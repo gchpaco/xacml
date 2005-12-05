@@ -3,72 +3,89 @@
  */
 package org.sigwinch.xacml.output.sat;
 
-
 /**
  * @author graham
  */
 public interface BooleanFormula {
     static public class True implements BooleanFormula {
-        True () {
+        True() {
         }
 
-        public BooleanFormula negate () {
+        public BooleanFormula negate() {
             return FALSE;
         }
 
         @Override
-        public String toString () {
+        public String toString() {
             return "true";
         }
-        
-        public BooleanFormula simplify () { return this; }
 
-        public BooleanFormula convertToCNF () {
+        public BooleanFormula simplify() {
             return this;
         }
-        public void visit (FormulaVisitor impl) { impl.visitTrue (this); }
-        public boolean isInCNF () { return true; }
+
+        public BooleanFormula convertToCNF() {
+            return this;
+        }
+
+        public void visit(FormulaVisitor impl) {
+            impl.visitTrue(this);
+        }
+
+        public boolean isInCNF() {
+            return true;
+        }
     }
 
     static public class False implements BooleanFormula {
-        False () {
+        False() {
         }
 
-        public BooleanFormula negate () {
+        public BooleanFormula negate() {
             return TRUE;
         }
 
         @Override
-        public String toString () {
+        public String toString() {
             return "false";
         }
-        
-        public BooleanFormula simplify () { return this; }
 
-        public BooleanFormula convertToCNF () {
+        public BooleanFormula simplify() {
             return this;
         }
-        
-        public void visit (FormulaVisitor impl) { impl.visitFalse (this); }
-        public boolean isInCNF () { return true; }
+
+        public BooleanFormula convertToCNF() {
+            return this;
+        }
+
+        public void visit(FormulaVisitor impl) {
+            impl.visitFalse(this);
+        }
+
+        public boolean isInCNF() {
+            return true;
+        }
     }
 
-    static BooleanFormula TRUE = new True ();
-    static BooleanFormula FALSE = new False ();
-    
-    public BooleanFormula negate ();
+    static BooleanFormula TRUE = new True();
+
+    static BooleanFormula FALSE = new False();
+
+    public BooleanFormula negate();
 
     /**
      * @param impl
      */
-    public void visit (FormulaVisitor impl);
-    public BooleanFormula simplify ();
-    public BooleanFormula convertToCNF ();
+    public void visit(FormulaVisitor impl);
+
+    public BooleanFormula simplify();
+
+    public BooleanFormula convertToCNF();
 
     /**
      * @return
      */
-    public boolean isInCNF ();
+    public boolean isInCNF();
 }
 
 // arch-tag: BooleanFormula.java Apr 25, 2005 2:13:50 PM

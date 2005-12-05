@@ -1,4 +1,5 @@
 package org.sigwinch.xacml.transformers;
+
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
@@ -16,7 +17,7 @@ import org.sigwinch.xacml.tree.VariableReference;
  * TripleFormation.java
  * 
  * 
- * Created: Sat Nov  8 02:00:09 2003
+ * Created: Sat Nov 8 02:00:09 2003
  * 
  * @author Graham Hughes
  * @version
@@ -24,39 +25,38 @@ import org.sigwinch.xacml.tree.VariableReference;
 
 public class TripleFormationTest extends TestCase {
     VariableReference a, b, c;
-    
+
     public static Test suite() {
-	return new TestSuite(TripleFormationTest.class);
+        return new TestSuite(TripleFormationTest.class);
     }
 
     @Override
     protected void setUp() {
-	a = new VariableReference ("a");
-	b = new VariableReference ("b");
-	c = new VariableReference ("c");
+        a = new VariableReference("a");
+        b = new VariableReference("b");
+        c = new VariableReference("c");
     }
-    
-    public void testCreatesTriples () {
-	Tree tree = new Scope (Permit.PERMIT, a);
-	Tree expectedResult = new Triple (a, SimplePredicate.FALSE, 
-					  SimplePredicate.FALSE);
-	assertEquals (expectedResult, tree.transform (new TripleFormer ()));
 
-	tree = new Scope (Deny.DENY, a);
-	expectedResult = new Triple (SimplePredicate.FALSE, a, 
-				     SimplePredicate.FALSE);
-	assertEquals (expectedResult, tree.transform (new TripleFormer ()));
+    public void testCreatesTriples() {
+        Tree tree = new Scope(Permit.PERMIT, a);
+        Tree expectedResult = new Triple(a, SimplePredicate.FALSE,
+                SimplePredicate.FALSE);
+        assertEquals(expectedResult, tree.transform(new TripleFormer()));
 
-	tree = new Error (Deny.DENY, a);
-	expectedResult = 
-	    new Triple (SimplePredicate.FALSE, a.not (), a);
-	assertEquals (expectedResult, tree.transform (new TripleFormer ()));
+        tree = new Scope(Deny.DENY, a);
+        expectedResult = new Triple(SimplePredicate.FALSE, a,
+                SimplePredicate.FALSE);
+        assertEquals(expectedResult, tree.transform(new TripleFormer()));
+
+        tree = new Error(Deny.DENY, a);
+        expectedResult = new Triple(SimplePredicate.FALSE, a.not(), a);
+        assertEquals(expectedResult, tree.transform(new TripleFormer()));
     }
-    
-    public void testSetsDisjoint () {
-	Tree tree = new Error (new Scope (Deny.DENY, b), a);
-	Tree expectedResult = 
-	    new Triple (SimplePredicate.FALSE, b.andWith (a.not ()), a);
-	assertEquals (expectedResult, tree.transform (new TripleFormer ()));
+
+    public void testSetsDisjoint() {
+        Tree tree = new Error(new Scope(Deny.DENY, b), a);
+        Tree expectedResult = new Triple(SimplePredicate.FALSE, b.andWith(a
+                .not()), a);
+        assertEquals(expectedResult, tree.transform(new TripleFormer()));
     }
 }

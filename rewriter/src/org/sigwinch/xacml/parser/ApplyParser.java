@@ -16,7 +16,7 @@ import org.w3c.dom.Node;
  * @version 1.0
  */
 public class ApplyParser extends ExpressionParser {
-    public ApplyParser () {
+    public ApplyParser() {
 
     }
 
@@ -29,23 +29,21 @@ public class ApplyParser extends ExpressionParser {
      * @return corresponding predicate
      */
     @Override
-    public Predicate parseElement (Element element) {
-        String functionId = getXACMLAttribute (element, "FunctionId");
-        ArrayList<Predicate> predicates = new ArrayList<Predicate> ();
-        Node child = element.getFirstChild ();
+    public Predicate parseElement(Element element) {
+        String functionId = getXACMLAttribute(element, "FunctionId");
+        ArrayList<Predicate> predicates = new ArrayList<Predicate>();
+        Node child = element.getFirstChild();
         while (child != null) {
-            if (child.getNodeType () == Node.ELEMENT_NODE)
-                predicates.add (parseExpression ((Element) child));
-            child = child.getNextSibling ();
+            if (child.getNodeType() == Node.ELEMENT_NODE)
+                predicates.add(parseExpression((Element) child));
+            child = child.getNextSibling();
         }
-        if (oneandonlyLookup.get (functionId) != null) {
-            assert predicates.size () == 1;
-            return predicates.get (0);
+        if (oneandonlyLookup.get(functionId) != null) {
+            assert predicates.size() == 1;
+            return predicates.get(0);
         }
-        return new FunctionCallPredicate (
-                                          functionId,
-                                          predicates
-                                                                  .toArray (new Predicate[] {}));
+        return new FunctionCallPredicate(functionId, predicates
+                .toArray(new Predicate[] {}));
 
     }
 
@@ -58,18 +56,18 @@ public class ApplyParser extends ExpressionParser {
      * @return corresponding predicate
      */
     @Override
-    public Predicate parseForError (Element element) {
-        String functionId = getXACMLAttribute (element, "FunctionId");
+    public Predicate parseForError(Element element) {
+        String functionId = getXACMLAttribute(element, "FunctionId");
         Predicate p = SimplePredicate.TRUE;
-        Node child = element.getFirstChild ();
+        Node child = element.getFirstChild();
         while (child != null) {
-            if (child.getNodeType () == Node.ELEMENT_NODE)
-                p = p.andWith (parseForError ((Element) child));
-            child = child.getNextSibling ();
+            if (child.getNodeType() == Node.ELEMENT_NODE)
+                p = p.andWith(parseForError((Element) child));
+            child = child.getNextSibling();
         }
-        if (oneandonlyLookup.get (functionId) != null) {
-            Predicate expression = parseExpression (element);
-            return p.andWith (new SolePredicate (expression).not ());
+        if (oneandonlyLookup.get(functionId) != null) {
+            Predicate expression = parseExpression(element);
+            return p.andWith(new SolePredicate(expression).not());
         }
         return p;
     }

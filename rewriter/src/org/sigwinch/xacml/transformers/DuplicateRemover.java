@@ -13,7 +13,7 @@ import org.sigwinch.xacml.tree.Scope;
  * @version 1.0
  */
 public class DuplicateRemover extends TransformerImpl {
-    public DuplicateRemover () {
+    public DuplicateRemover() {
 
     }
 
@@ -25,17 +25,17 @@ public class DuplicateRemover extends TransformerImpl {
      * @return transformed tree
      */
     @Override
-    public Tree walkError (Error error) {
-        if (error.getChild () instanceof Error) {
-            Error child = (Error) error.getChild ();
+    public Tree walkError(Error error) {
+        if (error.getChild() instanceof Error) {
+            Error child = (Error) error.getChild();
             // This order is important so in the case of multiply
             // nested Error nodes, the OrPredicates will accumulate to
             // the right.
-            Predicate p = child.getCondition ().orWith (error.getCondition ());
-            Error newerr = new Error (child.getChild (), p);
-            return newerr.transform (this);
+            Predicate p = child.getCondition().orWith(error.getCondition());
+            Error newerr = new Error(child.getChild(), p);
+            return newerr.transform(this);
         }
-        return super.walkError (error);
+        return super.walkError(error);
     }
 
     /**
@@ -46,17 +46,17 @@ public class DuplicateRemover extends TransformerImpl {
      * @return transformed tree
      */
     @Override
-    public Tree walkScope (Scope scope) {
-        if (scope.getChild () instanceof Scope) {
-            Scope child = (Scope) scope.getChild ();
+    public Tree walkScope(Scope scope) {
+        if (scope.getChild() instanceof Scope) {
+            Scope child = (Scope) scope.getChild();
             // This order is important so in the case of multiply
             // nested Scope nodes, the AndPredicates will accumulate
             // to the right.
-            Predicate p = child.getCondition ().andWith (scope.getCondition ());
-            Scope newscope = new Scope (child.getChild (), p);
-            return newscope.transform (this);
+            Predicate p = child.getCondition().andWith(scope.getCondition());
+            Scope newscope = new Scope(child.getChild(), p);
+            return newscope.transform(this);
         }
-        return super.walkScope (scope);
+        return super.walkScope(scope);
     }
 }
 /*

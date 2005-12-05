@@ -13,7 +13,7 @@ public class Equivalence implements BooleanFormula {
      * @param left
      * @param right
      */
-    public Equivalence (BooleanFormula left, BooleanFormula right) {
+    public Equivalence(BooleanFormula left, BooleanFormula right) {
         this.left = left;
         this.right = right;
     }
@@ -24,7 +24,7 @@ public class Equivalence implements BooleanFormula {
      * @see java.lang.Object#toString()
      */
     @Override
-    public String toString () {
+    public String toString() {
         return "(<=> " + left + " " + right + ")";
     }
 
@@ -34,12 +34,12 @@ public class Equivalence implements BooleanFormula {
      * @see java.lang.Object#equals(java.lang.Object)
      */
     @Override
-    public boolean equals (Object obj) {
+    public boolean equals(Object obj) {
         if (obj instanceof Equivalence) {
             Equivalence obj2 = (Equivalence) obj;
-            return obj2.left.equals (left) && obj2.right.equals (right);
+            return obj2.left.equals(left) && obj2.right.equals(right);
         }
-        return super.equals (obj);
+        return super.equals(obj);
     }
 
     /*
@@ -48,48 +48,57 @@ public class Equivalence implements BooleanFormula {
      * @see java.lang.Object#hashCode()
      */
     @Override
-    public int hashCode () {
-        return '=' ^ left.hashCode () ^ right.hashCode ();
+    public int hashCode() {
+        return '=' ^ left.hashCode() ^ right.hashCode();
     }
-    
-    /* (non-Javadoc)
+
+    /*
+     * (non-Javadoc)
+     * 
      * @see org.sigwinch.xacml.output.sat.BooleanFormula#negate()
      */
-    public BooleanFormula negate () {
-        return new Not (this);
+    public BooleanFormula negate() {
+        return new Not(this);
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see org.sigwinch.xacml.output.sat.BooleanFormula#visit(org.sigwinch.xacml.output.sat.FormulaVisitor)
      */
-    public void visit (FormulaVisitor impl) {
-        impl.visitEquivalence (this);
+    public void visit(FormulaVisitor impl) {
+        impl.visitEquivalence(this);
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see org.sigwinch.xacml.output.sat.BooleanFormula#convertToCNF()
      */
-    public BooleanFormula convertToCNF () {
-        return new Or (new And (left, right), new And (left.negate (), right.negate ())).convertToCNF ();
+    public BooleanFormula convertToCNF() {
+        return new Or(new And(left, right), new And(left.negate(), right
+                .negate())).convertToCNF();
     }
-    
-    public BooleanFormula simplify () {
-        BooleanFormula l = left.simplify ();
-        BooleanFormula r = right.simplify ();
+
+    public BooleanFormula simplify() {
+        BooleanFormula l = left.simplify();
+        BooleanFormula r = right.simplify();
         if (l == BooleanFormula.TRUE)
             return r;
         else if (r == BooleanFormula.TRUE)
             return l;
         else if (l == BooleanFormula.FALSE)
-            return r.negate ().simplify ();
+            return r.negate().simplify();
         else if (r == BooleanFormula.FALSE)
-            return l.negate ().simplify ();
+            return l.negate().simplify();
         else
-            return new Equivalence (l, r);
+            return new Equivalence(l, r);
     }
-    public boolean isInCNF () { return false; }
+
+    public boolean isInCNF() {
+        return false;
+    }
 
 }
-
 
 // arch-tag: Equivalence.java May 30, 2005 2:39:51 AM

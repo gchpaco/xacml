@@ -7,26 +7,25 @@ import org.sigwinch.xacml.output.sat.BooleanFormula.False;
 import org.sigwinch.xacml.output.sat.BooleanFormula.True;
 import org.sigwinch.xacml.tree.VariableReference;
 
-
 /**
  * @author graham
  */
 public interface FormulaVisitor {
-    public void visitTrue (True t);
+    public void visitTrue(True t);
 
-    public void visitFalse (False f);
+    public void visitFalse(False f);
 
-    public void visitAnd (And and);
+    public void visitAnd(And and);
 
-    public void visitOr (Or or);
+    public void visitOr(Or or);
 
-    public void visitNot (Not not);
+    public void visitNot(Not not);
 
-    public void visitVariable (VariableReference ref);
+    public void visitVariable(VariableReference ref);
 
-    public void visitEquivalence (Equivalence equivalence);
+    public void visitEquivalence(Equivalence equivalence);
 
-    public void visitImplication (Implication implication);
+    public void visitImplication(Implication implication);
 }
 
 // arch-tag: FormulaVisitor.java May 28, 2005 12:47:58 AM

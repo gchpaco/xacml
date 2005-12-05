@@ -8,69 +8,68 @@ import org.sigwinch.xacml.tree.SimplePredicate;
 import org.sigwinch.xacml.tree.FunctionCallPredicate;
 import org.sigwinch.xacml.tree.ConstantValuePredicate;
 
-
 /**
  * AttributeSelectorParser.java
- *
- *
- * Created: Tue Nov  4 18:45:07 2003
- *
+ * 
+ * 
+ * Created: Tue Nov 4 18:45:07 2003
+ * 
  * @author <a href="mailto:graham@sigwinch.org">Graham Hughes</a>
  * @version 1.0
  */
 public class AttributeSelectorParser extends ExpressionParser {
     public AttributeSelectorParser() {
-	
+
     }
 
     /**
      * Parse AttributeSelector node.
-     *
-     * @param element AttributeSelector node to parse
+     * 
+     * @param element
+     *            AttributeSelector node to parse
      * @return predicate corresponding to its contents
      */
     @Override
     public Predicate parseElement(Element element) {
-	String type = getXACMLAttribute (element, "DataType");
-	String id = getXACMLAttribute (element, "RequestContextPath");
-	boolean force = false;
-	if (getXACMLAttribute (element, "MustBePresent").equals ("True"))
-	    force = true;
+        String type = getXACMLAttribute(element, "DataType");
+        String id = getXACMLAttribute(element, "RequestContextPath");
+        boolean force = false;
+        if (getXACMLAttribute(element, "MustBePresent").equals("True"))
+            force = true;
 
-	return new EnvironmentalPredicate (type, id, force);
+        return new EnvironmentalPredicate(type, id, force);
     }
 
     /**
-     * Comb <code>element</code> for error conditions.  These are
-     * basically impossible unless the <code>MustBePresent</code>
-     * attribute is true.
-     *
-     * @param element an <code>Element</code> node
+     * Comb <code>element</code> for error conditions. These are basically
+     * impossible unless the <code>MustBePresent</code> attribute is true.
+     * 
+     * @param element
+     *            an <code>Element</code> node
      * @return resulting predicate
      */
     @Override
     public Predicate parseForError(Element element) {
-	boolean force = false;
-	if (getXACMLAttribute (element, "MustBePresent").equals ("True"))
-	    force = true;
-	if (!force)
-	    return SimplePredicate.TRUE;
+        boolean force = false;
+        if (getXACMLAttribute(element, "MustBePresent").equals("True"))
+            force = true;
+        if (!force)
+            return SimplePredicate.TRUE;
 
-	String type = getXACMLAttribute (element, "DataType");
-	String id = getXACMLAttribute (element, "RequestContextPath");
-	String bagsize = type2bagsize.get (type);
-	return new FunctionCallPredicate
-	    ("urn:oasis:names:tc:xacml:1.0:function:integer-equal",
-	     new Predicate [] {
-		new FunctionCallPredicate
-		(bagsize,
-		 new Predicate [] {
-		    new EnvironmentalPredicate (type, id)
-		}),
-		new ConstantValuePredicate 
-		("http://www.w3.org/2001/XMLSchema#integer", "1")
-	    }).not ();
+        String type = getXACMLAttribute(element, "DataType");
+        String id = getXACMLAttribute(element, "RequestContextPath");
+        String bagsize = type2bagsize.get(type);
+        return new FunctionCallPredicate(
+                "urn:oasis:names:tc:xacml:1.0:function:integer-equal",
+                new Predicate[] {
+                        new FunctionCallPredicate(bagsize,
+                                new Predicate[] { new EnvironmentalPredicate(
+                                        type, id) }),
+                        new ConstantValuePredicate(
+                                "http://www.w3.org/2001/XMLSchema#integer", "1") })
+                .not();
     }
 }
-/* arch-tag: 18E26E40-0F3A-11D8-B489-000A95A2610A
+/*
+ * arch-tag: 18E26E40-0F3A-11D8-B489-000A95A2610A
  */

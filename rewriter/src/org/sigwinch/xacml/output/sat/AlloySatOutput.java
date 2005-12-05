@@ -21,14 +21,20 @@ import org.sigwinch.xacml.tree.VariableReference;
  */
 public class AlloySatOutput implements Output {
     PrintWriter stream;
+
     double slop;
+
     private int vars;
+
     private HashMap<Object, Integer> var2num;
+
     private SatVisitor sat;
+
     private TreeSet<BooleanFormula> formulae;
+
     private Triple lastTree;
 
-    public AlloySatOutput (PrintWriter stream, double slop) {
+    public AlloySatOutput(PrintWriter stream, double slop) {
         this.stream = stream;
         this.slop = slop;
     }
@@ -38,12 +44,13 @@ public class AlloySatOutput implements Output {
      * 
      * @see org.sigwinch.xacml.output.Output#preamble(org.sigwinch.xacml.tree.Tree)
      */
-    public void preamble (Tree tree) {
-        sat = new SatVisitor ();
-        sat.setMultiplicity ((int) slop);
+    public void preamble(Tree tree) {
+        sat = new SatVisitor();
+        sat.setMultiplicity((int) slop);
         vars = 0;
-        var2num = new HashMap<Object, Integer> ();
-        formulae = new TreeSet<BooleanFormula> (new SatVisitor.FormulaComparator ());
+        var2num = new HashMap<Object, Integer>();
+        formulae = new TreeSet<BooleanFormula>(
+                new SatVisitor.FormulaComparator());
         lastTree = null;
     }
 
@@ -52,41 +59,44 @@ public class AlloySatOutput implements Output {
      * 
      * @see org.sigwinch.xacml.output.Output#write(org.sigwinch.xacml.tree.Tree)
      */
-    public void write (Tree tree) {
-        tree.walk (sat);
-        BooleanFormula formula = sat.computeFormula ();
-        formula.visit (new FormulaImpl () {
+    public void write(Tree tree) {
+        tree.walk(sat);
+        BooleanFormula formula = sat.computeFormula();
+        formula.visit(new FormulaImpl() {
             @Override
-            public void visitVariable (VariableReference var) {
-                super.visitVariable (var);
-                putVariable (var);
+            public void visitVariable(VariableReference var) {
+                super.visitVariable(var);
+                putVariable(var);
             }
+
             @Override
-            public void visitTrue (BooleanFormula.True t) {
-                super.visitTrue (t);
-                putVariable (t);
+            public void visitTrue(BooleanFormula.True t) {
+                super.visitTrue(t);
+                putVariable(t);
             }
+
             @Override
-            public void visitFalse (BooleanFormula.False f) {
-                super.visitFalse (f);
-                putVariable (f);
+            public void visitFalse(BooleanFormula.False f) {
+                super.visitFalse(f);
+                putVariable(f);
             }
-            private void putVariable (Object var) {
-                if (!var2num.containsKey (var)) {
-                    var2num.put (var, new Integer (++vars));
+
+            private void putVariable(Object var) {
+                if (!var2num.containsKey(var)) {
+                    var2num.put(var, new Integer(++vars));
                 }
             }
         });
         if (formula instanceof And)
-            formulae.addAll (Arrays.asList (((And) formula).objects));
+            formulae.addAll(Arrays.asList(((And) formula).objects));
         else
-            formulae.add (formula);
+            formulae.add(formula);
         if (tree instanceof Triple) {
             Triple triple = (Triple) tree;
             if (lastTree == null)
                 lastTree = triple;
             else {
-                formulae.add (sat.generateImplications (lastTree, triple));
+                formulae.add(sat.generateImplications(lastTree, triple));
                 lastTree = triple;
             }
         }
@@ -97,31 +107,37 @@ public class AlloySatOutput implements Output {
      * 
      * @see org.sigwinch.xacml.output.Output#postamble()
      */
-    public void postamble () {
-        BooleanFormula [] allFormulae = formulae.toArray (new BooleanFormula [] {});
-        And full = new And (allFormulae);
-        int variables [] = new int [] { 0 };
-        Map<BooleanFormula, Integer> variableMap = new TreeMap<BooleanFormula, Integer> (new SatVisitor.FormulaComparator ());
+    public void postamble() {
+        BooleanFormula[] allFormulae = formulae
+                .toArray(new BooleanFormula[] {});
+        And full = new And(allFormulae);
+        int variables[] = new int[] { 0 };
+        Map<BooleanFormula, Integer> variableMap = new TreeMap<BooleanFormula, Integer>(
+                new SatVisitor.FormulaComparator());
         BooleanFormula converted = StructurePreservingConverter.convert(full);
         BooleanFormula cnf = converted.convertToCNF();
-        int [][] array = StructurePreservingConverter.asArray (cnf, variables, variableMap);
+        int[][] array = StructurePreservingConverter.asArray(cnf, variables,
+                variableMap);
 
-        //BooleanFormula simpleFull = full.simplify ();
-        //stream.println ("c " + full + "\nc ==> " + simpleFull 
-        //                    + "\nc ==> " + converted
-        //                    + "\nc ==> " + cnf);
-        for (Iterator iter = variableMap.keySet().iterator (); iter.hasNext ();) {
-            VariableReference variable = (VariableReference) iter.next ();
-            stream.println ("c " + variable + " == " + variableMap.get (variable));
+        // BooleanFormula simpleFull = full.simplify ();
+        // stream.println ("c " + full + "\nc ==> " + simpleFull
+        // + "\nc ==> " + converted
+        // + "\nc ==> " + cnf);
+        for (Iterator iter = variableMap.keySet().iterator(); iter.hasNext();) {
+            VariableReference variable = (VariableReference) iter.next();
+            stream
+                    .println("c " + variable + " == "
+                            + variableMap.get(variable));
         }
-        stream.println ("p cnf " + variables[0] + " " + array.length);
+        stream.println("p cnf " + variables[0] + " " + array.length);
 
         for (int i = 0; i < array.length; i++) {
             for (int j = 0; j < array[i].length; j++) {
-                if (j != 0) stream.print (' ');
-                stream.print (array[i][j]);
+                if (j != 0)
+                    stream.print(' ');
+                stream.print(array[i][j]);
             }
-            stream.println (" 0");
+            stream.println(" 0");
         }
     }
 

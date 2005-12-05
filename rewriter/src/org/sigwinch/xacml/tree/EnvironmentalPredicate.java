@@ -11,36 +11,40 @@ import java.util.HashMap;
  */
 public class EnvironmentalPredicate extends Predicate {
     static final HashMap<String, Integer> id2num;
+
     static int current;
+
     final int uniqueId;
+
     String type, id;
+
     boolean force;
 
-    public EnvironmentalPredicate (String t, String i) {
+    public EnvironmentalPredicate(String t, String i) {
         type = t;
         id = i;
         this.force = false;
-        if (!id2num.containsKey (i))
-            id2num.put (i, new Integer (current++));
-        uniqueId = id2num.get (i).intValue ();
+        if (!id2num.containsKey(i))
+            id2num.put(i, new Integer(current++));
+        uniqueId = id2num.get(i).intValue();
     }
 
-    public EnvironmentalPredicate (String t, String i, boolean force) {
+    public EnvironmentalPredicate(String t, String i, boolean force) {
         type = t;
         id = i;
         this.force = force;
-        if (!id2num.containsKey (i))
-            id2num.put (i, new Integer (current++));
-        uniqueId = id2num.get (i).intValue ();
+        if (!id2num.containsKey(i))
+            id2num.put(i, new Integer(current++));
+        uniqueId = id2num.get(i).intValue();
     }
 
     static {
-        id2num = new HashMap<String, Integer> ();
-        reset ();
+        id2num = new HashMap<String, Integer>();
+        reset();
     }
 
-    public static void reset () {
-        id2num.clear ();
+    public static void reset() {
+        id2num.clear();
         current = 0;
     }
 
@@ -49,7 +53,7 @@ public class EnvironmentalPredicate extends Predicate {
      * 
      * @return the value of type
      */
-    public String getType () {
+    public String getType() {
         return this.type;
     }
 
@@ -59,7 +63,7 @@ public class EnvironmentalPredicate extends Predicate {
      * @param argType
      *            Value to assign to this.type
      */
-    public void setType (String argType) {
+    public void setType(String argType) {
         this.type = argType;
     }
 
@@ -68,7 +72,7 @@ public class EnvironmentalPredicate extends Predicate {
      * 
      * @return the value of id
      */
-    public String getId () {
+    public String getId() {
         return this.id;
     }
 
@@ -78,47 +82,47 @@ public class EnvironmentalPredicate extends Predicate {
      * @param argId
      *            Value to assign to this.id
      */
-    public void setId (String argId) {
+    public void setId(String argId) {
         this.id = argId;
     }
 
-    public int getUniqueId () {
+    public int getUniqueId() {
         return uniqueId;
     }
 
-    public String getShortName () {
-        String shortName = type2string.get (type);
+    public String getShortName() {
+        String shortName = type2string.get(type);
         if (shortName == null)
             return type;
         return shortName;
     }
 
     @Override
-    public boolean isFunction () {
+    public boolean isFunction() {
         return true;
     }
 
     @Override
-    public void walk (Visitor v) {
-        v.walkEnvironmentalPredicate (this);
+    public void walk(Visitor v) {
+        v.walkEnvironmentalPredicate(this);
     }
 
     @Override
-    public Predicate transform (Transformer t) {
-        return t.walkEnvironmentalPredicate (this);
+    public Predicate transform(Transformer t) {
+        return t.walkEnvironmentalPredicate(this);
     }
 
     @Override
-    public boolean equals (Object o) {
+    public boolean equals(Object o) {
         if (!(o instanceof EnvironmentalPredicate))
             return false;
         EnvironmentalPredicate e = (EnvironmentalPredicate) o;
-        return type.equals (e.getType ()) && id.equals (e.getId ());
+        return type.equals(e.getType()) && id.equals(e.getId());
     }
 
     @Override
-    public int hashCode () {
-        return type.hashCode () ^ id.hashCode ();
+    public int hashCode() {
+        return type.hashCode() ^ id.hashCode();
     }
 }
 /*

@@ -22,8 +22,8 @@ public class Or implements BooleanFormula {
      * @param object2
      * @param object3
      */
-    public Or (BooleanFormula object, BooleanFormula object2,
-               BooleanFormula object3) {
+    public Or(BooleanFormula object, BooleanFormula object2,
+            BooleanFormula object3) {
         objects = new BooleanFormula[] { object, object2, object3 };
     }
 
@@ -31,15 +31,15 @@ public class Or implements BooleanFormula {
      * @param object
      * @param object2
      */
-    public Or (BooleanFormula object, BooleanFormula object2) {
+    public Or(BooleanFormula object, BooleanFormula object2) {
         objects = new BooleanFormula[] { object, object2 };
     }
 
     /**
      * @param formulas
      */
-    public Or (BooleanFormula[] formulas) {
-        objects = formulas.clone ();
+    public Or(BooleanFormula[] formulas) {
+        objects = formulas.clone();
     }
 
     /*
@@ -48,18 +48,18 @@ public class Or implements BooleanFormula {
      * @see java.lang.Object#toString()
      */
     @Override
-    public String toString () {
-        StringBuffer buf = new StringBuffer ();
-        buf.append ("(or");
+    public String toString() {
+        StringBuffer buf = new StringBuffer();
+        buf.append("(or");
         for (int i = 0; i < objects.length; i++) {
-            buf.append (" ");
+            buf.append(" ");
             if (objects[i] == null)
-                buf.append ("nil");
+                buf.append("nil");
             else
-                buf.append (objects[i].toString ());
+                buf.append(objects[i].toString());
         }
-        buf.append (")");
-        return buf.toString ();
+        buf.append(")");
+        return buf.toString();
     }
 
     /*
@@ -68,17 +68,17 @@ public class Or implements BooleanFormula {
      * @see java.lang.Object#equals(java.lang.Object)
      */
     @Override
-    public boolean equals (Object obj) {
+    public boolean equals(Object obj) {
         if (obj instanceof Or) {
             Or obj2 = (Or) obj;
             if (obj2.objects.length != objects.length)
                 return false;
             for (int i = 0; i < objects.length; i++)
-                if (!objects[i].equals (obj2.objects[i]))
+                if (!objects[i].equals(obj2.objects[i]))
                     return false;
             return true;
         }
-        return super.equals (obj);
+        return super.equals(obj);
     }
 
     /*
@@ -87,10 +87,10 @@ public class Or implements BooleanFormula {
      * @see java.lang.Object#hashCode()
      */
     @Override
-    public int hashCode () {
+    public int hashCode() {
         int hash = '^';
         for (int i = 0; i < objects.length; i++)
-            hash ^= objects[i].hashCode ();
+            hash ^= objects[i].hashCode();
         return hash;
     }
 
@@ -99,47 +99,47 @@ public class Or implements BooleanFormula {
      * 
      * @see org.sigwinch.xacml.output.sat.BooleanFormula#negate()
      */
-    public BooleanFormula negate () {
-        return new Not (this);
+    public BooleanFormula negate() {
+        return new Not(this);
     }
 
-    public BooleanFormula simplify () {
+    public BooleanFormula simplify() {
         // some trivial stuff first
         if (objects.length == 0)
             return BooleanFormula.FALSE;
 
-        TreeSet<BooleanFormula> elements = new TreeSet<BooleanFormula> (new SatVisitor.FormulaComparator ());
-        LinkedList<BooleanFormula> toProcess = new LinkedList<BooleanFormula> (Arrays.asList (objects));
+        TreeSet<BooleanFormula> elements = new TreeSet<BooleanFormula>(
+                new SatVisitor.FormulaComparator());
+        LinkedList<BooleanFormula> toProcess = new LinkedList<BooleanFormula>(
+                Arrays.asList(objects));
         // first, collapse Ors.
-        while (!toProcess.isEmpty ()) {
-            BooleanFormula head = toProcess.removeFirst ();
-            head = head.simplify ();
+        while (!toProcess.isEmpty()) {
+            BooleanFormula head = toProcess.removeFirst();
+            head = head.simplify();
             if (head instanceof Or) {
                 Or and = (Or) head;
-                toProcess.addAll (Arrays.asList (and.objects));
+                toProcess.addAll(Arrays.asList(and.objects));
             } else if (head == BooleanFormula.FALSE) {
                 // can't be alone, so skip
             } else if (head == BooleanFormula.TRUE) {
                 return head; // true is a short circuit for ors
             } else {
-                elements.add (head.simplify ());
+                elements.add(head.simplify());
             }
         }
-        if (elements.isEmpty ())
+        if (elements.isEmpty())
             // can only get here by skipping falses
             return BooleanFormula.FALSE;
-        else if (elements.size () == 1)
-            return elements.iterator ().next ();
+        else if (elements.size() == 1)
+            return elements.iterator().next();
         else {
             // scan for "a and not a"
-            for (Iterator iter = elements.iterator (); iter.hasNext ();) {
-                BooleanFormula element = (BooleanFormula) iter.next ();
-                if (elements.contains (element.negate ()))
+            for (Iterator iter = elements.iterator(); iter.hasNext();) {
+                BooleanFormula element = (BooleanFormula) iter.next();
+                if (elements.contains(element.negate()))
                     return BooleanFormula.TRUE;
             }
-            return new Or (
-                           elements
-                                                      .toArray (new BooleanFormula[] {}));
+            return new Or(elements.toArray(new BooleanFormula[] {}));
         }
     }
 
@@ -148,43 +148,42 @@ public class Or implements BooleanFormula {
      * 
      * @see org.sigwinch.xacml.output.sat.BooleanFormula#convertToCNF()
      */
-    public BooleanFormula convertToCNF () {
-        BooleanFormula simplified = this.simplify ();
+    public BooleanFormula convertToCNF() {
+        BooleanFormula simplified = this.simplify();
         if (simplified instanceof Or) {
             Or or = (Or) simplified;
             // First, make a pass through the array; some of our stuff turns
             // into Ors or Ands.
-            BooleanFormula[] array = or.objects.clone ();
+            BooleanFormula[] array = or.objects.clone();
             boolean makeAnotherPass = false;
             for (int i = 0; i < array.length; i++) {
-                array[i] = array[i].convertToCNF ();
+                array[i] = array[i].convertToCNF();
                 if (array[i] instanceof Or)
                     makeAnotherPass = true;
             }
             if (makeAnotherPass)
-                return new Or (array).convertToCNF ();
+                return new Or(array).convertToCNF();
             // OK, no ors and it's all primitives now.
-            ArrayList<BooleanFormula> elements = new ArrayList<BooleanFormula> (Arrays.asList (array));
-            for (Iterator iter = elements.iterator (); iter.hasNext ();) {
-                BooleanFormula element = (BooleanFormula) iter.next ();
+            ArrayList<BooleanFormula> elements = new ArrayList<BooleanFormula>(
+                    Arrays.asList(array));
+            for (Iterator iter = elements.iterator(); iter.hasNext();) {
+                BooleanFormula element = (BooleanFormula) iter.next();
                 if (element instanceof And) {
                     And and = (And) element;
-                    iter.remove ();
+                    iter.remove();
                     BooleanFormula[] others = elements
-                                                                         .toArray (new BooleanFormula[] {});
-                    BooleanFormula[] subclauses = and.objects
-                                                                                .clone ();
+                            .toArray(new BooleanFormula[] {});
+                    BooleanFormula[] subclauses = and.objects.clone();
                     for (int i = 0; i < subclauses.length; i++) {
-                        subclauses[i] = new Or (subclauses[i], new Or (others));
+                        subclauses[i] = new Or(subclauses[i], new Or(others));
                     }
-                    return new And (subclauses).convertToCNF ();
+                    return new And(subclauses).convertToCNF();
                 }
             }
-            BooleanFormula[] result = elements
-                                                                 .toArray (new BooleanFormula[] {});
-            return new Or (result).simplify ();
+            BooleanFormula[] result = elements.toArray(new BooleanFormula[] {});
+            return new Or(result).simplify();
         }
-        return simplified.convertToCNF ();
+        return simplified.convertToCNF();
     }
 
     /*
@@ -192,16 +191,16 @@ public class Or implements BooleanFormula {
      * 
      * @see org.sigwinch.xacml.output.sat.BooleanFormula#visit(org.sigwinch.xacml.output.sat.FormulaVisitor)
      */
-    public void visit (FormulaVisitor impl) {
-        impl.visitOr (this);
+    public void visit(FormulaVisitor impl) {
+        impl.visitOr(this);
     }
 
-    public boolean isInCNF () {
+    public boolean isInCNF() {
         for (int i = 0; i < objects.length; i++) {
-            if (!objects[i].isInCNF ())
+            if (!objects[i].isInCNF())
                 return false;
             if (objects[i] instanceof Not
-                || objects[i] instanceof VariableReference)
+                    || objects[i] instanceof VariableReference)
                 // NB: it is not okay to have true or false here, because they
                 // should have been reduced
                 continue;
