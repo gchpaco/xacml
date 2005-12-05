@@ -50,16 +50,19 @@ public class DenyOverridesRule extends Tree {
     public void setRight(Tree argRight) {
 	this.right = argRight;
     }
- 
+
+    @Override
     public void walk (Visitor v)
     {
 	v.walkDenyOverridesRule (this);
     }
+    @Override
     public Tree transform (Transformer t)
     {
 	return t.walkDenyOverridesRule (this);
     }
 
+    @Override
     public boolean equals (Object o)
     {
 	if (! (o instanceof DenyOverridesRule)) return false;
@@ -67,6 +70,7 @@ public class DenyOverridesRule extends Tree {
 	return left.equals (d.getLeft ()) && right.equals (d.getRight ());
     }
 
+    @Override
     public int hashCode ()
     {
 	return left.hashCode () ^ right.hashCode () ^ "ominus".hashCode ();

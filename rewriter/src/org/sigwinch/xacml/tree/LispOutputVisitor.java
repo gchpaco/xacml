@@ -341,6 +341,7 @@ public class LispOutputVisitor implements Visitor {
 	 *
 	 * @param predicate predicate to find size of
 	 */
+    @Override
 	public void visitSize(Predicate predicate) {
 	    stream.print ("(size ");
 	    predicate.walk (visitor);
@@ -353,6 +354,7 @@ public class LispOutputVisitor implements Visitor {
 	 * @param element element
 	 * @param set set to test
 	 */
+    @Override
 	public void visitInclusion(Predicate element, Predicate set) {
 	    stream.print ("(in-p");
 	    element.walk (visitor);
@@ -366,6 +368,7 @@ public class LispOutputVisitor implements Visitor {
 	 *
 	 * @param predicate singleton to wrap in a set
 	 */
+    @Override
 	public void visitSetCreation(Predicate predicate) {
 	    stream.print ("(set ");
 	    predicate.walk (visitor);
@@ -378,6 +381,7 @@ public class LispOutputVisitor implements Visitor {
 	 * @param first first value to compare
 	 * @param second second value to compare
 	 */
+    @Override
 	public void visitEquality(Predicate first, Predicate second) {
 	    stream.print ("(= ");
 	    first.walk (visitor);
@@ -392,6 +396,7 @@ public class LispOutputVisitor implements Visitor {
 	 * @param first first set
 	 * @param second second set
 	 */
+    @Override
 	public void visitIntersection(Predicate first, Predicate second) {
 	    stream.print ("(intersection ");
 	    first.walk (visitor);
@@ -406,6 +411,7 @@ public class LispOutputVisitor implements Visitor {
 	 * @param first first set
 	 * @param second second set
 	 */
+    @Override
 	public void visitUnion(Predicate first, Predicate second) {
 	    stream.print ("(union ");
 	    first.walk (visitor);
@@ -420,6 +426,7 @@ public class LispOutputVisitor implements Visitor {
 	 * @param first first set
 	 * @param second second set
 	 */
+    @Override
 	public void visitSubset(Predicate first, Predicate second) {
 	    stream.print ("(subset-p ");
 	    first.walk (visitor);
@@ -434,6 +441,7 @@ public class LispOutputVisitor implements Visitor {
 	 * @param first first set
 	 * @param second second set
 	 */
+    @Override
 	public void visitAtLeastOne(Predicate first, Predicate second) {
 	    stream.print ("(/= (intersection ");
 	    first.walk (visitor);
@@ -448,6 +456,7 @@ public class LispOutputVisitor implements Visitor {
 	 * @param first first set
 	 * @param second second set
 	 */
+    @Override
 	public void visitSetEquality(Predicate first, Predicate second) {
 	    stream.print ("(and (subset-p ");
 	    first.walk (visitor);
@@ -466,6 +475,7 @@ public class LispOutputVisitor implements Visitor {
 	 * @param first first arithmetic value
 	 * @param second second arithmetic value
 	 */
+    @Override
 	public void visitGreaterThan(Predicate first, Predicate second) {
 	    stream.print ("(> ");
 	    first.walk (visitor);
@@ -480,6 +490,7 @@ public class LispOutputVisitor implements Visitor {
 	 * @param first first arithmetic value
 	 * @param second second arithmetic value
 	 */
+    @Override
 	public void visitGreaterThanOrEqual(Predicate first, 
 					    Predicate second) {
 	    stream.print ("(>= ");
@@ -495,6 +506,7 @@ public class LispOutputVisitor implements Visitor {
 	 * @param first first arithmetic value
 	 * @param second second arithmetic value
 	 */
+    @Override
 	public void visitLessThan(Predicate first, Predicate second) {
 	    stream.print ("(< ");
 	    first.walk (visitor);
@@ -509,6 +521,7 @@ public class LispOutputVisitor implements Visitor {
 	 * @param first first arithmetic value
 	 * @param second second arithmetic value
 	 */
+    @Override
 	public void visitLessThanOrEqual(Predicate first, Predicate second) {
 	    stream.print ("(<= ");
 	    first.walk (visitor);
@@ -522,6 +535,7 @@ public class LispOutputVisitor implements Visitor {
 	 *
 	 * @param arguments predicates to combine
 	 */
+    @Override
 	public void visitAnd(Predicate [] arguments) {
 	    stream.print ("(and");
 	    for (int i = 0; i < arguments.length; i++) {
@@ -536,6 +550,7 @@ public class LispOutputVisitor implements Visitor {
 	 *
 	 * @param arguments predicates to combine
 	 */
+    @Override
 	public void visitOr(Predicate [] arguments) {
 	    stream.print ("(or");
 	    for (int i = 0; i < arguments.length; i++) {
@@ -550,6 +565,7 @@ public class LispOutputVisitor implements Visitor {
 	 *
 	 * @param predicate a <code>Predicate</code>
 	 */
+    @Override
 	public void visitNot(Predicate predicate) {
 	    stream.print ("(not ");
 	    predicate.walk (visitor);
@@ -562,6 +578,7 @@ public class LispOutputVisitor implements Visitor {
 	 * @param string function
 	 * @param arguments arguments
 	 */
+    @Override
 	public void visitDefault(String string, Predicate[] arguments) {
 	    stream.print ("(");
 	    stream.print (string);

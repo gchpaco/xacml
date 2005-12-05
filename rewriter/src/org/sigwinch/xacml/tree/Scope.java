@@ -55,17 +55,21 @@ public class Scope extends Tree {
 	this.condition = argCondition;
     }
 
+    @Override
     public boolean isFunction () { return true; }
 
+    @Override
     public void walk (Visitor v)
     {
 	v.walkScope (this);
     }
+    @Override
     public Tree transform (Transformer t)
     {
 	return t.walkScope (this);
     }
 
+    @Override
     public boolean equals (Object o)
     {
 	if (! (o instanceof Scope)) return false;
@@ -73,7 +77,8 @@ public class Scope extends Tree {
 	return child.equals (s.getChild ()) && 
 	    condition.equals (s.getCondition ());
     }
-    
+
+    @Override
     public int hashCode ()
     {
 	return child.hashCode () ^ condition.hashCode () ^ 'S';

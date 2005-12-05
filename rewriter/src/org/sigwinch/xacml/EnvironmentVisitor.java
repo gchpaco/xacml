@@ -26,6 +26,7 @@ public class EnvironmentVisitor extends VisitorImpl {
      *
      * @param environmentalPredicate a reference to the environment
      */
+    @Override
     public void walkEnvironmentalPredicate(EnvironmentalPredicate 
 					   environmentalPredicate) {
 	stream.print ("E_");

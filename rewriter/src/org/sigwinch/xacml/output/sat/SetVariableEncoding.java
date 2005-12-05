@@ -17,6 +17,7 @@ public class SetVariableEncoding extends VariableEncoding {
         super (buildNamesFor (baseName, multiplicity), multiplicity, baseName);
     }
     
+    @Override
     public BooleanFormula address (int i) {
         return names[i];
     }

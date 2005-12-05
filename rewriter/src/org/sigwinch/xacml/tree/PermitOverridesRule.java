@@ -50,16 +50,19 @@ public class PermitOverridesRule extends Tree {
     public void setRight(Tree argRight) {
 	this.right = argRight;
     }
- 
+
+    @Override
     public void walk (Visitor v)
     {
 	v.walkPermitOverridesRule (this);
     }
+    @Override
     public Tree transform (Transformer t)
     {
 	return t.walkPermitOverridesRule (this);
     }
 
+    @Override
     public boolean equals (Object o)
     {
 	if (! (o instanceof PermitOverridesRule)) return false;
@@ -67,6 +70,7 @@ public class PermitOverridesRule extends Tree {
 	return left.equals (p.getLeft ()) && right.equals (p.getRight ());
     }
 
+    @Override
     public int hashCode ()
     {
 	return left.hashCode () ^ right.hashCode () ^ "oplus".hashCode ();

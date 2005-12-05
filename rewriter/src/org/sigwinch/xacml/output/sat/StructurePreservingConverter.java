@@ -253,7 +253,8 @@ public class StructurePreservingConverter {
     BooleanFormula returnValue;
     FormulaVisitor pos, neg;
     int names = 0;
-    Map namesSeen, symbolsSeen;
+    Map<BooleanFormula, VariableReference> namesSeen;
+    Map<BooleanFormula, BooleanFormula> symbolsSeen;
 
     /**
      *  
@@ -262,8 +263,8 @@ public class StructurePreservingConverter {
         returnValue = null;
         pos = new PositiveVisitor ();
         neg = new NegativeVisitor ();
-        namesSeen = new HashMap ();
-        symbolsSeen = new HashMap ();
+        namesSeen = new HashMap<BooleanFormula, VariableReference> ();
+        symbolsSeen = new HashMap<BooleanFormula, BooleanFormula> ();
     }
 
     BooleanFormula callOn (BooleanFormula target, FormulaVisitor visitor) {
@@ -271,7 +272,7 @@ public class StructurePreservingConverter {
             target.visit (visitor);
             symbolsSeen.put (target, returnValue);
         }
-        return (BooleanFormula) symbolsSeen.get (target);
+        return symbolsSeen.get (target);
     }
 
     void returnWith (BooleanFormula target) {
@@ -289,7 +290,7 @@ public class StructurePreservingConverter {
         if (!namesSeen.containsKey (expression))
             namesSeen.put (expression, new VariableReference ("clause_"
                                                               + ++names));
-        return (VariableReference) namesSeen.get (expression);
+        return namesSeen.get (expression);
     }
 
     static public BooleanFormula convert (BooleanFormula formula) {
@@ -302,12 +303,12 @@ public class StructurePreservingConverter {
     }
     
     static public int [][] toArray (BooleanFormula formula) {
-        HashMap lookup = new HashMap ();
+        HashMap<BooleanFormula, Integer> lookup = new HashMap<BooleanFormula, Integer> ();
         int [] vars = new int [] { 0 };
         return toArray (formula, vars, lookup);
     }
 
-    private static int [] writeRow (BooleanFormula formula, Map lookup, int[] vars) {
+    private static int [] writeRow (BooleanFormula formula, Map<BooleanFormula, Integer> lookup, int[] vars) {
         int [] result;
         if (formula instanceof Or) {
             Or or = (Or) formula;
@@ -328,12 +329,12 @@ public class StructurePreservingConverter {
      * @param vars
      * @return
      */
-    private static int toNumber (BooleanFormula formula, Map lookup, int[] vars) {
+    private static int toNumber (BooleanFormula formula, Map<BooleanFormula, Integer> lookup, int[] vars) {
         if (formula instanceof Not) {
             Not not = (Not) formula;
             return -toNumber (not.formula, lookup, vars);
         } else if (lookup.containsKey (formula)) {
-            return ((Integer) lookup.get (formula)).intValue();
+            return lookup.get (formula).intValue();
         } else {
             Integer num = new Integer (++vars[0]);
             lookup.put (formula, num);
@@ -347,12 +348,12 @@ public class StructurePreservingConverter {
      * @param variableMap
      * @return
      */
-    public static int[][] toArray (BooleanFormula formula, int[] vars, Map lookup) {
+    public static int[][] toArray (BooleanFormula formula, int[] vars, Map<BooleanFormula, Integer> lookup) {
         // after structure preserving, do naive conversion
         return asArray (convert (formula).convertToCNF(), vars, lookup);
     }
 
-    public static int[][] asArray (BooleanFormula cnf, int[] vars, Map lookup) {
+    public static int[][] asArray (BooleanFormula cnf, int[] vars, Map<BooleanFormula, Integer> lookup) {
         assert cnf.isInCNF () : cnf + " is not in CNF";
         int [][] result;
         if (cnf instanceof And) {

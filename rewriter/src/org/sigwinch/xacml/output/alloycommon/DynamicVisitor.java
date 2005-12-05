@@ -18,18 +18,18 @@ import java.util.HashSet;
  * @version 1.0
  */
 public class DynamicVisitor extends VisitorImpl {
-    Map map;
-    Set alreadySeen;
-    public DynamicVisitor(Map map) {
+    Map<String, Integer> map;
+    Set<Integer> alreadySeen;
+    public DynamicVisitor(Map<String, Integer> map) {
 	this.map = map;
-	this.alreadySeen = new HashSet ();
+	this.alreadySeen = new HashSet<Integer> ();
     } // DynamicVisitor constructor
 
     public void incrementType (String name) {
 	if (! map.containsKey (name))
 	    map.put (name, new Integer (0));
 	map.put (name, 
-		 new Integer (((Integer) map.get (name)).intValue () + 1));
+		 new Integer (map.get (name).intValue () + 1));
     }
 
     /**
@@ -37,6 +37,7 @@ public class DynamicVisitor extends VisitorImpl {
      *
      * @param environmentalPredicate an <code>EnvironmentalPredicate</code>
      */
+    @Override
     public void walkEnvironmentalPredicate (EnvironmentalPredicate
 					    environmentalPredicate) {
 	if (alreadySeen.contains (new Integer

@@ -25,6 +25,7 @@ public class RuleParser extends AbstractParser {
      * @param element an <code>Element</code> representing a <code>Rule</code> node
      * @return the appropriate <code>Tree</code> value
      */
+    @Override
     public Tree parseElement(Element element) {
 	Tree base;
 	if (getXACMLAttribute (element, "Effect").equals ("Permit"))

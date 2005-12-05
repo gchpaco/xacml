@@ -18,6 +18,7 @@ public class MatchingParser extends ExpressionParser {
 	
     }
 
+    @Override
     public Predicate parseElement (Element matching) {
 	String function = getXACMLAttribute (matching, "MatchId");
 	// all of these are \exists x \in second argument st. first

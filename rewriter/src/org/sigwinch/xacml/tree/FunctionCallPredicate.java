@@ -59,23 +59,26 @@ public class FunctionCallPredicate extends Predicate {
      * @return short name of the function
      */
     public String getShortName () {
-	String shortName = (String) function2string.get (function);
+	String shortName = function2string.get (function);
 	if (shortName == null)
 	    return function;
-	else
-	    return shortName;
+    return shortName;
     }
 
+    @Override
     public boolean isFunction () { return true; }
+    @Override
     public void walk (Visitor v)
     {
 	v.walkFunctionCallPredicate (this);
     }
+    @Override
     public Predicate transform (Transformer t)
     {
 	return t.walkFunctionCallPredicate (this);
     }
 
+    @Override
     public boolean equals (Object o)
     {
 	if (! (o instanceof FunctionCallPredicate)) return false;
@@ -90,6 +93,7 @@ public class FunctionCallPredicate extends Predicate {
 	return function.equals (f.getFunction ());
     }
 
+    @Override
     public int hashCode ()
     {
 	int start = function.hashCode () ^ arguments.length;

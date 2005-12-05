@@ -55,7 +55,8 @@ public class OutputTest extends TestCase {
 	out = new AlloySetOutput (new PrintWriter (stream), 2.0);
 	Predicate.reset ();
     }
-    
+
+    @Override
     protected void setUp() {
 	a = new VariableReference ("a");
 	b = new VariableReference ("b");

@@ -49,6 +49,7 @@ public class VariableReference extends Predicate implements BooleanFormula {
      * @param transformer a <code>Transformer</code>
      * @return new predicate
      */
+    @Override
     public Predicate transform(Transformer transformer) {
 	return transformer.walkVariableReference (this);
     }
@@ -59,6 +60,7 @@ public class VariableReference extends Predicate implements BooleanFormula {
      *
      * @param visitor a <code>Visitor</code>
      */
+    @Override
     public void walk(Visitor visitor) {
 	visitor.walkVariableReference (this);
     }
@@ -68,10 +70,12 @@ public class VariableReference extends Predicate implements BooleanFormula {
      *
      * @return true
      */
+    @Override
     public boolean isFunction() {
 	return true;
     }
 
+    @Override
     public boolean equals (Object o)
     {
 	if (! (o instanceof VariableReference)) return false;
@@ -79,6 +83,7 @@ public class VariableReference extends Predicate implements BooleanFormula {
 	return r.getName ().equals (name);
     }
 
+    @Override
     public int hashCode ()
     {
 	return name.hashCode ();

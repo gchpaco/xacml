@@ -25,6 +25,7 @@ public class FunctionVisitorImpl extends FunctionVisitor {
      *
      * @param predicate a <code>Predicate</code> value
      */
+    @Override
     public void visitSize(Predicate predicate) {
 	predicate.walk (visitor);
     }
@@ -35,6 +36,7 @@ public class FunctionVisitorImpl extends FunctionVisitor {
      * @param predicate a <code>Predicate</code> value
      * @param predicate1 a <code>Predicate</code> value
      */
+    @Override
     public void visitInclusion(Predicate predicate, Predicate predicate1) {
 	predicate.walk (visitor);
 	predicate1.walk (visitor);
@@ -45,6 +47,7 @@ public class FunctionVisitorImpl extends FunctionVisitor {
      *
      * @param predicate a <code>Predicate</code> value
      */
+    @Override
     public void visitSetCreation(Predicate predicate) {
 	predicate.walk (visitor);
     }
@@ -55,6 +58,7 @@ public class FunctionVisitorImpl extends FunctionVisitor {
      * @param predicate a <code>Predicate</code> value
      * @param predicate1 a <code>Predicate</code> value
      */
+    @Override
     public void visitEquality(Predicate predicate, Predicate predicate1) {
 	predicate.walk (visitor);
 	predicate1.walk (visitor);
@@ -66,6 +70,7 @@ public class FunctionVisitorImpl extends FunctionVisitor {
      * @param predicate a <code>Predicate</code> value
      * @param predicate1 a <code>Predicate</code> value
      */
+    @Override
     public void visitIntersection(Predicate predicate, Predicate predicate1) {
 	predicate.walk (visitor);
 	predicate1.walk (visitor);
@@ -77,6 +82,7 @@ public class FunctionVisitorImpl extends FunctionVisitor {
      * @param predicate a <code>Predicate</code> value
      * @param predicate1 a <code>Predicate</code> value
      */
+    @Override
     public void visitUnion(Predicate predicate, Predicate predicate1) {
 	predicate.walk (visitor);
 	predicate1.walk (visitor);
@@ -88,6 +94,7 @@ public class FunctionVisitorImpl extends FunctionVisitor {
      * @param predicate a <code>Predicate</code> value
      * @param predicate1 a <code>Predicate</code> value
      */
+    @Override
     public void visitSubset(Predicate predicate, Predicate predicate1) {
 	predicate.walk (visitor);
 	predicate1.walk (visitor);
@@ -99,6 +106,7 @@ public class FunctionVisitorImpl extends FunctionVisitor {
      * @param predicate a <code>Predicate</code> value
      * @param predicate1 a <code>Predicate</code> value
      */
+    @Override
     public void visitAtLeastOne(Predicate predicate, Predicate predicate1) {
 	predicate.walk (visitor);
 	predicate1.walk (visitor);
@@ -110,6 +118,7 @@ public class FunctionVisitorImpl extends FunctionVisitor {
      * @param predicate a <code>Predicate</code> value
      * @param predicate1 a <code>Predicate</code> value
      */
+    @Override
     public void visitSetEquality(Predicate predicate, Predicate predicate1) {
 	predicate.walk (visitor);
 	predicate1.walk (visitor);
@@ -121,6 +130,7 @@ public class FunctionVisitorImpl extends FunctionVisitor {
      * @param predicate a <code>Predicate</code> value
      * @param predicate1 a <code>Predicate</code> value
      */
+    @Override
     public void visitGreaterThan(Predicate predicate, Predicate predicate1) {
 	predicate.walk (visitor);
 	predicate1.walk (visitor);
@@ -132,6 +142,7 @@ public class FunctionVisitorImpl extends FunctionVisitor {
      * @param predicate a <code>Predicate</code> value
      * @param predicate1 a <code>Predicate</code> value
      */
+    @Override
     public void visitGreaterThanOrEqual(Predicate predicate, Predicate predicate1) {
 	predicate.walk (visitor);
 	predicate1.walk (visitor);
@@ -143,6 +154,7 @@ public class FunctionVisitorImpl extends FunctionVisitor {
      * @param predicate a <code>Predicate</code> value
      * @param predicate1 a <code>Predicate</code> value
      */
+    @Override
     public void visitLessThan(Predicate predicate, Predicate predicate1) {
 	predicate.walk (visitor);
 	predicate1.walk (visitor);
@@ -154,6 +166,7 @@ public class FunctionVisitorImpl extends FunctionVisitor {
      * @param predicate a <code>Predicate</code> value
      * @param predicate1 a <code>Predicate</code> value
      */
+    @Override
     public void visitLessThanOrEqual(Predicate predicate, Predicate predicate1) {
 	predicate.walk (visitor);
 	predicate1.walk (visitor);
@@ -164,6 +177,7 @@ public class FunctionVisitorImpl extends FunctionVisitor {
      *
      * @param predicateArray a <code>Predicate[]</code> value
      */
+    @Override
     public void visitAnd(Predicate[] predicateArray) {
 	for (int i = 0; i < predicateArray.length; i++)
 	    predicateArray[i].walk (visitor);
@@ -174,6 +188,7 @@ public class FunctionVisitorImpl extends FunctionVisitor {
      *
      * @param predicateArray a <code>Predicate[]</code> value
      */
+    @Override
     public void visitOr(Predicate[] predicateArray) {
 	for (int i = 0; i < predicateArray.length; i++)
 	    predicateArray[i].walk (visitor);
@@ -184,6 +199,7 @@ public class FunctionVisitorImpl extends FunctionVisitor {
      *
      * @param predicate a <code>Predicate</code> value
      */
+    @Override
     public void visitNot(Predicate predicate) {
 	predicate.walk (visitor);
     }
@@ -194,6 +210,7 @@ public class FunctionVisitorImpl extends FunctionVisitor {
      * @param string function name
      * @param predicateArray a <code>Predicate[]</code> value
      */
+    @Override
     public void visitDefault(String string, Predicate[] predicateArray) {
 	for (int i = 0; i < predicateArray.length; i++)
 	    predicateArray[i].walk (visitor);

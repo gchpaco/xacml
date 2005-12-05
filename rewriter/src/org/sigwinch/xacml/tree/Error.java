@@ -55,17 +55,21 @@ public class Error extends Tree {
 	this.condition = argCondition;
     }
 
+    @Override
     public boolean isFunction () { return true; }
 
+    @Override
     public void walk (Visitor v)
     {
 	v.walkError (this);
     }
+    @Override
     public Tree transform (Transformer t)
     {
 	return t.walkError (this);
     }
 
+    @Override
     public boolean equals (Object o)
     {
 	if (! (o instanceof Error)) return false;
@@ -73,7 +77,8 @@ public class Error extends Tree {
 	return child.equals (e.getChild ()) && 
 	    condition.equals (e.getCondition ());
     }
-    
+
+    @Override
     public int hashCode ()
     {
 	return child.hashCode () ^ condition.hashCode () ^ 'E';

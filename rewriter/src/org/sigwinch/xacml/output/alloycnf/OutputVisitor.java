@@ -36,6 +36,7 @@ public class OutputVisitor extends VisitorImpl {
      *
      * @param deny a <code>Deny</code> value
      */
+    @Override
     public void walkDeny(Deny deny) {
 	throw new IllegalArgumentException ("Deny not supported for Alloy");
     }
@@ -45,6 +46,7 @@ public class OutputVisitor extends VisitorImpl {
      *
      * @param permit a <code>Permit</code> value
      */
+    @Override
     public void walkPermit(Permit permit) {
 	throw new IllegalArgumentException ("Permit not supported for Alloy");
     }
@@ -54,6 +56,7 @@ public class OutputVisitor extends VisitorImpl {
      *
      * @param error an <code>Error</code> value
      */
+    @Override
     public void walkError(Error error) {
 	throw new IllegalArgumentException ("Error not supported for Alloy");
     }
@@ -63,6 +66,7 @@ public class OutputVisitor extends VisitorImpl {
      *
      * @param scope a <code>Scope</code> value
      */
+    @Override
     public void walkScope(Scope scope) {
 	throw new IllegalArgumentException ("Scope not supported for Alloy");
     }
@@ -72,6 +76,7 @@ public class OutputVisitor extends VisitorImpl {
      *
      * @param triple a <code>Triple</code> value
      */
+    @Override
     public void walkTriple(Triple triple) {
 	stream.print ("one sig T");
 	stream.print (triples++);
@@ -90,6 +95,7 @@ public class OutputVisitor extends VisitorImpl {
      *
      * @param permitOverridesRule a <code>PermitOverridesRule</code> value
      */
+    @Override
     public void walkPermitOverridesRule(PermitOverridesRule permitOverridesRule) {
 	throw new IllegalArgumentException 
 	    ("Permit-overrides not supported for Alloy");
@@ -100,6 +106,7 @@ public class OutputVisitor extends VisitorImpl {
      *
      * @param denyOverridesRule a <code>DenyOverridesRule</code> value
      */
+    @Override
     public void walkDenyOverridesRule(DenyOverridesRule denyOverridesRule) {
 	throw new IllegalArgumentException 
 	    ("Deny-overrides not supported for Alloy");
@@ -110,6 +117,7 @@ public class OutputVisitor extends VisitorImpl {
      *
      * @param onlyOneRule an <code>OnlyOneRule</code> value
      */
+    @Override
     public void walkOnlyOneRule(OnlyOneRule onlyOneRule) {
 	throw new IllegalArgumentException 
 	    ("Only-one not supported for Alloy");
@@ -120,6 +128,7 @@ public class OutputVisitor extends VisitorImpl {
      *
      * @param firstApplicableRule a <code>FirstApplicableRule</code> value
      */
+    @Override
     public void walkFirstApplicableRule(FirstApplicableRule firstApplicableRule) {
 	throw new IllegalArgumentException 
 	    ("First-applicable not supported for Alloy");

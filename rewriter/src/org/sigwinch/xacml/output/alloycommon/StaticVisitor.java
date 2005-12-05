@@ -20,20 +20,21 @@ import java.util.HashSet;
  * @version 1.0
  */
 public class StaticVisitor extends VisitorImpl {
-    Map map;
-    Set alreadySeen;
-    public StaticVisitor(Map map) {
+    Map<String, Integer> map;
+    Set<Integer> alreadySeen;
+    public StaticVisitor(Map<String, Integer> map) {
 	this.map = map;
-	this.alreadySeen = new HashSet ();
+	this.alreadySeen = new HashSet<Integer> ();
     } // StaticVisitor constructor
 
     public void incrementType (String name) {
 	if (! map.containsKey (name))
 	    map.put (name, new Integer (0));
 	map.put (name, 
-		 new Integer (((Integer) map.get (name)).intValue () + 1));
+		 new Integer (map.get (name).intValue () + 1));
     }
-    
+
+    @Override
     public void walkConstantValuePredicate (ConstantValuePredicate
 					    predicate) {
 	if (alreadySeen.contains (new Integer (predicate.getIndex ())))
@@ -42,6 +43,7 @@ public class StaticVisitor extends VisitorImpl {
 	incrementType (predicate.getShortName ());
     }
 
+    @Override
     public void walkFunctionCallPredicate (FunctionCallPredicate 
 					   functionCallPredicate) {
 	if (alreadySeen.contains (new Integer
@@ -65,6 +67,7 @@ public class StaticVisitor extends VisitorImpl {
 	 *
 	 * @param predicate a <code>Predicate</code> value
 	 */
+    @Override
 	public void visitSize(Predicate predicate) {
 	    v.incrementType ("Integer");
 	    super.visitSize (predicate);
@@ -76,6 +79,7 @@ public class StaticVisitor extends VisitorImpl {
 	 * @param predicate a <code>Predicate</code> value
 	 * @param predicate1 a <code>Predicate</code> value
 	 */
+    @Override
 	public void visitGreaterThan (Predicate predicate, 
 				      Predicate predicate1) {
 	    v.incrementType ("Bool");
@@ -88,6 +92,7 @@ public class StaticVisitor extends VisitorImpl {
 	 * @param predicate a <code>Predicate</code> value
 	 * @param predicate1 a <code>Predicate</code> value
 	 */
+    @Override
 	public void visitGreaterThanOrEqual (Predicate predicate, 
 					     Predicate predicate1) {
 	    v.incrementType ("Bool");
@@ -100,6 +105,7 @@ public class StaticVisitor extends VisitorImpl {
 	 * @param predicate a <code>Predicate</code> value
 	 * @param predicate1 a <code>Predicate</code> value
 	 */
+    @Override
 	public void visitLessThan(Predicate predicate, Predicate predicate1) {
 	    v.incrementType ("Bool");
 	    super.visitLessThan (predicate, predicate1);
@@ -111,6 +117,7 @@ public class StaticVisitor extends VisitorImpl {
 	 * @param predicate a <code>Predicate</code> value
 	 * @param predicate1 a <code>Predicate</code> value
 	 */
+    @Override
 	public void visitLessThanOrEqual (Predicate predicate, 
 					  Predicate predicate1) {
 	    v.incrementType ("Bool");
@@ -123,6 +130,7 @@ public class StaticVisitor extends VisitorImpl {
 	 * @param string function name
 	 * @param arguments function arguments
 	 */
+    @Override
 	public void visitDefault(String string, Predicate[] arguments) {
 	    v.incrementType ("Bool");
 	    super.visitDefault (string, arguments);

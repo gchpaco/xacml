@@ -18,12 +18,13 @@ public class OrderingTest extends XACMLTestCase {
      * @author graham
      */
     public abstract class Closure {
-        public abstract void perform (ArrayList list, VariableEncoding left, VariableEncoding right);
+        public abstract void perform (ArrayList<BooleanFormula> list, VariableEncoding left, VariableEncoding right);
     }
     private ConstantValuePredicate first;
     private ConstantValuePredicate second;
     private int size;
-    
+
+    @Override
     protected void setUp () {
         super.setUp ();
         size = 4;
@@ -41,9 +42,9 @@ public class OrderingTest extends XACMLTestCase {
         lessthan.walk (out);
         VariableEncoding foos = out.getEncodingFor (first);
         VariableEncoding bars = out.getEncodingFor (second);
-        ArrayList formulas = new ArrayList ();
+        ArrayList<BooleanFormula> formulas = new ArrayList<BooleanFormula> ();
         closure.perform (formulas, foos, bars);
-        BooleanFormula[] subformulae = (BooleanFormula[]) formulas
+        BooleanFormula[] subformulae = formulas
                                                                   .toArray (new BooleanFormula[] {});
         Or expected = new Or (subformulae);
         BooleanFormula got = out.getFormulaFor (lessthan);
@@ -57,7 +58,8 @@ public class OrderingTest extends XACMLTestCase {
 
     public void testLessThan () {
         performTest ("string-less-than", new Closure () {
-            public void perform (ArrayList list, VariableEncoding left, VariableEncoding right) {
+            @Override
+            public void perform (ArrayList<BooleanFormula> list, VariableEncoding left, VariableEncoding right) {
                 for (int i = 0; i < size; i++) {
                     for (int j = i + 1; j < size; j++) {
                         list.add (new And (left.address (i), right.address (j)));
@@ -69,7 +71,8 @@ public class OrderingTest extends XACMLTestCase {
 
     public void testLessThanOrEquals () {
         performTest ("string-less-than-or-equal", new Closure () {
-            public void perform (ArrayList list, VariableEncoding left, VariableEncoding right) {
+            @Override
+            public void perform (ArrayList<BooleanFormula> list, VariableEncoding left, VariableEncoding right) {
                 for (int i = 0; i < size; i++) {
                     for (int j = i; j < size; j++) {
                         list.add (new And (left.address (i), right.address (j)));
@@ -81,7 +84,8 @@ public class OrderingTest extends XACMLTestCase {
 
     public void testGreaterThan () {
         performTest ("string-greater-than", new Closure () {
-            public void perform (ArrayList list, VariableEncoding left, VariableEncoding right) {
+            @Override
+            public void perform (ArrayList<BooleanFormula> list, VariableEncoding left, VariableEncoding right) {
                 for (int i = 0; i < size; i++) {
                     for (int j = i + 1; j < size; j++) {
                         list.add (new And (left.address (j), right.address (i)));
@@ -93,7 +97,8 @@ public class OrderingTest extends XACMLTestCase {
 
     public void testGreaterThanOrEqual () {
         performTest ("string-greater-than-or-equal", new Closure () {
-            public void perform (ArrayList list, VariableEncoding left, VariableEncoding right) {
+            @Override
+            public void perform (ArrayList<BooleanFormula> list, VariableEncoding left, VariableEncoding right) {
                 for (int i = 0; i < size; i++) {
                     for (int j = i; j < size; j++) {
                         list.add (new And (left.address (j), right.address (i)));

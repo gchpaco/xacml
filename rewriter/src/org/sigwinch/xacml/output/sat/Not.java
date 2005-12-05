@@ -19,6 +19,7 @@ public class Not implements BooleanFormula {
         formula = reference;
     }
 
+    @Override
     public String toString () {
         return "(not " + formula.toString () + ")";
     }
@@ -28,12 +29,13 @@ public class Not implements BooleanFormula {
      * 
      * @see java.lang.Object#equals(java.lang.Object)
      */
+    @Override
     public boolean equals (Object obj) {
         if (obj instanceof Not) {
             Not obj2 = (Not) obj;
             return formula.equals (obj2.formula);
-        } else
-            return super.equals (obj);
+        }
+        return super.equals (obj);
     }
 
     /*
@@ -41,6 +43,7 @@ public class Not implements BooleanFormula {
      * 
      * @see java.lang.Object#hashCode()
      */
+    @Override
     public int hashCode () {
         return '!' ^ formula.hashCode ();
     }
@@ -74,14 +77,14 @@ public class Not implements BooleanFormula {
             return not.formula.convertToCNF ();
         } else if (formula instanceof And) {
             And and = (And) formula;
-            BooleanFormula [] results = (BooleanFormula[]) and.objects.clone();
+            BooleanFormula [] results = and.objects.clone();
             for (int i = 0; i < results.length; i++) {
                 results[i] = results[i].negate ();
             }
             return new Or (results).convertToCNF ();
         } else if (formula instanceof Or) {
             Or or = (Or) formula;
-            BooleanFormula [] results = (BooleanFormula[]) or.objects.clone();
+            BooleanFormula [] results = or.objects.clone();
             for (int i = 0; i < results.length; i++) {
                 results[i] = results[i].negate ();
             }

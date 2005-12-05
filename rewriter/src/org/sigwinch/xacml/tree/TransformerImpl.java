@@ -28,16 +28,14 @@ public class TransformerImpl implements Transformer {
 	Predicate condition = error.getCondition().transform (this);
 	if (child == error.getChild () && condition == error.getCondition ())
 	    return error;
-	else
-	    return new Error (child, condition);
+    return new Error (child, condition);
     }
     public Tree walkScope(Scope scope) {
 	Tree child = scope.getChild().transform (this);
 	Predicate condition = scope.getCondition().transform (this);
 	if (child == scope.getChild () && condition == scope.getCondition ())
 	    return scope;
-	else
-	    return new Scope (child, condition);
+    return new Scope (child, condition);
     }
     public Tree walkTriple (Triple triple) {
 	Predicate permit = triple.getPermit ().transform (this);
@@ -46,8 +44,7 @@ public class TransformerImpl implements Transformer {
 	if (permit == triple.getPermit () && deny == triple.getDeny () &&
 	    error == triple.getError ())
 	    return triple;
-	else
-	    return new Triple (permit, deny, error);
+    return new Triple (permit, deny, error);
     }
     public Tree walkPermitOverridesRule(PermitOverridesRule 
 					permitOverridesRule) {
@@ -56,8 +53,7 @@ public class TransformerImpl implements Transformer {
 	if (left == permitOverridesRule.getLeft () && 
 	    right == permitOverridesRule.getRight ())
 	    return permitOverridesRule;
-	else
-	    return new PermitOverridesRule (left, right);
+    return new PermitOverridesRule (left, right);
     }
     public Tree walkDenyOverridesRule(DenyOverridesRule denyOverridesRule) {
 	Tree left = denyOverridesRule.getLeft().transform (this);
@@ -65,8 +61,7 @@ public class TransformerImpl implements Transformer {
 	if (left == denyOverridesRule.getLeft () && 
 	    right == denyOverridesRule.getRight ())
 	    return denyOverridesRule;
-	else
-	    return new DenyOverridesRule (left, right);
+    return new DenyOverridesRule (left, right);
     }
     public Tree walkOnlyOneRule(OnlyOneRule onlyOneRule) {
 	Tree left = onlyOneRule.getLeft().transform (this);
@@ -74,8 +69,7 @@ public class TransformerImpl implements Transformer {
 	if (left == onlyOneRule.getLeft () && 
 	    right == onlyOneRule.getRight ())
 	    return onlyOneRule;
-	else
-	    return new OnlyOneRule (left, right);
+    return new OnlyOneRule (left, right);
     }
     public Tree walkFirstApplicableRule(FirstApplicableRule 
 					firstApplicableRule) {
@@ -84,8 +78,7 @@ public class TransformerImpl implements Transformer {
 	if (left == firstApplicableRule.getLeft () && 
 	    right == firstApplicableRule.getRight ())
 	    return firstApplicableRule;
-	else
-	    return new FirstApplicableRule (left, right);
+    return new FirstApplicableRule (left, right);
     }
     public Predicate walkAndPredicate(AndPredicate andPredicate) {
 	Predicate left = andPredicate.getLeft().transform (this);
@@ -93,8 +86,7 @@ public class TransformerImpl implements Transformer {
 	if (left == andPredicate.getLeft () && 
 	    right == andPredicate.getRight ())
 	    return andPredicate;
-	else
-	    return new AndPredicate (left, right);
+    return new AndPredicate (left, right);
     }
     public Predicate walkConstantValuePredicate(ConstantValuePredicate 
 						constantValuePredicate) {
@@ -111,9 +103,8 @@ public class TransformerImpl implements Transformer {
 	if (bag == existentialPredicate.getBag () && 
 	    attribute == existentialPredicate.getAttribute ())
 	    return existentialPredicate;
-	else
-	    return new ExistentialPredicate 
-		(existentialPredicate.getFunction (), bag, attribute);
+    return new ExistentialPredicate 
+    (existentialPredicate.getFunction (), bag, attribute);
     }
     public Predicate walkFunctionCallPredicate(FunctionCallPredicate
 					  functionCallPredicate) {
@@ -127,9 +118,8 @@ public class TransformerImpl implements Transformer {
 		unchanged = false;
 	if (unchanged)
 	    return functionCallPredicate;
-	else
-	    return new FunctionCallPredicate
-		(functionCallPredicate.getFunction (), newargs);
+    return new FunctionCallPredicate
+    (functionCallPredicate.getFunction (), newargs);
     }
     public Predicate walkOrPredicate(OrPredicate orPredicate) {
 	Predicate left = orPredicate.getLeft().transform (this);
@@ -137,8 +127,7 @@ public class TransformerImpl implements Transformer {
 	if (left == orPredicate.getLeft () && 
 	    right == orPredicate.getRight ())
 	    return orPredicate;
-	else
-	    return new OrPredicate (left, right);
+    return new OrPredicate (left, right);
     }
     public Predicate walkSimplePredicate(SimplePredicate simplePredicate) {
 	return simplePredicate;
@@ -146,7 +135,7 @@ public class TransformerImpl implements Transformer {
     public Predicate walkSolePredicate (SolePredicate p) {
 	Predicate set = p.getSet ().transform (this);
 	if (set == p.getSet ()) return p;
-	else return new SolePredicate (set);
+    return new SolePredicate (set);
     }
     public Predicate walkVariableReference (VariableReference v) {
 	return v;

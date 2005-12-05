@@ -1,5 +1,5 @@
 package org.sigwinch.xacml.parser;
-import java.util.Hashtable;
+import java.util.HashMap;
 
 import org.sigwinch.xacml.tree.DenyOverridesRule;
 import org.sigwinch.xacml.tree.Error;
@@ -24,18 +24,18 @@ import org.w3c.dom.NodeList;
  * @version 1.0
  */
 abstract public class AbstractParser extends XACMLParser {
-    static Hashtable nodeLookup;
-    static Hashtable ruleLookup;
+    static HashMap<String, HashMap<String, AbstractParser>> nodeLookup;
+    static HashMap<String, BinaryTreeCreator> ruleLookup;
 
     static {
-	nodeLookup = new Hashtable ();
-	Hashtable subtable = new Hashtable ();
+	nodeLookup = new HashMap<String, HashMap<String, AbstractParser>> ();
+	HashMap<String, AbstractParser> subtable = new HashMap<String, AbstractParser> ();
 	nodeLookup.put (xacmlns, subtable);
 	subtable.put ("Policy", new PolicyParser ());
 	subtable.put ("PolicySet", new PolicySetParser ());
 	subtable.put ("Rule", new RuleParser ());
 
-	ruleLookup = new Hashtable ();
+	ruleLookup = new HashMap<String, BinaryTreeCreator> ();
 	BinaryTreeCreator rule = new BinaryTreeCreator () {
 		public Tree go (Tree first, Tree second) {
 		    return new DenyOverridesRule (first, second);
@@ -158,15 +158,14 @@ abstract public class AbstractParser extends XACMLParser {
     }
 
     protected Tree ruleToTree (String text, Tree first, Tree second) {
-	return ((BinaryTreeCreator) ruleLookup.get (text)).go (first, second);
+	return ruleLookup.get (text).go (first, second);
     }
 
     static public Tree parse (Element e) {
 	String ns = e.getNamespaceURI ();
 	if (ns == null) ns = xacmlns;
 	String name = e.getNodeName ();
-	AbstractParser parser = (AbstractParser) 
-	    ((Hashtable) nodeLookup.get (ns)).get (name);
+	AbstractParser parser = nodeLookup.get (ns).get (name);
 	return parser.parseElement (e);
     }
 }

@@ -31,6 +31,7 @@ public abstract class XACMLTestCase extends TestCase {
         out.setMultiplicity (3);
     }
 
+    @Override
     protected void setUp () {
         a = new VariableReference ("a");
         b = new VariableReference ("b");
@@ -55,14 +56,14 @@ public abstract class XACMLTestCase extends TestCase {
         assertNotNull (permit);
         assertNotNull (deny);
         assertNotNull (error);
-        TreeSet formulas = new TreeSet (new SatVisitor.FormulaComparator ());
+        TreeSet<BooleanFormula> formulas = new TreeSet<BooleanFormula> (new SatVisitor.FormulaComparator ());
         formulas.add (new Equivalence (permit, f1));
         formulas.add (new Equivalence (deny, f2));
         formulas.add (new Equivalence (error, f3));
         for (int i = 0; i < frames.length; i++) {
             formulas.add (frames[i]);
         }
-        BooleanFormula [] array = (BooleanFormula[]) formulas.toArray (new BooleanFormula [] {});
+        BooleanFormula [] array = formulas.toArray (new BooleanFormula [] {});
         String first = new And (array).toString ();
         String second = out.computeFormula ().toString ();
         if (!(first.equals (second))) {

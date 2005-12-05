@@ -30,7 +30,8 @@ public class LispOutputTest extends TestCase {
 	stream = new StringWriter ();
 	out = new LispOutputVisitor (new PrintWriter (stream));
     }
-    
+
+    @Override
     protected void setUp() {
 	reset ();
 	a = new VariableReference ("a");

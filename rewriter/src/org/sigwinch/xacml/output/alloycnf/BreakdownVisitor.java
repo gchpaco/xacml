@@ -10,7 +10,7 @@ import org.sigwinch.xacml.tree.*;
 public class BreakdownVisitor extends CodeVisitor {
     StringWriter decls, facts;
     PrintWriter d, f;
-    HashMap map;
+    HashMap<Predicate, String> map;
     int count;
     public BreakdownVisitor () {
 	super (null);
@@ -19,26 +19,30 @@ public class BreakdownVisitor extends CodeVisitor {
 	d = new PrintWriter (decls);
 	f = new PrintWriter (facts);
 	stream = d;
-	map = new HashMap ();
+	map = new HashMap<Predicate, String> ();
 	count = 0;
     }
 
+    @Override
     protected void outputStart () {}
+    @Override
     protected void outputEnd () {}
 
     public String getDecls () { return decls.toString (); }
     public String getFacts () { return facts.toString (); }
-    public Map getMap () { return map; }
+    public Map<Predicate, String> getMap () { return map; }
 
     void maybeWalk (Predicate p) {
 	if (! map.containsKey (p))
 	    p.walk (this);
     }
 
+    @Override
     public void walkVariableReference (VariableReference ref) {
 	map.put (ref, ref.getName ());
     }
 
+    @Override
     public void walkSimplePredicate (SimplePredicate simple) {
 	String name;
 	if (simple == SimplePredicate.TRUE)
@@ -48,6 +52,7 @@ public class BreakdownVisitor extends CodeVisitor {
 	map.put (simple, name);
     }
 
+    @Override
     public void walkSolePredicate (SolePredicate solePredicate) {
 	maybeWalk (solePredicate.getSet ());
 	int mynum = count++;
@@ -60,6 +65,7 @@ public class BreakdownVisitor extends CodeVisitor {
 	map.put (solePredicate, "X.sole" + mynum);
     }
 
+    @Override
     public void walkAndPredicate (AndPredicate andPredicate) {
 	maybeWalk (andPredicate.getLeft ());
 	maybeWalk (andPredicate.getRight ());
@@ -73,6 +79,7 @@ public class BreakdownVisitor extends CodeVisitor {
 	map.put (andPredicate, "X.and" + mynum);
     }
 
+    @Override
     public void walkOrPredicate (OrPredicate orPredicate) {
 	maybeWalk (orPredicate.getLeft ());
 	maybeWalk (orPredicate.getRight ());
@@ -86,14 +93,17 @@ public class BreakdownVisitor extends CodeVisitor {
 	map.put (orPredicate, "X.or" + mynum);
     }
 
+    @Override
     public void walkEnvironmentalPredicate (EnvironmentalPredicate env) {
 	map.put (env, "E.env" + env.getUniqueId ());
     }
 
+    @Override
     public void walkConstantValuePredicate (ConstantValuePredicate con) {
 	map.put (con, "S.static" + con.getUniqueId ());
     }
 
+    @Override
     public void walkExistentialPredicate (ExistentialPredicate pred) {
 	BreakdownExistentialFV v =
 	    new BreakdownExistentialFV (this, pred);
@@ -105,12 +115,14 @@ public class BreakdownVisitor extends CodeVisitor {
 	map.put (pred, "X.expr" + v.getExpr ());
     }
 
+    @Override
     public void walkTriple (Triple triple) {
 	maybeWalk (triple.getPermit ());
 	maybeWalk (triple.getDeny ());
 	maybeWalk (triple.getError ());
     }
 
+    @Override
     public void walkFunctionCallPredicate (FunctionCallPredicate 
 					   functionCallPredicate) {
 	BreakdownFunctionVisitor v = 
@@ -138,10 +150,11 @@ public class BreakdownVisitor extends CodeVisitor {
 	    f.println (") then True else False");
 	}
 
+    @Override
 	public void visitEquality (Predicate first, Predicate second) {
 	    maybeWalk (predicate.getBag ());
 	    maybeWalk (predicate.getAttribute ());
-	    String type = (String) Predicate.type2string.get (getType ());
+	    String type = Predicate.type2string.get (getType ());
 	    int bag = count++;
 	    printSet ("env" + bag, type, "");
 	    expr = count++;
@@ -156,6 +169,7 @@ public class BreakdownVisitor extends CodeVisitor {
 	    printExpr (bag, expr);
 	}
 
+    @Override
 	public void visitDefault (String string, Predicate [] arguments) {
 	    maybeWalk (predicate.getBag ());
 	    int bag = count++;
@@ -179,6 +193,7 @@ public class BreakdownVisitor extends CodeVisitor {
 	    func = f;
 	}
 
+    @Override
 	public void visitSize (Predicate predicate) {
 	    int mynum = count++;
 	    printConstant ("expr" + mynum, "Integer", name);
@@ -200,31 +215,37 @@ public class BreakdownVisitor extends CodeVisitor {
 	    map.put (func, "X.expr" + mynum);
 	}
 
+    @Override
 	public void visitEquality (Predicate first, Predicate second) {
 	    binaryFunction ("Eq", first, second);
 	}
 
+    @Override
 	public void visitSetEquality (Predicate first, Predicate second) {
 	    binaryFunction ("Eq", first, second);
 	}
-	
+
+    @Override
 	public void visitInclusion (Predicate first, Predicate second) {
 	    binaryFunction ("In", first, second);
 	}
 
+    @Override
 	public void visitSubset (Predicate first, Predicate second) {
 	    binaryFunction ("In", first, second);
 	}
 
+    @Override
 	public void visitAtLeastOne (Predicate first, Predicate second) {
 	    binaryFunction ("AtLeastOne", first, second);
 	}
 
+    @Override
 	public void visitIntersection (Predicate first, Predicate second) {
 	    maybeWalk (first);
 	    maybeWalk (second);
 	    int mynum = count++;
-	    String type = (String) Predicate.type2string.get (getType ());
+	    String type = Predicate.type2string.get (getType ());
 	    printSet ("expr" + mynum, type, "");
 	    f.print ("\tX.expr");
 	    f.print (mynum);
@@ -235,11 +256,12 @@ public class BreakdownVisitor extends CodeVisitor {
 	    map.put (func, "X.expr" + mynum);
 	}
 
+    @Override
 	public void visitUnion (Predicate first, Predicate second) {
 	    maybeWalk (first);
 	    maybeWalk (second);
 	    int mynum = count++;
-	    String type = (String) Predicate.type2string.get (getType ());
+	    String type = Predicate.type2string.get (getType ());
 	    printSet ("expr" + mynum, type, "");
 	    f.print ("\tX.expr");
 	    f.print (mynum);
@@ -249,7 +271,8 @@ public class BreakdownVisitor extends CodeVisitor {
 	    f.println (map.get (second));
 	    map.put (func, "X.expr" + mynum);
 	}
-	
+
+    @Override
 	public void visitGreaterThan (Predicate first, Predicate second) {
 	    maybeWalk (first); maybeWalk (second);
 	    int mynum = count++;
@@ -264,6 +287,7 @@ public class BreakdownVisitor extends CodeVisitor {
 	    map.put (func, "X.expr" + mynum);
 	}
 
+    @Override
 	public void visitGreaterThanOrEqual (Predicate first, 
 					     Predicate second) {
 	    maybeWalk (first); maybeWalk (second);
@@ -279,6 +303,7 @@ public class BreakdownVisitor extends CodeVisitor {
 	    map.put (func, "X.expr" + mynum);
 	}
 
+    @Override
 	public void visitLessThan (Predicate first, Predicate second) {
 	    maybeWalk (first); maybeWalk (second);
 	    int mynum = count++;
@@ -293,6 +318,7 @@ public class BreakdownVisitor extends CodeVisitor {
 	    map.put (func, "X.expr" + mynum);
 	}
 
+    @Override
 	public void visitLessThanOrEqual (Predicate first, Predicate second) {
 	    maybeWalk (first); maybeWalk (second);
 	    int mynum = count++;
@@ -307,10 +333,11 @@ public class BreakdownVisitor extends CodeVisitor {
 	    map.put (func, "X.expr" + mynum);
 	}
 
+    @Override
 	public void visitAnd (Predicate [] arguments) {
 	    assert arguments.length > 0;
 	    maybeWalk (arguments[0]);
-	    String previous = (String) map.get (arguments[0]);
+	    String previous = map.get (arguments[0]);
 	    for (int i = 1; i < arguments.length; i++) {
 		maybeWalk (arguments[i]);
 		int mynum = count++;
@@ -325,10 +352,11 @@ public class BreakdownVisitor extends CodeVisitor {
 	    map.put (func, previous);
 	}
 
+    @Override
 	public void visitOr (Predicate [] arguments) {
 	    assert arguments.length > 0;
 	    maybeWalk (arguments[0]);
-	    String previous = (String) map.get (arguments[0]);
+	    String previous = map.get (arguments[0]);
 	    for (int i = 1; i < arguments.length; i++) {
 		maybeWalk (arguments[i]);
 		int mynum = count++;
@@ -343,6 +371,7 @@ public class BreakdownVisitor extends CodeVisitor {
 	    map.put (func, previous);
 	}
 
+    @Override
 	public void visitNot (Predicate predicate) {
 	    maybeWalk (predicate);
 	    int mynum = count++;
@@ -353,6 +382,7 @@ public class BreakdownVisitor extends CodeVisitor {
 	    map.put (func, "X.not" + mynum);
 	}
 
+    @Override
 	public void visitDefault (String string, Predicate [] arguments) {
 	    int mynum = count++;
 	    printConstant ("expr" + mynum, "Bool", string);

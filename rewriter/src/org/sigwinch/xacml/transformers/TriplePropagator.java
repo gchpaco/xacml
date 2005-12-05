@@ -31,6 +31,7 @@ public class TriplePropagator extends TransformerImpl {
      * @param p a <code>PermitOverridesRule</code> node
      * @return new triple
      */
+    @Override
     public Tree walkPermitOverridesRule (PermitOverridesRule p) {
 	PermitOverridesRule rule = 
 	    (PermitOverridesRule) super.walkPermitOverridesRule (p);
@@ -56,6 +57,7 @@ public class TriplePropagator extends TransformerImpl {
      * @param d a <code>DenyOverridesRule</code> node
      * @return new triple
      */
+    @Override
     public Tree walkDenyOverridesRule(DenyOverridesRule d) {
 	DenyOverridesRule rule = 
 	    (DenyOverridesRule) super.walkDenyOverridesRule (d);
@@ -81,6 +83,7 @@ public class TriplePropagator extends TransformerImpl {
      * @param o an <code>OnlyOneRule</code> node
      * @return new triple
      */
+    @Override
     public Tree walkOnlyOneRule(OnlyOneRule o) {
 	OnlyOneRule rule = 
 	    (OnlyOneRule) super.walkOnlyOneRule (o);
@@ -108,6 +111,7 @@ public class TriplePropagator extends TransformerImpl {
      * @param f a <code>FirstApplicableRule</code> node
      * @return new triple
      */
+    @Override
     public Tree walkFirstApplicableRule (FirstApplicableRule f) {
 	FirstApplicableRule rule = 
 	    (FirstApplicableRule) super.walkFirstApplicableRule (f);

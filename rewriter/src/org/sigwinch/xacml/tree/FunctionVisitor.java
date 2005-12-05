@@ -120,8 +120,8 @@ public abstract class FunctionVisitor {
                 return "urn:oasis:names:tc:xcaml:1.0:data-type:rfc822Name";
             else
                 return null;
-        } else
-            return null;
+        }
+        return null;
     }
 
     public abstract void visitSize (Predicate argument);

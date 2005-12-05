@@ -25,7 +25,8 @@ public class TriplePropagationTest extends TestCase {
     public static Test suite() {
 	return new TestSuite(TriplePropagationTest.class);
     }
-    
+
+    @Override
     protected void setUp() {
 	a = new VariableReference ("a");
 	b = new VariableReference ("b");

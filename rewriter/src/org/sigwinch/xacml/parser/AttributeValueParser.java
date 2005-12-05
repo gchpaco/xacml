@@ -18,6 +18,7 @@ public class AttributeValueParser extends ExpressionParser {
 	
     }
 
+    @Override
     public Predicate parseElement (Element e) {
 	String type = getXACMLAttribute (e, "DataType");
 	StringBuffer value = new StringBuffer ();

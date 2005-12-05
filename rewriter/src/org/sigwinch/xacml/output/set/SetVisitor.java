@@ -28,6 +28,7 @@ public class SetVisitor extends CodeVisitor {
 	    this.precedence = precedence;
 	}
 
+    @Override
 	public String toString () { return reference; }
 
 	static final int EQ = 0;
@@ -39,13 +40,18 @@ public class SetVisitor extends CodeVisitor {
 	static final int VARIABLE = NOT + 1;
     }
 
-    class PrecedenceMap extends HashMap {
-	String textOf (Predicate p) {
+    class PrecedenceMap extends HashMap<Predicate,PrecedencePair> {
+    /**
+         * 
+         */
+        private static final long serialVersionUID = 7136505735853358893L;
+
+    String textOf (Predicate p) {
 	    return get (p).toString ();
 	}
 
 	int precedenceOf (Predicate p) {
-	    return ((PrecedencePair) get (p)).precedence;
+	    return get (p).precedence;
 	}
 
 	void setTextFor (Predicate p, String text, int precedence) {
@@ -67,10 +73,12 @@ public class SetVisitor extends CodeVisitor {
 	this.count = 0;
 	this.triples = 0;
     }
-    
+
+    @Override
     public void outputStart () {
 	stream.println ("one sig Functions {");
     }
+    @Override
     public void outputEnd () {
 	stream.println ("}");
     }
@@ -109,6 +117,7 @@ public class SetVisitor extends CodeVisitor {
 	return "(" + map.textOf (p) + ")";
     }
 
+    @Override
     public void walkVariableReference (VariableReference ref) {
 	map.setTextFor (ref, ref.getName (), PrecedencePair.VARIABLE);
     }
@@ -119,6 +128,7 @@ public class SetVisitor extends CodeVisitor {
      *
      * @param simplePredicate a <code>SimplePredicate</code> value
      */
+    @Override
     public void walkSimplePredicate(SimplePredicate simplePredicate) {
 	if (simplePredicate == SimplePredicate.TRUE)
 	    map.setTextFor (simplePredicate, "E", PrecedencePair.VARIABLE);
@@ -131,6 +141,7 @@ public class SetVisitor extends CodeVisitor {
      *
      * @param solePredicate a <code>SolePredicate</code> value
      */
+    @Override
     public void walkSolePredicate (SolePredicate solePredicate) {
 	maybeWalk (solePredicate.getSet ());
 	int expr = count++;
@@ -148,6 +159,7 @@ public class SetVisitor extends CodeVisitor {
      *
      * @param pred an <code>ExistentialPredicate</code> value
      */
+    @Override
     public void walkExistentialPredicate (ExistentialPredicate pred) {
 	SetExistentialFV v = new SetExistentialFV (this, pred);
 	v.visitFunction (pred.getFunction (),
@@ -163,6 +175,7 @@ public class SetVisitor extends CodeVisitor {
      *
      * @param andPredicate an <code>AndPredicate</code>
      */
+    @Override
     public void walkAndPredicate(AndPredicate andPredicate) {
 	maybeWalk (andPredicate.getLeft ());
 	maybeWalk (andPredicate.getRight ());
@@ -179,6 +192,7 @@ public class SetVisitor extends CodeVisitor {
      *
      * @param orPredicate an <code>OrPredicate</code>
      */
+    @Override
     public void walkOrPredicate(OrPredicate orPredicate) {
 	maybeWalk (orPredicate.getLeft ());
 	maybeWalk (orPredicate.getRight ());
@@ -195,6 +209,7 @@ public class SetVisitor extends CodeVisitor {
      *
      * @param env an <code>EnvironmentalPredicate</code>
      */
+    @Override
     public void walkEnvironmentalPredicate (EnvironmentalPredicate env) {
 	map.setTextFor (env, "env" + env.getUniqueId (), 
 			PrecedencePair.VARIABLE);
@@ -206,6 +221,7 @@ public class SetVisitor extends CodeVisitor {
      *
      * @param con a <code>ConstantValuePredicate</code>
      */
+    @Override
     public void walkConstantValuePredicate (ConstantValuePredicate con) {
 	map.setTextFor (con, "S.static" + con.getUniqueId (),
 			PrecedencePair.DOT);
@@ -216,6 +232,7 @@ public class SetVisitor extends CodeVisitor {
      *
      * @param functionCallPredicate a <code>FunctionCallPredicate</code>
      */
+    @Override
     public void walkFunctionCallPredicate (FunctionCallPredicate
 					   functionCallPredicate) {
 	SetFunctionVisitor v = new SetFunctionVisitor (this, 
@@ -228,6 +245,7 @@ public class SetVisitor extends CodeVisitor {
      *
      * @param triple a <code>Triple</code>
      */
+    @Override
     public void walkTriple(Triple triple) {
 	maybeWalk (triple.getPermit ());
 	maybeWalk (triple.getDeny ());
@@ -251,6 +269,7 @@ public class SetVisitor extends CodeVisitor {
 	    this.predicate = predicate;
 	}
 
+    @Override
 	public void visitEquality (Predicate first, Predicate second) {
 	    maybeWalk (predicate.getBag ());
 	    maybeWalk (predicate.getAttribute ());
@@ -264,6 +283,7 @@ public class SetVisitor extends CodeVisitor {
 	    map.setTextFor (predicate, "S" + expr, PrecedencePair.VARIABLE);
 	}
 
+    @Override
 	public void visitDefault (String string, Predicate [] arguments) {
 	    // only allowed weird function
 	    assert string.equals (xacmlprefix + "xpath-node-match"): string + " is not xpath-node-match";
@@ -306,10 +326,12 @@ public class SetVisitor extends CodeVisitor {
 	    map.setTextFor (func, "S" + expr, PrecedencePair.VARIABLE);
 	}
 
+    @Override
 	public void visitEquality (Predicate first, Predicate second) {
 	    visitBinaryFunction ("=", first, second, PrecedencePair.EQ);
 	}
 
+    @Override
 	public void visitSetEquality (Predicate first, Predicate second) {
 	    visitBinaryFunction ("=", first, second, PrecedencePair.EQ);
 	}
@@ -319,6 +341,7 @@ public class SetVisitor extends CodeVisitor {
 	 *
 	 * @param predicate bag
 	 */
+    @Override
 	public void visitSize(Predicate predicate) {
 	    maybeWalk (predicate);
 	    String functionName = "expr" + count++;
@@ -332,14 +355,17 @@ public class SetVisitor extends CodeVisitor {
 	 * Write out code for testing whether one set is included in
 	 * another.  We use auxiliary sets for this.
 	 */
+    @Override
 	public void visitInclusion(Predicate left, Predicate right) {
 	    visitBinaryFunction ("in", left, right, PrecedencePair.EQ);
 	}
-	
+
+    @Override
 	public void visitSubset (Predicate first, Predicate second) {
 	    visitBinaryFunction ("in", first, second, PrecedencePair.EQ);
 	}
 
+    @Override
 	public void visitAtLeastOne (Predicate first, Predicate second) {
 	    maybeWalk (first);
 	    maybeWalk (second);
@@ -353,6 +379,7 @@ public class SetVisitor extends CodeVisitor {
 	    map.setTextFor (func, "S" + expr, PrecedencePair.VARIABLE);
 	}
 
+    @Override
 	public void visitIntersection (Predicate first, Predicate second) {
 	    maybeWalk (first); maybeWalk (second);
 	    map.setTextFor (func, binaryFunction ("&", first, second, func,
@@ -360,6 +387,7 @@ public class SetVisitor extends CodeVisitor {
 			    PrecedencePair.INTERSECT);
 	}
 
+    @Override
 	public void visitUnion (Predicate first, Predicate second) {
 	    maybeWalk (first);
 	    maybeWalk (second);
@@ -368,6 +396,7 @@ public class SetVisitor extends CodeVisitor {
 			    PrecedencePair.UNION);
 	}
 
+    @Override
 	public void visitLessThan (Predicate first, Predicate second) {
 	    maybeWalk (first);
 	    maybeWalk (second);
@@ -381,7 +410,8 @@ public class SetVisitor extends CodeVisitor {
 	    fa.println (") }");
 	    map.setTextFor (func, "S" + expr, PrecedencePair.VARIABLE);
 	}
-	
+
+    @Override
 	public void visitLessThanOrEqual (Predicate first, Predicate second) {
 	    maybeWalk (first);
 	    maybeWalk (second);
@@ -396,6 +426,7 @@ public class SetVisitor extends CodeVisitor {
 	    map.setTextFor (func, "S" + expr, PrecedencePair.VARIABLE);
 	}
 
+    @Override
 	public void visitGreaterThan (Predicate first, Predicate second) {
 	    maybeWalk (first);
 	    maybeWalk (second);
@@ -409,7 +440,8 @@ public class SetVisitor extends CodeVisitor {
 	    fa.println (") }");
 	    map.setTextFor (func, "S" + expr, PrecedencePair.VARIABLE);
 	}
-	
+
+    @Override
 	public void visitGreaterThanOrEqual (Predicate first, 
 					     Predicate second) {
 	    maybeWalk (first);
@@ -425,6 +457,7 @@ public class SetVisitor extends CodeVisitor {
 	    map.setTextFor (func, "S" + expr, PrecedencePair.VARIABLE);
 	}
 
+    @Override
 	public void visitAnd (Predicate [] arguments) {
 	    assert arguments.length > 0;
 	    maybeWalk (arguments[0]);
@@ -440,6 +473,7 @@ public class SetVisitor extends CodeVisitor {
 	    map.setTextFor (func, text.toString (), PrecedencePair.INTERSECT);
 	}
 
+    @Override
 	public void visitOr (Predicate [] arguments) {
 	    assert arguments.length > 0;
 	    maybeWalk (arguments[0]);
@@ -455,6 +489,7 @@ public class SetVisitor extends CodeVisitor {
 	    map.setTextFor (func, text.toString (), PrecedencePair.UNION);
 	}
 
+    @Override
 	public void visitNot (Predicate predicate) {
 	    maybeWalk (predicate);
 	    map.setTextFor (func, "E - " + maybeWrap (predicate, func,
@@ -465,12 +500,14 @@ public class SetVisitor extends CodeVisitor {
 	/**
 	 * Write code for set creation functions.
 	 */
+    @Override
 	public void visitSetCreation(Predicate predicate) {
 	    maybeWalk (predicate);
 	    map.setTextFor (func, map.textOf (predicate), 
 			    map.precedenceOf (predicate));
 	}
 
+    @Override
 	public void visitDefault (String function, Predicate[] arguments) {
 	    for (int i = 0; i < arguments.length; i++)
 		maybeWalk (arguments[i]);

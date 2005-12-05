@@ -28,7 +28,8 @@ public class TripleFormationTest extends TestCase {
     public static Test suite() {
 	return new TestSuite(TripleFormationTest.class);
     }
-    
+
+    @Override
     protected void setUp() {
 	a = new VariableReference ("a");
 	b = new VariableReference ("b");

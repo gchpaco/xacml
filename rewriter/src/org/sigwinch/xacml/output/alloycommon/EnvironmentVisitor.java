@@ -1,7 +1,7 @@
 package org.sigwinch.xacml.output.alloycommon;
 
 import java.io.PrintWriter;
-import java.util.Hashtable;
+import java.util.HashMap;
 
 import org.sigwinch.xacml.output.CodeVisitor;
 import org.sigwinch.xacml.tree.EnvironmentalPredicate;
@@ -18,12 +18,13 @@ import org.sigwinch.xacml.tree.EnvironmentalPredicate;
  * @version 1.0
  */
 public class EnvironmentVisitor extends CodeVisitor {
-    Hashtable indexesSeen;
+    HashMap<Integer, Boolean> indexesSeen;
     public EnvironmentVisitor(PrintWriter stream) {
 	super (stream);
-	indexesSeen = new Hashtable ();
+	indexesSeen = new HashMap<Integer, Boolean> ();
     }
 
+    @Override
     public void outputStart () {
 	stream.println ("one sig E {");
     }
@@ -33,6 +34,7 @@ public class EnvironmentVisitor extends CodeVisitor {
      *
      * @param environmentalPredicate an <code>EnvironmentalPredicate</code>
      */
+    @Override
     public void walkEnvironmentalPredicate (EnvironmentalPredicate 
 					    environmentalPredicate) {
 	if (indexesSeen.containsKey (new Integer 

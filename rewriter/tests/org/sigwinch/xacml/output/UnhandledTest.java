@@ -31,6 +31,7 @@ public class UnhandledTest extends TestCase {
         Predicate.reset ();
     }
 
+    @Override
     protected void setUp () {
         a = new VariableReference ("a");
         b = new VariableReference ("b");

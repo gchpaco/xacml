@@ -26,12 +26,12 @@ public class AlloySetOutput implements Output {
     PrintWriter stream;
     int trees;
     double slop;
-    TreeMap instances;
+    TreeMap<String, Integer> instances;
     public AlloySetOutput(PrintWriter stream, double slop) {
 	this.stream = stream;
 	this.trees = 0;
 	this.slop = slop;
-	this.instances = new TreeMap ();
+	this.instances = new TreeMap<String, Integer> ();
     }
 
     public void preamble (Tree tree) {
@@ -47,28 +47,24 @@ public class AlloySetOutput implements Output {
 
 	StaticVisitor sv = new StaticVisitor (instances);
 	tree.walk (sv);
-	TreeMap dynamics = new TreeMap ();
+	TreeMap<String, Integer> dynamics = new TreeMap<String, Integer> ();
 	DynamicVisitor dv = new DynamicVisitor (dynamics);
 	tree.walk (dv);
-	Iterator i = dynamics.keySet ().iterator ();
-	while (i.hasNext ()) {
-	    String key = (String) i.next ();
+    for (String key : dynamics.keySet ()) {
 	    if (key.equals ("Bool")) continue;
 	    
 	    Integer old;
 	    if (instances.containsKey (key))
-		old = (Integer) instances.get (key);
+		old = instances.get (key);
 	    else
 		old = new Integer (0);
-	    Integer incr = (Integer) dynamics.get (key);
+	    Integer incr = dynamics.get (key);
 	    instances.put (key,
 			   new Integer ((int) (old.intValue () + 
 					       incr.intValue () * slop)));
 	}
 
-	i = instances.keySet ().iterator();
-	while (i.hasNext ()) {
-	    String key = (String) i.next ();
+	for (String key : instances.keySet ()) {
 	    if (key.equals ("Bool")) continue; // bool loaded from util/bool
 	
 	    stream.print ("sig ");
@@ -134,7 +130,7 @@ public class AlloySetOutput implements Output {
 	while (i.hasNext ()) {
 	    String key = (String) i.next ();
 	    if (key.equals ("Bool")) continue; // only ever two booleans
-	    total += ((Integer) instances.get (key)).intValue ();
+	    total += instances.get (key).intValue ();
 	    
 	    stream.print (", ");
 	    stream.print (instances.get (key));

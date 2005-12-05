@@ -24,16 +24,19 @@ public class SolePredicate extends Predicate {
 	return this.set;
     }
 
+    @Override
     public void walk (Visitor v)
     {
 	v.walkSolePredicate (this);
     }
 
+    @Override
     public Predicate transform (Transformer t)
     {
 	return t.walkSolePredicate (this);
     }
 
+    @Override
     public boolean equals (Object o)
     {
 	if (! (o instanceof SolePredicate)) return false;
@@ -41,6 +44,7 @@ public class SolePredicate extends Predicate {
 	return s.set.equals (set);
     }
 
+    @Override
     public int hashCode ()
     {
 	return set.hashCode () ^ '|';

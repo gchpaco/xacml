@@ -24,6 +24,7 @@ public class DuplicateRemover extends TransformerImpl {
      *            an <code>Error</code> node in a tree
      * @return transformed tree
      */
+    @Override
     public Tree walkError (Error error) {
         if (error.getChild () instanceof Error) {
             Error child = (Error) error.getChild ();
@@ -44,6 +45,7 @@ public class DuplicateRemover extends TransformerImpl {
      *            an <code>Scope</code> node in a tree
      * @return transformed tree
      */
+    @Override
     public Tree walkScope (Scope scope) {
         if (scope.getChild () instanceof Scope) {
             Scope child = (Scope) scope.getChild ();

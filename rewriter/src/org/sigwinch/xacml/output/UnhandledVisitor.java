@@ -22,16 +22,18 @@ import org.sigwinch.xacml.tree.Visitor;
  * @version 1.0
  */
 public class UnhandledVisitor extends CodeVisitor {
-    HashSet indexesSeen;
+    HashSet<Integer> indexesSeen;
     public UnhandledVisitor(PrintWriter stream) {
 	super (stream);
-	indexesSeen = new HashSet ();
+	indexesSeen = new HashSet<Integer> ();
     }
-    
+
+    @Override
     public void outputStart () {
 	stream.println ("one sig X {");
     }
 
+    @Override
     public void walkExistentialPredicate (ExistentialPredicate 
 					  existentialPredicate) {
 	UnhandledFunctionVisitor v = 
@@ -49,6 +51,7 @@ public class UnhandledVisitor extends CodeVisitor {
      *
      * @param functionCallPredicate a <code>FunctionCallPredicate</code>
      */
+    @Override
     public void walkFunctionCallPredicate (FunctionCallPredicate 
 					   functionCallPredicate) {
 	UnhandledFunctionVisitor v = 
@@ -66,6 +69,7 @@ public class UnhandledVisitor extends CodeVisitor {
 	 *
 	 * @param predicate a <code>Predicate</code> value
 	 */
+    @Override
 	public void visitSize(Predicate predicate) {
 	    outputFunction ("Integer");
 	}
@@ -76,6 +80,7 @@ public class UnhandledVisitor extends CodeVisitor {
 	 * @param predicate a <code>Predicate</code> value
 	 * @param predicate1 a <code>Predicate</code> value
 	 */
+    @Override
 	public void visitGreaterThan (Predicate predicate, 
 				      Predicate predicate1) {
 	    outputFunction ("Bool");
@@ -87,6 +92,7 @@ public class UnhandledVisitor extends CodeVisitor {
 	 * @param predicate a <code>Predicate</code> value
 	 * @param predicate1 a <code>Predicate</code> value
 	 */
+    @Override
 	public void visitGreaterThanOrEqual (Predicate predicate, 
 					     Predicate predicate1) {
 	    outputFunction ("Bool");
@@ -98,6 +104,7 @@ public class UnhandledVisitor extends CodeVisitor {
 	 * @param predicate a <code>Predicate</code> value
 	 * @param predicate1 a <code>Predicate</code> value
 	 */
+    @Override
 	public void visitLessThan(Predicate predicate, Predicate predicate1) {
 	    outputFunction ("Bool");
 	}
@@ -108,6 +115,7 @@ public class UnhandledVisitor extends CodeVisitor {
 	 * @param predicate a <code>Predicate</code> value
 	 * @param predicate1 a <code>Predicate</code> value
 	 */
+    @Override
 	public void visitLessThanOrEqual (Predicate predicate, 
 					  Predicate predicate1) {
 	    outputFunction ("Bool");
@@ -119,6 +127,7 @@ public class UnhandledVisitor extends CodeVisitor {
 	 * @param string function name
 	 * @param arguments function arguments
 	 */
+    @Override
 	public void visitDefault(String string, Predicate[] arguments) {
 	    outputFunction ("Bool"); // not guaranteed, we punt
 	}

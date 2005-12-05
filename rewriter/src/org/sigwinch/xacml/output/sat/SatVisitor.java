@@ -19,16 +19,14 @@ public class SatVisitor extends VisitorImpl {
     /**
      * @author graham
      */
-    public static class FormulaComparator implements Comparator {
+    public static class FormulaComparator implements Comparator<BooleanFormula> {
 
         /*
          * (non-Javadoc)
          * 
          * @see java.util.Comparator#compare(java.lang.Object, java.lang.Object)
          */
-        public int compare (Object o1, Object o2) {
-            BooleanFormula left = (BooleanFormula) o1;
-            BooleanFormula right = (BooleanFormula) o2;
+        public int compare (BooleanFormula left, BooleanFormula right) {
             return left.toString ().compareTo (right.toString ());
         }
 
@@ -49,6 +47,7 @@ public class SatVisitor extends VisitorImpl {
             this.ep = ep;
         }
 
+        @Override
         public void visitDefault (String string, Predicate[] predicateArray) {
             super.visitDefault (string, predicateArray);
             // This is a noop currently, because we do no handling of xpath.
@@ -56,6 +55,7 @@ public class SatVisitor extends VisitorImpl {
             setFormulaFor (ep, BooleanFormula.TRUE);
         }
 
+        @Override
         public void visitEquality (Predicate attribute, Predicate bag) {
             super.visitEquality (attribute, bag);
             VariableEncoding attr = getEncodingFor (attribute);
@@ -86,6 +86,7 @@ public class SatVisitor extends VisitorImpl {
             func = fcp;
         }
 
+        @Override
         public void visitEquality (Predicate left, Predicate right) {
             super.visitEquality (left, right);
             VariableReference[][] allNames = getNames (left, right);
@@ -96,6 +97,7 @@ public class SatVisitor extends VisitorImpl {
             setFormulaFor (func, new And (clauses));
         }
 
+        @Override
         public void visitSetEquality (Predicate left, Predicate right) {
             super.visitSetEquality (left, right);
             VariableReference[][] allNames = getNames (left, right);
@@ -106,6 +108,7 @@ public class SatVisitor extends VisitorImpl {
             setFormulaFor (func, new And (clauses));
         }
 
+        @Override
         public void visitAnd (Predicate[] predicateArray) {
             super.visitAnd (predicateArray);
             BooleanFormula[] clauses = new BooleanFormula[predicateArray.length];
@@ -115,11 +118,13 @@ public class SatVisitor extends VisitorImpl {
             setFormulaFor (func, new And (clauses));
         }
 
+        @Override
         public void visitNot (Predicate predicate) {
             super.visitNot (predicate);
             setFormulaFor (func, getFormulaFor (predicate).negate ());
         }
 
+        @Override
         public void visitOr (Predicate[] predicateArray) {
             super.visitAnd (predicateArray);
             BooleanFormula[] clauses = new BooleanFormula[predicateArray.length];
@@ -129,6 +134,7 @@ public class SatVisitor extends VisitorImpl {
             setFormulaFor (func, new Or (clauses));
         }
 
+        @Override
         public void visitAtLeastOne (Predicate left, Predicate right) {
             super.visitAtLeastOne (left, right);
             VariableReference[][] allNames = getNames (left, right);
@@ -139,6 +145,7 @@ public class SatVisitor extends VisitorImpl {
             setFormulaFor (func, new Or (clauses));
         }
 
+        @Override
         public void visitDefault (String string, Predicate[] predicateArray) {
             super.visitDefault (string, predicateArray);
             if (string.equals (xacmlprefix + "xpath-node-match")) {
@@ -179,38 +186,41 @@ public class SatVisitor extends VisitorImpl {
             return buffer.toString ();
         }
 
+        @Override
         public void visitGreaterThan (Predicate left, Predicate right) {
             super.visitGreaterThan (left, right);
             VariableEncoding l = getEncodingFor (left);
             VariableEncoding r = getEncodingFor (right);
             assert l.getSize () == r.getSize ();
-            ArrayList f = new ArrayList ();
+            ArrayList<BooleanFormula> f = new ArrayList<BooleanFormula> ();
             for (int i = 0; i < l.getSize (); i++) {
                 for (int j = i + 1; j < r.getSize (); j++) {
                     f.add (new And (l.address (j), r.address (i)));
                 }
             }
-            BooleanFormula[] clauses = (BooleanFormula[]) f
+            BooleanFormula[] clauses = f
                                                            .toArray (new BooleanFormula[] {});
             setFormulaFor (func, new Or (clauses));
         }
 
+        @Override
         public void visitGreaterThanOrEqual (Predicate left, Predicate right) {
             super.visitGreaterThanOrEqual (left, right);
             VariableEncoding l = getEncodingFor (left);
             VariableEncoding r = getEncodingFor (right);
             assert l.getSize () == r.getSize ();
-            ArrayList f = new ArrayList ();
+            ArrayList<BooleanFormula> f = new ArrayList<BooleanFormula> ();
             for (int i = 0; i < l.getSize (); i++) {
                 for (int j = i; j < r.getSize (); j++) {
                     f.add (new And (l.address (j), r.address (i)));
                 }
             }
-            BooleanFormula[] clauses = (BooleanFormula[]) f
+            BooleanFormula[] clauses = f
                                                            .toArray (new BooleanFormula[] {});
             setFormulaFor (func, new Or (clauses));
         }
 
+        @Override
         public void visitInclusion (Predicate left, Predicate right) {
             super.visitInclusion (left, right);
             VariableEncoding lnames = getEncodingFor (left);
@@ -222,6 +232,7 @@ public class SatVisitor extends VisitorImpl {
             setFormulaFor (func, new Or (clauses));
         }
 
+        @Override
         public void visitIntersection (Predicate left, Predicate right) {
             super.visitIntersection (left, right);
             VariableReference[][] allNames = getNames (left, right);
@@ -240,38 +251,41 @@ public class SatVisitor extends VisitorImpl {
             frames.add (new And (frameClauses));
         }
 
+        @Override
         public void visitLessThan (Predicate left, Predicate right) {
             super.visitLessThan (left, right);
             VariableEncoding l = getEncodingFor (left);
             VariableEncoding r = getEncodingFor (right);
             assert l.getSize () == r.getSize ();
-            ArrayList f = new ArrayList ();
+            ArrayList<BooleanFormula> f = new ArrayList<BooleanFormula> ();
             for (int i = 0; i < l.getSize (); i++) {
                 for (int j = i + 1; j < r.getSize (); j++) {
                     f.add (new And (l.address (i), r.address (j)));
                 }
             }
-            BooleanFormula[] clauses = (BooleanFormula[]) f
+            BooleanFormula[] clauses = f
                                                            .toArray (new BooleanFormula[] {});
             setFormulaFor (func, new Or (clauses));
         }
 
+        @Override
         public void visitLessThanOrEqual (Predicate left, Predicate right) {
             super.visitLessThanOrEqual (left, right);
             VariableEncoding l = getEncodingFor (left);
             VariableEncoding r = getEncodingFor (right);
             assert l.getSize () == r.getSize ();
-            ArrayList f = new ArrayList ();
+            ArrayList<BooleanFormula> f = new ArrayList<BooleanFormula> ();
             for (int i = 0; i < l.getSize (); i++) {
                 for (int j = i; j < r.getSize (); j++) {
                     f.add (new And (l.address (i), r.address (j)));
                 }
             }
-            BooleanFormula[] clauses = (BooleanFormula[]) f
+            BooleanFormula[] clauses = f
                                                            .toArray (new BooleanFormula[] {});
             setFormulaFor (func, new Or (clauses));
         }
 
+        @Override
         public void visitSetCreation (Predicate predicate) {
             super.visitSetCreation (predicate);
             VariableEncoding lnames = getEncodingFor (predicate);
@@ -295,6 +309,7 @@ public class SatVisitor extends VisitorImpl {
             frames.add (new And (frameClauses));
         }
 
+        @Override
         public void visitSize (Predicate predicate) {
             super.visitSize (predicate);
             VariableEncoding enc = getEncodingFor (predicate);
@@ -307,6 +322,7 @@ public class SatVisitor extends VisitorImpl {
             frames.addAll (all.disallowIllegals ());
         }
 
+        @Override
         public void visitSubset (Predicate left, Predicate right) {
             super.visitSubset (left, right);
             VariableReference[][] allNames = getNames (left, right);
@@ -317,6 +333,7 @@ public class SatVisitor extends VisitorImpl {
             setFormulaFor (func, new And (clauses));
         }
 
+        @Override
         public void visitUnion (Predicate left, Predicate right) {
             super.visitUnion (left, right);
             VariableReference[][] allNames = getNames (left, right);
@@ -346,18 +363,19 @@ public class SatVisitor extends VisitorImpl {
         }
     }
 
-    Map scalars, sets;
-    Set frames;
+    Map<Predicate, BooleanFormula> scalars;
+    Map<Object, VariableEncoding> sets;
+    Set<BooleanFormula> frames;
     int triples, multiplicity;
-    private HashMap names;
+    private HashMap<String, String> names;
 
     SatVisitor () {
-        scalars = new HashMap ();
-        sets = new HashMap ();
-        names = new HashMap ();
+        scalars = new HashMap<Predicate, BooleanFormula> ();
+        sets = new HashMap<Object, VariableEncoding> ();
+        names = new HashMap<String, String> ();
         // This isn't the most efficient comparator I've ever had, but it's
         // quick & easy and this isn't the part that takes all the time, anyway.
-        frames = new TreeSet (new FormulaComparator ());
+        frames = new TreeSet<BooleanFormula> (new FormulaComparator ());
         triples = 0;
         multiplicity = 1;
     }
@@ -372,21 +390,19 @@ public class SatVisitor extends VisitorImpl {
     }
 
     public BooleanFormula[] getFrameConditions () {
-        return (BooleanFormula[]) frames.toArray (new BooleanFormula[] {});
+        return frames.toArray (new BooleanFormula[] {});
     }
 
     public BooleanFormula computeFormula () {
         BooleanFormula[] conditions = getFrameConditions ();
         if (conditions.length == 0)
             return BooleanFormula.TRUE;
-        else {
-            ArrayList clauses = new ArrayList ();
-            for (int i = 0; i < conditions.length; i++)
-                clauses.add (conditions[i]);
-            return new And (
-                            (BooleanFormula[]) clauses
-                                                      .toArray (new BooleanFormula[] {}));
-        }
+        ArrayList<BooleanFormula> clauses = new ArrayList<BooleanFormula> ();
+        for (int i = 0; i < conditions.length; i++)
+            clauses.add (conditions[i]);
+        return new And (
+                        clauses
+                                                  .toArray (new BooleanFormula[] {}));
     }
 
     /**
@@ -421,7 +437,7 @@ public class SatVisitor extends VisitorImpl {
      * @return Boolean formula for the given predicate
      */
     public BooleanFormula getFormulaFor (Predicate predicate) {
-        BooleanFormula result = (BooleanFormula) scalars.get (predicate);
+        BooleanFormula result = scalars.get (predicate);
         assert result != null : predicate
                                 + " was used in a Boolean context, but has no Boolean value";
         return result;
@@ -489,6 +505,7 @@ public class SatVisitor extends VisitorImpl {
      * 
      * @see org.sigwinch.xacml.tree.Visitor#walkVariableReference(org.sigwinch.xacml.tree.VariableReference)
      */
+    @Override
     public void walkVariableReference (VariableReference v) {
         super.walkVariableReference (v);
         setFormulaFor (v, v);
@@ -499,6 +516,7 @@ public class SatVisitor extends VisitorImpl {
      * 
      * @see org.sigwinch.xacml.tree.Visitor#walkAndPredicate(org.sigwinch.xacml.tree.AndPredicate)
      */
+    @Override
     public void walkAndPredicate (AndPredicate andPredicate) {
         super.walkAndPredicate (andPredicate);
         setFormulaFor (andPredicate,
@@ -511,6 +529,7 @@ public class SatVisitor extends VisitorImpl {
      * 
      * @see org.sigwinch.xacml.tree.Visitor#walkAndPredicate(org.sigwinch.xacml.tree.AndPredicate)
      */
+    @Override
     public void walkOrPredicate (OrPredicate orPredicate) {
         super.walkOrPredicate (orPredicate);
         setFormulaFor (orPredicate,
@@ -523,6 +542,7 @@ public class SatVisitor extends VisitorImpl {
      * 
      * @see org.sigwinch.xacml.tree.Visitor#walkEnvironmentalPredicate(org.sigwinch.xacml.tree.EnvironmentalPredicate)
      */
+    @Override
     public void walkEnvironmentalPredicate (EnvironmentalPredicate ep) {
         super.walkEnvironmentalPredicate (ep);
         setNamesFor (ep,
@@ -530,6 +550,7 @@ public class SatVisitor extends VisitorImpl {
                                               multiplicity));
     }
 
+    @Override
     public void walkExistentialPredicate (ExistentialPredicate ep) {
         super.walkExistentialPredicate (ep);
         SatExistentialFV v = new SatExistentialFV (this, ep);
@@ -545,7 +566,7 @@ public class SatVisitor extends VisitorImpl {
     private String intern (String name) {
         String sn;
         if (names.containsKey (name))
-            sn = (String) names.get (name);
+            sn = names.get (name);
         else {
             sn = makeSafe (name);
             while (names.containsValue (sn))
@@ -563,6 +584,7 @@ public class SatVisitor extends VisitorImpl {
         return sn.replaceAll ("[^_A-Za-z0-9]", "_");
     }
 
+    @Override
     public void walkConstantValuePredicate (ConstantValuePredicate cvp) {
         super.walkConstantValuePredicate (cvp);
         String sn = intern ("const_" + cvp.getValue ());
@@ -583,6 +605,7 @@ public class SatVisitor extends VisitorImpl {
      * 
      * @see org.sigwinch.xacml.tree.Visitor#walkTriple(org.sigwinch.xacml.tree.Triple)
      */
+    @Override
     public void walkTriple (Triple triple) {
         ensureTriple (triple);
         super.walkTriple (triple);
@@ -601,6 +624,7 @@ public class SatVisitor extends VisitorImpl {
      * 
      * @see org.sigwinch.xacml.tree.Visitor#walkSolePredicate(org.sigwinch.xacml.tree.SolePredicate)
      */
+    @Override
     public void walkSolePredicate (SolePredicate p) {
         super.walkSolePredicate (p);
         VariableReference[] allNames = getNamesFor (p.getSet ());
@@ -618,6 +642,7 @@ public class SatVisitor extends VisitorImpl {
         setFormulaFor (p, new Or (subformulae));
     }
 
+    @Override
     public void walkSimplePredicate (SimplePredicate simplePredicate) {
         super.walkSimplePredicate (simplePredicate);
         if (simplePredicate == SimplePredicate.TRUE) {
@@ -632,6 +657,7 @@ public class SatVisitor extends VisitorImpl {
         }
     }
 
+    @Override
     public void walkFunctionCallPredicate (
                                            FunctionCallPredicate functionCallPredicate) {
         SatFunctionVisitor v = new SatFunctionVisitor (this,
@@ -644,7 +670,7 @@ public class SatVisitor extends VisitorImpl {
      * @return class describing the variable encoding for <code>foo</code>
      */
     public VariableEncoding getEncodingFor (Object ep) {
-        return (VariableEncoding) sets.get (ep);
+        return sets.get (ep);
     }
 
     private void setNamesFor (Object obj, VariableEncoding encoding) {

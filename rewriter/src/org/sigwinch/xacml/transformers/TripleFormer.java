@@ -32,6 +32,7 @@ public class TripleFormer extends TransformerImpl {
      * @param permit a <code>Permit</code> node
      * @return corresponding triple
      */
+    @Override
     public Tree walkPermit(Permit permit) {
 	return new Triple (SimplePredicate.TRUE, SimplePredicate.FALSE,
 			   SimplePredicate.FALSE);
@@ -43,6 +44,7 @@ public class TripleFormer extends TransformerImpl {
      * @param deny a <code>Deny</code> node
      * @return corresponding triple
      */
+    @Override
     public Tree walkDeny(Deny deny) {
 	return new Triple (SimplePredicate.FALSE, SimplePredicate.TRUE,
 			   SimplePredicate.FALSE);
@@ -55,6 +57,7 @@ public class TripleFormer extends TransformerImpl {
      * @param scope a <code>Scope</code> node
      * @return corresponding triple
      */
+    @Override
     public Tree walkScope(Scope scope) {
 	// okay, so errors should be above scopes, and duplicate
 	// scopes are folded together, and so scopes should be
@@ -81,6 +84,7 @@ public class TripleFormer extends TransformerImpl {
      * @param error an <code>Error</code> node
      * @return corresponding triple
      */
+    @Override
     public Tree walkError(Error error) {
 	// This should absolutely never fail, because we've previously
 	// moved errors down to the bottom of the tree, only just

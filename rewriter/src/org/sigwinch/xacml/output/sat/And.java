@@ -44,7 +44,7 @@ public class And implements BooleanFormula {
         for (int i = 0; i < clauses.length; i++) {
             assert clauses[i] != null : i + "th argument is null";
         }
-        objects = (BooleanFormula[]) clauses.clone ();
+        objects = clauses.clone ();
     }
 
     /*
@@ -52,6 +52,7 @@ public class And implements BooleanFormula {
      * 
      * @see java.lang.Object#toString()
      */
+    @Override
     public String toString () {
         StringBuffer buf = new StringBuffer ();
         buf.append ("(and");
@@ -71,6 +72,7 @@ public class And implements BooleanFormula {
      * 
      * @see java.lang.Object#equals(java.lang.Object)
      */
+    @Override
     public boolean equals (Object obj) {
         if (obj instanceof And) {
             And obj2 = (And) obj;
@@ -80,8 +82,8 @@ public class And implements BooleanFormula {
                 if (!objects[i].equals (obj2.objects[i]))
                     return false;
             return true;
-        } else
-            return super.equals (obj);
+        }
+        return super.equals (obj);
     }
 
     /*
@@ -89,6 +91,7 @@ public class And implements BooleanFormula {
      * 
      * @see java.lang.Object#hashCode()
      */
+    @Override
     public int hashCode () {
         int hash = '^';
         for (int i = 0; i < objects.length; i++)
@@ -111,11 +114,11 @@ public class And implements BooleanFormula {
             return BooleanFormula.FALSE;
         //      We use this set to keep the elements in a recognizable order, and as
         // a side effect to kill duplicates.
-        TreeSet elements = new TreeSet (new SatVisitor.FormulaComparator ());
-        LinkedList toProcess = new LinkedList (Arrays.asList (objects));
+        TreeSet<BooleanFormula> elements = new TreeSet<BooleanFormula> (new SatVisitor.FormulaComparator ());
+        LinkedList<BooleanFormula> toProcess = new LinkedList<BooleanFormula> (Arrays.asList (objects));
         // first, collapse Ands.
         while (!toProcess.isEmpty ()) {
-            BooleanFormula head = (BooleanFormula) toProcess.removeFirst ();
+            BooleanFormula head = toProcess.removeFirst ();
             head = head.simplify ();
             if (head instanceof And) {
                 And and = (And) head;
@@ -132,7 +135,7 @@ public class And implements BooleanFormula {
             // can only get here by skipping trues
             return BooleanFormula.TRUE;
         else if (elements.size () == 1)
-            return (BooleanFormula) elements.iterator ().next ();
+            return elements.iterator ().next ();
         else {
             // scan for "a and not a"
             for (Iterator iter = elements.iterator (); iter.hasNext ();) {
@@ -141,7 +144,7 @@ public class And implements BooleanFormula {
                     return BooleanFormula.FALSE;
             }
             return new And (
-                            (BooleanFormula[]) elements
+                            elements
                                                        .toArray (new BooleanFormula[] {}));
         }
     }
@@ -156,7 +159,7 @@ public class And implements BooleanFormula {
         if (simplified instanceof And) {
             And and = (And) simplified;
             // First, make a pass through the array; some of our stuff turns into Ors or Ands.
-            BooleanFormula [] array = (BooleanFormula[]) and.objects.clone ();
+            BooleanFormula [] array = and.objects.clone ();
             boolean makeAnotherPass = false;
             for (int i = 0; i < array.length; i++) {
                 array[i] = array[i].convertToCNF ();
@@ -169,8 +172,8 @@ public class And implements BooleanFormula {
                 result[i] = array[i].convertToCNF ();
             }
             return new And (result).simplify ();
-        } else
-            return simplified.convertToCNF ();
+        }
+        return simplified.convertToCNF ();
     }
 
     /*

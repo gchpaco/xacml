@@ -28,6 +28,7 @@ public class PolicyParser extends AbstractParser {
      * @param element an <code>Element</code> representing a <code>Policy</code> node
      * @return the appropriate <code>Tree</code> value
      */
+    @Override
     public Tree parseElement(Element element) {
 	NodeList subrules = getList (element, "Rule");
 	assert subrules != null;

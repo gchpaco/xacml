@@ -26,6 +26,7 @@ abstract public class Tree {
     abstract public void walk (Visitor v);
     abstract public Tree transform (Transformer t);
 
+    @Override
     public String toString ()
     {
 	StringWriter stream = new StringWriter ();

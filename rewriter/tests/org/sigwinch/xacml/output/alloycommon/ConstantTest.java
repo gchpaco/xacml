@@ -31,7 +31,8 @@ public class ConstantTest extends TestCase {
 	stream = new StringWriter ();
 	out = new ConstantVisitor (new PrintWriter (stream));
     }
-    
+
+    @Override
     protected void setUp() {
 	reset ();
 	a = new VariableReference ("a");

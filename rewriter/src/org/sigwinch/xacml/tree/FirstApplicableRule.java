@@ -50,16 +50,19 @@ public class FirstApplicableRule extends Tree {
     public void setRight(Tree argRight) {
 	this.right = argRight;
     }
-    
+
+    @Override
     public void walk (Visitor v)
     {
 	v.walkFirstApplicableRule (this);
     }
+    @Override
     public Tree transform (Transformer t)
     {
 	return t.walkFirstApplicableRule (this);
     }
 
+    @Override
     public boolean equals (Object o)
     {
 	if (! (o instanceof FirstApplicableRule)) return false;
@@ -67,6 +70,7 @@ public class FirstApplicableRule extends Tree {
 	return left.equals (f.getLeft ()) && right.equals (f.getRight ());
     }
 
+    @Override
     public int hashCode ()
     {
 	return left.hashCode () ^ right.hashCode () ^ "odivide".hashCode ();

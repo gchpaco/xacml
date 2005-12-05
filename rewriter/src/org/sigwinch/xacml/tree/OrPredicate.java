@@ -51,15 +51,18 @@ public class OrPredicate extends Predicate {
 	this.right = argRight;
     }
 
+    @Override
     public void walk (Visitor v)
     {
 	v.walkOrPredicate (this);
     }
+    @Override
     public Predicate transform (Transformer t)
     {
 	return t.walkOrPredicate (this);
     }
 
+    @Override
     public boolean equals (Object o)
     {
 	if (! (o instanceof OrPredicate)) return false;
@@ -67,6 +70,7 @@ public class OrPredicate extends Predicate {
 	return left.equals (p.getLeft ()) && right.equals (p.getRight ());
     }
 
+    @Override
     public int hashCode ()
     {
 	return left.hashCode () ^ right.hashCode () ^ '|';

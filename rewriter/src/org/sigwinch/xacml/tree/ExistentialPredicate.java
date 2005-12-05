@@ -69,15 +69,18 @@ public class ExistentialPredicate extends Predicate {
 	this.function = newFunction;
     }
 
+    @Override
     public void walk (Visitor v)
     {
 	v.walkExistentialPredicate (this);
     }
+    @Override
     public Predicate transform (Transformer t)
     {
 	return t.walkExistentialPredicate (this);
     }
 
+    @Override
     public boolean equals (Object o)
     {
 	if (! (o instanceof ExistentialPredicate)) return false;
@@ -87,6 +90,7 @@ public class ExistentialPredicate extends Predicate {
 	    bag.equals (e.getBag ());
     }
 
+    @Override
     public int hashCode ()
     {
 	return bag.hashCode () ^ attribute.hashCode () ^ function.hashCode ();

@@ -17,12 +17,15 @@ public class Deny extends Tree {
     private Deny() {
     }
 
+    @Override
     public boolean isFunction () { return true; }
 
+    @Override
     public void walk (Visitor v)
     {
 	v.walkDeny (this);
     }
+    @Override
     public Tree transform (Transformer t)
     {
 	return t.walkDeny (this);

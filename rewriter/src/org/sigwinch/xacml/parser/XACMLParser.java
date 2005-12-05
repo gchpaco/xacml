@@ -1,5 +1,5 @@
 package org.sigwinch.xacml.parser;
-import java.util.Hashtable;
+import java.util.HashMap;
 
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
@@ -14,7 +14,7 @@ import org.w3c.dom.NodeList;
  * @version 1.0
  */
 abstract public class XACMLParser {
-    static Hashtable type2bagsize;
+    static HashMap<String, String> type2bagsize;
     static final String xacmlns = "urn:oasis:names:tc:xacml:1.0:policy";
     static final String stringType = "http://www.w3.org/2001/XMLSchema#string";
     static final String booleanType = 
@@ -42,7 +42,7 @@ abstract public class XACMLParser {
 	"urn:oasis:names:tc:xacml:1.0:data-type:rfc822Name";
 
     static {
-	type2bagsize = new Hashtable ();
+	type2bagsize = new HashMap<String, String> ();
 	type2bagsize.put 
 	(stringType, "urn:oasis:names:tc:xacml:1.0:function:string-bag-size");
 	type2bagsize.put 

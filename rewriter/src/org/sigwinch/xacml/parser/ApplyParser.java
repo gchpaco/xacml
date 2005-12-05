@@ -28,9 +28,10 @@ public class ApplyParser extends ExpressionParser {
      *            element to parse
      * @return corresponding predicate
      */
+    @Override
     public Predicate parseElement (Element element) {
         String functionId = getXACMLAttribute (element, "FunctionId");
-        ArrayList predicates = new ArrayList ();
+        ArrayList<Predicate> predicates = new ArrayList<Predicate> ();
         Node child = element.getFirstChild ();
         while (child != null) {
             if (child.getNodeType () == Node.ELEMENT_NODE)
@@ -39,11 +40,11 @@ public class ApplyParser extends ExpressionParser {
         }
         if (oneandonlyLookup.get (functionId) != null) {
             assert predicates.size () == 1;
-            return (Predicate) predicates.get (0);
+            return predicates.get (0);
         }
         return new FunctionCallPredicate (
                                           functionId,
-                                          (Predicate[]) predicates
+                                          predicates
                                                                   .toArray (new Predicate[] {}));
 
     }
@@ -56,6 +57,7 @@ public class ApplyParser extends ExpressionParser {
      *            element to parse
      * @return corresponding predicate
      */
+    @Override
     public Predicate parseForError (Element element) {
         String functionId = getXACMLAttribute (element, "FunctionId");
         Predicate p = SimplePredicate.TRUE;

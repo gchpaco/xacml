@@ -17,25 +17,25 @@ public class SimplePredicate extends Predicate {
 	value = v;
     }
 
+    @Override
     public Predicate andWith (Predicate other) {
 	if (value)
 	    return other;
-	else
-	    return this;
+    return this;
     }
-    
+
+    @Override
     public Predicate orWith (Predicate other) {
 	if (value)
 	    return this;
-	else
-	    return other;
+    return other;
     }
 
+    @Override
     public Predicate not () {
 	if (value)
 	    return SimplePredicate.FALSE;
-	else
-	    return SimplePredicate.TRUE;
+    return SimplePredicate.TRUE;
     }
 
     static {
@@ -43,11 +43,14 @@ public class SimplePredicate extends Predicate {
 	FALSE = new SimplePredicate (false);
     }
 
+    @Override
     public boolean isFunction () { return true; }
+    @Override
     public void walk (Visitor v)
     {
 	v.walkSimplePredicate (this);
     }
+    @Override
     public Predicate transform (Transformer t)
     {
 	return t.walkSimplePredicate (this);

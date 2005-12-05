@@ -50,16 +50,19 @@ public class OnlyOneRule extends Tree {
     public void setRight(Tree argRight) {
 	this.right = argRight;
     }
-    
+
+    @Override
     public void walk (Visitor v)
     {
 	v.walkOnlyOneRule (this);
     }
+    @Override
     public Tree transform (Transformer t)
     {
 	return t.walkOnlyOneRule (this);
     }
 
+    @Override
     public boolean equals (Object o)
     {
 	if (! (o instanceof OnlyOneRule)) return false;
@@ -67,6 +70,7 @@ public class OnlyOneRule extends Tree {
 	return left.equals (r.getLeft ()) && right.equals (r.getRight ());
     }
 
+    @Override
     public int hashCode ()
     {
 	return left.hashCode () ^ right.hashCode () ^ "otimes".hashCode ();

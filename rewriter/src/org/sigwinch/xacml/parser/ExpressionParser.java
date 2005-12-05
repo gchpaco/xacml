@@ -1,6 +1,6 @@
 package org.sigwinch.xacml.parser;
 
-import java.util.Hashtable;
+import java.util.HashMap;
 
 import org.sigwinch.xacml.tree.Predicate;
 import org.sigwinch.xacml.tree.SimplePredicate;
@@ -15,14 +15,14 @@ import org.w3c.dom.Element;
  * @version 1.0
  */
 public class ExpressionParser extends XACMLParser {
-    static Hashtable matchingLookup;
-    static Hashtable oneandonlyLookup;
-    static Hashtable functionLookup;
-    static Hashtable elementLookup;
+    static HashMap matchingLookup;
+    static HashMap<String, Boolean> oneandonlyLookup;
+    static HashMap functionLookup;
+    static HashMap<String, HashMap<String, ExpressionParser>> elementLookup;
 
     static {
-        matchingLookup = new Hashtable ();
-        oneandonlyLookup = new Hashtable ();
+        matchingLookup = new HashMap ();
+        oneandonlyLookup = new HashMap<String, Boolean> ();
         oneandonlyLookup
                         .put (
                               "urn:oasis:names:tc:xacml:1.0:function:string-one-and-only",
@@ -79,9 +79,9 @@ public class ExpressionParser extends XACMLParser {
                         .put (
                               "urn:oasis:names:tc:xacml:1.0:function:rfc822Name-one-and-only",
                               Boolean.TRUE);
-        functionLookup = new Hashtable ();
-        elementLookup = new Hashtable ();
-        Hashtable subtable = new Hashtable ();
+        functionLookup = new HashMap ();
+        elementLookup = new HashMap<String, HashMap<String, ExpressionParser>> ();
+        HashMap<String, ExpressionParser> subtable = new HashMap<String, ExpressionParser> ();
         elementLookup.put (xacmlns, subtable);
         subtable.put ("AttributeValue", new AttributeValueParser ());
         subtable.put ("ResourceMatch", new MatchingParser ());
@@ -122,8 +122,7 @@ public class ExpressionParser extends XACMLParser {
         if (ns == null)
             ns = xacmlns;
         String name = expression.getNodeName ();
-        final Hashtable hashtable = (Hashtable) elementLookup.get (ns);
-        ExpressionParser parser = (ExpressionParser) hashtable.get (name);
+        ExpressionParser parser = elementLookup.get (ns).get (name);
         if (parser == null)
             parser = new ExpressionParser ();
         return parser;

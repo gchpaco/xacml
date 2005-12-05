@@ -39,7 +39,7 @@ public class Or implements BooleanFormula {
      * @param formulas
      */
     public Or (BooleanFormula[] formulas) {
-        objects = (BooleanFormula[]) formulas.clone ();
+        objects = formulas.clone ();
     }
 
     /*
@@ -47,6 +47,7 @@ public class Or implements BooleanFormula {
      * 
      * @see java.lang.Object#toString()
      */
+    @Override
     public String toString () {
         StringBuffer buf = new StringBuffer ();
         buf.append ("(or");
@@ -66,6 +67,7 @@ public class Or implements BooleanFormula {
      * 
      * @see java.lang.Object#equals(java.lang.Object)
      */
+    @Override
     public boolean equals (Object obj) {
         if (obj instanceof Or) {
             Or obj2 = (Or) obj;
@@ -75,8 +77,8 @@ public class Or implements BooleanFormula {
                 if (!objects[i].equals (obj2.objects[i]))
                     return false;
             return true;
-        } else
-            return super.equals (obj);
+        }
+        return super.equals (obj);
     }
 
     /*
@@ -84,6 +86,7 @@ public class Or implements BooleanFormula {
      * 
      * @see java.lang.Object#hashCode()
      */
+    @Override
     public int hashCode () {
         int hash = '^';
         for (int i = 0; i < objects.length; i++)
@@ -105,11 +108,11 @@ public class Or implements BooleanFormula {
         if (objects.length == 0)
             return BooleanFormula.FALSE;
 
-        TreeSet elements = new TreeSet (new SatVisitor.FormulaComparator ());
-        LinkedList toProcess = new LinkedList (Arrays.asList (objects));
+        TreeSet<BooleanFormula> elements = new TreeSet<BooleanFormula> (new SatVisitor.FormulaComparator ());
+        LinkedList<BooleanFormula> toProcess = new LinkedList<BooleanFormula> (Arrays.asList (objects));
         // first, collapse Ors.
         while (!toProcess.isEmpty ()) {
-            BooleanFormula head = (BooleanFormula) toProcess.removeFirst ();
+            BooleanFormula head = toProcess.removeFirst ();
             head = head.simplify ();
             if (head instanceof Or) {
                 Or and = (Or) head;
@@ -126,7 +129,7 @@ public class Or implements BooleanFormula {
             // can only get here by skipping falses
             return BooleanFormula.FALSE;
         else if (elements.size () == 1)
-            return (BooleanFormula) elements.iterator ().next ();
+            return elements.iterator ().next ();
         else {
             // scan for "a and not a"
             for (Iterator iter = elements.iterator (); iter.hasNext ();) {
@@ -135,7 +138,7 @@ public class Or implements BooleanFormula {
                     return BooleanFormula.TRUE;
             }
             return new Or (
-                           (BooleanFormula[]) elements
+                           elements
                                                       .toArray (new BooleanFormula[] {}));
         }
     }
@@ -151,7 +154,7 @@ public class Or implements BooleanFormula {
             Or or = (Or) simplified;
             // First, make a pass through the array; some of our stuff turns
             // into Ors or Ands.
-            BooleanFormula[] array = (BooleanFormula[]) or.objects.clone ();
+            BooleanFormula[] array = or.objects.clone ();
             boolean makeAnotherPass = false;
             for (int i = 0; i < array.length; i++) {
                 array[i] = array[i].convertToCNF ();
@@ -161,15 +164,15 @@ public class Or implements BooleanFormula {
             if (makeAnotherPass)
                 return new Or (array).convertToCNF ();
             // OK, no ors and it's all primitives now.
-            ArrayList elements = new ArrayList (Arrays.asList (array));
+            ArrayList<BooleanFormula> elements = new ArrayList<BooleanFormula> (Arrays.asList (array));
             for (Iterator iter = elements.iterator (); iter.hasNext ();) {
                 BooleanFormula element = (BooleanFormula) iter.next ();
                 if (element instanceof And) {
                     And and = (And) element;
                     iter.remove ();
-                    BooleanFormula[] others = (BooleanFormula[]) elements
+                    BooleanFormula[] others = elements
                                                                          .toArray (new BooleanFormula[] {});
-                    BooleanFormula[] subclauses = (BooleanFormula[]) and.objects
+                    BooleanFormula[] subclauses = and.objects
                                                                                 .clone ();
                     for (int i = 0; i < subclauses.length; i++) {
                         subclauses[i] = new Or (subclauses[i], new Or (others));
@@ -177,11 +180,11 @@ public class Or implements BooleanFormula {
                     return new And (subclauses).convertToCNF ();
                 }
             }
-            BooleanFormula[] result = (BooleanFormula[]) elements
+            BooleanFormula[] result = elements
                                                                  .toArray (new BooleanFormula[] {});
             return new Or (result).simplify ();
-        } else
-            return simplified.convertToCNF ();
+        }
+        return simplified.convertToCNF ();
     }
 
     /*

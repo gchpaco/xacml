@@ -18,7 +18,8 @@ public class StructurePreservingConversionTest extends TestCase {
     public static void main (String[] args) {
         junit.textui.TestRunner.run (StructurePreservingConversionTest.class);
     }
-    
+
+    @Override
     protected void setUp () {
         a = new VariableReference ("a");
         b = new VariableReference ("b");
@@ -82,18 +83,6 @@ public class StructurePreservingConversionTest extends TestCase {
         assertArraysEqual (new int [][] {{-1, -2, 3}, {-3, -2, 1}, {2}}, result);
         result = StructurePreservingConverter.toArray (formula.negate ());
         assertArraysEqual (new int [][] {{-1}, {-2, -3, 1}, {2, 3, 1}}, result);
-    }
-
-    private void printArray (int[][] array) {
-        for (int i = 0; i < array.length; i++) {
-            System.out.print ("[");
-            for (int j = 0; j < array[i].length; j++) {
-                if (j != 0)
-                    System.out.print (" ");
-                System.out.print (array[i][j]);
-            }
-            System.out.println ("]");
-        }
     }
 
     private void assertArraysEqual (int[][] model, int[][] result) {

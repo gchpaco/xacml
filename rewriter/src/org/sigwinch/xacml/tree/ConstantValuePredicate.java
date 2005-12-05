@@ -1,5 +1,5 @@
 package org.sigwinch.xacml.tree;
-import java.util.Hashtable;
+import java.util.HashMap;
 
 
 /**
@@ -12,7 +12,7 @@ import java.util.Hashtable;
  * @version 1.0
  */
 public class ConstantValuePredicate extends Predicate {
-    static final Hashtable val2num;
+    static final HashMap<String, Integer> val2num;
     static int current;
     final int uniqueId;
     String type, value;
@@ -20,11 +20,11 @@ public class ConstantValuePredicate extends Predicate {
 	type = t; value = v;
 	if (!val2num.containsKey (v))
 	    val2num.put (v, new Integer (current++));
-	uniqueId = ((Integer) val2num.get (v)).intValue ();
+	uniqueId = val2num.get (v).intValue ();
     }
 
     static {
-	val2num = new Hashtable ();
+	val2num = new HashMap<String, Integer> ();
 	reset ();
     }
 
@@ -40,16 +40,15 @@ public class ConstantValuePredicate extends Predicate {
      * @return the type of this predicate
      */
     public String getShortName () {
-	String shortName = (String) type2string.get (type);
+	String shortName = type2string.get (type);
 	if (shortName == null)
 	    return type;
-	else
-	    return shortName;
+    return shortName;
     }
 
     /**
      * Gets the value of type
-g     *
+     *
      * @return the value of type
      */
     public String getType()  {
@@ -85,16 +84,20 @@ g     *
 
     public int getUniqueId () { return uniqueId; }
 
+    @Override
     public boolean isFunction () { return true; }
+    @Override
     public void walk (Visitor v)
     {
 	v.walkConstantValuePredicate (this);
     }
+    @Override
     public Predicate transform (Transformer t)
     {
 	return t.walkConstantValuePredicate (this);
     }
 
+    @Override
     public boolean equals (Object o)
     {
 	if (! (o instanceof ConstantValuePredicate)) return false;
@@ -102,6 +105,7 @@ g     *
 	return type.equals (c.getType ()) && value.equals (c.getValue ());
     }
 
+    @Override
     public int hashCode ()
     {
 	return type.hashCode () ^ value.hashCode ();

@@ -29,7 +29,8 @@ public class InlineTest extends TestCase {
 	out = new SetVisitor ();
 	Predicate.reset ();
     }
-    
+
+    @Override
     protected void setUp() {
 	a = new VariableReference ("a");
 	b = new VariableReference ("b");

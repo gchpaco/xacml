@@ -36,6 +36,7 @@ public class ExistentialVisitor extends VisitorImpl {
      *
      * @param existentialPredicate an <code>ExistentialPredicate</code> value
      */
+    @Override
     public void walkExistentialPredicate (ExistentialPredicate
 					  existentialPredicate) {
 	if (inverted)
@@ -48,7 +49,8 @@ public class ExistentialVisitor extends VisitorImpl {
 	stream.print (" | ");
 	existentialPredicate.getAttribute ().walk (this);
     }
-    
+
+    @Override
     public void walkFunctionCallPredicate (FunctionCallPredicate 
 					   functionCallPredicate) {
 	ExistentialFunctionVisitor v = 
@@ -63,6 +65,7 @@ public class ExistentialVisitor extends VisitorImpl {
 	    super (visitor);
 	}
 
+    @Override
 	public void visitNot (Predicate predicate)
 	{
 	    ((ExistentialVisitor) visitor).toggle ();

@@ -322,7 +322,8 @@ public class LatexOutputVisitor implements Visitor {
 	 *
 	 * @param predicate a <code>Predicate</code> value
 	 */
-	public void visitSize(Predicate predicate) {
+	@Override
+    public void visitSize(Predicate predicate) {
 	    stream.print ("|");
 	    predicate.walk (visitor);
 	    stream.print ("|");
@@ -334,7 +335,8 @@ public class LatexOutputVisitor implements Visitor {
 	 * @param element a <code>Predicate</code> value
 	 * @param set a <code>Predicate</code> value
 	 */
-	public void visitInclusion(Predicate element, Predicate set) {
+	@Override
+    public void visitInclusion(Predicate element, Predicate set) {
 	    visitor.wrapParens (element);
 	    stream.print (" \\in ");
 	    visitor.wrapParens (set);
@@ -345,7 +347,8 @@ public class LatexOutputVisitor implements Visitor {
 	 *
 	 * @param predicate a <code>Predicate</code> value
 	 */
-	public void visitSetCreation(Predicate predicate) {
+	@Override
+    public void visitSetCreation(Predicate predicate) {
 	    stream.print ("\\{");
 	    predicate.walk (visitor);
 	    stream.print ("\\}");
@@ -357,7 +360,8 @@ public class LatexOutputVisitor implements Visitor {
 	 * @param first a <code>Predicate</code> value
 	 * @param second a <code>Predicate</code> value
 	 */
-	public void visitEquality(Predicate first, Predicate second) {
+	@Override
+    public void visitEquality(Predicate first, Predicate second) {
 	    visitor.wrapParens (first);
 	    stream.print (" = ");
 	    visitor.wrapParens (second);
@@ -369,7 +373,8 @@ public class LatexOutputVisitor implements Visitor {
 	 * @param first a <code>Predicate</code> value
 	 * @param second a <code>Predicate</code> value
 	 */
-	public void visitIntersection(Predicate first, Predicate second) {
+	@Override
+    public void visitIntersection(Predicate first, Predicate second) {
 	    visitor.wrapParens (first);
 	    stream.print (" \\cap ");
 	    visitor.wrapParens (second);
@@ -381,7 +386,8 @@ public class LatexOutputVisitor implements Visitor {
 	 * @param first a <code>Predicate</code> value
 	 * @param second a <code>Predicate</code> value
 	 */
-	public void visitUnion(Predicate first, Predicate second) {
+	@Override
+    public void visitUnion(Predicate first, Predicate second) {
 	    visitor.wrapParens (first);
 	    stream.print (" \\cup ");
 	    visitor.wrapParens (second);
@@ -393,7 +399,8 @@ public class LatexOutputVisitor implements Visitor {
 	 * @param first a <code>Predicate</code> value
 	 * @param second a <code>Predicate</code> value
 	 */
-	public void visitSubset(Predicate first, Predicate second) {
+	@Override
+    public void visitSubset(Predicate first, Predicate second) {
 	    visitor.wrapParens (first);
 	    stream.print (" \\subseteq ");
 	    visitor.wrapParens (second);
@@ -405,6 +412,7 @@ public class LatexOutputVisitor implements Visitor {
 	 * @param first a <code>Predicate</code> value
 	 * @param second a <code>Predicate</code> value
 	 */
+    @Override
 	public void visitAtLeastOne(Predicate first, Predicate second) {
 	    visitor.wrapParens (first);
 	    stream.print (" \\cap ");
@@ -418,6 +426,7 @@ public class LatexOutputVisitor implements Visitor {
 	 * @param first a <code>Predicate</code> value
 	 * @param second a <code>Predicate</code> value
 	 */
+    @Override
 	public void visitSetEquality(Predicate first, Predicate second) {
 	    stream.print ("(");
 	    visitor.wrapParens (first);
@@ -436,6 +445,7 @@ public class LatexOutputVisitor implements Visitor {
 	 * @param first a <code>Predicate</code> value
 	 * @param second a <code>Predicate</code> value
 	 */
+    @Override
 	public void visitGreaterThan(Predicate first, Predicate second) {
 	    visitor.wrapParens (first);
 	    stream.print (" > ");
@@ -448,6 +458,7 @@ public class LatexOutputVisitor implements Visitor {
 	 * @param first a <code>Predicate</code> value
 	 * @param second a <code>Predicate</code> value
 	 */
+    @Override
 	public void visitGreaterThanOrEqual(Predicate first, 
 					    Predicate second) {
 	    visitor.wrapParens (first);
@@ -461,6 +472,7 @@ public class LatexOutputVisitor implements Visitor {
 	 * @param first a <code>Predicate</code> value
 	 * @param second a <code>Predicate</code> value
 	 */
+    @Override
 	public void visitLessThan(Predicate first, Predicate second) {
 	    visitor.wrapParens (first);
 	    stream.print (" < ");
@@ -473,6 +485,7 @@ public class LatexOutputVisitor implements Visitor {
 	 * @param first a <code>Predicate</code> value
 	 * @param second a <code>Predicate</code> value
 	 */
+    @Override
 	public void visitLessThanOrEqual(Predicate first, Predicate second) {
 	    visitor.wrapParens (first);
 	    stream.print (" \\leq ");
@@ -484,6 +497,7 @@ public class LatexOutputVisitor implements Visitor {
 	 *
 	 * @param arguments function arguments
 	 */
+    @Override
 	public void visitAnd(Predicate [] arguments) {
 	    for (int i = 0; i < arguments.length; i++) {
 		if (i != 0) stream.print (" \\wedge ");
@@ -496,6 +510,7 @@ public class LatexOutputVisitor implements Visitor {
 	 *
 	 * @param arguments function arguments
 	 */
+    @Override
 	public void visitOr(Predicate [] arguments) {
 	    for (int i = 0; i < arguments.length; i++) {
 		if (i != 0) stream.print (" \\vee ");
@@ -508,6 +523,7 @@ public class LatexOutputVisitor implements Visitor {
 	 *
 	 * @param predicate a <code>Predicate</code> value
 	 */
+    @Override
 	public void visitNot(Predicate predicate) {
 	    stream.print ("\\neg ");
 	    visitor.wrapParens (predicate);
@@ -519,6 +535,7 @@ public class LatexOutputVisitor implements Visitor {
 	 * @param string function name
 	 * @param arguments function arguments
 	 */
+    @Override
 	public void visitDefault(String string, Predicate[] arguments) {
 	    stream.print (string);
 	    stream.print (" (");

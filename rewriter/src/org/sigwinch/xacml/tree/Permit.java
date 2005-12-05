@@ -17,12 +17,15 @@ public class Permit extends Tree {
     private Permit() {
     }
 
+    @Override
     public boolean isFunction () { return true; }
 
+    @Override
     public void walk (Visitor v)
     {
 	v.walkPermit (this);
     }
+    @Override
     public Tree transform (Transformer t)
     {
 	return t.walkPermit (this);

@@ -1,5 +1,5 @@
 package org.sigwinch.xacml.tree;
-import java.util.Hashtable;
+import java.util.HashMap;
 import java.io.StringWriter;
 import java.io.PrintWriter;
 
@@ -15,9 +15,9 @@ import java.io.PrintWriter;
 abstract public class Predicate {
     final int index;
     static int generatedIndices;
-    public static Hashtable type2string, function2string;
+    public static HashMap<String, String> type2string, function2string;
     static {
-	type2string = new Hashtable ();
+	type2string = new HashMap<String, String> ();
 	type2string.put ("http://www.w3.org/2001/XMLSchema#string",
 			 "String");
 	type2string.put ("http://www.w3.org/2001/XMLSchema#integer",
@@ -30,7 +30,7 @@ abstract public class Predicate {
 			 "-20020816#yearMonthDuration",
 			 "YearMonthDuration");
 	// TODO: fill in rest
-	function2string = new Hashtable ();
+	function2string = new HashMap<String, String> ();
     }
     
     public Predicate() {
@@ -81,6 +81,7 @@ abstract public class Predicate {
     abstract public void walk (Visitor v);
     abstract public Predicate transform (Transformer t);
 
+    @Override
     public String toString ()
     {
 	StringWriter stream = new StringWriter ();

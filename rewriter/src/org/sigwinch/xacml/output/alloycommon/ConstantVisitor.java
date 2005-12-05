@@ -18,12 +18,13 @@ import org.sigwinch.xacml.tree.ConstantValuePredicate;
  * @version 1.0
  */
 public class ConstantVisitor extends CodeVisitor {
-    Hashtable indexesSeen;
+    Hashtable<Integer, Boolean> indexesSeen;
     public ConstantVisitor(PrintWriter stream) {
 	super (stream);
-	indexesSeen = new Hashtable ();
+	indexesSeen = new Hashtable<Integer, Boolean> ();
     }
-    
+
+    @Override
     public void outputStart () {
 	stream.println ("one sig S {");
     }
@@ -33,6 +34,7 @@ public class ConstantVisitor extends CodeVisitor {
      *
      * @param constantValuePredicate a <code>ConstantValuePredicate</code>
      */
+    @Override
     public void walkConstantValuePredicate (ConstantValuePredicate 
 					    constantValuePredicate) {
 	if (indexesSeen.containsKey (new Integer 

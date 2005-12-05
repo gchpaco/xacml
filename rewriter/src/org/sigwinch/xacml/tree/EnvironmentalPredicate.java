@@ -1,7 +1,7 @@
 package org.sigwinch.xacml.tree;
 
 import org.sigwinch.xacml.tree.Predicate;
-import java.util.Hashtable;
+import java.util.HashMap;
 
 /**
  * EnvironmentalPredicate.java Created: Tue Nov 4 13:52:37 2003
@@ -10,7 +10,7 @@ import java.util.Hashtable;
  * @version 1.0
  */
 public class EnvironmentalPredicate extends Predicate {
-    static final Hashtable id2num;
+    static final HashMap<String, Integer> id2num;
     static int current;
     final int uniqueId;
     String type, id;
@@ -22,7 +22,7 @@ public class EnvironmentalPredicate extends Predicate {
         this.force = false;
         if (!id2num.containsKey (i))
             id2num.put (i, new Integer (current++));
-        uniqueId = ((Integer) id2num.get (i)).intValue ();
+        uniqueId = id2num.get (i).intValue ();
     }
 
     public EnvironmentalPredicate (String t, String i, boolean force) {
@@ -31,11 +31,11 @@ public class EnvironmentalPredicate extends Predicate {
         this.force = force;
         if (!id2num.containsKey (i))
             id2num.put (i, new Integer (current++));
-        uniqueId = ((Integer) id2num.get (i)).intValue ();
+        uniqueId = id2num.get (i).intValue ();
     }
 
     static {
-        id2num = new Hashtable ();
+        id2num = new HashMap<String, Integer> ();
         reset ();
     }
 
@@ -87,25 +87,28 @@ public class EnvironmentalPredicate extends Predicate {
     }
 
     public String getShortName () {
-        String shortName = (String) type2string.get (type);
+        String shortName = type2string.get (type);
         if (shortName == null)
             return type;
-        else
-            return shortName;
+        return shortName;
     }
 
+    @Override
     public boolean isFunction () {
         return true;
     }
 
+    @Override
     public void walk (Visitor v) {
         v.walkEnvironmentalPredicate (this);
     }
 
+    @Override
     public Predicate transform (Transformer t) {
         return t.walkEnvironmentalPredicate (this);
     }
 
+    @Override
     public boolean equals (Object o) {
         if (!(o instanceof EnvironmentalPredicate))
             return false;
@@ -113,6 +116,7 @@ public class EnvironmentalPredicate extends Predicate {
         return type.equals (e.getType ()) && id.equals (e.getId ());
     }
 
+    @Override
     public int hashCode () {
         return type.hashCode () ^ id.hashCode ();
     }

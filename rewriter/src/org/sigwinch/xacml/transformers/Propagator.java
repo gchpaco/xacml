@@ -32,6 +32,7 @@ public class Propagator extends TransformerImpl {
      * @param s a <code>Scope</code> node
      * @return transformed tree
      */
+    @Override
     public Tree walkScope(Scope s) {
 	Scope scope = (Scope) super.walkScope (s);
 	if (scope.getChild () instanceof Error) {
@@ -85,6 +86,7 @@ public class Propagator extends TransformerImpl {
      * @param e a <code>Error</code> node
      * @return transformed tree
      */
+    @Override
     public Tree walkError(Error e) {
 	Error error = (Error) super.walkError (e);
 	if (error.getChild () instanceof PermitOverridesRule) {

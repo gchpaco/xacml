@@ -30,7 +30,8 @@ public class OutputTest extends TestCase {
     public static void main (String[] args) {
         junit.textui.TestRunner.run (OutputTest.class);
     }
-    
+
+    @Override
     protected void setUp () {
         // ConstantValuePredicate a = new ConstantValuePredicate ("http://www.w3.org/2001/XMLSchema#string", "a");
         // ConstantValuePredicate b = new ConstantValuePredicate ("http://www.w3.org/2001/XMLSchema#string", "b");

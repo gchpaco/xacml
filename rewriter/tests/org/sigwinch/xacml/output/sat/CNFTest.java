@@ -16,6 +16,7 @@ public class CNFTest extends TestCase {
     private VariableReference b;
     private VariableReference c;
 
+    @Override
     public void setUp () {
         a = new VariableReference ("a");
         b = new VariableReference ("b");
@@ -93,16 +94,6 @@ public class CNFTest extends TestCase {
                                                           c));
         BooleanFormula result = formula.convertToCNF ();
         assert result.isInCNF();
-    }
-
-    private boolean isPrimitive (BooleanFormula formula) {
-        return formula instanceof VariableReference
-               || formula instanceof BooleanFormula.True
-               || formula instanceof BooleanFormula.False;
-    }
-
-    private boolean isOkayNot (BooleanFormula formula) {
-        return formula instanceof Not && isPrimitive (((Not) formula).formula);
     }
 
 }

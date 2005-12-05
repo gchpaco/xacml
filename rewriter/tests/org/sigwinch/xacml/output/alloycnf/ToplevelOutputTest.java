@@ -24,7 +24,7 @@ public class ToplevelOutputTest extends TestCase {
     VariableReference a, b, c;
     OutputVisitor out;
     StringWriter stream;
-    HashMap map;
+    HashMap<Predicate, String> map;
 
     public static Test suite() {
 	return new TestSuite(OutputTest.class);
@@ -32,14 +32,15 @@ public class ToplevelOutputTest extends TestCase {
 
     protected void reset () {
 	stream = new StringWriter ();
-	map = new HashMap ();
+	map = new HashMap<Predicate, String> ();
 	out = new OutputVisitor (new PrintWriter (stream), 0, map);
 	map.put (a, "a");
 	map.put (b, "b");
 	map.put (c, "c");
 	Predicate.reset ();
     }
-    
+
+    @Override
     protected void setUp() {
 	a = new VariableReference ("a");
 	b = new VariableReference ("b");

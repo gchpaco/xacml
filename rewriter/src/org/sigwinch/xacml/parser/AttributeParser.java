@@ -30,6 +30,7 @@ public class AttributeParser extends ExpressionParser {
      * @param element XML tree containing the attribute designator
      * @return the attribute as a predicate
      */
+    @Override
     public Predicate parseElement(Element element) {
 	String type = getXACMLAttribute (element, "DataType");
 	String id = getXACMLAttribute (element, "AttributeId");
@@ -52,6 +53,7 @@ public class AttributeParser extends ExpressionParser {
      * @param element an <code>Element</code> node
      * @return resulting predicate
      */
+    @Override
     public Predicate parseForError(Element element) {
 	boolean force = false;
 	if (getXACMLAttribute (element, "MustBePresent").equals ("True"))
@@ -61,7 +63,7 @@ public class AttributeParser extends ExpressionParser {
 
 	String type = getXACMLAttribute (element, "DataType");
 	String id = getXACMLAttribute (element, "AttributeId");
-	String bagsize = (String) type2bagsize.get (type);
+	String bagsize = type2bagsize.get (type);
 	return new FunctionCallPredicate
 	    ("urn:oasis:names:tc:xacml:1.0:function:integer-equal",
 	     new Predicate [] {

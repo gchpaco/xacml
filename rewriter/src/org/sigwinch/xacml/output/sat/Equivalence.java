@@ -23,6 +23,7 @@ public class Equivalence implements BooleanFormula {
      * 
      * @see java.lang.Object#toString()
      */
+    @Override
     public String toString () {
         return "(<=> " + left + " " + right + ")";
     }
@@ -32,12 +33,13 @@ public class Equivalence implements BooleanFormula {
      * 
      * @see java.lang.Object#equals(java.lang.Object)
      */
+    @Override
     public boolean equals (Object obj) {
         if (obj instanceof Equivalence) {
             Equivalence obj2 = (Equivalence) obj;
             return obj2.left.equals (left) && obj2.right.equals (right);
-        } else
-            return super.equals (obj);
+        }
+        return super.equals (obj);
     }
 
     /*
@@ -45,6 +47,7 @@ public class Equivalence implements BooleanFormula {
      * 
      * @see java.lang.Object#hashCode()
      */
+    @Override
     public int hashCode () {
         return '=' ^ left.hashCode () ^ right.hashCode ();
     }

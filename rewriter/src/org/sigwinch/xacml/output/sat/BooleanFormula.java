@@ -16,6 +16,7 @@ public interface BooleanFormula {
             return FALSE;
         }
 
+        @Override
         public String toString () {
             return "true";
         }
@@ -37,6 +38,7 @@ public interface BooleanFormula {
             return TRUE;
         }
 
+        @Override
         public String toString () {
             return "false";
         }

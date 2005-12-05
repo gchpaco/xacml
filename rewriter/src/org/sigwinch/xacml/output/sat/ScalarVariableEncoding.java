@@ -32,8 +32,8 @@ public class ScalarVariableEncoding extends VariableEncoding {
     /**
      * 
      */
-    public Set disallowIllegals () {
-        HashSet illegals = new HashSet ();
+    public Set<BooleanFormula> disallowIllegals () {
+        HashSet<BooleanFormula> illegals = new HashSet<BooleanFormula> ();
         for (int i = multiplicity; i < 1 << names.length; i++) {
             BooleanFormula[] clauses = new BooleanFormula[names.length];
             for (int j = 0; j < clauses.length; j++) {
@@ -51,9 +51,10 @@ public class ScalarVariableEncoding extends VariableEncoding {
      * @return a Boolean formula that represents the <code>i</code> th value
      *         of this variable
      */
+    @Override
     public BooleanFormula address (int i) {
         assert 0 <= i && i < multiplicity: i + " is not between 0 and " + multiplicity;
-        ArrayList components = new ArrayList ();
+        ArrayList<BooleanFormula> components = new ArrayList<BooleanFormula> ();
         for (int j = 0; j < length; j++) {
             int index = 1 << j;
             if ((i & index) > 0)
@@ -62,7 +63,7 @@ public class ScalarVariableEncoding extends VariableEncoding {
                 components.add (names[j].negate ());
         }
         return new And (
-                        (BooleanFormula[]) components
+                        components
                                                      .toArray (new BooleanFormula[] {}));
     }
 

@@ -23,9 +23,9 @@ public class AlloySatOutput implements Output {
     PrintWriter stream;
     double slop;
     private int vars;
-    private HashMap var2num;
+    private HashMap<Object, Integer> var2num;
     private SatVisitor sat;
-    private TreeSet formulae;
+    private TreeSet<BooleanFormula> formulae;
     private Triple lastTree;
 
     public AlloySatOutput (PrintWriter stream, double slop) {
@@ -42,8 +42,8 @@ public class AlloySatOutput implements Output {
         sat = new SatVisitor ();
         sat.setMultiplicity ((int) slop);
         vars = 0;
-        var2num = new HashMap ();
-        formulae = new TreeSet (new SatVisitor.FormulaComparator ());
+        var2num = new HashMap<Object, Integer> ();
+        formulae = new TreeSet<BooleanFormula> (new SatVisitor.FormulaComparator ());
         lastTree = null;
     }
 
@@ -56,14 +56,17 @@ public class AlloySatOutput implements Output {
         tree.walk (sat);
         BooleanFormula formula = sat.computeFormula ();
         formula.visit (new FormulaImpl () {
+            @Override
             public void visitVariable (VariableReference var) {
                 super.visitVariable (var);
                 putVariable (var);
             }
+            @Override
             public void visitTrue (BooleanFormula.True t) {
                 super.visitTrue (t);
                 putVariable (t);
             }
+            @Override
             public void visitFalse (BooleanFormula.False f) {
                 super.visitFalse (f);
                 putVariable (f);
@@ -95,15 +98,15 @@ public class AlloySatOutput implements Output {
      * @see org.sigwinch.xacml.output.Output#postamble()
      */
     public void postamble () {
-        BooleanFormula [] allFormulae = (BooleanFormula[]) formulae.toArray (new BooleanFormula [] {});
+        BooleanFormula [] allFormulae = formulae.toArray (new BooleanFormula [] {});
         And full = new And (allFormulae);
-        int vars [] = new int [] { 0 };
-        Map variableMap = new TreeMap (new SatVisitor.FormulaComparator ());
-        BooleanFormula simpleFull = full.simplify ();
+        int variables [] = new int [] { 0 };
+        Map<BooleanFormula, Integer> variableMap = new TreeMap<BooleanFormula, Integer> (new SatVisitor.FormulaComparator ());
         BooleanFormula converted = StructurePreservingConverter.convert(full);
         BooleanFormula cnf = converted.convertToCNF();
-        int [][] array = StructurePreservingConverter.asArray (cnf, vars, variableMap);
+        int [][] array = StructurePreservingConverter.asArray (cnf, variables, variableMap);
 
+        //BooleanFormula simpleFull = full.simplify ();
         //stream.println ("c " + full + "\nc ==> " + simpleFull 
         //                    + "\nc ==> " + converted
         //                    + "\nc ==> " + cnf);
@@ -111,7 +114,7 @@ public class AlloySatOutput implements Output {
             VariableReference variable = (VariableReference) iter.next ();
             stream.println ("c " + variable + " == " + variableMap.get (variable));
         }
-        stream.println ("p cnf " + vars[0] + " " + array.length);
+        stream.println ("p cnf " + variables[0] + " " + array.length);
 
         for (int i = 0; i < array.length; i++) {
             for (int j = 0; j < array[i].length; j++) {

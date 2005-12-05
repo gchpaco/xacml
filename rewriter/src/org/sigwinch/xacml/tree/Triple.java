@@ -75,16 +75,20 @@ public class Triple extends Tree {
 	this.error = argError;
     }
 
+    @Override
     public boolean isFunction () { return true; }
+    @Override
     public void walk (Visitor v)
     {
 	v.walkTriple (this);
     }
+    @Override
     public Tree transform (Transformer t)
     {
 	return t.walkTriple (this);
     }
 
+    @Override
     public boolean equals (Object o)
     {
 	if (! (o instanceof Triple)) return false;
@@ -94,6 +98,7 @@ public class Triple extends Tree {
 	    error.equals (t.getError ());
     }
 
+    @Override
     public int hashCode ()
     {
 	return permit.hashCode () ^ deny.hashCode () ^ error.hashCode ();

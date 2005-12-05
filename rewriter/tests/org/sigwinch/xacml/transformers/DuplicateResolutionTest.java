@@ -26,7 +26,8 @@ public class DuplicateResolutionTest extends TestCase {
     public static Test suite() {
 	return new TestSuite(DuplicateResolutionTest.class);
     }
-    
+
+    @Override
     protected void setUp() {
 	a = new VariableReference ("a");
 	b = new VariableReference ("b");
