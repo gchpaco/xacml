@@ -1,0 +1,161 @@
+bin/alloy.cfg
+models/distalg/opt_spantree.als sRun 1
+models/distalg/dijkstra.als deadlock 1 nodeadlock 0
+models/distalg/s_ringlead.als liveness 0 someleader 1
+models/puzzles/hanoi.als smallgame 1
+models/systems/bart.als policy 1
+models/bugs/bug1/models/ord.als
+n models/bugs/bug1/models/seq.als
+n models/bugs/bug10/models/dijkstra.als
+models/bugs/bug11/models/foo.als
+models/bugs/bug12/models/ticks.als
+models/bugs/bug13/models/bool.als
+n models/bugs/bug13/models/messaging.als
+models/bugs/bug13/models/ord.als
+n models/bugs/bug13/models/ringlead.als
+models/bugs/bug14/eshop.als
+models/bugs/bug15/models/ord.als
+n models/bugs/bug15/models/stable_ringlead.als
+models/bugs/bug15/models/util.als
+models/bugs/bug16/models/bool.als
+models/bugs/bug16/models/ord.als
+models/bugs/bug16/models/util.als
+models/bugs/bug17/models/ord.als
+n models/bugs/bug17/models/s_ringlead.als
+models/bugs/bug17/models/util.als
+models/bugs/bug2/models/ord.als
+n models/bugs/bug2/models/seq.als
+n models/bugs/bug2/models/testseq.als
+models/bugs/bug3/models/ord.als
+n models/bugs/bug3/models/seq.als
+n models/bugs/bug3/models/testseq.als
+models/bugs/bug4/models/tree.als
+n models/bugs/bug5/models/testtree.als
+models/bugs/bug5/models/tree.als
+models/bugs/bug6/models/ord.als
+n models/bugs/bug6/models/seq.als
+n models/bugs/bug6/models/seq2.als
+n models/bugs/bug6/models/testseq.als
+models/bugs/bug7/ins.als
+models/bugs/bug8/models/graphs.als
+models/bugs/bug8/models/ord.als
+n models/bugs/bug8/models/seq.als
+n models/bugs/bug8/models/shortpath.als
+n models/bugs/bug8/models/testpath.als
+models/bugs/bug9/derclass.als
+models/bugs/bug_22OBI/test.als
+models/bugs/bug_3FnGA/test.als
+models/bugs/bug_3xy1a/test.als
+models/bugs/bug_5Jxa2/test.als
+models/bugs/bug_6QUMa/test.als
+models/bugs/bug_aJRK6/test.als
+n models/bugs/bug_eALBs/test.als
+models/bugs/bug_ehshp/test.als
+models/bugs/bug_GSgIB/test.als
+models/bugs/bug_HPT0f/test.als
+models/bugs/bug_jRuhG/test.als
+models/bugs/bug_lqxJn/test.als
+models/bugs/bug_odakj/test.als
+models/bugs/bug_PXsnJ/test.als
+models/bugs/bug_rK7QU/test.als
+models/bugs/bug_rWwYX/test.als
+models/bugs/bug_sjw4i/test.als
+models/bugs/bug_sPmWv/test.als
+models/bugs/bug_VvTlk/test.als
+models/bugs/bug_w54v2/test.als
+models/bugs/bug_xiSOB/test.als
+models/commonerrors/eshop.als
+models/distalg/messaging.als
+n models/distalg/msgs.als
+models/distalg/peterson.als
+models/distalg/ringlead.als
+n models/distalg/spantree.als
+models/distalg/stable_mutex_ring.als
+models/distalg/stable_orient_ring1.als
+models/distalg/stable_ringlead.als
+models/meta/alloy.als
+models/meta/AlloyNames.als
+models/meta/BasicBooleanDag.als
+n models/meta/CacheBooleanDag.als
+models/meta/CNFFormulas.als
+models/meta/CommonBooleanDefs.als
+models/meta/sat2cnf.als
+n models/meta/sharebool.als
+models/meta/subinst.als
+models/meta/SwitchBooleanDag.als
+models/meta/SwitchDagGrdOut.als
+models/misc/B-example.als
+models/misc/B_example.als
+models/misc/bbook.als
+models/misc/bmc1.als
+models/misc/bmodule.als
+models/misc/bothptrs.als
+models/misc/dag.als
+n models/misc/forest.als
+models/misc/geom.als
+models/misc/graphs.als
+models/misc/ldillon/lockingOrdered.als
+models/misc/ldillon/lockingTrace.als
+models/misc/ldillon/ord.als
+models/misc/ldillon/rev-Genshortcut.als
+models/misc/ldillon/rev-initialValues.als
+models/misc/ldillon/student-work/alloyBreak.als
+models/misc/ldillon/student-work/alloySeq.als
+models/misc/ldillon/student-work/lockingTrace1.als
+models/misc/ldillon/student-work/MylockingTrace1.als
+models/misc/ldillon/student-work/MyLockingTrace2.als
+models/misc/ldillon/student-work/NDLlockingTrace.als
+models/misc/ldillon/student-work/nolockTrace.als
+models/misc/ldillon/student-work/orderedlockingTrace.als
+models/misc/m.als
+models/misc/marksweepgc.als
+models/misc/mem.als
+n models/misc/mergesort.als
+models/misc/network.als
+models/misc/numtest.als
+models/misc/shortpath.als
+models/misc/shotcuts.als
+models/misc/showbug.als
+models/misc/stud.als
+models/misc/test.als
+models/misc/testgraphs.als
+models/misc/testpath.als
+models/misc/testqual.als
+models/misc/testseq.als
+models/misc/testskolem.als
+models/misc/testtree.als
+models/misc/testtype.als
+models/misc/ticks.als
+models/misc/toy.als
+models/misc/tree.als
+models/published_systems/chord.als
+models/published_systems/com.als
+models/published_systems/firewire.als
+n models/published_systems/ins.als
+models/published_systems/INSLabel.als
+models/published_systems/new-chord.als
+models/puzzles/hunter.als
+models/puzzles/life1.als
+models/puzzles/shakehands.als
+models/samples/birthday.als
+models/samples/ceilingsAndFloors.als
+models/samples/genealogy.als
+models/samples/handshake.als
+models/samples/javatypes.als
+models/samples/numbering.als
+models/std/bool.als
+models/std/ord.als
+models/std/seq.als
+models/std/util.als
+n models/systems/alfa-dyn.als
+n models/systems/alfa-static.als
+models/systems/drscheme.als
+models/systems/file_system.als
+models/systems/new-views.als
+models/systems/railway.als
+models/systems/registry.als
+models/systems/webapp.als
+tests/java/lang/Integer.als
+tests/java/util/TreeMap.als
+tests/russell.als
+tests/toy.als

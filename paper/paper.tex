@@ -1,0 +1,277 @@
+\documentclass{acm_proc_article-sp}
+\usepackage{amsmath}
+\usepackage{times}
+\usepackage{mathptm}
+\renewcommand{\ttdefault}{cmtt}
+\DeclareMathOperator{\eff}{eff}
+\DeclareMathOperator{\xpathmatch}{xpathnodematch}
+\DeclareMathOperator{\translation}{translate}
+\DeclareMathOperator{\extract}{extract}
+\DeclareMathOperator{\constant}{constant}
+\DeclareMathOperator{\env}{env}
+\newcommand{\step}[1]{\intertext{\{#1\}}}
+\newcommand{\mtt}[1]{\text{\texttt{#1}}}
+\newcommand{\itmathcommand}[1]{\ensuremath{\text{\textit{#1}}}}
+\newcommand{\Scope}{\itmathcommand{Scope}}
+\newcommand{\Err}{\itmathcommand{Err}}
+\newcommand{\Permit}{\itmathcommand{Permit}}
+\newcommand{\Deny}{\itmathcommand{Deny}}
+\newcommand{\Indeterminate}{\itmathcommand{Indet}}
+\newcommand{\NotApplicable}{\itmathcommand{NotApp}}
+
+\begin{document}
+\title{Automated Verification of Access Control Policies}
+\numberofauthors{2}
+\author{
+\alignauthor Graham Hughes \quad Tevfik Bultan \\
+      \affaddr{Computer Science Department} \\
+      \affaddr{University of California} \\
+      \affaddr{Santa Barbara, CA 93106, USA} \\
+      \email{\{graham,bultan\}@cs.ucsb.edu} \\
+}
+\date\today
+\maketitle
+
+\begin{abstract}
+  Managing access control policies in modern computer systems can be
+  challenging and error-prone, especially when multiple access
+  policies are combined to form new policies, possibly introducing
+  unintended consequences.  In this paper we present a framework for
+  automated verification of access control policies.  We introduce a
+  formal model for systematically specifying access to resources.  We
+  show that the access control policies in the XACML access control
+  language can be translated to a simple form which partitions the
+  input domain to four classes: permit, deny, error, and
+  not-applicable.  We present several ordering relations for access
+  control policies which can be used to specify the properties of
+  the policies and the relationships among them.  We then show how to
+  automatically check these ordering relations using an existing
+  automated analysis tool.  In particular, we translate XACML policies
+  to the Alloy language and check their properties using the Alloy
+  Analyzer.  Our experimental results demonstrate that automated
+  verification of XACML policies is feasible.
+\end{abstract}
+
+
+\input{introduction}
+\input{policyspec}
+\input{properties}
+\input{translating}
+\input{experiments}
+\input{conclusion}
+
+\bibliographystyle{abbrv}
+%\bibliography{citations/citations.bib}
+\begin{thebibliography}{10}
+
+\bibitem{abadpeiro99plas}
+J.~L. Abad-Peiro, H.~Debar, T.~Schweinberger, and P.~Trommler.
+\newblock {PLAS} --- {P}olicy language for authorizations.
+\newblock Technical Report RZ 3126, IBM Research Division, 1999.
+
+\bibitem{abadi93calculus}
+M.~Abadi, M.~Burrows, B.~Lampson, and G.~Plotkin.
+\newblock A calculus for access control in distributed systems.
+\newblock {\em ACM Transactions on Programming Languages and Systems},
+  15(4):706--734, September 1993.
+
+\bibitem{bertino98access}
+E.~Bertino, C.~Bettini, E.~Ferrari, and P.~Samarati.
+\newblock An access control model supporting periodicity constraints and
+  temporal reasoning.
+\newblock {\em ACM Transactions on Database Systems}, 23(3):231--285, 1998.
+
+\bibitem{bonatti01dataarchives}
+P.~Bonatti, E.~Damiani, S.~{De Capitani di Vimercati}, and P.~Samarati.
+\newblock An access control model for data archives.
+\newblock In {\em Proceedings of the 16th international conference on
+  information security: trusted information}, pages 261--276, Paris, France,
+  2001. Kluwer International Federation For Information Processing Series.
+
+\bibitem{bonatti02algebra}
+P.~Bonatti, S.~{De Capitani di Vimercati}, and P.~Samarati.
+\newblock An algebra for composing access control policies.
+\newblock {\em ACM Transactions on Information Systems Security}, 5(1):1--35,
+  2002.
+
+\bibitem{damiani02SVG}
+E.~Damiani, S.~{De Capitani di Vimercati}, E.~Fern\'andez-Medina, and
+  P.~Samarati.
+\newblock Access control of {SVG} documents.
+\newblock In {\em Proceedings of DBSec 2002}, pages 219--230, 2002.
+
+\bibitem{damiani00design}
+E.~Damiani, S.~{De Capitani di Vimercati}, S.~Paraboschi, and P.~Samarati.
+\newblock Design and implementation of an access control processor for {XML}
+  documents.
+\newblock {\em Computer Networks}, 33(1--6):59--75, 2000.
+
+\bibitem{damiani02fine}
+E.~Damiani, S.~{De Capitani di Vimercati}, S.~Paraboschi, and P.~Samarati.
+\newblock A fine-grained access control system for {XML} documents.
+\newblock {\em ACM Transactions on Information Systems Security},
+  5(2):169--202, 2002.
+
+\bibitem{damiani01controllingaccess}
+E.~Damiani, P.~Samarati, S.~{De Capitani di Vimercati}, and S.~Paraboschi.
+\newblock Controlling access to {XML} documents.
+\newblock {\em IEEE Internet Computing}, 5(6):18--28, 2001.
+
+\bibitem{divimercati96federated}
+S.~{De Capitani di Vimercati} and P.~Samarati.
+\newblock Access control in federated systems.
+\newblock In {\em Proceedings of the 1996 workshop on new security paradigms},
+  pages 87--99, Lake Arrowhead, California, United States, 1996. ACM Press.
+
+\bibitem{heckman98applying}
+M.~Heckman and K.~N. Levitt.
+\newblock Applying the composition principle to verify a hierarchy of security
+  servers.
+\newblock In {\em {HICSS} (3)}, pages 338--347, 1998.
+
+\bibitem{jackson:micromodels}
+D.~Jackson.
+\newblock Micromodels of software: Modeling and analysis with {A}lloy.
+\newblock \texttt{http://sdg.lcs.mit.edu/alloy/reference-manual.pdf}.
+
+\bibitem{jackson00automating}
+D.~Jackson.
+\newblock Automating first-order relational logic.
+\newblock In {\em Proc. ACM SIGSOFT COnf. Foundations of Software Engineering},
+  November 2000.
+
+\bibitem{jackson:elements}
+D.~Jackson and C.~A. Damon.
+\newblock Elements of style: Analyzing a software design feature with a
+  counterexample detector.
+\newblock {\em IEEE Transactions on Software Engineering}, 22(7), July 1996.
+
+\bibitem{jackson:alcoa}
+D.~Jackson, I.~Schechter, and I.~Shlyakhter.
+\newblock Alcoa: the {A}lloy constraint analyzer.
+\newblock In {\em Proceedings of International Conference on Software
+  Engineering}, Limerick, Ireland, June 2000. IEEE.
+
+\bibitem{jackson01lightweight}
+D.~Jackson and A.~Waingold.
+\newblock Lightweight extraction of object models from bytecode.
+\newblock In {\em IEEE Transactions on Software Engineering}, February 2001.
+
+\bibitem{jajodia01multiplepolicies}
+S.~Jajodia, P.~Samarati, M.~L. Sapino, and V.~S. Subrahmanian.
+\newblock Flexible support for multiple access control policies.
+\newblock {\em ACM Transactions on Database Systems}, 26(2):214--260, 2001.
+
+\bibitem{jajodialogical}
+S.~Jajodia, P.~Samarati, and V.~S. Subrahmanian.
+\newblock A logical language for expressing authorizations.
+\newblock In {\em Proceedings of the 1997 IEEE Symposium on Security and
+  Privacy}, pages 31--42, Oakland, CA, USA, 1997. IEEE Press.
+
+\bibitem{jajoida97unified}
+S.~Jajodia, P.~Samarati, V.~S. Subrahmanian, and E.~Bertino.
+\newblock A unified framework for enforcing multiple access control policies.
+\newblock In {\em SIGMOD'97}, pages 474--485, Tucson, AZ, May 1997.
+
+\bibitem{marinov:exhaustive}
+D.~Marinov, A.~Andoni, D.~Danilinc, S.~Khurshid, and M.~Rinard.
+\newblock An evaluation of exhaustive testing for data structures.
+\newblock Technical Report MIT-LCS-TR-921, MIT CSAIL, 2003.
+
+\bibitem{marinov02valloy}
+D.~Marinov and S.~Khurshid.
+\newblock {VA}lloy: Virtual functions meet a relational language.
+\newblock In {\em 11th International Symposium of Formal Methods Europe (FME
+  2002)}, Copenhagen, Denmark, July 2002.
+
+\bibitem{naumovich:permission-analysis}
+G.~Naumovich.
+\newblock A conservative algorithm for computing the flow of permissions in
+  {J}ava programs.
+\newblock In {\em Proceedings of the International Symposium on Software
+  Testing and Analysis ({ISSTA} '02)}, pages 33--43, July 2002.
+
+\bibitem{nolte02filesystem}
+T.~Nolte.
+\newblock Exploring filesystem synchronization with lightweight modeling and
+  analysis.
+\newblock Master's thesis, MIT, August 2002.
+
+\bibitem{samarati01policiesmodelsmechanisms}
+P.~Samarati and S.~{De Capitani di Vimercati}.
+\newblock {\em Foundations of Security Analysis and Design}, chapter~3, pages
+  137--196.
+\newblock Springer Verlag, 2001.
+
+\bibitem{sandhu96audit}
+R.~Sandhu and P.~Samarati.
+\newblock Authentication, access control, and audit.
+\newblock {\em ACM Computing Surveys}, 28(1):241--243, 1996.
+
+\bibitem{sandhu93latticebased}
+R.~S. Sandhu.
+\newblock Lattice-based access control models.
+\newblock {\em IEEE Computer}, 26(11):9--19, November 1993.
+
+\balancecolumns
+\bibitem{sandhu96rolebased}
+R.~S. Sandhu, E.~J. Coyne, H.~L. Feinstein, and C.~E. Youman.
+\newblock Role-based access control models.
+\newblock {\em IEEE Computer}, 29(2):38--47, 1996.
+
+\bibitem{sandhu94access}
+R.~S. Sandhu and P.~Samarati.
+\newblock Access control: Principles and practice.
+\newblock {\em IEEE Communications Magazine}, 32(9):40--48, 1994 1994.
+
+\bibitem{schaad:lightweight}
+A.~Schaad and J.~Moffet.
+\newblock A lightweight approach to specification and analysis of role-based access control extensions.
+\newblock In {\em 7th ACM Symposium on Access Control Models and Technologies (SACMAT 2002)}, June 2002.
+
+\bibitem{vaziri03heap}
+M.~Vaziri and D.~Jackson.
+\newblock Checking heap-manipulating procedures with a constraint solver.
+\newblock In {\em TACAS'03}, Warsaw, Poland, 2003.
+
+\bibitem{waingold01automated}
+A.~Waingold.
+\newblock Automated extraction of abstract object models.
+\newblock Master's thesis, MIT, May 2001.
+
+\bibitem{zao:rbac}
+J.~Zao, H.~Wee, J.~Chu, and D.~Jackson.
+\newblock {RBAC} schema verification using lightweight formal model and constraint analysis.
+\newblock XXX
+
+\bibitem{xacml}
+{eXtensible Access Control Markup Language (XACML)} version 1.0.
+\newblock OASIS Standard, February 2003.
+
+\bibitem{XML}
+Extensible markup language ({XML}) 1.0 (second edition), 2000.
+
+\bibitem{xmlschema}
+{XML Schema} part 2: Datatypes.
+\newblock W3C Recommendation, May 2001.
+
+\end{thebibliography}
+
+\clearpage
+\appendix
+\section{XACML Representation of Voting Example and Alloy Translation}
+\label{sec:xacml-repr-voting}
+
+{ \small
+\input{trimmedexample.xacml.tex}
+}
+\newpage
+
+\section{Alloy Translation}
+\label{sec:alloy-trans}
+
+{ \small
+\input{trimmedexample.als.tex}
+}
+
+\end{document}

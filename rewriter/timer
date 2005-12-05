@@ -1,0 +1,12 @@
+#!/bin/sh -e
+ALLOYDIR=../alloydist
+JARFILE="=build.dist/rewrite.jar"
+TMPFILE=`mktemp` || exit 1
+java -jar $JARFILE "$@" > $TMPFILE
+for x in 1 2 3 4 5
+do
+	echo "Run $x"
+	cd $ALLOYDIR && time java -cp alloy.jar alloy.api.AlloyRunner \
+		$TMPFILE
+done
+rm -f $TMPFILE

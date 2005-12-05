@@ -1,0 +1,86 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+    
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <title>Lynda.com Network Notes</title>
+  <link rel="meta" type="application/rdf+xml" title="FOAF"
+  href="foaf.rdf" />
+  <meta name="foaf:maker" 
+  content="foaf:mbox_sha1sum '00c8db8ce01c91009c596d518bdd8999d4d52377'" />
+</head>
+
+<body>
+<h1>Lynda.com Network Notes</h1>
+
+<ul>
+  <li>Network topology:
+    <ul>
+      <li>web server outside the firewall</li>
+      <li>untrusted classroom network inside the firewall</li>
+      <li>mostly-trusted corporate network inside</li>
+      <li>financial network centered around FileMaker server, but with
+      some components on web server</li>
+       </ul></li>
+  <li>Goals:
+   <ul>
+    <li>No one outside the network should be able to snoop traffic inside</li>
+    <li>No one outside the network should be able to communicate with anything
+    e xcept one machine using DNS, SMTP, POP3, IMAP</li>
+    <li>No one should be able to hit other machines through that one box</li>
+    <li>Especially no one outside the network should be able to snoop login 
+    data or financial data to/from the web server</li>
+    <li>No one on the classroom network should be able to get access to the 
+    corporate network except for restricted access to the file server</li>
+    <li>No one in the mostly-trusted network should be able to snoop other 
+    traffic or get financial data</li>
+  </ul></li>
+  <li>Actually implemented:
+  <ul>
+    <li>Well, if the firewall worked perfectly no one should be able to snoop 
+    traffic inside, and it was pretty good</li>
+    <li>Classroom network was in no way save physically segregated from rest 
+    of network; this might have been good enough for stupid FileMaker</li>
+    <li>Everybody and their sister had FileMaker logins</li>
+    <li>Order data was sent through PGP encrypted email, and conference 
+    financial retrieval was through HTTP over SSL, but order data was 
+    retrieved via cleartext protocol--didn't involve credit card data, 
+    though</li>
+    <li>Web monkey tools insisted upon using plaintext FTP, which is an 
+    absolute bear to secure, so we didn't</li>
+    <li>Holes opened in firewall for sysadmin use but also because of 
+    stupid Windows box</li>
+    <li>Windows file server far from secure (or stable for that matter)</li>
+    <li>Political issues involved in changing this</li>
+    <li>DMZ was thought of, never achieved</li>
+  </ul></li>
+</ul>
+
+<p>Rendering this into XACML would probably require at least five
+policies.  Probably more for detailed stuff.  Assume list of financial
+users is an environmental property.  Assume network location is a
+subject property or whatever.</p>
+
+<p>It would be <i>gratifying</i> if the Alloy solution would propose
+my preferred solution (physical subnetting of the three separate
+networks, separate fileserver would be ideal but impractical, so we'll
+settle for secure fileserver, mail/DNS server on DMZ, all
+communications between firewall and web server should be encrypted).
+This was politically impossible and technically infeasable.</p>
+
+<p>More details:</p>
+
+<ul>
+<li>Only web server should be able to connect to database (not
+physically possible due to stupid script, but nice in ideal)</li>
+<li>Only blessed users can connect to conference management</li>
+<li>Only blessed users can read/write email</li>
+<li>Only financial users and scripts could connect to financial 
+database</li>
+<li>Only blessed users could connect to full file server</li>
+<li>Only classroom users could connect to classroom stuff</li>
+<li>No communication from office to firewall should be unencrypted</li>
+</ul>
+
+</body>
+</html>

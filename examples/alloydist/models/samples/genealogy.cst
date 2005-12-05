@@ -1,0 +1,10 @@
+VIEW_UN
+SAVE_DOT
+TYPE Person VISIBLE color:white shape:ellipse namelabel:Person
+RELATION Person$spouse VISIBLE EDGELABEL edgecolor:red namelabel:spouse
+RELATION Eve VISIBLE SETLABEL EDGELABEL edgecolor:black namelabel:Eve
+RELATION Woman VISIBLE EDGELABEL setcolor:magenta edgecolor:black namelabel:Woman
+RELATION Person VISIBLE EDGELABEL edgecolor:black namelabel:Person
+RELATION Person$parents VISIBLE edgecolor:black namelabel:Person$parents
+RELATION Adam VISIBLE SETLABEL EDGELABEL edgecolor:black namelabel:Adam
+RELATION Man VISIBLE EDGELABEL setcolor:cyan edgecolor:black namelabel:Man

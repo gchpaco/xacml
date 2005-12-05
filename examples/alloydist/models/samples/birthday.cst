@@ -1,0 +1,10 @@
+VIEW_UN
+SAVE_DOT
+TYPE Date VISIBLE color:cyan shape:ellipse namelabel:Date
+TYPE Name VISIBLE color:yellow shape:ellipse namelabel:Name
+TYPE BirthdayBook PROJECT VISIBLE color:white shape:ellipse namelabel:BirthdayBook
+RELATION Date VISIBLE EDGELABEL edgecolor:black namelabel:Date
+RELATION Name VISIBLE EDGELABEL edgecolor:black namelabel:Name
+RELATION BirthdayBook$known VISIBLE SETLABEL EDGELABEL edgecolor:black namelabel:known
+RELATION BirthdayBook VISIBLE EDGELABEL edgecolor:black namelabel:BirthdayBook
+RELATION BirthdayBook$date VISIBLE EDGELABEL edgecolor:black namelabel:date

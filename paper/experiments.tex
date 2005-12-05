@@ -1,0 +1,107 @@
+\section{Experiments}
+\label{sec:experiments}
+
+Our tool generates Alloy code which is then run through the Alloy
+Analyzer to do the analysis.  It is targeted for proving things about
+$\sqsubseteq$ relations, but we can use it for simpler questions as
+well.
+
+One such question might be `give a tuple $e$ such that $\eff (e, p) =
+\Permit$' (where $p$ is defined as in our running example).  We
+generate the Alloy code for the XACML policy, as normal, and then
+append the following:
+\begin{verbatim}
+fun CheckTuple {
+    some T0.permit
+}
+run CheckTuple for 2 but 2 Bool, 1 Triple, 8 Type
+\end{verbatim}
+The numbers after \texttt{CheckTuple} establish how deeply we will
+look; we're looking for such a tuple in a universe where there are two
+Boolean values, only one Triple (\texttt{T0}, the one generated
+through $\translation(p)$), 8 domain types (strings, integers, and the
+like)), and two elements of everything else.  If we run this, the
+analyzer tells us that the tuple $\langle \{ \mtt{Type\_6} \},$ $\{
+\mtt{Bool\_1} \},$ $\{ \mtt{Type\_7} \} \rangle$ generates a
+\Permit{}, and further examination of the output shows that
+\texttt{Bool\_1} is \texttt{True}, \texttt{Type\_6} is 18, and
+\texttt{Type\_7} is the string \texttt{vote}.  Through similar means
+we can discover that the tuple $\langle \{ 18 \}, \{ \}, \{ \mtt{vote}
+\} \rangle$ will generate an error.
+
+For something more interesting, we try to show that $p_v \sqsubseteq_D
+p_c$, as we proved manually.  Our coda now becomes
+\begin{verbatim}
+assert Subset {
+    T0.deny in T1.deny
+}
+check Subset for 2 but 2 Bool, 2 Triple, 10 Type
+\end{verbatim}
+We get a counterexample almost immediately, giving us the tuple we
+constructed in Section~\ref{sec:properties-policies}.  If we modify
+the policy so as to restrict result checking to only those who voted
+successfully, then the subset relation holds, and no counterexample is
+produced.
+
+\subsection{Timing Data}
+
+These are but small examples, so they do not reflect the time required
+to solve large problems that one might reasonably ask.  Since the
+underlying problem (SAT) is NP complete, it is reasonable to ask
+whether these techniques are useful at all as the problem size
+increases.
+
+There are two sides to this.  One side is that larger and more complex
+policies will inescapably take longer than small policies.  The other
+is that---in the context of problems in $BP_3$ and $BP_4$, where we
+must restrain the domains to a certain finite size---the amount of
+computation involved as the size of the domain increases may trigger
+the exponential worst case behavior.
+
+\begin{figure}
+  \centering
+  \includegraphics{data/chart}
+  \caption{Run time vs. domain size plotted for $P_1$ and $P_2$}
+  \label{fig:graph}
+\end{figure}
+
+\begin{table}
+\centering
+\begin{tabular}{ccc}
+Domain size & \multicolumn{2}{c}{Comparison} \\
+& $P_3 \sqsubseteq P_4$ & $P_4 \not\sqsubseteq P_3$ \\
+\input{data/invloutput}
+\end{tabular}
+\caption{Median run time of Medico example ($P_4$) and subset ($P_3$) in seconds}
+\label{tbl:bigdata}
+\end{table}
+
+To demonstrate that the analysis is still feasible, we have collected
+two sets of data.  The first, which we have charted in
+Figure~\ref{fig:graph}, shows the time required to verify or refute a
+relationship between two example policies.  It shows how the technique
+scales as the size of the domain sets increases.  The second set of
+data proves and refutes a relationship between the Medico policy from
+Section~4.2 of the XACML specification~\cite{xacml} and a subset of
+itself.  This shows that the technique is feasible for larger
+policies.  All these benchmarks were performed on a 1 GHz PowerPC, and
+all times are the median of five runs, to smooth out irregularities.
+In each case, trials were run until the formula proved too large for
+Alloy Analyzer to handle; past the given sizes the analyzer would fail
+cryptically.  ``Domain size'' means the number of elements we are
+using for our analysis, in each domain; so a domain size of 8 for our
+example environment $E$ means we simulate every $e \in E$ where
+$|e[i]| \leq 8$ for each component in $E$.
+
+The data indicates that the time required for analysis is exponential
+in the size of the scope, which is to be expected for a SAT based
+algorithm.  However, all times are under two minutes, and our
+technique can clearly prove important properties of these problems in
+a useful amount of time.
+
+% arch-tag: 5a3a4d97-641f-4c94-804d-9ec83256e4e6
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: "paper"
+%%% End: 

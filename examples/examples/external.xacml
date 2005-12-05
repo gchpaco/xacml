@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Policy xmlns="urn:oasis:names:tc:xacml:1.0:policy"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           PolicyId="urn:com:example:network:external"
+           RuleCombiningAlgId="urn:oasis:names:tc:xacml:1.0:rule-combining-algorithm:first-applicable">
+  <Description>
+    The rules governing external access to the example.com network
+  </Description>
+  <Target>
+    <Subjects>
+      <Subject>
+        <SubjectMatch MatchId="urn:oasis:names:tc:xacml:1.0:function:string-equal">
+          <AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">
+            External
+          </AttributeValue>
+          <SubjectAttributeDesignator
+            AttributeId="urn:com:example:network:source:network"
+            DataType="http://www.w3.org/2001/XMLSchema#string"/>
+        </SubjectMatch>
+      </Subject>
+    </Subjects>
+    <Resources><AnyResource/></Resources>
+    <Actions><AnyAction/></Actions>
+  </Target>
+  <Rule RuleId="urn:com:example:network:external:servers"
+        Effect="Permit">
+    <Description>
+      External people may open connections to externally-permitted servers.
+    </Description>
+    <Target>
+      <Subjects>
+        <Subject>
+          <SubjectMatch MatchId="urn:oasis:names:tc:xacml:1.0:function:string-equal">
+            <AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">
+              Server
+            </AttributeValue>
+            <SubjectAttributeDesignator
+              AttributeId="urn:com:example:network:target:network"
+              DataType="http://www.w3.org/2001/XMLSchema#string"/>
+          </SubjectMatch>
+          <SubjectMatch MatchId="urn:oasis:names:tc:xacml:1.0:function:string-equal">
+            <AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">
+              External Server
+            </AttributeValue>
+            <SubjectAttributeDesignator
+              AttributeId="urn:com:example:network:target:role"
+              DataType="http://www.w3.org/2001/XMLSchema#string"/>
+          </SubjectMatch>
+        </Subject>
+      </Subjects>
+      <Resources><AnyResource/></Resources>
+      <Actions>
+        <Action>
+          <ActionMatch MatchId="urn:oasis:names:tc:xacml:1.0:function:string-equal">
+            <AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">
+              initiation
+            </AttributeValue>
+            <ActionAttributeDesignator
+              AttributeId="urn:com:example:network:packet-nature"
+              DataType="http://www.w3.org/2001/XMLSchema#string"/>
+          </ActionMatch>
+        </Action>
+      </Actions>
+    </Target>
+  </Rule>
+  <Rule RuleId="urn:com:example:network:external:noinitiation"
+        Effect="Deny">
+    <Description>
+      Don't let external entities open communication to any other parts
+      of the internal network.
+    </Description>
+    <Target>
+      <Subjects><AnySubject/></Subjects>
+      <Resources><AnyResource/></Resources>
+      <Actions>
+        <Action>
+          <ActionMatch MatchId="urn:oasis:names:tc:xacml:1.0:function:string-equal">
+            <AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">
+              initiation
+            </AttributeValue>
+            <ActionAttributeDesignator
+              AttributeId="urn:com:example:network:packet-nature"
+              DataType="http://www.w3.org/2001/XMLSchema#string"/>
+          </ActionMatch>
+        </Action>
+      </Actions>
+    </Target>
+  </Rule>
+</Policy>

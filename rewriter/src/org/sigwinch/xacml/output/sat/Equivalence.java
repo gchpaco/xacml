@@ -1,0 +1,92 @@
+/*
+ * Created on May 30, 2005
+ */
+package org.sigwinch.xacml.output.sat;
+
+/**
+ * @author graham
+ */
+public class Equivalence implements BooleanFormula {
+    BooleanFormula left, right;
+
+    /**
+     * @param left
+     * @param right
+     */
+    public Equivalence (BooleanFormula left, BooleanFormula right) {
+        this.left = left;
+        this.right = right;
+    }
+
+    /*
+     * (non-Javadoc)
+     * 
+     * @see java.lang.Object#toString()
+     */
+    public String toString () {
+        return "(<=> " + left + " " + right + ")";
+    }
+
+    /*
+     * (non-Javadoc)
+     * 
+     * @see java.lang.Object#equals(java.lang.Object)
+     */
+    public boolean equals (Object obj) {
+        if (obj instanceof Equivalence) {
+            Equivalence obj2 = (Equivalence) obj;
+            return obj2.left.equals (left) && obj2.right.equals (right);
+        } else
+            return super.equals (obj);
+    }
+
+    /*
+     * (non-Javadoc)
+     * 
+     * @see java.lang.Object#hashCode()
+     */
+    public int hashCode () {
+        return '=' ^ left.hashCode () ^ right.hashCode ();
+    }
+    
+    /* (non-Javadoc)
+     * @see org.sigwinch.xacml.output.sat.BooleanFormula#negate()
+     */
+    public BooleanFormula negate () {
+        return new Not (this);
+    }
+
+    /* (non-Javadoc)
+     * @see org.sigwinch.xacml.output.sat.BooleanFormula#visit(org.sigwinch.xacml.output.sat.FormulaVisitor)
+     */
+    public void visit (FormulaVisitor impl) {
+        impl.visitEquivalence (this);
+    }
+
+    /* (non-Javadoc)
+     * @see org.sigwinch.xacml.output.sat.BooleanFormula#convertToCNF()
+     */
+    public BooleanFormula convertToCNF () {
+        return new Or (new And (left, right), new And (left.negate (), right.negate ())).convertToCNF ();
+    }
+    
+    public BooleanFormula simplify () {
+        BooleanFormula l = left.simplify ();
+        BooleanFormula r = right.simplify ();
+        if (l == BooleanFormula.TRUE)
+            return r;
+        else if (r == BooleanFormula.TRUE)
+            return l;
+        else if (l == BooleanFormula.FALSE)
+            return r.negate ().simplify ();
+        else if (r == BooleanFormula.FALSE)
+            return l.negate ().simplify ();
+        else
+            return new Equivalence (l, r);
+    }
+    public boolean isInCNF () { return false; }
+
+}
+
+
+// arch-tag: Equivalence.java May 30, 2005 2:39:51 AM

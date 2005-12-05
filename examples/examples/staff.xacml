@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Policy xmlns="urn:oasis:names:tc:xacml:1.0:policy"
+	   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	   PolicyId="urn:com:example:network:staff"
+	   RuleCombiningAlgId="urn:oasis:names:tc:xacml:1.0:rule-combining-algorithm:deny-overrides">
+  <Description>
+    The rules governing network access for staff.
+  </Description>
+  <Target>
+    <Subjects>
+      <Subject>
+        <SubjectMatch MatchId="urn:oasis:names:tc:xacml:1.0:function:string-equal">
+          <AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">
+            Staff
+          </AttributeValue>
+          <SubjectAttributeDesignator
+            AttributeId="urn:com:example:network:source:network"
+            DataType="http://www.w3.org/2001/XMLSchema#string"/>
+        </SubjectMatch>
+      </Subject>
+    </Subjects>
+    <Resources><AnyResource/></Resources>
+    <Actions><AnyAction/></Actions>
+  </Target>
+  <Rule RuleId="urn:com:example:network:staff:internal"
+	Effect="Permit">
+    <Description>
+      Staff can access their own network.
+    </Description>
+    <Target>
+      <Subjects>
+        <Subject>
+	  <SubjectMatch MatchId="urn:oasis:names:tc:xacml:1.0:function:string-equal">
+	    <AttributeValue DataType="http;//www.w3.org/2001/XMLSchema#string">
+	      Staff
+	    </AttributeValue>
+	    <SubjectAttributeDesignator
+	      AttributeId="urn:com:example:network:target:network"
+	      DataType="http://www.w3.org/2001/XMLSchema#string"/>
+	  </SubjectMatch>
+        </Subject>
+      </Subjects>
+      <Resources><AnyResource/></Resources>
+      <Actions><AnyAction/></Actions>
+    </Target>
+  </Rule>
+  <Rule RuleId="urn:com:example:network:staff:servers"
+	Effect="Permit">
+    <Description>
+      Staff can access internal servers.
+    </Description>
+    <Target>
+      <Subjects>
+        <Subject>
+	  <SubjectMatch MatchId="urn:oasis:names:tc:xacml:1.0:function:string-equal">
+	    <AttributeValue DataType="http;//www.w3.org/2001/XMLSchema#string">
+	      Internal Server
+	    </AttributeValue>
+	    <SubjectAttributeDesignator
+	      AttributeId="urn:com:example:network:target:role"
+	      DataType="http://www.w3.org/2001/XMLSchema#string"/>
+	  </SubjectMatch>
+        </Subject>
+      </Subjects>
+      <Resources><AnyResource/></Resources>
+      <Actions><AnyAction/></Actions>
+    </Target>
+  </Rule>
+  <Rule RuleId="urn:com:example:network:staff:external"
+	Effect="Permit">
+    <Description>
+      Staff may speak to the world at large.
+    </Description>
+    <Target>
+      <Subjects>
+        <Subject>
+	  <SubjectMatch MatchId="urn:oasis:names:tc:xacml:1.0:function:string-equal">
+	    <AttributeValue DataType="http;//www.w3.org/2001/XMLSchema#string">
+	      External
+	    </AttributeValue>
+	    <SubjectAttributeDesignator
+	      AttributeId="urn:com:example:network:target:network"
+	      DataType="http://www.w3.org/2001/XMLSchema#string"/>
+	  </SubjectMatch>
+        </Subject>
+      </Subjects>
+      <Resources><AnyResource/></Resources>
+      <Actions><AnyAction/></Actions>
+    </Target>
+  </Rule>
+</Policy>

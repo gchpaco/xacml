@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Rule RuleId="urn:oasis:names:tc:xacml:examples:ruleid:3"
+  xmlns="urn:oasis:names:tc:xacml:1.0:policy"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xmlns:md="http://www.medico.com/schemas/record.xsd"
+  Effect="Permit">
+  <Description>
+    A physician may write any medical element in a record for which 
+    he or she is the designated primary care physician, provided an 
+    email is sent to the patient.
+  </Description>
+  <Target>
+    <Subjects>
+      <Subject>
+	<SubjectMatch
+	  MatchId="urn:oasis:names:tc:xacml:1.0:function:string-equal">
+	  <AttributeValue
+	    DataType="http://www.w3.org/2001/XMLSchema#string">physician</AttributeValue>
+	  <SubjectAttributeDesignator AttributeId=
+	    "urn:oasis:names:tc:xacml:1.0:example:attribute:role"
+	    DataType="http://www.w3.org/2001/XMLSchema#string"/>
+	</SubjectMatch>
+      </Subject>
+    </Subjects>
+    <Resources>
+      <Resource>
+	<ResourceMatch
+	  MatchId="urn:oasis:names:tc:xacml:1.0:function:xpath-node-match">
+	  <AttributeValue 
+	    DataType="http://www.w3.org/2001/XMLSchema#string">
+	    /md:record/md:medical
+	  </AttributeValue>
+	  <ResourceAttributeDesignator AttributeId=
+	    "urn:oasis:names:tc:xacml:1.0:resource:xpath"
+	    DataType="http://www.w3.org/2001/XMLSchema#string"/>
+	</ResourceMatch>
+      </Resource>
+    </Resources>
+    <Actions>
+      <Action>
+	<ActionMatch
+	  MatchId="urn:oasis:names:tc:xacml:1.0:function:string-equal">
+	  <AttributeValue
+	    DataType="http://www.w3.org/2001/XMLSchema#string">write</AttributeValue>
+	  <ActionAttributeDesignator AttributeId=
+	    "urn:oasis:names:tc:xacml:1.0:action:action-id"
+	    DataType="http://www.w3.org/2001/XMLSchema#string"/>
+	</ActionMatch>
+      </Action>
+    </Actions>
+  </Target>
+  <Condition
+    FunctionId="urn:oasis:names:tc:xacml:1.0:function:string-equal">
+    <Apply FunctionId="urn:oasis:names:tc:xacml:1.0:function:string-one-and-only">
+      <SubjectAttributeDesignator AttributeId=
+	"urn:oasis:names:tc:xacml:1.0:example:attribute:physician-id"
+	DataType="http://www.w3.org/2001/XMLSchema#string"/>
+    </Apply>
+    <Apply FunctionId="urn:oasis:names:tc:xacml:1.0:function:string-one-and-only">
+      <AttributeSelector RequestContextPath=
+	"//md:record/md:primaryCarePhysician/md:registrationID/text()"
+	DataType="http://www.w3.org/2001/XMLSchema#string"/>
+    </Apply>
+  </Condition>
+</Rule>

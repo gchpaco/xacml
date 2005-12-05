@@ -1,0 +1,17 @@
+VIEW_UN
+SAVE_DOT
+TYPE Style VISIBLE color:white shape:ellipse namelabel:Style
+TYPE Value VISIBLE color:white shape:ellipse namelabel:Value
+TYPE State PROJECT VISIBLE color:white shape:ellipse namelabel:State
+RELATION Style$initial VISIBLE ATTRLABEL EDGELABEL edgecolor:black namelabel:init
+RELATION State$context VISIBLE EDGELABEL edgecolor:black setcolor:yellow namelabel:State$context
+RELATION Style$parents VISIBLE edgecolor:blue namelabel:Style$parents
+RELATION NumberedState VISIBLE EDGELABEL edgecolor:black namelabel:NumberedState
+RELATION NumberedStyle VISIBLE EDGELABEL edgecolor:black namelabel:NumberedStyle
+RELATION State$ancestors EDGELABEL edgecolor:black namelabel:State$ancestors
+RELATION Style$replaces VISIBLE edgecolor:red namelabel:Style$replaces
+RELATION State$value VISIBLE ATTRLABEL EDGELABEL edgecolor:black namelabel:val
+RELATION Value VISIBLE EDGELABEL edgecolor:black namelabel:Value
+RELATION Value$next VISIBLE ATTRLABEL EDGELABEL edgecolor:black namelabel:next
+RELATION Style VISIBLE EDGELABEL edgecolor:black namelabel:Style
+RELATION State VISIBLE EDGELABEL edgecolor:black namelabel:State

@@ -1,0 +1,41 @@
+---------
+Directory
+---------
+
+models
+
+------------
+Description:
+------------
+
+This directory contains a variety of Alloy models.
+
+Locations of models used in the CAV2002 submission are
+given at the end of this file.
+
+---------
+Contents:
+---------
+
+published_systems/     Models of published systems; fairly complex and detailed models.
+distalg/               Models of various distributed algorithms.  Relatively simple models.
+puzzles/               Models of some well-known puzzles.  Useful for understanding Alloy semantics.
+std/                   Standard library of polymorphic Alloy definitions.  Can be used by other models to
+                       define commonly occurring structures such as total orders.  The analyzer has special
+                       support for some of these models.
+meta/                  Models of aspects of the Alloy analyzer.  Mostly of interest
+                       to Alloy developers, although eventually we'll add meta-models
+                       of the Alloy language which can help understand aspects
+                       of the language.
+--------------
+CAV2002 models
+--------------
+
+distalg/opt_spantree.als            Distributed spanning tree computation
+distalg/s_ringlead.als              Simple leader election in a ring
+distalg/stable_ringlead.als         Self-stabilizing leader election in a ring
+distalg/stable_mutex_ring.als       Self-stabilizing mutual exclusion in a ring
+published_systems/firewire.als      Firewire leader election
+
+
+

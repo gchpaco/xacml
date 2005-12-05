@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Rule xmlns="urn:oasis:names:tc:xacml:1.0:policy"
+	  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	  RuleId="urn:edu:ucsb:wireless:rule-ids:1"
+	  Effect="Permit">
+  <Description>
+  	Only approved wireless addresses may use the network.
+  </Description>
+  <Target>
+    <Subjects><AnySubject/></Subjects>
+    <Resources>
+      <Resource>
+        <ResourceMatch MatchId="urn:oasis:names:tc:xacml:1.0:function:string-equal">
+          <AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">
+            CS Test
+          </AttributeValue>
+          <ResourceAttributeDesignator
+          	AttributeId="urn:edu:ucsb:wireless:network"
+          	DataType="http://www.w3.org/2001/XMLSchema#string"/>
+        </ResourceMatch>
+      </Resource>
+    </Resources>
+    <Actions><AnyAction/></Actions>
+  </Target>
+  <Condition FunctionId="urn:oasis:names:tc:xacml:1.0:function:any-of">
+    <Function FunctionId="urn:oasis:names:tc:xacml:1.0:function:string-equal"/>
+    <Apply FunctionId="urn:oasis:names:tc:xacml:1.0:function:string-one-and-only">
+      <SubjectAttributeDesignator AttributeId="urn:edu:ucsb:wireless:mac"
+      	DataType="http://www.w3.org/2001/XMLSchema#string"/>
+    </Apply>
+    <EnvironmentAttributeDesignator AttributeId="urn:edu:ucsb:wireless:acceptable-mac"
+      	DataType="http://www.w3.org/2001/XMLSchema#string"/>
+  </Condition>
+</Rule>

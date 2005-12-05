@@ -1,0 +1,15 @@
+VIEW_UN
+SAVE_DOT
+TYPE Instance VISIBLE color:red shape:ellipse namelabel:Instance
+TYPE Type VISIBLE color:white shape:ellipse namelabel:Type
+TYPE Variable VISIBLE color:yellow shape:ellipse namelabel:Variable
+RELATION Type VISIBLE EDGELABEL edgecolor:black namelabel:Type
+RELATION Variable VISIBLE EDGELABEL edgecolor:black namelabel:Variable
+RELATION Class VISIBLE EDGELABEL setcolor:burlywood edgecolor:black namelabel:Class
+RELATION Type$subtypes VISIBLE EDGELABEL edgecolor:red namelabel:sub
+RELATION Interface VISIBLE EDGELABEL setcolor:cyan edgecolor:black namelabel:Interface
+RELATION Variable$type VISIBLE EDGELABEL edgecolor:black namelabel:type
+RELATION Object VISIBLE SETLABEL EDGELABEL edgecolor:black namelabel:Object
+RELATION Instance VISIBLE EDGELABEL edgecolor:black namelabel:Instance
+RELATION Instance$type VISIBLE EDGELABEL edgecolor:black namelabel:type
+RELATION Variable$holds VISIBLE EDGELABEL edgecolor:black namelabel:holds

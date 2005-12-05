@@ -1,0 +1,106 @@
+\section{Properties of Policies}
+\label{sec:properties-policies}
+
+In this section we will 
+show that properties of policies can be 
+expressed based on several partial ordering relations.
+For example, we might want to prove
+that a (possibly very complex) policy at least protects as much as
+some simpler policy, and similarly we might want to guarantee that a
+(possibly very complex) policy does not say anything outside of its
+scope. Such properties can be expressed using the ordering relations
+defined below.
+
+Let $P_1 = \langle S_1, R_1, T_1 \rangle$ and let $P_2 =
+\langle S_2, R_2, T_2 \rangle$ be two policies.  
+We define the following
+partial orders:
+\begin{eqnarray*}
+  P_1 \sqsubseteq_P P_2 & \mbox{iff} & S_1 \subseteq S_2 \\
+  P_1 \sqsubseteq_D P_2 & \mbox{iff} & R_1 \subseteq R_2 \\
+  P_1 \sqsubseteq_E P_2 & \mbox{iff} & T_1 \subseteq T_2 \\
+  P_1 \sqsubseteq_{P,D,E} P_2 & \mbox{iff} & P_1 \sqsubseteq_P P_2
+  \wedge P_1 \sqsubseteq_D P_2 \wedge P_1 \sqsubseteq_E P_2 
+\end{eqnarray*}
+Note that, we can define a partial order for
+for any combination of of $P$, $D$ and $E$.
+We define $P_1 \sqsubseteq P_2 \equiv P_1 \sqsubseteq_{P,D,E} P_2$.
+We can regard $P_1 \sqsubseteq P_2$ as stating that for any $e \in E$
+where $\eff (P_1, e) \neq \NotApplicable$, $\eff (P_2, e) = \eff (P_1,
+e)$.
+
+To demonstrate the use of these ordering relations, 
+let us create a new policy; people are permitted
+to check the current results of the election, for exit polls.  
+We encode this with the
+following policy 
+\begin{eqnarray*}
+  S_5 & = & \{ \langle a, v, o \rangle \in E : 
+  \exists x \in o \; x = \mtt{getresult} \} \\
+  r_3 & = & \Scope (\Err (\Permit, S_4), S_5)
+\end{eqnarray*}
+where $S_4$ is defined in Equation~\eqref{eq:s4}.
+Now, we can create a composite policy as follows $p_c = p \oplus r_3$,
+where $p$ is defined in Equation~\eqref{eq:p}.  This
+policy has a bug---specifically, it permits people under 18 to vote in
+certain circumstances---and we will demonstrate the usefulness of our
+technique by showing this.  First, we perform our translations on this
+new policy as above, getting:
+\begin{eqnarray*}
+  g(f(r_3)) & = & \langle S_5 \setminus S_4, \emptyset, S_4 \cap S_5 \rangle \\
+  g(f(p_c)) 
+    & = &  \langle ((S_2 \setminus (S_0 \cup S_1 \cup S_3 \cup S_4)) \\
+    & & \quad \cup (S_5 \setminus S_4)) \setminus
+    (((S_3 \cup S_4) \cap S_2) 
+    \cup (S_4 \cap S_5)), \\
+    & & (((S_0 \cup S_1) \setminus (S_3 \cup S_4)) \cap S_2) \\
+    & & \quad \setminus ((S_5 \setminus S_4)
+    \cup (S_4 \cap S_5)), \\
+    & & ((S_3 \cup S_4) \cap S_2) \cup (S_4 \cap S_5) \rangle
+\end{eqnarray*}
+where $S_0,S_1, S_3$ and $S_4$ are from
+Equations~\eqref{eq:s1} to ~\eqref{eq:s4}.
+Using set algebra we can simplify the expression for policy $p_c$ to
+\begin{align*}
+  g(f(p_c)) = \langle & \left( S_2 \setminus (S_0 \cup S_1 \cup S_3 \cup S_4) \right)
+    \\ & \quad
+    \cup \left( S_5 \setminus ((S_3 \cap S_2) \cup S_4)
+    \right), \\
+    & ((S_0 \cup S_1) \cap S_2) \setminus (S_3 \cup S_4 \cup
+    S_5), \\
+    & ((S_3 \cup S_4) \cap S_2) \cup (S_4 \cap S_1 \cap S_5) \rangle
+\end{align*}
+Now, we insist that this combined policy deny anyone trying to vote
+who is under 18.  This is itself a policy, which we call $p_v$:
+\begin{align*}
+  p_v = \langle \emptyset, (S_0 \cap S_2) \setminus (S_3 \cup S_4),
+  (S_3 \cup S_4) \cap S_2 \rangle
+\end{align*}
+The interesting thing here is whether or not $p_v \sqsubseteq_D p_c$,
+i.e., does the policy $p_c$ deny every input that is denied by $p_v$.
+That would mean that everyone trying to vote who is under 18 is
+denied, and that our policy combination has not done any harm.
+However, the environmental tuple \[e = \langle \{17\}, \{\mtt{true}\},
+\{\mtt{vote}, \mtt{getresult} \} \rangle\] demonstrates that that is
+not the case.  Input $e$ passes the second part of the \Permit{}
+requirement and so is permitted by $p_c$ (which means that it is {\em
+  not} denied by $p_c$) but denied by $p_v$, i.e., $e$ demonstrates
+that $p_v \not \sqsubseteq_D p_c$.  The error is that, we do not
+enforce that only one action be given in the third component of the
+input, and because of this we have the surprising result that someone
+who is under eighteen and has already voted, but asks for the voting
+results at the same time as trying to vote will be permitted, and so
+can cast any number of ballots.  To fix this, we could insist upon a
+new condition, that $\exists ! \, x \in o$; or we could use $\otimes$
+instead of $\oplus$, which would ensure that only one of the
+sub-policies could be definitive on any given point (and so turn $\eff
+(e, p_v)$ into an \Indeterminate{} result instead of a \Permit{}); or we
+could decide that only people who have voted already can check the
+results.
+
+% arch-tag: e2b0e59e-49da-4b4c-9860-1da5c30b891f
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: "paper"
+%%% End: 
