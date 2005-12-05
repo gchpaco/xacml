@@ -83,13 +83,13 @@ public class Equivalence implements BooleanFormula {
     public BooleanFormula simplify() {
         BooleanFormula l = left.simplify();
         BooleanFormula r = right.simplify();
-        if (l == BooleanFormula.TRUE)
+        if (l == PrimitiveBoolean.TRUE)
             return r;
-        else if (r == BooleanFormula.TRUE)
+        else if (r == PrimitiveBoolean.TRUE)
             return l;
-        else if (l == BooleanFormula.FALSE)
+        else if (l == PrimitiveBoolean.FALSE)
             return r.negate().simplify();
-        else if (r == BooleanFormula.FALSE)
+        else if (r == PrimitiveBoolean.FALSE)
             return l.negate().simplify();
         else
             return new Equivalence(l, r);

@@ -111,7 +111,7 @@ public class And implements BooleanFormula {
     public BooleanFormula simplify() {
         // some trivial stuff first
         if (objects.length == 0)
-            return BooleanFormula.FALSE;
+            return PrimitiveBoolean.FALSE;
         // We use this set to keep the elements in a recognizable order, and as
         // a side effect to kill duplicates.
         TreeSet<BooleanFormula> elements = new TreeSet<BooleanFormula>(
@@ -125,9 +125,9 @@ public class And implements BooleanFormula {
             if (head instanceof And) {
                 And and = (And) head;
                 toProcess.addAll(Arrays.asList(and.objects));
-            } else if (head == BooleanFormula.TRUE) {
+            } else if (head == PrimitiveBoolean.TRUE) {
                 // can't be the only thing, because we checked that; so skip
-            } else if (head == BooleanFormula.FALSE) {
+            } else if (head == PrimitiveBoolean.FALSE) {
                 return head; // false is a short circuit for ands
             } else {
                 elements.add(head.simplify());
@@ -135,7 +135,7 @@ public class And implements BooleanFormula {
         }
         if (elements.isEmpty())
             // can only get here by skipping trues
-            return BooleanFormula.TRUE;
+            return PrimitiveBoolean.TRUE;
         else if (elements.size() == 1)
             return elements.iterator().next();
         else {
@@ -143,7 +143,7 @@ public class And implements BooleanFormula {
             for (Iterator iter = elements.iterator(); iter.hasNext();) {
                 BooleanFormula element = (BooleanFormula) iter.next();
                 if (elements.contains(element.negate()))
-                    return BooleanFormula.FALSE;
+                    return PrimitiveBoolean.FALSE;
             }
             return new And(elements.toArray(new BooleanFormula[] {}));
         }

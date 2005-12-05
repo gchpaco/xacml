@@ -6,8 +6,6 @@ package org.sigwinch.xacml.output.sat;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.sigwinch.xacml.output.sat.BooleanFormula.False;
-import org.sigwinch.xacml.output.sat.BooleanFormula.True;
 import org.sigwinch.xacml.tree.VariableReference;
 
 /**
@@ -23,7 +21,7 @@ public class StructurePreservingConverter {
          * 
          * @see org.sigwinch.xacml.output.sat.FormulaVisitor#visitTrue(org.sigwinch.xacml.output.sat.BooleanFormula.True)
          */
-        public void visitTrue(True t) {
+        public void visitTrue(PrimitiveBoolean t) {
             returnWith(t);
         }
 
@@ -32,7 +30,7 @@ public class StructurePreservingConverter {
          * 
          * @see org.sigwinch.xacml.output.sat.FormulaVisitor#visitFalse(org.sigwinch.xacml.output.sat.BooleanFormula.False)
          */
-        public void visitFalse(False f) {
+        public void visitFalse(PrimitiveBoolean f) {
             returnWith(f);
         }
 
@@ -89,7 +87,7 @@ public class StructurePreservingConverter {
          * @see org.sigwinch.xacml.output.sat.FormulaVisitor#visitVariable(org.sigwinch.xacml.tree.VariableReference)
          */
         public void visitVariable(VariableReference ref) {
-            returnWith(BooleanFormula.TRUE);
+            returnWith(PrimitiveBoolean.TRUE);
         }
 
         /*
@@ -138,7 +136,7 @@ public class StructurePreservingConverter {
          * 
          * @see org.sigwinch.xacml.output.sat.FormulaVisitor#visitTrue(org.sigwinch.xacml.output.sat.BooleanFormula.True)
          */
-        public void visitTrue(True t) {
+        public void visitTrue(PrimitiveBoolean t) {
             returnWith(t);
         }
 
@@ -147,7 +145,7 @@ public class StructurePreservingConverter {
          * 
          * @see org.sigwinch.xacml.output.sat.FormulaVisitor#visitFalse(org.sigwinch.xacml.output.sat.BooleanFormula.False)
          */
-        public void visitFalse(False f) {
+        public void visitFalse(PrimitiveBoolean f) {
             returnWith(f);
         }
 
@@ -204,7 +202,7 @@ public class StructurePreservingConverter {
          * @see org.sigwinch.xacml.output.sat.FormulaVisitor#visitVariable(org.sigwinch.xacml.tree.VariableReference)
          */
         public void visitVariable(VariableReference ref) {
-            returnWith(BooleanFormula.TRUE);
+            returnWith(PrimitiveBoolean.TRUE);
         }
 
         /*

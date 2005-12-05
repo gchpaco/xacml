@@ -3,8 +3,6 @@
  */
 package org.sigwinch.xacml.output.sat;
 
-import org.sigwinch.xacml.output.sat.BooleanFormula.False;
-import org.sigwinch.xacml.output.sat.BooleanFormula.True;
 import org.sigwinch.xacml.tree.VariableReference;
 
 public abstract class FormulaImpl implements FormulaVisitor {
@@ -15,7 +13,7 @@ public abstract class FormulaImpl implements FormulaVisitor {
         }
     }
 
-    public void visitFalse(False f) {
+    public void visitFalse(PrimitiveBoolean f) {
     }
 
     public void visitNot(Not not) {
@@ -28,7 +26,7 @@ public abstract class FormulaImpl implements FormulaVisitor {
         }
     }
 
-    public void visitTrue(True t) {
+    public void visitTrue(PrimitiveBoolean t) {
     }
 
     public void visitVariable(VariableReference ref) {

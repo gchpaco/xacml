@@ -70,13 +70,13 @@ public class AlloySatOutput implements Output {
             }
 
             @Override
-            public void visitTrue(BooleanFormula.True t) {
+            public void visitTrue(PrimitiveBoolean t) {
                 super.visitTrue(t);
                 putVariable(t);
             }
 
             @Override
-            public void visitFalse(BooleanFormula.False f) {
+            public void visitFalse(PrimitiveBoolean f) {
                 super.visitFalse(f);
                 putVariable(f);
             }

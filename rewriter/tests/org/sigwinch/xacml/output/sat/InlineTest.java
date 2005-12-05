@@ -51,9 +51,9 @@ public class InlineTest extends XACMLTestCase {
     public void testTrueFalse() {
         Triple t = new Triple(SimplePredicate.TRUE, SimplePredicate.FALSE, c);
         t.walk(out);
-        assertTriple(BooleanFormula.TRUE, BooleanFormula.FALSE, c, t,
-                new BooleanFormula[] { new Not(BooleanFormula.FALSE),
-                        BooleanFormula.TRUE });
+        assertTriple(PrimitiveBoolean.TRUE, PrimitiveBoolean.FALSE, c, t,
+                new BooleanFormula[] { new Not(PrimitiveBoolean.FALSE),
+                        PrimitiveBoolean.TRUE });
     }
 
     public void testAndOrFunctions() {
@@ -327,7 +327,7 @@ public class InlineTest extends XACMLTestCase {
         }
         BooleanFormula strEq = new And(subclauses);
         BooleanFormula expected = new Or(new And(strEq, new Not(strEq)),
-                BooleanFormula.TRUE);
+                PrimitiveBoolean.TRUE);
         assertEquals(expected, result);
         assertEquals(0, out.getFrameConditions().length);
     }

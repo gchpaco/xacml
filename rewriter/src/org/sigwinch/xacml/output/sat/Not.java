@@ -60,10 +60,10 @@ public class Not implements BooleanFormula {
         if (formula instanceof Not) {
             Not not = (Not) formula;
             return not.formula.simplify();
-        } else if (formula == BooleanFormula.TRUE) {
-            return BooleanFormula.FALSE;
-        } else if (formula == BooleanFormula.FALSE) {
-            return BooleanFormula.TRUE;
+        } else if (formula == PrimitiveBoolean.TRUE) {
+            return PrimitiveBoolean.FALSE;
+        } else if (formula == PrimitiveBoolean.FALSE) {
+            return PrimitiveBoolean.TRUE;
         } else {
             return new Not(formula.simplify());
         }

@@ -52,7 +52,7 @@ public class SatVisitor extends VisitorImpl {
             super.visitDefault(string, predicateArray);
             // This is a noop currently, because we do no handling of xpath.
             assert string.equals(xacmlprefix + "xpath-node-match");
-            setFormulaFor(ep, BooleanFormula.TRUE);
+            setFormulaFor(ep, PrimitiveBoolean.TRUE);
         }
 
         @Override
@@ -376,7 +376,7 @@ public class SatVisitor extends VisitorImpl {
     public BooleanFormula computeFormula() {
         BooleanFormula[] conditions = getFrameConditions();
         if (conditions.length == 0)
-            return BooleanFormula.TRUE;
+            return PrimitiveBoolean.TRUE;
         ArrayList<BooleanFormula> clauses = new ArrayList<BooleanFormula>();
         for (int i = 0; i < conditions.length; i++)
             clauses.add(conditions[i]);
@@ -614,14 +614,14 @@ public class SatVisitor extends VisitorImpl {
     public void walkSimplePredicate(SimplePredicate simplePredicate) {
         super.walkSimplePredicate(simplePredicate);
         if (simplePredicate == SimplePredicate.TRUE) {
-            frames.add(BooleanFormula.TRUE);
-            setFormulaFor(simplePredicate, BooleanFormula.TRUE);
+            frames.add(PrimitiveBoolean.TRUE);
+            setFormulaFor(simplePredicate, PrimitiveBoolean.TRUE);
         } else {
             // NB: we do not use negate here, because that gets inlined. We
             // are expressing a syntactic condition on the variable named
             // "false"
-            frames.add(new Not(BooleanFormula.FALSE));
-            setFormulaFor(simplePredicate, BooleanFormula.FALSE);
+            frames.add(new Not(PrimitiveBoolean.FALSE));
+            setFormulaFor(simplePredicate, PrimitiveBoolean.FALSE);
         }
     }
 

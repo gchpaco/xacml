@@ -106,7 +106,7 @@ public class Or implements BooleanFormula {
     public BooleanFormula simplify() {
         // some trivial stuff first
         if (objects.length == 0)
-            return BooleanFormula.FALSE;
+            return PrimitiveBoolean.FALSE;
 
         TreeSet<BooleanFormula> elements = new TreeSet<BooleanFormula>(
                 new SatVisitor.FormulaComparator());
@@ -119,9 +119,9 @@ public class Or implements BooleanFormula {
             if (head instanceof Or) {
                 Or and = (Or) head;
                 toProcess.addAll(Arrays.asList(and.objects));
-            } else if (head == BooleanFormula.FALSE) {
+            } else if (head == PrimitiveBoolean.FALSE) {
                 // can't be alone, so skip
-            } else if (head == BooleanFormula.TRUE) {
+            } else if (head == PrimitiveBoolean.TRUE) {
                 return head; // true is a short circuit for ors
             } else {
                 elements.add(head.simplify());
@@ -129,7 +129,7 @@ public class Or implements BooleanFormula {
         }
         if (elements.isEmpty())
             // can only get here by skipping falses
-            return BooleanFormula.FALSE;
+            return PrimitiveBoolean.FALSE;
         else if (elements.size() == 1)
             return elements.iterator().next();
         else {
@@ -137,7 +137,7 @@ public class Or implements BooleanFormula {
             for (Iterator iter = elements.iterator(); iter.hasNext();) {
                 BooleanFormula element = (BooleanFormula) iter.next();
                 if (elements.contains(element.negate()))
-                    return BooleanFormula.TRUE;
+                    return PrimitiveBoolean.TRUE;
             }
             return new Or(elements.toArray(new BooleanFormula[] {}));
         }

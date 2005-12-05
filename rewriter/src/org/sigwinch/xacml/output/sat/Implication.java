@@ -79,13 +79,13 @@ public class Implication implements BooleanFormula {
     public BooleanFormula simplify() {
         BooleanFormula l = left.simplify();
         BooleanFormula r = right.simplify();
-        if (l == BooleanFormula.TRUE)
+        if (l == PrimitiveBoolean.TRUE)
             return r;
-        else if (r == BooleanFormula.TRUE)
-            return BooleanFormula.TRUE;
-        else if (l == BooleanFormula.FALSE)
-            return BooleanFormula.TRUE;
-        else if (r == BooleanFormula.FALSE)
+        else if (r == PrimitiveBoolean.TRUE)
+            return PrimitiveBoolean.TRUE;
+        else if (l == PrimitiveBoolean.FALSE)
+            return PrimitiveBoolean.TRUE;
+        else if (r == PrimitiveBoolean.FALSE)
             return l.negate().simplify();
         else
             return new Implication(l, r);

@@ -30,8 +30,8 @@ public class CNFTest extends TestCase {
     }
 
     public void testTrueFalse() {
-        assertEquals(BooleanFormula.TRUE, BooleanFormula.TRUE.convertToCNF());
-        assertEquals(BooleanFormula.FALSE, BooleanFormula.FALSE.convertToCNF());
+        assertEquals(PrimitiveBoolean.TRUE, PrimitiveBoolean.TRUE.convertToCNF());
+        assertEquals(PrimitiveBoolean.FALSE, PrimitiveBoolean.FALSE.convertToCNF());
     }
 
     public void testVariables() {
@@ -80,7 +80,7 @@ public class CNFTest extends TestCase {
     }
 
     public void testSanity() {
-        BooleanFormula formula = new Or(new Equivalence(BooleanFormula.TRUE, b)
+        BooleanFormula formula = new Or(new Equivalence(PrimitiveBoolean.TRUE, b)
                 .negate(),
                 new Implication(new And(a, new Equivalence(a, b)), c));
         BooleanFormula result = formula.convertToCNF();
