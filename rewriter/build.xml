@@ -44,7 +44,7 @@
 	  description="Compile main source code">
     <depend srcdir="src" destdir="${build}" cache="${build.cache}"
             closure="yes"/>
-    <javac source="1.4" srcdir="src" destdir="${build}"
+    <javac source="1.5" srcdir="src" destdir="${build}"
 	   debug="on" debuglevel="lines,vars,source"
 	   classpathref="build.initial.path"/>
   </target>
@@ -53,7 +53,7 @@
     <depend srcdir="tests" destdir="${build.test}" 
 	    cache="${build.cache}" closure="yes"
 	    classpathref="build.test.class.path"/>
-    <javac source="1.4" srcdir="tests" destdir="${build.test}"
+    <javac source="1.5" srcdir="tests" destdir="${build.test}"
 	   debug="on" debuglevel="lines,vars,source"
 	   classpathref="build.class.path"/>
   </target>
@@ -87,8 +87,8 @@
   </target>
 
   <target name="test" depends="testcompile" description="Run tests">
-    <junit fork="yes">
-      <batchtest todir="${build.test}/reports">
+    <junit haltonfailure="yes">
+      <batchtest>
 	<fileset dir="${build.test}">
 	  <include name="**/*Test.class"/>
 	</fileset>
@@ -96,15 +96,6 @@
       <formatter type="xml"/>
       <classpath refid="build.test.class.path"/>
     </junit>
-    <junitreport todir="${build.test}/reports">
-      <fileset dir="${build.test}/reports">
-	<include name="TEST-*.xml"/>
-      </fileset>
-      <report format="frames" todir="${build.test}/reports/html"/>
-    </junitreport>
-    <exec dir="${build.test}/reports/html" executable="open">
-      <arg line="index.html"/>
-    </exec>
   </target>
 </project>
 <!-- arch-tag: A43569F4-0431-11D8-843B-000A95A2610A
