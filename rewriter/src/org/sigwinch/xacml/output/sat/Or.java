@@ -16,30 +16,16 @@ import org.sigwinch.xacml.tree.VariableReference;
  */
 public class Or implements BooleanFormula {
     BooleanFormula[] objects;
-
-    /**
-     * @param object
-     * @param object2
-     * @param object3
-     */
-    public Or(BooleanFormula object, BooleanFormula object2,
-            BooleanFormula object3) {
-        objects = new BooleanFormula[] { object, object2, object3 };
-    }
-
-    /**
-     * @param object
-     * @param object2
-     */
-    public Or(BooleanFormula object, BooleanFormula object2) {
-        objects = new BooleanFormula[] { object, object2 };
-    }
-
+    
     /**
      * @param formulas
      */
-    public Or(BooleanFormula[] formulas) {
-        objects = formulas.clone();
+    public <X extends BooleanFormula> Or(X... formulas) {
+        objects = new BooleanFormula[formulas.length];
+        for (int i = 0; i < formulas.length; i++) {
+            assert formulas[i] != null : i + "th argument is null";
+            objects[i] = formulas[i];
+        }
     }
 
     /*
