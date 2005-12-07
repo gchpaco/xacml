@@ -17,34 +17,14 @@ public class And implements BooleanFormula {
     BooleanFormula[] objects;
 
     /**
-     * @param a
-     * @param b
-     */
-    public And(BooleanFormula a, BooleanFormula b) {
-        assert a != null : "First argument is null";
-        assert b != null : "Second argument is null";
-        objects = new BooleanFormula[] { a, b };
-    }
-
-    /**
-     * @param a
-     * @param b
-     */
-    public And(BooleanFormula a, BooleanFormula b, BooleanFormula c) {
-        assert a != null : "First argument is null";
-        assert b != null : "Second argument is null";
-        assert c != null : "Third argument is null";
-        objects = new BooleanFormula[] { a, b, c };
-    }
-
-    /**
      * @param clauses
      */
-    public And(BooleanFormula[] clauses) {
+    public <X extends BooleanFormula> And(X... clauses) {
+        objects = new BooleanFormula[clauses.length];
         for (int i = 0; i < clauses.length; i++) {
             assert clauses[i] != null : i + "th argument is null";
+            objects[i] = clauses[i];
         }
-        objects = clauses.clone();
     }
 
     /*
