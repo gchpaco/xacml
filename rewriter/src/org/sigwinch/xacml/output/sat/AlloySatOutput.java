@@ -119,10 +119,7 @@ public class AlloySatOutput implements Output {
         int[][] array = StructurePreservingConverter.asArray(cnf, variables,
                 variableMap);
 
-        // BooleanFormula simpleFull = full.simplify ();
-        // stream.println ("c " + full + "\nc ==> " + simpleFull
-        // + "\nc ==> " + converted
-        // + "\nc ==> " + cnf);
+        // stream.println ("c " + converted);
         for (Iterator iter = variableMap.keySet().iterator(); iter.hasNext();) {
             VariableReference variable = (VariableReference) iter.next();
             stream
