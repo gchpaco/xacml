@@ -250,7 +250,7 @@ public class StructurePreservingConverter {
 
     Map<BooleanFormula, VariableReference> namesSeen;
 
-    Map<BooleanFormula, BooleanFormula> symbolsSeen;
+    Map<FormulaVisitor, Map<BooleanFormula, BooleanFormula>> symbolsSeen;
 
     /**
      * 
@@ -260,15 +260,17 @@ public class StructurePreservingConverter {
         pos = new PositiveVisitor();
         neg = new NegativeVisitor();
         namesSeen = new HashMap<BooleanFormula, VariableReference>();
-        symbolsSeen = new HashMap<BooleanFormula, BooleanFormula>();
+        symbolsSeen = new HashMap<FormulaVisitor, Map<BooleanFormula, BooleanFormula>>();
     }
 
     BooleanFormula callOn(BooleanFormula target, FormulaVisitor visitor) {
-        if (!symbolsSeen.containsKey(target)) {
+        if (!symbolsSeen.containsKey (visitor))
+            symbolsSeen.put (visitor, new HashMap<BooleanFormula, BooleanFormula> ());
+        if (!symbolsSeen.get (visitor).containsKey(target)) {
             target.visit(visitor);
-            symbolsSeen.put(target, returnValue);
+            symbolsSeen.get(visitor).put (target, returnValue);
         }
-        return symbolsSeen.get(target);
+        return symbolsSeen.get(visitor).get (target);
     }
 
     void returnWith(BooleanFormula target) {

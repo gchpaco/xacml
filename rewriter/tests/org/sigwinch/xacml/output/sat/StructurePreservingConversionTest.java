@@ -4,6 +4,8 @@
 package org.sigwinch.xacml.output.sat;
 
 import org.sigwinch.xacml.tree.VariableReference;
+import static org.sigwinch.xacml.output.sat.StructurePreservingConverter.rawConvert;
+import static org.sigwinch.xacml.output.sat.PrimitiveBoolean.TRUE;
 
 import junit.framework.TestCase;
 
@@ -16,6 +18,12 @@ public class StructurePreservingConversionTest extends TestCase {
 
     private VariableReference b;
 
+    private VariableReference var1;
+
+    private VariableReference var2;
+
+    private VariableReference var3;
+
     public static void main(String[] args) {
         junit.textui.TestRunner.run(StructurePreservingConversionTest.class);
     }
@@ -24,55 +32,9 @@ public class StructurePreservingConversionTest extends TestCase {
     protected void setUp() {
         a = new VariableReference("a");
         b = new VariableReference("b");
-    }
-
-    public void testAnd() {
-        And formula = new And(a.negate(), b);
-        VariableReference var = new VariableReference("clause_1");
-        BooleanFormula conversion = StructurePreservingConverter
-                .convert(formula);
-        assertEquals(
-                new And(new Implication(var, new And(a.negate(), b)), var),
-                conversion);
-        conversion = StructurePreservingConverter.convert(formula.negate());
-        assertEquals(new And(new Implication(new And(a.negate(), b), var), var
-                .negate()), conversion);
-    }
-
-    public void testOr() {
-        Or formula = new Or(a.negate(), b);
-        VariableReference var = new VariableReference("clause_1");
-        BooleanFormula conversion = StructurePreservingConverter
-                .convert(formula);
-        assertEquals(new And(new Implication(var, new Or(a.negate(), b)), var),
-                conversion);
-        conversion = StructurePreservingConverter.convert(formula.negate());
-        assertEquals(new And(new Implication(new Or(a.negate(), b), var), var
-                .negate()), conversion);
-    }
-
-    public void testEquivalence() {
-        Equivalence formula = new Equivalence(a.negate(), b);
-        VariableReference var = new VariableReference("clause_1");
-        BooleanFormula conversion = StructurePreservingConverter
-                .convert(formula);
-        assertEquals(new And(new Implication(var,
-                new Equivalence(a.negate(), b)), var), conversion);
-        conversion = StructurePreservingConverter.convert(formula.negate());
-        assertEquals(new And(new Implication(new Equivalence(a.negate(), b),
-                var), var.negate()), conversion);
-    }
-
-    public void testImplication() {
-        Implication formula = new Implication(a.negate(), b);
-        VariableReference var = new VariableReference("clause_1");
-        BooleanFormula conversion = StructurePreservingConverter
-                .convert(formula);
-        assertEquals(new And(new Implication(var,
-                new Implication(a.negate(), b)), var), conversion);
-        conversion = StructurePreservingConverter.convert(formula.negate());
-        assertEquals(new And(new Implication(new Implication(a.negate(), b),
-                var), var.negate()), conversion);
+        var1 = new VariableReference("clause_1");
+        var2 = new VariableReference("clause_2");
+        var3 = new VariableReference("clause_3");
     }
 
     public void testSimpleConverter() {
@@ -80,6 +42,95 @@ public class StructurePreservingConversionTest extends TestCase {
                 new VariableReference("b"));
         int[][] result = StructurePreservingConverter.toArray(formula);
         assertArraysEqual(new int[][] { { -1, -2 }, { -2, 3 }, { 2 } }, result);
+    }
+
+    public void testAnd() {
+        BooleanFormula formula = new And(new And(a, b), new And(b, a));
+        BooleanFormula expected = new And(new And(new Implication(var1,
+                new And(var2, var3)), new And(new Implication(var2, new And(a,
+                b)), TRUE, TRUE), new And(new Implication(var3, new And(b, a)),
+                TRUE, TRUE)), var1);
+        assertEquals(expected, rawConvert(formula));
+    }
+
+    public void testOr() {
+        BooleanFormula formula = new Or(new And(a, b), new And(b, a));
+        BooleanFormula expected = new And(new And(new Implication(var1, new Or(
+                var2, var3)), new And(new Implication(var2, new And(a, b)),
+                TRUE, TRUE), new And(new Implication(var3, new And(b, a)),
+                TRUE, TRUE)), var1);
+        assertEquals(expected, rawConvert(formula));
+    }
+
+    public void testEquiv() {
+        BooleanFormula formula = new Equivalence(new And(a, b), new And(b, a));
+        BooleanFormula expected = new And(new And(new Implication(var3,
+                new Equivalence(var1, var2)), new And(new Implication(var1,
+                new And(a, b)), TRUE, TRUE), new And(new Implication(var2,
+                new And(b, a)), TRUE, TRUE), new And(new Implication(new And(a,
+                b), var1), TRUE, TRUE), new And(new Implication(new And(b, a),
+                var2), TRUE, TRUE)), var3);
+        assertEquals(expected, rawConvert(formula));
+    }
+
+    public void testImplies() {
+        BooleanFormula formula = new Implication(new And(a, b), new And(b, a));
+        BooleanFormula expected = new And(new And(new Implication(var3,
+                new Implication(var1, var2)), new And(new Implication(new And(
+                a, b), var1), TRUE, TRUE), new And(new Implication(var2,
+                new And(b, a)), TRUE, TRUE)), var3);
+        assertEquals(expected, rawConvert(formula));
+    }
+
+    public void testNegAnd() {
+        BooleanFormula formula = new And(new And(a, b), new And(b, a)).negate();
+        BooleanFormula expected = new And(new And(new Implication(new And(var2,
+                var3), var1), new And(new Implication(new And(a, b), var2),
+                TRUE, TRUE), new And(new Implication(new And(b, a), var3),
+                TRUE, TRUE)), var1.negate());
+        assertEquals(expected, rawConvert(formula));
+    }
+
+    public void testNegOr() {
+        BooleanFormula formula = new Or(new And(a, b), new And(b, a)).negate();
+        BooleanFormula expected = new And(new And(new Implication(new Or(var2,
+                var3), var1), new And(new Implication(new And(a, b), var2),
+                TRUE, TRUE), new And(new Implication(new And(b, a), var3),
+                TRUE, TRUE)), var1.negate());
+        assertEquals(expected, rawConvert(formula));
+    }
+
+    public void testNegEquiv() {
+        BooleanFormula formula = new Equivalence(new And(a, b), new And(b, a))
+                .negate();
+        BooleanFormula expected = new And(new And(new Implication(
+                new Equivalence(var1, var2), var3), new And(new Implication(
+                new And(a, b), var1), TRUE, TRUE), new And(new Implication(
+                new And(b, a), var2), TRUE, TRUE), new And(new Implication(
+                var1, new And(a, b)), TRUE, TRUE), new And(new Implication(
+                var2, new And(b, a)), TRUE, TRUE)), var3.negate());
+        assertEquals(expected, rawConvert(formula));
+    }
+
+    public void testNegImplies() {
+        BooleanFormula formula = new Implication(new And(a, b), new And(b, a))
+                .negate();
+        BooleanFormula expected = new And(new And(new Implication(
+                new Implication(var1, var2), var3), new And(new Implication(
+                var1, new And(a, b)), TRUE, TRUE), new And(new Implication(
+                new And(b, a), var2), TRUE, TRUE)), var3.negate());
+        assertEquals(expected, rawConvert(formula));
+    }
+
+    public void testNegations() {
+        BooleanFormula formula = new Implication(new And(a, b).negate(),
+                new And(b, a)).negate();
+        BooleanFormula expected = new And(new And(new Implication(
+                new Implication(var1.negate(), var2), var3), new And(
+                new Implication(new And(a, b), var1), TRUE, TRUE), new And(
+                new Implication(new And(b, a), var2), TRUE, TRUE)), var3
+                .negate());
+        assertEquals(expected, rawConvert(formula));
     }
 
     public void testEquivalences() {
