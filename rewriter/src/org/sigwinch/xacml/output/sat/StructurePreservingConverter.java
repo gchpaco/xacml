@@ -288,10 +288,14 @@ public class StructurePreservingConverter {
                     new VariableReference("clause_" + ++names));
         return namesSeen.get(expression);
     }
+    
+    static public BooleanFormula rawConvert (BooleanFormula formula) {
+        StructurePreservingConverter converter = new StructurePreservingConverter();
+        return converter.go(formula);
+    }
 
     static public BooleanFormula convert(BooleanFormula formula) {
-        StructurePreservingConverter converter = new StructurePreservingConverter();
-        return converter.go(formula.simplify()).simplify();
+        return rawConvert(formula.simplify()).simplify();
     }
 
     private BooleanFormula go(BooleanFormula formula) {
