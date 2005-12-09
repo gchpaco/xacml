@@ -1,5 +1,6 @@
 package org.sigwinch.xacml.output.set;
 
+import java.io.File;
 import java.io.PrintWriter;
 import java.util.Iterator;
 import java.util.TreeMap;
@@ -153,6 +154,9 @@ public class AlloySetOutput implements Output {
         preamble(tree);
         write(tree);
         postamble();
+    }
+    
+    public void roundTripOn(File aFile) {
     }
 }
 /*

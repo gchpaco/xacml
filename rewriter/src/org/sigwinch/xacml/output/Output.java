@@ -1,5 +1,8 @@
 package org.sigwinch.xacml.output;
 
+import java.io.File;
+import java.io.IOException;
+
 import org.sigwinch.xacml.tree.Tree;
 
 /**
@@ -18,6 +21,8 @@ public interface Output {
     public void write(Tree tree);
 
     public void postamble();
+    
+    public void roundTripOn (File aFile) throws IOException;
 }
 /*
  * arch-tag: FEB616EA-35D8-11D8-B121-000A957284DA

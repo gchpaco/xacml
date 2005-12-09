@@ -3,6 +3,11 @@
  */
 package org.sigwinch.xacml.output.sat;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -138,6 +143,38 @@ public class AlloySatOutput implements Output {
         }
     }
 
+    public void roundTripOn(File aFile) throws IOException {
+        InputStream zchaff = getClass().getResourceAsStream("/zchaff");
+        File executable = File.createTempFile("zchaff", ".exe");
+        executable.deleteOnExit();
+        OutputStream writer = new FileOutputStream(executable);
+        copyStream(zchaff, writer);
+        zchaff.close();
+        writer.close();
+        try {
+            Runtime.getRuntime().exec(
+                    new String[] { "chmod", "755", executable.getAbsolutePath() }).waitFor ();
+        } catch (InterruptedException e) {
+        }
+        try {
+            Process process = Runtime.getRuntime().exec(
+                    new String[] { executable.getAbsolutePath(),
+                            aFile.getAbsolutePath() });
+            copyStream (process.getInputStream(), System.out);
+            process.waitFor();
+        } catch (InterruptedException e) {
+        }
+    }
+
+    private void copyStream(InputStream in, OutputStream out) throws IOException {
+        byte[] b = new byte[256];
+        while (true) {
+            int read = in.read(b);
+            if (read == -1)
+                break;
+            out.write(b, 0, read);
+        }
+    }
 }
 
 // arch-tag: AlloySatOutput.java May 28, 2005 12:32:37 AM

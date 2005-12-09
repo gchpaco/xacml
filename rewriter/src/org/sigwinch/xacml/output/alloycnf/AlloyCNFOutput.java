@@ -1,5 +1,6 @@
 package org.sigwinch.xacml.output.alloycnf;
 
+import java.io.File;
 import java.io.PrintWriter;
 
 import org.sigwinch.xacml.output.Output;
@@ -169,6 +170,9 @@ public class AlloyCNFOutput implements Output {
         preamble(tree);
         write(tree);
         postamble();
+    }
+    
+    public void roundTripOn(File aFile) {
     }
 }
 /*

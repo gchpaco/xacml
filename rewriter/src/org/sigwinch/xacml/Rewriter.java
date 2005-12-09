@@ -10,6 +10,9 @@ import org.sigwinch.xacml.output.alloycnf.AlloyCNFOutput;
 import org.sigwinch.xacml.output.sat.AlloySatOutput;
 import org.sigwinch.xacml.output.set.AlloySetOutput;
 import org.sigwinch.xacml.parser.AbstractParser;
+
+import java.io.File;
+import java.io.IOException;
 import java.io.PrintWriter;
 import org.sigwinch.xacml.tree.Tree;
 import org.sigwinch.xacml.transformers.*;
@@ -36,6 +39,12 @@ public class Rewriter {
         options.addOption("h", "help", false, "This help screen");
         options.addOption("S", "style", true,
                 "Which style of output to use (predicate, set, sat)");
+        options
+                .addOption(
+                        "r",
+                        "roundtrip",
+                        false,
+                        "Whether to automatically run the analyzer and report results (only works for sat now)");
     }
 
     DocumentBuilder builder;
@@ -91,7 +100,7 @@ public class Rewriter {
                 + "[<potential derivation>]", options);
     }
 
-    public static void main(String[] argv) {
+    public static void main(String[] argv) throws IOException {
         CommandLineParser parser = new GnuParser();
 
         CommandLine line = null;
@@ -116,13 +125,27 @@ public class Rewriter {
             System.exit(1);
         }
 
-        PrintWriter writer = new PrintWriter(System.out);
+        File tempFile = null;
         Output output;
         String outputType;
+        boolean roundTrip = false;
+        if (line.hasOption("r"))
+            roundTrip = true;
         if (line.hasOption("S"))
             outputType = line.getOptionValue("S");
         else
             outputType = "sat";
+        if (roundTrip && !outputType.equals("sat")) {
+            usage();
+            System.exit(1);
+        }
+        PrintWriter writer;
+        if (roundTrip) {
+            tempFile = File.createTempFile("xacml", ".cnf");
+            tempFile.deleteOnExit();
+            writer = new PrintWriter(tempFile);
+        } else
+            writer = new PrintWriter(System.out);
         if (outputType.equals("predicate")) {
             output = new AlloyCNFOutput(writer, slop);
         } else if (outputType.equals("set")) {
@@ -148,6 +171,8 @@ public class Rewriter {
             output.write(trees[i]);
         output.postamble();
         writer.flush();
+        if (roundTrip)
+            output.roundTripOn(tempFile);
     }
 }
 /*
