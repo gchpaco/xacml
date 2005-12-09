@@ -170,7 +170,6 @@ public class AlloySatOutput implements Output {
             while (true) {
                 String line = result.readLine ();
                 if (line == null) break;
-                System.out.println (line);
                 if (line.startsWith("RESULT:"))
                     isValid = line.endsWith("UNSAT");
                 String[] strings = line.split ("Random Seed Used");
