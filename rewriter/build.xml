@@ -8,6 +8,7 @@
   <property name="dist" location="=build.dist"/>
   <property name="cli" location="commons-cli-1.0.jar"/>
   <property name="javadoc" location="${user.home}/Documents/javadoc"/>
+  <property name="zchaff" location="../zchaff"/>
 
   <path id="build.initial.path">
     <pathelement location="${cli}"/>
@@ -57,8 +58,12 @@
 	   debug="on" debuglevel="lines,vars,source"
 	   classpathref="build.class.path"/>
   </target>
+  
+  <target name="zchaff">
+    <exec executable="make" failonerror="true" dir="${zchaff}"/>
+  </target>
 
-  <target name="dist" depends="compile,init"
+  <target name="dist" depends="compile,init,zchaff"
 	  description="Bundle main source code into a .jar">
     <unjar src="${cli}" dest="${build}">
       <patternset>
