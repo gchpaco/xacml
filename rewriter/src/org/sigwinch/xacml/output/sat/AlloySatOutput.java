@@ -168,7 +168,7 @@ public class AlloySatOutput implements Output {
                 if (line.startsWith("RESULT:"))
                     isValid = line.endsWith("UNSAT");
                 String[] strings = line.split ("Random Seed Used");
-                if (strings.length > 1) {
+                if (strings.length > 1 && !strings[0].equals("")) {
                     String[] integers = strings[0].split (" ");
                     for (int i = 0; i < integers.length; i++) {
                         exceptions.add(Integer.parseInt(integers[i]));
