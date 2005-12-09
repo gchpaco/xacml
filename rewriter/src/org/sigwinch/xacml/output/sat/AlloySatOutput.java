@@ -11,14 +11,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.PrintWriter;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.TreeMap;
-import java.util.TreeSet;
+import java.util.*;
 
 import org.sigwinch.xacml.output.Output;
 import org.sigwinch.xacml.tree.Tree;
@@ -42,6 +35,8 @@ public class AlloySatOutput implements Output {
     private TreeSet<BooleanFormula> formulae;
 
     private Triple lastTree;
+
+    private Map<BooleanFormula, Integer> variableMap;
 
     public AlloySatOutput(PrintWriter stream, double slop) {
         this.stream = stream;
@@ -121,8 +116,8 @@ public class AlloySatOutput implements Output {
                 .toArray(new BooleanFormula[] {});
         And full = new And(allFormulae);
         int variables[] = new int[] { 0 };
-        Map<BooleanFormula, Integer> variableMap = new TreeMap<BooleanFormula, Integer>(
-                new SatVisitor.FormulaComparator());
+        variableMap = new TreeMap<BooleanFormula, Integer>(
+                        new SatVisitor.FormulaComparator());
         BooleanFormula converted = StructurePreservingConverter.convert(full);
         BooleanFormula cnf = converted.convertToCNF();
         int[][] array = StructurePreservingConverter.asArray(cnf, variables,
@@ -161,7 +156,7 @@ public class AlloySatOutput implements Output {
         } catch (InterruptedException e) {
         }
         boolean isValid = false;
-        List<Integer> exceptions = new ArrayList<Integer> ();
+        Set<Integer> exceptions = new HashSet<Integer> ();
         try {
             Process process = Runtime.getRuntime().exec(
                     new String[] { executable.getAbsolutePath(),
@@ -187,11 +182,18 @@ public class AlloySatOutput implements Output {
         if (isValid)
             System.out.println("Subsumption valid");
         else {
-            System.out.print("Subsumption invalid:");
-            for (Integer integer : exceptions) {
-                System.out.print(" " + integer);
+            System.out.println("Subsumption invalid:");
+            for (Map.Entry<BooleanFormula, Integer> entry : variableMap.entrySet()) {
+                String key = entry.getKey ().toString ();
+                // the internal clauses are boring
+                if (key.startsWith ("clause_")) continue;
+                if (exceptions.contains (entry.getValue()))
+                    System.out.println (key);
+                else if (exceptions.contains (- entry.getValue ()))
+                    System.out.println ("! " + key);
+                else
+                    System.out.println ("[ " + key + " not mentioned? ]");
             }
-            System.out.println ();
         }
     }
 
