@@ -11,9 +11,11 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 import java.util.TreeSet;
@@ -158,6 +160,8 @@ public class AlloySatOutput implements Output {
                     new String[] { "chmod", "755", executable.getAbsolutePath() }).waitFor ();
         } catch (InterruptedException e) {
         }
+        boolean isValid = false;
+        List<Integer> exceptions = new ArrayList<Integer> ();
         try {
             Process process = Runtime.getRuntime().exec(
                     new String[] { executable.getAbsolutePath(),
@@ -167,10 +171,28 @@ public class AlloySatOutput implements Output {
                 String line = result.readLine ();
                 if (line == null) break;
                 System.out.println (line);
+                if (line.startsWith("RESULT:"))
+                    isValid = line.endsWith("UNSAT");
+                String[] strings = line.split ("Random Seed Used");
+                if (strings.length > 1) {
+                    String[] integers = strings[0].split (" ");
+                    for (int i = 0; i < integers.length; i++) {
+                        exceptions.add(Integer.parseInt(integers[i]));
+                    }
+                }
             }
             process.waitFor();
             result.close ();
         } catch (InterruptedException e) {
+        }
+        if (isValid)
+            System.out.println("Subsumption valid");
+        else {
+            System.out.print("Subsumption invalid:");
+            for (Integer integer : exceptions) {
+                System.out.print(" " + integer);
+            }
+            System.out.println ();
         }
     }
 
