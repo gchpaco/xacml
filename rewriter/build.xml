@@ -73,6 +73,7 @@
     <jar destfile="${dist}/rewrite.jar"
 	 manifest="manifest">
       <fileset dir="${build}"/>
+      <fileset file="${zchaff}/zchaff"/>
     </jar>
   </target>
 
