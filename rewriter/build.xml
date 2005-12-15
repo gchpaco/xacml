@@ -7,22 +7,26 @@
   <property name="build.test" location="=build.test"/>
   <property name="dist" location="=build.jar"/>
   <property name="cli" location="commons-cli-1.0.jar"/>
+  <property name="lang" location="commons-lang-2.1.jar"/>
   <property name="javadoc" location="${user.home}/Documents/javadoc"/>
   <property name="zchaff" location="../zchaff"/>
 
   <path id="build.initial.path">
     <pathelement location="${cli}"/>
+    <pathelement location="${lang}"/>
     <pathelement path="${java.class.path}"/>
   </path>
   <path id="build.class.path">
     <pathelement location="${build}"/>
     <pathelement location="${cli}"/>
+    <pathelement location="${lang}"/>
     <pathelement path="${java.class.path}"/>
   </path>
   <path id="build.test.class.path">
     <pathelement location="${build.test}"/>
     <pathelement location="${build}"/>
     <pathelement location="${cli}"/>
+    <pathelement location="${lang}"/>
     <pathelement path="${java.class.path}"/>
   </path>
 
@@ -66,6 +70,11 @@
   <target name="dist" depends="compile,init,zchaff"
 	  description="Bundle main source code into a .jar">
     <unjar src="${cli}" dest="${build}">
+      <patternset>
+        <include name="**/*.class"/>
+      </patternset>
+    </unjar>
+    <unjar src="${lang}" dest="${build}">
       <patternset>
         <include name="**/*.class"/>
       </patternset>
