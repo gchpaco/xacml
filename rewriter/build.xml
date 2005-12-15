@@ -10,16 +10,19 @@
   <property name="lang" location="commons-lang-2.1.jar"/>
   <property name="javadoc" location="${user.home}/Documents/javadoc"/>
   <property name="zchaff" location="../zchaff"/>
+  <property name="utils" location="../../javautils"/>
 
   <path id="build.initial.path">
     <pathelement location="${cli}"/>
     <pathelement location="${lang}"/>
+    <pathelement location="${utils}/build"/>
     <pathelement path="${java.class.path}"/>
   </path>
   <path id="build.class.path">
     <pathelement location="${build}"/>
     <pathelement location="${cli}"/>
     <pathelement location="${lang}"/>
+    <pathelement location="${utils}/build"/>
     <pathelement path="${java.class.path}"/>
   </path>
   <path id="build.test.class.path">
@@ -27,6 +30,7 @@
     <pathelement location="${build}"/>
     <pathelement location="${cli}"/>
     <pathelement location="${lang}"/>
+    <pathelement location="${utils}/build"/>
     <pathelement path="${java.class.path}"/>
   </path>
 
