@@ -14,9 +14,12 @@ import java.io.PrintWriter;
 import java.util.*;
 
 import org.sigwinch.xacml.output.Output;
+import org.sigwinch.xacml.output.sat.VariableEncoding.Value;
 import org.sigwinch.xacml.tree.Tree;
 import org.sigwinch.xacml.tree.Triple;
 import org.sigwinch.xacml.tree.VariableReference;
+
+import util.Pair;
 
 /**
  * @author graham
@@ -183,17 +186,59 @@ public class AlloySatOutput implements Output {
             System.out.println("Subsumption valid");
         else {
             System.out.println("Subsumption invalid:");
+            ArrayList<Pair<String, Boolean>> variables = new ArrayList<Pair<String,Boolean>> ();
             for (Map.Entry<BooleanFormula, Integer> entry : variableMap.entrySet()) {
                 String key = entry.getKey ().toString ();
                 // the internal clauses are boring
-                if (key.startsWith ("clause_")) continue;
-                if (exceptions.contains (entry.getValue()))
-                    System.out.println (key);
-                else if (exceptions.contains (- entry.getValue ()))
-                    System.out.println ("! " + key);
+                if (key.startsWith("clause_"))
+                    continue;
+                if (exceptions.contains(entry.getValue()))
+                    variables.add(Pair.make(key, true));
+                else if (exceptions.contains(-entry.getValue()))
+                    variables.add(Pair.make(key, false));
                 else
-                    System.out.println ("[ " + key + " not mentioned? ]");
+                    System.out.println("[ " + key + " not mentioned? ]");
             }
+            Collections.sort(variables, new Comparator<Pair<String, Boolean>> () {
+                public int compare(Pair<String, Boolean> arg0, Pair<String, Boolean> arg1) {
+                    String base0 = VariableEncoding.baseNameOf(arg0.first);
+                    String base1 = VariableEncoding.baseNameOf(arg1.first);
+                    if (base0 == null) {
+                        if (base1 == null)
+                            return 0;
+                        return base1.compareTo (base0);
+                    }
+                    return base0.compareTo(base1);
+                }
+            });
+            ArrayList<String> strings = null;
+            ArrayList<Boolean> booleans = null;
+            String lastBase = null;
+            for (Pair<String, Boolean> pair : variables) {
+                String base = VariableEncoding.baseNameOf (pair.first);
+                if (base == null || !base.equals (lastBase)) {
+                    outputData(strings, booleans, lastBase);
+                    strings = new ArrayList<String> ();
+                    booleans = new ArrayList<Boolean> ();
+                }
+                strings.add (pair.first);
+                booleans.add (pair.second);
+                lastBase = base;
+            }
+            outputData(strings, booleans, lastBase);
+        }
+    }
+
+    private void outputData(ArrayList<String> strings, ArrayList<Boolean> booleans, String base) {
+        if (base != null) {
+            String[] strs = strings.toArray(new String[strings.size()]);
+            Boolean[] bbools = booleans.toArray(new Boolean[booleans.size()]);
+            boolean[] bools = new boolean[bbools.length];
+            for (int i = 0; i < bools.length; i++) {
+                bools[i] = bbools[i];
+            }
+            Value value = VariableEncoding.decode(strs, bools);
+            System.out.println (value);
         }
     }
 
