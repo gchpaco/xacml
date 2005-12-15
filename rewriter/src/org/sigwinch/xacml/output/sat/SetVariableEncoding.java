@@ -3,6 +3,9 @@
  */
 package org.sigwinch.xacml.output.sat;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * @author graham
  */
@@ -19,6 +22,28 @@ public class SetVariableEncoding extends VariableEncoding {
     @Override
     public BooleanFormula address(int i) {
         return names[i];
+    }
+
+    static final private Map<String, Map<Integer, SetVariableEncoding>> cache = new HashMap<String, Map<Integer, SetVariableEncoding>>();
+
+    public static SetVariableEncoding retrieve(String var, int i) {
+        if (!cache.containsKey(var))
+            cache.put(var, new HashMap<Integer, SetVariableEncoding> ());
+        if (!cache.get(var).containsKey(i))
+            cache.get(var).put(i, new SetVariableEncoding(var, i));
+        return cache.get(var).get(i);
+    }
+
+    public static Constructor getConstructor() {
+        return new Constructor() {
+            public VariableEncoding constructType(String basename, int length) {
+                return SetVariableEncoding.retrieve(basename, length);
+            };
+
+            public Object constructValue(boolean[] values) {
+                return values;
+            };
+        };
     }
 }
 

@@ -3,6 +3,9 @@
  */
 package org.sigwinch.xacml.output.sat;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.sigwinch.xacml.tree.VariableReference;
@@ -139,6 +142,8 @@ public abstract class VariableEncoding {
         }
         return new VariablePair (basename, value);
     }
+    
+    static final Map<String, Constructor> constructorCache = new HashMap<String, Constructor> ();
 
     public static Value decode(String[] strings, boolean[] bs) {
         VariablePair pair = decodeArrays (strings, bs);
@@ -147,7 +152,17 @@ public abstract class VariableEncoding {
             assert bs.length == 1;
             return new Value (BooleanVariableEncoding.retrieve(new VariableReference(strings[0])), bs[0]);   
         }
+        if (constructorCache.containsKey (pair.name)) {
+            Constructor constructor = constructorCache.get (pair.name);
+            return new Value (constructor.constructType(pair.name, bs.length), constructor.constructValue(bs));
+        }
         return new Value (ScalarVariableEncoding.retrieve (pair.name, 1 << bs.length), pair.value);
+    }
+
+    public static void logAs(String string, Constructor constructor) {
+        if (constructorCache.containsKey(string))
+            throw new IllegalArgumentException ("Already used " + string);
+        constructorCache.put (string, constructor);
     }
 }
 

@@ -1,5 +1,7 @@
 package org.sigwinch.xacml.output.sat;
 
+import java.util.Arrays;
+
 import junit.framework.TestCase;
 
 public class VariableEncodingTest extends TestCase {
@@ -58,5 +60,20 @@ public class VariableEncodingTest extends TestCase {
         assertFalse(value.equals(VariableEncoding.decode(bars, fs)));
         assertEquals("bar", value.getBase());
         assertEquals(10, value.getValue());
+        
+        String[] foo2s = { "foo__0", "foo__1", "foo__2", "foo__3" };
+        String[] bar2s = { "bar__0", "bar__1", "bar__2", "bar__3" };
+        VariableEncoding.logAs ("foo_", SetVariableEncoding.getConstructor ());
+        VariableEncoding.logAs ("bar_", SetVariableEncoding.getConstructor ());
+        value = VariableEncoding.decode(bar2s, values);
+        assertTrue(value.getType() instanceof SetVariableEncoding);
+        assertSame(value.getType(), VariableEncoding.decode(bar2s, values).getType());
+        assertNotSame(value.getType(), VariableEncoding.decode(foo2s, fs)
+                .getType());
+        assertSame(value.getType(), VariableEncoding.decode(bar2s, fs).getType());
+        assertEquals(value, VariableEncoding.decode(bar2s, values));
+        assertFalse(value.equals(VariableEncoding.decode(bar2s, fs)));
+        assertEquals("bar_", value.getBase());
+        assertTrue(Arrays.equals(values, (boolean[]) value.getValue ()));
     }
 }
