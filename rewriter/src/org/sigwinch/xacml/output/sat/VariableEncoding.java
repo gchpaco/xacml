@@ -44,6 +44,12 @@ public abstract class VariableEncoding {
         }
         return n;
     }
+    
+    static public String baseNameOf (String name) {
+        if (!name.matches(".*_[0-9]+$"))
+            return null;
+        return name.replaceAll("_[0-9]+$", "");
+    }
 
     /**
      * @return return the number of values this variable can take
