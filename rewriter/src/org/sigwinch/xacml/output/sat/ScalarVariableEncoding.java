@@ -73,8 +73,10 @@ public class ScalarVariableEncoding extends VariableEncoding {
     static final private Map<String, Map<Integer, ScalarVariableEncoding>> cache = new HashMap<String, Map<Integer, ScalarVariableEncoding>>();
 
     public static ScalarVariableEncoding retrieve(String var, int i) {
-        if (!cache.containsKey(var))
+        if (!cache.containsKey(var)) {
             cache.put(var, new HashMap<Integer, ScalarVariableEncoding> ());
+            logAs(var, getConstructor());
+        }
         if (!cache.get(var).containsKey(i))
             cache.get(var).put(i, new ScalarVariableEncoding(var, i));
         return cache.get(var).get(i);

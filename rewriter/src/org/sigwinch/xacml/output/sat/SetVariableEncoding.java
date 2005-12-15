@@ -27,8 +27,10 @@ public class SetVariableEncoding extends VariableEncoding {
     static final private Map<String, Map<Integer, SetVariableEncoding>> cache = new HashMap<String, Map<Integer, SetVariableEncoding>>();
 
     public static SetVariableEncoding retrieve(String var, int i) {
-        if (!cache.containsKey(var))
+        if (!cache.containsKey(var)) {
             cache.put(var, new HashMap<Integer, SetVariableEncoding> ());
+            logAs(var, getConstructor());
+        }
         if (!cache.get(var).containsKey(i))
             cache.get(var).put(i, new SetVariableEncoding(var, i));
         return cache.get(var).get(i);
