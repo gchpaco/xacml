@@ -51,6 +51,11 @@ public abstract class VariableEncoding {
             Value rhs = (Value) obj;
             return new EqualsBuilder().append(type, rhs.type).append(value, rhs.value).isEquals();
         }
+        
+        @Override
+        public String toString() {
+            return getBase() + " = " + getValue ();
+        }
     }
 
     public static class VariablePair {
