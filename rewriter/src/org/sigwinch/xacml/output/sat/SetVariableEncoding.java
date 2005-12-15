@@ -15,7 +15,7 @@ public class SetVariableEncoding extends VariableEncoding {
      * @param baseName
      * @param multiplicity
      */
-    public SetVariableEncoding(String baseName, int multiplicity) {
+    private SetVariableEncoding(String baseName, int multiplicity) {
         super(buildNamesFor(baseName, multiplicity), multiplicity, baseName);
     }
 

@@ -227,8 +227,8 @@ public class SatVisitor extends VisitorImpl {
         public void visitIntersection(Predicate left, Predicate right) {
             super.visitIntersection(left, right);
             VariableReference[][] allNames = getNames(left, right);
-            VariableEncoding enc = new SetVariableEncoding(makeNameFrom(left,
-                    right)
+            VariableEncoding enc = SetVariableEncoding.retrieve(makeNameFrom(
+                    left, right)
                     + "_intersection", allNames[0].length);
             setNamesFor(func, enc);
             BooleanFormula[] frameClauses = new BooleanFormula[allNames[0].length];
@@ -275,8 +275,8 @@ public class SatVisitor extends VisitorImpl {
         public void visitSetCreation(Predicate predicate) {
             super.visitSetCreation(predicate);
             VariableEncoding lnames = getEncodingFor(predicate);
-            VariableEncoding all = new SetVariableEncoding(nameFrom(predicate)
-                    + "_set", lnames.getSize());
+            VariableEncoding all = SetVariableEncoding.retrieve(
+                    nameFrom(predicate) + "_set", lnames.getSize());
             setNamesFor(func, all);
             BooleanFormula[] frameClauses = new BooleanFormula[all.getSize()];
             for (int i = 0; i < frameClauses.length; i++) {
@@ -319,8 +319,8 @@ public class SatVisitor extends VisitorImpl {
         public void visitUnion(Predicate left, Predicate right) {
             super.visitUnion(left, right);
             VariableReference[][] allNames = getNames(left, right);
-            VariableEncoding union = new SetVariableEncoding(makeNameFrom(left,
-                    right)
+            VariableEncoding union = SetVariableEncoding.retrieve(makeNameFrom(
+                    left, right)
                     + "_union", allNames[0].length);
             setNamesFor(func, union);
             BooleanFormula[] frameClauses = new BooleanFormula[allNames[0].length];
@@ -516,8 +516,8 @@ public class SatVisitor extends VisitorImpl {
     @Override
     public void walkEnvironmentalPredicate(EnvironmentalPredicate ep) {
         super.walkEnvironmentalPredicate(ep);
-        setNamesFor(ep, new SetVariableEncoding(intern("env_" + ep.getId()),
-                multiplicity));
+        setNamesFor(ep, SetVariableEncoding.retrieve(
+                intern("env_" + ep.getId()), multiplicity));
     }
 
     @Override
