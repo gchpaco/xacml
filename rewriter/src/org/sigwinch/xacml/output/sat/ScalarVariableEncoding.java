@@ -28,7 +28,7 @@ public class ScalarVariableEncoding extends VariableEncoding {
      * @param baseName
      * @param multiplicity
      */
-    public ScalarVariableEncoding(String baseName, int multiplicity) {
+    private ScalarVariableEncoding(String baseName, int multiplicity) {
         super(baseName, multiplicity);
     }
 
@@ -70,11 +70,11 @@ public class ScalarVariableEncoding extends VariableEncoding {
         return new And(components.toArray(new BooleanFormula[] {}));
     }
 
-    static final private Map<String, Map<Integer, VariableEncoding>> cache = new HashMap<String, Map<Integer, VariableEncoding>>();
+    static final private Map<String, Map<Integer, ScalarVariableEncoding>> cache = new HashMap<String, Map<Integer, ScalarVariableEncoding>>();
 
-    public static VariableEncoding retrieve(String var, int i) {
+    public static ScalarVariableEncoding retrieve(String var, int i) {
         if (!cache.containsKey(var))
-            cache.put(var, new HashMap<Integer, VariableEncoding> ());
+            cache.put(var, new HashMap<Integer, ScalarVariableEncoding> ());
         if (!cache.get(var).containsKey(i))
             cache.get(var).put(i, new ScalarVariableEncoding(var, i));
         return cache.get(var).get(i);

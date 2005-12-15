@@ -154,8 +154,9 @@ public class SatVisitor extends VisitorImpl {
                     .equals(xacmlprefix + "date-add-yearMonthDuration")) {
                 // create a new thing of the same type as the first argument
                 VariableEncoding enc = getEncodingFor(predicateArray[0]);
-                setNamesFor(func, new ScalarVariableEncoding(intern("xpath_"
-                        + makeNameFrom(predicateArray)), enc.getSize()));
+                setNamesFor(func, ScalarVariableEncoding.retrieve(
+                        intern("xpath_" + makeNameFrom(predicateArray)), enc
+                                .getSize()));
             } else
                 throw new RuntimeException("unsupported function " + string);
         }
@@ -297,8 +298,8 @@ public class SatVisitor extends VisitorImpl {
             super.visitSize(predicate);
             VariableEncoding enc = getEncodingFor(predicate);
             String sn = intern(enc.getBase() + "_size");
-            ScalarVariableEncoding all = new ScalarVariableEncoding(sn, enc
-                    .getSize());
+            ScalarVariableEncoding all = ScalarVariableEncoding.retrieve(sn,
+                    enc.getSize());
             setNamesFor(func, all);
             frames.addAll(all.disallowIllegals());
         }
@@ -561,7 +562,7 @@ public class SatVisitor extends VisitorImpl {
             setFormulaFor(cvp, name);
             setNamesFor(cvp, BooleanVariableEncoding.retrieve(name));
         } else {
-            ScalarVariableEncoding encoding = new ScalarVariableEncoding(sn,
+            ScalarVariableEncoding encoding = ScalarVariableEncoding.retrieve(sn,
                     multiplicity);
             setNamesFor(cvp, encoding);
             frames.addAll(encoding.disallowIllegals());
