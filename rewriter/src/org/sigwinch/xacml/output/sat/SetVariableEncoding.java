@@ -42,8 +42,15 @@ public class SetVariableEncoding extends VariableEncoding {
                 return SetVariableEncoding.retrieve(basename, length);
             };
 
-            public Object constructValue(boolean[] values) {
-                return values;
+            public Object constructValue(int value) {
+                int size = BooleanCombinations.binaryLog(value);
+                boolean [] array = new boolean[size];
+                for (int i = 0; i < array.length; i++)
+                    if ((value & (1 << i)) != 0)
+                        array[i] = true;
+                    else
+                        array[i] = false;
+                return array;
             };
         };
     }

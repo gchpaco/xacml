@@ -88,11 +88,7 @@ public class ScalarVariableEncoding extends VariableEncoding {
                 return ScalarVariableEncoding.retrieve(basename, 1 << length);
             };
 
-            public Object constructValue(boolean[] values) {
-                int value = 0;
-                for (int i = 0; i < values.length; i++) {
-                    if (values[i]) value += 1 << i;
-                }
+            public Object constructValue(int value) {
                 return value;
             };
         };

@@ -41,8 +41,8 @@ public class BooleanVariableEncoding extends VariableEncoding {
                 return BooleanVariableEncoding.retrieve(basename);
             };
 
-            public Object constructValue(boolean[] values) {
-                return values[0];
+            public Object constructValue(int value) {
+                return value == 1;
             };
         };
     }

@@ -137,8 +137,9 @@ public abstract class VariableEncoding {
         }
         int value = 0;
         for (int i = 0; i < values.length; i++) {
+            int radix = Integer.parseInt(names[i].substring(names[i].lastIndexOf('_') + 1));
             if (values[i])
-                value += 1 << i;
+                value += 1 << radix;
         }
         return new VariablePair (basename, value);
     }
@@ -148,21 +149,24 @@ public abstract class VariableEncoding {
     public static Value decode(String[] strings, boolean[] bs) {
         Constructor constructor;
         String baseName;
+        int value;
         VariablePair pair = decodeArrays (strings, bs);
         if (pair == null) {
             assert strings.length == 1;
             assert bs.length == 1;
             constructor = BooleanVariableEncoding.getConstructor ();
             baseName = strings[0];  
+            value = bs[0] ? 1 : 0;
         } else {
             baseName = pair.name;
+            value = pair.value;
             if (constructorCache.containsKey(pair.name)) {
                 constructor = constructorCache.get(pair.name);
             } else {
                 constructor = ScalarVariableEncoding.getConstructor();
             }
         }
-        return new Value (constructor.constructType(baseName, bs.length), constructor.constructValue(bs));
+        return new Value (constructor.constructType(baseName, bs.length), constructor.constructValue(value));
     }
 
     public static void logAs(String string, Constructor constructor) {

@@ -28,6 +28,9 @@ public class VariableEncodingTest extends TestCase {
         assertNull (VariableEncoding.decodeArrays (names, new boolean [] {}));
         assertNull (VariableEncoding.decodeArrays (new String [] { "foo_0", "bar_1", "baz_2" }, values));
         assertNull (VariableEncoding.decodeArrays (new String [] { "foo", "bar", "baz" }, values));
+        pair = VariableEncoding.decodeArrays (new String [] { "foo_bar_42_0", "foo_bar_42_2", "foo_bar_42_1" } , values);
+        assertEquals ("foo_bar_42", pair.name);
+        assertEquals (4, pair.value);
     }
 
     public void testDecode () {
