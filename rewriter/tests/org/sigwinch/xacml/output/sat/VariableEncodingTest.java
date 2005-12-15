@@ -29,20 +29,34 @@ public class VariableEncodingTest extends TestCase {
     }
 
     public void testDecode () {
-        VariableEncoding.Value value = VariableEncoding.decode(
-                new String[] { "bar" }, new boolean[] { true });
-        assertTrue(value.getType () instanceof BooleanVariableEncoding);
-        assertSame(value.getType (), VariableEncoding.decode(new String[] { "bar" },
-                new boolean[] { true }).getType ());
-        assertNotSame(value.getType (), VariableEncoding.decode(new String[] { "foo" },
-                new boolean[] { true }).getType ());
-        assertSame(value.getType (), VariableEncoding.decode(new String[] { "bar" },
-                new boolean[] { false }).getType ());
-        assertEquals (value, VariableEncoding.decode(new String[] { "bar" },
-                new boolean[] { true }));
-        assertFalse(value.equals(VariableEncoding.decode(new String[] { "bar" },
-                new boolean[] { false })));
+        String[] foo = { "foo" };
+        String[] bar = { "bar" };
+        boolean[] t = { true };
+        boolean[] f = { false };
+        VariableEncoding.Value value = VariableEncoding.decode(bar, t);
+        assertTrue(value.getType() instanceof BooleanVariableEncoding);
+        assertSame(value.getType(), VariableEncoding.decode(bar, t).getType());
+        assertNotSame(value.getType(), VariableEncoding.decode(foo, t)
+                .getType());
+        assertSame(value.getType(), VariableEncoding.decode(bar, f).getType());
+        assertEquals(value, VariableEncoding.decode(bar, t));
+        assertFalse(value.equals(VariableEncoding.decode(bar, f)));
         assertEquals("bar", value.getBase());
         assertEquals(true, value.getValue());
+        
+        String[] foos = { "foo_0", "foo_1", "foo_2", "foo_3" };
+        String[] bars = { "bar_0", "bar_1", "bar_2", "bar_3" };
+        boolean[] values = { false, true, false, true };
+        boolean[] fs = { false, false, false, false };
+        value = VariableEncoding.decode(bars, values);
+        assertTrue(value.getType() instanceof ScalarVariableEncoding);
+        assertSame(value.getType(), VariableEncoding.decode(bars, values).getType());
+        assertNotSame(value.getType(), VariableEncoding.decode(foos, fs)
+                .getType());
+        assertSame(value.getType(), VariableEncoding.decode(bars, fs).getType());
+        assertEquals(value, VariableEncoding.decode(bars, values));
+        assertFalse(value.equals(VariableEncoding.decode(bars, fs)));
+        assertEquals("bar", value.getBase());
+        assertEquals(10, value.getValue());
     }
 }

@@ -4,7 +4,9 @@
 package org.sigwinch.xacml.output.sat;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 
 import org.sigwinch.xacml.tree.VariableReference;
@@ -66,6 +68,16 @@ public class ScalarVariableEncoding extends VariableEncoding {
                 components.add(names[j].negate());
         }
         return new And(components.toArray(new BooleanFormula[] {}));
+    }
+
+    static final private Map<String, Map<Integer, VariableEncoding>> cache = new HashMap<String, Map<Integer, VariableEncoding>>();
+
+    public static VariableEncoding retrieve(String var, int i) {
+        if (!cache.containsKey(var))
+            cache.put(var, new HashMap<Integer, VariableEncoding> ());
+        if (!cache.get(var).containsKey(i))
+            cache.get(var).put(i, new ScalarVariableEncoding(var, i));
+        return cache.get(var).get(i);
     }
 
 }

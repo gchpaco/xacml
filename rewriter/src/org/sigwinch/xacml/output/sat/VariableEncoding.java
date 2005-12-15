@@ -141,7 +141,13 @@ public abstract class VariableEncoding {
     }
 
     public static Value decode(String[] strings, boolean[] bs) {
-        return new Value (BooleanVariableEncoding.retrieve(new VariableReference(strings[0])), bs[0]);
+        VariablePair pair = decodeArrays (strings, bs);
+        if (pair == null) {
+            assert strings.length == 1;
+            assert bs.length == 1;
+            return new Value (BooleanVariableEncoding.retrieve(new VariableReference(strings[0])), bs[0]);   
+        }
+        return new Value (ScalarVariableEncoding.retrieve (pair.name, 1 << bs.length), pair.value);
     }
 }
 
