@@ -80,6 +80,21 @@ public class ScalarVariableEncoding extends VariableEncoding {
         return cache.get(var).get(i);
     }
 
+    public static Constructor getConstructor() {
+        return new Constructor() {
+            public VariableEncoding constructType(String basename, int length) {
+                return ScalarVariableEncoding.retrieve(basename, 1 << length);
+            };
+
+            public Object constructValue(boolean[] values) {
+                int value = 0;
+                for (int i = 0; i < values.length; i++) {
+                    if (values[i]) value += 1 << i;
+                }
+                return value;
+            };
+        };
+    }
 }
 
 // arch-tag: ScalarVariableEncoding.java May 29, 2005 2:29:49 AM

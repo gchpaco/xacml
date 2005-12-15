@@ -29,7 +29,21 @@ public class BooleanVariableEncoding extends VariableEncoding {
             cache.put(var, new BooleanVariableEncoding(var));
         return cache.get(var);
     }
+    public static BooleanVariableEncoding retrieve(String var) {
+        return retrieve (new VariableReference (var));
+    }
 
+    public static Constructor getConstructor() {
+        return new Constructor() {
+            public VariableEncoding constructType(String basename, int length) {
+                return BooleanVariableEncoding.retrieve(basename);
+            };
+
+            public Object constructValue(boolean[] values) {
+                return values[0];
+            };
+        };
+    }
 }
 
 // arch-tag: BooleanVariableEncoding.java May 28, 2005 1:59:13 AM

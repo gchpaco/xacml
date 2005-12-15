@@ -146,17 +146,23 @@ public abstract class VariableEncoding {
     static final Map<String, Constructor> constructorCache = new HashMap<String, Constructor> ();
 
     public static Value decode(String[] strings, boolean[] bs) {
+        Constructor constructor;
+        String baseName;
         VariablePair pair = decodeArrays (strings, bs);
         if (pair == null) {
             assert strings.length == 1;
             assert bs.length == 1;
-            return new Value (BooleanVariableEncoding.retrieve(new VariableReference(strings[0])), bs[0]);   
+            constructor = BooleanVariableEncoding.getConstructor ();
+            baseName = strings[0];  
+        } else {
+            baseName = pair.name;
+            if (constructorCache.containsKey(pair.name)) {
+                constructor = constructorCache.get(pair.name);
+            } else {
+                constructor = ScalarVariableEncoding.getConstructor();
+            }
         }
-        if (constructorCache.containsKey (pair.name)) {
-            Constructor constructor = constructorCache.get (pair.name);
-            return new Value (constructor.constructType(pair.name, bs.length), constructor.constructValue(bs));
-        }
-        return new Value (ScalarVariableEncoding.retrieve (pair.name, 1 << bs.length), pair.value);
+        return new Value (constructor.constructType(baseName, bs.length), constructor.constructValue(bs));
     }
 
     public static void logAs(String string, Constructor constructor) {
