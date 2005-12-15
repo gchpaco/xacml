@@ -9,6 +9,15 @@ import org.sigwinch.xacml.tree.VariableReference;
  * @author graham
  */
 public abstract class VariableEncoding {
+    public static class VariablePair {
+        public VariablePair(String string, int v) {
+            name = string;
+            value = v;
+        }
+        public final String name;
+        public final int value;
+    }
+
     VariableReference[] names;
 
     int multiplicity;
@@ -71,6 +80,15 @@ public abstract class VariableEncoding {
     }
 
     public abstract BooleanFormula address(int i);
+
+    public static VariablePair decode(String[] names, boolean[] values) {
+        int value = 0;
+        for (int i = 0; i < values.length; i++) {
+            if (values[i])
+                value += 1 << i;
+        }
+        return new VariablePair (baseNameOf (names[0]), value);
+    }
 }
 
 // arch-tag: VariableEncoding.java May 22, 2005 2:07:57 AM
