@@ -1,6 +1,7 @@
 package org.sigwinch.xacml.output.sat;
 
 import java.util.Arrays;
+import java.util.BitSet;
 
 import junit.framework.TestCase;
 
@@ -82,6 +83,21 @@ public class VariableEncodingTest extends TestCase {
         assertEquals(value, VariableEncoding.decode(bar2s, values));
         assertFalse(value.equals(VariableEncoding.decode(bar2s, fs)));
         assertEquals("bar_", value.getBase());
-        assertTrue(Arrays.equals(values, (boolean[]) value.getValue ()));
+        BitSet bitset = (BitSet) value.getValue();
+        assertFalse(bitset.get(0));
+        assertTrue(bitset.get(1));
+        assertFalse(bitset.get(2));
+        assertTrue(bitset.get(3));
+
+        SetVariableEncoding.retrieve("env___md_record_md_patient_md_patient_number_text__", 2);
+        assertEquals ("env___md_record_md_patient_md_patient_number_text__ = {1}",
+                VariableEncoding
+                        .decode(
+                                new String[] {
+                                        "env___md_record_md_patient_md_patient_number_text___0",
+                                        "env___md_record_md_patient_md_patient_number_text___1" },
+                                new boolean [] {
+                                        false, true
+                                }).toString ());
     }
 }

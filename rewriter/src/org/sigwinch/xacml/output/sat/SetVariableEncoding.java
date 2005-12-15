@@ -3,6 +3,7 @@
  */
 package org.sigwinch.xacml.output.sat;
 
+import java.util.BitSet;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -43,14 +44,11 @@ public class SetVariableEncoding extends VariableEncoding {
             };
 
             public Object constructValue(int value) {
-                int size = BooleanCombinations.binaryLog(value);
-                boolean [] array = new boolean[size];
-                for (int i = 0; i < array.length; i++)
+                BitSet set = new BitSet ();
+                for (int i = 0; i <= BooleanCombinations.binaryLog(value); i++)
                     if ((value & (1 << i)) != 0)
-                        array[i] = true;
-                    else
-                        array[i] = false;
-                return array;
+                        set.set(i);
+                return set;
             };
         };
     }
