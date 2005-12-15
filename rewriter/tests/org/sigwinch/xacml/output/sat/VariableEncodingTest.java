@@ -28,4 +28,21 @@ public class VariableEncodingTest extends TestCase {
         assertNull (VariableEncoding.decodeArrays (new String [] { "foo", "bar", "baz" }, values));
     }
 
+    public void testDecode () {
+        VariableEncoding.Value value = VariableEncoding.decode(
+                new String[] { "bar" }, new boolean[] { true });
+        assertTrue(value.getType () instanceof BooleanVariableEncoding);
+        assertSame(value.getType (), VariableEncoding.decode(new String[] { "bar" },
+                new boolean[] { true }).getType ());
+        assertNotSame(value.getType (), VariableEncoding.decode(new String[] { "foo" },
+                new boolean[] { true }).getType ());
+        assertSame(value.getType (), VariableEncoding.decode(new String[] { "bar" },
+                new boolean[] { false }).getType ());
+        assertEquals (value, VariableEncoding.decode(new String[] { "bar" },
+                new boolean[] { true }));
+        assertFalse(value.equals(VariableEncoding.decode(new String[] { "bar" },
+                new boolean[] { false })));
+        assertEquals("bar", value.getBase());
+        assertEquals(true, value.getValue());
+    }
 }

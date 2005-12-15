@@ -3,12 +3,53 @@
  */
 package org.sigwinch.xacml.output.sat;
 
+import org.apache.commons.lang.builder.EqualsBuilder;
+import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.sigwinch.xacml.tree.VariableReference;
 
 /**
  * @author graham
  */
 public abstract class VariableEncoding {
+    public static class Value {
+        private final VariableEncoding type;
+        private final Object value;
+
+        public Value(VariableEncoding type, Object value) {
+            this.type = type;
+            this.value = value;
+        }
+
+        public VariableEncoding getType() {
+            return type;
+        }
+
+        public Object getValue() {
+            return value;
+        }
+
+        public String getBase() {
+            return getType ().getBase();
+        }
+        
+        @Override
+        public int hashCode() {
+            return new HashCodeBuilder(3, 5).append(type).append(value).toHashCode();
+        }
+
+        @Override
+        public boolean equals(Object obj) {
+            if (obj instanceof Value == false) {
+                return false;
+            }
+            if (this == obj) {
+                return true;
+            }
+            Value rhs = (Value) obj;
+            return new EqualsBuilder().append(type, rhs.type).append(value, rhs.value).isEquals();
+        }
+    }
+
     public static class VariablePair {
         public VariablePair(String string, int v) {
             name = string;
@@ -97,6 +138,10 @@ public abstract class VariableEncoding {
                 value += 1 << i;
         }
         return new VariablePair (basename, value);
+    }
+
+    public static Value decode(String[] strings, boolean[] bs) {
+        return new Value (BooleanVariableEncoding.retrieve(new VariableReference(strings[0])), bs[0]);
     }
 }
 
