@@ -81,7 +81,7 @@ public abstract class VariableEncoding {
 
     public abstract BooleanFormula address(int i);
 
-    public static VariablePair decode(String[] names, boolean[] values) {
+    public static VariablePair decodeArrays(String[] names, boolean[] values) {
         if (names.length != values.length) return null;
         if (names.length == 0) return null;
         String basename = baseNameOf (names[0]);
