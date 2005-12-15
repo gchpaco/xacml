@@ -22,9 +22,9 @@ public class BooleanVariableEncoding extends VariableEncoding {
         return names[0];
     }
     
-    static final private Map<VariableReference, VariableEncoding> cache = new HashMap<VariableReference, VariableEncoding>();
+    static final private Map<VariableReference, BooleanVariableEncoding> cache = new HashMap<VariableReference, BooleanVariableEncoding>();
 
-    public static VariableEncoding retrieve(VariableReference var) {
+    public static BooleanVariableEncoding retrieve(VariableReference var) {
         if (!cache.containsKey(var))
             cache.put(var, new BooleanVariableEncoding(var));
         return cache.get(var);
