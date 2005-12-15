@@ -3,6 +3,9 @@
  */
 package org.sigwinch.xacml.output.sat;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.sigwinch.xacml.tree.VariableReference;
 
 /**
@@ -17,6 +20,14 @@ public class BooleanVariableEncoding extends VariableEncoding {
     public BooleanFormula address(int i) {
         assert i == 0 : "tried to address a Boolean variable with " + i;
         return names[0];
+    }
+    
+    static final private Map<VariableReference, VariableEncoding> cache = new HashMap<VariableReference, VariableEncoding>();
+
+    public static VariableEncoding retrieve(VariableReference var) {
+        if (!cache.containsKey(var))
+            cache.put(var, new BooleanVariableEncoding(var));
+        return cache.get(var);
     }
 
 }
