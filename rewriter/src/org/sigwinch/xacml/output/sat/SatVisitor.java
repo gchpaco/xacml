@@ -559,7 +559,7 @@ public class SatVisitor extends VisitorImpl {
         if (cvp.getShortName() == "Bool") {
             VariableReference name = new VariableReference(sn);
             setFormulaFor(cvp, name);
-            setNamesFor(cvp, new BooleanVariableEncoding(name));
+            setNamesFor(cvp, BooleanVariableEncoding.retrieve(name));
         } else {
             ScalarVariableEncoding encoding = new ScalarVariableEncoding(sn,
                     multiplicity);

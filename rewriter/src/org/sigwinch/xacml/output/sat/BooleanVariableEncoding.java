@@ -12,7 +12,7 @@ import org.sigwinch.xacml.tree.VariableReference;
  * @author graham
  */
 public class BooleanVariableEncoding extends VariableEncoding {
-    public BooleanVariableEncoding(VariableReference name) {
+    private BooleanVariableEncoding(VariableReference name) {
         super(new VariableReference[] { name }, 1, name.toString());
     }
 
