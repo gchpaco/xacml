@@ -11,7 +11,18 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.PrintWriter;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.TreeMap;
+import java.util.TreeSet;
 
 import org.sigwinch.xacml.output.Output;
 import org.sigwinch.xacml.output.sat.VariableEncoding.Value;
@@ -206,40 +217,70 @@ public class AlloySatOutput implements Output {
                     if (base0 == null) {
                         if (base1 == null)
                             return 0;
-                        return base1.compareTo (base0);
+                        return -1;
                     }
+                    if (base1 == null)
+                        return 1;
                     return base0.compareTo(base1);
                 }
             });
-            ArrayList<String> strings = null;
-            ArrayList<Boolean> booleans = null;
+            // goal is to gather the string and booleans for all consecutive
+            // pairs with the same base, unless that base is null; if it is
+            // null, register each individually.
+            ArrayList<String> currentStrings = new ArrayList<String>();
+            ArrayList<Boolean> currentBooleans = new ArrayList<Boolean>();
+            boolean queueing = false;
             String lastBase = null;
             for (Pair<String, Boolean> pair : variables) {
-                String base = VariableEncoding.baseNameOf (pair.first);
-                if (base == null || !base.equals (lastBase)) {
-                    outputData(strings, booleans, lastBase);
-                    strings = new ArrayList<String> ();
-                    booleans = new ArrayList<Boolean> ();
+                String currentBase = VariableEncoding.baseNameOf(pair.first);
+                if (queueing) {
+                    // queueing => lastBase != null
+                    if (currentBase == null || !currentBase.equals(lastBase)) {
+                        outputData(currentStrings, currentBooleans, lastBase);
+                        currentStrings = new ArrayList<String>();
+                        currentBooleans = new ArrayList<Boolean>();
+                        if (currentBase == null) {
+                            queueing = false;
+                            outputData(Collections.singletonList(pair.first),
+                                    Collections.singletonList(pair.second),
+                                    null);
+                        } else {
+                            queueing = true;
+                            currentStrings.add(pair.first);
+                            currentBooleans.add(pair.second);
+                        }
+                        lastBase = currentBase;
+                    } else {
+                        currentStrings.add(pair.first);
+                        currentBooleans.add(pair.second);
+                    }
+                } else {
+                    if (currentBase == null) {
+                        queueing = false;
+                        outputData(Collections.singletonList(pair.first),
+                                Collections.singletonList(pair.second), null);
+                    } else {
+                        queueing = true;
+                        currentStrings.add(pair.first);
+                        currentBooleans.add(pair.second);
+                    }
                 }
-                strings.add (pair.first);
-                booleans.add (pair.second);
-                lastBase = base;
             }
-            outputData(strings, booleans, lastBase);
+            if (queueing)
+                outputData (currentStrings, currentBooleans, lastBase);
         }
     }
 
-    private void outputData(ArrayList<String> strings, ArrayList<Boolean> booleans, String base) {
-        if (base != null) {
-            String[] strs = strings.toArray(new String[strings.size()]);
-            Boolean[] bbools = booleans.toArray(new Boolean[booleans.size()]);
-            boolean[] bools = new boolean[bbools.length];
-            for (int i = 0; i < bools.length; i++) {
-                bools[i] = bbools[i];
-            }
-            Value value = VariableEncoding.decode(strs, bools);
-            System.out.println (value);
+    private void outputData(List<String> strings, List<Boolean> booleans,
+            String base) {
+        String[] strs = strings.toArray(new String[strings.size()]);
+        Boolean[] bbools = booleans.toArray(new Boolean[booleans.size()]);
+        boolean[] bools = new boolean[bbools.length];
+        for (int i = 0; i < bools.length; i++) {
+            bools[i] = bbools[i];
         }
+        Value value = VariableEncoding.decode(strs, bools);
+        System.out.println(value);
     }
 
     private void copyStream(InputStream in, OutputStream out) throws IOException {
