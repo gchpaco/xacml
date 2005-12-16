@@ -1,6 +1,5 @@
 package org.sigwinch.xacml.output.sat;
 
-import java.util.Arrays;
 import java.util.BitSet;
 
 import junit.framework.TestCase;
