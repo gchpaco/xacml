@@ -327,7 +327,7 @@ public class InlineTest extends XACMLTestCase {
         }
         BooleanFormula strEq = new And(subclauses);
         BooleanFormula expected = new Or(new And(strEq, new Not(strEq)),
-                PrimitiveBoolean.TRUE);
+                new VariableReference ("xpath_attribute_bag"));
         assertEquals(expected, result);
         assertEquals(0, out.getFrameConditions().length);
     }

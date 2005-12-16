@@ -10,7 +10,19 @@ import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
 
-import org.sigwinch.xacml.tree.*;
+import org.sigwinch.xacml.tree.AndPredicate;
+import org.sigwinch.xacml.tree.ConstantValuePredicate;
+import org.sigwinch.xacml.tree.EnvironmentalPredicate;
+import org.sigwinch.xacml.tree.ExistentialPredicate;
+import org.sigwinch.xacml.tree.FunctionCallPredicate;
+import org.sigwinch.xacml.tree.FunctionVisitorImpl;
+import org.sigwinch.xacml.tree.OrPredicate;
+import org.sigwinch.xacml.tree.Predicate;
+import org.sigwinch.xacml.tree.SimplePredicate;
+import org.sigwinch.xacml.tree.SolePredicate;
+import org.sigwinch.xacml.tree.Triple;
+import org.sigwinch.xacml.tree.VariableReference;
+import org.sigwinch.xacml.tree.VisitorImpl;
 
 /**
  * @author graham
@@ -50,9 +62,16 @@ public class SatVisitor extends VisitorImpl {
         @Override
         public void visitDefault(String string, Predicate[] predicateArray) {
             super.visitDefault(string, predicateArray);
-            // This is a noop currently, because we do no handling of xpath.
             assert string.equals(xacmlprefix + "xpath-node-match");
-            setFormulaFor(ep, PrimitiveBoolean.TRUE);
+            assert predicateArray[0] instanceof ConstantValuePredicate;
+            assert predicateArray[1] instanceof EnvironmentalPredicate;
+            assert predicateArray.length == 2;
+            ConstantValuePredicate cvp = (ConstantValuePredicate) predicateArray[0];
+            EnvironmentalPredicate evp = (EnvironmentalPredicate) predicateArray[1];
+            String id = intern ("xpath_" + cvp.getValue () + " " + evp.getId ());
+            VariableReference var = new VariableReference (id);
+            setFormulaFor(ep, var);
+            setNamesFor(ep, BooleanVariableEncoding.retrieve(var));
         }
 
         @Override
