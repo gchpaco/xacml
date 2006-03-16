@@ -171,6 +171,7 @@ public class AlloySatOutput implements Output {
         }
         boolean isValid = false;
         Set<Integer> exceptions = new HashSet<Integer> ();
+        long start = System.currentTimeMillis();
         try {
             Process process = Runtime.getRuntime().exec(
                     new String[] { executable.getAbsolutePath(),
@@ -193,10 +194,11 @@ public class AlloySatOutput implements Output {
             result.close ();
         } catch (InterruptedException e) {
         }
+        long end = System.currentTimeMillis();
         if (isValid)
-            System.out.println("Subsumption valid");
+            System.out.println("Subsumption valid: " + (end - start) + " ms");
         else {
-            System.out.println("Subsumption invalid:");
+            System.out.println("Subsumption invalid: " + (end - start) + " ms:");
             ArrayList<Pair<String, Boolean>> variables = new ArrayList<Pair<String,Boolean>> ();
             for (Map.Entry<BooleanFormula, Integer> entry : variableMap.entrySet()) {
                 String key = entry.getKey ().toString ();

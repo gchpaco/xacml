@@ -155,6 +155,7 @@ public class Rewriter {
         }
         String[] args = line.getArgs();
 
+        long start = System.currentTimeMillis();
         Tree trees[] = new Tree[args.length];
         for (int i = 0; i < args.length; i++)
             trees[i] = readFile(args[i]);
@@ -171,6 +172,8 @@ public class Rewriter {
             output.write(trees[i]);
         output.postamble();
         writer.flush();
+        long end = System.currentTimeMillis();
+        System.out.println("Generated in " + (end - start) + " ms");
         if (roundTrip)
             output.roundTripOn(tempFile);
     }
