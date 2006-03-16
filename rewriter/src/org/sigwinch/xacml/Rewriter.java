@@ -82,15 +82,16 @@ public class Rewriter {
     }
 
     static Tree readFile(String file) {
-        Rewriter r = new Rewriter();
-        Tree t = r.parseFile(file);
-        if (t != null) {
-            t = t.transform(new DuplicateRemover());
-            t = t.transform(new Propagator());
-            t = t.transform(new DuplicateRemover());
-            t = t.transform(new TripleFormer());
-            t = t.transform(new TriplePropagator());
-        }
+        return new Rewriter().parseFile(file);
+    }
+
+    private static Tree transformTree(Tree t) {
+        if (t == null) return t;
+        t = t.transform(new DuplicateRemover());
+        t = t.transform(new Propagator());
+        t = t.transform(new DuplicateRemover());
+        t = t.transform(new TripleFormer());
+        t = t.transform(new TriplePropagator());
         return t;
     }
 
@@ -159,7 +160,16 @@ public class Rewriter {
         Tree trees[] = new Tree[args.length];
         for (int i = 0; i < args.length; i++)
             trees[i] = readFile(args[i]);
+        long end = System.currentTimeMillis();
+        System.err.println("IO in " + (end - start) + " ms");
+        
+        start = System.currentTimeMillis();
+        for (int i = 0; i < args.length; i++)
+            trees[i] = transformTree(trees[i]);
+        end = System.currentTimeMillis();
+        System.err.println("Tree transformations in " + (end - start) + " ms");
 
+        start = System.currentTimeMillis();
         // This is junk just to combine the trees for unified processing
         Tree unified;
         if (args.length == 1)
@@ -172,8 +182,8 @@ public class Rewriter {
             output.write(trees[i]);
         output.postamble();
         writer.flush();
-        long end = System.currentTimeMillis();
-        System.out.println("Generated in " + (end - start) + " ms");
+        end = System.currentTimeMillis();
+        System.err.println("Output in " + (end - start) + " ms");
         if (roundTrip)
             output.roundTripOn(tempFile);
     }
