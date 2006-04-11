@@ -10,7 +10,7 @@
   <property name="lang" location="commons-lang-2.1.jar"/>
   <property name="javadoc" location="${user.home}/Documents/javadoc"/>
   <property name="zchaff" location="../zchaff"/>
-  <property name="utils" location="/Users/graham/wd/javautils"/>
+  <property name="utils" location="/home/graham/wd/javautils"/>
 
   <path id="build.initial.path">
     <pathelement location="${cli}"/>
