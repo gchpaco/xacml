@@ -6,30 +6,25 @@
   <property name="build.cache" location="=build.cache"/>
   <property name="build.test" location="=build.test"/>
   <property name="dist" location="=build.jar"/>
-  <property name="cli" location="commons-cli-1.0.jar"/>
-  <property name="lang" location="commons-lang-2.1.jar"/>
   <property name="javadoc" location="${user.home}/Documents/javadoc"/>
   <property name="zchaff" location="../zchaff"/>
   <property name="utils" location="/home/graham/wd/javautils"/>
 
   <path id="build.initial.path">
-    <pathelement location="${cli}"/>
-    <pathelement location="${lang}"/>
+    <fileset dir="lib" includes="*.jar" />
     <pathelement location="${utils}/build"/>
     <pathelement path="${java.class.path}"/>
   </path>
   <path id="build.class.path">
+    <fileset dir="lib" includes="*.jar" />
     <pathelement location="${build}"/>
-    <pathelement location="${cli}"/>
-    <pathelement location="${lang}"/>
     <pathelement location="${utils}/build"/>
     <pathelement path="${java.class.path}"/>
   </path>
   <path id="build.test.class.path">
+    <fileset dir="lib" includes="*.jar" />
     <pathelement location="${build.test}"/>
     <pathelement location="${build}"/>
-    <pathelement location="${cli}"/>
-    <pathelement location="${lang}"/>
     <pathelement location="${utils}/build"/>
     <pathelement path="${java.class.path}"/>
   </path>
