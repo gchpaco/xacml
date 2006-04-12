@@ -40,10 +40,9 @@ public class TriplePropagationTest extends TestCase {
     public void testThroughPermit() {
         Tree tree = new PermitOverridesRule(new Triple(a, b, c), new Triple(d,
                 e, f));
-        Tree expectedResult = new Triple(
-                a.orWith(d).andWith(c.orWith(f).not()), (b.andWith(d.orWith(f)
-                        .not())).orWith(e.andWith(a.orWith(c).not())), c
-                        .orWith(f));
+        Tree expectedResult = new Triple(a.orWith(d), (b.andWith(d.orWith(f)
+                .not())).orWith(e.andWith(a.orWith(c).not())), c.orWith(f)
+                .andWith(a.orWith(d).not()));
         assertEquals(expectedResult, tree.transform(new TriplePropagator()));
     }
 
@@ -51,8 +50,8 @@ public class TriplePropagationTest extends TestCase {
         Tree tree = new DenyOverridesRule(new Triple(a, b, c), new Triple(d, e,
                 f));
         Tree expectedResult = new Triple((a.andWith(e.orWith(f).not()))
-                .orWith(d.andWith(b.orWith(c).not())), b.orWith(e).andWith(
-                c.orWith(f).not()), c.orWith(f));
+                .orWith(d.andWith(b.orWith(c).not())), b.orWith(e), c.orWith(f)
+                .andWith(b.orWith(e).not()));
         assertEquals(expectedResult, tree.transform(new TriplePropagator()));
     }
 
@@ -83,8 +82,8 @@ public class TriplePropagationTest extends TestCase {
          * new Triple ((a.andWith (c.not ())) .orWith (nil), nil.orWith
          * (c).andWith (b.orWith (nil).not ()), b.orWith (nil));
          */
-        Tree expectedResult = new Triple((a.andWith(c.not())), c.andWith(b
-                .not()), b);
+        Tree expectedResult = new Triple((a.andWith(c.not())), c, b.andWith(c
+                .not()));
         assertEquals(expectedResult, tree.transform(new TriplePropagator()));
     }
 

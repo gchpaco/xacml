@@ -78,19 +78,23 @@ public class Propagator extends TransformerImpl {
         if (error.getChild() instanceof PermitOverridesRule) {
             PermitOverridesRule p = (PermitOverridesRule) error.getChild();
             return new PermitOverridesRule(new Error(p.getLeft(), error
-                    .getCondition()).transform(this), p.getRight());
+                    .getCondition()).transform(this), new Error(p.getRight(),
+                    error.getCondition()).transform(this));
         } else if (error.getChild() instanceof DenyOverridesRule) {
             DenyOverridesRule p = (DenyOverridesRule) error.getChild();
             return new DenyOverridesRule(new Error(p.getLeft(), error
-                    .getCondition()).transform(this), p.getRight());
+                    .getCondition()).transform(this), new Error(p.getRight(),
+                    error.getCondition()).transform(this));
         } else if (error.getChild() instanceof FirstApplicableRule) {
             FirstApplicableRule p = (FirstApplicableRule) error.getChild();
             return new FirstApplicableRule(new Error(p.getLeft(), error
-                    .getCondition()).transform(this), p.getRight());
+                    .getCondition()).transform(this), new Error(p.getRight(),
+                    error.getCondition()).transform(this));
         } else if (error.getChild() instanceof OnlyOneRule) {
             OnlyOneRule p = (OnlyOneRule) error.getChild();
             return new OnlyOneRule(new Error(p.getLeft(), error.getCondition())
-                    .transform(this), p.getRight());
+                    .transform(this), new Error(p.getRight(), error
+                    .getCondition()).transform(this));
         } else
             return error;
     }

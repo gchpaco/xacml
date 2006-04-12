@@ -41,7 +41,7 @@ public class ErrorPropogationTest extends TestCase {
         Tree tree = new Error(
                 new PermitOverridesRule(Deny.DENY, Permit.PERMIT), a);
         Tree expectedResult = new PermitOverridesRule(new Error(Deny.DENY, a),
-                Permit.PERMIT);
+                new Error(Permit.PERMIT, a));
         assertEquals(expectedResult, tree.transform(new Propagator()));
     }
 
@@ -49,7 +49,7 @@ public class ErrorPropogationTest extends TestCase {
         Tree tree = new Error(new DenyOverridesRule(Deny.DENY, Permit.PERMIT),
                 a);
         Tree expectedResult = new DenyOverridesRule(new Error(Deny.DENY, a),
-                Permit.PERMIT);
+                new Error(Permit.PERMIT, a));
         assertEquals(expectedResult, tree.transform(new Propagator()));
     }
 
@@ -57,14 +57,14 @@ public class ErrorPropogationTest extends TestCase {
         Tree tree = new Error(
                 new FirstApplicableRule(Deny.DENY, Permit.PERMIT), a);
         Tree expectedResult = new FirstApplicableRule(new Error(Deny.DENY, a),
-                Permit.PERMIT);
+                new Error(Permit.PERMIT, a));
         assertEquals(expectedResult, tree.transform(new Propagator()));
     }
 
     public void testThroughOnly() {
         Tree tree = new Error(new OnlyOneRule(Deny.DENY, Permit.PERMIT), a);
         Tree expectedResult = new OnlyOneRule(new Error(Deny.DENY, a),
-                Permit.PERMIT);
+                new Error(Permit.PERMIT, a));
         assertEquals(expectedResult, tree.transform(new Propagator()));
     }
 
@@ -72,7 +72,8 @@ public class ErrorPropogationTest extends TestCase {
         Tree tree = new OnlyOneRule(new Error(new PermitOverridesRule(
                 Deny.DENY, Permit.PERMIT), a), Deny.DENY);
         Tree expectedResult = new OnlyOneRule(new PermitOverridesRule(
-                new Error(Deny.DENY, a), Permit.PERMIT), Deny.DENY);
+                new Error(Deny.DENY, a), new Error(Permit.PERMIT, a)),
+                Deny.DENY);
         assertEquals(expectedResult, tree.transform(new Propagator()));
     }
 }

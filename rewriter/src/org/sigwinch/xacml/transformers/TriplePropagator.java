@@ -44,9 +44,9 @@ public class TriplePropagator extends TransformerImpl {
         Predicate r2 = right.getDeny();
         Predicate t1 = left.getError();
         Predicate t2 = right.getError();
-        return new Triple(s1.orWith(s2).andWith(t1.orWith(t2).not()), (r1
-                .andWith(s2.orWith(t2).not())).orWith(r2.andWith(s1.orWith(t1)
-                .not())), t1.orWith(t2));
+        return new Triple(s1.orWith(s2), (r1.andWith(s2.orWith(t2).not()))
+                .orWith(r2.andWith(s1.orWith(t1).not())), t1.orWith(t2)
+                .andWith(s1.orWith(s2).not()));
     }
 
     /**
@@ -71,8 +71,8 @@ public class TriplePropagator extends TransformerImpl {
         Predicate t1 = left.getError();
         Predicate t2 = right.getError();
         return new Triple((s1.andWith(r2.orWith(t2).not())).orWith(s2
-                .andWith(r1.orWith(t1).not())), r1.orWith(r2).andWith(
-                t1.orWith(t2).not()), t1.orWith(t2));
+                .andWith(r1.orWith(t1).not())), r1.orWith(r2), t1.orWith(t2)
+                .andWith(r1.orWith(r2).not()));
     }
 
     /**
