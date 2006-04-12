@@ -143,7 +143,7 @@ abstract public class AbstractParser extends XACMLParser {
         Predicate condition = SimplePredicate.TRUE;
         while (child != null) {
             Node grandchild = child.getFirstChild();
-            Predicate childcondition = SimplePredicate.TRUE;
+            Predicate childcondition = null;
             while (grandchild != null) {
                 if (grandchild.getNodeName().equals("AnySubject")
                         || grandchild.getNodeName().equals("AnyResource")
@@ -164,17 +164,22 @@ abstract public class AbstractParser extends XACMLParser {
                                     .parseExpression((Element) grandgrandchild);
                         else
                             grandchildcondition = grandchildcondition
-                                    .orWith(ExpressionParser
-                                            .parseExpression((Element) grandgrandchild));
+                                    .andWith(ExpressionParser
+					     .parseExpression((Element) grandgrandchild));
                     }
                     grandgrandchild = grandgrandchild.getNextSibling();
                 }
-                if (grandchildcondition != null)
-                    childcondition = childcondition
-                            .andWith(grandchildcondition);
+                if (grandchildcondition != null) {
+		    if (childcondition == null)
+			childcondition = grandchildcondition;
+		    else
+			childcondition = childcondition
+                            .orWith(grandchildcondition);
+		}
                 grandchild = grandchild.getNextSibling();
             }
-            condition = condition.andWith(childcondition);
+	    if (childcondition != null)
+		condition = condition.andWith(childcondition);
             child = child.getNextSibling();
         }
         return condition;

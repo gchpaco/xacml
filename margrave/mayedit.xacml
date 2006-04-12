@@ -16,8 +16,6 @@ need to constrain isMeeting and isEq_subjUserId_resUserId to be one value
 	   AttributeId="role"
 	   DataType="http://www.w3.org/2001/XMLSchema#string"/>
 	</SubjectMatch>
-      </Subject>
-      <Subject>
 	<SubjectMatch MatchId="urn:oasis:names:tc:xacml:1.0:function:string-equal">
 	  <AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">true</AttributeValue>
 	  <SubjectAttributeDesignator
