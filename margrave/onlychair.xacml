@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- subjects that are not pc-chairs or admins may not set the meeting flag
+We expect this to subsume the main policy: that is, <main> onlychair.xacml
+XXX: bug; doesn't work right  hard to express
+-->
+<Rule RuleId="1" Effect="Permit" xmlns="urn:oasis:names:tc:xacml:1.0:policy"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="urn:oasis:names:tc:xacml:1.0:policy /pro/xacml/summer2004/xacml/schema/cs-xacml-schema-policy-01.xsd">
+  <Target>
+    <Subjects>
+      <Subject>
+	<SubjectMatch MatchId="urn:oasis:names:tc:xacml:1.0:function:string-equal">
+	  <AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">pc-chair</AttributeValue>
+	  <SubjectAttributeDesignator AttributeId="role" DataType="http://www.w3.org/2001/XMLSchema#string"/>
+	</SubjectMatch>
+      </Subject>
+      <Subject>
+	<SubjectMatch MatchId="urn:oasis:names:tc:xacml:1.0:function:string-equal">
+	  <AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">admin</AttributeValue>
+	  <SubjectAttributeDesignator AttributeId="role" DataType="http://www.w3.org/2001/XMLSchema#string"/>
+	</SubjectMatch>
+      </Subject>
+    </Subjects>
+    <Resources>
+      <Resource>
+	<ResourceMatch MatchId="urn:oasis:names:tc:xacml:1.0:function:string-equal">
+	  <AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">true</AttributeValue>
+	  <ResourceAttributeDesignator
+	   AttributeId="isMeetingFlag_rc"
+	   DataType="http://www.w3.org/2001/XMLSchema#string"/>
+	</ResourceMatch>
+      </Resource>
+    </Resources>
+    <Actions>
+      <Action>
+	<ActionMatch MatchId="urn:oasis:names:tc:xacml:1.0:function:string-equal">
+	  <AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">write</AttributeValue>
+	  <ActionAttributeDesignator
+	   AttributeId="action-type"
+	   DataType="http://www.w3.org/2001/XMLSchema#string"/>
+	</ActionMatch>
+      </Action>
+    </Actions>
+  </Target>
+</Rule>
