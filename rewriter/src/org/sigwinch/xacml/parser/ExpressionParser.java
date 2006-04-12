@@ -94,11 +94,11 @@ public class ExpressionParser extends XACMLParser {
 
     }
 
-    public Predicate parseElement(Element element) {
+    public Predicate parseElement(@SuppressWarnings("unused") Element element) {
         return SimplePredicate.TRUE;
     }
 
-    public Predicate parseForError(Element element) {
+    public Predicate parseForError(@SuppressWarnings("unused") Element element) {
         return SimplePredicate.FALSE;
     }
 
