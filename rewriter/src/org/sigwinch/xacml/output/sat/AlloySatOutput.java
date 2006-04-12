@@ -238,14 +238,13 @@ public class AlloySatOutput implements Output {
                 if (queueing) {
                     // queueing => lastBase != null
                     if (currentBase == null || !currentBase.equals(lastBase)) {
-                        outputData(currentStrings, currentBooleans, lastBase);
+                        outputData(currentStrings, currentBooleans);
                         currentStrings = new ArrayList<String>();
                         currentBooleans = new ArrayList<Boolean>();
                         if (currentBase == null) {
                             queueing = false;
                             outputData(Collections.singletonList(pair.first),
-                                    Collections.singletonList(pair.second),
-                                    null);
+                                    Collections.singletonList(pair.second));
                         } else {
                             queueing = true;
                             currentStrings.add(pair.first);
@@ -260,7 +259,7 @@ public class AlloySatOutput implements Output {
                     if (currentBase == null) {
                         queueing = false;
                         outputData(Collections.singletonList(pair.first),
-                                Collections.singletonList(pair.second), null);
+                                Collections.singletonList(pair.second));
                     } else {
                         queueing = true;
                         currentStrings.add(pair.first);
@@ -269,12 +268,11 @@ public class AlloySatOutput implements Output {
                 }
             }
             if (queueing)
-                outputData (currentStrings, currentBooleans, lastBase);
+                outputData (currentStrings, currentBooleans);
         }
     }
 
-    private void outputData(List<String> strings, List<Boolean> booleans,
-            String base) {
+    private void outputData(List<String> strings, List<Boolean> booleans) {
         String[] strs = strings.toArray(new String[strings.size()]);
         Boolean[] bbools = booleans.toArray(new Boolean[booleans.size()]);
         boolean[] bools = new boolean[bbools.length];
