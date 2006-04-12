@@ -68,16 +68,19 @@
 
   <target name="dist" depends="compile,init,zchaff"
 	  description="Bundle main source code into a .jar">
-    <unjar src="${cli}" dest="${build}">
+    <unjar dest="${build}">
+      <fileset dir="lib">
+        <include name="**/*.jar"/>
+      </fileset>
       <patternset>
         <include name="**/*.class"/>
       </patternset>
     </unjar>
-    <unjar src="${lang}" dest="${build}">
-      <patternset>
+    <copy todir="${build}">
+      <fileset dir="${utils}/build">
         <include name="**/*.class"/>
-      </patternset>
-    </unjar>
+      </fileset>
+    </copy>
     <jar destfile="${dist}/rewrite.jar"
 	 manifest="manifest">
       <fileset dir="${build}"/>
