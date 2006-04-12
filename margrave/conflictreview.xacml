@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- want to ensure there's *something* in the role attribute.
-     We expect this to subsume the main policy: that is, <main> norole.xacml
+     We expect this to subsume the main policy: that is, conflictreview.xacml <main>
 -->
 <Policy PolicyId="0" xmlns="urn:oasis:names:tc:xacml:1.0:policy"
 	RuleCombiningAlgId="urn:oasis:names:tc:xacml:1.0:rule-combining-algorithm:permit-overrides"
