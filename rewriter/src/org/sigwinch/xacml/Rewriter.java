@@ -40,6 +40,9 @@ public class Rewriter {
         options.addOption("S", "style", true,
                 "Which style of output to use (predicate, set, sat)");
         options
+                .addOption("t", "type", true,
+                        "Which properties to test subsumption for (combination of p, d, e)");
+        options
                 .addOption(
                         "r",
                         "roundtrip",
@@ -86,7 +89,8 @@ public class Rewriter {
     }
 
     private static Tree transformTree(Tree t) {
-        if (t == null) return t;
+        if (t == null)
+            return t;
         t = t.transform(new DuplicateRemover());
         t = t.transform(new Propagator());
         t = t.transform(new DuplicateRemover());
@@ -117,10 +121,11 @@ public class Rewriter {
             System.exit(0);
         }
 
-        double slop = 2.0;
+        OutputConfiguration configuration = new OutputConfiguration();
         try {
             if (line.hasOption("s"))
-                slop = Double.parseDouble(line.getOptionValue("s"));
+                configuration.setSlop(Double.parseDouble(line
+                        .getOptionValue("s")));
         } catch (NumberFormatException e) {
             usage();
             System.exit(1);
@@ -140,6 +145,19 @@ public class Rewriter {
             usage();
             System.exit(1);
         }
+        if (line.hasOption("t")) {
+            String flags = line.getOptionValue("t");
+            if (flags.contains("p"))
+                configuration.setPermit(true);
+            if (flags.contains("d"))
+                configuration.setDeny(true);
+            if (flags.contains("e"))
+                configuration.setError(true);
+        } else {
+            configuration.setPermit(true);
+            configuration.setDeny(true);
+            configuration.setError(true);
+        }
         PrintWriter writer;
         if (roundTrip) {
             tempFile = File.createTempFile("xacml", ".cnf");
@@ -148,11 +166,11 @@ public class Rewriter {
         } else
             writer = new PrintWriter(System.out);
         if (outputType.equals("predicate")) {
-            output = new AlloyCNFOutput(writer, slop);
+            output = new AlloyCNFOutput(writer, configuration);
         } else if (outputType.equals("set")) {
-            output = new AlloySetOutput(writer, slop);
+            output = new AlloySetOutput(writer, configuration);
         } else {
-            output = new AlloySatOutput(writer, slop);
+            output = new AlloySatOutput(writer, configuration);
         }
         String[] args = line.getArgs();
 
@@ -162,7 +180,7 @@ public class Rewriter {
             trees[i] = readFile(args[i]);
         long end = System.currentTimeMillis();
         System.err.println("IO in " + (end - start) + " ms");
-        
+
         start = System.currentTimeMillis();
         for (int i = 0; i < args.length; i++)
             trees[i] = transformTree(trees[i]);

@@ -3,6 +3,7 @@ package org.sigwinch.xacml.output.alloycnf;
 import java.io.File;
 import java.io.PrintWriter;
 
+import org.sigwinch.xacml.OutputConfiguration;
 import org.sigwinch.xacml.output.Output;
 import org.sigwinch.xacml.output.alloycommon.ConstantVisitor;
 import org.sigwinch.xacml.output.alloycommon.DynamicVisitor;
@@ -27,16 +28,16 @@ public class AlloyCNFOutput implements Output {
 
     int trees;
 
-    double slop;
+    private OutputConfiguration configuration;
 
     TreeMap<String, Integer> instances;
 
     Map map;
 
-    public AlloyCNFOutput(PrintWriter stream, double slop) {
+    public AlloyCNFOutput(PrintWriter stream, OutputConfiguration configuration) {
         this.stream = stream;
         this.trees = 0;
-        this.slop = slop;
+        this.configuration = configuration;
         this.instances = new TreeMap<String, Integer>();
     }
 
@@ -87,7 +88,7 @@ public class AlloyCNFOutput implements Output {
             Integer incr = dynamics.get(key);
             instances.put(key, new Integer((int) (old.intValue() + incr
                     .intValue()
-                    * slop)));
+                    * configuration.getSlop())));
         }
 
         i = instances.keySet().iterator();
@@ -131,13 +132,16 @@ public class AlloyCNFOutput implements Output {
     public void postamble() {
         if (trees == 2) {
             stream.println("assert Subset {");
-            stream.println("\t(T0.permit = True) => (T1.permit = True)");
-            stream.println("\t(T0.deny = True) => (T1.deny = True)");
-            stream.println("\t(T0.error = True) => (T1.error = True)");
+            if (configuration.isPermit())
+                stream.println("\t(T0.permit = True) => (T1.permit = True)");
+            if (configuration.isDeny())
+                stream.println("\t(T0.deny = True) => (T1.deny = True)");
+            if (configuration.isError())
+                stream.println("\t(T0.error = True) => (T1.error = True)");
             stream.println("}");
 
             stream.print("check Subset for ");
-            stream.print((int) slop);
+            stream.print((int) configuration.getSlop());
             stream.print(" but 2 Bool, ");
             stream.print(trees);
             stream.print(" Triple");

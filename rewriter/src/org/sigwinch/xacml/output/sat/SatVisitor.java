@@ -10,6 +10,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
 
+import org.sigwinch.xacml.OutputConfiguration;
 import org.sigwinch.xacml.tree.AndPredicate;
 import org.sigwinch.xacml.tree.ConstantValuePredicate;
 import org.sigwinch.xacml.tree.EnvironmentalPredicate;
@@ -668,14 +669,19 @@ public class SatVisitor extends VisitorImpl {
     /**
      * @param left
      * @param right
+     * @param configuration 
      * @return logical formula demanding an example where what is true for left
      *         is not true in right
      */
-    public BooleanFormula generateImplications(Triple left, Triple right) {
-        return new And(
-                new Implication(getPermitFor(left), getPermitFor(right)),
-                new Implication(getDenyFor(left), getDenyFor(right)),
-                new Implication(getErrorFor(left), getErrorFor(right)))
+    public BooleanFormula generateImplications(Triple left, Triple right, OutputConfiguration configuration) {
+        ArrayList<Implication> conjuncts = new ArrayList<Implication>();
+        if (configuration.isPermit())
+            conjuncts.add(new Implication(getPermitFor(left), getPermitFor(right)));
+        if (configuration.isDeny())
+            conjuncts.add(new Implication(getDenyFor(left), getDenyFor(right)));
+        if (configuration.isError())
+            conjuncts.add(new Implication(getErrorFor(left), getErrorFor(right)));
+        return new And(conjuncts.toArray(new BooleanFormula[0]))
                 .negate();
     }
 }

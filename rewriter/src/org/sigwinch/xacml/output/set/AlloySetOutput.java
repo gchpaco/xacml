@@ -5,6 +5,7 @@ import java.io.PrintWriter;
 import java.util.Iterator;
 import java.util.TreeMap;
 
+import org.sigwinch.xacml.OutputConfiguration;
 import org.sigwinch.xacml.output.Output;
 import org.sigwinch.xacml.output.alloycommon.ConstantVisitor;
 import org.sigwinch.xacml.output.alloycommon.DynamicVisitor;
@@ -26,14 +27,14 @@ public class AlloySetOutput implements Output {
 
     int trees;
 
-    double slop;
+    private OutputConfiguration configuration;
 
     TreeMap<String, Integer> instances;
 
-    public AlloySetOutput(PrintWriter stream, double slop) {
+    public AlloySetOutput(PrintWriter stream, OutputConfiguration configuration) {
         this.stream = stream;
         this.trees = 0;
-        this.slop = slop;
+        this.configuration = configuration;
         this.instances = new TreeMap<String, Integer>();
     }
 
@@ -65,7 +66,7 @@ public class AlloySetOutput implements Output {
             Integer incr = dynamics.get(key);
             instances.put(key, new Integer((int) (old.intValue() + incr
                     .intValue()
-                    * slop)));
+                    * configuration.getSlop())));
         }
 
         for (String key : instances.keySet()) {
@@ -100,9 +101,12 @@ public class AlloySetOutput implements Output {
     public void postamble() {
         if (trees >= 2) {
             stream.println("assert Subset {");
-            stream.println("\tT0.permit in T1.permit");
-            stream.println("\tT0.deny in T1.deny");
-            stream.println("\tT0.error in T1.error");
+            if (configuration.isPermit())
+                stream.println("\tT0.permit in T1.permit");
+            if (configuration.isDeny())
+                stream.println("\tT0.deny in T1.deny");
+            if (configuration.isError())
+                stream.println("\tT0.error in T1.error");
             stream.println("}");
         }
         for (int i = 0; i < trees; i++) {
@@ -124,7 +128,7 @@ public class AlloySetOutput implements Output {
     }
 
     private void writeTypes() {
-        stream.print(Math.max((int) slop, 1));
+        stream.print(Math.max((int) configuration.getSlop(), 1));
         stream.print(" but 2 Bool, ");
         stream.print(trees);
         stream.print(" Triple");

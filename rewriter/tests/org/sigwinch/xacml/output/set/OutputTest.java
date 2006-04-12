@@ -2,6 +2,7 @@ package org.sigwinch.xacml.output.set;
 
 import junit.framework.*;
 
+import org.sigwinch.xacml.OutputConfiguration;
 import org.sigwinch.xacml.tree.VariableReference;
 import java.io.StringWriter;
 import org.sigwinch.xacml.tree.EnvironmentalPredicate;
@@ -53,7 +54,8 @@ public class OutputTest extends TestCase {
 
     protected void reset() {
         stream = new StringWriter();
-        out = new AlloySetOutput(new PrintWriter(stream), 2.0);
+        out = new AlloySetOutput(new PrintWriter(stream),
+                new OutputConfiguration(2.0, true, true, true));
         Predicate.reset();
     }
 

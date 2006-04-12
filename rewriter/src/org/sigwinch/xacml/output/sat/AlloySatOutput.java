@@ -24,6 +24,7 @@ import java.util.Set;
 import java.util.TreeMap;
 import java.util.TreeSet;
 
+import org.sigwinch.xacml.OutputConfiguration;
 import org.sigwinch.xacml.output.Output;
 import org.sigwinch.xacml.output.sat.VariableEncoding.Value;
 import org.sigwinch.xacml.tree.Tree;
@@ -38,8 +39,6 @@ import util.Pair;
 public class AlloySatOutput implements Output {
     PrintWriter stream;
 
-    double slop;
-
     private int vars;
 
     private HashMap<Object, Integer> var2num;
@@ -52,9 +51,11 @@ public class AlloySatOutput implements Output {
 
     private Map<BooleanFormula, Integer> variableMap;
 
-    public AlloySatOutput(PrintWriter stream, double slop) {
+    private OutputConfiguration configuration;
+
+    public AlloySatOutput(PrintWriter stream, OutputConfiguration configuration) {
         this.stream = stream;
-        this.slop = slop;
+        this.configuration = configuration;
     }
 
     /*
@@ -64,7 +65,7 @@ public class AlloySatOutput implements Output {
      */
     public void preamble(Tree tree) {
         sat = new SatVisitor();
-        sat.setMultiplicity((int) slop);
+        sat.setMultiplicity((int) configuration.getSlop());
         vars = 0;
         var2num = new HashMap<Object, Integer>();
         formulae = new TreeSet<BooleanFormula>(
@@ -114,7 +115,7 @@ public class AlloySatOutput implements Output {
             if (lastTree == null)
                 lastTree = triple;
             else {
-                formulae.add(sat.generateImplications(lastTree, triple));
+                formulae.add(sat.generateImplications(lastTree, triple, configuration));
                 lastTree = triple;
             }
         }

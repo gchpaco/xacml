@@ -8,6 +8,7 @@ import java.io.StringWriter;
 
 import junit.framework.TestCase;
 
+import org.sigwinch.xacml.OutputConfiguration;
 import org.sigwinch.xacml.tree.ConstantValuePredicate;
 import org.sigwinch.xacml.tree.EnvironmentalPredicate;
 import org.sigwinch.xacml.tree.FunctionCallPredicate;
@@ -44,7 +45,8 @@ public class OutputTest extends TestCase {
         EnvironmentalPredicate baz = new EnvironmentalPredicate(
                 "http://www.w3.org/2001/XMLSchema#string", "baz");
         stream = new StringWriter();
-        out = new AlloySatOutput(new PrintWriter(stream), 2.0);
+        out = new AlloySatOutput(new PrintWriter(stream),
+                new OutputConfiguration(2.0, true, true, true));
         String xp = FunctionVisitor.xacmlprefix;
         Predicate.reset();
         ConstantValuePredicate frobConstant = new ConstantValuePredicate(
