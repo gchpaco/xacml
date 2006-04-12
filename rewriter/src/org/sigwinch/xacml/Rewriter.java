@@ -48,6 +48,7 @@ public class Rewriter {
                         "roundtrip",
                         false,
                         "Whether to automatically run the analyzer and report results (only works for sat now)");
+        options.addOption("v", "verbose", false, "Output formula before simplification");
     }
 
     DocumentBuilder builder;
@@ -158,6 +159,8 @@ public class Rewriter {
             configuration.setDeny(true);
             configuration.setError(true);
         }
+	if (line.hasOption("v"))
+	    configuration.setVerbose(true);
         PrintWriter writer;
         if (roundTrip) {
             tempFile = File.createTempFile("xacml", ".cnf");
