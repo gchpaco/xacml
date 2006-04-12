@@ -1,29 +1,40 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!-- A pc-member may edit reviews of which he is the owner.
+We expect the main policy to subsume this: that is, mayedit.xacml <main>
+XXX: bug; I think it's got to do with multivalued things again
+need to constrain isMeeting and isEq_subjUserId_resUserId to be one value
+-->
 <Rule RuleId="1" Effect="Permit" xmlns="urn:oasis:names:tc:xacml:1.0:policy"
       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
       xsi:schemaLocation="urn:oasis:names:tc:xacml:1.0:policy /pro/xacml/summer2004/xacml/schema/cs-xacml-schema-policy-01.xsd">
   <Target>
     <Subjects>
-      <SubjectMatch MatchId="urn:oasis:names:tc:xacml:1.0:function:string-equal">
-	<AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">pc-member</AttributeValue>
-	<SubjectAttributeDesignator
-	 AttributeId="role"
-	 DataType="http://www.w3.org/2001/XMLSchema#string"/>
-      </SubjectMatch>
-      <SubjectMatch MatchId="urn:oasis:names:tc:xacml:1.0:function:string-equal">
-	<AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">true</AttributeValue>
-	<SubjectAttributeDesignator
-	 AttributeId="isEq-subjUserId-resUserId" DataType="http://www.w3.org/2001/XMLSchema#string"/>
-      </SubjectMatch>
+      <Subject>
+	<SubjectMatch MatchId="urn:oasis:names:tc:xacml:1.0:function:string-equal">
+	  <AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">pc-member</AttributeValue>
+	  <SubjectAttributeDesignator
+	   AttributeId="role"
+	   DataType="http://www.w3.org/2001/XMLSchema#string"/>
+	</SubjectMatch>
+      </Subject>
+      <Subject>
+	<SubjectMatch MatchId="urn:oasis:names:tc:xacml:1.0:function:string-equal">
+	  <AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">true</AttributeValue>
+	  <SubjectAttributeDesignator
+	   AttributeId="isEq-subjUserId-resUserId" DataType="http://www.w3.org/2001/XMLSchema#string"/>
+	</SubjectMatch>
+      </Subject>
     </Subjects>
     <Resources><AnyResource/></Resources>
     <Actions>
-      <ActionMatch MatchId="urn:oasis:names:tc:xacml:1.0:function:string-equal">
-	<AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">write</AttributeValue>
-	<ActionAttributeDesignator
-	 AttributeId="action-type"
-	 DataType="http://www.w3.org/2001/XMLSchema#string"/>
-      </ActionMatch>
+      <Action>
+	<ActionMatch MatchId="urn:oasis:names:tc:xacml:1.0:function:string-equal">
+	  <AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">write</AttributeValue>
+	  <ActionAttributeDesignator
+	   AttributeId="action-type"
+	   DataType="http://www.w3.org/2001/XMLSchema#string"/>
+	</ActionMatch>
+      </Action>
     </Actions>
   </Target>
 </Rule>
