@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- A pc-member having just submitted the review for a paper should be able to see others reviews.  Should pass.
+-t p submitted.xacml <main>
+-->
+<Policy PolicyId="0" xmlns="urn:oasis:names:tc:xacml:1.0:policy"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="urn:oasis:names:tc:xacml:1.0:policy /pro/xacml/summer2004/xacml/schema/cs-xacml-schema-policy-01.xsd"
+      RuleCombiningAlgId="urn:oasis:names:tc:xacml:1.0:rule-combining-algorithm:first-applicable">
+  <Target>
+    <Subjects><AnySubject/></Subjects>
+    <Resources>
+      <Resource>
+	<ResourceMatch MatchId="urn:oasis:names:tc:xacml:1.0:function:string-equal">
+	  <AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">paper-review-content_rc</AttributeValue>
+	  <ResourceAttributeDesignator AttributeId="resource-class" DataType="http://www.w3.org/2001/XMLSchema#string"/>
+	</ResourceMatch>
+      </Resource>
+      <Resource>
+	<ResourceMatch MatchId="urn:oasis:names:tc:xacml:1.0:function:string-equal">
+	  <AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">paper-review-content-commentsAll_rc</AttributeValue>
+	  <ResourceAttributeDesignator AttributeId="resource-class" DataType="http://www.w3.org/2001/XMLSchema#string"/>
+	</ResourceMatch>
+      </Resource>
+      <Resource>
+	<ResourceMatch MatchId="urn:oasis:names:tc:xacml:1.0:function:string-equal">
+	  <AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">paper-review-content-commentsPc_rc</AttributeValue>
+	  <ResourceAttributeDesignator AttributeId="resource-class" DataType="http://www.w3.org/2001/XMLSchema#string"/>
+	</ResourceMatch>
+      </Resource>
+      <Resource>
+	<ResourceMatch MatchId="urn:oasis:names:tc:xacml:1.0:function:string-equal">
+	  <AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">paper-review-content-rating_rc</AttributeValue>
+	  <ResourceAttributeDesignator AttributeId="resource-class" DataType="http://www.w3.org/2001/XMLSchema#string"/>
+	</ResourceMatch>
+      </Resource>
+      <Resource>
+	<ResourceMatch MatchId="urn:oasis:names:tc:xacml:1.0:function:string-equal">
+	  <AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">paper-review-info-reviewer_rc</AttributeValue>
+	  <ResourceAttributeDesignator AttributeId="resource-class" DataType="http://www.w3.org/2001/XMLSchema#string"/>
+	</ResourceMatch>
+      </Resource>
+    </Resources>
+  </Target>
+  <Rule RuleId="1" Effect="Permit">
+    <Target>
+      <Subjects>
+	<Subject>
+	  <SubjectMatch MatchId="urn:oasis:names:tc:xacml:1.0:function:string-equal">
+	    <AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">pc-member</AttributeValue>
+	    <SubjectAttributeDesignator
+	     AttributeId="role"
+	     DataType="http://www.w3.org/2001/XMLSchema#string"/>
+	  </SubjectMatch>
+	  <SubjectMatch MatchId="urn:oasis:names:tc:xacml:1.0:function:string-equal">
+	    <AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">true</AttributeValue>
+	    <SubjectAttributeDesignator
+	     AttributeId="hasSubmittedReviewForResPaper"
+	     DataType="http://www.w3.org/2001/XMLSchema#string"/>
+	  </SubjectMatch>
+	  <SubjectMatch MatchId="urn:oasis:names:tc:xacml:1.0:function:string-equal">
+	    <AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">true</AttributeValue>
+	    <SubjectAttributeDesignator
+	     AttributeId="subjReviewsThisResPaper"
+	     DataType="http://www.w3.org/2001/XMLSchema#string"/>
+	  </SubjectMatch>
+	</Subject>
+      </Subjects>
+      <Resources><AnyResource/></Resources>
+      <Actions>
+	<Action>
+	  <ActionMatch MatchId="urn:oasis:names:tc:xacml:1.0:function:string-equal">
+	    <AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">read</AttributeValue>
+	    <ActionAttributeDesignator
+	     AttributeId="action-type"
+	     DataType="http://www.w3.org/2001/XMLSchema#string"/>
+	  </ActionMatch>
+	</Action>
+      </Actions>
+    </Target>
+    <!-- wholly artificial thing to restrict domain of isConflicted -->
+    <Condition FunctionId="urn:oasis:names:tc:xacml:1.0:function:and">
+      <Apply FunctionId="urn:oasis:names:tc:xacml:1.0:function:string-equal">
+	<Apply FunctionId="urn:oasis:names:tc:xacml:1.0:function:string-one-and-only">
+	  <SubjectAttributeDesignator
+	   AttributeId="isConflicted"
+	   DataType="http://www.w3.org/2001/XMLSchema#string"/>
+	</Apply>
+	<Apply FunctionId="urn:oasis:names:tc:xacml:1.0:function:string-bag">
+	  <AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">false</AttributeValue>
+	</Apply>
+      </Apply>
+      <Apply FunctionId="urn:oasis:names:tc:xacml:1.0:function:string-equal">
+	<Apply FunctionId="urn:oasis:names:tc:xacml:1.0:function:string-one-and-only">
+	  <SubjectAttributeDesignator
+	   AttributeId="hasSubmittedReviewForResPaper"
+	   DataType="http://www.w3.org/2001/XMLSchema#string"/>
+	</Apply>
+	<Apply FunctionId="urn:oasis:names:tc:xacml:1.0:function:string-bag">
+	  <AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">true</AttributeValue>
+	</Apply>
+      </Apply>
+      <Apply FunctionId="urn:oasis:names:tc:xacml:1.0:function:string-equal">
+	<Apply FunctionId="urn:oasis:names:tc:xacml:1.0:function:string-one-and-only">
+	  <SubjectAttributeDesignator
+	   AttributeId="subjReviewsThisResPaper"
+	   DataType="http://www.w3.org/2001/XMLSchema#string"/>
+	</Apply>
+	<Apply FunctionId="urn:oasis:names:tc:xacml:1.0:function:string-bag">
+	  <AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">true</AttributeValue>
+	</Apply>
+      </Apply>
+    </Condition>
+  </Rule>
+</Policy>
