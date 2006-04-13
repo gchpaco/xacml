@@ -355,7 +355,8 @@ public class SatVisitor extends VisitorImpl {
             VariableReference[][] allNames = new VariableReference[][] {
                     getNamesFor(left), getNamesFor(right) };
             if (allNames[0].length != allNames[1].length)
-                throw new RuntimeException("invalid types being compared!");
+                throw new RuntimeException("invalid types being compared! "
+					   + left + ", " + right + ", " + allNames[0][0] + ", " + allNames[1][0]);
             return allNames;
         }
     }
