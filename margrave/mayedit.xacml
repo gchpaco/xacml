@@ -35,4 +35,12 @@ need to constrain isMeeting and isEq_subjUserId_resUserId to be one value
       </Action>
     </Actions>
   </Target>
+    <Condition FunctionId="urn:oasis:names:tc:xacml:1.0:function:and">
+      <Apply FunctionId="urn:oasis:names:tc:xacml:1.0:function:not">
+	<Apply FunctionId="urn:oasis:names:tc:xacml:1.0:function:string-is-in">
+	  <AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">true</AttributeValue>
+	  <SubjectAttributeDesignator AttributeId="isEq-subjUserId-resUserId" DataType="http://www.w3.org/2001/XMLSchema#string"/>
+	</Apply>
+      </Apply>
+    </Condition>
 </Rule>

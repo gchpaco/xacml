@@ -74,10 +74,22 @@
       <Resources><AnyResource/></Resources>
       <Actions><AnyAction/></Actions>
     </Target>
-    <Condition FunctionId="urn:oasis:names:tc:xacml:1.0:function:not">
-      <Apply FunctionId="urn:oasis:names:tc:xacml:1.0:function:string-is-in">
-	<AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">true</AttributeValue>
-	<SubjectAttributeDesignator AttributeId="isEq-subjUserId-resUserId" DataType="http://www.w3.org/2001/XMLSchema#string"/>
+    <Condition FunctionId="urn:oasis:names:tc:xacml:1.0:function:and">
+      <Apply FunctionId="urn:oasis:names:tc:xacml:1.0:function:not">
+	<Apply FunctionId="urn:oasis:names:tc:xacml:1.0:function:string-is-in">
+	  <AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">true</AttributeValue>
+	  <SubjectAttributeDesignator AttributeId="isEq-subjUserId-resUserId" DataType="http://www.w3.org/2001/XMLSchema#string"/>
+	</Apply>
+      </Apply>
+      <Apply FunctionId="urn:oasis:names:tc:xacml:1.0:function:string-equal">
+	<Apply FunctionId="urn:oasis:names:tc:xacml:1.0:function:string-one-and-only">
+	  <SubjectAttributeDesignator
+	   AttributeId="isConflicted"
+	   DataType="http://www.w3.org/2001/XMLSchema#string"/>
+	</Apply>
+	<Apply FunctionId="urn:oasis:names:tc:xacml:1.0:function:string-bag">
+	  <AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">true</AttributeValue>
+	</Apply>
       </Apply>
     </Condition>
   </Rule>
