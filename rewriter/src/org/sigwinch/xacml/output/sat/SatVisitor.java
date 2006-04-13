@@ -573,6 +573,9 @@ public class SatVisitor extends VisitorImpl {
         return sn.replaceAll("[^_A-Za-z0-9]", "_");
     }
 
+    private TreeSet<String> consts = new TreeSet<String>();
+    private boolean constwritten = false;
+
     @Override
     public void walkConstantValuePredicate(ConstantValuePredicate cvp) {
         super.walkConstantValuePredicate(cvp);
@@ -586,7 +589,34 @@ public class SatVisitor extends VisitorImpl {
                     multiplicity);
             setNamesFor(cvp, encoding);
             frames.addAll(encoding.disallowIllegals());
+	    /*
+	    VariableReference[] enames = encoding.getNames();
+	    for (String name : consts) {
+		if (name == sn) continue;
+		ScalarVariableEncoding other = ScalarVariableEncoding.retrieve(name, multiplicity);
+		if (other.getSize() == encoding.getSize()) {
+		    VariableReference[] onames = other.getNames();
+		    BooleanFormula[] clauses = new BooleanFormula[enames.length];
+		    for (int i = 0; i < clauses.length; i++) {
+			clauses[i] = new Equivalence(enames[i], onames[i]);
+		    }
+		    frames.add(new And(clauses).negate());
+		}
+	    }
+	    */
+	    // special case true/false for Margrave stuff
         }
+	consts.add(sn);
+	if (consts.contains("const_true") && consts.contains("const_false") && !constwritten) {
+	    VariableReference[] tnames = ScalarVariableEncoding.retrieve("const_true", multiplicity).getNames();
+	    VariableReference[] fnames = ScalarVariableEncoding.retrieve("const_false", multiplicity).getNames();
+	    BooleanFormula[] clauses = new BooleanFormula[tnames.length];
+	    for (int i = 0; i < clauses.length; i++) {
+		clauses[i] = new Equivalence(tnames[i], fnames[i]);
+	    }
+	    frames.add(new And(clauses).negate());
+	    constwritten = true;
+	}
     }
 
     /*
