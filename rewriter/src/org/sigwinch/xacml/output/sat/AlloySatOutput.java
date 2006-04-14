@@ -131,7 +131,7 @@ public class AlloySatOutput implements Output {
                 .toArray(new BooleanFormula[] {});
         And full = new And(allFormulae);
 	if (configuration.isVerbose())
-	    System.out.println("Formula: " + full);
+	    System.out.println("Formula: " + full.simplify());
         int variables[] = new int[] { 0 };
         variableMap = new TreeMap<BooleanFormula, Integer>(
                         new SatVisitor.FormulaComparator());
