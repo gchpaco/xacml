@@ -6,69 +6,25 @@ properties defined in Section~\ref{sec:properties-policies} we would
 like to check properties of access policies automatically.  To do this
 we first formalize the syntax of formulas we use to specify subsets of
 $E$.  Then we discuss how policies constructed using these formulas
-and policy combinators can be translated to the Alloy language.  One
-can check properties of access policies by translating them to SAT
-problems.  Instead of targeting a SAT problem directly, our translator
-targets the Alloy language, which is in turn translated into a SAT
-problem by the Alloy Analyzer.  This approach simplifies our
-translator and permits us to remain closer to the syntax of the
-original problem statement.
+and policy combinators can be translated to Boolean logic formulas.  
+After this translation we show that we can 
+check properties of access policies using a SAT solver.
 
-\subsection{Policy Classes}
+\subsection{Characterizing Subsets of the Environment}
 \label{sec:policy-classes}
 
 In Section~\ref{sec:formal-model}, we defined our formal model using
-subsets of $E$ for the definition of \Scope and \Err.  Since $E$ is
-the Cartesian product of the power sets of what are in most cases
-infinite sets, analyzing these properties would seem to require
-enumerating these subsets, an impossible job.  Fortunately, we are
-translating from XACML to our foreign model, and totally arbitrary
-subsets are not possible in XACML.  We can structure the subsets we
-will get from XACML policies in a more useful fashion: they end up
-looking like the sets $S_0, S_1, \dots, S_4$ in
-Equation~\eqref{eq:s0}.
+subsets of $E$. We showed that each policy can be expressed
+in triple form $P= \langle S, R, T \rangle$   where
+$S$, $R$, and $T$ are subsets of the environment $E$.
+We will assume that all subsets of $E$ are specified in the form $\{ e
+\in E : C \}$ where $C$ is a constraint that evaluates to true or
+false for each environment.
+Note that the sets $S_0, S_1, \dots, S_4$ in
+Equation~\eqref{eq:s0} are expressed this way.
 
-To formalize this, we fix the following notational conveniences: for
-elements $e \in E$, we name the components of $e$ $e[0], e[1], \dots,
-e[n]$.  We use $s, s_0, s_1, \dots, s_n$ to denote set variables, $c,
-c_0, c_1, \dots, c_n$ to denote scalar variables, and $C, C_0, C_1,
-\dots, C_n$ to denote constants.  Finally, $BP$ is a set of basic
-predicates which we will define below.  We fix our structure in the
-following fashion: all subsets of $E$ are specified in the form $\{ e
-\in E : P \}$, where there are no free variables save $e$ in $P$ and
-$P$ is defined as follows:
-\begin{eqnarray*}
-  P & \rightarrow & BP \quad | \quad \forall c \in s \; P \quad |
-  \quad \exists c \in s \; P \\
-  & | & \exists ! \, c \in s \; P \quad | \quad \exists ! \, c \in e[i] \; P \\
-  & | & P \wedge P \quad | \quad P \vee P \quad | \quad \neg P
-\end{eqnarray*}
-
-Below, we will define four different basic predicate sets with
-increasing expressive power, such that $BP_1 \subseteq BP_2 \subseteq
-BP_3 \subseteq BP_4$.  The version of $BP$ that used is important for
-translation. For example, if a policy can be written using only
-predicates from $BP_1$ then we can make certain guarantees about its
-translation that may not hold if we must simulate predicates from a
-larger $BP$.
-
-Our first class is that of policies using only enumerated types (which
-obviously have finite domains) and the simple operations $\neg$, $=$,
-$\in$, $\subseteq$.  We define the first class of basic predicates,
-$BP_1$, as follows:
-\begin{eqnarray*}
-  SCAL & \rightarrow & c \quad | \quad C \\
-  BSET & \rightarrow & s \quad | \quad e[i] \\
-  SET & \rightarrow & SET \cup SET \quad | \quad SET \cap SET \\
-  & | & SET \setminus SET \quad | \quad \{ SCAL \} \quad | \quad BSET \\
-  BP_1 & \rightarrow & SET \subseteq SET \quad | \quad SCAL \in SET \\
-  & | & SCAL = SCAL \quad | \quad \texttt{true} \quad | \quad \texttt{false}
-\end{eqnarray*}
-We can express all set definitions on unordered and enumerated types
-that are permitted in XACML using the expressions above.
-
-Given a set in the form $S = \{ e \in E : P \}$ where $P$ is defined
-based on the above syntax, one can generate a boolean logic formula
+Given a set in the form $S = \{ e \in E : C \}$
+our goal to generate a boolean logic formula
 $B$ which encodes the set $S$.  The encoding will map each $e \in E$
 to a valuation of the boolean variables in $B$ and $B$ will evaluate
 to true if and only if $e \in S$.  Based on such an encoding we can
@@ -80,11 +36,49 @@ $\sqsubseteq$) by another one.  If the SAT solver returns a satisfying
 assignment to the formula, then we can conclude that the property is
 false, and generate a counterexample based on the satisfying
 assignment.  If the SAT solver declares that the formula is not
-satisfiable then we can conclude that the property holds.  Details of
-such a translation for the Alloy language is given
-in~\cite{jackson00automating}, and as we will show below the policies
-specified with the syntax described above can be translated to Alloy
-language.
+satisfiable then we can conclude that the property holds.
+We will discuss the details of such a translation below.
+
+To formalize this, we fix the following notational conveniences: for
+elements $e \in E$, we name the components of $e$ $e[0], e[1], \dots,
+e[n]$.  We use $s, s_0, s_1, \dots, s_n$ to denote set variables, $c,
+c_0, c_1, \dots, c_n$ to denote scalar variables, and $C, C_0, C_1,
+\dots, C_n$ to denote constants.  Finally, $BP$ is a set of basic
+predicates which we define as follows:
+\begin{eqnarray*}
+  SCAL & \rightarrow & c \quad | \quad C \\
+  BSET & \rightarrow & s \quad | \quad e[i] \\
+  SET & \rightarrow & SET \cup SET \quad | \quad SET \cap SET \\
+  & | & SET \setminus SET \quad | \quad \{ SCAL \} \quad | \quad BSET \\
+  BP & \rightarrow & SET \subseteq SET \quad | \quad SCAL \in SET \\
+  & | & SCAL = SCAL \quad | \quad \texttt{true} \quad | \quad \texttt{false}
+\end{eqnarray*}
+The above grammar is sufficient for specifying policies 
+using only enumerated types (which
+obviously have finite domains) and the simple operations $\neg$, $=$,
+$\in$, $\subseteq$.
+
+Now, we assume that all subsets of $E$ are specified in the form $\{ e
+\in E : C \}$, where there are no free variables save $e$ in $C$ and
+$C$ is defined as follows:
+\begin{eqnarray*}
+  C & \rightarrow & BP \quad | \quad \forall c \in s \; C \quad |
+  \quad \exists c \in s \; C \\
+  & | & \exists ! \, c \in s \; C \quad | \quad \exists ! \, c \in e[i] \; C \\
+  & | & C \wedge C \quad | \quad C \vee C \quad | \quad \neg C
+\end{eqnarray*}
+We can express all set definitions on unordered and enumerated types
+that are permitted in XACML using the expressions above.
+
+
+Below, we will define four different basic predicate sets with
+increasing expressive power, such that $BP_1 \subseteq BP_2 \subseteq
+BP_3 \subseteq BP_4$.  The version of $BP$ that used is important for
+translation. For example, if a policy can be written using only
+predicates from $BP_1$ then we can make certain guarantees about its
+translation that may not hold if we must simulate predicates from a
+larger $BP$.
+
 
 The second class of basic predicates extends the first one to handle
 types which have a total order relation $<$, as well.  We define

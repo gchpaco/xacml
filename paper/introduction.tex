@@ -34,15 +34,16 @@ separating the conditions that give rise to {\em access permitted},
 partial orderings between access control policies, with the intention
 of checking whether a policy is over- or under constrained with
 respect to another one.  We show that these ordering relations can be
-translated to logical expressions which evaluate to true if and only
-if the corresponding relation holds.  We use Alloy analyzer to check
-the truth value of these logical expressions automatically. Using our
-translator and Alloy analyzer, we can check if a combination of XACML
+translated to Boolean formulas which are satisfiable if and only
+if the corresponding relation is violated.  We use a SAT solver to check
+satisfiablity of these Boolean logic formulas. Using our
+translator and a SAT solver we can check if a combination of XACML
 policies does or does not faithfully reproduce the properties of its
 subpolicies, and thus discover unintended consequences before they
 appear in practice.
 
-In Section~\ref{sec:policy-spec} we develop a formal model for access
+In Section~\ref{sec:policy-spec}, after giving an overview
+of XACML, we develop a formal model for access
 policies; in Section~\ref{sec:transformations} we discuss how to
 transform these models into a normal form that distinguishes access
 permitted, access denied, and error conditions.  In
@@ -55,88 +56,6 @@ we use in Section~\ref{sec:translation-alloy} to show how to translate
 a policy to the Alloy modeling language.  Finally, we report the
 results of our experiments in Section~\ref{sec:experiments}.
 
-{\bf Related Work:}
-Access control has been extensively researched:
-\cite{samarati01policiesmodelsmechanisms,sandhu94access,sandhu96audit}~introduce
-the process,
-\cite{bertino98access,bonatti01dataarchives,sandhu93latticebased,sandhu96rolebased}~describe
-various models for access control,
-\cite{damiani02SVG,damiani01controllingaccess,damiani02fine,damiani00design}~describe
-a particular fine grained access control for XML documents,
-\cite{bonatti02algebra}~defines an algebra for composing different
-parts of a model into a unified whole and
-\cite{abadi93calculus,heckman98applying,divimercati96federated}~speak
-of distributing the control so that it is consistent across a
-distributed system.
-
-Access policy languages, too, are not new:
-\cite{abadpeiro99plas}~describes a general purpose policy language for
-authorization systems, \cite{jajodialogical}~defines a model and
-language for access control and \cite{jajodia01multiplepolicies}~and
-\cite{jajoida97unified} present a framework for enforcing multiple
-access policies by expressing how to combine them in a new language.
-We chose XACML because it is a standardized language with tool
-support, and so our results are more likely to be immediately useful.
-
-The problem with access policies becoming large and difficult to
-reason about has also been studied, but not in the general case:
-\cite{heckman98applying}~speaks of verifying a hierarchy of security
-servers to ensure that they are enforcing the whole access policy,
-and \cite{naumovich:permission-analysis}~presents an algorithm for
-computing the flow of permissions through the Java security model, to
-aid static analysis.  Neither of these are exactly what we want:
-\cite{heckman98applying}~can prove that the programs you have
-collectively implement the policy you specified, but their technique
-cannot tell you whether you have made a subtle error in creating your
-policy in the first place; \cite{naumovich:permission-analysis} is
-more comprehensive but is specific to Java's security model.
-
-Automated analysis of access control policies has also been
-researched; \cite{schaad:lightweight}~and \cite{zao:rbac}~analyze role
-based access control schemas using the Alloy modeling system which we
-also use.  However \cite{schaad:lightweight}~uses Alloy to verify that
-the composition of specifications is well formed and is silent about
-their content, whereas we introduce a formal model of and a partial
-ordering on XACML specifications specifically designed for analyzing
-the semantics.  \cite{zao:rbac}~models RBAC schema in Alloy and then
-checks these models against predicates, also written in Alloy.  We
-introduce a formal model for XACML with a partial ordering on policies
-that we then automatically check using Alloy as a back end; we do not
-insist that the user write Alloy predicates directly and operate
-solely on XACML.
-
-{\bf XACML:}
-XACML is an OASIS standard for specifying access policies; it is
-written in XML.  The language comprises three classes of
-objects---individual rules, collections of rules called policies, and
-collections of policies called policy sets.  An XACML Policy
-Enforcement Point, the gateway that determines whether an action is
-permitted or not, takes \emph{access requests}, which are specially
-formatted XML documents that define a set of data that we call the
-\emph{environment}.  Policy Enforcement Points yield one of four
-results: Permit, meaning that the access request is permitted; Deny,
-meaning that the access request will not be permitted; Not Applicable,
-meaning that this particular policy says nothing about the request;
-and Indeterminate, which means that something unexpected came up and
-the policy has failed.  Which result is yielded depends on what result
-the policy dictates, given the environment defined in the access
-request.
-
-XACML rules are the most basic object, and have a goal effect---either
-Permit or Deny---a domain of applicability, and conditions under which
-they can yield Indeterminate and fail.  The domain of applicability is
-realized in a series of predicates about the environmental data that
-must all be satisfied for the rule to yield its goal effect; the error
-conditions are embedded in the domain predicates, but can be separated
-out into a set of predicates all their own.  Policies combine
-individual rules and also have a domain of applicability; policy sets
-combine individual policies with a domain of applicability.
-
-XACML predicates comprise one of a number of primitive functions, with
-mechanisms for extension; we consider only the core functionality.
-These functions include simple equality, set inclusion, ordering
-within numeric types, and also more complex functions such as XPath
-matching and X500 name matching.
 
 % arch-tag: 964a775e-9547-4b64-a0f7-ebf78d282c99
 

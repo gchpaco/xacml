@@ -1,6 +1,7 @@
 \section{Experiments}
 \label{sec:experiments}
 
+
 Our tool generates Alloy code which is then run through the Alloy
 Analyzer to do the analysis.  It is targeted for proving things about
 $\sqsubseteq$ relations, but we can use it for simpler questions as
@@ -58,25 +59,53 @@ must restrain the domains to a certain finite size---the amount of
 computation involved as the size of the domain increases may trigger
 the exponential worst case behavior.
 
-\begin{figure}
-  \centering
-  \includegraphics{data/chart}
-  \caption{Run time vs. domain size plotted for $P_1$ and $P_2$}
-  \label{fig:graph}
-\end{figure}
-
-\begin{table}
+\begin{table*}[t]
 \centering
-\begin{tabular}{ccc}
-Domain size & \multicolumn{2}{c}{Comparison} \\
-& $P_3 \sqsubseteq P_4$ & $P_4 \not\sqsubseteq P_3$ \\
-\input{data/invloutput}
+\begin{tabular}{c|cccc|cc|c}
+  Property & IO & Transform & CNF & SAT & Variables
+  & Clauses & Result \\
+  \hline
+% unsat
+  C1 & 1.85 & 0.17 & 1.35 & 0.11 & 56 & 114 & No \\
+  C2 & 2.07 & 0.19 & 1.41 & 0.39 & 42 & 83  & No \\
+  C3 & 1.88 & 0.16 & 1.36 & 0.12 & 51 & 108 & No \\
+  C4 & 1.94 & 0.17 & 1.33 & 0.11 & 52 & 106 & No \\
+  C5 & 1.82 & 0.16 & 2.00 & 0.16 &  79 & 166 & No \\
+  \hline
+% sat
+  C6 & 2.12 & 0.15 & 2.53 & 0.15 & 89 & 190 & Yes \\
+  C7 & 2.56 & 0.34 & 3.70 & 0.10 & 95 & 218 & Yes  \\
+  C8 & 1.99 & 0.18 & 1.21 & 0.11 & 42 & 83 & Yes \\
+  C9 & 1.92 & 0.16 & 1.49 & 0.11 & 51 & 106 & Yes \\
+  C10 & 1.88 & 0.19 & 3.47 & 0.11 & 108 & 250 & Yes \\
+  C11 & 1.89 & 0.16 & 5.18 & 0.15 & 129 & 297& Yes \\
+  \hline
+  M1 & 0.75 & 0.02 & 15.10 & 0.22 & 109 & 280 & No \\
+  M2 & 1.00 & 0.03 & 14.78 & 0.13 & 108 & 279 & No \\
+\hline
+  V1 & 0.731 & 0.14 & 5.86 & 0.12 & 52 & 123 & Yes \\
 \end{tabular}
-\caption{Median run time of Medico example ($P_4$) and subset ($P_3$) in seconds}
+\caption{Verification performance for the 
+properties of conference manager (C1-11), medico (M1-2) and
+voting (V1) examples. 
+We divided the execution time to I/O, tranformation
+to triple form, CNF transformation and SAT solving.
+The times are in seconds.
+We also listed the size of the generated SAT problem instance 
+(in terms of the number of Boolean variables and clauses)
+for verification of each property.
+If the result is ``Yes'' the generated SAT instance is satisfiable
+and the property is violated. 
+If the result is ``No'' the generated SAT instance is not satisfiable
+and the property holds.
+}
 \label{tbl:bigdata}
-\end{table}
+\end{table*}
 
-To demonstrate that the analysis is still feasible, we have collected
+
+
+To demonstrate the effectiveness of the verification approach we propose 
+we have collected 
 two sets of data.  The first, which we have charted in
 Figure~\ref{fig:graph}, shows the time required to verify or refute a
 relationship between two example policies.  It shows how the technique

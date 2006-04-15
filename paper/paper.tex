@@ -45,11 +45,11 @@
   not-applicable.  We present several ordering relations for access
   control policies which can be used to specify the properties of
   the policies and the relationships among them.  We then show how to
-  automatically check these ordering relations using an existing
-  automated analysis tool.  In particular, we translate XACML policies
-  to the Alloy language and check their properties using the Alloy
-  Analyzer.  Our experimental results demonstrate that automated
-  verification of XACML policies is feasible.
+  automatically check these ordering relations using a SAT solver.
+  We discuss how we translate queries about XACML policies to a Boolean
+  satisfiability problem.
+  Our experimental results demonstrate that automated
+  verification of XACML policies is feasible using our approach.
 \end{abstract}
 
 
@@ -58,6 +58,7 @@
 \input{properties}
 \input{translating}
 \input{experiments}
+\input{related}
 \input{conclusion}
 
 \bibliographystyle{abbrv}
@@ -123,11 +124,23 @@ S.~{De Capitani di Vimercati} and P.~Samarati.
 \newblock In {\em Proceedings of the 1996 workshop on new security paradigms},
   pages 87--99, Lake Arrowhead, California, United States, 1996. ACM Press.
 
+\bibitem{fisler05}
+K.~Fisler, S.~Krishnamurthi, L.~A.~Meyerovich and M.~C.~Tschantz.
+\newblock Verification and Change-Impact Analysis of Access-Control Policies.
+\newblock In {\em Proceedings of the 27th International Conference on Software Engineering}, 
+pages 196--205, St. Louis, Missouri, USA, May 2005.
+
 \bibitem{heckman98applying}
 M.~Heckman and K.~N. Levitt.
 \newblock Applying the composition principle to verify a hierarchy of security
   servers.
 \newblock In {\em {HICSS} (3)}, pages 338--347, 1998.
+
+\bibitem{hughes04}
+G.~Hughes and T.~Bultan.
+\newblock Automated Verification of Access Control Policies.
+\newblock Technical Report 2004-22, Department of Computer Science, 
+University of California, Santa Barbara, September 2004.
 
 \bibitem{jackson:micromodels}
 D.~Jackson.
@@ -137,7 +150,7 @@ D.~Jackson.
 \bibitem{jackson00automating}
 D.~Jackson.
 \newblock Automating first-order relational logic.
-\newblock In {\em Proc. ACM SIGSOFT COnf. Foundations of Software Engineering},
+\newblock In {\em Proc. ACM SIGSOFT Conf. Foundations of Software Engineering},
   November 2000.
 
 \bibitem{jackson:elements}
@@ -257,21 +270,21 @@ Extensible markup language ({XML}) 1.0 (second edition), 2000.
 
 \end{thebibliography}
 
-\clearpage
-\appendix
-\section{XACML Representation of Voting Example and Alloy Translation}
-\label{sec:xacml-repr-voting}
+% \clearpage
+% \appendix
+% \section{XACML Representation of Voting Example and Alloy Translation}
+% \label{sec:xacml-repr-voting}
 
-{ \small
-\input{trimmedexample.xacml.tex}
-}
-\newpage
+% { \small
+% \input{trimmedexample.xacml.tex}
+% }
+% \newpage
 
-\section{Alloy Translation}
-\label{sec:alloy-trans}
-
-{ \small
-\input{trimmedexample.als.tex}
-}
+% \section{Alloy Translation}
+% \label{sec:alloy-trans}
+% 
+% { \small
+% \input{trimmedexample.als.tex}
+% }
 
 \end{document}

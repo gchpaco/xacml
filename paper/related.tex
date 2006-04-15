@@ -1,0 +1,78 @@
+\section{Related Work}
+Access control has been extensively researched:
+\cite{samarati01policiesmodelsmechanisms,sandhu94access,sandhu96audit}~introduce
+the process,
+\cite{bertino98access,bonatti01dataarchives,sandhu93latticebased,sandhu96rolebased}~describe
+various models for access control,
+\cite{damiani02SVG,damiani01controllingaccess,damiani02fine,damiani00design}~describe
+a particular fine grained access control for XML documents,
+\cite{bonatti02algebra}~defines an algebra for composing different
+parts of a model into a unified whole and
+\cite{abadi93calculus,heckman98applying,divimercati96federated}~speak
+of distributing the control so that it is consistent across a
+distributed system.
+
+Access policy languages, too, are not new:
+\cite{abadpeiro99plas}~describes a general purpose policy language for
+authorization systems, \cite{jajodialogical}~defines a model and
+language for access control and \cite{jajodia01multiplepolicies}~and
+\cite{jajoida97unified} present a framework for enforcing multiple
+access policies by expressing how to combine them in a new language.
+We chose XACML because it is a standardized language with tool
+support, and so our results are more likely to be immediately useful.
+
+The problem with access policies becoming large and difficult to
+reason about has also been studied, but not in the general case:
+\cite{heckman98applying}~speaks of verifying a hierarchy of security
+servers to ensure that they are enforcing the whole access policy,
+and \cite{naumovich:permission-analysis}~presents an algorithm for
+computing the flow of permissions through the Java security model, to
+aid static analysis.  Neither of these are exactly what we want:
+\cite{heckman98applying}~can prove that the programs you have
+collectively implement the policy you specified, but their technique
+cannot tell you whether you have made a subtle error in creating your
+policy in the first place; \cite{naumovich:permission-analysis} is
+more comprehensive but is specific to Java's security model.
+
+Automated analysis of access control policies has also been
+researched; \cite{schaad:lightweight}~and \cite{zao:rbac}~analyze role
+based access control schemas using the Alloy analyzer.
+However \cite{schaad:lightweight}~uses Alloy to verify that
+the composition of specifications is well formed and is silent about
+their content, whereas we introduce a formal model of and a partial
+ordering on XACML specifications specifically designed for analyzing
+the semantics.
+\cite{zao:rbac}~models RBAC schema in Alloy and then
+checks these models against predicates, also written in Alloy.
+We introduce a formal model for XACML with a partial ordering on policies
+that we then automatically check using a SAT solver as a back end; we do not
+insist that the user write predicates in another language and operate
+solely on XACML.
+
+Alloy analyzer also uses a SAT solver as a back-end to solve verification
+queries \cite{jackson00automating,jackson:alcoa}. 
+Hence, translating XACML policies to Alloy in order to verify them
+is in effect an indirect way of using a SAT solver for verification.
+In fact, we also tried using Alloy analyzer for verification of XACML policies \cite{hughes04}.
+However our experiments showed that a direct
+translation to SAT is much more effective then translating
+the verification queries to Alloy. 
+Using a direct translation we can generate a customized encoding 
+of the problem. Alloy analyzer is optimized for a more general class
+of models and hence, not necessarily efficient for types of verification
+queries we are interested in.
+
+Recently, Fisler et al. \cite{fisler05} used multi-terminal decision
+diagrams to verify properties of XACML policies. Verification
+queries in \cite{fisler05} are expressed differently than the approach we use.
+In our approach verification queries are stated as relationships between
+policies which makes our tool very easy to use. 
+A verification approach that uses decision diagrams is more likely to be
+successful for incremental analysis techniques. Hence we believe that
+the multi-terminal decision
+diagrams are the appropriate representation to use for the change-impact analysis
+presented in \cite{fisler05}. 
+However for the type of verification queries we discuss in this paper we expect a verification
+approach based on SAT solvers to
+perform better than a verification approach based on decision diagrams. 
+Our experimental results support this view.
