@@ -1,68 +1,23 @@
 \section{Experiments}
 \label{sec:experiments}
 
-
-Our tool generates Alloy code which is then run through the Alloy
-Analyzer to do the analysis.  It is targeted for proving things about
-$\sqsubseteq$ relations, but we can use it for simpler questions as
-well.
-
-One such question might be `give a tuple $e$ such that $\eff (e, p) =
-\Permit$' (where $p$ is defined as in our running example).  We
-generate the Alloy code for the XACML policy, as normal, and then
-append the following:
-\begin{verbatim}
-fun CheckTuple {
-    some T0.permit
-}
-run CheckTuple for 2 but 2 Bool, 1 Triple, 8 Type
-\end{verbatim}
-The numbers after \texttt{CheckTuple} establish how deeply we will
-look; we're looking for such a tuple in a universe where there are two
-Boolean values, only one Triple (\texttt{T0}, the one generated
-through $\translation(p)$), 8 domain types (strings, integers, and the
-like)), and two elements of everything else.  If we run this, the
-analyzer tells us that the tuple $\langle \{ \mtt{Type\_6} \},$ $\{
-\mtt{Bool\_1} \},$ $\{ \mtt{Type\_7} \} \rangle$ generates a
-\Permit{}, and further examination of the output shows that
-\texttt{Bool\_1} is \texttt{True}, \texttt{Type\_6} is 18, and
-\texttt{Type\_7} is the string \texttt{vote}.  Through similar means
-we can discover that the tuple $\langle \{ 18 \}, \{ \}, \{ \mtt{vote}
-\} \rangle$ will generate an error.
-
-For something more interesting, we try to show that $p_v \sqsubseteq_D
-p_c$, as we proved manually.  Our coda now becomes
-\begin{verbatim}
-assert Subset {
-    T0.deny in T1.deny
-}
-check Subset for 2 but 2 Bool, 2 Triple, 10 Type
-\end{verbatim}
-We get a counterexample almost immediately, giving us the tuple we
-constructed in Section~\ref{sec:properties-policies}.  If we modify
-the policy so as to restrict result checking to only those who voted
-successfully, then the subset relation holds, and no counterexample is
-produced.
-
-\subsection{Timing Data}
-
-These are but small examples, so they do not reflect the time required
-to solve large problems that one might reasonably ask.  Since the
-underlying problem (SAT) is NP complete, it is reasonable to ask
-whether these techniques are useful at all as the problem size
-increases.
-
-There are two sides to this.  One side is that larger and more complex
-policies will inescapably take longer than small policies.  The other
-is that---in the context of problems in $BP_3$ and $BP_4$, where we
-must restrain the domains to a certain finite size---the amount of
-computation involved as the size of the domain increases may trigger
-the exponential worst case behavior.
+Our tool generates a Boolean formula in Conjunctive Normal Form, which
+we then give to a SAT solver; in particular, we use the
+\texttt{zchaff}~\cite{moskewicz01chaff} tool.  To demonstrate the
+value of this tool, we have used the \textsc{Continue}
+example~\cite{XXX}, encoded into XACML by Fisler et
+al.~\cite{fisler05}.  \textsc{Continue} is a Web-based conference
+management tool, aiding paper submission, review, discussion and
+notification.  Additionally, we have used the Medico example from the
+XACML~\cite{xacml} specification, which models a simple medical
+database meant to be accessed by physicians.  Finally, we have encoded
+our running example into XACML and applied our tool to the discovery
+of the error.
 
 \begin{table*}[t]
 \centering
 \begin{tabular}{c|cccc|cc|c}
-  Property & IO & Transform & CNF & SAT & Variables
+  Property & IO & Transform & Boolean & SAT & Variables
   & Clauses & Result \\
   \hline
 % unsat
@@ -70,7 +25,7 @@ the exponential worst case behavior.
   C2 & 2.07 & 0.19 & 1.41 & 0.39 & 42 & 83  & No \\
   C3 & 1.88 & 0.16 & 1.36 & 0.12 & 51 & 108 & No \\
   C4 & 1.94 & 0.17 & 1.33 & 0.11 & 52 & 106 & No \\
-  C5 & 1.82 & 0.16 & 2.00 & 0.16 &  79 & 166 & No \\
+  C5 & 1.82 & 0.16 & 2.00 & 0.16 & 79 & 166 & No \\
   \hline
 % sat
   C6 & 2.12 & 0.15 & 2.53 & 0.15 & 89 & 190 & Yes \\
@@ -86,47 +41,80 @@ the exponential worst case behavior.
   V1 & 0.73 & 0.14 & 5.86 & 0.12 & 52 & 123 & Yes \\
 \end{tabular}
 \caption{Verification performance for the 
-properties of conference manager (C1-11), medico (M1-2) and
-voting (V1) examples. 
-We divided the execution time to I/O, tranformation
-to triple form, CNF transformation and SAT solving.
-The times are in seconds.
-We also listed the size of the generated SAT problem instance 
-(in terms of the number of Boolean variables and clauses)
-for verification of each property.
-If the result is ``Yes'' the generated SAT instance is satisfiable
-and the property is violated. 
-If the result is ``No'' the generated SAT instance is not satisfiable
-and the property holds.
+  properties of conference manager (C1-11), medico (M1-2) and
+  voting (V1) examples. 
+  We divided the execution time to I/O, tranformation
+  to triple form, Boolean formula generation and CNF transformation 
+  and SAT solving.
+  The times are in seconds.
+  We also listed the size of the generated SAT problem instance 
+  (in terms of the number of Boolean variables and clauses)
+  for verification of each property.
+  If the result is ``Yes'' the generated SAT instance is satisfiable
+  and the property is violated. 
+  If the result is ``No'' the generated SAT instance is not satisfiable
+  and the property holds.
 }
 \label{tbl:bigdata}
 \end{table*}
 
+We tested 11 properties, labelled C1, C2, and so on, for subsumption
+on \textsc{Continue} and two, labelled M1 and M2 on the Medico
+example; our voting example is property V1.  Run times for
+verification are given in Table~\ref{tbl:bigdata}.  In detail:
+\begin{enumerate}
+\item Property C1 tests whether the conference manager denies program
+  committee chairs the ability to review papers he/she has a conflict
+  with.
+\item Property C2 and C7 test two related properties concerning
+  reviews for papers a program committee member reviews that he/she
+  owns.
+\item Property C3 and C8 test two related properties concerning access
+  to the conference manager if the user has no defined role.
+\item Property C4 and C5 test two related properties regarding read
+  access to information about meetings.
+\item Property C6 tests whether program committee members can read
+  all parts of a review.
+\item Property C9 tests which roles can set meetings.
+\item Property C10 and C11 test under what conditions program
+  committee members can see reviews.
+\item Property M1 and M2 test whether the unified Medico policy
+  upholds some important access properties.
+\item Property V1 is just the voting property we demonstrated in
+  Section~\ref{sec:properties-policies}.
+\end{enumerate}
+Some of these properties are expected to be subsumed by the
+\textsc{Continue} policy, and some are expected to subsume the policy.
+In general, if one wishes to verify that a property is upheld for any
+potential outcome, one should write a policy that is expected to
+subsume the target policy.  Existence properties are most readily
+demonstrated with policies that are expected to be subsumed by the
+target policy.
 
+In general, analysis time is dominated by the initial parsing of the
+policies and by the conversion from triple form to a Boolean formula;
+sometimes the Boolean conversion is strongly dominant, as in the
+Medico examples.  The resulting formulas are unexpectedly small and
+analysis time is so small the startup and I/O overhead of the
+\texttt{zchaff} tool is probably dominating.  This was unexpected; our
+tool goes to some length to simplify the Boolean formula on the
+assumption that run times would be dominated by the SAT solver, which
+is clearly wrong.
 
-To demonstrate the effectiveness of the verification approach we propose 
-we have collected 
-two sets of data.  The first, which we have charted in
-Figure~\ref{fig:graph}, shows the time required to verify or refute a
-relationship between two example policies.  It shows how the technique
-scales as the size of the domain sets increases.  The second set of
-data proves and refutes a relationship between the Medico policy from
-Section~4.2 of the XACML specification~\cite{xacml} and a subset of
-itself.  This shows that the technique is feasible for larger
-policies.  All these benchmarks were performed on a 1 GHz PowerPC, and
-all times are the median of five runs, to smooth out irregularities.
-In each case, trials were run until the formula proved too large for
-Alloy Analyzer to handle; past the given sizes the analyzer would fail
-cryptically.  ``Domain size'' means the number of elements we are
-using for our analysis, in each domain; so a domain size of 8 for our
-example environment $E$ means we simulate every $e \in E$ where
-$|e[i]| \leq 8$ for each component in $E$.
+The number of variables in our Boolean formulas is quite large,
+approximately half the number of clauses.  We have made a deliberate
+tradeoff to get this; our translation machinery from
+Section~\ref{sec:autom-prov-prop} introduces large numbers of tightly
+constrained variables, and our CNF conversion uses the structure
+preserving technique~\cite{XXX} which generates even more variables,
+but in exchange we get a relatively small formula, and the search
+space is not so large as might be presumed because of the constraints.
+A different CNF conversion might embody a different tradeoff that
+might be worth exploring.
 
-The data indicates that the time required for analysis is exponential
-in the size of the scope, which is to be expected for a SAT based
-algorithm.  However, all times are under two minutes, and our
-technique can clearly prove important properties of these problems in
-a useful amount of time.
+This data clearly demonstrates that the subsumption property is
+practical to analyze, and we believe total runtime could be lowered
+through different techniques.
 
 % arch-tag: 5a3a4d97-641f-4c94-804d-9ec83256e4e6
 
