@@ -129,8 +129,9 @@ yields \Deny{} if either $p$ or $q$ yield \Deny{}.
 \item  {\bf Only-one-applicable:} $p \otimes q$ requires that
 one of $p$ or $q$ yield \NotApplicable{} and then yields the other
 half's answer.
-\item {\bf First-applicable:} $p \oslash q$ yields $p$'s answer unless that is
-\NotApplicable{}, in which case it yields $q$'s answer.
+\item {\bf First-applicable:} $p \oslash q$ yields $p$'s answer unless
+  that answer is \NotApplicable{}, in which case it yields $q$'s
+  answer.
 \end{itemize}
 
 More formally, we define a function $\eff : E \times P \rightarrow R$
@@ -225,32 +226,31 @@ $S_2$ is the set of environments where someone's trying to vote, etc.
 \centering
 \begin{footnotesize}
 \begin{eqnarray*}
-  f & : & P   \rightarrow  P \nonumber \\
-  f (\Scope (\Scope (X, S), R))  & = & f (\Scope (X, R \cap S)) 
-  \nonumber \\
-  f (\Scope (\Err (X, S), R)) & = & f (\Err (\Scope (X, R \setminus S), S \cap R)) 
-  \nonumber \\
-  f (\Scope (X \oplus Y, S)) & = & \Scope (f (X), S) \oplus \Scope (f (Y), S) 
-  \nonumber \\
-  f (\Scope (X \ominus Y, S)) & = & \Scope (f (X), S) \ominus \Scope (f (Y), S) 
-  \nonumber \\
-  f (\Scope (X \otimes Y, S)) & = & \Scope (f (X), S) \otimes \Scope (f (Y), S)) 
-  \nonumber \\
-  f (\Scope (X \oslash Y, S)) & = & \Scope (f (X), S) \oslash \Scope (f (Y), S) 
-  \nonumber \\
-  f (\Scope (P, S)) & = & \Scope (f (P), S) 
-     \ \text{if no other rules apply} \nonumber \\
-  f (\Err (\Err (X, S), R)) & = & f (\Err (X, R \cup S)) \nonumber \\
-  f (\Err (\Scope (X, S), R)) & = & f (\Err (\Scope (X, S \setminus R), R)) 
-     \ \text{if $S \cup R \neq \emptyset$} \nonumber \\
-  f (\Err (X \oplus Y, S))  & = &  \Err (f (X), S) \oplus \Err (f (Y), S) \nonumber \\
-  f (\Err (X \ominus Y, S)) & = &  \Err (f (X), S) \ominus \Err (f (Y), S) \nonumber \\
-  f (\Err (X \otimes Y, S)) & = &  \Err (f (X), S) \otimes \Err (f (Y), S) \nonumber \\
-  f (\Err (X \oslash Y, S)) & = &  \Err (f (X), S) \oslash \Err (f (Y), S) \nonumber \\
-  f (\Err (P, S)) & = & \Err (f (P), S) 
-     \  \text{if no other rules apply} \nonumber \\
-  f (\Permit) & = & \Permit \nonumber \\
-  f (\Deny) & = & \Deny \nonumber
+  f & : & P   \rightarrow  P \\
+  f (\Scope (\Scope (X, S), R))  & = & f (\Scope (X, R \cap S)) \\
+  f (\Scope (\Err (X, S), R)) & = & f (\Err (\Scope (X, R \setminus S), 
+  S \cap R)) \\
+  f (\Scope (X \oplus Y, S)) & = & \Scope (f (X), S) \oplus 
+  \Scope (f (Y), S) \\
+  f (\Scope (X \ominus Y, S)) & = & \Scope (f (X), S) \ominus 
+  \Scope (f (Y), S) \\
+  f (\Scope (X \otimes Y, S)) & = & \Scope (f (X), S) \otimes 
+  \Scope (f (Y), S)) \\
+  f (\Scope (X \oslash Y, S)) & = & \Scope (f (X), S) \oslash 
+  \Scope (f (Y), S) \\
+  f (\Scope (P, S)) & = & \Scope (f (P), S) \\
+  && \quad \text{if no other rules apply} \\
+  f (\Err (\Err (X, S), R)) & = & f (\Err (X, R \cup S)) \\
+  f (\Err (\Scope (X, S), R)) & = & f (\Err (\Scope (X, S \setminus R), R)) \\
+  && \quad \text{if $S \cup R \neq \emptyset$} \\
+  f (\Err (X \oplus Y, S))  & = &  \Err (f (X), S) \oplus \Err (f (Y), S) \\
+  f (\Err (X \ominus Y, S)) & = &  \Err (f (X), S) \ominus \Err (f (Y), S) \\
+  f (\Err (X \otimes Y, S)) & = &  \Err (f (X), S) \otimes \Err (f (Y), S) \\
+  f (\Err (X \oslash Y, S)) & = &  \Err (f (X), S) \oslash \Err (f (Y), S) \\
+  f (\Err (P, S)) & = & \Err (f (P), S) \\
+  && \quad \text{if no other rules apply} \\
+  f (\Permit) & = & \Permit \\
+  f (\Deny) & = & \Deny
 \end{eqnarray*}
 \end{footnotesize}
 \caption{$\eff$-preserving transformations for reduction to normal form}
