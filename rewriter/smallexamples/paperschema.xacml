@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PolicySet PolicySetId="0"
+	PolicyCombiningAlgId="urn:oasis:names:tc:xacml:1.0:policy-combining-algorithm:permit-overrides"
+	xmlns="urn:oasis:names:tc:xacml:1.0:policy"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="urn:oasis:names:tc:xacml:1.0:policy /pro/xacml/summer2004/xacml/schema/cs-xacml-schema-policy-01.xsd">
+  <Policy PolicyId="1"
+	  RuleCombiningAlgId="urn:oasis:names:tc:xacml:1.0:rule-combining-algorithm:deny-overrides">
+    <Target>
+      <Subjects><AnySubject/></Subjects>
+      <Resources><AnyResource/></Resources>
+      <Actions>
+	<Action>
+	  <ActionMatch MatchId="urn:oasis:names:tc:xacml:1.0:function:string-equal">
+	    <AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">vote</AttributeValue>
+	    <ActionAttributeDesignator AttributeId="action" DataType="http://www.w3.org/2001/XMLSchema#string"/>
+	  </ActionMatch>
+	</Action>
+      </Actions>
+    </Target>
+    <Rule RuleId="1" Effect="Deny">
+      <Condition FunctionId="urn:oasis:names:tc:xacml:1.0:function:integer-less-than">
+	<Apply FunctionId="urn:oasis:names:tc:xacml:1.0:function:integer-one-and-only">
+	  <SubjectAttributeDesignator
+	   AttributeId="age"
+	   DataType="http://www.w3.org/2001/XMLSchema#integer"/>
+	</Apply>
+	<AttributeValue DataType="http://www.w3.org/2001/XMLSchema#integer">18</AttributeValue>
+      </Condition>
+    </Rule>
+    <Rule RuleId="2" Effect="Deny">
+      <Target>
+	<Subjects>
+	  <Subject>
+	    <SubjectMatch MatchId="urn:oasis:names:tc:xacml:1.0:function:boolean-equal">
+	      <AttributeValue DataType="http://www.w3.org/2001/XMLSchema#boolean">true</AttributeValue>
+	      <SubjectAttributeDesignator AttributeId="hasVoted" DataType="http://www.w3.org/2001/XMLSchema#boolean"/>
+	    </SubjectMatch>
+	  </Subject>
+	</Subjects>
+      </Target>
+      <Condition FunctionId="urn:oasis:names:tc:xacml:1.0:function:boolean-equal">
+	<Apply FunctionId="urn:oasis:names:tc:xacml:1.0:function:boolean-one-and-only">
+	  <SubjectAttributeDesignator
+	   AttributeId="hasVoted"
+	   DataType="http://www.w3.org/2001/XMLSchema#boolean"/>
+	</Apply>
+	<Apply FunctionId="urn:oasis:names:tc:xacml:1.0:function:boolean-one-and-only">
+	  <SubjectAttributeDesignator
+	   AttributeId="hasVoted"
+	   DataType="http://www.w3.org/2001/XMLSchema#boolean"/>
+	</Apply>
+      </Condition>    
+    </Rule>
+    <Rule RuleId="3" Effect="Permit"/>
+  </Policy>
+  <Policy PolicyId="5"
+	  RuleCombiningAlgId="urn:oasis:names:tc:xacml:1.0:rule-combining-algorithm:first-applicable">
+    <Rule RuleId="6" Effect="Permit">
+      <Target>
+	<Subjects><AnySubject/></Subjects>
+	<Resources><AnyResource/></Resources>
+	<Actions>
+	  <Action>
+	    <ActionMatch MatchId="urn:oasis:names:tc:xacml:1.0:function:string-equal">
+	      <AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">getresult</AttributeValue>
+	      <ActionAttributeDesignator AttributeId="action" DataType="http://www.w3.org/2001/XMLSchema#string"/>
+	    </ActionMatch>
+	  </Action>
+	</Actions>
+      </Target>
+    </Rule>
+  </Policy>
+</PolicySet>
