@@ -49,18 +49,18 @@ that we then automatically check using a SAT solver as a back end; we do not
 insist that the user write predicates in another language and operate
 solely on XACML.
 
-Alloy analyzer also uses a SAT solver as a back-end to solve verification
-queries \cite{jackson00automating,jackson:alcoa}. 
-Hence, translating XACML policies to Alloy in order to verify them
-is in effect an indirect way of using a SAT solver for verification.
-In fact, we also tried using Alloy analyzer for verification of XACML policies \cite{hughes04}.
-However our experiments showed that a direct
-translation to SAT is much more effective then translating
-the verification queries to Alloy. 
-Using a direct translation we can generate a customized encoding 
-of the problem. Alloy analyzer is optimized for a more general class
-of models and hence, not necessarily efficient for types of verification
-queries we are interested in.
+Alloy analyzer also uses a SAT solver as a back-end to solve
+verification queries \cite{jackson00automating,jackson:alcoa}.  Hence,
+translating XACML policies to Alloy in order to verify them is in
+effect an indirect way of using a SAT solver for verification.  In
+fact, we also tried using Alloy analyzer for verification of XACML
+policies \cite{hughes04}.  However our experiments showed that a
+direct translation to SAT is much more effective then translating the
+verification queries to Alloy.  Using a direct translation we can
+generate a customized encoding of the problem. Alloy analyzer is
+optimized for a more general class of models and hence, not
+necessarily efficient for types of verification queries we are
+interested in.
 
 Recently, Fisler et al.~\cite{fisler05} used multi-terminal decision
 diagrams to verify properties of XACML policies with the Margrave
