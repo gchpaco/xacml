@@ -138,21 +138,11 @@ that, given an environment and a policy produces a result.  We define
 this function in Figure~\ref{fig:semantics} so that it corresponds to
 our intuition about the desired properties, as described above.
 
-% We define our semantics to be slightly different from that defined in
-% the XACML standard; specifically, $\eff(e, \Permit \oplus
-% \Indeterminate) = \Indeterminate$, not $\Permit$, and similarly
-% $\eff(e, \Deny \ominus \Indeterminate) = \Indeterminate$ not $\Deny$.
-% We did this because \Indeterminate{} is an erroneous condition in an
-% XACML specification; we believed that for the purposes of analysis
-% error conditions should not be covered up.  Using the original
-% semantics does not change the analysis technique, merely some of the
-% normal form transformations and then only slightly.
-
 \begin{figure}[t]
 \centering
 \begin{footnotesize}
 \begin{eqnarray*}
-\eff : E \times P \rightarrow R  && \\
+  \eff & : & E \times P \rightarrow R \\
   \eff (e, \Permit) & = & \Permit \\
   \eff (e, \Deny) & = & \Deny \\
   \eff (e, \Scope (p, S)) & = & \left\{\begin{array}{ll}
@@ -234,36 +224,34 @@ $S_2$ is the set of environments where someone's trying to vote, etc.
 \begin{figure}[t]
 \centering
 \begin{footnotesize}
-\[
-\begin{array}{l}
-  f : P   \rightarrow  P \nonumber \\
-  f (\Scope (\Scope (X, S), R))  =  f (\Scope (X, R \cap S)) 
+\begin{eqnarray*}
+  f & : & P   \rightarrow  P \nonumber \\
+  f (\Scope (\Scope (X, S), R))  & = & f (\Scope (X, R \cap S)) 
   \nonumber \\
-  f (\Scope (\Err (X, S), R))  =  f (\Err (\Scope (X, R \setminus S), S \cap R)) 
+  f (\Scope (\Err (X, S), R)) & = & f (\Err (\Scope (X, R \setminus S), S \cap R)) 
   \nonumber \\
-  f (\Scope (X \oplus Y, S))  =  \Scope (f (X), S) \oplus \Scope (f (Y), S) 
+  f (\Scope (X \oplus Y, S)) & = & \Scope (f (X), S) \oplus \Scope (f (Y), S) 
   \nonumber \\
-  f (\Scope (X \ominus Y, S))  =  \Scope (f (X), S) \ominus \Scope (f (Y), S) 
+  f (\Scope (X \ominus Y, S)) & = & \Scope (f (X), S) \ominus \Scope (f (Y), S) 
   \nonumber \\
-  f (\Scope (X \otimes Y, S))  =  \Scope (f (X), S) \otimes \Scope (f (Y), S)) 
+  f (\Scope (X \otimes Y, S)) & = & \Scope (f (X), S) \otimes \Scope (f (Y), S)) 
   \nonumber \\
-  f (\Scope (X \oslash Y, S))  =  \Scope (f (X), S) \oslash \Scope (f (Y), S) 
+  f (\Scope (X \oslash Y, S)) & = & \Scope (f (X), S) \oslash \Scope (f (Y), S) 
   \nonumber \\
-  f (\Scope (P, S))  =  \Scope (f (P), S) 
+  f (\Scope (P, S)) & = & \Scope (f (P), S) 
      \ \text{if no other rules apply} \nonumber \\
-  f (\Err (\Err (X, S), R))  =  f (\Err (X, R \cup S)) \nonumber \\
-  f (\Err (\Scope (X, S), R))  =  f (\Err (\Scope (X, S \setminus R), R)) 
+  f (\Err (\Err (X, S), R)) & = & f (\Err (X, R \cup S)) \nonumber \\
+  f (\Err (\Scope (X, S), R)) & = & f (\Err (\Scope (X, S \setminus R), R)) 
      \ \text{if $S \cup R \neq \emptyset$} \nonumber \\
-  f (\Err (X \oplus Y, S))   =   \Err (f (X), S) \oplus \Err (f (Y), S) \nonumber \\
-  f (\Err (X \ominus Y, S))  =   \Err (f (X), S) \ominus \Err (f (Y), S) \nonumber \\
-  f (\Err (X \otimes Y, S))  =   \Err (f (X), S) \otimes \Err (f (Y), S) \nonumber \\
-  f (\Err (X \oslash Y, S))  =   \Err (f (X), S) \oslash \Err (f (Y), S) \nonumber \\
-  f (\Err (P, S))  =  \Err (f (P), S) 
+  f (\Err (X \oplus Y, S))  & = &  \Err (f (X), S) \oplus \Err (f (Y), S) \nonumber \\
+  f (\Err (X \ominus Y, S)) & = &  \Err (f (X), S) \ominus \Err (f (Y), S) \nonumber \\
+  f (\Err (X \otimes Y, S)) & = &  \Err (f (X), S) \otimes \Err (f (Y), S) \nonumber \\
+  f (\Err (X \oslash Y, S)) & = &  \Err (f (X), S) \oslash \Err (f (Y), S) \nonumber \\
+  f (\Err (P, S)) & = & \Err (f (P), S) 
      \  \text{if no other rules apply} \nonumber \\
-  f (\Permit)  =  \Permit \nonumber \\
-  f (\Deny)  =  \Deny \nonumber
-\end{array}
-\]
+  f (\Permit) & = & \Permit \nonumber \\
+  f (\Deny) & = & \Deny \nonumber
+\end{eqnarray*}
 \end{footnotesize}
 \caption{$\eff$-preserving transformations for reduction to normal form}
 \label{fig:1streduction}
@@ -299,14 +287,12 @@ Now that we have a framework for transforming policies, we would like
 to transform an entire policy with $\Scope$, $\Err$ and combinators alike
 into a single triple.  We know that for any policy $P$ a triple $P_T$
 that is equivalent to it exists: the triple is just 
-\[ 
-\begin{array}{ll} 
-P_T = & \langle \{
+\begin{eqnarray*}
+P_T & = & \langle \{
 e \in E : \eff (e, P) = \Permit \}, \\
-&  \{ e \in E : \eff (e, P) = \Deny \}, \\
-& \{ e \in E : \eff (e, P) = \Indeterminate \}\rangle.
-\end{array}
-\]  
+&& \;\, \{ e \in E : \eff (e, P) = \Deny \}, \\
+&& \;\, \{ e \in E : \eff (e, P) = \Indeterminate \}\rangle.
+\end{eqnarray*}
 However,
 this is not a constructive definition.  To transform the policies to
 the triple form, we define two functions 
@@ -323,12 +309,12 @@ As an example, applying $f$ to the policy $p$ defined in
 Equation~\eqref{eq:p} leads to the following:
 \begin{eqnarray*}
   p & = & \Scope (\Err (\Scope (\Deny, S_0), S_3) \\
-  & & \qquad \ominus \Err (\Scope (\Deny, S_1), S_4) \\
-  & & \qquad \ominus \Permit, S_2) \nonumber \\
-  f(p)  & = & \Err (\Scope (\Deny, S_2 \cap S_0 \setminus S_3), S_3 \cap S_2) \\
-  & & \qquad \ominus
-  \Err (\Scope (\Deny, S_2 \cap S_1 \setminus S_4), S_4 \cap S_2) \\
-  & & \qquad \ominus \Scope (\Permit, S_2)
+  & & \qquad \ominus \, \Err (\Scope (\Deny, S_1), S_4) \\
+  & & \qquad \ominus \, \Permit, S_2) \nonumber \\
+  f(p)  & = & \Err (\Scope (\Deny, (S_2 \cap S_0) \setminus S_3), S_3 \cap S_2) \\
+  & & \qquad \ominus \,
+  \Err (\Scope (\Deny, (S_2 \cap S_1) \setminus S_4), S_4 \cap S_2) \\
+  & & \qquad \ominus \, \Scope (\Permit, S_2)
 \end{eqnarray*}
 Note that the function $f$ pushes all $\Scope$ forms down to the leaves
 of the policy tree, and all $\Err$ forms down to just above the leaves.
@@ -351,68 +337,59 @@ $g$ all preserve the disjointness property, and using the function $g$
 we can transform the policy generated by function $f$ to a single
 triple $\langle S, R, T \rangle$ for some $S, R, T \subseteq E$.
 
-\begin{figure}[t]
+\begin{figure*}[t]
 \centering
 \begin{footnotesize}
-\[
-\begin{array}{l}
-  g : P \rightarrow \langle S, R, T \rangle \\
-  g (\langle S_1, R_1, T_1 \rangle \oplus \langle S_2, R_2, T_2 \rangle) = 
+\begin{eqnarray*}
+  g & : & P \rightarrow \langle S, R, T \rangle \\
+  g (\langle S_1, R_1, T_1 \rangle \oplus \langle S_2, R_2, T_2 \rangle) & = & 
   \langle 
-  S_1 \cup S_2, \\
-  \qquad (R_1 \setminus (S_2 \cup T_2)) \cup (R_2 \setminus (S_1 \cup T_1)), 
-  T_1 \cup T_2 \setminus (S_1 \cup S_2)
+  S_1 \cup S_2, (R_1 \setminus (S_2 \cup T_2)) \cup (R_2 \setminus (S_1 \cup T_1)), 
+  (T_1 \cup T_2) \setminus (S_1 \cup S_2)
   \rangle \\
   g (\langle S_1, R_1, T_1 \rangle \ominus \langle S_2, R_2, T_2 \rangle)
-  =  \\
-  \qquad \langle (S_1 \setminus (R_2 \cup T_2)) \cup 
-  (S_2 \setminus (R_1 \cup T_1)), \\
-  \qquad
+  & = & \langle (S_1 \setminus (R_2 \cup T_2)) \cup 
+  (S_2 \setminus (R_1 \cup T_1)), 
   R_1 \cup R_2,
   (T_1 \cup T_2) \setminus (R_1 \cup R_2)
   \rangle
   \\
   g (\langle S_1, R_1, T_1 \rangle \otimes \langle S_2, R_2, T_2 \rangle)
-  = \\
-  \qquad \langle 
-  (S_1 \cup S_2) \setminus ((S_1 \cap S_2) \cup T_1 \cup T_2), \\
-  \qquad
-  (R_1 \cup R_2) \setminus ((R_1 \cap R_2) \cup T_1 \cup T_2), \\
-  \qquad
+  & = & \langle 
+  (S_1 \cup S_2) \setminus ((S_1 \cap S_2) \cup T_1 \cup T_2), 
+  (R_1 \cup R_2) \setminus ((R_1 \cap R_2) \cup T_1 \cup T_2), 
   T_1 \cup T_2 \cup (S_1 \cap S_2) \cup (R_1 \cap R_2)
   \rangle 
   \\
   g (\langle S_1, R_1, T_1 \rangle \oslash \langle S_2, R_2, T_2 \rangle)
-  = \langle 
-  S_1 \cup (S_2 \setminus (R_1 \cup T_1)), \\
-  \qquad 
+  & = & \langle 
+  S_1 \cup (S_2 \setminus (R_1 \cup T_1)),
   R_1 \cup (R_2 \setminus (S_1 \cup T_1)), 
   T_1 \cup (T_2 \setminus (S_1 \cup R_1))
   \rangle
   \\
-  g (\langle S_1, R_1, T_1 \rangle) = \langle  S_1, R_1, T_1 \rangle 
+  g (\langle S_1, R_1, T_1 \rangle) & = & \langle  S_1, R_1, T_1 \rangle 
   \\
-  g (P_1 \oplus P_2) =  g (g (P_1) \oplus g (P_2)) \quad 
+  g (P_1 \oplus P_2) & = & g (g (P_1) \oplus g (P_2)) \quad 
   \text{if no other rules apply}  \\
-  g (P_1 \ominus P_2) =  g (g (P_1) \ominus g (P_2)) \quad 
+  g (P_1 \ominus P_2) & = & g (g (P_1) \ominus g (P_2)) \quad 
   \text{if no other rules apply}  \\
-  g (P_1 \otimes P_2) =  g (g (P_1) \otimes g (P_2)) \quad 
+  g (P_1 \otimes P_2) & = & g (g (P_1) \otimes g (P_2)) \quad 
   \text{if no other rules apply}  \\
-  g (P_1 \oslash P_2) =  g (g (P_1) \oslash g (P_2)) \quad
+  g (P_1 \oslash P_2) & = & g (g (P_1) \oslash g (P_2)) \quad
   \text{if no other rules apply} 
-\end{array}
-\]
+\end{eqnarray*}
 \end{footnotesize}
 \caption{$\eff$-preserving transformations for $\langle S, R, T \rangle$ 
   reduction}
 \label{fig:triplereduction}
-\end{figure}
+\end{figure*}
 
 When we apply the function $g$ to our example we get the following:
 \begin{eqnarray*}
-  f(p) & = & \Err (\Scope (\Deny, S_2 \cap S_0 \setminus S_3), S_3 \cap S_2) \\
-  & & \ominus \Err (\Scope (\Deny, S_2 \cap S_1 \setminus S_4), S_4 \cap S_2) \\
-  & & \ominus \Scope (\Permit, S_2)
+  f(p) & = & \Err (\Scope (\Deny, (S_2 \cap S_0) \setminus S_3), S_3 \cap S_2) \\
+  & & \ominus \, \Err (\Scope (\Deny, (S_2 \cap S_1) \setminus S_4), S_4 \cap S_2) \\
+  & & \ominus \, \Scope (\Permit, S_2)
   \\
   & = & \langle \emptyset, S_2 \cap S_0 \setminus S_3, S_3 \cap S_2 \rangle \\
   & & \ominus \langle \emptyset, S_2 \cap S_1 \setminus S_4, S_4 \cap S_2 \rangle \\
