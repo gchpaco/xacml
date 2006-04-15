@@ -62,17 +62,18 @@ of the problem. Alloy analyzer is optimized for a more general class
 of models and hence, not necessarily efficient for types of verification
 queries we are interested in.
 
-Recently, Fisler et al. \cite{fisler05} used multi-terminal decision
-diagrams to verify properties of XACML policies. Verification
-queries in \cite{fisler05} are expressed differently than the approach we use.
-In our approach verification queries are stated as relationships between
-policies which makes our tool very easy to use. 
-A verification approach that uses decision diagrams is more likely to be
-successful for incremental analysis techniques. Hence we believe that
-the multi-terminal decision
-diagrams are the appropriate representation to use for the change-impact analysis
-presented in \cite{fisler05}. 
-However for the type of verification queries we discuss in this paper we expect a verification
-approach based on SAT solvers to
-perform better than a verification approach based on decision diagrams. 
-Our experimental results support this view.
+Recently, Fisler et al.~\cite{fisler05} used multi-terminal decision
+diagrams to verify properties of XACML policies with the Margrave
+tool.  Verification queries in~\cite{fisler05} are expressed in the
+Scheme language.  We use relationships between policies instead, and
+we believe this makes our tool easier to use.  Also, a verification
+approach that uses decision diagrams is more likely to be successful
+for incremental analysis techniques.  Hence we believe that the
+multi-terminal decision diagrams are the appropriate representation to
+use for the change-impact analysis presented in~\cite{fisler05}.
+However, for the type of verification queries we discuss in this paper
+we expect a verification approach based on SAT solvers to perform
+better than a verification approach based on decision diagrams.  Our
+experimental results support this view.  A final difference is that
+our tool handles more of XACML than Margrave does, including complex
+conditionals and more datatypes.
