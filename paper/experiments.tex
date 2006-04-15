@@ -1,10 +1,10 @@
 \section{Experiments}
 \label{sec:experiments}
 
-Our tool generates a Boolean formula in Conjunctive Normal Form, which
+Our tool generates a Boolean formula in Conjunctive Normal Form (CNF), which
 we then give to a SAT solver; in particular, we use the
 \texttt{zchaff}~\cite{moskewicz01chaff} tool.  To demonstrate the
-value of this tool, we use the \textsc{Continue}
+value of our tool, we use the \textsc{Continue}
 example~\cite{krishnamurthi03continue}, encoded into XACML by Fisler
 et al.~\cite{fisler05}.  \textsc{Continue} is a Web-based conference
 management tool, aiding paper submission, review, discussion and
@@ -41,9 +41,9 @@ applied our tool to the discovery of the error which we know to exist.
   V1 & 0.73 & 0.14 & 5.86 & 0.12 & 52 & 123 & Yes \\
 \end{tabular}
 \caption{Verification performance for the 
-  properties of conference manager (C1-11), medico (M1-2) and
+  properties of the \textsc{Continue} conference manager (C1-11), Medico (M1-2) and
   voting (V1) examples. 
-  We divided the execution time to I/O, tranformation
+  We divided the execution time to I/O, transformation
   to triple form, Boolean formula generation and CNF transformation 
   and SAT solving.
   The times are in seconds.
@@ -58,8 +58,8 @@ applied our tool to the discovery of the error which we know to exist.
 \label{tbl:bigdata}
 \end{table*}
 
-We tested 11 properties, labelled C1, C2, and so on, for subsumption
-on \textsc{Continue} and two, labelled M1 and M2 on the Medico
+We tested 11 properties, labeled C1, C2, and so on, for subsumption
+on \textsc{Continue} and two, labeled M1 and M2 on the Medico
 example; our voting example is property V1.  Run times for
 verification are given in Table~\ref{tbl:bigdata}.  In detail:
 \begin{enumerate}
@@ -79,7 +79,7 @@ verification are given in Table~\ref{tbl:bigdata}.  In detail:
 \item Property C10 and C11 test under what conditions program
   committee members can see reviews.
 \item Property M1 and M2 test whether the unified Medico policy
-  upholds some important access properties.
+  upholds the required access properties about the medical records.
 \item Property V1 is just the voting property we demonstrated in
   Section~\ref{sec:properties-policies}.
 \end{enumerate}
@@ -91,15 +91,22 @@ subsume the target policy.  Existence properties are most readily
 demonstrated with policies that are expected to be subsumed by the
 target policy.
 
-In general, analysis time is dominated by the initial parsing of the
+The performance results shown in Table~\ref{tbl:bigdata} indicate that
+analysis time is dominated by the initial parsing of the
 policies and by the conversion from triple form to a Boolean formula;
 sometimes the Boolean conversion is strongly dominant, as in the
 Medico examples.  The resulting formulas are unexpectedly small and
 analysis time is so small the startup and I/O overhead of the
 \texttt{zchaff} tool is probably dominating.  This was unexpected; our
 tool goes to some length to simplify the Boolean formula on the
-assumption that run times would be dominated by the SAT solver, which
-is clearly wrong.
+assumption that run times would be dominated by the SAT solver. 
+The results show that our assumption was wrong.
+However, these results are very encouraging in terms of the scalability
+of the proposed approach. Among the different components of our
+analysis, SAT solving is the one with worst case complexity.
+Since the examples we tested so far were easily handled by the SAT solver
+we believe that our approach will be feasible for analysis of very
+large XACML policies.
 
 The number of variables in our Boolean formulas is quite large,
 approximately half the number of clauses.  We have made a deliberate
@@ -110,11 +117,13 @@ preserving technique~\cite{plaisted86structure} which generates even
 more variables, but in exchange we get a relatively small formula, and
 the search space is not so large as might be presumed because of the
 constraints.  A different CNF conversion might embody a different
-tradeoff that might be worth exploring.
+tradeoff between the CNF conversion and SAT solving 
+that might be worth exploring.
 
-This data clearly demonstrates that the subsumption property is
+Our experimental results clearly demonstrate that the subsumption property is
 practical to analyze, and we believe total runtime could be lowered
-through different techniques.
+by optimizing the Boolean formula generation and CNF transformation
+steps.
 
 % arch-tag: 5a3a4d97-641f-4c94-804d-9ec83256e4e6
 
