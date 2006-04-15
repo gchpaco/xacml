@@ -48,27 +48,28 @@ technique by showing this.  First, we perform our translations on this
 new policy as above, getting:
 \begin{eqnarray*}
   g(f(r_3)) & = & \langle S_5 \setminus S_4, \emptyset, S_4 \cap S_5 \rangle \\
-  g(f(p_c)) 
-    & = &  \langle ((S_2 \setminus (S_0 \cup S_1 \cup S_3 \cup S_4)) \\
-    & & \quad \cup (S_5 \setminus S_4)) \setminus
-    (((S_3 \cup S_4) \cap S_2) 
-    \cup (S_4 \cap S_5)), \\
-    & & (((S_0 \cup S_1) \setminus (S_3 \cup S_4)) \cap S_2) \\
-    & & \quad \setminus ((S_5 \setminus S_4)
-    \cup (S_4 \cap S_5)), \\
-    & & ((S_3 \cup S_4) \cap S_2) \cup (S_4 \cap S_5) \rangle
+  g(f(p_c)) & = & \langle ((S_2 \setminus (S_0 \cup S_1 \cup S_3 \cup S_4)) 
+  \cup (S_5 \setminus S_4)), \\
+  & & \;\, (((S_0 \setminus S_3) \cup (S_1 \setminus S_4)) \cap S_2) 
+  \setminus (S_4 \cap S_5), \\
+  & & \;\, ((S_4 \cap S_5) \cup ((S_3 \cup S_4) \setminus \\
+  & & \;\, \qquad ((S_0 \setminus S_3) \cup 
+  (S_1 \setminus S_4))) \cap S_2) \setminus \\
+  & & \;\, \quad ((S_2 \setminus (S_0 \cup S_1 \cup S_3 \cup S_4)) 
+  \cup (S_5 \setminus S_4)) \rangle \\
 \end{eqnarray*}
 where $S_0,S_1, S_3$ and $S_4$ are from
 Equations~\eqref{eq:s1} to ~\eqref{eq:s4}.
 Using set algebra we can simplify the expression for policy $p_c$ to
 \begin{align*}
-  g(f(p_c)) = \langle & \left( S_2 \setminus (S_0 \cup S_1 \cup S_3 \cup S_4) \right)
-    \\ & \quad
-    \cup \left( S_5 \setminus ((S_3 \cap S_2) \cup S_4)
-    \right), \\
-    & ((S_0 \cup S_1) \cap S_2) \setminus (S_3 \cup S_4 \cup
-    S_5), \\
-    & ((S_3 \cup S_4) \cap S_2) \cup (S_4 \cap S_1 \cap S_5) \rangle
+  g(f(p_c)) = \big\langle & ((S_2 \setminus (S_0 \cup S_1 \cup S_3)) 
+  \cup S_5) \setminus S_4, \\
+  & (((S_0 \setminus S_3) \cup (S_1 \setminus S_4)) \cap S_2) 
+  \setminus (S_4 \cap S_5), \\
+  & \big((S_4 \cap S_5) \setminus (S_2 \setminus (S_0 \cup S_1 \cup S_3))\big)
+  \cup \\
+  & \quad \big(((S_3 \cup S_4) \setminus ((S_0 \setminus S_3) \cup
+  (S_1 \setminus S_4))) \cap S_2 \big) \big\rangle
 \end{align*}
 Now, we insist that this combined policy deny anyone trying to vote
 who is under 18.  This is itself a policy, which we call $p_v$:

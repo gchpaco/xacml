@@ -391,13 +391,14 @@ When we apply the function $g$ to our example we get the following:
   & & \ominus \, \Err (\Scope (\Deny, (S_2 \cap S_1) \setminus S_4), S_4 \cap S_2) \\
   & & \ominus \, \Scope (\Permit, S_2)
   \\
-  & = & \langle \emptyset, S_2 \cap S_0 \setminus S_3, S_3 \cap S_2 \rangle \\
-  & & \ominus \langle \emptyset, S_2 \cap S_1 \setminus S_4, S_4 \cap S_2 \rangle \\
-  & & \ominus \langle S_2, \emptyset, \emptyset \rangle
+  & = & \langle \emptyset, (S_2 \cap S_0) \setminus S_3, S_3 \cap S_2 \rangle \\
+  & & \;\, \ominus \, \langle \emptyset, (S_2 \cap S_1) \setminus S_4, S_4 \cap S_2 \rangle \\
+  & & \;\, \ominus \, \langle S_2, \emptyset, \emptyset \rangle
   \\
   g(f(p))  & = & \langle S_2 \setminus (S_0 \cup S_1 \cup S_3 \cup S_4), \\
-  & & ((S_0 \cup S_1) \setminus (S_3 \cup S_4)) \cap S_2, \\
-  & &  (S_3 \cup S_4) \cap S_2 \rangle
+  & & \;\, ((S_0 \setminus S_3) \cup (S_1 \setminus S_4)) \cap S_2, \\
+  & & \;\, ((S_3 \cup S_4) \setminus ((S_0 \setminus S_3) \cup 
+  (S_1 \setminus S_4))) \cap S_2 \rangle
 \end{eqnarray*}
 
 Now that we have our policy into a form that is convenient for
