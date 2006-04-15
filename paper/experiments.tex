@@ -4,9 +4,9 @@
 Our tool generates a Boolean formula in Conjunctive Normal Form, which
 we then give to a SAT solver; in particular, we use the
 \texttt{zchaff}~\cite{moskewicz01chaff} tool.  To demonstrate the
-value of this tool, we have used the \textsc{Continue}
-example~\cite{XXX}, encoded into XACML by Fisler et
-al.~\cite{fisler05}.  \textsc{Continue} is a Web-based conference
+value of this tool, we use the \textsc{Continue}
+example~\cite{krishnamurthi03continue}, encoded into XACML by Fisler
+et al.~\cite{fisler05}.  \textsc{Continue} is a Web-based conference
 management tool, aiding paper submission, review, discussion and
 notification.  Additionally, we have used the Medico example from the
 XACML~\cite{xacml} specification, which models a simple medical
@@ -106,11 +106,11 @@ approximately half the number of clauses.  We have made a deliberate
 tradeoff to get this; our translation machinery from
 Section~\ref{sec:autom-prov-prop} introduces large numbers of tightly
 constrained variables, and our CNF conversion uses the structure
-preserving technique~\cite{XXX} which generates even more variables,
-but in exchange we get a relatively small formula, and the search
-space is not so large as might be presumed because of the constraints.
-A different CNF conversion might embody a different tradeoff that
-might be worth exploring.
+preserving technique~\cite{plaisted86structure} which generates even
+more variables, but in exchange we get a relatively small formula, and
+the search space is not so large as might be presumed because of the
+constraints.  A different CNF conversion might embody a different
+tradeoff that might be worth exploring.
 
 This data clearly demonstrates that the subsumption property is
 practical to analyze, and we believe total runtime could be lowered
