@@ -1,22 +1,21 @@
 \section{Conclusion}
 
-We have presented a formal model for access control policies, and shown how to
-verify interesting properties about such models in an automated way.
-In particular we translate queries about access control policies
-to Boolean satisfiability problems and use a SAT solver to obtain an answer.
-We express properties about access control policies as subsumption queries
-between two policies.
-We have implemented a tool that 1) translates XACML policies to our formal model
-and 2) translates subsumption queries between two XACML policies to
-a Boolean satisfiability problem.
-Our experimental results
+We have presented a formal model for access control policies, and
+shown how to verify interesting properties about such models in an
+automated way.  In particular we translate queries about access
+control policies to Boolean satisfiability problems and use a SAT
+solver to obtain an answer.  We express properties about access
+control policies as subsumption queries between two policies.  We have
+implemented a tool that 1) translates XACML policies to our formal
+model and 2) translates subsumption queries between two XACML policies
+to a Boolean satisfiability problem.  Our experimental results
 indicate that automated verification of nontrivial access policies is
 feasible using our approach.
 
-In the future, it would be interesting to investigate using predicate abstraction to
-generate more precise models for the functions that we cannot directly
-simulate.  We would also like to experiment on more and larger
-policies.
+In the future, it would be interesting to investigate using predicate
+abstraction to generate more precise models for the functions that we
+cannot directly simulate.  We would also like to experiment on more
+and larger policies.
 
 % arch-tag: d0400f29-ab24-4a88-a786-3e22d798dc41
 

@@ -1,19 +1,19 @@
 
-\def \Union {\bigcup}
-\def \union {\cup}
-\def \Intersect {\bigcap}
-\def \intersect {\cap}
-\def \And {\wedge}
-\def \Or {\vee}
-\def \band {\bigwedge}
-\def \bor {\bigvee}
-\def \Implies {\Rightarrow}
-\def \Iff {\Leftrightarrow}
-\def \implies {\rightarrow}
-\def \iff {\leftrightarrow}
-\def \true {\texttt{true}}
-\def \false {\texttt{false}}
-\def \assign {:=}
+\newcommand{\Union}{\bigcup}
+\newcommand{\union}{\cup}
+\newcommand{\Intersect}{\bigcap}
+\newcommand{\intersect}{\cap}
+\renewcommand{\And}{\wedge}
+\newcommand{\Or}{\vee}
+\newcommand{\band}{\bigwedge}
+\newcommand{\bor}{\bigvee}
+\newcommand{\Implies}{\Rightarrow}
+\newcommand{\Iff}{\Leftrightarrow}
+\renewcommand{\implies}{\rightarrow}
+\renewcommand{\iff}{\leftrightarrow}
+\newcommand{\true}{\texttt{true}}
+\newcommand{\false}{\texttt{false}}
+\newcommand{\assign}{:=}
 
 \section{Automatically Proving Properties of Policies}
 \label{sec:autom-prov-prop}
@@ -23,43 +23,41 @@ properties defined in Section~\ref{sec:properties-policies} we would
 like to check properties of access policies automatically.  To do this
 we first formalize the syntax of formulas we use to specify subsets of
 $E$.  Then we discuss how policies constructed using these formulas
-and policy combinators can be translated to Boolean logic formulas.  
-After this translation we show that we can 
-check properties of access policies using a SAT solver.
+and policy combinators can be translated to Boolean logic formulas.
+After this translation we show that we can check properties of access
+policies using a SAT solver.
 
 \subsection{Characterizing Subsets of the Environment}
 \label{sec:policy-classes}
 
 In Section~\ref{sec:formal-model}, we defined our formal model using
-subsets of the set of possible environments $E$. 
-We showed that each policy can be expressed
-in triple form $P= \langle S, R, T \rangle$   where
-$S$, $R$, and $T$ are subsets $E$.
-We will assume that all subsets of $E$ are specified in the form:
+subsets of the set of possible environments $E$.  We showed that each
+policy can be expressed in triple form $P= \langle S, R, T \rangle$
+where $S$, $R$, and $T$ are subsets of $E$.  We will assume that all
+subsets of $E$ are specified in the form:
 \[ 
 \{ e \in E : C \}
 \]
-where $C$ is a constraint that evaluates to true or
-false for each environment, i.e., the only free variables
-in $C$ are the components of the environment tuple $e$.
-Note that the sets $S_0, S_1, \dots, S_4$ in
-Equation~\eqref{eq:s0} are expressed this way.
+where $C$ is a constraint that evaluates to true or false for each
+environment, i.e., the only free variables in $C$ are the components
+of the environment tuple $e$.  Note that the sets $S_0, S_1, \dots,
+S_4$ in Equation~\eqref{eq:s0} are expressed this way.
 
-Given a set in the form $S = \{ e \in E : C \}$
-our goal is to generate a boolean logic formula
-$B$ which encodes the set $S$.  The encoding will map each $e \in E$
-to a valuation of the boolean variables in $B$ and $B$ will evaluate
-to true if and only if $e \in S$.  Based on such an encoding we can
-convert questions about different policies (such as if one subsumes
-the other one) to SAT problems and then use a SAT solver to check
-them.  For example, we can generate a boolean formula which is
-satisfiable if and only if an access policy is not subsumed (i.e.,
-$\not \sqsubseteq$) by another one.  If the SAT solver returns a satisfying
-assignment to the formula, then we can conclude that the property is
-false, and generate a counterexample based on the satisfying
-assignment.  If the SAT solver declares that the formula is not
-satisfiable then we can conclude that the property holds.
-We will discuss the details of such a translation below.
+Given a set in the form $S = \{ e \in E : C \}$ our goal is to
+generate a boolean logic formula $B$ which encodes the set $S$.  The
+encoding will map each $e \in E$ to a valuation of the boolean
+variables in $B$, and $B$ will evaluate to true if and only if $e \in
+S$.  Based on such an encoding we can convert questions about
+different policies (such as if one subsumes the other one) to SAT
+problems and then use a SAT solver to check them.  For example, we can
+generate a boolean formula which is satisfiable if and only if an
+access policy is not subsumed (i.e., $\not \sqsubseteq$) by another
+one.  If the SAT solver returns a satisfying assignment to the
+formula, then we can conclude that the property is false, and generate
+a counterexample based on the satisfying assignment.  If the SAT
+solver declares that the formula is not satisfiable then we can
+conclude that the property holds.  We will discuss the details of such
+a translation below.
 
 \begin{figure*}[t]
 \[
@@ -68,13 +66,13 @@ We will discuss the details of such a translation below.
         SCAL.f \assign SCAL.v[A]
         \And \band_{i=1, i \neq A}^k (\neg SCAL.v[i]) \\
 2 & SCAL \rightarrow  a &
-        SCAL.f \assign \band_{i=1}^k (BSET.v[i] \iff a[i])
-        \And (\bor_{i=1}^k BSET.v[i]) \And \band_{i=1}^k
+        SCAL.f \assign \band_{i=1}^k (SCAL.v[i] \iff a[i])
+        \And (\bor_{i=1}^k SCAL.v[i]) \And \band_{i=1}^k
         (SCAL.v[i] \implies \band_{j=1,j\neq i}^k \neg SCAL.v[j])  \\
 3 & BSET \rightarrow  s &
         BSET.f \assign \band_{i=1}^k (BSET.v[i] \iff s[i]) \\
 4 & BSET \rightarrow  e[i] &
-        SCAL.f \assign \band_{j=1}^k (BSET.v[j] \iff e[i][j]) \\
+        BSET.f \assign \band_{j=1}^k (BSET.v[j] \iff e[i][j]) \\
 5 & SET  \rightarrow  \{ SCAL \} &
         SET.f \assign SCAL.f \And \band_{i=1}^k (SET.v[i] \iff SCAL.v[i]) \\
 6 & SET  \rightarrow  BSET &
@@ -107,32 +105,31 @@ We will discuss the details of such a translation below.
 \label{fig:BP}
 \end{figure*}
 
-
-To present our translation we use the following notational conveniences: for
-elements $e \in E$, we name the components of $e$ $e[0]$, $e[1]$, $\dots$,
-$e[n]$.  We use $s$, $s_0$, $s_1$, $\dots$, $s_n$ to denote set variables, 
-$a$, $a_0$, $a_1$, $\dots$, $a_n$ to denote scalar variables, and $A$, $A_0$, $A_1$,
-$\dots$, $A_n$ to denote constants.  Finally, $BP$ is a set of basic
-predicates which we define as follows:
+To present our translation we use the following notational
+conveniences: for elements $e \in E$, we name the components of $e$
+$e[0]$, $e[1]$, $\dots$, $e[n]$.  We use $s$, $s_0$, $s_1$, $\dots$,
+$s_n$ to denote set variables, $a$, $a_0$, $a_1$, $\dots$, $a_n$ to
+denote scalar variables, and $A$, $A_0$, $A_1$, $\dots$, $A_n$ to
+denote constants.  Finally, $BP$ is a set of basic predicates which we
+define as follows:
 \begin{eqnarray*}
   SCAL & \rightarrow & A \quad | \quad a \\
   BSET & \rightarrow & s \quad | \quad e[i] \\
-  BP & \rightarrow &  \texttt{true} \quad | \quad \texttt{false}  \\
+  BP & \rightarrow &  \texttt{true} \quad | \quad \texttt{false} \\
  & | & SCAL = SCAL \quad | \quad SCAL \in SET  \\
  & | &  SET \subseteq SET \\
   SET & \rightarrow & BSET  \quad | \quad \{ SCAL \} \\
   & | & SET \cup SET \quad | \quad SET \cap SET  \\
   & | &  SET \setminus SET \\
 \end{eqnarray*}
-The above grammar is sufficient for specifying policies 
-using only enumerated types (which
-obviously have finite domains) and the simple operations $\neg$, $=$,
-$\in$, $\subseteq$.
-We will discuss extension to other domains later in this section.
+The above grammar is sufficient for specifying policies using only
+enumerated types (which obviously have finite domains) and the simple
+operations $\neg$, $=$, $\in$, $\subseteq$.  We will discuss extension
+to other domains later in this section.
 
-Assuming that all subsets of $E$ are specified in the form $\{ e
-\in E : C \}$, where there are no free variables save $e$ in $C$,
-$C$ is defined as follows:
+Assuming that all subsets of $E$ are specified in the form $\{ e \in E
+: C \}$, where there are no free variables save $e$ in $C$, $C$ is
+defined as follows:
 \begin{eqnarray*}
   C & \rightarrow & BP \quad | 
       \quad C \wedge C \quad | \quad C \vee C \quad | \quad \neg C \\
@@ -141,48 +138,42 @@ $C$ is defined as follows:
   & | & \exists ! \, a \in BSET \; C \quad 
 \end{eqnarray*}
 We use $\exists !$ to mean there exists exactly one instance that
-holds.
-We can express all set definitions on unordered and enumerated types
-that are permitted in XACML using the expressions above.
+holds.  We can express all set definitions on unordered and enumerated
+types that are permitted in XACML using the expressions above.
 
 We will explain our translation of a constraint $C$ defined by the
-above grammar to a Boolean logic formula using attribute grammars.
-We will first discuss the translation of the 
-basic predicates $BP$.
-In order to simplify our presentation we will assume that 
-domains of all the scalars have the same size, call it $k$. We will encode a set
-of values from any domain using a Boolean vector of size $k$.
-Given a Boolean vector $v$, we will denote its components
-as $v[1]$, $v[2]$, $\dots$, $v[k]$ where $v[i] \iff \true$ means
-that element $i$ is a member of the set represented by $v$
-whereas $v[i] \iff \false$ means that it is not.
-We encode a set variable $s$ and each component of the
-environment tuple $e$ using the same encoding, i.e., as a vector
-of Boolean values.
-To simplify our presentation we
-also encode a scalar variable $a$ as a s set using a vector of Boolean values
-but restrict it to be a singleton set by making sure that at any time
-only one of the Boolean values in the vector can be true.
-In our actual implementation scalar variables are represented
-using $\log_2 k$ Boolean variables where $k$ is the size of the domain.
+above grammar to a Boolean logic formula using attribute grammars.  We
+will first discuss the translation of the basic predicates $BP$.  In
+order to simplify our presentation we will assume that domains of all
+the scalars have the same size, call it $k$.  We will encode a set of
+values from any domain using a Boolean vector of size $k$.  Given a
+Boolean vector $v$, we will denote its components as $v[1]$, $v[2]$,
+$\dots$, $v[k]$ where $v[i] \iff \true$ means that element $i$ is a
+member of the set represented by $v$ whereas $v[i] \iff \false$ means
+that it is not.  We encode a set variable $s$ and each component of
+the environment tuple $e$ using the same encoding, i.e., as a vector
+of Boolean values.  To simplify our presentation we also encode a
+scalar variable $a$ as a set using a vector of Boolean values but
+restrict it to be a singleton set by making sure that at any time only
+one of the Boolean values in the vector can be true.  In our actual
+implementation scalar variables are represented using $\log_2 k$
+Boolean variables where $k$ is the size of the domain.
 
-The attribute grammar for basic predicates is shown in 
-Figure \ref{fig:BP}.
-We numbered the production rules. Each production rule has a corresponding
-semantic rule next to it. Semantic rules
-describe how to compute the attributes of the nonterminal on the
-left hand side of the production rule using the attributes
-of the terminals and nonterminals on the right 
-hand side of the production rule. 
-In the attribute grammar shown in Figure \ref{fig:BP}
-the nonterminals $SCAL$, $BSET$
-and $SET$ have two attributes. One of them is a Boolean vector $v$
-denoting a set of values, and the other one is a Boolean logic formula
-$f$ which accumulates the frame constraints.
-Again to simplify our presentation we represent scalar constants and
-scalar variables (i.e., the non-terminal $SCAL$) as singleton sets
-whereas in our actual implementation they are  represented
-using $\log_2 k$ Boolean variables.
+The attribute grammar for basic predicates is shown in
+Figure~\ref{fig:BP}.  We have numbered the production rules.  Each
+production rule has a corresponding semantic rule next to it.
+Semantic rules describe how to compute the attributes of the
+nonterminal on the left hand side of the production rule using the
+attributes of the terminals and nonterminals on the right hand side of
+the production rule.  In the attribute grammar shown in
+Figure~\ref{fig:BP} the nonterminals $SCAL$, $BSET$ and $SET$ have two
+attributes.  One of them is a Boolean vector $v$ denoting a set of
+values, and the other one is a Boolean logic formula $f$ which
+accumulates the frame constraints.  Again to simplify our presentation
+we represent scalar constants and scalar variables (i.e., the
+non-terminal $SCAL$) as singleton sets whereas in our actual
+implementation they are represented using $\log_2 k$ Boolean
+variables.
 
 \begin{figure*}[t]
 \[
@@ -201,8 +192,8 @@ using $\log_2 k$ Boolean variables.
         (C.b \iff (C_1.b \And C_2.b)) \\
 5 & C \rightarrow  \forall a \in BSET \; C_1  &
         C.f \assign BSET.f \And C_1.f \And
-        \band_{i=1}^k (BSET.v[i] \implies
-         (a[i] \And \band_{j=1,j \neq i}^k \neg a[j] \And C_1.b)) \\
+        (\band_{i=1}^k (BSET.v[i] \implies
+         (a[i] \And \band_{j=1,j \neq i}^k \neg a[j] \And C_1.b))) \\
 6 & C \rightarrow  \exists a \in BSET \; C_1  &
         C.f \assign  BSET.f \And C_1.f \And
         (\bor_{i=1}^k (BSET.v[i] \implies
@@ -221,176 +212,168 @@ using $\log_2 k$ Boolean variables.
 \label{fig:C}
 \end{figure*}
 
-Rule 1 in Figure \ref{fig:BP} states that a scalar constant $A$
-is encoded as a singleton set that contains only $A$. This singleton
-set is represented as a Boolean vector $v$, such that 
-$v[A]$ is set to true and all the rest of the elements of the vector
-are set to false. This condition is stored in the frame constraint $f$.
-Rule 2 states that a scalar variable is also encoded as a Boolean vector $v$.
-The frame constraint $f$ makes sure that the elements of the Boolean vector $v$
-are same as the elements of the Boolean vector representing the scalar
-variable $a$ and exactly one of the elements in $a$ or $v$ is set to true
-in any given time.
-Rules 3 and 4 show that the set variables ($s$) and components of the
-environment tuple ($e[i]$) are also encoded as Boolean vectors.
+Rule~1 in Figure~\ref{fig:BP} states that a scalar constant $A$ is
+encoded as a singleton set that contains only $A$.  This singleton set
+is represented as a Boolean vector $v$, such that $v[A]$ is set to
+true and all the rest of the elements of the vector are set to false.
+This condition is stored in the frame constraint $f$.  Rule~2 states
+that a scalar variable is also encoded as a Boolean vector $v$.  The
+frame constraint $f$ makes sure that the elements of the Boolean
+vector $v$ are same as the elements of the Boolean vector representing
+the scalar variable $a$ and exactly one of the elements in $a$ or $v$
+is set to true in any given time.  Rules~3 and~4 show that the set
+variables ($s$) and components of the environment tuple ($e[i]$) are
+also encoded as Boolean vectors.
 
-Rule 5 creates a singleton set from a scalar constant $SCAL$. However,
-since we encode scalar constants as singleton sets, this simply means
-that the Boolean vectors encoding the scalar constant ($SCAL.v$)
-and the set ($SET.v$) are equivalent and the frame constraint
-$SET.f$ expresses this constraint.
-Note that in the attribute grammar shown in  Figure \ref{fig:BP}
-the frame constraint of a nonterminal on the left hand side of a production
-is a conjunction of the frame constraints of the nonterminals
-on the right had side of the production plus some other constraints
-that are added based on the production rule.
+Rule~5 creates a singleton set from a scalar constant $SCAL$.
+However, since we encode scalar constants as singleton sets, this
+simply means that the Boolean vectors encoding the scalar constant
+($SCAL.v$) and the set ($SET.v$) are equivalent and the frame
+constraint $SET.f$ expresses this constraint.  Note that in the
+attribute grammar shown in Figure~\ref{fig:BP} the frame constraint of
+a nonterminal on the left hand side of a production is a conjunction
+of the frame constraints of the nonterminals on the right hand side of
+the production plus some other constraints that are added based on the
+production rule.
 
-Rules 7, 8 and 9 encode the set operations: union, intersection and set
-difference. Each set operation on two set expressions $SET_1$ and $SET_2$
-results in the creation of new Boolean vector $SET.v$.
-The value of an element in $SET.v$ is defined based on the corresponding
-elements in  $SET_1.v$ and $SET_2.v$.
-For example for the union operation
-$SET.v[i]$ is true if and only if $SET_1.v[i]$ is true or $SET_2.v[i]$ is true.
-The intersection and set difference are defined similarly.
+Rules~7, 8 and~9 encode the set operations: union, intersection and
+set difference.  Each set operation on two set expressions $SET_1$ and
+$SET_2$ results in the creation of new Boolean vector $SET.v$.  The
+value of an element in $SET.v$ is defined based on the corresponding
+elements in $SET_1.v$ and $SET_2.v$.  For example for the union
+operation $SET.v[i]$ is true if and only if $SET_1.v[i]$ is true or
+$SET_2.v[i]$ is true.  The intersection and set difference are defined
+similarly.
 
 The nonterminal $BP$ corresponds to the basic predicates and it has
 two attributes. One of them is a boolean variable $b$ representing
 the truth value of the predicate and the other one is a
 Boolean logic formula $f$ that accumulates the frame constraints.
 
-Rules 10 and 11 create two basic predicates which have the 
-truth value true and false, respectively.
+Rules~10 and~11 create two basic predicates which have the truth value
+true and false, respectively.
 
-Rule 12 is a basic predicate that corresponds to an equality expression
-comparing two scalars. Since scalars are expressed as Boolean vectors,
-the Boolean variable encoding the truth value of the predicate  is
-true if and only if all elements of the Boolean vectors encoding the two
-scalar values are the same. This constraint is added to the frame constraint
-of the basic predicate.
+Rule~12 is a basic predicate that corresponds to an equality
+expression comparing two scalars.  Since scalars are expressed as
+Boolean vectors, the Boolean variable encoding the truth value of the
+predicate is true if and only if all elements of the Boolean vectors
+encoding the two scalar values are the same.  This constraint is added
+to the frame constraint of the basic predicate.
 
-Rule 13 creates a basic predicate that corresponds to a membership
+Rule~13 creates a basic predicate that corresponds to a membership
 expression testing membership of a scalar to a set expression.
-Rule 14 creates a basic predicate that corresponds to a subset
-expression testing if a set expression is subsumed by another set expression.
-Since we encode scalars a singleton sets the frame constraints  generated
-for rules 13 and 14 are very similar. They just state that if a value
-is a member of the set on the left hand side, then it should also be member of
-the set on the right hand side.
+Rule~14 creates a basic predicate that corresponds to a subset
+expression testing if a set expression is subsumed by another set
+expression.  Since we encode scalars a singleton sets, the frame
+constraints generated for rules~13 and~14 are very similar.  They
+state that if a value is a member of the set on the left hand side,
+then it should also be member of the set on the right hand side.
 
 The attribute grammar for the constraints is shown in
-Figure \ref{fig:C}.
-The nonterminals $C$ has two attributes.
-One of them is a boolean variable $b$ representing
-the truth value of the constraint and the other one is a
-Boolean logic formula $f$ that accumulates the frame constraints.
-Again, the frame constraint of a nonterminal 
-on the left hand side of a production
-is a conjunction of the frame constraints of the nonterminals
-on the right had side of the production plus some other constraints
-that are added based on the production rule.
+Figure~\ref{fig:C}.  The nonterminal $C$ has two attributes.  One of
+them is a boolean variable $b$ representing the truth value of the
+constraint, and the other one is a Boolean logic formula $f$ that
+accumulates the frame constraints.  Again, the frame constraint of a
+nonterminal on the left hand side of a production is a conjunction of
+the frame constraints of the nonterminals on the right hand side of
+the production plus some other constraints that are added based on the
+production rule.
 
-Rule 1 is just a syntactic rule expressing that a constraint can be
-a basic predicate.
-Rule 2 defines the negation operation. As expected the
-frame constraint states that the value of the constraint
-on the left hand side of the production rule is the negation of
-the the value of the constraint
-on the right hand side of the production rule.
-Rules 3 and 4 define the disjunction and conjunction operations.
-The frame constraints generated in Rules 3 and 4
-state that the value of the constraint
-on the left hand side of the production rule is the disjunction or
-the conjunction of the values of the constraints on the right
-hand side of the production rule, respectively.
+Rule~1 is just a syntactic rule expressing that a constraint can be a
+basic predicate.  Rule~2 defines the negation operation.  As expected
+the frame constraint states that the value of the constraint on the
+left hand side of the production rule is the negation of the the value
+of the constraint on the right hand side of the production rule.
+Rules~3 and~4 define the disjunction and conjunction operations.  The
+frame constraints generated in Rules~3 and~4 state that the value of
+the constraint on the left hand side of the production rule is the
+disjunction or the conjunction of the values of the constraints on the
+right hand side of the production rule, respectively.
 
-Rules 5, 6 and 7 deal with quantified constraints.
-In the rules 5, 6 and 7, $a$ denotes a scalar variable which is quantified 
-over a basic set expression $BSET$ which is either a set variable $s$ or
-a component of the environment tuple $e[i]$.
-The quantified variable $a$ can appear as a free variable in the constraint
-expression on the right hand side ($C_1$).
-Universal quantification is expressed as a conjunction which states that
-for all the members of the set $s$ or $e[i]$, the constraint $C_1$ should evaluate
-to true. This is achieved by restricting the value of the scalar variable $a$
-to the value of a different member of the set for each conjunct.
-Existential quantification is expressed similarly as a disjunction by 
-restricting the value of the scalar variable $a$ to the value of a 
-different member of the set for each disjunct.
+Rules~5, 6 and~7 deal with quantified constraints.  In the rules~5, 6
+and~7, $a$ denotes a scalar variable which is quantified over a basic
+set expression $BSET$ which is either a set variable $s$ or a
+component of the environment tuple $e[i]$.  The quantified variable
+$a$ can appear as a free variable in the constraint expression on the
+right hand side ($C_1$).  Universal quantification is expressed as a
+conjunction which states that for all the members of the set $s$ or
+$e[i]$, the constraint $C_1$ should evaluate to true.  This is
+achieved by restricting the value of the scalar variable $a$ to the
+value of a different member of the set for each conjunct.  Existential
+quantification is expressed similarly as a disjunction by restricting
+the value of the scalar variable $a$ to the value of a different
+member of the set for each disjunct.
 
-Rule 7 is an existentially quantified constraint which evaluates to true
-if and only if the constraint $C_1$ evaluates to true for exactly one
-member of the set $s$ or $e[i]$. This is expressed by first stating
-that there is at least one member of the set $s$ or $e[i]$ for which the
-constraint $C_1$ evaluates to true (which is equivalent to
+Rule~7 is an existentially quantified constraint which evaluates to
+true if and only if the constraint $C_1$ evaluates to true for exactly
+one member of the set $s$ or $e[i]$.  This is expressed by first
+stating that there is at least one member of the set $s$ or $e[i]$ for
+which the constraint $C_1$ evaluates to true (which is equivalent to
 existential quantification) and then adding an extra conjunction which
 states that the constraint $C_1$ does not evaluate to true for two
-different members of the set $s$ or $e[i]$. 
+different members of the set $s$ or $e[i]$.
 
-The translation we described above can handle 
-XACML policies which only use bounded unordered and enumerated types.
-In fact, during our analysis we limit the size of every domain
-to a given fixed size and then analyze the policies as though
-they were specified using finite enumerated sets of that size. 
-The problem is that if our automated analysis does not yield
-a counterexample to a given property, then that does not necessarily mean that
-no counterexample exists---perhaps if we had increased the scope just
-a little more we would have found one. The small scope hypothesis
-(discussed in~\cite{jackson:elements}, and tested and confirmed for
-some data structure algorithms in~\cite{marinov:exhaustive}) suggests
-that small scopes could be sufficient in practice. Note that if a
-counterexample is found, that counterexample is definite and can be
-translated into an error in the original policy.
+The translation we described above can handle XACML policies which
+only use bounded unordered and enumerated types.  In fact, during our
+analysis we limit the size of every domain to a given fixed size and
+then analyze the policies as though they were specified using finite
+enumerated sets of that size.  The problem is that if our automated
+analysis does not yield a counterexample to a given property, then
+that does not necessarily mean that no counterexample exists---perhaps
+if we had increased the scope just a little more we would have found
+one.  The small scope hypothesis (discussed
+in~\cite{jackson:elements}, and tested and confirmed for some data
+structure algorithms in~\cite{marinov:exhaustive}) suggests that small
+scopes could be sufficient in practice.  Note that if a counterexample
+is found, that counterexample is definite and can be translated into
+an error in the original policy.
 
-Finally, the translation we described above does not handle domain specific
-predicates, e.g., ordering relations on types such as integers.
-When we translate sets described using such predicates to boolean logic
-formulas we represent them as uninterpreted Boolean functions.
-We create a Boolean
-variable for encoding the value of the uninterpreted boolean function 
-and we generate
-constraints which guarantee that the value of the function is the same
-if its arguments are the same. Other than this restriction the
-variables encoding the functions can get arbitrary values.  Note that
-this brings an extra level of imprecision to our analysis.  We were
-not able to trust the positive results because of the scope
-restriction, but now it is also possible that counterexamples may be
-spurious, and will need to be validated against the original policy.
-However, we think that such automated analysis can still be useful in
-uncovering errors in access policies.
+Finally, the translation we described above does not handle domain
+specific predicates, e.g., ordering relations on types such as
+integers.  When we translate sets described using such predicates to
+boolean logic formulas we represent them as uninterpreted Boolean
+functions.  We create a Boolean variable for encoding the value of the
+uninterpreted boolean function and we generate constraints which
+guarantee that the value of the function is the same if its arguments
+are the same.  Other than this restriction the variables encoding the
+functions can get arbitrary values.  Note that this brings an extra
+level of imprecision to our analysis.  We were not able to trust the
+positive results because of the scope restriction, but now it is also
+possible that counterexamples may be spurious, and will need to be
+validated against the original policy.  However, we think that such
+automated analysis can still be useful in uncovering errors in access
+policies.
 
-Note that, it is possible to fully interpret ordering relations.
-We can encode a type with a domain of $n$
-ordered elements using $n^2$ boolean variables, one for each pair of
-values in the domain, representing the ordering relations.
-However, XACML uses many complex functions such as XPath matching and X500
-name matching which can be lead to very complex formulas if one tries to
-fully interpret them in the Boolean logic translation.
-Hence, we believe that using uninterpreted functions for abstracting such
-complex functionality is a justified approach which enables us to handle
-a significant portion of the XACML language.
-Also, we would like to note that the imprecision caused by abstraction 
-of such complex functions did not 
+Note that, it is possible to fully interpret ordering relations.  We
+can encode a type with a domain of $n$ ordered elements using $n^2$
+boolean variables, one for each pair of values in the domain,
+representing the ordering relations.  However, XACML uses many complex
+functions such as XPath matching and X500 name matching which can be
+lead to very complex formulas if one tries to fully interpret them in
+the Boolean logic translation.  Hence, we believe that using
+uninterpreted functions for abstracting such complex functionality is
+a justified approach which enables us to handle a significant portion
+of the XACML language.  Also, we would like to note that the
+imprecision caused by abstraction of such complex functions did not
 lead to any spurious results in the experiments we performed so far.
 
 \subsection{Verification of Policies}
 
-As discussed in Section \ref{sec:properties-policies}, we specify properties
-of policies using a set of partial ordering relations. These partial ordering
-relations can be used to state that a certain type of outcome
-for one policy subsumes the same type of outcome for another policy.
-In this section we will only focus on the $\sqsubseteq$ relation.
-Translation of properties specified using other relations are handled similarly.
+As discussed in Section~\ref{sec:properties-policies}, we specify
+properties of policies using a set of partial ordering relations.
+These partial ordering relations can be used to state that a certain
+type of outcome for one policy subsumes the same type of outcome for
+another policy.  In this section we will only focus on the
+$\sqsubseteq$ relation.  Translation of properties specified using
+other relations are handled similarly.
 
-Given a query like $P_1 \sqsubseteq P_2$, our goal is to 
-generate a Boolean logic formula which is satisfiable
-if and only if $P_1 \not \sqsubseteq P_2$.
-As we discussed earlier our tool first translates policies
-$P_1$ and $P_2$ to triple form, such that
-$P_1 = \langle S_1, R_1, T_1 \rangle$ and 
-$P_2 = \langle S_2, R_2, T_2 \rangle$
-where each element of each triple is specified with a constraint expression
-as follows:
+Given a query like $P_1 \sqsubseteq P_2$, our goal is to generate a
+Boolean logic formula which is satisfiable if and only if $P_1 \not
+\sqsubseteq P_2$.  As we discussed earlier our tool first translates
+policies $P_1$ and $P_2$ to triple form, such that $P_1 = \langle S_1,
+R_1, T_1 \rangle$ and $P_2 = \langle S_2, R_2, T_2 \rangle$ where each
+element of each triple is specified with a constraint expression as
+follows:
 \begin{eqnarray*}
 S_1  & = & \{ e \in E : C_{S_1} \} \\
 R_1  & = & \{ e \in E : C_{R_1} \} \\
@@ -400,19 +383,18 @@ R_2  & = & \{ e \in E : C_{R_2} \} \\
 T_2  & = & \{ e \in E : C_{T_2} \}
 \end{eqnarray*}
 
-After translating policies $P_1$ and $P_2$ in to the triple form
-our translator generates a boolean logic formulas for the constraints
-$C_{S_1}$,  $C_{R_1}$,  $C_{T_1}$, $C_{S_2}$, $C_{R_2}$ and $C_{T_2}$
-based on the attribute grammar rules described in Figures \ref{fig:BP} and
-\ref{fig:C}.
-For example, after this translation the truth value of the
-constraint $C_{S_1}$ is represented with the Boolean variable
+After translating policies $P_1$ and $P_2$ in to the triple form our
+translator generates a boolean logic formulas for the constraints
+$C_{S_1}$, $C_{R_1}$, $C_{T_1}$, $C_{S_2}$, $C_{R_2}$ and $C_{T_2}$
+based on the attribute grammar rules described in Figures~\ref{fig:BP}
+and~\ref{fig:C}.  For example, after this translation the truth value
+of the constraint $C_{S_1}$ is represented with the Boolean variable
 $C_{S_1}.b$ and the frame constraint $C_{S_1}.f$ states all the
 constraints on the Boolean variable $C_{S_1}.b$.
 
 Recall that, given $P_1 = \langle S_1, R_1, T_1 \rangle$ and $P_2 =
-\langle S_2, R_2, T_2 \rangle$, 
-$P_1 \sqsubseteq P_2$ holds if and only if
+\langle S_2, R_2, T_2 \rangle$, $P_1 \sqsubseteq P_2$ holds if and
+only if
 \[
   S_1 \subseteq S_2
   \wedge R_1 \subseteq R_2 \wedge T_1 \subseteq T_2
@@ -429,21 +411,19 @@ F & = & (C_{S_1}.f \wedge C_{R_1}.f \wedge C_{T_1}.f \wedge
     \wedge (C_{T_1}.b \implies C_{T_2}.b))
 \end{eqnarray*}
 
-Finally, we send the property $\neg F$ to the SAT solver. If the SAT solver
-returns a satisfying assignment for the Boolean variables
-encoding the environment tuple $e$ (which are the only free variables in the
-formula $\neg F$), the satisfying assignment corresponds to 
-a counter-example environment demonstrating how the property is violated. If the
-SAT solver states that $\neg F$  is not satisfiable, then we conclude that
-the property holds, i.e., $P_1 \sqsubseteq P_2$.
+Finally, we send the property $\neg F$ to the SAT solver.  If the SAT
+solver returns a satisfying assignment for the Boolean variables
+encoding the environment tuple $e$ (which are the only free variables
+in the formula $\neg F$), the satisfying assignment corresponds to a
+counter-example environment demonstrating how the property is
+violated.  If the SAT solver states that $\neg F$ is not satisfiable,
+then we conclude that the property holds, i.e., $P_1 \sqsubseteq P_2$.
 
-Since majority of the
-SAT solvers expect their input to
-be expressed in Conjunctive Normal Form (CNF), 
-the last step in our translation (before we send the formula $\neg F$ 
-to the SAT solver) is to convert $\neg F$ to CNF.
-For conversion to CNF we implemented the structure
-preserving technique from \cite{plaisted86structure}.
+Since majority of the SAT solvers expect their input to be expressed
+in Conjunctive Normal Form (CNF), the last step in our translation
+(before we send the formula $\neg F$ to the SAT solver) is to convert
+$\neg F$ to CNF.  For conversion to CNF we have implemented the
+structure preserving technique from \cite{plaisted86structure}.
 
 % arch-tag: 931ea1c1-9ebf-4e94-89e7-06ac1ad3856f
 
