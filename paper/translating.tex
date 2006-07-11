@@ -202,9 +202,9 @@ variables.
   C.f \assign BSET.f \And C_1.f \And
   (\bor_{i=1}^k (BSET.v[i] \implies
    (a[i] \And \band_{j=1,j \neq i}^k \neg a[j] \And C_1.b))) \\
-   & & \And (\bor_{i=1}^k ((BSET.v[i] \And
+   & & \And (\band_{i=1}^k ((BSET.v[i] \And
    a[i] \And \band_{j=1,j \neq i}^k \neg a[j] \And C_1.b) 
-   \implies \neg \band_{l=1, l \neq i}^k (BSET.v[l] \And
+   \implies \neg \bor_{l=1, l \neq i}^k (BSET.v[l] \And
    a[l] \And \band_{j=1,j \neq l}^k \neg a[j] \And C_1.b)))
 \end{array}
 \]
