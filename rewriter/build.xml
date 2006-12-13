@@ -8,7 +8,7 @@
   <property name="dist" location="=build.jar"/>
   <property name="javadoc" location="${user.home}/Documents/javadoc"/>
   <property name="zchaff" location="../zchaff"/>
-  <property name="utils" location="/Users/graham/wd/javautils"/>
+  <property name="utils" location="${user.home}/wd/javautils"/>
 
   <path id="build.initial.path">
     <fileset dir="lib" includes="*.jar" />
