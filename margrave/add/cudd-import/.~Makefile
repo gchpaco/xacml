@@ -1,0 +1,31 @@
+# Makefile for XACML extensions to CUDD
+# Kathi Fisler, August 2, 2004
+
+CUDIR = /users/csfaculty/kfisler/.LocalDisk/VerifTools/CUDD/cudd-2.4.0/
+BDDINCLUDE = ${CUDIR}/include/
+
+xacmlplain : cuddAddXacml.c
+	gcc -I${BDDINCLUDE} cuddAddXacml.c \
+	${CUDIR}/cudd/*.o ${CUDIR}/util/*.o ${CUDIR}/mtr/*.o ${CUDIR}/st/*.o \
+	${CUDIR}/epd/*.o -lm
+
+cuddAddXacml.o : cuddAddXacml.c
+	mzc ++ccf -I${BDDINCLUDE} --cc cuddAddXacml.c
+
+cuddAddXacml.so : cuddAddXacml.o
+	mzc --ld cuddAddXacml.so cuddAddXacml.o \
+	${CUDIR}/cudd/*.o ${CUDIR}/util/*.o ${CUDIR}/mtr/*.o ${CUDIR}/st/*.o \
+	${CUDIR}/epd/*.o
+
+import.o : import.c
+	mzc ++ccf -I${BDDINCLUDE} --cc import.c
+
+import.so : import.o
+	mzc --ld import.so import.o \
+	${CUDIR}/cudd/*.o ${CUDIR}/util/*.o ${CUDIR}/mtr/*.o ${CUDIR}/st/*.o \
+	${CUDIR}/epd/*.o
+
+
+
+
+
