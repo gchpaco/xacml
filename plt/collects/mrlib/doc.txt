@@ -1,0 +1,345 @@
+[][][][][][][][][][][][][][][][][][][][][][][][][][][][][][]
+
+                          _graph.ss_
+
+[][][][][][][][][][][][][][][][][][][][][][][][][][][][][][]
+
+The graph.ss library provides a graph drawing toolkit, built
+out of mred's pasteboard%s.
+
+In provides four exports: graph-snip<%>, graph-snip-mixin,
+graph-pasteboard<%>, graph-pasteboard-mixin, and add-links.
+
+============================================================
+
+The _graph-pasteboard<%>_ interface has one method:
+
+> (send a-graph-pasteboard<%> on-mouse-over-snips a-los)
+  a-los : (listof snip%)
+
+This method is called when the mouse passes over any snips
+in the editor. It is only called when the list of snips
+under the editor changes (ie, if the mouse moves, but
+remains over the same list of snips, the method is not
+called). Also, this method is called with the empty list if
+the mouse leaves the pasteboard.
+
+The _graph-pasteboard-mixin_ overrides many methods to draw
+lines between graph-snip<%>s that it contains and
+implements the graph-pasteboard<%> interface.
+
+============================================================
+
+The _graph-snip<%>_ interface has these methods:
+
+> (send a-graph-snip<%> get-children) - returns a list of
+   snips that implement graph-snip<%>. Each of these snips
+   will have a line drawn from it, pointing at this snip.
+
+> (send a-graph-snip<%> add-child (is-a?/c graph-snip<%>)) -
+  adds a child of this snip. Instead of calling this method,
+  consider using the add-child function provided from this
+  library. 
+
+> (send a-graph-snip<%> remove-child (is-a?/c graph-snip<%>)) - 
+  removes a child snip from this snip. Be sure to remove this
+  snip as a parent from the argument, too.
+  
+
+> (send a-graph-snip<%> get-parents) - returns a list of
+  snips that implement graph-snip<%>. Each of these
+  snips will have a line drawn to it, starting from this
+  snip. 
+
+> (send a-graph-snip<%> add-parent (is-a?/c graph-snip<%>))
+> (send a-graph-snip<%> add-parent (is-a?/c graph-snip<%>)
+                                   (union false? (is-a?/c pen%))
+                                   (union false? (is-a?/c pen%))
+                                   (union false? (is-a?/c brush%))
+                                   (union false? (is-a?/c brush%)))
+  adds a parent of this snip. Instead of calling this method,
+  consider using the add-links function provided from this
+  library. 
+
+> (send a-graph-snip<%> remove-parent)
+  removes a parent snip from this snip. Be sure to remove this
+  snip as a child from the argument, too.
+
+> (send a-graph-snip<%> get-parent-links) - this method is
+  only used internally. It returns a list of opaque
+  structures that contain information about the parent snips
+  and what color the links between them should be.
+
+============================================================
+
+The _graph-snip-mixin_ adds the graph-snip<%> functionality
+to a snip%.
+
+============================================================
+
+The _add-links_ function connects a parent snip to a child
+snip in the same pasteboard.
+
+> (add-links (is-a?/c graph-snip<%>) (is-a?/c graph-snip<%>))
+> (add-links (is-a?/c graph-snip<%>) 
+             (is-a?/c graph-snip<%>)
+             (union false? (is-a?/c pen%))
+             (union false? (is-a?/c pen%))
+             (union false? (is-a?/c brush%))
+             (union false? (is-a?/c brush%)))
+
+When called with two arguments, connects the snips using a
+blue/purple color scheme for the links. The first snip is
+the parent and the second snip is the child.
+
+When called with four arguments, uses the two pens and
+brushes for the color scheme. The first pen and the first
+brush are used when the mouse cursor is over the snip
+(or a child or parent) and the second pen and brush are used
+when the mouse cursor is not over the snip. The brush is used to
+draw inside the arrow head and the pen is used to draw the
+border of the arrowhead and the line connecting the two
+snips.
+
+
+[][][][][][][][][][][][][][][][][][][][][][][][][][][][][][]
+
+                     _name-message.ss_
+
+[][][][][][][][][][][][][][][][][][][][][][][][][][][][][][]
+
+
+The _name-message%_ class is derived from canvas%. It
+overrides the on-paint and on-event methods to draw the name
+of a file and handle clicks to popup a menu for choosing a
+directory.
+
+> (send a-name-message set-message file-name? msg)
+
+  file-name? : boolean
+  msg : string
+
+If file-name? is #t, msg is treated like a pathname and
+clicks on the name message objects popup a menu that opens a
+get-file dialog.
+
+If file-name is #f, msg is treated as a regular
+string. Clicking on the name message pops up a dialog saying
+that there is no file name until the file is saved.
+      
+> (send a-name-message on-choose-directory dir)
+
+  dir : string
+
+This method is called when one of the popup menu items is
+chosen. The argument is a string representing the specified
+directory.
+
+============================================================
+
+> (calc-button-min-sizes dc string) 
+
+Calculates the minimum width and height of a button label
+(when drawn with draw-button-label). Returns two values: the
+width and height.
+
+============================================================
+
+> (draw-frame-button-label dc label width height inverted)
+
+Draws a button label like the one for the (define ...) and
+filename buttons in the top-left corner of the DrScheme
+
+frame. Use this function to draw similar buttons. The basic
+idea is to create a canvas object whose on-paint method is
+overridden to call this function.  The dc should be canvas's
+dc object, the label should be the string to display on the
+button.  The width and height arguments should be the width
+and height of the button and inverted? should be #t when the
+button is being depressed.
+
+See calc-button-min-sizes for help calculating the min sizes
+of the button.
+
+
+
+[][][][][][][][][][][][][][][][][][][][][][][][][][][][][][]
+
+                     _plot.ss_
+
+[][][][][][][][][][][][][][][][][][][][][][][][][][][][][][]
+
+plot.ss provides a simple tool for plotting data values to a 
+device context.
+
+
+Two structures are provided:
+===========================================================
+> (struct data-set ((points (listof (is-a?/c point%)))
+		    (connected? any?)
+		    (pen (is-a?/c pen%))
+		    (min-x number?)
+		    (max-x number?)   
+		    (min-y number?)   
+		    (max-y number?)))
+
+points: the list of data values.
+connected: determines whether the points are connected by a line or not.
+pen: the pen% to draw the points/lines with.
+min-x, max-x, min-y, max-y: indicate the window coordinates that the
+data should be drawn in.
+
+===========================================================
+
+> (struct plot-setup ((axis-label-font (is-a?/c font%))
+		      (axis-number-font (is-a?/c font%))
+		      (axis-pen (is-a?/c pen%))
+		      (grid? any?)
+		      (grid-pen (is-a?/c pen%))
+		      (x-axis-marking (listof number?))
+		      (y-axis-marking (listof number?))
+		      (x-axis-label string?)
+		      (y-axis-label string?)))
+
+axis-label-font: the font% the axis-labels is drawn with.
+axis-number-font: the font% the numbering on the axes is
+drawn with.
+axis-pen: the pen% the axis is drawn with.
+grid?: whether a grid should be drawn in at each axis marking.
+grid-pen: the pen% to draw the grid with.
+x-axis-marking: where marks should be placed on the x-axis.
+y-axis-marking: where marks should be placed on the y-axis.
+x-axis-label-string: the x-axis label.
+y-axis-label-string: the y-axis label.
+
+===========================================================
+
+One function is provided:
+===========================================================
+> (plot (is-a?/c dc<%>) (listof data-set?) plot-setup?)
+
+Draws the data-sets on the dc<%> configured by the setup.
+Uses window coordinates that will accommodate all of the
+data sets.
+
+
+[][][][][][][][][][][][][][][][][][][][][][][][][][][][][][]
+
+                     _aligned-pasteboard.ss_
+
+[][][][][][][][][][][][][][][][][][][][][][][][][][][][][][]
+
+The aligned-pasteboard collection provides classes derived
+from pasteboard% with geometry management that mirrors that
+of vertical-panel% and horizontal-panel%
+
+It provides: horizontal-pasteboard%, vertical-pasteboard%,
+aligned-editor-snip%, aligned-editor-canvas%,
+aligned-pasteboard<%>,aligned-pasteboard-parent<%>, and
+stretchable-snip<%>
+
+============================================================
+
+The _horizontal-pasteboard%_ and _vertical-pasteboard%_
+classes are derived from pasteboard%. They implement the
+aligned-pasteboard<%> interface and override the
+after-insert, after-delete, after-reorder, and resized
+methods.
+
+============================================================
+
+_aligned-pasteboard<%>_'s implements the following methods.
+
+> (send an-aligned-pasteboard realign width height)
+
+  width: nonnegative
+  height: nonnegative
+
+Realigns the children inside the aligned-pasteboard<%> to
+the given width and height.
+
+> (send an-aligned-pasteboard realign)
+
+Realigns the children inside the aligned-pasteboard<%> to
+the previously alloted width and height.
+
+> (send an-aligned-pasteboard set-aligned-min-sizes)
+
+Calculates the minimum width and height of the of the
+pasteboard based on children's min-sizes and stores it for
+later retrieval via the getters.
+
+> (send an-aligned-pasteboard get-aligned-min-width)
+
+The minimum width an aligned-pasteboard can be and still
+fit the widths of all of its children.
+
+> (send an-aligned-pasteboard get-aligned-min-height)
+
+The minimum height an aligned-pasteboard can be and still
+fit the heights of all of its children.
+
+============================================================
+
+The _aligned-editor-snip%_ and aligned-editor-canvas%_
+classes are derived from editor-snip% and editor-canvas%
+respectively and implement aligned-pasteboard-parent<%>.
+
+Both classes also send the realign method to their editor
+when they are resized.
+
+============================================================
+
+The _aligned-pasteboard-parent<%>_ interface must be
+implemented by any class who's editor is an
+aligned-pasteboard<%>.
+
+> (send an-aligned-pasteboard-parent set-aligned-min-sizes)
+
+Sets the aligned-min-sizes of the child editor of the
+aligned-pasteboard-parent<%>
+
+============================================================
+
+The _stretchable-snip<%>_ interface must be implemented
+by any snip class who's objects will be stretchable when
+inserted into an aligned-pasteboard<%>.
+
+> (send a-stretchable-snip get-aligned-min-width)
+
+The minimum width that the snip can be resized to
+
+> (send a-stretchable-snip get-aligned-min-height)
+
+The minimum height that the snip can be resized to
+
+> (send a-stretchable-snip stretchable-width)
+
+Whether or not the snip can be stretched in the X dimension
+
+> (send a-stretchable-snip stretchable-height)
+
+Whether or not the snip can be stretched in the Y dimension
+
+
+[][][][][][][][][][][][][][][][][][][][][][][][][][][][][][]
+
+                  _include-bitmap.ss_
+
+[][][][][][][][][][][][][][][][][][][][][][][][][][][][][][]
+
+The include-bitmap.ss library provides a `include-bitmap form that
+takes a filename containing a bitmap and "inlines" the bitmap into the
+program. The advantage of "inlining" the bitmap is that a stand-alone
+executable can be created that contains the bitmap and does not refer
+to the original image file.
+
+> (include-bitmap file-spec)                       SYNTAX
+
+The `file-spec' is the same as for MzLib's `include': a path string, a
+`build-path' form, or a `lib' form.
+
+> (include-bitmap/relative-to source file-spec)    SYNTAX
+
+Analogous to `include-at/relative-to', though only a source is needed
+(no context).

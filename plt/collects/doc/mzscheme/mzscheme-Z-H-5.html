@@ -1,0 +1,576 @@
+<!doctype html public "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!--
+
+Generated from mzscheme.tex by tex2page, v 2004-09-11
+(running on MzScheme 209, unix), 
+(c) Dorai Sitaram, 
+http://www.ccs.neu.edu/~dorai/tex2page/tex2page-doc.html
+
+-->
+<head>
+<title>
+PLT MzScheme: Language Manual
+</title>
+<link rel="stylesheet" type="text/css" href="mzscheme-Z-S.css" title=default>
+<meta name=robots content="noindex,follow">
+</head>
+<body>
+<div align=right class=navigation><i>[Go to <span><a href="mzscheme.html">first</a>, <a href="mzscheme-Z-H-4.html">previous</a></span><span>, <a href="mzscheme-Z-H-6.html">next</a></span> page<span>; &nbsp;&nbsp;</span><span><a href="mzscheme.html#node_toc_start">contents</a></span><span><span>; &nbsp;&nbsp;</span><a href="mzscheme-Z-H-19.html#node_index_start">index</a></span>]</i></div><p></p>
+<a name="node_chap_5"></a>
+<h1 class=chapter>
+<div class=chapterheading><a href="mzscheme.html#node_toc_node_chap_5">Chapter 5</a></div><br>
+<a href="mzscheme.html#node_toc_node_chap_5">Modules</a></h1>
+<p><a name="node_idx_608"></a></p>
+<p>
+<a name="node_idx_610"></a><a name="node_idx_612"></a>
+MzScheme provides a module system for managing the scope of variable
+and syntax definitions, and for directing compilation. Module
+declarations can appear only at the top level. The space of module
+names is separate from the space of top-level variable and syntax
+names.</p>
+<p>
+A <a name="node_kw_definitionmodule"></a><a name="node_idx_614"></a><code class=scheme><span class=keyword>module</span></code> declaration consists of the name for the module,
+the name of a module to supply an initial set of syntax and variable
+bindings, and a module body:
+</p>
+<div align=left><pre class=scheme>(<span class=keyword>module</span> <span class=variable>module-identifier</span> <span class=variable>initial-required-module-name</span> <span class=variable>body-datum</span> <tt>&middot;&middot;&middot;</tt>)
+</pre></div><p>
+A module encapsulates syntax definitions to be used in expanding the
+body of the module, as well as expressions and definitions to be
+evaluated when the module is executed. When a syntax identifier is
+exported with <code class=scheme><span class=keyword>provide</span></code> (as described in&nbsp;section&nbsp;<a href="#node_sec_5.2">5.2</a>), its
+transformer can be used during the expansion of an importing module;
+when a variable identifier is exported, its value can be used during
+the execution of an importing module.</p>
+<p>
+A module named <a name="node_idx_616"></a><code class=scheme>mzscheme</code> is built in, and it exports the
+procedures and syntactic forms described in <em>R5RS</em> and this
+manual. The <code class=scheme><code class=scheme>mzscheme</code></code> module supplies the initial syntax and
+variable bindings for a typical module.</p>
+<p>
+Example:
+</p>
+<div align=left><pre class=scheme>(<span class=keyword>module</span> <span class=variable>hello-world</span>    <span class=comment>; the module name </span>
+        <code class=scheme>mzscheme</code>       <span class=comment>; initial syntax and variable bindings </span>
+                       <span class=comment>;  for the module body </span>
+  <span class=comment>; the module body </span>
+  (<code class=scheme>display</code> <span class=selfeval>&quot;Hello world!&quot;</span>) 
+  (<code class=scheme>newline</code>))
+</pre></div><p></p>
+<p>
+In general, the initial import serves as a kind of &quot;language&quot;
+declaration. By initially importing a module other than
+<code class=scheme><code class=scheme>mzscheme</code></code>, a module can be defined in terms of a commonly-used
+variant of Scheme that contains more than the MzScheme built-in
+syntax and procedures, or a variant of Scheme that contains fewer
+constructs. The initial import might even omit syntax for declaring
+additional imports. For example, section&nbsp;<a href="mzscheme-Z-H-12.html#node_sec_12.5">12.5</a> shows an
+example module that defines a <code class=scheme><span class=variable>lambda-calculus</span></code> language.</p>
+<p>
+</p>
+<a name="node_sec_5.1"></a>
+<h2><a href="mzscheme.html#node_toc_node_sec_5.1">5.1&nbsp;&nbsp;Module Expansion and Execution</a></h2>
+<p><a name="node_idx_618"></a></p>
+<p>
+<a name="node_idx_620"></a><a name="node_idx_622"></a>
+When a module declaration is evaluated, the module's body is
+syntax-expanded and compiled, but not executed. The body is executed
+only when the module is explicitly invoked, via a <code class=scheme><span class=keyword>require</span></code> or
+<code class=scheme><span class=keyword>require-for-syntax</span></code> expression at the top level, or a call to
+<code class=scheme><code class=scheme>dynamic-require</code></code>.</p>
+<p>
+When a module is invoked, its body definitions and expressions are
+evaluated. First, however, the definitions and expressions are
+evaluated for each module imported (via <code class=scheme><span class=keyword>require</span></code>) by the
+invoked module. The import-initialization rule applies up the chain
+of modules, so that every module used (directly or indirectly) by the
+invoked module is executed before any module that uses its exports. A
+module can only import from previously declared modules, so the
+module-import relationship is acyclic.</p>
+<p>
+Every module is executed at most once in response to an invocation,
+regardless of the number of times it is imported into other
+modules. Every top-level invocation executes only the modules needed
+by the invocation that have not been executed by previous
+invocations.</p>
+<p>
+Example:
+</p>
+<div align=left><pre class=scheme>(<span class=keyword>module</span> <span class=variable>never-used</span>               <span class=comment>; unused module </span>
+        <code class=scheme>mzscheme</code> 
+  (<code class=scheme>display</code> <span class=selfeval>&quot;This is never printed&quot;</span>) 
+  (<code class=scheme>newline</code>)) 
+
+(<span class=keyword>module</span> <span class=variable>hello-world-printer</span>      <span class=comment>; module used by <code class=scheme><span class=variable>hello-world2</span></code></span>
+        <code class=scheme>mzscheme</code> 
+  (<span class=keyword>define</span> (<span class=variable>print-hello-world</span>) 
+    (<code class=scheme>display</code> <span class=selfeval>&quot;Hello world!&quot;</span>) 
+    (<code class=scheme>newline</code>)) 
+  (<code class=scheme>display</code> <span class=selfeval>&quot;printer ready&quot;</span>) 
+  (<code class=scheme>newline</code>) 
+  (<span class=keyword>provide</span> <span class=variable>print-hello-world</span>))   <span class=comment>; export</span>
+
+(<span class=keyword>module</span> <span class=variable>hello-world2</span> 
+        <code class=scheme>mzscheme</code>                 <span class=comment>; initial import </span>
+  (<span class=keyword>require</span> <span class=variable>hello-world-printer</span>)  <span class=comment>; additional import </span>
+  (<span class=variable>print-hello-world</span>)) 
+
+(<span class=keyword>require</span> <span class=variable>hello-world2</span>)   <span class=comment>; =&gt; prints <code class=scheme><span class=selfeval>&quot;printer ready&quot;</span></code>, then <code class=scheme><span class=selfeval>&quot;Hello world!&quot;</span></code></span>
+</pre></div><p>
+Separating module declarations from module executions benefits
+compilation in the presence of expressive syntax transformers, as
+explained in section&nbsp;<a href="mzscheme-Z-H-12.html#node_sec_12.3.4">12.3.4</a>.</p>
+<p>
+</p>
+<a name="node_sec_5.2"></a>
+<h2><a href="mzscheme.html#node_toc_node_sec_5.2">5.2&nbsp;&nbsp;Module Bodies</a></h2>
+<p><a name="node_idx_624"></a></p>
+<p>
+<a name="node_idx_626"></a><a name="node_idx_628"></a><a name="node_idx_630"></a>
+In general, the format of a module body depends on the initial
+import. Since the <code class=scheme><code class=scheme>mzscheme</code></code> module defines the procedures and
+syntactic forms described in <em>R5RS</em> and this manual, the
+<code class=scheme><span class=variable>body-datum</span></code>s of a module using <code class=scheme><code class=scheme>mzscheme</code></code> as its initial
+import must conform to the usual MzScheme top-level grammar.</p>
+<p>
+The <a name="node_kw_definitionrequire"></a><a name="node_idx_632"></a><code class=scheme><span class=keyword>require</span></code> form is used both to invoke a module at the
+top level, and to import syntax and variables into a module.
+</p>
+<div align=left><pre class=scheme>(<span class=keyword>require</span> <span class=variable>require-spec</span> <tt>&middot;&middot;&middot;</tt>) 
+
+<span class=variable>require-spec</span> is one of
+  <span class=variable>module-name</span> 
+  (<span class=keyword>prefix</span> <span class=variable>prefix-identifier</span> <span class=variable>module-name</span>) 
+  (<span class=keyword>all-except</span> <span class=variable>module-name</span> <span class=variable>identifier</span> <tt>&middot;&middot;&middot;</tt>) 
+  (<span class=keyword>prefix-all-except</span> <span class=variable>prefix-identifier</span> <span class=variable>module-name</span> <span class=variable>identifier</span> <tt>&middot;&middot;&middot;</tt>) 
+  (<span class=keyword>rename</span> <span class=variable>module-name</span> <span class=variable>local-identifier</span> <span class=variable>exported-identifier</span>)
+</pre></div><p>
+The <code class=scheme><span class=variable>module-name</span></code> form imports all exported identifiers from the
+named module. The <a name="node_idx_634"></a><code class=scheme>(<code class=scheme><span class=keyword>prefix</span></code>
+<code class=scheme><span class=variable>prefix-identifier</span></code> <code class=scheme><span class=variable>module-name</span></code>)</code> form imports all
+identifiers from the named module, but locally prefixes each
+identifier with <code class=scheme><span class=variable>prefix-identifier</span></code>. The
+<a name="node_idx_636"></a><code class=scheme>(<code class=scheme><span class=keyword>all-except</span></code> <code class=scheme><span class=variable>module-name</span></code>
+<code class=scheme><span class=variable>identifier</span></code> <tt>&middot;&middot;&middot;</tt>)</code> form imports all identifiers from the named
+module, except for the listed identifiers.  The
+<a name="node_idx_638"></a><code class=scheme>(<code class=scheme><span class=keyword>prefix-all-except</span></code>
+<code class=scheme><span class=variable>prefix-identifier</span></code> <code class=scheme><span class=variable>module-name</span></code> <code class=scheme><span class=variable>identifier</span></code> <tt>&middot;&middot;&middot;</tt>)</code>
+form combines the <code class=scheme><span class=keyword>prefix</span></code> and <code class=scheme><span class=keyword>all-except</span></code> forms. Finally,
+the <a name="node_idx_640"></a><code class=scheme>(<code class=scheme><span class=keyword>rename</span></code> <code class=scheme><span class=variable>module-name</span></code>
+<code class=scheme><span class=variable>local-identifier</span></code> <code class=scheme><span class=variable>exported-identifier</span></code>)</code> imports
+<code class=scheme><span class=variable>exported-identifier</span></code> from <code class=scheme><span class=variable>module-name</span></code>, binding it locally
+to <code class=scheme><span class=variable>identifier</span></code>.</p>
+<p>
+The <a name="node_kw_definitionprovide"></a><a name="node_idx_642"></a><code class=scheme><span class=keyword>provide</span></code> form (legal only within a module declaration)
+exports syntax and variable bindings from the current module for use
+by other modules. The exported identifiers must be either defined or
+imported in the module, but the export of an identifier may precede
+its definition or import.
+</p>
+<div align=left><pre class=scheme>(<span class=keyword>provide</span> <span class=variable>provide-spec</span> <tt>&middot;&middot;&middot;</tt>) 
+
+<span class=variable>provide-spec</span> is one of
+  <span class=variable>identifier</span> 
+  (<span class=keyword>rename</span> <span class=variable>local-identifier</span> <span class=variable>export-identifier</span>) 
+  (<span class=keyword>struct</span> <span class=variable>struct-identifier</span> (<span class=variable>field-identifier</span> <tt>&middot;&middot;&middot;</tt>))
+  (<span class=keyword>all-from</span> <span class=variable>module-name</span>) 
+  (<span class=keyword>all-from-except</span> <span class=variable>module-name</span> <span class=variable>identifier</span> <tt>&middot;&middot;&middot;</tt>)
+  (<span class=keyword>all-defined</span>) 
+  (<span class=keyword>all-defined-except</span> <span class=variable>identifier</span> <tt>&middot;&middot;&middot;</tt>)
+</pre></div><p>
+The <code class=scheme><span class=variable>identifier</span></code> form exports the (imported or defined) identifier
+from the module.
+The <a name="node_idx_644"></a><code class=scheme>(<code class=scheme><span class=keyword>rename</span></code>
+<code class=scheme><span class=variable>local-identifier</span></code> <code class=scheme><span class=variable>export-identifier</span></code>)</code> form exports
+<code class=scheme><span class=variable>local-identifier</span></code> from the module with the external name
+<code class=scheme><span class=variable>export-identifier</span></code>; other modules importing from this one will
+see <code class=scheme><span class=variable>export-identifier</span></code> instead of <code class=scheme><span class=variable>local-identifier</span></code>.
+The <a name="node_idx_646"></a><code class=scheme>(<code class=scheme><span class=keyword>struct</span></code> <code class=scheme><span class=variable>struct-identifier</span></code>
+(<code class=scheme><span class=variable>field-identifier</span></code> <tt>&middot;&middot;&middot;</tt>))</code> form exports the names that
+<code class=scheme>(<span class=keyword>define-struct</span> <span class=variable>struct-identifier</span> (<span class=variable>field-identifier</span> <tt>&middot;&middot;&middot;</tt>))</code>
+generates.
+The <a name="node_idx_648"></a><code class=scheme>(<code class=scheme><span class=keyword>all-from</span></code> <code class=scheme><span class=variable>module-name</span></code>)</code>
+form exports all of the identifiers imported from the named module,
+using their local names.
+The <a name="node_idx_650"></a><code class=scheme>(<code class=scheme><span class=keyword>all-from-except</span></code>
+<code class=scheme><span class=variable>module-name</span></code> <code class=scheme><span class=variable>identifier</span></code> <tt>&middot;&middot;&middot;</tt>)</code> form is similar, except
+that the listed imported identifiers are not exported.
+The <a name="node_idx_652"></a><code class=scheme>(<code class=scheme><span class=keyword>all-defined</span></code>)</code> form exports
+all of the identifiers defined (not imported) in the module.
+The <a name="node_idx_654"></a><code class=scheme>(<code class=scheme><span class=keyword>all-defined-except</span></code>
+<code class=scheme><span class=variable>identifier</span></code> <tt>&middot;&middot;&middot;</tt>)</code> form is similar, except that the listed
+defined identifiers are not exported.</p>
+<p>
+The scope of all imported identifiers covers the entire module body,
+as does the scope of any identifier defined within the module body.
+See section&nbsp;<a href="mzscheme-Z-H-12.html#node_sec_12.3.5">12.3.5</a> for additional information concerning
+macro-generated definitions, <code class=scheme><span class=keyword>require</span></code> declarations,
+and <code class=scheme><span class=keyword>provide</span></code> declarations.  An <code class=scheme><span class=variable>identifier</span></code> can be
+defined by a definition or import at most once, except than
+an <code class=scheme><span class=variable>identifier</span></code> can be imported multiple times if each import is
+from the same module. All exports must be unique.  A module body
+cannot contain free variables.  A module is not permitted to mutate
+an imported variable with <code class=scheme><span class=keyword>set!</span></code>. However, mutations to an
+exported variable performed by its defining module are visible to
+modules that import the variable.</p>
+<p>
+At syntax-expansion time, expressions and definitions within a module
+are partially expanded, just enough to determine whether the
+expression is a definition, syntax definition, import, export, or a
+non-definition. If a partially expanded expression is a syntax
+definition, the syntax transformer is immediately evaluated and the
+syntax name is available for expanding successive expressions. Import
+expressions are treated similarly, so that imported syntax is
+available for expansion following its import. (The ordering of syntax
+definitions does not affect the scope of the syntax names; a
+transformer for <code class=scheme><span class=variable>A</span></code> can produce expressions containing
+<code class=scheme><span class=variable>B</span></code>, while the transformer for <code class=scheme><span class=variable>B</span></code> produces expressions
+containing <code class=scheme><span class=variable>A</span></code>, regardless of the order of declarations for
+<code class=scheme><span class=variable>A</span></code> and <code class=scheme><span class=variable>B</span></code>. However, a syntactic form that produces
+syntax definitions must be defined before it is used.) The
+<code class=scheme><span class=keyword>begin</span></code> form at the top level for a module body works like
+<code class=scheme><span class=keyword>begin</span></code> at the top level, so that the sub-expressions are
+flattened out into the module's body.</p>
+<p>
+At run time, expressions and definitions are evaluated in order as they
+appear within the module. Accessing a (non-syntax) identifier before
+it is initialized signals a run-time error, just like accessing an
+undefined global variable.</p>
+<p>
+Example:
+</p>
+<div align=left><pre class=scheme>(<span class=keyword>module</span> <span class=variable>a</span> <code class=scheme>mzscheme</code> 
+  (<span class=keyword>provide</span> <span class=variable>x</span>) 
+  (<span class=keyword>define</span> <span class=variable>x</span> <span class=selfeval>1</span>)) 
+ 
+(<span class=keyword>module</span> <span class=variable>b</span> <code class=scheme>mzscheme</code> 
+  (<span class=keyword>provide</span> <span class=variable>f</span> (<span class=keyword>rename</span> <span class=variable>x</span> <span class=variable>y</span>)) 
+  (<span class=keyword>define</span> <span class=variable>x</span> <span class=selfeval>2</span>) 
+  (<span class=keyword>define</span> (<span class=variable>f</span>) (<span class=keyword>set!</span> <span class=variable>x</span> <span class=selfeval>7</span>))) 
+ 
+(<span class=keyword>module</span> <span class=variable>c</span> <code class=scheme>mzscheme</code> 
+  (<span class=keyword>require</span> (<span class=keyword>prefix</span> <span class=variable>a.</span> <span class=variable>a</span>) (<span class=keyword>prefix</span> <span class=variable>b.</span> <span class=variable>b</span>)) 
+  (<span class=variable>b.f</span>) 
+  (<code class=scheme>display</code> (<span class=variable>+</span> <span class=variable>a.x</span> <span class=variable>b.y</span>)) 
+  (<code class=scheme>newline</code>)) 
+ 
+(<span class=keyword>require</span> <span class=variable>c</span>)          <span class=comment>; =&gt; executes <code class=scheme><span class=variable>c</span></code>, prints <code class=schemeresponse><span class=selfeval>8</span></code></span>
+</pre></div><p></p>
+<p>
+</p>
+<a name="node_sec_5.3"></a>
+<h2><a href="mzscheme.html#node_toc_node_sec_5.3">5.3&nbsp;&nbsp;Modules and Macros</a></h2>
+<p><a name="node_idx_656"></a></p>
+<p>
+<a name="node_idx_658"></a><a name="node_idx_660"></a>
+Macros defined with <code class=scheme><span class=keyword>syntax-rules</span></code> follow the rules specified
+in <em>R5RS</em> regarding the binding and free references in the macro
+template. In particular, the template of an exported macro may refer
+to an identifier defined in the module or imported into the module;
+uses of the macro in other modules expand to references of the
+identifier defined or imported at the macro-definition site, as
+opposed to the use site.</p>
+<p>
+Example:
+</p>
+<div align=left><pre class=scheme>(<span class=keyword>module</span> <span class=variable>a</span> <code class=scheme>mzscheme</code> 
+  (<span class=keyword>provide</span> <span class=variable>xm</span>) 
+  (<span class=keyword>define</span> <span class=variable>y</span> <span class=selfeval>2</span>) 
+  (<span class=keyword>define-syntax</span> <span class=variable>xm</span>     <span class=comment>; a macro that expands to <code class=scheme><span class=variable>y</span></code></span>
+    (<span class=keyword>syntax-rules</span> () 
+      [(<span class=variable>xm</span>) <span class=variable>y</span>]))) 
+ 
+(<span class=keyword>module</span> <span class=variable>b</span> <code class=scheme>mzscheme</code> 
+  (<span class=keyword>require</span> <span class=variable>a</span>) 
+  (<code class=scheme>printf</code> <span class=selfeval>&quot;~a~n&quot;</span> (<span class=variable>xm</span>))) 
+ 
+(<span class=keyword>require</span> <span class=variable>b</span>)   <span class=comment>; =&gt; prints <code class=schemeresponse><span class=selfeval>2</span></code></span>
+</pre></div><p></p>
+<p>
+For further information about syntax definitions, see
+section&nbsp;<a href="mzscheme-Z-H-12.html#node_sec_12.3.4">12.3.4</a>. See section&nbsp;<a href="mzscheme-Z-H-12.html#node_sec_12.6.4">12.6.4</a> for information on extracting
+details about an expanded or compiled module declaration.</p>
+<p>
+</p>
+<a name="node_sec_5.4"></a>
+<h2><a href="mzscheme.html#node_toc_node_sec_5.4">5.4&nbsp;&nbsp;Module Paths</a></h2>
+<p><a name="node_idx_662"></a></p>
+<p>
+<a name="node_idx_664"></a><a name="node_idx_666"></a><a name="node_idx_668"></a>
+In practice, the modules composing a program are rarely declared
+together in a single file. Multiple module-declaring files can be
+loaded in sequence with <code class=scheme><code class=scheme>load</code></code>, but modules that are intended as
+libraries have complex interdependencies; constructing an appropriate
+sequence of <code class=scheme><code class=scheme>load</code></code> expressions  --  one that loads each module
+declaration exactly once and before all of its uses  --  can be
+difficult and tedious. Worse, even though module declarations prevent
+collisions among syntax and variable names, module names themselves
+can collide.</p>
+<p>
+To solve these problems, a <code class=scheme><span class=variable>module-name</span></code> can describe a path to a
+module source file, which is resolved by the current <strong>module
+name resolver</strong>. The default module name resolver loads the source for
+a given module path the first time that the source is referenced. To
+avoid module name collisions, the module in the referenced file is
+assigned a name that identifies its source file.</p>
+<p>
+A module path resolved by the standard resolver can take any of four
+forms:
+</p>
+<div align=left><pre class=scheme><span class=variable>unix-relative-path-string</span> 
+(<code class=scheme><span class=keyword>file</span></code> <span class=variable>path-string</span>) 
+(<code class=scheme><span class=keyword>lib</span></code> <span class=variable>filename-string</span> <span class=variable>collection-string</span> <tt>&middot;&middot;&middot;</tt>)
+(<code class=scheme><span class=keyword>planet</span></code> . <span class=variable>datum</span>)
+</pre></div><p>
+</p>
+<ul><p>
+</p>
+<li><p>When a module name is a
+string, <code class=scheme><span class=variable>unix-relative-path-string</span></code>, it is interpreted as a path
+relative to the source of the containing module (as determined
+by <code class=scheme><code class=scheme>current-load-relative-directory</code></code>
+or <code class=scheme><code class=scheme>current-directory</code></code>).  Regardless of the platform running
+MzScheme, the path is always parsed as a Unix-format path: <tt><strong>/</strong></tt>
+is the path delimiter (multiple adjacent <tt><strong>/</strong></tt> are treated as a
+single delimiter), <tt><strong>..</strong></tt> accesses the parent directory,
+and <tt><strong>.</strong></tt> accesses the current directory. To avoid portability
+problems, the path elements are further constrained to contain only
+alpha-numeric characters plus <tt><strong>-</strong></tt>, <tt><strong>_</strong></tt>, <tt><strong>.</strong></tt>, and
+space, and the path may not be empty or contain a leading or trailing
+slash.</p>
+<p>
+</p>
+<li><p>When a module name has the form 
+<code class=scheme>(<a name="node_kw_definitionfile"></a><a name="node_idx_670"></a><code class=scheme><span class=keyword>file</span></code> <code class=scheme><span class=variable>path-string</span></code>)</code>,
+then <code class=scheme><span class=variable>path-string</span></code> is interpreted as a file path using the
+current platform's path conventions. If <code class=scheme><span class=variable>path-string</span></code> is a
+relative path, it is resolved relative to the source of the
+containing module (as determined by
+<code class=scheme><code class=scheme>current-load-relative-directory</code></code> or <code class=scheme><code class=scheme>current-directory</code></code>).</p>
+<p>
+</p>
+<li><p>When a module name has the form 
+<code class=scheme>(<a name="node_kw_definitionlib"></a><a name="node_idx_672"></a><code class=scheme><span class=keyword>lib</span></code> <code class=scheme><span class=variable>filename-string</span></code>
+<code class=scheme><span class=variable>collection-string</span></code> <tt>&middot;&middot;&middot;</tt>)</code>, it specifies a collection-based
+library; see Chapter&nbsp;<a href="mzscheme-Z-H-16.html#node_chap_16">16</a> for more information about libraries and
+collections.</p>
+<p>
+</p>
+<li><p>When a module name has the form
+<code class=scheme>(<a name="node_kw_definitionplanet"></a><a name="node_idx_674"></a><code class=scheme><span class=keyword>planet</span></code> . <code class=scheme><span class=variable>datum</span></code>)</code>,
+it is passed to the PLaneT resolver as described in
+section&nbsp;<a href="#node_sec_5.4.1">5.4.1</a>.</p>
+<p>
+</p>
+</ul><p></p>
+<p>
+A source file that is referenced by a module path must contain a
+single module declaration. The name of the declared module must
+match the source's filename, minus its suffix.</p>
+<p>
+Different module paths can access the same module, but for the
+purposes of <code class=scheme><span class=keyword>provide</span></code> declarations using <code class=scheme><span class=keyword>all-from</span></code> and
+<code class=scheme><span class=keyword>all-from-except</span></code>, source module paths are compared
+syntactically (instead of comparing resolved module names).</p>
+<p>
+</p>
+<a name="node_sec_5.4.1"></a>
+<h3><a href="mzscheme.html#node_toc_node_sec_5.4.1">5.4.1&nbsp;&nbsp;Module Name Resolver</a></h3>
+<p></p>
+<p>
+<a name="node_idx_676"></a>
+In general, the module name resolver is invoked by MzScheme when a
+<code class=scheme><span class=variable>module-name</span></code> is not an identifier. The grammar of non-symbolic
+module names is determined by the module name resolver. The module
+name resolver, in turn, is determined by the
+<code class=scheme><code class=scheme>current-module-name-resolver</code></code> parameter (see also
+section&nbsp;<a href="mzscheme-Z-H-7.html#node_sec_7.7.1.12">7.7.1.12</a>). The resolver is a function
+that takes three arguments  --  an arbitrary value for the module
+path, a symbol for the source module's name, and a syntax object or
+<code class=scheme><span class=selfeval>#f</span></code>  --  and returns a symbol for the resolved name.</p>
+<p>
+Except for <code class=scheme>(<code class=scheme><span class=keyword>planet</span></code> . <span class=variable>datum</span>)</code> paths (which are handled as
+described below), the standard module name resolver creates a module
+identifier as the expanded, simplified, and de-suffixed path of the
+file designated by the module path. (See section&nbsp;<a href="mzscheme-Z-H-11.html#node_sec_11.3">11.3</a> for
+details on platform-specific path handling.) The standard module name
+resolver also keeps a per-registry table of loaded module identifiers
+(where the registry is obtained from a namespace; see
+Chapter&nbsp;<a href="mzscheme-Z-H-8.html#node_chap_8">8</a>). If the resolved identifier is not in the
+table, the identifier is put into the table and the corresponding
+file is loaded with a variant of <code class=scheme><code class=scheme>load/use-compiled</code></code> that
+passes the expected module name to the load handler.</p>
+<p>
+While loading a file, the standard resolver sets the
+<code class=scheme><code class=scheme>current-module-name-prefix</code></code> parameter, so that the name of
+any module declared in the loaded file is given a prefix. This
+mechanism enables the resolver to avoid module name collisions. The
+resolver sets the prefix to the resolved module name, minus the
+de-suffixed file name. It also loads the file by calling the load
+handler or load extension handler with the name of the expected
+module (see section&nbsp;<a href="#node_sec_5.8">5.8</a>).</p>
+<p>
+The current module name resolver is also called by
+<a name="node_idx_678"></a><code class=scheme>namespace-attach-module</code> to notify the resolver that a
+module was attached to the current namespace (and shouldn't be loaded
+in the future for the namespace's registry). In this notification
+mode, the first argument to the resolver is <code class=scheme><span class=selfeval>#f</span></code>, the second
+argument is the name of the attached module, and the third argument
+is <code class=scheme><span class=selfeval>#f</span></code>.</p>
+<p>
+When the default module name resolver is given a module path of the
+form <code class=scheme>(<code class=scheme><span class=keyword>planet</span></code> . <span class=variable>datum</span>)</code> as its first argument, it provides
+all of the resolver arguments to the PLaneT resolver. If the PLaneT
+resolver has not yet been loaded, it is loaded in the initial
+namespace by requiring <code class=scheme>planet-module-name-resolver</code> from
+<code class=scheme>(<code class=scheme><span class=keyword>lib</span></code> <span class=selfeval>&quot;resolver.ss&quot;</span> <span class=selfeval>&quot;planet&quot;</span>)</code>. Thereafter, the PLaneT
+resolver receives each <code class=scheme>namespace-attach-module</code> notification
+that the standard resolver receives.</p>
+<p>
+</p>
+<a name="node_sec_5.4.2"></a>
+<h3><a href="mzscheme.html#node_toc_node_sec_5.4.2">5.4.2&nbsp;&nbsp;Module Names and Compilation</a></h3>
+<p><a name="node_idx_680"></a>
+When syntax-expanding or compiling a <code class=scheme><span class=keyword>module</span></code> declaration,
+MzScheme resolves module names for imports (since some imported
+identifier may have syntax bindings), but it also preserves the
+module path name. Consequently, a compiled module can be moved to
+another filesystem, where the module name resolver can resolve
+inter-module references among compiled code.</p>
+<p>
+</p>
+<a name="node_sec_5.5"></a>
+<h2><a href="mzscheme.html#node_toc_node_sec_5.5">5.5&nbsp;&nbsp;Dynamic Module Access</a></h2>
+<p><a name="node_idx_682"></a></p>
+<p>
+<a name="node_idx_684"></a>
+<a name="node_idx_686"></a><a name="node_kw_definitiondynamic-require"></a><code class=scheme>(dynamic-require</code><tt>&nbsp;</tt><code class=scheme><span class=variable>module-path-v provided-symbol</span></code><code class=scheme>)</code> dynamically
+invokes the module specified by <code class=scheme><span class=variable>module-path-v</span></code> in the current
+namespace's registry if it is not yet invoked. If <code class=scheme><span class=variable>module-path-v</span></code>
+is not a symbol, the current module name resolver may load a module
+declaration to resolve it.  The path is not resolved with respect to
+any other module, even if the current namespace corresponds to a
+module body.</p>
+<p>
+If <code class=scheme><span class=variable>provided-symbol</span></code> is <code class=scheme><span class=selfeval>#f</span></code>, then the result is
+void. Otherwise, when <code class=scheme><span class=variable>provided-symbol</span></code> is a symbol, the
+value of the module's export with the given name is returned. If the
+module has no such exported variable, the
+<a name="node_idx_688"></a><code class=scheme>exn:application:mismatch</code> exception is raised. The expansion-time portion of
+the module is not executed.</p>
+<p>
+If <code class=scheme><span class=variable>provided-symbol</span></code> is void, then the module is partially
+invoked, where its expansion-time expressions are evaluated, but not
+its normal expressions (though the module may have been invoked
+previously in the current namespace's registry). The result is
+void.</p>
+<p>
+<a name="node_idx_690"></a><a name="node_kw_definitiondynamic-require-for-syntax"></a><code class=scheme>(dynamic-require-for-syntax</code><tt>&nbsp;</tt><code class=scheme><span class=variable>module-path-v provided-symbol-or-#f</span></code><code class=scheme>)</code> is similar to
+<code class=scheme>dynamic-require</code>, except that it accesses a value from an
+expansion-time module instance (the one that could be used by
+transformers in expanding top-level expressions in the current
+namespace).  As with <code class=scheme>dynamic-require</code>, the module
+name resolver may load a module declaration to resolve
+<code class=scheme><span class=variable>module-path-v</span></code> if it is not a symbol.</p>
+<p>
+</p>
+<a name="node_sec_5.6"></a>
+<h2><a href="mzscheme.html#node_toc_node_sec_5.6">5.6&nbsp;&nbsp;Re-declaring Modules</a></h2>
+<p><a name="node_idx_692"></a></p>
+<p>
+<a name="node_idx_694"></a><a name="node_idx_696"></a>
+<a name="node_idx_698"></a><a name="node_idx_700"></a>
+When a module is re-declared in a namespace whose registry already
+contains an declaration of the module (see Chapter&nbsp;<a href="mzscheme-Z-H-8.html#node_chap_8">8</a>), the
+new declaration's syntax and variable definitions replace and extend
+the old declarations. If a variable in the old declaration has no
+counterpart in the new declaration, it continues to exist, but
+becomes inaccessible to newly compiled code. In other words, a module
+name in a particular registry maps to a namespace containing the
+module body's definitions; see also <code class=scheme>module-&gt;namespace</code> in
+section&nbsp;<a href="mzscheme-Z-H-8.html#node_sec_8.3">8.3</a>.</p>
+<p>
+If a module is invoked before it is re-declared, each re-declaration
+of the module is immediately invoked. The immediate invocation is
+necessary to keep the module-specific namespace consistent with the
+module declaration.</p>
+<p>
+If a module was originally declared for a registry via
+<code class=scheme>namespace-attach-module</code>, then it cannot be re-declared (and
+the <a name="node_idx_702"></a><code class=scheme>exn:module</code> exception is raised if a re-declaration is attempted). If a
+module re-declaration creates an import cycle, the
+<a name="node_idx_704"></a><code class=scheme>exn:module</code> exception is raised.</p>
+<p>
+</p>
+<a name="node_sec_5.7"></a>
+<h2><a href="mzscheme.html#node_toc_node_sec_5.7">5.7&nbsp;&nbsp;Built-in Modules</a></h2>
+<p><a name="node_idx_706"></a></p>
+<p>
+<a name="node_idx_708"></a><a name="node_idx_710"></a><a name="node_idx_712"></a>
+The built-in <code class=scheme><code class=scheme>mzscheme</code></code> module is implemented by several
+primitive modules whose names start with <code class=scheme><span class=selfeval>#%</span></code>. In general,
+module names starting with <code class=scheme><span class=selfeval>#%</span></code> are reserved for use by
+MzScheme and embedding applications. The built-in modules are
+declared in the initial namespace's registry via
+<code class=scheme>namespace-attach-module</code>, so they cannot be re-declared and
+their private namespaces are not available via
+<code class=scheme>module-&gt;namespace</code>.</p>
+<p>
+</p>
+<a name="node_sec_5.8"></a>
+<h2><a href="mzscheme.html#node_toc_node_sec_5.8">5.8&nbsp;&nbsp;Modules and Load Handlers</a></h2>
+<p><a name="node_idx_714"></a></p>
+<p>
+The second argument to a load handler or load extension handler
+indicates whether the load is expected (and required) to produce a
+module declaration. If the second argument is <code class=scheme><span class=selfeval>#f</span></code>, the file
+is loaded normally, otherwise the argument will be a symbol and the
+file must be checked specially before it is loaded.</p>
+<p>
+When the second argument to the local handler is a symbol, the handler
+is responsible for ensuring that the file-to-load actually contains a
+<code class=scheme><span class=keyword>module</span></code> declaration (possibly compiled); if not, it must
+raise an exception without evaluating the declaration. The handler
+must also raise an <code class=scheme>exn:module</code> exception if the name in the
+module declaration is not the same as the symbol argument to the
+handler (before applying any prefix in
+<code class=scheme><code class=scheme>current-module-name-prefix</code></code>).</p>
+<p>
+Furthermore, while reading the file and expanding the module
+declaration, the load handler must set reader parameter values (see
+section&nbsp;<a href="mzscheme-Z-H-7.html#node_sec_7.7.1.3">7.7.1.3</a>) to the following states:
+</p>
+<div align=left><pre class=scheme>(<code class=scheme>read-case-sensitive</code> <span class=selfeval>#f</span>)
+(<code class=scheme>read-square-bracket-as-paren</code> <span class=selfeval>#t</span>)
+(<code class=scheme>read-curly-brace-as-paren</code> <span class=selfeval>#t</span>)
+(<code class=scheme>read-accept-box</code> <span class=selfeval>#t</span>)
+(<code class=scheme>read-accept-compiled</code> <span class=selfeval>#t</span>)
+(<code class=scheme>read-accept-bar-quote</code> <span class=selfeval>#t</span>)
+(<code class=scheme>read-accept-graph</code> <span class=selfeval>#t</span>)
+(<code class=scheme>read-decimal-as-inexact</code> <span class=selfeval>#t</span>)
+(<code class=scheme>read-accept-dot</code> <span class=selfeval>#t</span>)
+(<code class=scheme>read-accept-quasiquote</code> <span class=selfeval>#t</span>)
+</pre></div><p>
+These states are the same as the normal defaults, except that
+compiled-code reading is enabled. Note that a module body can be made
+case sensitive by prefixing the module with <code class=scheme>#cs</code> (see
+section&nbsp;<a href="mzscheme-Z-H-14.html#node_sec_14.3">14.3</a>).</p>
+<p>
+Finally, before compiling or evaluating a module declaration from
+source, the handler must replace a leading <code class=scheme><span class=keyword>module</span></code> identifier
+with an identifier that is bound to the <code class=scheme><span class=keyword>module</span></code> export of
+MzScheme. Evaluating the expression will then produce a module
+declaration, regardless of the binding of <code class=scheme><span class=keyword>module</span></code> in the
+current namespace.</p>
+<p>
+Separate compilation of <code class=scheme><span class=keyword>module</span></code> declarations introduces the
+possibility of import cycles when the module declarations are
+executed. The <a name="node_idx_716"></a><code class=scheme>exn:module</code> exception is raised when such a cycle is detected.</p>
+<p>
+</p>
+<p>
+</p>
+<div align=right class=navigation><i>[Go to <span><a href="mzscheme.html">first</a>, <a href="mzscheme-Z-H-4.html">previous</a></span><span>, <a href="mzscheme-Z-H-6.html">next</a></span> page<span>; &nbsp;&nbsp;</span><span><a href="mzscheme.html#node_toc_start">contents</a></span><span><span>; &nbsp;&nbsp;</span><a href="mzscheme-Z-H-19.html#node_index_start">index</a></span>]</i></div><p></p>
+</body>
+</html>

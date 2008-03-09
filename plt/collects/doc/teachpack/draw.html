@@ -1,0 +1,113 @@
+<html>
+<head>
+<title>Teachpack : Simple Drawing Exercises</title>
+</head>
+<body bgcolor="#ffffff" text="#000000"
+      link="#009900" vlink="#007700" alink="#cc0000">
+
+<a href="index.html">Teachpacks for How to Design Programs</a>
+
+<h1>Simple Drawing Exercises</h1>
+
+<hr> <h3><a name="draw.ss">draw.ss</a></h3> <!-- DOCNOTE="teach=draw.ss" -->
+
+The teachpack provides two kinds of functions. The first four allow
+students to simulate a small world of animated drawings and games: 
+<menu>
+<li><code><a name="big-bang">big-bang</a></code> : Number World -> true; <br>
+<code>(define (big-bang n w) ...)</code>
+start the clock, one tick every <code>n</code> seconds; <code>w</code>
+becomes the first world
+<li><code><a name="on-key-event">on-key-event</a></code> : ((union char symbol) World -> World) -> true; <br>
+add a function to the world that processes keyboard events
+<li><code><a name="on-tick-event">on-tick-event</a></code> : (World -> World) -> true; <br>
+add a function to the world that processes tick events
+<li><code><a name="end-of-time">end-of-time</a></code> : -> World; <br>
+stop the world, return the last world 
+</menu>
+The world consists of a canvas and whatever the tick and keyevent handlers
+draw on it. For the use of these functions, see the HtDP+ material. 
+
+With the reminder, the students can write functions that draw into this
+world: 
+<menu>
+<li><code><a name="start">start</a></code> : Number Number -> true; <br>
+opens a canvas of specified size
+<li><code><a name="start/cartesian-plane">start/cartesian-plane</a></code> : Number Number -> true; <br>
+opens a canvas of specified size and draws a Cartesian plane
+<li><code><a name="stop">stop</a></code> : -> true (no arguments);  <br>
+closes the canvas
+<li><code><a name="draw-circle">draw-circle</a></code> : Posn Number Symbol -> true; <br>
+draws a circle at posn with given radius and color
+<li><code><a name="draw-solid-disk">draw-solid-disk</a></code> : Posn Number Symbol -> true; <br>
+draws a disk at posn with given radius and color
+<li><code><a name="draw-solid-rect">draw-solid-rect</a></code> : Posn Number Number Symbol -> true; <br>
+draws a rectangle at posn with given width, height, and color
+<li><code><a name="draw-solid-line">draw-solid-line</a></code> : Posn Posn Symbol -> true; <br>
+draws a line from one posn to other
+<li><code><a name="draw-solid-string">draw-solid-string</a></code> : Posn String -> true; <br>
+draws a string at posn
+<li><code><a name="wait-for-mouse-click">wait-for-mouse-click</a></code> : -> Posn; <br>
+waits for the user to click on the mouse, within the window (the operation
+is a quasi-constructor for posns)
+<li><code><a name="get-key-event">get-key-event</a></code> : -> false or Character or Symbol ; <br>
+checks whether the user has pressed a key within the window; its result is
+<ol>
+ <li><code>false</code>, if the user didn't press a key;
+ <li><code>Character</code>, if the user pressed an alphanumeric key;
+ <li><code>Symbol</code>, if the user pressed, for example, an arror key:
+ <code>'up</code> <code>'down</code>  <code>'left</code> <code>'right</code>
+</ol>
+<br>
+<li><code><a name="sleep-for-a-while">sleep-for-a-while</a></code> : Number -> true; <br>
+suspends evaluation for the given number of seconds
+<br>
+<li>The following symbols are recognized as colors:
+<blockquote>
+<code>'white</code>
+<code>'yellow</code>
+<code>'red</code>
+<code>'blue</code>
+<code>'green</code>
+<code>'black</code>
+</blockquote>
+For other colors, guess! For example, <code>'orange</code> works, but
+<code>'mauve</code> doesn't. If you apply the function to a symbol that it
+doesn't recognize as a color, it raises an error. 
+</menu>
+<br>
+<br>
+<br>
+The teachpack also provides <code>clear-</code> operations for each
+<code>draw-</code> operation. The arguments are the same. Note: use
+<code>clear-rectangle</code> instead of <code>clear-string</code> for now.
+<br>
+<br>
+<br>
+The color argument for all functions are optional.
+
+<p>Sample session: Set teachpack to <code>draw.ss</code> and execute:
+<br> <code> > (start 500 500) </code>
+<br> <code> > (draw-solid-disk (make-posn 100 100) 3 'red) </code>
+<br> <code> true </code>
+<br> <code> > (clear-solid-disk (make-posn 100 100) 3 'red) </code>
+<br> <code> true </code>
+<br> <code> > (sleep-for-a-while 1) </code>
+<br> <code> > (draw-solid-disk (make-posn 100 100) 3 'red) </code>
+<br> <code> true </code>
+<br> <code> > (clear-solid-disk (make-posn 100 100) 3) </code>
+<br> <code> true </code>
+<br> <code> > (stop) </code>
+<br> <code> > </code>
+<br>
+This session opens a window, draws a red disk, clears it, sleeps for a second,
+and then repeats. The last expression closes the canvas.
+
+See <tt>http://www.ccs.neu.edu/home/matthias/HtDP/Extended/</tt>
+for an example on how to use <code>get-key-event</code>. The program is
+the basis for an extended exercise under development.
+
+<br>
+<br>
+</body>
+</html>

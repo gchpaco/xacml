@@ -1,0 +1,53 @@
+<html>
+<head>
+<title>Teachpack : Convert</title>
+</head>
+<body bgcolor="#ffffff" text="#000000"
+      link="#009900" vlink="#007700" alink="#cc0000">
+
+<a href="index.html">Teachpacks for How to Design Programs</a>
+
+<h1>Convert</h1>
+
+<hr> <h3><a name="convert.ss">convert.ss</a></h3> <!-- DOCNOTE="teach=convert.ss" -->
+
+<p>The teachpack <code>convert.ss</code> provides three functions:
+<menu>
+
+  <li> <code><a name="convert-gui">convert-gui</a></code>, which consumes a conversion function
+       from Fahrenheit to Celsius and creates a graphical user interface
+       with two rulers, which users can use to convert temperatures
+       according to the given temperature conversion function
+
+  <li> <code><a name="convert-repl">convert-repl</a></code>, which consumes a conversion function
+       from Fahrenheit to Celsius and then starts a read-evaluate-print
+       loop. The loop prompts users to enter a number and then converts the
+       number according to the given temperature conversion function.
+       A user can exit the loop by entering <code>x</code>.
+
+  <li> <code><a name="convert-file">convert-file</a></code>; it consumes a file name <code>in</code>, a
+       conversion function from Fahrenheit to Celsius, and a string
+       <code>out</code>. The program then reads a number from
+       <code>in</code>, converts it according to the given temperature
+       conversion function, and prints the result to the newly created file
+       <code>out</code>.  <br>
+
+       <br><b>Warning:</b> If <code>out</code> already exists, it is
+       deleted.
+
+</menu>
+
+
+<p>Example: Define a function <code>f2c</code> in the Definitons window.
+Set teachpack to <code>convert.ss</code> and execute. Then evaluate
+<pre>
+> (convert-gui f2c)
+>
+</pre>
+This will create a graphical user interface with two rulers. Slide the top
+one and click on convert to see the lower one move.</p>
+
+<br>
+<br>
+</body>
+</html>

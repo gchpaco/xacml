@@ -1,0 +1,6 @@
+This is makeindex, version 2.14 [02-Oct-2002] (kpathsea + Thai support).
+Scanning input file misclib/misclib--h.idx....done (124 entries accepted, 0 rejected).
+Sorting entries....done (963 comparisons).
+Generating output file misclib/misclib--h.ind....done (175 lines written, 0 warnings).
+Output written in misclib/misclib--h.ind.
+Transcript written in misclib/misclib--h.ilg.

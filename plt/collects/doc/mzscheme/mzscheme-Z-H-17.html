@@ -1,0 +1,329 @@
+<!doctype html public "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!--
+
+Generated from mzscheme.tex by tex2page, v 2004-09-11
+(running on MzScheme 209, unix), 
+(c) Dorai Sitaram, 
+http://www.ccs.neu.edu/~dorai/tex2page/tex2page-doc.html
+
+-->
+<head>
+<title>
+PLT MzScheme: Language Manual
+</title>
+<link rel="stylesheet" type="text/css" href="mzscheme-Z-S.css" title=default>
+<meta name=robots content="noindex,follow">
+</head>
+<body>
+<div align=right class=navigation><i>[Go to <span><a href="mzscheme.html">first</a>, <a href="mzscheme-Z-H-16.html">previous</a></span><span>, <a href="mzscheme-Z-H-18.html">next</a></span> page<span>; &nbsp;&nbsp;</span><span><a href="mzscheme.html#node_toc_start">contents</a></span><span><span>; &nbsp;&nbsp;</span><a href="mzscheme-Z-H-19.html#node_index_start">index</a></span>]</i></div><p></p>
+<a name="node_chap_17"></a>
+<h1 class=chapter>
+<div class=chapterheading><a href="mzscheme.html#node_toc_node_chap_17">Chapter 17</a></div><br>
+<a href="mzscheme.html#node_toc_node_chap_17">Running MzScheme</a></h1>
+<p><a name="node_idx_2794"></a></p>
+<p>
+
+ 
+
+
+ </p>
+<p>
+<a name="node_idx_2796"></a></p>
+<p>
+</p>
+
+
+
+<p>
+<a name="node_idx_2798"></a>
+The stand-alone version of MzScheme accepts a number of command-line flags. </p>
+<p>
+</p>
+<p>
+</p>
+<p>
+MzScheme accepts the following flags:
+</p>
+<ul><p>
+</p>
+<li><p><strong>Startup file and expression flags:</strong></p>
+<p>
+</p>
+<ul><p>
+</p>
+<li><p><b> </b>&nbsp;&nbsp; <tt>-e</tt><a name="node_idx_2800"></a> <code class=scheme><span class=variable>expr</span></code> or <tt>--eval</tt><a name="node_idx_2802"></a>
+<code class=scheme><span class=variable>expr</span></code> : Evaluates <code class=scheme><span class=variable>expr</span></code> after MzScheme starts.</p>
+<p>
+</p>
+<li><p><b> </b>&nbsp;&nbsp; <tt>-f</tt><a name="node_idx_2804"></a> <code class=scheme><span class=variable>file</span></code> or <tt>--load</tt><a name="node_idx_2806"></a>
+<code class=scheme><span class=variable>file</span></code> : Loads <code class=scheme><span class=variable>file</span></code> after MzScheme starts.</p>
+<p>
+</p>
+<li><p><b> </b>&nbsp;&nbsp; <tt>-d</tt><a name="node_idx_2808"></a> <code class=scheme><span class=variable>file</span></code> or <tt>--load-cd</tt><a name="node_idx_2810"></a>
+<code class=scheme><span class=variable>file</span></code> : Uses <code class=scheme>load/cd</code> to load <code class=scheme><span class=variable>file</span></code> after MzScheme
+starts.</p>
+<p>
+</p>
+<li><p><b> </b>&nbsp;&nbsp; <tt>-t</tt><a name="node_idx_2812"></a> <code class=scheme><span class=variable>file</span></code> or <tt>--require</tt><a name="node_idx_2814"></a>
+<code class=scheme><span class=variable>file</span></code> : Requires <code class=scheme><span class=variable>file</span></code> after MzScheme starts.</p>
+<p>
+</p>
+<li><p><b> </b>&nbsp;&nbsp; <tt>-F</tt><a name="node_idx_2816"></a> or <tt>--Load</tt><a name="node_idx_2818"></a> : Loads each
+remaining argument as a file after MzScheme starts.</p>
+<p>
+</p>
+<li><p><b> </b>&nbsp;&nbsp; <tt>-D</tt><a name="node_idx_2820"></a> or <tt>--Load-cd</tt><a name="node_idx_2822"></a> : Loads each
+remaining argument as a file using <code class=scheme>load/cd</code> after MzScheme
+starts.</p>
+<p>
+</p>
+<li><p><b> </b>&nbsp;&nbsp; <tt>-T</tt><a name="node_idx_2824"></a> or <tt>--Require</tt><a name="node_idx_2826"></a> : Requires each
+remaining argument as a file after MzScheme starts.</p>
+<p>
+</p>
+<li><p><b> </b>&nbsp;&nbsp; <tt>-l</tt><a name="node_idx_2828"></a> <code class=scheme><span class=variable>file</span></code> or <tt>--mzlib</tt><a name="node_idx_2830"></a>
+<code class=scheme><span class=variable>file</span></code>: Requires the MzLib library <code class=scheme><span class=variable>file</span></code> after MzScheme
+starts.</p>
+<p>
+</p>
+<li><p><b> </b>&nbsp;&nbsp; <tt>-L</tt><a name="node_idx_2832"></a> <code class=scheme><span class=variable>file</span></code> <code class=scheme><span class=variable>collect</span></code> : Requires the
+library <code class=scheme><span class=variable>file</span></code> in the collection <code class=scheme><span class=variable>collect</span></code> after MzScheme
+starts.</p>
+<p>
+</p>
+<li><p><b> </b>&nbsp;&nbsp; <tt>-M</tt><a name="node_idx_2834"></a> <code class=scheme><span class=variable>collect</span></code> : Requires the library
+<tt><strong><code class=scheme><span class=variable>collect</span></code>.ss</strong></tt> in the collection <code class=scheme><span class=variable>collect</span></code> after
+MzScheme starts.</p>
+<p>
+</p>
+<li><p><b> </b>&nbsp;&nbsp; <tt>-r</tt><a name="node_idx_2836"></a> <code class=scheme><span class=variable>file</span></code> or <tt>--script</tt><a name="node_idx_2838"></a>
+<code class=scheme><span class=variable>file</span></code> : Use this flag for MzScheme-based scripts. It mutes the
+startup banner printout, suppresses the <code class=scheme>read</code>-<code class=scheme>eval</code>-<code class=scheme>print</code> loop, and loads
+<code class=scheme><span class=variable>file</span></code> after MzScheme starts. No argument after <code class=scheme><span class=variable>file</span></code> is
+treated as a flag. The <tt>-r</tt> or <tt>--script</tt> flag is a
+shorthand for <tt>-fmv-</tt>.</p>
+<p>
+</p>
+<li><p><b> </b>&nbsp;&nbsp; <tt>-i</tt><a name="node_idx_2840"></a> <code class=scheme><span class=variable>file</span></code> or <tt>--script-cd</tt><a name="node_idx_2842"></a>
+<code class=scheme><span class=variable>file</span></code> : Same as <tt>-r</tt> <code class=scheme><span class=variable>file</span></code> or <tt>--script</tt>
+<code class=scheme><span class=variable>file</span></code>, except that the current directory is changed to
+<code class=scheme><span class=variable>file</span></code>'s directory before it is loaded. The <tt>-i</tt> or
+<tt>--script-cd</tt> flag is a shorthand for <tt>-dmv-</tt>.</p>
+<p>
+</p>
+<li><p><b> </b>&nbsp;&nbsp; <tt>-u</tt><a name="node_idx_2844"></a> <code class=scheme><span class=variable>file</span></code> or
+<tt>--require-script</tt><a name="node_idx_2846"></a> <code class=scheme><span class=variable>file</span></code> : Same as <tt>-r</tt>
+<code class=scheme><span class=variable>file</span></code> or <tt>--script</tt> <code class=scheme><span class=variable>file</span></code>, except that <code class=scheme><span class=variable>file</span></code>
+is <code class=scheme><span class=keyword>require</span></code>d instead of <code class=scheme>load</code>ed. The <tt>-u</tt> or
+<tt>--require-script</tt> flag is a shorthand for <tt>-tmv-</tt>.</p>
+<p>
+</p>
+<p>
+</p>
+<li><p><b> </b>&nbsp;&nbsp; <tt>-w</tt><a name="node_idx_2848"></a> or <tt>--awk</tt><a name="node_idx_2850"></a> : Loads the <tt><strong>awk.ss</strong></tt>
+library after MzScheme starts.</p>
+<p>
+</p>
+<li><p><b> </b>&nbsp;&nbsp; <tt>-k</tt><a name="node_idx_2852"></a> <code class=scheme><span class=variable>n</span></code> <code class=scheme><span class=variable>m</span></code> : Loads code embedded in
+the executable from file position <code class=scheme><span class=variable>n</span></code> to <code class=scheme><span class=variable>m</span></code> after MzScheme
+starts. This flag is useful for creating a stand-alone binary by
+appending code to the normal MzScheme executable. See <a href="../mzc/mzc.html"><i>PLT mzc: MzScheme Compiler Manual</i></a>
+for more details.</p>
+<p>
+</p>
+<li><p><b> </b>&nbsp;&nbsp; <tt>-C</tt><a name="node_idx_2854"></a> or <tt>--main</tt><a name="node_idx_2856"></a> : Like <tt>-r</tt>,
+then calls the function bound to <code class=scheme><span class=variable>main</span></code> in the top-level
+environment. The argument to <code class=scheme><span class=variable>main</span></code> is a list of immutable
+strings; the first string is the path of the file that was loaded,
+and the rest of the list contains leftover command-line arguments
+(the ones installed in <code class=scheme>current-command-line-arguments</code>). The
+<code class=scheme><span class=variable>main</span></code> function is called only if no previous evaluations or
+loads resulted in an uncaught exception.</p>
+<p>
+</p>
+</ul><p></p>
+<p>
+</p>
+<li><p><strong>Initialization flags:</strong></p>
+<p>
+</p>
+<ul><p>
+</p>
+<li><p><b> </b>&nbsp;&nbsp; <tt>-x</tt><a name="node_idx_2858"></a> or <tt>--no-lib-path</tt><a name="node_idx_2860"></a> : Suppresses
+the initialization of <a name="node_idx_2862"></a><code class=scheme>current-library-collection-paths</code>
+(as described in Chapter&nbsp;<a href="mzscheme-Z-H-16.html#node_chap_16">16</a>).</p>
+<p>
+</p>
+<li><p><b> </b>&nbsp;&nbsp; <tt>-q</tt><a name="node_idx_2864"></a> or <tt>--no-init-file</tt><a name="node_idx_2866"></a> :
+Suppresses loading the user's initialization file, as described
+below.</p>
+<p>
+</p>
+<li><p><b> </b>&nbsp;&nbsp; <tt>-A</tt><a name="node_idx_2868"></a> or <tt>--no-argv</tt><a name="node_idx_2870"></a> :
+Suppresses the definition of <code class=scheme><span class=variable>argv</span></code> and <code class=scheme><span class=variable>program</span></code>, as described
+below.</p>
+<p>
+</p>
+</ul><p></p>
+<p>
+</p>
+<li><p><strong>Language setting flags:</strong></p>
+<p>
+</p>
+<ul><p>
+</p>
+<li><p><b> </b>&nbsp;&nbsp; <tt>-g</tt><a name="node_idx_2872"></a> or <tt>--case-sens</tt><a name="node_idx_2874"></a> : Creates an
+initial namespace where identifiers and symbols are case-sensitive.</p>
+<p>
+</p>
+<li><p><b> </b>&nbsp;&nbsp; <tt>-s</tt><a name="node_idx_2876"></a> or <tt>--set-undef</tt><a name="node_idx_2878"></a> : Creates an
+initial namespace where <a name="node_idx_2880"></a><code class=scheme>set!</code> will successfully
+mutate an undefined global variable (implicitly defining it).</p>
+<p>
+</p>
+</ul><p></p>
+<p>
+</p>
+<li><p><strong>Miscellaneous flags:</strong></p>
+<p>
+</p>
+<ul><p>
+</p>
+<li><p><b> </b>&nbsp;&nbsp; <tt>--</tt><a name="node_idx_2882"></a> : No argument following this flag is
+used as a flag.</p>
+<p>
+</p>
+<li><p><b> </b>&nbsp;&nbsp; <tt>-m</tt><a name="node_idx_2884"></a> or <tt>--mute-banner</tt><a name="node_idx_2886"></a> : Suppresses
+the startup banner text produced by <tt>-v</tt>.</p>
+<p>
+</p>
+<li><p><b> </b>&nbsp;&nbsp; <tt>-v</tt><a name="node_idx_2888"></a> or <tt>--version</tt><a name="node_idx_2890"></a> : Suppresses the
+<code class=scheme>read</code>-<code class=scheme>eval</code>-<code class=scheme>print</code> loop.</p>
+<p>
+</p>
+<p>
+</p>
+<li><p><b> </b>&nbsp;&nbsp; <tt>-h</tt><a name="node_idx_2892"></a> or <tt>--help</tt><a name="node_idx_2894"></a> : Shows information
+about MzScheme's command-line flags and then exits, ignoring other
+flags.</p>
+<p>
+</p>
+<li><p><b> </b>&nbsp;&nbsp; <tt>-p</tt><a name="node_idx_2896"></a> or <tt>--persistent</tt><a name="node_idx_2898"></a> : Catches the
+SIGDANGER (low page space) signal and ignores it (AIX only).</p>
+<p>
+</p>
+<li><p><b> </b>&nbsp;&nbsp; <tt>-R</tt><a name="node_idx_2900"></a><code class=scheme><span class=variable>file</span></code> or <tt>--restore</tt><a name="node_idx_2902"></a>
+<code class=scheme><span class=variable>file</span></code> : Restores a saved image (see
+section&nbsp;<a href="mzscheme-Z-H-14.html#node_sec_14.8">14.8</a>). Extra
+arguments after <code class=scheme><span class=variable>file</span></code> are returned as a vector of strings to
+the continuation of the <a name="node_idx_2904"></a><code class=scheme>write-image-to-file</code> call that
+created the image.</p>
+<p>
+</p>
+</ul><p></p>
+<p>
+</p>
+</ul><p></p>
+<p>
+</p>
+<a name="node_sec_17.1"></a>
+<h2><a href="mzscheme.html#node_toc_node_sec_17.1">17.1&nbsp;&nbsp;Flag Conventions</a></h2>
+<p><a name="node_idx_2906"></a></p>
+<p>
+Extra arguments following the last flag are available from the
+<a name="node_idx_2908"></a><code class=scheme>current-command-line-arguments</code> parameter (see
+section&nbsp;<a href="mzscheme-Z-H-7.html#node_sec_7.7.1.6">7.7.1.6</a>)
+as an immutable vector of immutable strings.  The name used to start
+MzScheme is available from the <a name="node_idx_2910"></a><code class=scheme>find-system-path</code> procedure
+(see section&nbsp;<a href="mzscheme-Z-H-11.html#node_sec_11.3.1">11.3.1</a>)
+using <code class=scheme><span class=selfeval>'exec-file</span></code>.  In addition, unless <tt>-A</tt> is specified,
+the argument vector is put into the global variable <a name="node_idx_2912"></a><code class=scheme>argv</code>,
+and the name used to start MzScheme is put into the global variable
+<a name="node_idx_2914"></a><code class=scheme>program</code> as an immutable string.</p>
+<p>
+Multiple single-letter flags (the ones preceded by a single dash) can
+be collapsed into a single flag by concatenating the letters, as long
+as the the first flag is not <tt>--</tt>. The arguments for each flag
+are placed after the collapsed flags (in the order of the
+flags). For example,
+<tt></p>
+<p> 
+&nbsp;&nbsp;  -vfme <code class=scheme><span class=variable>file</span></code> <code class=scheme><span class=variable>expr</span></code> 
+</p>
+<p></tt>
+and
+<tt></p>
+<p> 
+&nbsp;&nbsp;  -v -f <code class=scheme><span class=variable>file</span></code> -m -e <code class=scheme><span class=variable>expr</span></code> 
+</p>
+<p></tt>
+are equivalent. If a collapsed <tt>--</tt> appears before other collapsed
+flags, it is implicitly moved to the end of the collapsed set.</p>
+<p>
+</p>
+<a name="node_sec_17.2"></a>
+<h2><a href="mzscheme.html#node_toc_node_sec_17.2">17.2&nbsp;&nbsp;Executable Name</a></h2>
+<p><a name="node_idx_2916"></a></p>
+<p>
+If the MzScheme executable is given a name of the form
+<tt><strong>scheme-<code class=scheme><span class=variable>dialect</span></code></strong></tt>, then the command line is effectively
+prefixed with
+<tt></p>
+<p> 
+&nbsp;&nbsp;  -qAeC '(require (lib &quot;init.ss&quot; &quot;script-lang&quot; &quot;<code class=scheme><span class=variable>dialect</span></code>&quot;))' 
+</p>
+<p></tt>
+The first actual command-line argument thus serves as a file to
+load. The file is loaded into a namespace that is initialized by the
+<code class=scheme><span class=variable>dialect</span></code>-specific <tt><strong>init.ss</strong></tt> library. The loaded file should
+define <code class=scheme><span class=variable>main</span></code>, which is called with command-line
+arguments -- starting with the loaded file name -- as a list of
+immutable strings.</p>
+<p>
+</p>
+<a name="node_sec_17.3"></a>
+<h2><a href="mzscheme.html#node_toc_node_sec_17.3">17.3&nbsp;&nbsp;Initialization</a></h2>
+<p><a name="node_idx_2918"></a></p>
+<p>
+The <a name="node_idx_2920"></a><code class=scheme>current-library-collection-paths</code> parameter is
+initialized (as described in
+Chapter&nbsp;<a href="mzscheme-Z-H-16.html#node_chap_16">16</a>) before any expression or file is evaluated or
+loaded, unless the <tt>-x</tt> or <tt>--no-lib-path</tt> flag is specified.</p>
+<p>
+Unless the <tt>-q</tt> or <tt>--no-init-file</tt> flag is specified, a user
+initialization file is loaded after
+<code class=scheme>current-library-collection-paths</code> parameter is initialized and
+before any other expression or file is evaluated or loaded. The path
+to the user initialization file is obtained from MzScheme's
+<a name="node_idx_2922"></a><code class=scheme>find-system-path</code> procedure using <code class=scheme><span class=selfeval>'init-file</span></code>.</p>
+<p>
+Expressions and files are evaluated and loaded in order that they are
+provided on the command line, including calls to main implied by
+<tt>--main</tt>, embeddings loaded by <tt>-k</tt>, and so on. If an
+uncaught exception occurs, the remaining expressions and files are
+skipped. The thread that loads the files and evaluates the
+expressions is the <strong>main thread</strong>. When the main thread
+terminates (or is killed), the MzScheme process exits. </p>
+<p>
+After the command-line files and expressions are loaded and evaluated,
+the main thread calls <a name="node_idx_2924"></a><code class=scheme>read-eval-print-loop</code>, unless the <tt>-v</tt>,
+<tt>--version</tt>, <tt>-r</tt>, <tt>--script</tt>, <tt>-i</tt>, or
+<tt>--script-cd</tt> flag is specified. </p>
+<p>
+</p>
+<p>
+The exit status for the MzScheme process indicates an error if an error
+occurs evaluating or loading a command-line expression or file and
+<a name="node_idx_2926"></a><code class=scheme>read-eval-print-loop</code> is not called afterwards, or if the default exit handler
+is called with an exact integer between 1 and 255.</p>
+<p>
+</p>
+<p>
+</p>
+
+<p>
+</p>
+<div align=right class=navigation><i>[Go to <span><a href="mzscheme.html">first</a>, <a href="mzscheme-Z-H-16.html">previous</a></span><span>, <a href="mzscheme-Z-H-18.html">next</a></span> page<span>; &nbsp;&nbsp;</span><span><a href="mzscheme.html#node_toc_start">contents</a></span><span><span>; &nbsp;&nbsp;</span><a href="mzscheme-Z-H-19.html#node_index_start">index</a></span>]</i></div><p></p>
+</body>
+</html>

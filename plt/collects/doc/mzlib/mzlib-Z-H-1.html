@@ -1,0 +1,149 @@
+<!doctype html public "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!--
+
+Generated from mzlib.tex by tex2page, v 2004-09-11
+(running on MzScheme 209, unix), 
+(c) Dorai Sitaram, 
+http://www.ccs.neu.edu/~dorai/tex2page/tex2page-doc.html
+
+-->
+<head>
+<title>
+PLT MzLib: Libraries Manual
+</title>
+<link rel="stylesheet" type="text/css" href="mzlib-Z-S.css" title=default>
+<meta name=robots content="noindex,follow">
+</head>
+<body>
+<div align=right class=navigation><i>[Go to <span><a href="mzlib.html">first</a>, <a href="mzlib.html">previous</a></span><span>, <a href="mzlib-Z-H-2.html">next</a></span> page<span>; &nbsp;&nbsp;</span><span><a href="mzlib.html#node_toc_start">contents</a></span><span><span>; &nbsp;&nbsp;</span><a href="mzlib-Z-H-42.html#node_index_start">index</a></span>]</i></div><p></p>
+<a name="node_chap_1"></a>
+<h1 class=chapter>
+<div class=chapterheading><a href="mzlib.html#node_toc_node_chap_1">Chapter 1</a></div><br>
+<a href="mzlib.html#node_toc_node_chap_1">MzLib</a></h1>
+<p><a name="node_idx_2"></a></p>
+<p>
+The MzLib collection consists of several libraries, each of which
+provides a set of procedures and syntax.</p>
+<p>
+To use a MzLib library, either at the top-level or within a module,
+import it with
+<tt></p>
+<p> 
+&nbsp;&nbsp;   (require (lib <code class=scheme><span class=variable>libname</span></code>))  
+</p>
+<p></tt>
+For example, to use the <tt><strong>list.ss</strong></tt> library:
+<tt></p>
+<p> 
+&nbsp;&nbsp;   (require (lib &quot;list.ss&quot;))  
+</p>
+<p></tt></p>
+<p>
+The MzLib collection provides the following libraries:
+</p>
+<ul> <li><p><tt><strong>async-channel.ss</strong></tt>  --  buffered channels
+</p>
+<li><p><tt><strong>awk.ss</strong></tt>  --  AWK-like syntax
+</p>
+<li><p><tt><strong>class.ss</strong></tt>  --  object system
+</p>
+<li><p><tt><strong>cm.ss</strong></tt>  --  compilation manager
+</p>
+<li><p><tt><strong>cm-accomplice.ss</strong></tt>  --  compilation support hook syntax transformers
+</p>
+<li><p><tt><strong>cmdline.ss</strong></tt>  --  command-line parsing
+</p>
+<li><p><tt><strong>cml.ss</strong></tt>  --  Concurrent ML compatibility
+</p>
+<li><p><tt><strong>compat.ss</strong></tt>  --  compatibility procedures and syntax
+</p>
+<li><p><tt><strong>compile.ss</strong></tt>  --  bytecode compilation
+</p>
+<li><p><tt><strong>contract.ss</strong></tt>  --  programming by contract
+</p>
+<li><p><tt><strong>date.ss</strong></tt>  --  date-processing procedures
+</p>
+<li><p><tt><strong>deflate.ss</strong></tt>  --  <tt>gzip</tt>
+</p>
+<li><p><tt><strong>defmacro.ss</strong></tt>  --  <code class=scheme><span class=keyword>define-macro</span></code> and <code class=scheme><span class=keyword>defmacro</span></code>
+</p>
+<li><p><tt><strong>etc.ss</strong></tt>  --  semi-standard procedures and syntax
+</p>
+<li><p><tt><strong>file.ss</strong></tt>  --  file-processing procedures
+</p>
+<li><p><tt><strong>include.ss</strong></tt>  --  textual source inclusion
+</p>
+<li><p><tt><strong>inflate.ss</strong></tt>  --  <tt>gunzip</tt>
+</p>
+<li><p><tt><strong>list.ss</strong></tt>  --  list-processing procedures
+</p>
+<li><p><tt><strong>match.ss</strong></tt>  --  pattern matching (backwards compatible library)
+</p>
+<li><p><tt><strong>math.ss</strong></tt>  --  arithmetic procedures and constants
+</p>
+<li><p><tt><strong>package.ss</strong></tt>  --  local-definition scope control
+</p>
+<li><p><tt><strong>pconvert.ss</strong></tt>  --  print values as expressions
+</p>
+<li><p><tt><strong>plt-match.ss</strong></tt>  --  pattern matching (improved syntax for patterns)
+</p>
+<li><p><tt><strong>pregexp.ss</strong></tt> - Perl-style regular expressions 
+</p>
+<li><p><tt><strong>pretty.ss</strong></tt>  --  pretty-printer
+</p>
+<li><p><tt><strong>restart.ss</strong></tt>  --  stand-alone MzScheme emulator
+</p>
+<li><p><tt><strong>sendevent.ss</strong></tt>  --  AppleEvents
+</p>
+<li><p><tt><strong>shared.ss</strong></tt>  --  graph constructor syntax
+</p>
+<li><p><tt><strong>spidey.ss</strong></tt>  --  MrSpidey annotation syntax
+</p>
+<li><p><tt><strong>string.ss</strong></tt>  --  string-processing procedures
+</p>
+<li><p><tt><strong>surrogate.ss</strong></tt>  --  a proxy-like design pattern
+</p>
+<li><p><tt><strong>thread.ss</strong></tt>  --  thread utilities
+</p>
+<li><p><tt><strong>trace.ss</strong></tt>  --  function tracing
+</p>
+<li><p><tt><strong>traceld.ss</strong></tt>  --  file-load tracing
+</p>
+<li><p><tt><strong>transcr.ss</strong></tt>  --  transcripts
+</p>
+<li><p><tt><strong>unit.ss</strong></tt>  --  component system
+</p>
+<li><p><tt><strong>unitsig.ss</strong></tt>  --  component system with signatures
+</p>
+</ul><p></p>
+<p>
+
+</p>
+<p>
+
+
+
+
+
+
+
+</p>
+<p>
+</p>
+<p>
+</p>
+<p>
+</p>
+<p>
+</p>
+<p>
+
+</p>
+<p>
+</p>
+<p>
+</p>
+<div align=right class=navigation><i>[Go to <span><a href="mzlib.html">first</a>, <a href="mzlib.html">previous</a></span><span>, <a href="mzlib-Z-H-2.html">next</a></span> page<span>; &nbsp;&nbsp;</span><span><a href="mzlib.html#node_toc_start">contents</a></span><span><span>; &nbsp;&nbsp;</span><a href="mzlib-Z-H-42.html#node_index_start">index</a></span>]</i></div><p></p>
+</body>
+</html>

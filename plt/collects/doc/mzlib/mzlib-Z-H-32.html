@@ -1,0 +1,108 @@
+<!doctype html public "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!--
+
+Generated from mzlib.tex by tex2page, v 2004-09-11
+(running on MzScheme 209, unix), 
+(c) Dorai Sitaram, 
+http://www.ccs.neu.edu/~dorai/tex2page/tex2page-doc.html
+
+-->
+<head>
+<title>
+PLT MzLib: Libraries Manual
+</title>
+<link rel="stylesheet" type="text/css" href="mzlib-Z-S.css" title=default>
+<meta name=robots content="noindex,follow">
+</head>
+<body>
+<div align=right class=navigation><i>[Go to <span><a href="mzlib.html">first</a>, <a href="mzlib-Z-H-31.html">previous</a></span><span>, <a href="mzlib-Z-H-33.html">next</a></span> page<span>; &nbsp;&nbsp;</span><span><a href="mzlib.html#node_toc_start">contents</a></span><span><span>; &nbsp;&nbsp;</span><a href="mzlib-Z-H-42.html#node_index_start">index</a></span>]</i></div><p></p>
+<a name="node_chap_32"></a>
+<h1 class=chapter>
+<div class=chapterheading><a href="mzlib.html#node_toc_node_chap_32">Chapter 32</a></div><br>
+<a href="mzlib.html#node_toc_node_chap_32"><tt><strong>shared.ss</strong></tt>: Graph Constructor Syntax</a></h1>
+<p><a name="node_idx_1062"></a><a name="node_idx_1064"></a></p>
+<p>
+
+<a name="node_kw_definitionshared"></a><a name="node_idx_1066"></a>
+</p>
+<p></p>
+<p>
+
+<code class=scheme>(<code class=scheme><span class=keyword>shared</span></code> <code class=scheme><span class=variable><code class=scheme>(</code>shared-binding <code class=scheme><tt>&middot;&middot;&middot;</tt>)</code> body-expr <tt>&middot;&middot;&middot;</tt><sup>1</sup></span></code>)</code> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<small>S</small><small>Y</small><small>N</small><small>T</small><small>A</small><small>X</small>
+</p>
+<p>
+Binds variables with shared structure according to
+<code class=scheme><span class=variable>shared-bindings</span></code> and then evaluates the <code class=scheme><span class=variable>body-expr</span></code>s,
+returning the result of the last expression.</p>
+<p>
+The <code class=scheme><span class=keyword>shared</span></code> form is similar to <code class=scheme><span class=keyword>letrec</span></code>. Each
+<code class=scheme><span class=variable>shared-binding</span></code> has the form:
+<tt></p>
+<p> 
+&nbsp;&nbsp;  (<code class=scheme><span class=variable>variable</span></code> <code class=scheme><span class=variable>value-expr</span></code>) 
+</p>
+<p></tt>
+The <code class=scheme><span class=variable>variable</span></code>s are bound to the result of <code class=scheme><span class=variable>value-expr</span></code>s in
+the same way as for a <code class=scheme>letrec</code> expression, except for
+<code class=scheme><span class=variable>value-expr</span></code>s with the following special forms (after partial
+expansion):
+</p>
+<ul><p>
+</p>
+<li><p><code class=scheme>(cons <code class=scheme><span class=variable>car-expr</span></code> <code class=scheme><span class=variable>cdr-expr</span></code>)</code></p>
+<p>
+</p>
+<li><p><code class=scheme>(list <code class=scheme><span class=variable>element-expr</span></code> <tt>&middot;&middot;&middot;</tt>)</code></p>
+<p>
+</p>
+<li><p><code class=scheme>(box <code class=scheme><span class=variable>box-expr</span></code>)</code></p>
+<p>
+</p>
+<li><p><code class=scheme>(vector <code class=scheme><span class=variable>element-expr</span></code> <tt>&middot;&middot;&middot;</tt>)</code></p>
+<p>
+</p>
+<li><p><code class=scheme>(<code class=scheme><span class=variable>prefix:</span></code>make-<code class=scheme><span class=variable>name</span></code> <code class=scheme><span class=variable>element-expr</span></code>
+<tt>&middot;&middot;&middot;</tt>)</code> where <code class=scheme><span class=variable>prefix:name</span></code> is the name of a structure type (or,
+more generally, is bound to expansion-time information about a
+structure type)</p>
+<p>
+</p>
+</ul><p>
+The <code class=scheme>cons</code> above means an identifier that is
+<code class=scheme>module-identifier=?</code> either to the <code class=scheme>cons</code> export from
+<code class=scheme>mzscheme</code> or to the top-level <code class=scheme>cons</code>. The same is true of
+<code class=scheme>list</code>, <code class=scheme>box</code>, and <code class=scheme>vector</code>. In the
+<code class=scheme><code class=scheme><span class=variable>prefix:</span></code>make-<code class=scheme><span class=variable>name</span></code></code> case, the expansion-time
+information associated with <code class=scheme><span class=variable>prefix:name</span></code> must provide a
+constructor binding and a complete set of field mutator bindings.</p>
+<p>
+For each of the special forms, the cons cell, list, box, vector, or
+structure is allocated with undefined content. The content
+expressions are not evaluated until all of the bindings have values;
+then the content expressions are evaluated and the values are
+inserted into the appropriate locations. In this way, values with
+shared structure (even cycles) can be constructed.</p>
+<p>
+Examples:
+<tt></p>
+<p> 
+&nbsp;&nbsp;  
+(shared ([a (cons 1 a)]) a) ; =&gt; infinite list of 1s <br>
+&nbsp;&nbsp;&nbsp;(shared ([a (cons 1 b)] <br>
+&nbsp;&nbsp;&nbsp;  &nbsp;&nbsp;&nbsp;       &nbsp;&nbsp;&nbsp;[b (cons 2 a)]) <br>
+&nbsp;&nbsp;&nbsp;  &nbsp;&nbsp;&nbsp;a) ; =&gt; (1 2 1 2 1 2 <tt>&middot;&middot;&middot;</tt>) <br>
+&nbsp;&nbsp;&nbsp;(shared ([a (vector b b b)] <br>
+&nbsp;&nbsp;&nbsp;  &nbsp;&nbsp;&nbsp;       &nbsp;&nbsp;&nbsp;[b (box 1)]) <br>
+&nbsp;&nbsp;&nbsp;  &nbsp;&nbsp;&nbsp;(set-box! (vector-ref a 0) 2) <br>
+&nbsp;&nbsp;&nbsp;  &nbsp;&nbsp;&nbsp;a) ; =&gt; #(#&amp;2 #&amp;2 #&amp;2)</p>
+<p>
+</p>
+<p></tt></p>
+<p>
+</p>
+<p>
+</p>
+<div align=right class=navigation><i>[Go to <span><a href="mzlib.html">first</a>, <a href="mzlib-Z-H-31.html">previous</a></span><span>, <a href="mzlib-Z-H-33.html">next</a></span> page<span>; &nbsp;&nbsp;</span><span><a href="mzlib.html#node_toc_start">contents</a></span><span><span>; &nbsp;&nbsp;</span><a href="mzlib-Z-H-42.html#node_index_start">index</a></span>]</i></div><p></p>
+</body>
+</html>

@@ -1,0 +1,449 @@
+\begin{theindex}
+
+  \item \File{$\sim$}, \expandhtmlindex{324}
+  \item (define ...) button, \expandhtmlindex{20}
+  \item \File{.LOCK.plt-prefs.ss}, \expandhtmlindex{636}
+  \item \File{.LOCKplt-prefs.ss}, \expandhtmlindex{634}
+  \item \File{.bak}, \expandhtmlindex{322}, \expandhtmlindex{618}
+  \item \File{.plt-prefs.ss}, \expandhtmlindex{626}, 
+		\expandhtmlindex{630}
+  \item \File{.sch}, \expandhtmlindex{610}
+  \item \File{.scm}, \expandhtmlindex{606}
+  \item \File{.ss}, \expandhtmlindex{608}
+  \item \File{/Library/Frameworks}, \expandhtmlindex{110}
+  \item {\tt >} prompt, \expandhtmlindex{54}
+
+  \indexspace
+
+  \item About DrScheme... menu item, \expandhtmlindex{296}
+  \item About {\drscheme}, \expandhtmlindex{2}
+  \item Add Teachpack... menu item, \expandhtmlindex{236}
+  \item Advanced Student language, \expandhtmlindex{80}
+  \item alpha renaming, \expandhtmlindex{32}
+  \item Ask about clearing test coverage preference, 
+		\expandhtmlindex{368}
+  \item Ask before changing save format preference, 
+		\expandhtmlindex{362}
+  \item Auto-save files preference, \expandhtmlindex{318}
+  \item Automatically print to postscript file preference, 
+		\expandhtmlindex{348}
+  \item autosave files, \expandhtmlindex{620}
+
+  \indexspace
+
+  \item backup files, \expandhtmlindex{616}
+  \item Backup files preference, \expandhtmlindex{320}
+  \item Beginning Student language, \expandhtmlindex{72}
+  \item Beginning Student language with List Abbreviations, 
+		\expandhtmlindex{74}
+  \item Break button, \expandhtmlindex{36}
+  \item Break menu item, \expandhtmlindex{242}
+  \item Bring Frame to Front... menu item, \expandhtmlindex{290}
+  \item Buttons, \expandhtmlindex{16}
+
+  \indexspace
+
+  \item changing keybindings, \expandhtmlindex{708}
+  \item Check for Updates... menu item, \expandhtmlindex{298}
+  \item Check Syntax, \expandhtmlindex{30}
+  \item Choose Language menu item, \expandhtmlindex{234}
+  \item Clear All Teachpacks menu item, \expandhtmlindex{238}
+  \item Clear Error Highlight menu item, \expandhtmlindex{246}
+  \item Clear menu item, \expandhtmlindex{198}
+  \item Close menu item, \expandhtmlindex{184}
+  \item Collapse menu item, \expandhtmlindex{232}
+  \item Color syntax interactively preference, \expandhtmlindex{346}
+  \item Comment Out with a Box menu item, \expandhtmlindex{260}
+  \item Comment Out with Semicolons menu item, \expandhtmlindex{258}
+  \item compiler, \expandhtmlindex{712}
+  \item configuration files, \expandhtmlindex{624}
+  \item constructor-style output, \expandhtmlindex{122}
+  \item Copy menu item, \expandhtmlindex{192}
+  \item Correct parens preference, \expandhtmlindex{356}
+  \item Count column numbers from one preference, \expandhtmlindex{330}
+  \item Create Executable... menu item, \expandhtmlindex{248}
+  \item Create Servlet... menu item, \expandhtmlindex{250}
+  \item Cut menu item, \expandhtmlindex{190}
+
+  \indexspace
+
+  \item defaults
+    \subitem site-specific, \expandhtmlindex{640}
+  \item \File{defaults}, \expandhtmlindex{644}
+  \item definitions window, \expandhtmlindex{8}
+  \item Delete menu item, \expandhtmlindex{196}
+  \item Disable All Test Cases menu item, \expandhtmlindex{264}
+  \item disk requirements, \expandhtmlindex{698}
+  \item \rawscm{display}, \expandhtmlindex{134}
+  \item Display line numbers in buffer; not character     offsets preference, 
+		\expandhtmlindex{332}
+  \item DLLs, \expandhtmlindex{100}
+  \item documentation
+    \subitem downloading, \expandhtmlindex{686}
+  \item DrScheme
+    \subitem Environment Variables, \expandhtmlindex{662}
+  \item DrScheme Files, \expandhtmlindex{602}
+  \item DrScheme Teachpacks, \expandhtmlindex{650}
+
+  \indexspace
+
+  \item editors, \expandhtmlindex{40}
+  \item Emacs keybindings, \expandhtmlindex{378}
+  \item Enable keybindings in menus preference, \expandhtmlindex{344}
+  \item Environment Variables, \expandhtmlindex{660}
+  \item error highlighting, \expandhtmlindex{62}
+  \item Errors, \expandhtmlindex{60}
+  \item evaluating expressions, \expandhtmlindex{56}
+  \item Executables, \expandhtmlindex{94}
+  \item execution speed, \expandhtmlindex{718}
+  \item Extending DrScheme, \expandhtmlindex{646}
+
+  \indexspace
+
+  \item file extensions, \expandhtmlindex{604}
+  \item filename button, \expandhtmlindex{18}
+  \item Find Again menu item, \expandhtmlindex{206}
+  \item Find menu item, \expandhtmlindex{204}, \expandhtmlindex{338}, 
+		\expandhtmlindex{340}
+  \item Flash paren match preference, \expandhtmlindex{358}
+  \item flashing parenthesis matches, \expandhtmlindex{42}
+  \item font preference, \expandhtmlindex{312}
+  \item formatting Scheme code, \expandhtmlindex{46}
+  \item Frequently Asked Questions, \expandhtmlindex{680}
+  \item frequently asked questions, \expandhtmlindex{682}
+
+  \indexspace
+
+  \item graphical interface, \expandhtmlindex{6}
+    \subitem details, \expandhtmlindex{146}
+  \item gray highlight regions, \expandhtmlindex{44}
+
+  \indexspace
+
+  \item Help Desk, \expandhtmlindex{702}
+  \item Help Desk menu item, \expandhtmlindex{294}
+  \item Help menu item, \expandhtmlindex{306}
+  \item Hide Definitions menu item, \expandhtmlindex{216}
+  \item Hide Interactions menu item, \expandhtmlindex{220}
+  \item Hide Profile menu item, \expandhtmlindex{228}
+  \item Hide Program Contour menu item, \expandhtmlindex{224}
+  \item Highlight between matching parens preference, 
+		\expandhtmlindex{354}
+
+  \indexspace
+
+  \item I/O, \expandhtmlindex{128}
+  \item Indenting preferences, \expandhtmlindex{314}
+  \item indenting Scheme code, \expandhtmlindex{48}
+  \item Input and Output, \expandhtmlindex{126}
+  \item Insert Comment Box menu item, \expandhtmlindex{266}
+  \item Insert Delta (define) menu item, \expandhtmlindex{276}
+  \item Insert Fraction... menu item, \expandhtmlindex{270}
+  \item Insert Image... menu item, \expandhtmlindex{268}
+  \item Insert Java Comment Box menu item, \expandhtmlindex{278}
+  \item Insert Java Interactions Box menu item, \expandhtmlindex{280}
+  \item Insert Lambda menu item, \expandhtmlindex{274}
+  \item Insert Large Letters... menu item, \expandhtmlindex{272}
+  \item Insert Scheme Box menu item, \expandhtmlindex{284}
+  \item Insert Scheme Splice Box menu item, \expandhtmlindex{286}
+  \item Insert Test Case menu item, \expandhtmlindex{288}
+  \item Insert XML Box menu item, \expandhtmlindex{282}
+  \item Install PLT File... menu item, \expandhtmlindex{158}
+  \item installation instructions, \expandhtmlindex{694}
+  \item Interact with DrScheme in English menu item, 
+		\expandhtmlindex{304}
+  \item interactions window, \expandhtmlindex{10}, \expandhtmlindex{52}
+  \item Interface Essentials, \expandhtmlindex{4}
+  \item Interface Reference, \expandhtmlindex{144}
+  \item Intermediate Student language, \expandhtmlindex{76}
+  \item Intermediate Student with Lambda        language, 
+		\expandhtmlindex{78}
+
+  \indexspace
+
+  \item keybindings, \expandhtmlindex{376}
+    \subitem A-C-down, \expandhtmlindex{480}
+    \subitem A-C-left, \expandhtmlindex{456}
+    \subitem A-C-right, \expandhtmlindex{464}
+    \subitem A-C-up, \expandhtmlindex{472}
+    \subitem b, \expandhtmlindex{596}, \expandhtmlindex{600}
+    \subitem C-+, \expandhtmlindex{560}
+    \subitem C-\_, \expandhtmlindex{556}
+    \subitem C-a, \expandhtmlindex{412}
+    \subitem C-b, \expandhtmlindex{384}
+    \subitem C-d, \expandhtmlindex{484}
+    \subitem C-e, \expandhtmlindex{416}
+    \subitem C-f, \expandhtmlindex{380}
+    \subitem C-h, \expandhtmlindex{488}
+    \subitem C-k, \expandhtmlindex{500}
+    \subitem C-n, \expandhtmlindex{420}
+    \subitem C-p, \expandhtmlindex{424}
+    \subitem C-r, \expandhtmlindex{586}
+    \subitem C-s, \expandhtmlindex{582}
+    \subitem C-t, \expandhtmlindex{520}
+    \subitem C-v, \expandhtmlindex{396}
+    \subitem C-w, \expandhtmlindex{512}
+    \subitem C-x C-s, \expandhtmlindex{574}
+    \subitem C-x C-w, \expandhtmlindex{578}
+    \subitem C-x u, \expandhtmlindex{564}
+    \subitem C-y, \expandhtmlindex{516}
+    \subitem copy selection to clipboard, \expandhtmlindex{510}
+    \subitem cut complete sexpression, \expandhtmlindex{538}
+    \subitem delete backward one character, \expandhtmlindex{490}
+    \subitem delete backward one word, \expandhtmlindex{498}
+    \subitem delete forward one character, \expandhtmlindex{486}
+    \subitem delete forward one S-expression, \expandhtmlindex{506}
+    \subitem delete forward one word, \expandhtmlindex{494}
+    \subitem delete forward to end of line, \expandhtmlindex{502}
+    \subitem delete selection to clipboard (cut), \expandhtmlindex{514}
+    \subitem f5, \expandhtmlindex{590}
+    \subitem M-$<$, \expandhtmlindex{404}
+    \subitem M-$>$, \expandhtmlindex{408}
+    \subitem M-(, \expandhtmlindex{540}
+    \subitem M-[, \expandhtmlindex{544}
+    \subitem M-\{, \expandhtmlindex{548}
+    \subitem M-b, \expandhtmlindex{392}
+    \subitem M-C-b, \expandhtmlindex{432}
+    \subitem M-C-d, \expandhtmlindex{440}
+    \subitem M-C-down, \expandhtmlindex{476}
+    \subitem M-C-f, \expandhtmlindex{428}
+    \subitem M-C-k, \expandhtmlindex{504}, \expandhtmlindex{536}
+    \subitem M-C-left, \expandhtmlindex{452}
+    \subitem M-C-m, \expandhtmlindex{532}
+    \subitem M-C-p, \expandhtmlindex{448}
+    \subitem M-C-right, \expandhtmlindex{460}
+    \subitem M-C-SPACE, \expandhtmlindex{444}
+    \subitem M-C-t, \expandhtmlindex{528}
+    \subitem M-C-u, \expandhtmlindex{436}
+    \subitem M-C-up, \expandhtmlindex{468}
+    \subitem M-d, \expandhtmlindex{492}
+    \subitem M-DEL, \expandhtmlindex{496}
+    \subitem M-f, \expandhtmlindex{388}
+    \subitem M-n, \expandhtmlindex{598}
+    \subitem M-o, \expandhtmlindex{570}
+    \subitem M-p, \expandhtmlindex{594}
+    \subitem M-S-L, \expandhtmlindex{552}
+    \subitem M-t, \expandhtmlindex{524}
+    \subitem M-v, \expandhtmlindex{400}
+    \subitem M-w, \expandhtmlindex{508}
+    \subitem match parentheses backward, \expandhtmlindex{450}
+    \subitem move backward one character, \expandhtmlindex{386}
+    \subitem move backward one page, \expandhtmlindex{402}
+    \subitem move backward one S-expression, \expandhtmlindex{434}
+    \subitem move backward one word, \expandhtmlindex{394}
+    \subitem move backwards to the nearest editor box, 
+		\expandhtmlindex{454}, \expandhtmlindex{458}
+    \subitem move down into a nested S-expression, 
+		\expandhtmlindex{442}
+    \subitem move down into an embedded editor, \expandhtmlindex{478}, 
+		\expandhtmlindex{482}
+    \subitem move forward one character, \expandhtmlindex{382}
+    \subitem move forward one page, \expandhtmlindex{398}
+    \subitem move forward one S-expression, \expandhtmlindex{430}
+    \subitem move forward one word, \expandhtmlindex{390}
+    \subitem move forward to the nearest editor box, 
+		\expandhtmlindex{462}, \expandhtmlindex{466}
+    \subitem move to beginning of file, \expandhtmlindex{406}
+    \subitem move to beginning of line (left), \expandhtmlindex{414}
+    \subitem move to end of file, \expandhtmlindex{410}
+    \subitem move to end of line (right), \expandhtmlindex{418}
+    \subitem move to next line (down), \expandhtmlindex{422}
+    \subitem move to previous line (up), \expandhtmlindex{426}
+    \subitem move up out of an embedded editor, \expandhtmlindex{470}, 
+		\expandhtmlindex{474}
+    \subitem move up out of an S-expression, \expandhtmlindex{438}
+    \subitem paste from clipboard (yank), \expandhtmlindex{518}
+    \subitem redo, \expandhtmlindex{562}
+    \subitem Run, \expandhtmlindex{592}
+    \subitem save file, \expandhtmlindex{576}
+    \subitem save file under new name, \expandhtmlindex{580}
+    \subitem search for string backward, \expandhtmlindex{588}
+    \subitem search for string forward, \expandhtmlindex{584}
+    \subitem select forward S-expression, \expandhtmlindex{446}
+    \subitem toggle dark green marking of matching parenthesis, 
+		\expandhtmlindex{534}
+    \subitem toggle overwrite mode, \expandhtmlindex{572}
+    \subitem transpose characters, \expandhtmlindex{522}
+    \subitem transpose sexpressions, \expandhtmlindex{530}
+    \subitem transpose words, \expandhtmlindex{526}
+    \subitem undo, \expandhtmlindex{558}, \expandhtmlindex{566}
+    \subitem wrap selection in curly brackets, \expandhtmlindex{550}
+    \subitem wrap selection in parentheses, \expandhtmlindex{542}
+    \subitem wrap selection in square brackets, \expandhtmlindex{546}
+    \subitem wrap selection in {\tt (lambda () ...)} and put the insertion point in the arglist of the lambda, 
+		\expandhtmlindex{554}
+  \item Keybindings menu item, \expandhtmlindex{210}
+  \item Keyboard Shortcuts, \expandhtmlindex{372}
+  \item keyboard shortcuts, \expandhtmlindex{374}
+  \item Kill menu item, \expandhtmlindex{244}
+
+  \indexspace
+
+  \item language levels, \see{ languages}{66}
+  \item Languages, \expandhtmlindex{64}
+  \item languages, \expandhtmlindex{68}
+    \subitem changing, \expandhtmlindex{70}
+    \subitem extending, \expandhtmlindex{648}
+  \item launcher executables, \expandhtmlindex{96}
+  \item \File{libmred[vers].dll}, \expandhtmlindex{106}
+  \item \File{libmzgc[vers].dll}, \expandhtmlindex{104}
+  \item \File{libmzsch[vers].dll}, \expandhtmlindex{102}
+  \item license, \expandhtmlindex{688}
+  \item Limit interactions size preference, \expandhtmlindex{352}
+  \item Log Definitions and Interactions... menu item, 
+		\expandhtmlindex{176}
+
+  \indexspace
+
+  \item Map delete to backspace preference, \expandhtmlindex{326}
+  \item Memory and Performance, \expandhtmlindex{716}
+  \item memory requirements, \expandhtmlindex{692}
+  \item menu items, \expandhtmlindex{150}
+  \item Menus, \expandhtmlindex{148}
+  \item Module Browser... menu item, \expandhtmlindex{252}
+  \item {\tt module} language, \expandhtmlindex{90}
+  \item Most Recent Window menu item, \expandhtmlindex{292}
+  \item MrFlow, \expandhtmlindex{704}
+  \item MrSpidey, \expandhtmlindex{706}
+  \item multimedia file format, \expandhtmlindex{614}
+
+  \indexspace
+
+  \item New menu item, \expandhtmlindex{152}
+  \item Number of recent items preference, \expandhtmlindex{316}
+  \item numbers
+    \subitem printing, \expandhtmlindex{92}
+
+  \indexspace
+
+  \item Only warn once when executions and interactions are not     synchronized preference, 
+		\expandhtmlindex{366}
+  \item Open files in separate tabs (not separate     windows) preference, 
+		\expandhtmlindex{350}
+  \item Open Recent menu item, \expandhtmlindex{156}
+  \item Open... menu item, \expandhtmlindex{154}
+  \item output format, \expandhtmlindex{116}
+  \item overwrite mode, \expandhtmlindex{568}
+
+  \indexspace
+
+  \item Parenthesis highlight color preference, \expandhtmlindex{360}
+  \item Paste menu item, \expandhtmlindex{194}
+  \item plain-text file format, \expandhtmlindex{612}
+  \item PLT Graphical (MrEd) language, \expandhtmlindex{86}
+  \item PLT Pretty Big language, \expandhtmlindex{88}
+  \item PLT Textual (MzScheme) language, \expandhtmlindex{84}
+  \item \File{plt-prefs.ss}, \expandhtmlindex{628}, 
+		\expandhtmlindex{632}, \expandhtmlindex{642}
+  \item \File{PLT\_MrEd}, \expandhtmlindex{112}
+  \item \File{PLT\_MzScheme}, \expandhtmlindex{108}
+  \item PLTDRBREAK, \expandhtmlindex{674}
+  \item PLTDRCM, \expandhtmlindex{668}
+  \item PLTDRDEBUG, \expandhtmlindex{672}
+  \item PLTDRTESTS, \expandhtmlindex{676}
+  \item PLTHDCM, \expandhtmlindex{670}
+  \item PLTNOTOOLS, \expandhtmlindex{664}
+  \item PLTONLYTOOL, \expandhtmlindex{666}
+  \item PLTSTRINGCONSTANTS, \expandhtmlindex{678}
+  \item preference files, \expandhtmlindex{622}
+  \item Preferences, \expandhtmlindex{308}
+  \item preferences, \expandhtmlindex{310}
+    \subitem site-specific, \expandhtmlindex{638}
+  \item Preferences... menu item, \expandhtmlindex{212}
+  \item Print Definitions... menu item, \expandhtmlindex{178}
+  \item Print Interactions... menu item, \expandhtmlindex{180}
+  \item Printed Results, \expandhtmlindex{114}
+  \item printing format, \expandhtmlindex{118}
+  \item proxy, \expandhtmlindex{370}
+
+  \indexspace
+
+  \item quasiquote-style output, \expandhtmlindex{124}
+
+  \indexspace
+
+  \item R5RS, \expandhtmlindex{82}
+  \item \rawscm{read}, \expandhtmlindex{130}
+  \item \rawscm{read-char}, \expandhtmlindex{132}
+  \item read-eval-print loop, \expandhtmlindex{120}
+  \item recycling icon, \expandhtmlindex{14}
+  \item Redo menu item, \expandhtmlindex{188}
+  \item Reindent All menu item, \expandhtmlindex{256}
+  \item Reindent menu item, \expandhtmlindex{254}
+  \item Related Web Sites menu item, \expandhtmlindex{300}
+  \item Replace \& Find Again menu item, \expandhtmlindex{208}
+  \item Reuse existing frames when opening new files preference, 
+		\expandhtmlindex{342}
+  \item Revert menu item, \expandhtmlindex{160}
+  \item Run button, \expandhtmlindex{58}
+  \item Run menu item, \expandhtmlindex{240}
+
+  \indexspace
+
+  \item Save button, \expandhtmlindex{22}
+  \item Save Definitions As Text... menu item, \expandhtmlindex{168}
+  \item Save Definitions As... menu item, \expandhtmlindex{164}
+  \item Save Definitions menu item, \expandhtmlindex{162}
+  \item Save Interactions As Text... menu item, \expandhtmlindex{174}
+  \item Save Interactions As... menu item, \expandhtmlindex{172}
+  \item Save Interactions menu item, \expandhtmlindex{170}
+  \item Save Other menu item, \expandhtmlindex{166}
+  \item Search in Files... menu item, \expandhtmlindex{182}
+  \item Select All menu item, \expandhtmlindex{200}
+  \item Show Definitions menu item, \expandhtmlindex{214}
+  \item Show Interactions menu item, \expandhtmlindex{218}
+  \item Show Profile menu item, \expandhtmlindex{226}
+  \item Show Program Contour menu item, \expandhtmlindex{222}
+  \item Show status-line preference, \expandhtmlindex{328}
+  \item Split menu item, \expandhtmlindex{230}
+  \item stand-alone executables, \expandhtmlindex{98}, 
+		\expandhtmlindex{714}
+  \item status line, \expandhtmlindex{12}
+  \item Step button, \expandhtmlindex{24}
+  \item stepper, \expandhtmlindex{26}
+  \item storage requirements, \expandhtmlindex{696}
+  \item Supported Operating Systems and Installation, 
+		\expandhtmlindex{684}
+  \item supported platforms, \expandhtmlindex{690}
+
+  \indexspace
+
+  \item tail calls, \expandhtmlindex{34}
+  \item Teachpacks, \expandhtmlindex{654}
+    \subitem implementing, \expandhtmlindex{656}
+  \item Test Cases, \expandhtmlindex{142}
+  \item The Editor, \expandhtmlindex{38}
+  \item The Interactions Window, \expandhtmlindex{50}
+  \item The Stepper, \expandhtmlindex{28}
+  \item Tool Web Sites menu item, \expandhtmlindex{302}
+  \item Tools, \expandhtmlindex{658}
+  \item tools, \expandhtmlindex{652}
+  \item Troubleshooting, \expandhtmlindex{720}
+
+  \indexspace
+
+  \item Uncomment menu item, \expandhtmlindex{262}
+  \item Undo menu item, \expandhtmlindex{186}
+  \item Use separate dialog for searching preference, 
+		\expandhtmlindex{336}
+  \item Using DrScheme, \expandhtmlindex{700}
+
+  \indexspace
+
+  \item Verify exit preference, \expandhtmlindex{364}
+
+  \indexspace
+
+  \item Wrap Text menu item, \expandhtmlindex{202}
+  \item Wrap words in editor buffers preference, \expandhtmlindex{334}
+  \item \rawscm{write}, \expandhtmlindex{136}
+
+  \indexspace
+
+  \item XML, \expandhtmlindex{138}, \expandhtmlindex{140}
+
+  \indexspace
+
+  \item yellow and black messages, \expandhtmlindex{710}
+
+\end{theindex}

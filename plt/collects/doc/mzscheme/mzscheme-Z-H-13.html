@@ -1,0 +1,154 @@
+<!doctype html public "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!--
+
+Generated from mzscheme.tex by tex2page, v 2004-09-11
+(running on MzScheme 209, unix), 
+(c) Dorai Sitaram, 
+http://www.ccs.neu.edu/~dorai/tex2page/tex2page-doc.html
+
+-->
+<head>
+<title>
+PLT MzScheme: Language Manual
+</title>
+<link rel="stylesheet" type="text/css" href="mzscheme-Z-S.css" title=default>
+<meta name=robots content="noindex,follow">
+</head>
+<body>
+<div align=right class=navigation><i>[Go to <span><a href="mzscheme.html">first</a>, <a href="mzscheme-Z-H-12.html">previous</a></span><span>, <a href="mzscheme-Z-H-14.html">next</a></span> page<span>; &nbsp;&nbsp;</span><span><a href="mzscheme.html#node_toc_start">contents</a></span><span><span>; &nbsp;&nbsp;</span><a href="mzscheme-Z-H-19.html#node_index_start">index</a></span>]</i></div><p></p>
+<a name="node_chap_13"></a>
+<h1 class=chapter>
+<div class=chapterheading><a href="mzscheme.html#node_toc_node_chap_13">Chapter 13</a></div><br>
+<a href="mzscheme.html#node_toc_node_chap_13">Memory Management</a></h1>
+<p><a name="node_idx_2294"></a></p>
+<p>
+</p>
+<a name="node_sec_13.1"></a>
+<h2><a href="mzscheme.html#node_toc_node_sec_13.1">13.1&nbsp;&nbsp;Weak Boxes</a></h2>
+<p><a name="node_idx_2296"></a></p>
+<p>
+<a name="node_idx_2298"></a>
+A <strong>weak box</strong> is similar to a normal box (see section&nbsp;<a href="mzscheme-Z-H-3.html#node_sec_3.9">3.9</a>),
+but when the automatic memory manager can prove that the content
+value of a weak box is only reachable via weak boxes, the content of
+the weak box is replaced with <code class=scheme><span class=selfeval>#f</span></code>.</p>
+<p>
+</p>
+<ul><p>
+</p>
+<li><p><a name="node_idx_2300"></a><a name="node_kw_definitionmake-weak-box"></a><code class=scheme>(make-weak-box</code><tt>&nbsp;</tt><code class=scheme><span class=variable>v</span></code><code class=scheme>)</code> returns a new weak box that initially
+contains <code class=scheme><span class=variable>v</span></code>.</p>
+<p>
+</p>
+<li><p><a name="node_idx_2302"></a><a name="node_kw_definitionweak-box-value"></a><code class=scheme>(weak-box-value</code><tt>&nbsp;</tt><code class=scheme><span class=variable>weak-box</span></code><code class=scheme>)</code> returns the value contained in
+<code class=scheme><span class=variable>weak-box</span></code>. If the memory manager has proven that the previous
+content value of <code class=scheme><span class=variable>weak-box</span></code> was reachable only through weak
+boxes, then <code class=scheme><span class=selfeval>#f</span></code> is returned.</p>
+<p>
+</p>
+<li><p><a name="node_idx_2304"></a><a name="node_kw_definitionweak-box_Q_"></a><code class=scheme>(weak-box?</code><tt>&nbsp;</tt><code class=scheme><span class=variable>v</span></code><code class=scheme>)</code> returns <code class=scheme><span class=selfeval>#t</span></code> if <code class=scheme><span class=variable>v</span></code> is a weak box,
+<code class=scheme><span class=selfeval>#f</span></code> otherwise.</p>
+<p>
+</p>
+</ul><p></p>
+<p>
+</p>
+<a name="node_sec_13.2"></a>
+<h2><a href="mzscheme.html#node_toc_node_sec_13.2">13.2&nbsp;&nbsp;Will Executors</a></h2>
+<p><a name="node_idx_2306"></a></p>
+<p>
+<a name="node_idx_2308"></a> <a name="node_idx_2310"></a>
+<a name="node_idx_2312"></a>
+A <strong>will executor</strong> manages a collection of values and
+associated <strong>will procedures</strong>. The will procedure for each
+value is ready to be executed when the value has been proven (by the
+automatic memory manager) to be unreachable, except through will
+executors, weak boxes, weak hash table keys, and custodians. A will
+is useful for triggering clean-up actions on data associated with an
+unreachable value, such as closing a port embedded in an object when
+the object is no longer used.</p>
+<p>
+Calling the <code class=scheme><code class=scheme>will-execute</code></code> or <code class=scheme><code class=scheme>will-try-execute</code></code>
+procedure executes a will that is ready in the specified will
+executor. Wills are not executed automatically, because certain
+programs need control to avoid race conditions. However, a program
+can create thread whose sole job is to execute wills for a particular
+executor.</p>
+<p>
+</p>
+<ul><p>
+</p>
+<li><p><a name="node_idx_2314"></a><a name="node_kw_definitionmake-will-executor"></a><code class=scheme>(make-will-executor</code><code class=scheme>)</code> returns a new will executor with no
+managed values.</p>
+<p>
+</p>
+<li><p><a name="node_idx_2316"></a><a name="node_kw_definitionwill-executor_Q_"></a><code class=scheme>(will-executor?</code><tt>&nbsp;</tt><code class=scheme><span class=variable>v</span></code><code class=scheme>)</code> returns <code class=scheme><span class=selfeval>#t</span></code> if <code class=scheme><span class=variable>v</span></code> is a will
+executor, <code class=scheme><span class=selfeval>#f</span></code> otherwise.</p>
+<p>
+</p>
+<li><p><a name="node_idx_2318"></a><a name="node_kw_definitionwill-register"></a><code class=scheme>(will-register</code><tt>&nbsp;</tt><code class=scheme><span class=variable>executor v proc</span></code><code class=scheme>)</code> registers the value <code class=scheme><span class=variable>v</span></code>
+with the will procedure <code class=scheme><span class=variable>proc</span></code> in the will executor
+<code class=scheme><span class=variable>executor</span></code>. When <code class=scheme><span class=variable>v</span></code> is proven unreachable, then the
+procedure <code class=scheme><span class=variable>proc</span></code> is ready to be called with <code class=scheme><span class=variable>v</span></code> as its
+argument via <code class=scheme><code class=scheme>will-execute</code></code> or <code class=scheme><code class=scheme>will-try-execute</code></code>.</p>
+<p>
+</p>
+<li><p><a name="node_idx_2320"></a><a name="node_kw_definitionwill-execute"></a><code class=scheme>(will-execute</code><tt>&nbsp;</tt><code class=scheme><span class=variable>executor</span></code><code class=scheme>)</code> invokes the will procedure for a
+single ``unreachable'' value registered with the executor
+<code class=scheme><span class=variable>executable</span></code>. The value(s) returned by the will procedure is the
+result of the <code class=scheme><code class=scheme>will-execute</code></code> call.  If no will is ready for
+immediate execution, <code class=scheme><code class=scheme>will-execute</code></code> blocks until one is ready.</p>
+<p>
+</p>
+<li><p><a name="node_idx_2322"></a><a name="node_kw_definitionwill-try-execute"></a><code class=scheme>(will-try-execute</code><tt>&nbsp;</tt><code class=scheme><span class=variable>executor</span></code><code class=scheme>)</code> is like <code class=scheme><code class=scheme>will-execute</code></code> if a
+will is ready for immediate execution. Otherwise, <code class=scheme><span class=selfeval>#f</span></code> is
+returned.</p>
+<p>
+</p>
+</ul><p></p>
+<p>
+If a value is registered with multiple wills (in one or multiple
+executors), the wills are readied in the reverse order of
+registration. Since readying a will procedure makes the value
+reachable again, the will must be executed and the value must be
+proven unreachable once again before another of the wills is readied
+or executed.  However, wills for distinct unreachable values are
+readied at the same time, regardless of whether the values are
+reachable from each other.</p>
+<p>
+If the content value of a weak box (and/or a key in a weak hash table)
+is registered with a will executor, the weak box's content is not
+changed to <code class=scheme><span class=selfeval>#f</span></code> (and/or the weak hash table entry is not
+removed) until all wills have been executed for the value and the
+value has been proven unreachable again.</p>
+<p>
+</p>
+<a name="node_sec_13.3"></a>
+<h2><a href="mzscheme.html#node_toc_node_sec_13.3">13.3&nbsp;&nbsp;Garbage Collection</a></h2>
+<p><a name="node_idx_2324"></a></p>
+<p>
+<a name="node_idx_2326"></a><a name="node_kw_definitioncollect-garbage"></a><code class=scheme>(collect-garbage</code><code class=scheme>)</code> forces an immediate garbage collection. Since
+MzScheme uses a ``conservative'' garbage collector, some effectively
+unreachable data may remain uncollected (because the collector cannot
+prove that it is unreachable). This procedure provides some control
+over the timing of collections, but garbage will obviously be
+collected even if this procedure is never called.</p>
+<p>
+<a name="node_idx_2328"></a><a name="node_kw_definitioncurrent-memory-use"></a><code class=scheme>(current-memory-use</code><tt>&nbsp;</tt>[<code class=scheme><span class=variable>custodian</span></code>]<code class=scheme>)</code> returns an estimate of the
+number of bytes of memory occupied by reachable data from
+<code class=scheme><span class=variable>custodian</span></code>. (The estimate is calculated <em>without</em> performing
+an immediate garbage collection; performing a collection generally
+decreases the number returned by <code class=scheme><code class=scheme>current-memory-use</code></code>.)  If
+<code class=scheme><span class=variable>custodian</span></code> is not provided, the estimate is a total reachable
+from any custodians. Unless MzScheme is compiled with special support
+for memory accounting, the estimate is the same (i.e., all memory)
+for any individual custodian.</p>
+<p>
+<a name="node_idx_2330"></a><a name="node_kw_definitiondump-memory-stats"></a><code class=scheme>(dump-memory-stats</code><code class=scheme>)</code> dumps information about memory usage to the
+(low-level) standard output port.</p>
+<p>
+</p>
+<div align=right class=navigation><i>[Go to <span><a href="mzscheme.html">first</a>, <a href="mzscheme-Z-H-12.html">previous</a></span><span>, <a href="mzscheme-Z-H-14.html">next</a></span> page<span>; &nbsp;&nbsp;</span><span><a href="mzscheme.html#node_toc_start">contents</a></span><span><span>; &nbsp;&nbsp;</span><a href="mzscheme-Z-H-19.html#node_index_start">index</a></span>]</i></div><p></p>
+</body>
+</html>

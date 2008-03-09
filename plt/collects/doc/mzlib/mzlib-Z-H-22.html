@@ -1,0 +1,423 @@
+<!doctype html public "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!--
+
+Generated from mzlib.tex by tex2page, v 2004-09-11
+(running on MzScheme 209, unix), 
+(c) Dorai Sitaram, 
+http://www.ccs.neu.edu/~dorai/tex2page/tex2page-doc.html
+
+-->
+<head>
+<title>
+PLT MzLib: Libraries Manual
+</title>
+<link rel="stylesheet" type="text/css" href="mzlib-Z-S.css" title=default>
+<meta name=robots content="noindex,follow">
+</head>
+<body>
+<div align=right class=navigation><i>[Go to <span><a href="mzlib.html">first</a>, <a href="mzlib-Z-H-21.html">previous</a></span><span>, <a href="mzlib-Z-H-23.html">next</a></span> page<span>; &nbsp;&nbsp;</span><span><a href="mzlib.html#node_toc_start">contents</a></span><span><span>; &nbsp;&nbsp;</span><a href="mzlib-Z-H-42.html#node_index_start">index</a></span>]</i></div><p></p>
+<a name="node_chap_22"></a>
+<h1 class=chapter>
+<div class=chapterheading><a href="mzlib.html#node_toc_node_chap_22">Chapter 22</a></div><br>
+<a href="mzlib.html#node_toc_node_chap_22"><tt><strong>match.ss</strong></tt>: Pattern Matching</a></h1>
+<p><a name="node_idx_796"></a><a name="node_idx_798"></a></p>
+<p>
+This library is a backwards compatibility layer. For new match
+expressions, consider using Chapter&nbsp;<a href="mzlib-Z-H-26.html#node_chap_26">26</a>.</p>
+<p>
+This library provides functions for pattern-matching Scheme
+values. (This chapter adapted from Andrew K.&nbsp;Wright and Bruce Duba's
+original manual, entitled <i>Pattern Matching for Scheme</i>. The PLT
+Scheme port was contributed by Bruce Hauman.)
+<a name="node_idx_800"></a><a name="node_kw_definitionmatch"></a><a name="node_kw_definitionmatch-lambda"></a><a name="node_kw_definitionmatch-lambda*"></a><a name="node_kw_definitionmatch-let"></a><a name="node_kw_definitionmatch-let*"></a><a name="node_kw_definitionmatch-letrec"></a><a name="node_kw_definitionmatch-define"></a><a name="node_idx_802"></a><a name="node_idx_804"></a><a name="node_idx_806"></a><a name="node_idx_808"></a><a name="node_idx_810"></a><a name="node_idx_812"></a><a name="node_idx_814"></a>The following forms are provided:
+</p>
+<div align=left><pre class=scheme>(<span class=keyword>match</span> <span class=variable>expr</span> <span class=variable>clause</span> ...)
+(<span class=keyword>match-lambda</span> <span class=variable>clause</span> ...)
+(<span class=keyword>match-lambda*</span> <span class=variable>clause</span> ...)
+(<span class=keyword>match-let</span> ((<span class=variable>pat</span> <span class=variable>expr</span>) ...) <span class=variable>expr</span> <tt>&middot;&middot;&middot;</tt><sup>1</sup>)
+(<span class=keyword>match-let*</span> ((<span class=variable>pat</span> <span class=variable>expr</span>) ...) <span class=variable>expr</span> <tt>&middot;&middot;&middot;</tt><sup>1</sup>)
+(<span class=keyword>match-letrec</span> ((<span class=variable>pat</span> <span class=variable>expr</span>) ...) <span class=variable>expr</span> <tt>&middot;&middot;&middot;</tt><sup>1</sup>)
+(<span class=keyword>match-let</span> <span class=variable>var</span> ((<span class=variable>pat</span> <span class=variable>expr</span>) ...) <span class=variable>expr</span> <tt>&middot;&middot;&middot;</tt><sup>1</sup>)
+(<span class=keyword>match-define</span> <span class=variable>pat</span> <span class=variable>expr</span>)
+
+<span class=variable>clause</span> is one of
+ (<span class=variable>pat</span> <span class=variable>expr</span> <tt>&middot;&middot;&middot;</tt><sup>1</sup>)
+ (<span class=variable>pat</span> (<span class=keyword>=&gt;</span> <span class=variable>identifier</span>) <span class=variable>expr</span> <tt>&middot;&middot;&middot;</tt><sup>1</sup>)
+
+</pre></div><p>
+
+</p>
+<p>
+
+
+
+</p>
+<p>
+
+
+
+
+Figure&nbsp;<a href="#node_fig_Temp_6">1</a> gives the full syntax for <code class=scheme><span class=variable>pat</span></code> patterns.
+</p>
+<a name="node_fig_Temp_6"></a>
+<div class=figure align=center><table width=100%><tr><td align=center><p>
+</p>
+<div align=center><table><tr><td>
+
+<tt><p>
+<code class=scheme><span class=variable>pat</span></code><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;::=&nbsp;</tt><code class=scheme><span class=variable>identifier</span></code><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt>Match anything, bind <code class=scheme><span class=variable>identifier</span></code> as a variable<tt>&nbsp;&nbsp;</tt> <br>
+<tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;</tt>_<tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt>Match anything<tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt> <br>
+<tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;</tt><code class=scheme><span class=variable>literal</span></code><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt>Match <code class=scheme><span class=variable>literal</span></code><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt> <br>
+<tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;</tt>'<code class=scheme><span class=variable>datum</span></code><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt>Match <code class=scheme>equal?</code> <code class=scheme><span class=variable>datum</span></code><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt> <br>
+<tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;</tt>'<code class=scheme><span class=variable>symbol</span></code><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt>Match <code class=scheme>equal?</code> <code class=scheme><span class=variable>symbol</span></code> (special case of <code class=scheme><span class=variable>datum</span></code>)<tt>&nbsp;&nbsp;&nbsp;&nbsp;</tt> <br>
+<tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;</tt><tt>(</tt><code class=scheme><span class=variable>lvp</span></code> <code class=scheme><span class=keyword><tt>.</tt><tt>.</tt></span></code><tt>.</tt><tt>)</tt><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt>Match sequence of <code class=scheme><span class=variable>lvp</span></code>s<tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt> <br>
+<tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;</tt><tt>(</tt><code class=scheme><span class=variable>lvp</span></code> <code class=scheme><span class=keyword><tt>.</tt><tt>.</tt></span></code><tt>.</tt> <tt>.</tt> <code class=scheme><span class=variable>pat</span></code><tt>)</tt><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt>Match sequence of <code class=scheme><span class=variable>lvp</span></code>s <code class=scheme>cons</code>ed onto a <code class=scheme><span class=variable>pat</span></code><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt> <br>
+<tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;</tt>#<tt>(</tt><code class=scheme><span class=variable>lvp</span></code> <code class=scheme><span class=keyword><tt>.</tt><tt>.</tt></span></code><tt>.</tt><tt>)</tt><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt>Match vector of <code class=scheme><span class=variable>pat</span></code>s<tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt> <br>
+<tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;</tt>#&amp;<code class=scheme><span class=variable>pat</span></code><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt>Match boxed <code class=scheme><span class=variable>pat</span></code><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt> <br>
+<tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;</tt><tt>(</tt><code class=scheme><span class=keyword>$</span></code> <code class=scheme><span class=variable>struct-name</span></code> <code class=scheme><span class=variable>pat</span></code> <code class=scheme><span class=keyword><tt>.</tt><tt>.</tt></span></code><tt>.</tt><tt>)</tt><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt>Match <code class=scheme><span class=variable>struct-name</span></code> instance with matching fields<tt></tt> <br>
+<tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;</tt><tt>(</tt><code class=scheme><span class=keyword>and</span></code> <code class=scheme><span class=variable>pat</span></code> <code class=scheme><span class=keyword><tt>.</tt><tt>.</tt></span></code><tt>.</tt><tt>)</tt><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt>Match when all <code class=scheme><span class=variable>pat</span></code>s match<tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt> <br>
+<tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;</tt><tt>(</tt><code class=scheme><span class=keyword>or</span></code> <code class=scheme><span class=variable>pat</span></code> <code class=scheme><span class=keyword><tt>.</tt><tt>.</tt></span></code><tt>.</tt><tt>)</tt><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt>Match when any <code class=scheme><span class=variable>pat</span></code> match<tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt> <br>
+<tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;</tt><tt>(</tt><code class=scheme><span class=keyword>not</span></code> <code class=scheme><span class=variable>pat</span></code> <code class=scheme><span class=keyword><tt>.</tt><tt>.</tt></span></code><tt>.</tt><tt>)</tt><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt>Match when no <code class=scheme><span class=variable>pat</span></code> match<tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt> <br>
+<tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;</tt><tt>(</tt>= <code class=scheme><span class=variable>expr</span></code> <code class=scheme><span class=variable>pat</span></code><tt>)</tt><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt>Match when result of applying <code class=scheme><span class=variable>expr</span></code> matches <code class=scheme><span class=variable>pat</span></code><tt>&nbsp;</tt> <br>
+<tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;</tt><tt>(</tt><code class=scheme><span class=keyword>?</span></code> <code class=scheme><span class=variable>expr</span></code> <code class=scheme><span class=variable>pat</span></code> <code class=scheme><span class=keyword><tt>.</tt><tt>.</tt></span></code><tt>.</tt><tt>)</tt><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt>Match if <code class=scheme><span class=variable>expr</span></code> is true and all <code class=scheme><span class=variable>pat</span></code>s match<tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt> <br>
+<tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;</tt><tt>(</tt><code class=scheme><span class=keyword>set!</span></code> <code class=scheme><span class=variable>identifier</span></code><tt>)</tt><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt>Match anything, bind <code class=scheme><span class=variable>identifier</span></code> as a setter<tt>&nbsp;&nbsp;&nbsp;&nbsp;</tt> <br>
+<tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;</tt><tt>(</tt><code class=scheme><span class=keyword>get!</span></code> <code class=scheme><span class=variable>identifier</span></code><tt>)</tt><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt>Match anything, bind <code class=scheme><span class=variable>identifier</span></code> as a getter<tt>&nbsp;&nbsp;&nbsp;&nbsp;</tt> <br>
+<tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;</tt><code class=scheme><span class=keyword>`</span></code><code class=scheme><span class=variable>qp</span></code><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt>Match quasi<code class=scheme><span class=variable>pat</span></code>tern<tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt> <br>
+<code class=scheme><span class=variable>literal</span></code><tt>&nbsp;::=&nbsp;</tt>#t<tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt>Match true<tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt> <br>
+<tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;</tt>#f<tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt>Match false<tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt> <br>
+<tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;</tt><code class=scheme><span class=variable>string</span></code><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt>Match <code class=scheme>equal?</code> <code class=scheme><span class=variable>string</span></code><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt> <br>
+<tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;</tt><code class=scheme><span class=variable>number</span></code><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt>Match <code class=scheme>equal?</code> <code class=scheme><span class=variable>number</span></code><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt> <br>
+<tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;</tt><code class=scheme><span class=variable>character</span></code><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt>Match <code class=scheme>equal?</code> <code class=scheme><span class=variable>character</span></code><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt> <br>
+<code class=scheme><span class=variable>lvp</span></code><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;::=&nbsp;</tt><code class=scheme><span class=variable>pat</span></code> <code class=scheme><span class=variable>ooo</span></code><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt>Greedily match <code class=scheme><span class=variable>pat</span></code> instances<tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt> <br>
+<tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;</tt><code class=scheme><span class=variable>pat</span></code><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt>Match <code class=scheme><span class=variable>pat</span></code><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt> <br>
+<code class=scheme><span class=variable>ooo</span></code><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;::=&nbsp;</tt><code class=scheme><span class=keyword><tt>.</tt><tt>.</tt><tt>.</tt></span></code><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt>Zero or more (where <code class=scheme><span class=keyword>...</span></code> is a keyword)<tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt> <br>
+<tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;</tt><code class=scheme><span class=keyword>___</span></code><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt>Zero or more<tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt> <br>
+<tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;</tt><code class=scheme><span class=keyword><tt>.</tt><tt>.</tt></span></code><code class=scheme><span class=variable>k</span></code><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt><code class=scheme><span class=variable>k</span></code> or more, where <code class=scheme><span class=variable>k</span></code> is a non-negative integer<tt>&nbsp;&nbsp;&nbsp;</tt> <br>
+<tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;</tt><code class=scheme><span class=keyword>__</span></code><code class=scheme><span class=variable>k</span></code><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt><code class=scheme><span class=variable>k</span></code> or more, where <code class=scheme><span class=variable>k</span></code> is a non-negative integer<tt>&nbsp;&nbsp;&nbsp;</tt> <br>
+<code class=scheme><span class=variable>qp</span></code><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;::=&nbsp;</tt><code class=scheme><span class=variable>literal</span></code><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt>Match <code class=scheme><span class=variable>literal</span></code><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt> <br>
+<tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;</tt><code class=scheme><span class=variable>identifier</span></code><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt>Match <code class=scheme>equal?</code> <code class=scheme><span class=variable>symbol</span></code><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt> <br>
+<tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;</tt><tt>(</tt><code class=scheme><span class=variable>qp</span></code> <code class=scheme><span class=keyword><tt>.</tt><tt>.</tt></span></code><tt>.</tt><tt>)</tt><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt>Match sequences of <code class=scheme><span class=variable>qp</span></code>s<tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt> <br>
+<tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;</tt><tt>(</tt><code class=scheme><span class=variable>qp</span></code> <code class=scheme><span class=keyword><tt>.</tt><tt>.</tt></span></code><tt>.</tt> <tt>.</tt> <code class=scheme><span class=variable>qp</span></code><tt>)</tt><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt>Match sequence of <code class=scheme><span class=variable>qp</span></code>s <code class=scheme>cons</code>ed onto a <code class=scheme><span class=variable>qp</span></code><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt> <br>
+<tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;</tt><tt>(</tt><code class=scheme><span class=variable>qp</span></code> <code class=scheme><span class=keyword><tt>.</tt><tt>.</tt></span></code><tt>.</tt> <code class=scheme><span class=variable>qp</span></code> <code class=scheme><span class=variable>ooo</span></code><tt>)</tt><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt>Match <code class=scheme><span class=variable>qp</span></code>s <code class=scheme>cons</code>ed onto a repeated <code class=scheme><span class=variable>qp</span></code><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt> <br>
+<tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;</tt>#<tt>(</tt><code class=scheme><span class=variable>qp</span></code> <code class=scheme><span class=keyword><tt>.</tt><tt>.</tt></span></code><tt>.</tt><tt>)</tt><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt>Match vector of <code class=scheme><span class=variable>qp</span></code>s<tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt> <br>
+<tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;</tt>#&amp;<code class=scheme><span class=variable>qp</span></code><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt>Match boxed <code class=scheme><span class=variable>qp</span></code><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt> <br>
+<tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;</tt>,<code class=scheme><span class=variable>pat</span></code><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt>Match <code class=scheme><span class=variable>pat</span></code><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt> <br>
+<tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;</tt>,@<code class=scheme><span class=variable>pat</span></code><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt>Match <code class=scheme><span class=variable>pat</span></code>, spliced<tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt> <br>
+
+</p>
+</td></tr><tr><td>
+<p></p>
+</tt>
+</td></tr></table></div>
+
+</td></tr>
+<tr><td align=center><b>Figure 1:</b>&nbsp;&nbsp;Pattern Syntax</td></tr>
+<tr><td> 
+<p>
+</p>
+</td></tr></table></div><p>
+The next subsection describes the various patterns.</p>
+<p>
+The <code class=scheme><span class=keyword>match-lambda</span></code> and <code class=scheme><span class=keyword>match-lambda*</span></code> forms are convenient
+combinations of <code class=scheme><span class=keyword>match</span></code> and <code class=scheme><span class=keyword>lambda</span></code>, and can be explained
+as follows:
+</p>
+<blockquote>
+<table border=0><tr><td valign=top ><code class=scheme>(<span class=keyword>match-lambda</span> (<span class=variable>pat</span> <span class=variable>expr</span> <tt>&middot;&middot;&middot;</tt><sup>1</sup>) ...)</code>
+</td><td valign=top >=</td><td valign=top ><code class=scheme>(<span class=keyword>lambda</span> (<span class=variable>x</span>) (<span class=keyword>match</span> <span class=variable>x</span> (<span class=variable>pat</span> <span class=variable>expr</span> <tt>&middot;&middot;&middot;</tt><sup>1</sup>) ...))</code>
+</td></tr>
+<tr><td valign=top ><code class=scheme>(<span class=keyword>match-lambda*</span> (<span class=variable>pat</span> <span class=variable>expr</span> <tt>&middot;&middot;&middot;</tt><sup>1</sup>) ...)</code>
+</td><td valign=top >=</td><td valign=top ><code class=scheme>(<span class=keyword>lambda</span> <span class=variable>x</span> (<span class=keyword>match</span> <span class=variable>x</span> (<span class=variable>pat</span> <span class=variable>expr</span> <tt>&middot;&middot;&middot;</tt><sup>1</sup>) ...))</code>
+</td></tr></table>
+</blockquote>
+where <em>x</em> is a unique variable.
+The <code class=scheme><span class=keyword>match-lambda</span></code> form is convenient when defining a single argument
+function that immediately destructures its argument.
+The <code class=scheme><span class=keyword>match-lambda*</span></code> form constructs a function that accepts any number
+of arguments; the patterns of <code class=scheme><span class=keyword>match-lambda*</span></code> should be lists.<p>
+The <code class=scheme><span class=keyword>match-let</span></code>, <code class=scheme><span class=keyword>match-let*</span></code>, <code class=scheme><span class=keyword>match-letrec</span></code>,
+and schemematch-define forms generalize
+Scheme's <code class=scheme><span class=keyword>let</span></code>, <code class=scheme><span class=keyword>let*</span></code>, <code class=scheme><span class=keyword>letrec</span></code>, and <code class=scheme><span class=keyword>define</span></code>
+expressions to allow
+patterns in the binding position rather than just variables.
+For example, the following expression:
+</p>
+<div align=left><pre class=scheme>(<span class=keyword>match-let</span> ([(<span class=variable>x</span> <span class=variable>y</span> <span class=variable>z</span>) (<code class=scheme>list</code> <span class=selfeval>1</span> <span class=selfeval>2</span> <span class=selfeval>3</span>)]) <span class=variable>body</span>)
+</pre></div><p>
+binds <code class=scheme><span class=variable>x</span></code> to <code class=scheme><span class=selfeval>1</span></code>, <code class=scheme><span class=variable>y</span></code> to <code class=scheme><span class=selfeval>2</span></code>, and <code class=scheme><span class=variable>z</span></code> to <code class=scheme><span class=selfeval>3</span></code> in the body.
+These forms are convenient for destructuring the result
+of a function that returns multiple values.
+As usual for <code class=scheme><span class=keyword>letrec</span></code> and <code class=scheme><span class=keyword>define</span></code>,
+pattern variables bound by <code class=scheme><span class=keyword>match-letrec</span></code> and <code class=scheme><span class=keyword>match-define</span></code>
+should not be used in computing the bound value.</p>
+<p>
+The <code class=scheme><span class=keyword>match</span></code>, <code class=scheme><span class=keyword>match-lambda</span></code>, and <code class=scheme><span class=keyword>match-lambda*</span></code> forms
+allow the optional syntax <code class=scheme>(<span class=keyword>=&gt;</span> <span class=variable>identifier</span>)</code> between the pattern
+and the body of a clause.  When the pattern match for such a clause
+succeeds, the <i>identifier</i> is bound to a <em>failure
+procedure</em> of zero arguments within the body.  If this
+procedure is invoked, it jumps back to the pattern matching
+expression, and resumes the matching process as if the pattern had
+failed to match.  The body must not mutate the object being
+matched, otherwise unpredictable behavior may result.</p>
+<p>
+</p>
+<a name="node_sec_22.1"></a>
+<h2><a href="mzlib.html#node_toc_node_sec_22.1">22.1&nbsp;&nbsp;Patterns</a></h2>
+<p><a name="node_idx_816"></a></p>
+<p>
+Figure&nbsp;<a href="#node_fig_Temp_6">1</a> gives the full syntax for patterns.
+Explanations of these patterns follow.</p>
+<p>
+</p>
+<ul><p>
+</p>
+<li><p><code class=scheme><span class=variable>identifier</span></code> (excluding the reserved names
+?, =, $, _, <code class=scheme><span class=keyword>and</span></code>, <code class=scheme><span class=keyword>or</span></code>, <code class=scheme><span class=keyword>not</span></code>, <code class=scheme><span class=keyword>set!</span></code>, <code class=scheme><span class=keyword>get!</span></code>, <code class=scheme><span class=keyword>...</span></code>, and
+<code class=scheme><span class=keyword>..</span></code><code class=scheme><span class=variable>k</span></code> for non-negative integers <code class=scheme><span class=variable>k</span></code>)  -- 
+matches anything, and binds a variable of this name to
+the matching value in the body.
+</p>
+<p>
+</p>
+<li><p><code class=scheme><span class=keyword>_</span></code>  -- 
+matches anything, without binding any variables.</p>
+<p>
+</p>
+<li><p><code class=scheme><span class=selfeval>#t</span></code>, <code class=scheme><span class=selfeval>#f</span></code>, <code class=scheme><span class=variable>string</span></code>, <code class=scheme><span class=variable>number</span></code>,
+<code class=scheme><span class=variable>character</span></code>, <code class=scheme><span class=keyword>'</span></code><code class=scheme><span class=variable>s-expression</span></code>  -- 
+constant patterns that match themselves (i.e.,
+the corresponding value must be <code class=scheme><code class=scheme>equal?</code></code> to the pattern).</p>
+<p>
+</p>
+<li><p><code class=scheme>(<code class=scheme><span class=variable>pat<sub>1</sub></span></code>&nbsp;<tt>&middot;&middot;&middot;</tt>&nbsp;<code class=scheme><span class=variable>pat<sub><em>n</em></sub></span></code>)</code>
+matches a proper list of <em>n</em> elements
+that match <code class=scheme><span class=variable>pat<sub>1</sub></span></code> through <code class=scheme><span class=variable>pat<sub><em>n</em></sub></span></code>.</p>
+<p>
+</p>
+<li><p><code class=scheme>(<code class=scheme><span class=variable>lvp<sub>1</sub></span></code>&nbsp;<tt>&middot;&middot;&middot;</tt>&nbsp;<code class=scheme><span class=variable>lvp<sub><em>n</em></sub></span></code>)</code>
+generalizes the preceding pattern, where each <code class=scheme><span class=variable>lvp</span></code>
+corresponds to a ``spliced'' list of greedy matches.</p>
+<p>
+For example, <code class=scheme>(<code class=scheme><span class=variable>pat<sub>1</sub></span></code>&nbsp;<tt>&middot;&middot;&middot;</tt>&nbsp;<code class=scheme><span class=variable>pat<sub><em>n</em></sub></span></code> <code class=scheme><span class=variable>pat<sub><em>n</em>+1</sub></span></code> <code class=scheme><span class=keyword>...</span></code>)</code>
+matches a proper list of <em>n</em> or more elements, where
+each element past the <em>n</em>th matches <code class=scheme><span class=variable>pat<sub><em>n</em>+1</sub></span></code>.  Each pattern variable in
+<code class=scheme><span class=variable>pat<sub><em>n</em>+1</sub></span></code> is bound to a list of the matching values.  For example,
+the expression:
+</p>
+<div align=center><table><tr><td>
+
+</td><td><div align=left><pre class=scheme>(<span class=keyword>match</span> <span class=keyword>'</span>(<span class=keyword>let</span> ([<span class=variable>x</span> <span class=selfeval>1</span>][<span class=variable>y</span> <span class=selfeval>2</span>]) <span class=variable>z</span>)
+  [(<span class=keyword>'</span><span class=keyword>let</span> ((<span class=variable>binding</span> <span class=variable>vals</span>) ...) <span class=variable>exp</span>) <span class=variable>expr</span> <tt>&middot;&middot;&middot;</tt><sup>1</sup>])
+</pre></div></td><td>
+</td></tr></table></div>
+
+binds <code class=scheme><span class=variable>binding</span></code> to the list <code class=scheme><span class=keyword>'</span>(<span class=variable>x</span> <span class=variable>y</span>)</code>,
+<code class=scheme><span class=variable>vals</span></code> to the list <code class=scheme><span class=keyword>'</span>(<span class=selfeval>1</span> <span class=selfeval>2</span>)</code>,
+and <code class=scheme><span class=variable>exp</span></code> to <code class=scheme><span class=keyword>'</span><span class=variable>z</span></code>
+in the body of the <code class=scheme><span class=keyword>match</span></code>-expression.
+For the special case where <code class=scheme><span class=variable>pat<sub><em>n</em>+1</sub></span></code> is a pattern variable, the list
+bound to that variable may share with the matched value.<p>
+Instead of <code class=scheme><span class=keyword>...</span></code> or <code class=scheme><span class=keyword>___</span></code> (which are equivalent),
+<code class=scheme><span class=keyword>..</span></code><code class=scheme><span class=variable>k</span></code> or <code class=scheme><span class=keyword>__</span></code><code class=scheme><span class=variable>k</span></code> can be used to match a
+sequence that is at least <code class=scheme><span class=variable>k</span></code> long. The pattern keywords
+<code class=scheme><span class=keyword>..0</span></code>, <code class=scheme><span class=keyword>...</span></code>, and <code class=scheme><span class=keyword>___</span></code> are equivalent.</p>
+<p>
+</p>
+<li><p><code class=scheme>(<code class=scheme><span class=variable>pat<sub>1</sub></span></code>&nbsp;<tt>&middot;&middot;&middot;</tt>&nbsp;<code class=scheme><span class=variable>pat<sub><em>n</em></sub></span></code>&nbsp;.&nbsp;<code class=scheme><span class=variable>pat<sub><em>n</em>+1</sub></span></code>)</code>  -- 
+matches a (possibly improper) list of at least <code class=scheme><span class=variable>n</span></code>
+elements that ends in
+something matching <code class=scheme><span class=variable>pat<sub><em>n</em>+1</sub></span></code>.</p>
+<p>
+</p>
+<li><p><code class=scheme>(<code class=scheme><span class=variable>lvp<sub>1</sub></span></code>&nbsp;<tt>&middot;&middot;&middot;</tt>&nbsp;<code class=scheme><span class=variable>lvp<sub><em>n</em></sub></span></code>&nbsp;.&nbsp;<code class=scheme><span class=variable>pat<sub><em>n</em>+1</sub></span></code>)</code>  -- 
+generalizes the preceding pattern with greedy-sequence <code class=scheme><span class=variable>lvp</span></code>s.</p>
+<p>
+</p>
+<li><p><code class=scheme>#(<code class=scheme><span class=variable>pat<sub>1</sub></span></code>&nbsp;<tt>&middot;&middot;&middot;</tt>&nbsp;<code class=scheme><span class=variable>pat<sub><em>n</em></sub></span></code>)</code>  -- 
+matches a vector of length <em>n</em>, whose elements match  <em>p</em><em>a</em><em>t</em><sub>1</sub>
+through  <em>p</em><em>a</em><em>t</em><sub><em>n</em></sub>. The generalization to <code class=scheme><span class=variable>lvp</span></code>s matches
+consecutive elements of the vector greedily.</p>
+<p>
+</p>
+<li><p><code class=scheme>#&amp;<code class=scheme><span class=variable>pat</span></code></code>  -- 
+matches a box containing something matching <code class=scheme><span class=variable>pat</span></code>.</p>
+<p>
+</p>
+<li><p><code class=scheme>(<code class=scheme><span class=keyword>$</span></code>&nbsp;<code class=scheme><span class=variable>struct-name</span></code>
+<code class=scheme><span class=variable>pat<sub>1</sub></span></code>&nbsp;<tt>&middot;&middot;&middot;</tt>&nbsp;<code class=scheme><span class=variable>pat<sub><em>n</em></sub></span></code>)</code>  --  matches an instance of a
+structure type <code class=scheme><span class=variable>struct-name</span></code>, where the instance contains <code class=scheme><span class=variable>n</span></code>
+fields.</p>
+<p>
+Usually, <code class=scheme><span class=variable>struct-name</span></code> is defined with <code class=scheme><span class=keyword>define-struct</span></code>.
+More generally, <code class=scheme><span class=variable>struct-name</span></code> must be bound to expansion-time
+information for a structure type (see section&nbsp;<a href="../mzscheme/mzscheme-Z-H-12.html#node_sec_12.6.3">12.6.3</a> in <a href="../mzscheme/mzscheme.html"><i>PLT MzScheme: Language Manual</i></a>), where
+the information includes at least a predicate binding and some field
+accessor bindings (and <code class=scheme><span class=variable>pat<sub>1</sub></span></code> through <code class=scheme><span class=variable>pat<sub><em>n</em></sub></span></code> correspond
+to the provided accessors). In particular, a module import or a
+<code class=scheme><span class=keyword>unit/sig</span></code> import with a signature containing a
+<code class=scheme><span class=keyword>struct</span></code> declaration (see section&nbsp;<a href="mzlib-Z-H-41.html#node_sec_41.2">41.2</a>) can provide the
+structure type information.</p>
+<p>
+</p>
+<li><p><code class=scheme>(<code class=scheme><span class=keyword>=</span></code> <code class=scheme><span class=variable>field</span></code> <code class=scheme><span class=variable>pat</span></code>)</code>  -- 
+applies <code class=scheme><span class=variable>field</span></code> to the object being matched and
+uses <code class=scheme><span class=variable>pat</span></code> to match the extracted
+object. The <code class=scheme><span class=variable>field</span></code> subexpression may be any
+expression, but is often useful as a struct selector.</p>
+<p>
+</p>
+<li><p><code class=scheme>(<code class=scheme><span class=keyword>and</span></code> <code class=scheme><span class=variable>pat<sub>1</sub></span></code>&nbsp;<tt>&middot;&middot;&middot;</tt>&nbsp;<code class=scheme><span class=variable>pat<sub><em>n</em></sub></span></code>)</code>  -- 
+matches if all of the subpatterns match.
+This pattern is often used as <code class=scheme>(<code class=scheme><span class=keyword>and</span></code> <code class=scheme><span class=variable>x</span></code> <code class=scheme><span class=variable>pat</span></code>)</code> to bind <code class=scheme><span class=variable>x</span></code> to
+to the entire value that matches <code class=scheme><span class=variable>pat</span></code>.</p>
+<p>
+</p>
+<li><p><code class=scheme>(<code class=scheme><span class=keyword>or</span></code> <code class=scheme><span class=variable>pat<sub>1</sub></span></code>&nbsp;<tt>&middot;&middot;&middot;</tt>&nbsp;<code class=scheme><span class=variable>pat<sub><em>n</em></sub></span></code>)</code>  -- 
+matches if any of the subpatterns match.  At least
+one subpattern must be present.
+All subpatterns must bind the same set of pattern variables.</p>
+<p>
+</p>
+<li><p><code class=scheme>(<code class=scheme><span class=keyword>not</span></code> <code class=scheme><span class=variable>pat<sub>1</sub></span></code>&nbsp;<tt>&middot;&middot;&middot;</tt>&nbsp;<code class=scheme><span class=variable>pat<sub><em>n</em></sub></span></code>)</code>  -- 
+matches if none of the subpatterns match.
+The subpatterns may not bind any pattern variables.</p>
+<p>
+</p>
+<li><p><code class=scheme>(<code class=scheme><span class=keyword>?</span></code>&nbsp;<code class=scheme><span class=variable>predicate-expr</span></code> <code class=scheme><span class=variable>pat<sub>1</sub></span></code>&nbsp;<tt>&middot;&middot;&middot;</tt>&nbsp;<code class=scheme><span class=variable>pat<sub><em>n</em></sub></span></code>)</code>  -- 
+In this pattern,
+<code class=scheme><span class=variable>predicate-expr</span></code> must be an expression evaluating to a single argument
+function.
+This pattern matches if <code class=scheme><span class=variable>predicate-expr</span></code> applied to the corresponding value
+is true, and the subpatterns <code class=scheme><span class=variable>pat<sub>1</sub></span></code> through  <code class=scheme><span class=variable>pat<sub><em>n</em></sub></span></code> all match.
+The <code class=scheme><span class=variable>predicate-expr</span></code> should not have side effects, as
+the code generated by the pattern matcher may invoke predicates repeatedly
+in any order.
+The <code class=scheme><span class=variable>predicate-expr</span></code> expression is bound in the same scope as the
+match expression, so
+free variables in <code class=scheme><span class=variable>predicate-expr</span></code> are not bound by pattern variables.
+</p>
+<p>
+</p>
+<li><p><code class=scheme>(<code class=scheme><span class=keyword>set!</span></code>&nbsp;<code class=scheme><span class=variable>identifier</span></code>)</code>  -- 
+matches anything, and binds <code class=scheme><span class=variable>identifier</span></code>
+to a procedure of one argument that mutates the corresponding field of
+the matching value.
+This pattern must be nested within a pair, vector, box, or structure
+pattern. For example, the expression:
+</p>
+<div align=center><table><tr><td>
+
+</td><td><div align=left><pre class=scheme>(<span class=keyword>define</span> <span class=variable>x</span> (<code class=scheme>list</code> <span class=selfeval>1</span> (<code class=scheme>list</code> <span class=selfeval>2</span> <span class=selfeval>3</span>)))
+(<span class=keyword>match</span> <span class=variable>x</span> [(<span class=variable>_</span> (<span class=variable>_</span> (<span class=keyword>set!</span> <span class=variable>setit</span>)))  (<span class=variable>setit</span> <span class=selfeval>4</span>)])
+</pre></div></td><td>
+</td></tr></table></div>
+
+mutates the <code class=scheme><span class=variable>cadadr</span></code> of <em>x</em> to <code class=scheme><span class=selfeval>4</span></code>, so that <code class=scheme><span class=variable>x</span></code> is
+<code class=scheme><span class=keyword>'</span>(<span class=selfeval>1</span> (<span class=selfeval>2</span> <span class=selfeval>4</span>))</code>.<p>
+</p>
+<li><p><code class=scheme>(<code class=scheme><span class=keyword>get!</span></code>&nbsp;<code class=scheme><span class=variable>identifier</span></code>)</code>  -- 
+matches anything, and binds <code class=scheme><span class=variable>identifier</span></code>
+to a procedure of zero arguments that accesses the corresponding field of
+the matching value.  This pattern is the complement to <code class=scheme><span class=keyword>set!</span></code>.
+As with <code class=scheme><span class=keyword>set!</span></code>,
+this pattern must be nested within a pair, vector, box, or structure
+pattern.</p>
+<p>
+</p>
+<li><p><code class=scheme>`<code class=scheme><span class=variable>quasipattern</span></code></code>  -- 
+introduces a quasipattern, in which identifiers are considered
+to be symbolic constants.  Like Scheme's quasiquote for data,
+<code class=scheme><span class=keyword>unquote</span></code> (<code class=scheme><span class=keyword>,</span></code>) and <code class=scheme><span class=keyword>unquote-splicing</span></code> (<code class=scheme><span class=keyword>,@</span></code>) escape back to
+normal patterns.</p>
+<p>
+</p>
+</ul><p></p>
+<p>
+If no clause matches the value, the result is void.</p>
+<p>
+</p>
+<a name="node_sec_22.2"></a>
+<h2><a href="mzlib.html#node_toc_node_sec_22.2">22.2&nbsp;&nbsp;Examples</a></h2>
+<p><a name="node_idx_818"></a></p>
+<p>
+This section illustrates the convenience of pattern matching with
+some examples.
+The following function recognizes some s-expressions that represent
+the standard Y operator:
+</p>
+<div align=left><pre class=scheme>(<span class=keyword>define</span> <span class=variable>Y?</span>
+  (<span class=keyword>match-lambda</span>
+    [(<span class=keyword>'</span><span class=keyword>lambda</span> (<span class=variable>f1</span>)
+       (<span class=keyword>'</span><span class=keyword>lambda</span> (<span class=variable>y1</span>)
+         (((<span class=keyword>'</span><span class=keyword>lambda</span> (<span class=variable>x1</span>) (<span class=variable>f2</span> (<span class=keyword>'</span><span class=keyword>lambda</span> (<span class=variable>z1</span>) ((<span class=variable>x2</span> <span class=variable>x3</span>) <span class=variable>z2</span>))))
+           (<span class=keyword>'</span><span class=keyword>lambda</span> (<span class=variable>a1</span>) (<span class=variable>f3</span> (<span class=keyword>'</span><span class=keyword>lambda</span> (<span class=variable>b1</span>) ((<span class=variable>a2</span> <span class=variable>a3</span>) <span class=variable>b2</span>)))))
+          <span class=variable>y2</span>)))
+     (<span class=keyword>and</span> (<code class=scheme>symbol?</code> <span class=variable>f1</span>) (<code class=scheme>symbol?</code> <span class=variable>y1</span>) (<code class=scheme>symbol?</code> <span class=variable>x1</span>) (<code class=scheme>symbol?</code> <span class=variable>z1</span>) (<code class=scheme>symbol?</code> <span class=variable>a1</span>) (<code class=scheme>symbol?</code> <span class=variable>b1</span>)
+          (<code class=scheme>eq?</code> <span class=variable>f1</span> <span class=variable>f2</span>) (<code class=scheme>eq?</code> <span class=variable>f1</span> <span class=variable>f3</span>) (<code class=scheme>eq?</code> <span class=variable>y1</span> <span class=variable>y2</span>)
+          (<code class=scheme>eq?</code> <span class=variable>x1</span> <span class=variable>x2</span>) (<code class=scheme>eq?</code> <span class=variable>x1</span> <span class=variable>x3</span>) (<code class=scheme>eq?</code> <span class=variable>z1</span> <span class=variable>z2</span>)
+          (<code class=scheme>eq?</code> <span class=variable>a1</span> <span class=variable>a2</span>) (<code class=scheme>eq?</code> <span class=variable>a1</span> <span class=variable>a3</span>) (<code class=scheme>eq?</code> <span class=variable>b1</span> <span class=variable>b2</span>))]
+    [<span class=variable>_</span> <span class=selfeval>#f</span>]))
+</pre></div><p>
+Writing an equivalent piece of code in raw Scheme is tedious.</p>
+<p>
+The following code defines abstract syntax for a subset of Scheme,
+a parser into this abstract syntax, and an unparser.
+</p>
+<div align=left><pre class=scheme>(<span class=keyword>define-struct</span> <span class=variable>Lam</span> (<span class=variable>args</span> <span class=variable>body</span>))
+(<span class=keyword>define-struct</span> <span class=variable>Var</span> (<span class=variable>s</span>))
+(<span class=keyword>define-struct</span> <span class=variable>Const</span> (<span class=variable>n</span>))
+(<span class=keyword>define-struct</span> <span class=variable>App</span> (<span class=variable>fun</span> <span class=variable>args</span>))
+
+(<span class=keyword>define</span> <span class=variable>parse</span>
+  (<span class=keyword>match-lambda</span>
+    [(<span class=keyword>and</span> <span class=variable>s</span> (<code class=scheme><span class=keyword>?</span></code> <code class=scheme>symbol?</code>) (<code class=scheme><span class=keyword>not</span></code> <span class=keyword>'</span><span class=keyword>lambda</span>))
+     (<span class=variable>make-Var</span> <span class=variable>s</span>)]
+    [(<code class=scheme><span class=keyword>?</span></code> <code class=scheme>number?</code> <span class=variable>n</span>)
+     (<span class=variable>make-Const</span> <span class=variable>n</span>)]
+    [(<span class=keyword>'</span><span class=keyword>lambda</span> (<span class=keyword>and</span> <span class=variable>args</span> ((<code class=scheme><span class=keyword>?</span></code> <code class=scheme>symbol?</code>) ...) (<code class=scheme><span class=keyword>not</span></code> (<code class=scheme><span class=keyword>?</span></code> <span class=variable>repeats?</span>))) <span class=variable>body</span>)
+     (<span class=variable>make-Lam</span> <span class=variable>args</span> (<span class=variable>parse</span> <span class=variable>body</span>))]
+    [(<span class=variable>f</span> <span class=variable>args</span> ...)
+     (<span class=variable>make-App</span>
+       (<span class=variable>parse</span> <span class=variable>f</span>)
+       (<code class=scheme>map</code> <span class=variable>parse</span> <span class=variable>args</span>))]
+    [<span class=variable>x</span> (<code class=scheme>error</code> <span class=keyword>'</span><span class=keyword>syntax</span> <span class=selfeval>&quot;invalid expression&quot;</span>)]))
+
+(<span class=keyword>define</span> <span class=variable>repeats?</span>
+  (<span class=keyword>lambda</span> (<span class=variable>l</span>)
+    (<span class=keyword>and</span> (<code class=scheme>not</code> (<code class=scheme>null?</code> <span class=variable>l</span>))
+         (<span class=keyword>or</span> (<code class=scheme>memq</code> (<code class=scheme>car</code> <span class=variable>l</span>) (<code class=scheme>cdr</code> <span class=variable>l</span>)) (<span class=variable>repeats?</span> (<code class=scheme>cdr</code> <span class=variable>l</span>))))))
+
+(<span class=keyword>define</span> <span class=variable>unparse</span>
+  (<span class=keyword>match-lambda</span>
+    [(<code class=scheme><span class=keyword>$</span></code> <span class=variable>Var</span> <span class=variable>s</span>) <span class=variable>s</span>]
+    [(<code class=scheme><span class=keyword>$</span></code> <span class=variable>Const</span> <span class=variable>n</span>) <span class=variable>n</span>]
+    [(<code class=scheme><span class=keyword>$</span></code> <span class=variable>Lam</span> <span class=variable>args</span> <span class=variable>body</span>) <span class=keyword>`</span>(<span class=keyword>lambda</span> <span class=keyword>,</span><span class=variable>args</span> <span class=keyword>,</span>(<span class=variable>unparse</span> <span class=variable>body</span>))]
+    [(<code class=scheme><span class=keyword>$</span></code> <span class=variable>App</span> <span class=variable>f</span> <span class=variable>args</span>) <span class=keyword>`</span>(<span class=keyword>,</span>(<span class=variable>unparse</span> <span class=variable>f</span>) <span class=keyword>,@</span>(<code class=scheme>map</code> <span class=variable>unparse</span> <span class=variable>args</span>))]))
+</pre></div><p>
+With pattern matching, it is easy to ensure
+that the parser rejects <em>all</em>
+incorrectly formed inputs with an error message.</p>
+<p>
+With <code class=scheme><span class=keyword>match-define</span></code>, it is easy to define several procedures
+that share a hidden variable.  The following code defines three
+procedures, <code class=scheme><span class=variable>inc</span></code>, <code class=scheme><span class=variable>value</span></code>, and <code class=scheme><span class=variable>reset</span></code>,
+that manipulate a hidden counter variable:
+</p>
+<div align=left><pre class=scheme>(<span class=keyword>match-define</span> (<span class=variable>inc</span> <span class=variable>value</span> <span class=variable>reset</span>)
+  (<span class=keyword>let</span> ([<span class=variable>val</span> <span class=selfeval>0</span>])
+    (<code class=scheme>list</code>
+      (<span class=keyword>lambda</span> () (<span class=keyword>set!</span> <span class=variable>val</span> (<code class=scheme>add1</code> <span class=variable>val</span>)))
+      (<span class=keyword>lambda</span> () <span class=variable>val</span>)
+      (<span class=keyword>lambda</span> () (<span class=keyword>set!</span> <span class=variable>val</span> <span class=selfeval>0</span>)))))
+</pre></div><p>
+Although this example is not recursive,
+the bodies could recursively refer to each other.</p>
+<p>
+</p>
+<p>
+</p>
+<div align=right class=navigation><i>[Go to <span><a href="mzlib.html">first</a>, <a href="mzlib-Z-H-21.html">previous</a></span><span>, <a href="mzlib-Z-H-23.html">next</a></span> page<span>; &nbsp;&nbsp;</span><span><a href="mzlib.html#node_toc_start">contents</a></span><span><span>; &nbsp;&nbsp;</span><a href="mzlib-Z-H-42.html#node_index_start">index</a></span>]</i></div><p></p>
+</body>
+</html>

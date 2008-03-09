@@ -1,0 +1,493 @@
+<!doctype html public "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!--
+
+Generated from mzscheme.tex by tex2page, v 2004-09-11
+(running on MzScheme 209, unix), 
+(c) Dorai Sitaram, 
+http://www.ccs.neu.edu/~dorai/tex2page/tex2page-doc.html
+
+-->
+<head>
+<title>
+PLT MzScheme: Language Manual
+</title>
+<link rel="stylesheet" type="text/css" href="mzscheme-Z-S.css" title=default>
+<meta name=robots content="noindex,follow">
+</head>
+<body>
+<div align=right class=navigation><i>[Go to <span><a href="mzscheme.html">first</a>, <a href="mzscheme-Z-H-1.html">previous</a></span><span>, <a href="mzscheme-Z-H-3.html">next</a></span> page<span>; &nbsp;&nbsp;</span><span><a href="mzscheme.html#node_toc_start">contents</a></span><span><span>; &nbsp;&nbsp;</span><a href="mzscheme-Z-H-19.html#node_index_start">index</a></span>]</i></div><p></p>
+<a name="node_chap_2"></a>
+<h1 class=chapter>
+<div class=chapterheading><a href="mzscheme.html#node_toc_node_chap_2">Chapter 2</a></div><br>
+<a href="mzscheme.html#node_toc_node_chap_2">Basic Syntax Extensions</a></h1>
+<p><a name="node_idx_12"></a></p>
+<p>
+</p>
+<a name="node_sec_2.1"></a>
+<h2><a href="mzscheme.html#node_toc_node_sec_2.1">2.1&nbsp;&nbsp;Evaluation Order</a></h2>
+<p><a name="node_idx_14"></a></p>
+<p>
+<a name="node_idx_16"></a>
+In an application expression, the procedure expression and the
+argument expressions are always evaluated left-to-right. Similarly,
+expressions for <code class=scheme><span class=keyword>let</span></code> and <code class=scheme><span class=keyword>letrec</span></code> bindings are
+evaluated in sequence from left to right.</p>
+<p>
+</p>
+<a name="node_sec_2.2"></a>
+<h2><a href="mzscheme.html#node_toc_node_sec_2.2">2.2&nbsp;&nbsp;Multiple Return Values</a></h2>
+<p><a name="node_idx_18"></a></p>
+<p>
+<a name="node_idx_20"></a>
+MzScheme supports the <em>R5RS</em> <code class=scheme><code class=scheme>values</code></code> and
+<code class=scheme><code class=scheme>call-with-values</code></code> procedure, and also provides binding forms for
+multiple-value expressions, discussed in section&nbsp;<a href="#node_sec_2.8">2.8</a>.</p>
+<p>
+Multiple return values are legal in MzScheme whenever the return value
+of an expression is ignored.  For example, all but the last
+expression in a <code class=scheme><span class=keyword>begin</span></code> form can legally return multiple
+values in any context.  If a built-in procedure takes a procedure
+argument, and the built-in procedure does not inspect the result of
+the supplied procedure, then the supplied procedure can return
+multiple values. For example, the procedure supplied to
+<code class=scheme><code class=scheme>for-each</code></code> can return any number of values, but the procedure
+supplied to <code class=scheme><code class=scheme>map</code></code> must return a single value.</p>
+<p>
+When the number of values returned by an expression does not match the
+number of values expected by the expression's context, the
+<a name="node_idx_22"></a><code class=scheme>exn:application:arity</code> exception is raised (at run time).</p>
+<p>
+Examples:
+</p>
+<div align=left><pre class=scheme>(<span class=variable>-</span> (<code class=scheme>values</code> <span class=selfeval>1</span>)) <span class=comment>; =&gt; <code class=schemeresponse><span class=selfeval>-1</span></code></span>
+(<span class=variable>-</span> (<code class=scheme>values</code> <span class=selfeval>1</span> <span class=selfeval>2</span>)) <span class=comment>; =&gt; <code class=schemeresponse><span class=variable>exn:application:arity</span><span class=keyword>,</span> <span class=variable>returned</span> <span class=selfeval>2</span> <code class=scheme>values</code> <span class=variable>to</span> <span class=variable>single-value</span> <span class=variable>context</span></code></span>
+(<span class=variable>-</span> (<code class=scheme>values</code>)) <span class=comment>; =&gt; <code class=schemeresponse><span class=variable>exn:application:arity</span><span class=keyword>,</span> <span class=variable>returned</span> <span class=selfeval>0</span> <code class=scheme>values</code> <span class=variable>to</span> <span class=variable>single-value</span> <span class=variable>context</span></code></span>
+(<code class=scheme>call-with-values</code> 
+  (<span class=keyword>lambda</span> () (<code class=scheme>values</code> <span class=selfeval>1</span> <span class=selfeval>2</span>)) 
+  (<span class=keyword>lambda</span> (<span class=variable>x</span> <span class=variable>y</span>) <span class=variable>y</span>)) <span class=comment>; =&gt; <code class=schemeresponse><span class=selfeval>2</span></code></span>
+(<code class=scheme>call-with-values</code> 
+  (<span class=keyword>lambda</span> () (<code class=scheme>values</code> <span class=selfeval>1</span> <span class=selfeval>2</span>)) 
+  (<span class=keyword>lambda</span> <span class=variable>z</span> <span class=variable>z</span>)) <span class=comment>; =&gt; (1 2) </span>
+(<code class=scheme>call-with-values</code> 
+  (<span class=keyword>lambda</span> () (<span class=keyword>let/cc</span> <span class=variable>k</span> (<span class=variable>k</span> <span class=selfeval>3</span> <span class=selfeval>4</span>))) 
+  (<span class=keyword>lambda</span> (<span class=variable>x</span> <span class=variable>y</span>) <span class=variable>y</span>)) <span class=comment>; =&gt; <code class=schemeresponse><span class=selfeval>4</span></code></span>
+(<code class=scheme>call-with-values</code> 
+  (<span class=keyword>lambda</span> () (<code class=scheme>values</code> <span class=keyword>'</span><span class=variable>hello</span> <span class=selfeval>1</span> <span class=selfeval>2</span> <span class=selfeval>3</span> <span class=selfeval>4</span>)) 
+  (<span class=keyword>lambda</span> (<span class=variable>s</span> . <span class=variable>l</span>) 
+    (<code class=scheme>format</code> <span class=selfeval>&quot;~s = ~s&quot;</span> <span class=variable>s</span> <span class=variable>l</span>))) <span class=comment>; =&gt; <code class=schemeresponse><span class=selfeval>&quot;hello = (1 2 3 4)&quot;</span></code></span>
+</pre></div><p></p>
+<p>
+</p>
+<a name="node_sec_2.3"></a>
+<h2><a href="mzscheme.html#node_toc_node_sec_2.3">2.3&nbsp;&nbsp;Cond and Case</a></h2>
+<p><a name="node_idx_24"></a></p>
+<p>
+The <a name="node_idx_26"></a><code class=scheme>else</code> and <a name="node_idx_28"></a><code class=scheme>=&gt;</code> identifiers in a <code class=scheme><span class=keyword>cond</span></code> or
+<code class=scheme><span class=keyword>case</span></code> statement are handled specially only when they are not
+lexically bound or module-bound:
+</p>
+<div align=left><pre class=scheme>(<span class=keyword>cond</span> [<span class=selfeval>1</span> <span class=keyword>=&gt;</span> <code class=scheme>add1</code>]) <span class=comment>; =&gt; <code class=schemeresponse><span class=selfeval>2</span></code></span>
+(<span class=keyword>let</span> ([<span class=keyword>=&gt;</span> <span class=selfeval>5</span>]) (<span class=keyword>cond</span> [<span class=selfeval>1</span> <span class=keyword>=&gt;</span> <code class=scheme>add1</code>])) <span class=comment>; =&gt; <code class=schemeresponse><span class=variable>#&lt;primitive:add1&gt;</span></code></span>
+</pre></div><p></p>
+<p>
+</p>
+<a name="node_sec_2.4"></a>
+<h2><a href="mzscheme.html#node_toc_node_sec_2.4">2.4&nbsp;&nbsp;When and Unless</a></h2>
+<p><a name="node_idx_30"></a></p>
+<p>
+The <a name="node_kw_definitionwhen"></a><a name="node_idx_32"></a><code class=scheme><span class=keyword>when</span></code> and <a name="node_kw_definitionunless"></a><a name="node_idx_34"></a><code class=scheme><span class=keyword>unless</span></code> forms conditionally
+evaluate a single body of expressions:
+</p>
+<ul><p>
+</p>
+<li><p><code class=scheme>(<span class=keyword>when</span> <span class=variable>test-expr</span> <span class=variable>expr</span> <tt>&middot;&middot;&middot;</tt><sup>1</sup>)</code> evaluates the
+<code class=scheme><span class=variable>expr</span></code> body expressions only when <code class=scheme><span class=variable>test-expr</span></code> returns a
+true value.</p>
+<p>
+</p>
+<li><p><code class=scheme>(<span class=keyword>unless</span> <span class=variable>test-expr</span> <span class=variable>expr</span> <tt>&middot;&middot;&middot;</tt><sup>1</sup>)</code> evaluates the
+<code class=scheme><span class=variable>expr</span></code> body expressions only when <code class=scheme><span class=variable>test-expr</span></code> returns
+<code class=scheme><span class=selfeval>#f</span></code>.</p>
+<p>
+</p>
+</ul><p>
+The result of a <code class=scheme><span class=keyword>when</span></code> or <code class=scheme><span class=keyword>unless</span></code> expression is the result of
+the last body expression if the body is evaluated, or void (see
+section&nbsp;<a href="mzscheme-Z-H-3.html#node_sec_3.1">3.1</a>) if the body is not evaluated.</p>
+<p>
+</p>
+<a name="node_sec_2.5"></a>
+<h2><a href="mzscheme.html#node_toc_node_sec_2.5">2.5&nbsp;&nbsp;And and Or</a></h2>
+<p><a name="node_idx_36"></a></p>
+<p>
+In an <a name="node_idx_38"></a><code class=scheme><span class=keyword>and</span></code> or <a name="node_idx_40"></a><code class=scheme><span class=keyword>or</span></code> expression, the last test
+expression can return multiple values (see section&nbsp;<a href="#node_sec_2.2">2.2</a>). If the last
+expression is evaluated and it returns multiple values, then the
+result of the entire <code class=scheme><span class=keyword>and</span></code> or <code class=scheme><span class=keyword>or</span></code> expression is the multiple
+values. Other sub-expressions in an <code class=scheme><span class=keyword>and</span></code> or <code class=scheme><span class=keyword>or</span></code>
+expression must return a single value.</p>
+<p>
+</p>
+<a name="node_sec_2.6"></a>
+<h2><a href="mzscheme.html#node_toc_node_sec_2.6">2.6&nbsp;&nbsp;Sequences</a></h2>
+<p><a name="node_idx_42"></a></p>
+<p>
+The <a name="node_kw_definitionbegin0"></a><a name="node_idx_44"></a><code class=scheme><span class=keyword>begin0</span></code> form is like <a name="node_idx_46"></a><code class=scheme><span class=keyword>begin</span></code>, but the value
+of the first expression in the form is returned instead of the value
+of the last expression:
+</p>
+<div align=left><pre class=scheme>(<span class=keyword>let</span> ([<span class=variable>x</span> <span class=selfeval>4</span>])
+  (<span class=keyword>begin0</span> <span class=variable>x</span> (<span class=keyword>set!</span> <span class=variable>x</span> <span class=selfeval>9</span>) (<code class=scheme>display</code> <span class=variable>x</span>))) <span class=comment>; =&gt; <code class=scheme><code class=scheme>display</code></code>s <code class=schemeresponse><span class=selfeval>9</span></code> then returns <code class=schemeresponse><span class=selfeval>4</span></code></span>
+</pre></div><p></p>
+<p>
+The first sub-expression in a <code class=scheme><span class=keyword>begin0</span></code> expression is in tail
+position if and only if it is the only sub-expression.</p>
+<p>
+</p>
+<a name="node_sec_2.7"></a>
+<h2><a href="mzscheme.html#node_toc_node_sec_2.7">2.7&nbsp;&nbsp;Quote and Quasiquote</a></h2>
+<p><a name="node_idx_48"></a></p>
+<p>
+The <code class=scheme><span class=keyword>quote</span></code> form never allocates, so that the result of multiple
+evaluations of a single <code class=scheme><span class=keyword>quote</span></code> expression are always <code class=scheme><code class=scheme>eq?</code></code>.
+Nevertheless, a quoted cons cell, vector, or list is mutable;
+mutations to the result of a <code class=scheme><span class=keyword>quote</span></code> application are visible to
+future evaluations of the <code class=scheme><span class=keyword>quote</span></code> expression.</p>
+<p>
+The <code class=scheme><span class=keyword>quasiquote</span></code> form allocates only as many fresh cons cells,
+vectors, and boxes as are needed without analyzing <code class=scheme><span class=keyword>unquote</span></code>
+and <code class=scheme><span class=keyword>unquote-splicing</span></code> expressions. For example, in
+</p>
+<div align=left><pre class=scheme><span class=keyword>`</span>(<span class=keyword>,</span><span class=selfeval>1</span> <span class=selfeval>2</span> <span class=selfeval>3</span>)
+</pre></div><p>
+a single reader-allocated tail <code class=scheme><span class=keyword>'</span>(<span class=selfeval>2</span> <span class=selfeval>3</span>)</code> is used for every
+evaluation of the <code class=scheme><span class=keyword>quasiquote</span></code> expression.</p>
+<p>
+The standard Scheme <a name="node_idx_50"></a><code class=scheme><span class=keyword>quasiquote</span></code> has been extended so that
+<code class=scheme><span class=keyword>unquote</span></code> and <code class=scheme><span class=keyword>unquote-splicing</span></code> work within immediate boxes:
+</p>
+<div align=left><pre class=scheme><span class=keyword>`</span><span class=selfeval>#&amp;</span>(<span class=keyword>,</span>(<span class=variable>-</span> <span class=selfeval>2</span> <span class=selfeval>1</span>) <span class=keyword>,@</span>(<code class=scheme>list</code> <span class=selfeval>2</span> <span class=selfeval>3</span>)) <span class=comment>; =&gt; <code class=schemeresponse><span class=selfeval>#&amp;</span>(<span class=selfeval>1</span> <span class=selfeval>2</span> <span class=selfeval>3</span>)</code></span>
+</pre></div><p>
+See section&nbsp;<a href="mzscheme-Z-H-14.html#node_sec_14.3">14.3</a> for more information about immediate boxes.</p>
+<p>
+MzScheme defines the <a name="node_idx_52"></a><code class=scheme><span class=keyword>unquote</span></code> and
+<a name="node_idx_54"></a><code class=scheme><span class=keyword>unquote-splicing</span></code> identifiers as top-level syntactic forms
+that always report a syntax error.  The <code class=scheme><span class=keyword>quasiquote</span></code> form
+recognizes normal <code class=scheme><span class=keyword>unquote</span></code> and <code class=scheme><span class=keyword>unquote-splicing</span></code>
+uses via <code class=scheme><code class=scheme>module-identifier=?</code></code>.  (See section&nbsp;<a href="mzscheme-Z-H-12.html#node_sec_12.3.1">12.3.1</a> for more
+information on identifier comparisons.)</p>
+<p>
+</p>
+<a name="node_sec_2.8"></a>
+<h2><a href="mzscheme.html#node_toc_node_sec_2.8">2.8&nbsp;&nbsp;Binding Forms</a></h2>
+<p><a name="node_idx_56"></a></p>
+<p>
+</p>
+<a name="node_sec_2.8.1"></a>
+<h3><a href="mzscheme.html#node_toc_node_sec_2.8.1">2.8.1&nbsp;&nbsp;Definitions</a></h3>
+<p></p>
+<p>
+A procedure definition
+</p>
+<div align=left><pre class=scheme>(<span class=keyword>define</span> <span class=variable>variable</span> (<span class=keyword>lambda</span> <span class=variable>formals</span> <span class=variable>expr</span> <tt>&middot;&middot;&middot;</tt><sup>1</sup>))
+</pre></div><p>
+can be abbreviated
+</p>
+<div align=left><pre class=scheme>(<span class=keyword>define</span> (<span class=variable>variable</span> . <span class=variable>formals</span>) <span class=variable>expr</span> <tt>&middot;&middot;&middot;</tt><sup>1</sup>)
+</pre></div><p>
+In addition to this standard Scheme abbreviation, MzScheme supports an
+MIT-style generalization, so that a definition
+</p>
+<div align=left><pre class=scheme>(<span class=keyword>define</span> <span class=variable>header</span> (<span class=keyword>lambda</span> <span class=variable>formals</span> <span class=variable>expr</span> <tt>&middot;&middot;&middot;</tt><sup>1</sup>))
+</pre></div><p>
+can be abbreviated
+</p>
+<div align=left><pre class=scheme>(<span class=keyword>define</span> (<span class=variable>header</span> . <span class=variable>formals</span>) <span class=variable>expr</span> <tt>&middot;&middot;&middot;</tt><sup>1</sup>))
+</pre></div><p>
+even if <code class=scheme><span class=variable>header</span></code> is itself a parenthesized procedure
+abbrevation. The general syntax of <a name="node_kw_definitiondefine"></a><a name="node_idx_58"></a><code class=scheme><span class=keyword>define</span></code> is as
+follows:<a name="node_idx_60"></a><a name="node_idx_62"></a>
+</p>
+<div align=left><pre class=scheme>(<span class=keyword>define</span> <span class=variable>variable</span> <span class=variable>expr</span>)
+(<span class=keyword>define</span> (<span class=variable>header</span> . <span class=variable>formals</span>) <span class=variable>expr</span> <tt>&middot;&middot;&middot;</tt><sup>1</sup>)
+
+<span class=variable>header</span> is one of
+  <span class=variable>variable</span>
+  (<span class=variable>header</span> . <span class=variable>formals</span>)
+
+<span class=variable>formals</span> is one of
+  <span class=variable>variable</span>
+  (<span class=variable>variable</span> <tt>&middot;&middot;&middot;</tt>)
+  (<span class=variable>variable</span> <span class=variable>variable</span> <tt>&middot;&middot;&middot;</tt> . <span class=variable>variable</span>)
+</pre></div><p></p>
+<p>
+Multiple values can be bound to multiple variables at once using
+<a name="node_kw_definitiondefine-values"></a><a name="node_idx_64"></a><code class=scheme><span class=keyword>define-values</span></code>:
+</p>
+<div align=left><pre class=scheme>(<span class=keyword>define-values</span> (<span class=variable>variable</span> <tt>&middot;&middot;&middot;</tt>) <span class=variable>expr</span>)
+</pre></div><p>
+The number of values returned by <code class=scheme><span class=variable>expr</span></code> must match the number of
+<code class=scheme><span class=variable>variable</span></code>s provided, and the <code class=scheme><span class=variable>variable</span></code>s must be distinct.
+No procedure-definition abbreviation is available for
+<code class=scheme><span class=keyword>define-values</span></code>.</p>
+<p>
+Examples:
+</p>
+<div align=left><pre class=scheme>(<span class=keyword>define</span> <span class=variable>x</span> <span class=selfeval>1</span>) 
+<span class=variable>x</span> <span class=comment>; =&gt; <code class=schemeresponse><span class=selfeval>1</span></code></span>
+(<span class=keyword>define</span> (<span class=variable>f</span> <span class=variable>x</span>) (<span class=variable>+</span> <span class=variable>x</span> <span class=selfeval>1</span>))
+(<span class=variable>f</span> <span class=selfeval>2</span>) <span class=comment>; =&gt; <code class=schemeresponse><span class=selfeval>3</span></code></span>
+(<span class=keyword>define</span> (((<span class=variable>g</span> <span class=variable>x</span>) <span class=variable>y</span> <span class=variable>z</span>) . <span class=variable>w</span>) (<code class=scheme>list</code> <span class=variable>x</span> <span class=variable>y</span> <span class=variable>z</span> <span class=variable>w</span>))
+(<span class=keyword>let</span> ([<span class=variable>h</span> ((<span class=variable>g</span> <span class=selfeval>1</span>) <span class=selfeval>2</span> <span class=selfeval>3</span>)])
+  (<code class=scheme>list</code> (<span class=variable>h</span> <span class=selfeval>4</span> <span class=selfeval>5</span>) (<span class=variable>h</span> <span class=selfeval>6</span>))) <span class=comment>; =&gt; <code class=scheme><span class=keyword>'</span>((<span class=selfeval>1</span> <span class=selfeval>2</span> <span class=selfeval>3</span> (<span class=selfeval>4</span> <span class=selfeval>5</span>)) (<span class=selfeval>1</span> <span class=selfeval>2</span> <span class=selfeval>3</span> (<span class=selfeval>6</span>)))</code></span>
+
+(<span class=keyword>define-values</span> (<span class=variable>x</span>) <span class=selfeval>2</span>) 
+<span class=variable>x</span> <span class=comment>; =&gt; <code class=schemeresponse><span class=selfeval>2</span></code></span>
+(<span class=keyword>define-values</span> (<span class=variable>x</span> <span class=variable>y</span>) (<code class=scheme>values</code> <span class=selfeval>3</span> <span class=selfeval>4</span>)) 
+<span class=variable>x</span> <span class=comment>; =&gt; <code class=schemeresponse><span class=selfeval>3</span></code></span>
+<span class=variable>y</span> <span class=comment>; =&gt; <code class=schemeresponse><span class=selfeval>4</span></code></span>
+(<span class=keyword>define-values</span> (<span class=variable>x</span> <span class=variable>y</span>) (<code class=scheme>values</code> <span class=selfeval>5</span> (<code class=scheme>add1</code> <span class=variable>x</span>))) 
+<span class=variable>y</span> <span class=comment>; =&gt; <code class=schemeresponse><span class=selfeval>4</span></code></span>
+(<span class=keyword>define-values</span> () (<code class=scheme>values</code>)) <span class=comment>; same as <code class=scheme>(<code class=scheme>void</code>)</code></span>
+(<span class=keyword>define</span> <span class=variable>x</span> (<code class=scheme>values</code> <span class=selfeval>7</span> <span class=selfeval>8</span>)) <span class=comment>;  =&gt; <code class=schemeresponse><span class=variable>exn:application:arity</span><span class=keyword>,</span> <span class=selfeval>2</span> <code class=scheme>values</code> <span class=variable>for</span> <span class=variable>1-value</span> <span class=variable>context</span></code></span>
+(<span class=keyword>define-values</span> (<span class=variable>x</span> <span class=variable>y</span>) <span class=selfeval>7</span>) <span class=comment>;  =&gt; <code class=schemeresponse><span class=variable>exn:application:arity</span><span class=keyword>,</span> <span class=selfeval>1</span> <span class=variable>value</span> <span class=variable>for</span> <span class=variable>2-value</span> <span class=variable>context</span></code></span>
+(<span class=keyword>define-values</span> () <span class=selfeval>7</span>) <span class=comment>;  =&gt; <code class=schemeresponse><span class=variable>exn:application:arity</span><span class=keyword>,</span> <span class=selfeval>1</span> <span class=variable>value</span> <span class=variable>for</span> <span class=variable>0-value</span> <span class=variable>context</span></code></span>
+</pre></div><p></p>
+<p>
+</p>
+<a name="node_sec_2.8.2"></a>
+<h3><a href="mzscheme.html#node_toc_node_sec_2.8.2">2.8.2&nbsp;&nbsp;Local Bindings</a></h3>
+<p>Local variables are bound with standard Scheme's <a name="node_idx_66"></a><code class=scheme><span class=keyword>let</span></code>,
+<a name="node_idx_68"></a><code class=scheme><span class=keyword>let*</span></code>, and <a name="node_idx_70"></a><code class=scheme><span class=keyword>letrec</span></code>. MzScheme's
+<a name="node_idx_72"></a><code class=scheme><span class=keyword>letrec</span></code> form guarantees sequential left-to-right
+evaluation of the binding expressions.</p>
+<p>
+Multiple values are bound to multiple local variables at once with
+<a name="node_kw_definitionlet-values"></a><a name="node_idx_74"></a><code class=scheme><span class=keyword>let-values</span></code>, <a name="node_kw_definitionlet*-values"></a><a name="node_idx_76"></a><code class=scheme><span class=keyword>let*-values</span></code>, and
+<a name="node_kw_definitionletrec-values"></a><a name="node_idx_78"></a><code class=scheme><span class=keyword>letrec-values</span></code>.  The syntax for <code class=scheme><span class=keyword>let-values</span></code> is:
+</p>
+<div align=left><pre class=scheme>(<span class=keyword>let-values</span> (((<span class=variable>variable</span> <tt>&middot;&middot;&middot;</tt>) <span class=variable>expr</span>) <tt>&middot;&middot;&middot;</tt>) <span class=variable>body-expr</span> <tt>&middot;&middot;&middot;</tt><sup>1</sup>)
+</pre></div><p>
+As in <code class=scheme><span class=keyword>define-values</span></code>, the number of values returned by each
+<code class=scheme><span class=variable>expr</span></code> must match the number of <code class=scheme><span class=variable>variable</span></code>s declared in the
+corresponding clause. Each <code class=scheme><span class=variable>expr</span></code> remains outside of the scope of
+all variables bound by the <code class=scheme><span class=keyword>let-values</span></code> expression.</p>
+<p>
+The syntax for <code class=scheme><span class=keyword>let*-values</span></code> and <code class=scheme><span class=keyword>letrec-values</span></code> is the same
+as for <code class=scheme><span class=keyword>let-values</span></code>, and the binding semantics for each form
+corresponds to the single-value binding form:
+</p>
+<ul><p>
+</p>
+<li><p>In a <code class=scheme><span class=keyword>let*-values</span></code> expression, the scope of the variables
+of each clause includes all of the remaining binding clauses. The
+clause expressions are evaluated and bound to variables sequentially.</p>
+<p>
+</p>
+<li><p>In a <code class=scheme><span class=keyword>letrec-values</span></code> expression, the scope of the variables
+of each clause includes all of the binding clauses. The clause
+expressions are evaluated and bound to variables sequentially.</p>
+<p>
+</p>
+</ul><p></p>
+<p>
+When a <code class=scheme><span class=keyword>letrec</span></code> or <code class=scheme><span class=keyword>letrec-values</span></code> expression is evaluated,
+each variable binding is initially assigned the special undefined
+value (see section&nbsp;<a href="mzscheme-Z-H-3.html#node_sec_3.1">3.1</a>); the undefined value is replaced
+after the corresponding expression is evaluated.</p>
+<p>
+Examples:
+</p>
+<div align=left><pre class=scheme>(<span class=keyword>define</span> <span class=variable>x</span> <span class=selfeval>0</span>) 
+(<span class=keyword>let</span> ([<span class=variable>x</span> <span class=selfeval>5</span>] [<span class=variable>y</span> <span class=variable>x</span>]) <span class=variable>y</span>) <span class=comment>; =&gt; <code class=schemeresponse><span class=selfeval>0</span></code></span>
+(<span class=keyword>let*</span> ([<span class=variable>x</span> <span class=selfeval>5</span>] [<span class=variable>y</span> <span class=variable>x</span>]) <span class=variable>y</span>) <span class=comment>; =&gt; <code class=schemeresponse><span class=selfeval>5</span></code></span>
+(<span class=keyword>letrec</span> ([<span class=variable>x</span> <span class=selfeval>5</span>] [<span class=variable>y</span> <span class=variable>x</span>]) <span class=variable>y</span>) <span class=comment>; =&gt; <code class=schemeresponse><span class=selfeval>5</span></code></span>
+(<span class=keyword>letrec</span> ([<span class=variable>x</span> <span class=variable>y</span>] [<span class=variable>y</span> <span class=selfeval>5</span>]) <span class=variable>x</span>) <span class=comment>; =&gt; undefined</span>
+(<span class=keyword>let-values</span> ([(<span class=variable>x</span>) <span class=selfeval>5</span>] [(<span class=variable>y</span>) <span class=variable>x</span>]) <span class=variable>y</span>) <span class=comment>; =&gt; <code class=schemeresponse><span class=selfeval>0</span></code></span>
+(<span class=keyword>let-values</span> ([(<span class=variable>x</span> <span class=variable>y</span>) (<code class=scheme>values</code> <span class=selfeval>5</span> <span class=variable>x</span>)]) <span class=variable>y</span>) <span class=comment>; =&gt; <code class=schemeresponse><span class=selfeval>0</span></code></span>
+(<span class=keyword>let*-values</span> ([(<span class=variable>x</span>) <span class=selfeval>5</span>] [(<span class=variable>y</span>) <span class=variable>x</span>]) <span class=variable>y</span>) <span class=comment>; =&gt; <code class=schemeresponse><span class=selfeval>5</span></code></span>
+(<span class=keyword>let*-values</span> ([(<span class=variable>x</span> <span class=variable>y</span>) (<code class=scheme>values</code> <span class=selfeval>5</span> <span class=variable>x</span>)]) <span class=variable>y</span>) <span class=comment>; =&gt; <code class=schemeresponse><span class=selfeval>0</span></code></span>
+(<span class=keyword>letrec-values</span> ([(<span class=variable>x</span>) <span class=selfeval>5</span>] [(<span class=variable>y</span>) <span class=variable>x</span>]) <span class=variable>y</span>) <span class=comment>; =&gt; <code class=schemeresponse><span class=selfeval>5</span></code></span>
+(<span class=keyword>letrec-values</span> ([(<span class=variable>x</span> <span class=variable>y</span>) (<code class=scheme>values</code> <span class=selfeval>5</span> <span class=variable>x</span>)]) <span class=variable>y</span>) <span class=comment>; =&gt; undefined</span>
+(<span class=keyword>letrec-values</span> ([(<span class=variable>odd</span> <span class=variable>even</span>) (<code class=scheme>values</code> 
+                             (<span class=keyword>lambda</span> (<span class=variable>n</span>) (<span class=keyword>if</span> (<code class=scheme>zero?</code> <span class=variable>n</span>) <span class=selfeval>#f</span> (<span class=variable>even</span> (<code class=scheme>sub1</code> <span class=variable>n</span>)))) 
+                             (<span class=keyword>lambda</span> (<span class=variable>n</span>) (<span class=keyword>if</span> (<code class=scheme>zero?</code> <span class=variable>n</span>) <span class=selfeval>#t</span> (<span class=variable>odd</span> (<code class=scheme>sub1</code> <span class=variable>n</span>)))))]) 
+   (<span class=variable>odd</span> <span class=selfeval>17</span>)) <span class=comment>; =&gt; <code class=schemeresponse><span class=selfeval>#t</span></code></span>
+</pre></div><p></p>
+<p>
+</p>
+<a name="node_sec_2.8.3"></a>
+<h3><a href="mzscheme.html#node_toc_node_sec_2.8.3">2.8.3&nbsp;&nbsp;Assignments</a></h3>
+<p>The standard <a name="node_idx_80"></a><code class=scheme><span class=keyword>set!</span></code> form assigns a value to a
+single global, local, or module variable. Multiple variables can be
+assigned at once using <a name="node_idx_82"></a>
+<a name="node_kw_definitionset!-values"></a> <code class=scheme><span class=keyword>set!-values</span></code>:
+</p>
+<div align=left><pre class=scheme>(<span class=keyword>set!-values</span> (<span class=variable>variable</span> <tt>&middot;&middot;&middot;</tt>) <span class=variable>expr</span>)
+</pre></div><p>
+The number of values returned by <code class=scheme><span class=variable>expr</span></code> must match the number of
+<code class=scheme><span class=variable>variable</span></code>s provided.</p>
+<p>
+The <code class=scheme><span class=variable>variable</span></code>s, which must be distinct, can be any mixture of
+global, local, and module variables.  Assignments are performed
+sequentially from the first <code class=scheme><span class=variable>variable</span></code> to the last. If an error
+occurs in one of the assignments (perhaps because a global variable
+is not yet bound), then the assignments for the preceding
+<code class=scheme><span class=variable>variable</span></code>s will have already completed, but assignments for the
+remaining <code class=scheme><span class=variable>variable</span></code>s will never complete.</p>
+<p>
+</p>
+<a name="node_sec_2.8.4"></a>
+<h3><a href="mzscheme.html#node_toc_node_sec_2.8.4">2.8.4&nbsp;&nbsp;Fluid-Let</a></h3>
+<p>The syntax for a <a name="node_kw_definitionfluid-let"></a><a name="node_idx_84"></a><code class=scheme><span class=keyword>fluid-let</span></code> expression is the same as for
+<code class=scheme><span class=keyword>let</span></code>:
+</p>
+<div align=left><pre class=scheme>(<span class=keyword>fluid-let</span> ((<span class=variable>variable</span> <span class=variable>expr</span>) <tt>&middot;&middot;&middot;</tt>) <span class=variable>body-expr</span> <tt>&middot;&middot;&middot;</tt><sup>1</sup>)
+</pre></div><p></p>
+<p>
+Each <code class=scheme><span class=variable>variable</span></code> must be either a local variable or a global or
+module variable that is bound before the <code class=scheme><span class=keyword>fluid-let</span></code> expression
+is evaluated.  Before the <code class=scheme><span class=variable>body-expr</span></code>s are evaluated, the
+bindings for the <code class=scheme><span class=variable>variable</span></code>s are <code class=scheme><span class=keyword>set!</span></code> to the values of the
+corresponding <code class=scheme><span class=variable>expr</span></code>s.  Once the <code class=scheme><span class=variable>body-expr</span></code>s have been
+evaluated, the values of the variables are restored. The value of the
+entire <code class=scheme><span class=keyword>fluid-let</span></code> expression is the value of the last
+<code class=scheme><span class=variable>body-expr</span></code>.</p>
+<p>
+</p>
+<a name="node_sec_2.8.5"></a>
+<h3><a href="mzscheme.html#node_toc_node_sec_2.8.5">2.8.5&nbsp;&nbsp;Syntax Expansion and Internal Definitions</a></h3>
+<p></p>
+<p>
+All binding forms are syntax-expanded into <code class=scheme><span class=keyword>define-values</span></code>,
+<code class=scheme><span class=keyword>let-values</span></code>, <code class=scheme><span class=keyword>letrec-values</span></code>, <code class=scheme><span class=keyword>define-syntaxes</span></code>,
+<code class=scheme><span class=keyword>letrec-syntaxes+values</span></code>, and <code class=scheme><span class=keyword>fluid-let-syntax</span></code>
+expressions.  The <code class=scheme><span class=keyword>set!-values</span></code> form is expanded to
+<code class=scheme><span class=keyword>let-values</span></code> with <code class=scheme><span class=keyword>set!</span></code>. See section&nbsp;<a href="mzscheme-Z-H-12.html#node_sec_12.6.1">12.6.1</a> for
+more information.</p>
+<p>
+<a name="node_idx_86"></a>
+All <code class=scheme><span class=keyword>define-values</span></code> expressions that are inside only
+<a name="node_idx_88"></a><code class=scheme><span class=keyword>begin</span></code> expressions are treated as top-level
+definitions. Body <code class=scheme><span class=keyword>define-values</span></code> expressions in a
+<code class=scheme><span class=keyword>module</span></code> expression are handled specially as described in
+section&nbsp;<a href="mzscheme-Z-H-5.html#node_sec_5.1">5.1</a>.  Any other <code class=scheme><span class=keyword>define-values</span></code> expression is
+either an <strong>internal definition</strong> or syntactically illegal.
+The same is true of <code class=scheme><span class=keyword>define-syntaxes</span></code> expressions.</p>
+<p>
+Internal definitions can appear at the start of a sequence of
+expressions, such as the start of a <code class=scheme><span class=keyword>lambda</span></code>,
+<code class=scheme><span class=keyword>case-lambda</span></code>, or <code class=scheme><span class=keyword>let</span></code> body.  At least one
+non-definition expression must follow a sequence of internal
+definitions. The first expression in a <code class=scheme><span class=keyword>begin0</span></code> expression
+cannot be an internal definition; for the purposes of internal
+definitions, the second expression is the start of the sequence.</p>
+<p>
+When a <code class=scheme><span class=keyword>begin</span></code> expression appears within a sequence, its
+content is inlined into the sequence (recursively, if the
+<code class=scheme><span class=keyword>begin</span></code> expression contains other <code class=scheme><span class=keyword>begin</span></code>
+expressions). Like top-level <code class=scheme><span class=keyword>begin</span></code> expressions (and unlike
+other <code class=scheme><span class=keyword>begin</span></code> expressions), a <code class=scheme><span class=keyword>begin</span></code> expression within
+an internal definition sequence can be empty.</p>
+<p>
+An internal <code class=scheme><span class=keyword>define-values</span></code> or <code class=scheme><span class=keyword>define-syntaxes</span></code>
+expression is transformed, along with the expressions following it,
+into a <code class=scheme><span class=keyword>letrec-syntaxes+values</span></code> expression: the variables
+bound by the internal definitions become the binding variables of the
+new <code class=scheme><span class=keyword>letrec-syntaxes+values</span></code> expression, and the expressions
+that follow the definitions become the body of the new
+<code class=scheme><span class=keyword>letrec-syntaxes+values</span></code> expression.</p>
+<p>
+Multiple adjacent definitions are collected into a single
+<code class=scheme><span class=keyword>letrec-syntaxes+values</span></code> transformation, so that the
+definitions can be mutually recursive, but the definitions
+expressions must be adjacent. A non-definition marks the start of a
+sequence of expressions to be moved into the body of the newly
+created <code class=scheme><span class=keyword>letrec-syntaxes+values</span></code> form.</p>
+<p>
+Internal definitions are detected after a partial syntax expansion
+that exposes <code class=scheme><span class=keyword>begin</span></code>, <code class=scheme><span class=keyword>define-values</span></code>, and
+<code class=scheme><span class=keyword>define-syntaxes</span></code> forms without expanding the definition
+body. Therefore, an internal definition can shadow a syntactic form
+in the value part of other embedded definitions. However, an embedded
+definition cannot alter the decision of whether another expression is
+also an embedded definition in the same
+<code class=scheme><span class=keyword>letrec-syntaxes+values</span></code> transformation, because the
+definitions are collected through partial expansion before any new
+scope is created.</p>
+<p>
+</p>
+<a name="node_sec_2.9"></a>
+<h2><a href="mzscheme.html#node_toc_node_sec_2.9">2.9&nbsp;&nbsp;Case-Lambda</a></h2>
+<p><a name="node_idx_90"></a></p>
+<p>
+The <a name="node_kw_definitioncase-lambda"></a><a name="node_idx_92"></a><code class=scheme><span class=keyword>case-lambda</span></code> form creates a procedure that dispatches
+to a particular body of expressions based on the number of arguments
+that the procedure receives. The <code class=scheme><span class=keyword>case-lambda</span></code> form provides a
+mechanism for creating variable-arity procedures with more control
+and efficiency than using a <code class=scheme><span class=keyword>lambda</span></code> ``rest argument,'' such
+as the <code class=scheme><span class=variable>x</span></code> in <code class=scheme>(<span class=keyword>lambda</span> (<span class=variable>a</span> . <span class=variable>x</span>) <span class=variable>expr</span> <tt>&middot;&middot;&middot;</tt><sup>1</sup>)</code>.</p>
+<p>
+A <code class=scheme><span class=keyword>case-lambda</span></code> expression has the form:
+</p>
+<div align=left><pre class=scheme>(<span class=keyword>case-lambda</span>
+  (<span class=variable>formals</span> <span class=variable>expr</span> <tt>&middot;&middot;&middot;</tt><sup>1</sup>)
+  <tt>&middot;&middot;&middot;</tt>)
+
+<span class=variable>formals</span> is one of 
+  <span class=variable>variable</span>
+  (<span class=variable>variable</span> <tt>&middot;&middot;&middot;</tt>)
+  (<span class=variable>variable</span> <tt>&middot;&middot;&middot;</tt> . <span class=variable>variable</span>)
+</pre></div><p></p>
+<p>
+Each <code class=scheme>(<span class=variable>formals</span> <span class=variable>expr</span> <tt>&middot;&middot;&middot;</tt><sup>1</sup>)</code> clause of a <code class=scheme><span class=keyword>case-lambda</span></code>
+expression is analogous to a <code class=scheme><span class=keyword>lambda</span></code> expression of the form
+<code class=scheme>(<span class=keyword>lambda</span> <span class=variable>formals</span> <span class=variable>expr</span> <tt>&middot;&middot;&middot;</tt><sup>1</sup>)</code>. The scope of the
+<code class=scheme><span class=variable>variable</span></code>s in each clause's <code class=scheme><span class=variable>formals</span></code> includes only the same
+clause's <code class=scheme><span class=variable>expr</span></code>s. The <code class=scheme><span class=variable>formals</span></code> variables are bound to actual
+arguments in an application in the same way that <code class=scheme><span class=keyword>lambda</span></code>
+variables are bound in an application.</p>
+<p>
+When a <code class=scheme><span class=keyword>case-lambda</span></code> procedure is invoked, one clause is selected
+and its <code class=scheme><span class=variable>expr</span></code>s are evaluated for the application; the result of
+the last <code class=scheme><span class=variable>expr</span></code> in the clause is the result of the
+application. The clause that is selected for an application is the
+first one with a <code class=scheme><span class=variable>formals</span></code> specification that can accommodate the
+number of arguments in the application.<a name="call_footnote_Temp_4"></a><a href="#footnote_Temp_4"><sup><small>1</small></sup></a></p>
+<p>
+Examples:
+</p>
+<div align=left><pre class=scheme>(<span class=keyword>define</span> <span class=variable>f</span>
+  (<span class=keyword>case-lambda</span>
+    [(<span class=variable>x</span>) <span class=variable>x</span>]
+    [(<span class=variable>x</span> <span class=variable>y</span>) (<span class=variable>+</span> <span class=variable>x</span> <span class=variable>y</span>)]
+    [(<span class=variable>a</span> . <span class=variable>any</span>) <span class=variable>a</span>]))
+(<span class=variable>f</span> <span class=selfeval>1</span>) <span class=comment>; =&gt; <code class=schemeresponse><span class=selfeval>1</span></code></span>
+(<span class=variable>f</span> <span class=selfeval>1</span> <span class=selfeval>2</span>) <span class=comment>; =&gt; <code class=schemeresponse><span class=selfeval>3</span></code></span>
+(<span class=variable>f</span> <span class=selfeval>4</span> <span class=selfeval>5</span> <span class=selfeval>6</span> <span class=selfeval>7</span>) <span class=comment>; =&gt; <code class=schemeresponse><span class=selfeval>4</span></code></span>
+(<span class=variable>f</span>) <span class=comment>; =&gt; raises <code class=schemeresponse><span class=variable>exn:application:arity</span></code></span>
+</pre></div><p></p>
+<p>
+The result of a <code class=scheme><span class=keyword>case-lambda</span></code> expression is a procedure, just
+like the result of a <code class=scheme><span class=keyword>lambda</span></code> expression.  Thus, the
+<a name="node_idx_94"></a><code class=scheme>procedure?</code> predicate returns <code class=scheme><span class=selfeval>#t</span></code> when applied to
+the result of a <code class=scheme><span class=keyword>case-lambda</span></code> expression.</p>
+<p>
+</p>
+<a name="node_sec_2.10"></a>
+<h2><a href="mzscheme.html#node_toc_node_sec_2.10">2.10&nbsp;&nbsp;Procedure Application</a></h2>
+<p><a name="node_idx_96"></a></p>
+<p>
+The ``empty application'' form <code class=scheme>()</code> expands to the quoted empty
+list <code class=scheme><span class=keyword>'</span>()</code>.</p>
+<p>
+</p>
+<div class=footnoterule><hr></div><p></p>
+<div class=footnote><p><a name="footnote_Temp_4"></a><a href="#call_footnote_Temp_4"><sup><small>1</small></sup></a> It is possible that
+a clause in a <code class=scheme><span class=keyword>case-lambda</span></code> expression can never be evaluated
+because a preceding clause always matches the arguments.</p>
+</div>
+<div align=right class=navigation><i>[Go to <span><a href="mzscheme.html">first</a>, <a href="mzscheme-Z-H-1.html">previous</a></span><span>, <a href="mzscheme-Z-H-3.html">next</a></span> page<span>; &nbsp;&nbsp;</span><span><a href="mzscheme.html#node_toc_start">contents</a></span><span><span>; &nbsp;&nbsp;</span><a href="mzscheme-Z-H-19.html#node_index_start">index</a></span>]</i></div><p></p>
+</body>
+</html>

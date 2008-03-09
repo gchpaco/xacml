@@ -1,0 +1,71 @@
+<!doctype html public "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!--
+
+Generated from tour.tex by tex2page, v 2004-09-11
+(running on MzScheme 209, unix), 
+(c) Dorai Sitaram, 
+http://www.ccs.neu.edu/~dorai/tex2page/tex2page-doc.html
+
+-->
+<head>
+<title>
+A Brief Tour of DrScheme version 209
+</title>
+<link rel="stylesheet" type="text/css" href="tour-Z-S.css" title=default>
+<meta name=robots content="noindex,follow">
+</head>
+<body>
+<div align=right class=navigation><i>[Go to <span><a href="tour.html">first</a>, <a href="tour-Z-H-12.html">previous</a></span><span>, <a href="tour-Z-H-14.html">next</a></span> page<span>; &nbsp;&nbsp;</span><span><a href="tour-Z-H-1.html#node_toc_start">contents</a></span>]</i></div><p></p>
+<a name="node_chap_12"></a>
+<h1 class=chapter>
+<div class=chapterheading><a href="tour-Z-H-1.html#node_toc_node_chap_12">Chapter 12</a></div><br>
+<a href="tour-Z-H-1.html#node_toc_node_chap_12">XML Boxes</a></h1>
+<p>DrScheme provides support for generating XML output (which, as a
+special case, can be used to generate HTML).  This consists of three
+entries in the <i>Show</i> menu:
+</p>
+<dl><dt></dt><dd><p>
+</p>
+</dd><dt><b>Insert XML Box</b></dt><dd>
+Use this to insert a sub-editor in which you can enter literal XML
+source.<p>
+</p>
+</dd><dt><b>Insert Scheme Box</b></dt><dd>
+Write Scheme code within an XML Box using a Scheme Box.  A typical use
+is to include the value of a variable in the midst of the XML content.<p>
+</p>
+</dd><dt><b>Insert Scheme Splice Box</b></dt><dd>
+A Scheme Splice Box is like a Scheme Box, except the Scheme expression
+must evaluate to a list, which is spliced into the XML content.<p>
+</p>
+</dd></dl><p>
+The output is in the x-expression format.</p>
+<p>
+The first example shows a simple Web page template: the function
+consumes a title and name and generates a Web page for the named
+person.  The first invocation shows the x-expression output, while the
+second shows how a user can convert this into actual XML syntax:</p>
+<p>
+
+</p>
+<div align=center><table><tr><td>
+
+<img src="./images/xml-scm-box.gif" border="0"  alt="[./images/xml-scm-box.gif]">
+</td></tr></table></div>
+<p>
+The second example shows the use of Scheme Splice Boxes.  The
+combination of higher-order functions, lists and splicing results in
+an extremely powerful document generation tool.</p>
+<p>
+
+</p>
+<div align=center><table><tr><td>
+
+<img src="./images/xml-scm-splc.gif" border="0"  alt="[./images/xml-scm-splc.gif]">
+</td></tr></table></div>
+<p>
+</p>
+<div align=right class=navigation><i>[Go to <span><a href="tour.html">first</a>, <a href="tour-Z-H-12.html">previous</a></span><span>, <a href="tour-Z-H-14.html">next</a></span> page<span>; &nbsp;&nbsp;</span><span><a href="tour-Z-H-1.html#node_toc_start">contents</a></span>]</i></div><p></p>
+</body>
+</html>

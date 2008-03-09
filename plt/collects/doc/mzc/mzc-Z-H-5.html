@@ -1,0 +1,148 @@
+<!doctype html public "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!--
+
+Generated from mzc.tex by tex2page, v 2004-09-11
+(running on MzScheme 209, unix), 
+(c) Dorai Sitaram, 
+http://www.ccs.neu.edu/~dorai/tex2page/tex2page-doc.html
+
+-->
+<head>
+<title>
+PLT mzc: MzScheme Compiler Manual
+</title>
+<link rel="stylesheet" type="text/css" href="mzc-Z-S.css" title=default>
+<meta name=robots content="noindex,follow">
+</head>
+<body>
+<div align=right class=navigation><i>[Go to <span><a href="mzc.html">first</a>, <a href="mzc-Z-H-4.html">previous</a></span><span>, <a href="mzc-Z-H-6.html">next</a></span> page<span>; &nbsp;&nbsp;</span><span><a href="mzc.html#node_toc_start">contents</a></span><span><span>; &nbsp;&nbsp;</span><a href="mzc-Z-H-8.html#node_index_start">index</a></span>]</i></div><p></p>
+<a name="node_chap_5"></a>
+<h1 class=chapter>
+<div class=chapterheading><a href="mzc.html#node_toc_node_chap_5">Chapter 5</a></div><br>
+<a href="mzc.html#node_toc_node_chap_5">Building a Stand-alone Executable</a></h1>
+<p><a name="node_idx_158"></a></p>
+<p>
+<a name="node_idx_160"></a>
+Since the output of <tt><strong>mzc</strong></tt> relies on MzScheme to provide all run-time
+support, there is no way to use <tt><strong>mzc</strong></tt> to obtain <em>small</em>
+stand-alone executables. However, it is possible to produce a <em>large</em> stand-alone executable that contains an embedded copy of the
+MzScheme (or MrEd) run-time engine.</p>
+<p>
+</p>
+<a name="node_sec_5.1"></a>
+<h2><a href="mzc.html#node_toc_node_sec_5.1">5.1&nbsp;&nbsp;Stand-Alone Executables from Scheme Code</a></h2>
+<p><a name="node_idx_162"></a></p>
+<p>
+The command-line flag <tt>--exe</tt><a name="node_idx_164"></a> directs <tt><strong>mzc</strong></tt> to embed a
+module (from source or byte code) into a copy of the MzScheme
+executable. The created executable invokes the embedded module on
+startup. The <tt>--gui-exe</tt><a name="node_idx_166"></a> flag is similar, but copies the
+MrEd executable.</p>
+<p>
+If the embedded module refers statically (i.e., through
+<code class=scheme><span class=keyword>require</span></code>) to modules in MzLib or other collections, then
+those modules are also included in the embedding executable.</p>
+<p>
+Library modules that are referenced dynamically -- through
+<code class=scheme><code class=scheme>eval</code></code>, <code class=scheme><code class=scheme>load</code></code>, or <code class=scheme><code class=scheme>dynamic-require</code></code> -- are not
+automatically embedded into the created executable, but they can be
+explicitly included using <tt><strong>mzc</strong></tt>'s <tt>--lib</tt><a name="node_idx_168"></a> flag.</p>
+<p>
+The <tt>--exe</tt> and <tt>--gui-exe</tt> flags work only with
+<code class=scheme><span class=keyword>module</span></code>-based programs. The <tt><strong>embed.ss</strong></tt> library in the
+<tt><strong>compiler</strong></tt> collection provides a more general interface to the
+embedding mechanism.</p>
+<p>
+</p>
+<a name="node_sec_5.2"></a>
+<h2><a href="mzc.html#node_toc_node_sec_5.2">5.2&nbsp;&nbsp;Stand-Alone Executables from Native Code</a></h2>
+<p><a name="node_idx_170"></a></p>
+<p>
+Creating a stand-alone executable that embeds native code from <tt><strong>mzc</strong></tt>
+requires downloading the MzScheme source code and using a C compiler
+and linker directly.</p>
+<p>
+To build an executable with an embedded MzScheme engine:</p>
+<p>
+</p>
+<ul><p>
+</p>
+<li><p>Download the source code from <a href="http://www.drscheme.org/"><tt>http://www.drscheme.org/</tt></a>
+and compile MzScheme.</p>
+<p>
+</p>
+<li><p>Recompile MzScheme's <tt><strong>main.c</strong></tt> with the preprocessor symbol
+<tt>STANDALONE_WITH_EMBEDDED_EXTENSION</tt>
+<a name="node_idx_172"></a> defined.  Under Unix, the
+<tt><strong>Makefile</strong></tt> distributed with MzScheme provides a target
+<tt><strong>ee-main</strong></tt> that performs this step.</p>
+<p>
+The preprocessor symbol causes MzScheme's startup code to skip
+command line parsing, the user's initialization file, and the
+<code class=scheme>read-eval-print</code> loop. Instead, the C function <tt>scheme_initialize</tt> <a name="node_idx_174"></a> is called, which is the entry point into
+<tt><strong>mzc</strong></tt>-compiled Scheme code. After compiling <tt><strong>main.c</strong></tt> with <tt>STANDALONE_WITH_EMBEDDED_EXTENSION</tt> defined, MzScheme will not
+link by itself; it must be linked with objects produced by <tt><strong>mzc</strong></tt>.</p>
+<p>
+</p>
+<li><p>Compile each Scheme source file in the program with <tt><strong>mzc</strong></tt>'s
+<tt>-o</tt><a name="node_idx_176"></a> or <tt>--object</tt><a name="node_idx_178"></a> flag and the
+<tt>--embedded</tt><a name="node_idx_180"></a> flag, producing a set of <tt><strong>.kp</strong></tt> files and
+object (<tt><strong>.o</strong></tt> or <tt><strong>.obj</strong></tt>) files. </p>
+<p>
+</p>
+<li><p>After each Scheme file is
+compiled, run <tt><strong>mzc</strong></tt> with the <tt>-g</tt><a name="node_idx_182"></a> or
+<tt>--link-glue</tt><a name="node_idx_184"></a> and the <tt>--embedded</tt> flag, providing
+all of the <tt><strong>.kp</strong></tt> files and object files on the command
+line. (Put the object files in the order that they should be
+``loaded.'') The <tt>-g</tt><a name="node_idx_186"></a> or <tt>--link-glue</tt><a name="node_idx_188"></a> step
+produces a new object file, <tt><strong>_loader.o</strong></tt> or
+<tt><strong>_loader.obj</strong></tt>.</p>
+<p>
+Each of the Scheme source files in the program must have a different
+base name (i.e., the file name without its directory path or
+extension), otherwise <tt><strong>_loader</strong></tt> cannot distinguish them.  The
+files need not reside in the same directory.</p>
+<p>
+</p>
+<li><p>Link all of the <tt><strong>mzc</strong></tt>-created object files with the MzScheme
+implementation (having compiled <tt><strong>main.c</strong></tt> with <tt>STANDALONE_WITH_EMBEDDED_EXTENSION</tt> defined) to produce a
+stand-alone executable. </p>
+<p>
+Under Unix, the <tt><strong>Makefile</strong></tt> distributed with MzScheme provides a
+target <tt><strong>ee-app</strong></tt> that performs the final linking step. To use the
+target, call <tt><strong>mzmake</strong></tt> with a definition for the makefile macro
+<tt><strong>EEAPP</strong></tt> to the output file name, and a definition for the
+makefile macro <tt><strong>EEOBJECTS</strong></tt> to to the list of <tt><strong>mzc</strong></tt>-created
+object files.  (The example below demonstrates how to define makefile
+variables on the command line.)</p>
+<p>
+</p>
+</ul><p></p>
+<p>
+For example, under Unix, to create a standalone executable
+<tt><strong>MyApp</strong></tt> that is equivalent to
+</p>
+<p>  <tt><strong>mzscheme <tt>-mv</tt> <tt>-f</tt> file1.ss <tt>-f</tt> file2.ss</strong></tt></p>
+<p>unpack the MzScheme source code and perform the following steps:
+</p>
+<p>  <tt><strong>cd plt/src/mzscheme</strong></tt><br>
+  <tt><strong>./mzmake</strong></tt><br>
+  <tt><strong>./mzmake ee-main</strong></tt><br>
+  <tt><strong>mzc <tt>--object</tt> <tt>--embedded</tt> file1.ss </strong></tt><br>
+  <tt><strong>mzc <tt>--object</tt> <tt>--embedded</tt> file2.ss </strong></tt><br>
+  <tt><strong>mzc <tt>--link-glue</tt> <tt>--embedded</tt> file1.kp file1.o file2.kp file2.o </strong></tt><br>
+  <tt><strong>./mzmake EEAPP=MyApp EEOBJECTS=&quot;file1.o file2.o _loader.o&quot; ee-app</strong></tt>
+</p>
+<p></p>
+<p>
+To produce an executable that embeds the MrEd engine, the procedure is
+essentially the same; MrEd's main file is <tt><strong>mrmain.cxx</strong></tt> instead
+of <tt><strong>main.c</strong></tt>. See the compilation notes in the MrEd source code
+distribution for more information.</p>
+<p>
+</p>
+<div align=right class=navigation><i>[Go to <span><a href="mzc.html">first</a>, <a href="mzc-Z-H-4.html">previous</a></span><span>, <a href="mzc-Z-H-6.html">next</a></span> page<span>; &nbsp;&nbsp;</span><span><a href="mzc.html#node_toc_start">contents</a></span><span><span>; &nbsp;&nbsp;</span><a href="mzc-Z-H-8.html#node_index_start">index</a></span>]</i></div><p></p>
+</body>
+</html>

@@ -1,0 +1,864 @@
+<!doctype html public "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!--
+
+Generated from mzscheme.tex by tex2page, v 2004-09-11
+(running on MzScheme 209, unix), 
+(c) Dorai Sitaram, 
+http://www.ccs.neu.edu/~dorai/tex2page/tex2page-doc.html
+
+-->
+<head>
+<title>
+PLT MzScheme: Language Manual
+</title>
+<link rel="stylesheet" type="text/css" href="mzscheme-Z-S.css" title=default>
+<meta name=robots content="noindex,follow">
+</head>
+<body>
+<div align=right class=navigation><i>[Go to <span><a href="mzscheme.html">first</a>, <a href="mzscheme-Z-H-13.html">previous</a></span><span>, <a href="mzscheme-Z-H-15.html">next</a></span> page<span>; &nbsp;&nbsp;</span><span><a href="mzscheme.html#node_toc_start">contents</a></span><span><span>; &nbsp;&nbsp;</span><a href="mzscheme-Z-H-19.html#node_index_start">index</a></span>]</i></div><p></p>
+<a name="node_chap_14"></a>
+<h1 class=chapter>
+<div class=chapterheading><a href="mzscheme.html#node_toc_node_chap_14">Chapter 14</a></div><br>
+<a href="mzscheme.html#node_toc_node_chap_14">Support Facilities</a></h1>
+<p><a name="node_idx_2332"></a></p>
+<p>
+</p>
+<a name="node_sec_14.1"></a>
+<h2><a href="mzscheme.html#node_toc_node_sec_14.1">14.1&nbsp;&nbsp;Eval and Load</a></h2>
+<p><a name="node_idx_2334"></a></p>
+<p>
+<a name="node_idx_2336"></a><a name="node_kw_definitioneval"></a><code class=scheme>(eval</code><tt>&nbsp;</tt><code class=scheme><span class=variable>expr</span></code><code class=scheme>)</code> evaluates <code class=scheme><span class=variable>expr</span></code> in the current
+namespace.<a name="call_footnote_Temp_39"></a><a href="#footnote_Temp_39"><sup><small>35</small></sup></a>  (See section&nbsp;<a href="mzscheme-Z-H-8.html#node_chap_8">8</a> and
+section&nbsp;<a href="mzscheme-Z-H-7.html#node_sec_7.7.1.5">7.7.1.5</a> for more information about namespaces.)
+The <code class=scheme><span class=variable>expr</span></code> can be a syntax object, a compiled expression, a
+compiled expression wrapped as a syntax object, or an arbitrary
+S-expression (which will be converted to a syntax object using
+<code class=scheme>datum-&gt;syntax-object</code>; see section&nbsp;<a href="mzscheme-Z-H-12.html#node_sec_12.2.2">12.2.2</a>). If <code class=scheme><span class=variable>expr</span></code> is
+a syntax object, it is enriched with lexical context using
+<code class=scheme>namespace-syntax-introduce</code> before it is evaluated.</p>
+<p>
+<a name="node_idx_2338"></a><a name="node_kw_definitioneval-syntax"></a><code class=scheme>(eval-syntax</code><tt>&nbsp;</tt><code class=scheme><span class=variable>stx</span></code><code class=scheme>)</code> is like <code class=scheme>(eval <code class=scheme><span class=variable>stx</span></code>)</code>, except that
+<code class=scheme><span class=variable>stx</span></code> must be a syntax object, and its lexical context is not
+enriched before it is evaluated.</p>
+<p>
+<a name="node_idx_2340"></a>
+<a name="node_idx_2342"></a>
+<a name="node_idx_2344"></a><a name="node_kw_definitionload"></a><code class=scheme>(load</code><tt>&nbsp;</tt><code class=scheme><span class=variable>file-path</span></code><code class=scheme>)</code> evaluates each expression in
+the specified file using <code class=scheme><code class=scheme>eval</code></code>.<a name="call_footnote_Temp_40"></a><a href="#footnote_Temp_40"><sup><small>36</small></sup></a> The return value from <code class=scheme><code class=scheme>load</code></code> is the
+value of the last expression from the loaded file (or void if the
+file contains no expressions). If <code class=scheme><span class=variable>file-path</span></code> is a relative
+pathname, then it is resolved to an absolute pathname using the
+current directory. Before the first expression of <code class=scheme><span class=variable>file-path</span></code> is
+evaluated, the current <code class=scheme><code class=scheme>load-relative</code></code> directory (the value of
+the <a name="node_idx_2346"></a><code class=scheme>current-load-relative-directory</code> parameter; see
+section&nbsp;<a href="mzscheme-Z-H-7.html#node_sec_7.7.1.6">7.7.1.6</a>) is set to the absolute
+pathname of the directory containing <code class=scheme><span class=variable>file-path</span></code>; after the last
+expression in <code class=scheme><span class=variable>file-path</span></code> is evaluated (or when the load is
+aborted), the <code class=scheme><code class=scheme>load-relative</code></code> directory is restored to its
+pre-<code class=scheme><code class=scheme>load</code></code> value.</p>
+<p>
+<a name="node_idx_2348"></a><a name="node_kw_definitionload-relative"></a><code class=scheme>(load-relative</code><tt>&nbsp;</tt><code class=scheme><span class=variable>file-path</span></code><code class=scheme>)</code> is like <code class=scheme><code class=scheme>load</code></code>, but when
+<code class=scheme><span class=variable>file-path</span></code> is a relative pathname, it is resolved to an absolute
+pathname using the current <code class=scheme><code class=scheme>load-relative</code></code> directory rather
+than the current directory. If the current <code class=scheme><code class=scheme>load-relative</code></code>
+directory is <code class=scheme><span class=selfeval>#f</span></code>, then <code class=scheme><code class=scheme>load-relative</code></code> is the same as
+<code class=scheme><code class=scheme>load</code></code>.</p>
+<p>
+<a name="node_idx_2350"></a><a name="node_kw_definitionload/use-compiled"></a><code class=scheme>(load/use-compiled</code><tt>&nbsp;</tt><code class=scheme><span class=variable>file-path</span></code><code class=scheme>)</code> is like <code class=scheme><code class=scheme>load-relative</code></code>, but
+<code class=scheme><code class=scheme>load/use-compiled</code></code> also checks for <tt><strong>.zo</strong></tt> files (usually
+produced with <code class=scheme><code class=scheme>compile-file</code></code>; see Chapter&nbsp;<a href="../mzlib/mzlib-Z-H-12.html#node_chap_12">12</a>
+in <a href="../mzlib/mzlib.html"><i>PLT MzLib: Libraries Manual</i></a>)
+and <tt><strong>.so</strong></tt> (Unix and Mac OS) or <tt><strong>.dll</strong></tt> (Windows)
+files.<a name="call_footnote_Temp_41"></a><a href="#footnote_Temp_41"><sup><small>37</small></sup></a> The check for a compiled file occurs whenever
+<code class=scheme><span class=variable>file-path</span></code> ends with a dotted extension of three characters or
+less (e.g., <tt><strong>.ss</strong></tt> or <tt><strong>.scm</strong></tt>) and when a <tt><strong>compiled</strong></tt>
+subdirectory exists in the same directory as <code class=scheme><span class=variable>file-path</span></code>. A
+<tt><strong>.zo</strong></tt> version of the file is loaded if it exists directly in the
+<tt><strong>compiled</strong></tt> subdirectory. An <tt><strong>.so</strong></tt> or <tt><strong>.dll</strong></tt> version of
+the file is loaded if it exists within a <tt><strong>native</strong></tt> subdirectory
+of the <tt><strong>compiled</strong></tt> directory, in a deeper subdirectory as named
+by <code class=scheme><code class=scheme>system-library-subpath</code></code>. A compiled file is loaded only if
+its modification date is not older than the date for
+<code class=scheme><span class=variable>file-path</span></code>. If both <tt><strong>.zo</strong></tt> and <tt><strong>.so</strong></tt> or <tt><strong>.dll</strong></tt>
+files are available, the <tt><strong>.so</strong></tt> or <tt><strong>.dll</strong></tt> file is used.</p>
+<p>
+Multiple files can be combined into a single <tt><strong>.so</strong></tt> or <tt><strong>.dll</strong></tt>
+file by creating a special dynamic extension <tt><strong>_loader.so</strong></tt><a name="node_idx_2352"></a>
+or <tt><strong>_loader.dll</strong></tt>. When such a extension is present where a
+normal <tt><strong>.so</strong></tt> or <tt><strong>.dll</strong></tt> would be loaded, then the
+<tt><strong>_loader</strong></tt> extension is first loaded. The result returned by
+<tt><strong>_loader</strong></tt> must be a procedure that accepts a symbol. This
+procedure will be called with a symbol matching the base part of
+<code class=scheme><span class=variable>file-path</span></code> (without the directory path part of the name and
+without the filename extension), and the result must be two values;
+if <code class=scheme><span class=selfeval>#f</span></code> is returned as the first result, then
+<code class=scheme><code class=scheme>load/use-compiled</code></code> ignores <tt><strong>_loader</strong></tt> for
+<code class=scheme><span class=variable>file-path</span></code> and continues as normal. Otherwise, the first return
+value is yet another procedure. When this procedure is applied to no
+arguments, it should have the same effect as loading
+<code class=scheme><span class=variable>file-path</span></code>. The second return value is either a symbol or
+<code class=scheme><span class=selfeval>#f</span></code>; a symbol indicates that calling the returned procedure
+has the effect of declaring the module named by the symbol (which is
+potentially useful information to a load handler; see
+section&nbsp;<a href="mzscheme-Z-H-5.html#node_sec_5.8">5.8</a>).</p>
+<p>
+While a <tt><strong>.zo</strong></tt>, <tt><strong>.so</strong></tt>, or <tt><strong>.dll</strong></tt> file is loaded (or
+while a thunk returned by <tt><strong>_loader</strong></tt> is invoked), the current
+<code class=scheme><code class=scheme>load-relative</code></code> directory is set to the directory of the
+original <code class=scheme><span class=variable>file-path</span></code>.</p>
+<p>
+<a name="node_idx_2354"></a><a name="node_kw_definitionload/cd"></a><code class=scheme>(load/cd</code><tt>&nbsp;</tt><code class=scheme><span class=variable>file-path</span></code><code class=scheme>)</code> is the same as <code class=scheme>(load <code class=scheme><span class=variable>file-path</span></code>)</code>,
+but <code class=scheme><code class=scheme>load/cd</code></code> sets both the current directory and current
+<code class=scheme><code class=scheme>load-relative</code></code> directory to the directory of <code class=scheme><span class=variable>file-path</span></code>
+before the file's expressions are evaluated.</p>
+<p>
+<a name="node_idx_2356"></a>
+<a name="node_idx_2358"></a>
+<a name="node_idx_2360"></a><a name="node_kw_definitionread-eval-print-loop"></a><code class=scheme>(read-eval-print-loop</code><code class=scheme>)</code> starts a new <code class=scheme>read</code>-<code class=scheme>eval</code>-<code class=scheme>print</code> loop using the current
+input, output, and error ports. When <code class=scheme><code class=scheme>read-eval-print-loop</code></code>
+starts, it installs a new error escape procedure (see
+section&nbsp;<a href="mzscheme-Z-H-6.html#node_sec_6.7">6.7</a>) that does not exit the <code class=scheme>read</code>-<code class=scheme>eval</code>-<code class=scheme>print</code> loop.  The
+<code class=scheme><code class=scheme>read-eval-print-loop</code></code> procedure does not return until <code class=scheme><code class=scheme>eof</code></code>
+is read as an input expression; then it returns void.</p>
+<p>
+The <a name="node_idx_2362"></a><code class=scheme>read-eval-print-loop</code> procedure is parameterized by the
+current prompt read handler, the current evaluation handler, and the
+current print handler; a custom <code class=scheme>read</code>-<code class=scheme>eval</code>-<code class=scheme>print</code> loop can be implemented as in the
+following example (see also section&nbsp;<a href="mzscheme-Z-H-7.html#node_sec_7.7.1">7.7.1</a>):
+</p>
+<div align=left><pre class=scheme>  (<span class=keyword>parameterize</span> ([<code class=scheme>current-prompt-read</code> <span class=variable>my-read</span>]
+                 [<code class=scheme>current-eval</code> <span class=variable>my-eval</span>]
+                 [<code class=scheme>current-print</code> <span class=variable>my-print</span>])
+    (<code class=scheme>read-eval-print-loop</code>))
+</pre></div><p></p>
+<p>
+</p>
+<a name="node_sec_14.2"></a>
+<h2><a href="mzscheme.html#node_toc_node_sec_14.2">14.2&nbsp;&nbsp;Exiting</a></h2>
+<p><a name="node_idx_2364"></a></p>
+<p>
+<a name="node_idx_2366"></a><a name="node_kw_definitionexit"></a><code class=scheme>(exit</code><tt>&nbsp;</tt>[<code class=scheme><span class=variable>v</span></code>]<code class=scheme>)</code> passes <code class=scheme><span class=variable>v</span></code> on to the current exit handler (see
+<code class=scheme><code class=scheme>exit-handler</code></code> in section&nbsp;<a href="mzscheme-Z-H-7.html#node_sec_7.7.1.9">7.7.1.9</a>). The default value for
+<code class=scheme><span class=variable>v</span></code> is <code class=scheme><span class=selfeval>#t</span></code>.  If the exit handler does not escape or terminate
+the thread, void is returned.</p>
+<p>
+The default exit handler quits MzScheme (or MrEd), using its argument
+as the exit code if it is between 1 and 255 inclusive (meaning
+``failure''), or 0 (meaning ``success'') otherwise.</p>
+<p>
+When MzScheme is embedded within another application, the default exit
+handler may behave differently.</p>
+<p>
+</p>
+<a name="node_sec_14.3"></a>
+<h2><a href="mzscheme.html#node_toc_node_sec_14.3">14.3&nbsp;&nbsp;Input Parsing</a></h2>
+<p><a name="node_idx_2368"></a></p>
+<p>
+MzScheme's input parser obeys the following non-standard rules:
+</p>
+<ul>
+<li><p>Square brackets (``[''  and ``]'') and curly braces
+(``{'' and ``}'') can be used in place of parentheses. An open
+square bracket must be closed by a closing square bracket and an open
+curly brace must be closed by a closing curly brace. Whether square
+brackets are treated as parentheses is controlled by the
+<a name="node_idx_2370"></a><code class=scheme>read-square-bracket-as-paren</code> parameter (see
+section&nbsp;<a href="mzscheme-Z-H-7.html#node_sec_7.7.1.3">7.7.1.3</a>). Similarly, the parsing of
+curly braces is controlled with the
+<a name="node_idx_2372"></a><code class=scheme>read-curly-brace-as-paren</code> parameter. By default, square
+brackets and curly braces are treated as parentheses.</p>
+<p>
+<a name="node_idx_2374"></a>
+</p>
+<li><p>Vector constants can be unquoted, and a vector size can
+be specified with a decimal integer between the <code class=scheme><span class=selfeval>#</span></code> and opening
+parenthesis. If the specified size is larger than the number of
+vector elements that are provided, the last specified element is used
+to fill the remaining vector slots. For example, <code class=scheme><span class=selfeval>#4</span>(<span class=selfeval>1</span> <span class=selfeval>2</span>)</code> is
+equivalent to <code class=scheme><span class=selfeval>#</span>(<span class=selfeval>1</span> <span class=selfeval>2</span> <span class=selfeval>2</span> <span class=selfeval>2</span>)</code>. If no vector elements are specified,
+the vector is filled with <code class=scheme><span class=selfeval>0</span></code>. If a vector size is provided and
+it is smaller than the number of elements provided, the
+<a name="node_idx_2376"></a><code class=scheme>exn:read</code> exception is raised.</p>
+<p>
+<a name="node_idx_2378"></a> <a name="node_idx_2380"></a>
+</p>
+<li><p>Boxed constants can be created using <code class=scheme><span class=selfeval>#&amp;</span></code>. The S-expression 
+following <code class=scheme><span class=selfeval>#&amp;</span></code> is treated as a quoted constant and put into
+the new box.  (Space and comments following the <code class=scheme><span class=selfeval>#&amp;</span></code> are
+ignored.)  Box reading is controlled with the
+<a name="node_idx_2382"></a><code class=scheme>read-accept-box</code> boolean parameter (see
+section&nbsp;<a href="mzscheme-Z-H-7.html#node_sec_7.7.1.3">7.7.1.3</a>). Box reading is enabled by default. When
+box reading is disabled and <code class=scheme><span class=selfeval>#&amp;</span></code> is provided as input, the
+<a name="node_idx_2384"></a><code class=scheme>exn:read</code> exception is raised.</p>
+<p>
+<a name="node_idx_2386"></a><a name="node_idx_2388"></a><a name="node_idx_2390"></a><a name="node_idx_2392"></a>
+</p>
+<li><p>Expressions beginning with <code class=scheme><span class=selfeval>#</span><span class=keyword>'</span></code> are wrapped with <code class=scheme><span class=keyword>syntax</span></code>,
+in the same way that expressions starting with <code class=scheme><span class=keyword>'</span></code> are wrapped
+with <code class=scheme><span class=keyword>quote</span></code>. Similarly, <code class=scheme><span class=selfeval>#</span><span class=keyword>`</span></code> generates
+<code class=scheme><span class=keyword>quasisyntax</span></code>, <code class=scheme><span class=selfeval>#</span><span class=keyword>,</span></code> generates <code class=scheme><span class=keyword>unsyntax</span></code>, and
+<code class=scheme><span class=selfeval>#</span><span class=keyword>,@</span></code> generates <code class=scheme><span class=keyword>unsyntax-splicing</span></code>. See also
+section&nbsp;<a href="mzscheme-Z-H-12.html#node_sec_12.2.1.2">12.2.1.2</a>.</p>
+<p>
+<a name="node_idx_2394"></a> 
+</p>
+<li><p>The following character constants are recognized:
+</p>
+<ul>
+<li><p><code class=scheme><span class=selfeval>#\nul</span></code> or <code class=scheme><span class=selfeval>#\null</span></code> (ASCII 0) <a name="node_idx_2396"></a> <a name="node_idx_2398"></a>
+</p>
+<li><p><code class=scheme><span class=selfeval>#\backspace</span></code> (ASCII 8)              <a name="node_idx_2400"></a>
+</p>
+<li><p><code class=scheme><span class=selfeval>#\tab</span></code> (ASCII 9)                    <a name="node_idx_2402"></a>
+</p>
+<li><p><code class=scheme><span class=selfeval>#\newline</span></code> or <code class=scheme><span class=selfeval>#\linefeed</span></code> (ASCII 10) <a name="node_idx_2404"></a><a name="node_idx_2406"></a>
+</p>
+<li><p><code class=scheme><span class=selfeval>#\vtab</span></code> (ASCII 11)                  <a name="node_idx_2408"></a>
+</p>
+<li><p><code class=scheme><span class=selfeval>#\page</span></code> (ASCII 12)                  <a name="node_idx_2410"></a>
+</p>
+<li><p><code class=scheme><span class=selfeval>#\return</span></code> (ASCII 13)                <a name="node_idx_2412"></a>
+</p>
+<li><p><code class=scheme><span class=selfeval>#\space</span></code> (ASCII 32)                 <a name="node_idx_2414"></a>
+</p>
+<li><p><code class=scheme><span class=selfeval>#\rubout</span></code> (ASCII 127)               <a name="node_idx_2416"></a>
+</p>
+</ul><p> 
+Whenever <code class=scheme><span class=selfeval>#\ </span></code> is followed by at least two alphabetic characters,
+characters are read from the input port until the next non-alphabetic
+character is returned. If the resulting string of letters does not
+match one of the above constants (case-insensitively), the
+<a name="node_idx_2418"></a><code class=scheme>exn:read</code> exception is raised.</p>
+<p>
+Character constants can also be specified through direct ASCII values
+in octal notation: <code class=scheme>#<code class=scheme><span class=variable>n<sub>1</sub></span></code><code class=scheme><span class=variable>n<sub>2</sub></span></code><code class=scheme><span class=variable>n<sub>3</sub></span></code></code> where
+<code class=scheme><span class=variable>n<sub>1</sub></span></code> is in the range [<code class=scheme><span class=selfeval>0</span></code>, <code class=scheme><span class=selfeval>3</span></code>] and <code class=scheme><span class=variable>n<sub>2</sub></span></code> and
+<code class=scheme><span class=variable>n<sub>3</sub></span></code> are in the range [<code class=scheme><span class=selfeval>0</span></code>, <code class=scheme><span class=selfeval>7</span></code>]. Whenever <code class=scheme><span class=selfeval>#\ </span></code> is
+followed by at least two characters in the range [<code class=scheme><span class=selfeval>0</span></code>, <code class=scheme><span class=selfeval>7</span></code>],
+the next character must also be in this range and the resulting octal
+number must be in the range 000<sub>8</sub> to 377<sub>8</sub>.</p>
+<p>
+<a name="node_idx_2420"></a> 
+</p>
+<li><p>Within string constants, the following escape sequences are
+recognized in addition to <tt><tt>\</tt>&quot;</tt> and <tt><tt>\</tt><tt>\</tt></tt>:
+</p>
+<ul><p>
+</p>
+<li><p><a name="node_idx_2422"></a><tt><tt>\</tt>a</tt>: alarm (ASCII 7)
+</p>
+<li><p><a name="node_idx_2424"></a><tt><tt>\</tt>b</tt>: backspace (ASCII 8)
+</p>
+<li><p><a name="node_idx_2426"></a><tt><tt>\</tt>t</tt>: tab (ASCII 9)
+</p>
+<li><p><a name="node_idx_2428"></a><tt><tt>\</tt>n</tt>: linefeed (ASCII 10)
+</p>
+<li><p><a name="node_idx_2430"></a><tt><tt>\</tt>v</tt>: vertical tab (ASCII 11)
+</p>
+<li><p><a name="node_idx_2432"></a><tt><tt>\</tt>f</tt>: formfeed (ASCII 12)
+</p>
+<li><p><a name="node_idx_2434"></a><tt><tt>\</tt>r</tt>: return (ASCII 13)
+</p>
+<li><p><a name="node_idx_2436"></a><tt><tt>\</tt>e</tt>: escape (ASCII 27)</p>
+<p>
+</p>
+<li><p><a name="node_idx_2438"></a><tt><tt>\</tt><code class=scheme><span class=variable>o</span></code></tt>, <a name="node_idx_2440"></a><tt><tt>\</tt><code class=scheme><span class=variable>oo</span></code></tt>, or <a name="node_idx_2442"></a><tt><tt>\</tt><code class=scheme><span class=variable>ooo</span></code></tt>:
+ASCII for octal <code class=scheme><span class=variable>o</span></code>, <code class=scheme><span class=variable>oo</span></code>, or <code class=scheme><span class=variable>ooo</span></code>, where each
+<code class=scheme><span class=variable>o</span></code> is <code class=scheme>0</code>, <code class=scheme>1</code>, <code class=scheme>2</code>, <code class=scheme>3</code>, <code class=scheme>4</code>,
+<code class=scheme>5</code>, <code class=scheme>6</code>, or <code class=scheme>7</code>. The <tt><tt>\</tt><code class=scheme><span class=variable>ooo</span></code></tt> form
+takes precedence over the <tt><tt>\</tt><code class=scheme><span class=variable>oo</span></code></tt> form, and
+<tt><tt>\</tt><code class=scheme><span class=variable>oo</span></code></tt> takes precedence over <tt><tt>\</tt><code class=scheme><span class=variable>o</span></code></tt>.</p>
+<p>
+</p>
+<li><p><a name="node_idx_2444"></a><tt><tt>\</tt>x<code class=scheme><span class=variable>h</span></code></tt> or <a name="node_idx_2446"></a><tt><tt>\</tt>x<code class=scheme><span class=variable>hh</span></code></tt>: ASCII for hexadecimal
+<code class=scheme><span class=variable>h</span></code> or <code class=scheme><span class=variable>hh</span></code>, where each <code class=scheme><span class=variable>h</span></code> is <code class=scheme>0</code>, <code class=scheme>1</code>,
+<code class=scheme>2</code>, <code class=scheme>3</code>, <code class=scheme>4</code>, <code class=scheme>5</code>, <code class=scheme>6</code>, <code class=scheme>7</code>, <code class=scheme>a</code>,
+<code class=scheme>A</code>, <code class=scheme>b</code>, <code class=scheme>B</code>, <code class=scheme>c</code>, <code class=scheme>C</code>, <code class=scheme>d</code>, <code class=scheme>D</code>,
+<code class=scheme>e</code>, <code class=scheme>E</code>, <code class=scheme>f</code>, or <code class=scheme>F</code>. The <tt><tt>\</tt>x<code class=scheme><span class=variable>hh</span></code></tt>
+form takes precedence over the <tt><tt>\</tt>x<code class=scheme><span class=variable>h</span></code></tt> form.</p>
+<p>
+</p>
+</ul><p>
+Furthermore, a backslash followed by a linefeed, carriage return or
+return-linefeed combination is elided, allowing string constants to
+span lines. Any other use of backslash within a string constant is an
+error.
+</p>
+<p>
+<a name="node_idx_2448"></a> </p>
+<li><p>Numbers containing a decimal point or exponent (e.g.,
+<code class=scheme><span class=selfeval>1.3</span></code>, <code class=scheme><span class=selfeval>2e78</span></code>) are normally read as inexact. If the
+<a name="node_idx_2450"></a><code class=scheme>read-decimal-as-inexact</code> parameter is set to <code class=scheme><span class=selfeval>#f</span></code>,
+then such numbers are instead read as exact. The parameter does not
+affect the parsing of numbers with an explicit exactness tag
+(<code class=scheme><span class=selfeval>#e</span></code> or <code class=scheme><span class=selfeval>#i</span></code>).</p>
+<p>
+
+<a name="node_idx_2452"></a> </p>
+<li><p>A parenthesized sequence containing two delimited dots
+(``<code class=scheme>.</code>'')  triggers infix parsing. A single <code class=scheme><span class=variable>datum</span></code> must
+appear between the dots, and one or more <code class=scheme><span class=variable>datum</span></code>s must appear
+before the first dot and after the last dot:
+</p>
+<div align=center><table><tr><td>
+
+</td><td><div align=left><pre class=scheme>(<span class=variable>left-datum</span> <tt>&middot;&middot;&middot;</tt><sup>1</sup> . <span class=variable>first-datum</span> . <span class=variable>right-datum</span> <tt>&middot;&middot;&middot;</tt><sup>1</sup>)
+</pre></div></td><td>
+</td></tr></table></div>
+
+The resulting list consists of the <code class=scheme><span class=variable>datum</span></code> between the dots,
+followed by the remaining <code class=scheme><span class=variable>datum</span></code>s in order:
+<div align=center><table><tr><td>
+
+</td><td><div align=left><pre class=scheme>(<span class=variable>first-datum</span> <span class=variable>left-datum</span> <tt>&middot;&middot;&middot;</tt><sup>1</sup> <span class=variable>right-datum</span> <tt>&middot;&middot;&middot;</tt><sup>1</sup>)
+</pre></div></td><td>
+</td></tr></table></div>
+
+Consequently, the input expression <code class=scheme>(<span class=selfeval>1</span> . <span class=variable>&lt;</span> . <span class=selfeval>2</span>)</code> produces
+<code class=scheme><span class=selfeval>#t</span></code>, and <code class=scheme>(<span class=selfeval>1</span> <span class=selfeval>2</span> . <span class=variable>+</span> . <span class=selfeval>3</span> <span class=selfeval>4</span> <span class=selfeval>5</span>)</code> produces <code class=scheme><span class=selfeval>15</span></code>.<p>
+<a name="node_idx_2454"></a><a name="node_idx_2456"></a><a name="node_idx_2458"></a><a name="node_idx_2460"></a>
+</p>
+<li><p>When the <a name="node_idx_2462"></a><code class=scheme>read-accept-dot</code> parameter is set to
+<code class=scheme><span class=selfeval>#f</span></code>, then a delimited dot (``<code class=scheme>.</code>'') is disallowed in
+input. When the <a name="node_idx_2464"></a><code class=scheme>read-accept-quasiquote</code> parameter is set to
+<code class=scheme><span class=selfeval>#f</span></code>, then a backquote or comma is disallowed in input.  These
+modes simplify Scheme's input model for students.</p>
+<p>
+<a name="node_idx_2466"></a> <a name="node_idx_2468"></a> <a name="node_idx_2470"></a>
+</p>
+<li><p>MzScheme's identifier and symbol syntax is considerably more
+liberal than the syntax specified by <em>R5RS</em>. When input is
+scanned for tokens, the following characters delimit an identifier:</p>
+<p>
+<tt></p>
+<p> 
+&nbsp;&nbsp;  &quot; , ' ` ( ) [ ] { } space tab return newline page vtab 
+</p>
+<p></tt></p>
+<p>
+In addition, an identifier cannot start with a hash mark
+(``<code class=scheme><span class=selfeval>#</span></code>'') unless the hash mark is immediately followed by a
+percent sign (``<code class=scheme><span class=variable>%</span></code>''). The only other special characters are
+backslash (``<tt>\</tt>'') or quoting vertical bars (``|'');
+any other character is used as part of an identifier.</p>
+<p>
+Symbols containing special characters (including delimiters) are
+expressed using an escaping backslash (``<tt>\</tt>'') or quoting
+vertical bars (``|''):
+</p>
+<ul><p>
+</p>
+<li><p>A backslash preceding any character includes that character in
+the symbol literally; double backslashes produce a single backslash
+in the symbol.</p>
+<p>
+</p>
+<li><p>Characters between a pair of vertical bars are included in the
+symbol literally. Quoting bars can be used for any part of a symbol,
+or the whole symbol can be quoted. Backslashes and quoting bars can
+be mixed within a symbol, but a backslash is <em>not</em> a special
+character within a pair of quoting bars.</p>
+<p>
+</p>
+</ul><p>
+Characters quoted with a backslash or a vertical bar always preserve
+their case, even when identifiers are read case-insensitively (the
+default).</p>
+<p>
+An input token constructed in this way is an identifier when it is not
+a numerical constant (following the extended number syntax described
+in section&nbsp;<a href="mzscheme-Z-H-3.html#node_sec_3.3">3.3</a>). A token containing a backslash or vertical bars
+is never treated as a numerical constant.</p>
+<p>
+Examples:
+</p>
+<ul><p>
+</p>
+<li><p><code class=scheme>(<code class=scheme><span class=keyword>quote</span></code> a<tt>\</tt>(b)</code> produces the same symbol as
+<code class=scheme>(<code class=scheme>string-&gt;symbol</code> <span class=selfeval>&quot;a(b&quot;</span>)</code>.</p>
+<p>
+</p>
+<li><p><code class=scheme>(<code class=scheme><span class=keyword>quote</span></code> A<tt>\</tt>B)</code> produces the same
+symbol as <code class=scheme>(<code class=scheme>string-&gt;symbol</code> <span class=selfeval>&quot;aB&quot;</span>)</code> when identifiers are read
+without case-sensitivity.</p>
+<p>
+</p>
+<li><p><code class=scheme>(<code class=scheme><span class=keyword>quote</span></code> a<tt>\</tt> b)</code>, <code class=scheme>(<code class=scheme><span class=keyword>quote</span></code> |a b|)</code>, and
+<code class=scheme>(<code class=scheme><span class=keyword>quote</span></code> a| |b)</code> all produce the same symbol as
+<code class=scheme>(<code class=scheme>string-&gt;symbol</code> <span class=selfeval>&quot;a b&quot;</span>)</code>.</p>
+<p>
+</p>
+<li><p><code class=scheme>(<code class=scheme><span class=keyword>quote</span></code> |a||b|)</code> is the same as <code class=scheme>(<span class=keyword>quote</span> <span class=variable>ab</span>)</code>.</p>
+<p>
+</p>
+<li><p><code class=scheme>(<code class=scheme><span class=keyword>quote</span></code> 10)</code> is the number 10, but <code class=scheme>(<code class=scheme><span class=keyword>quote</span></code> |10|)</code>
+produces the same symbol as <code class=scheme>(<code class=scheme>string-&gt;symbol</code> <span class=selfeval>&quot;10&quot;</span>)</code>.</p>
+<p>
+</p>
+</ul><p></p>
+<p>
+Whether a vertical bar is used as a special or normal symbol character
+is controlled with the <a name="node_idx_2472"></a><code class=scheme>read-accept-bar-quote</code> boolean
+parameter (see section&nbsp;<a href="mzscheme-Z-H-7.html#node_sec_7.7.1.3">7.7.1.3</a>). Vertical bar quotes
+are enabled by default. Quoting backslashes cannot be disabled.</p>
+<p>
+<a name="node_idx_2474"></a>
+</p>
+<li><p>By default, symbols are read case-insensitively (i.e.,
+uppercase characters are downcased).  Case sensitivity for reading
+can be controlled in three ways:</p>
+<p>
+</p>
+<ul><p>
+</p>
+<li><p>Quoting part of a symbol with an escaping backslash
+(``<tt>\</tt>'') or quoting vertical bar (``|'') always
+preserves the case of the quoted portion, as described above.</p>
+<p>
+</p>
+<li><p><a name="node_idx_2476"></a> <a name="node_idx_2478"></a> The sequence <code class=scheme>#cs</code> can
+be used as a prefix for any expression to make reading symbols
+within the expression case-sensitive.  A <code class=scheme>#ci</code> prefix
+similarly makes reading symbols in an expression case-insensitive.
+Whitespace can appear between a <code class=scheme>#cs</code> or <code class=scheme>#ci</code>
+prefix and its expression, and prefixes can be nested. Backslash and
+vertical-bar quotes override a <code class=scheme>#ci</code> prefix.</p>
+<p>
+</p>
+<li><p>When the <a name="node_idx_2480"></a><code class=scheme>read-case-sensitive</code> parameter (see
+section&nbsp;<a href="mzscheme-Z-H-7.html#node_sec_7.7.1.3">7.7.1.3</a>) is set to <code class=scheme><span class=selfeval>#t</span></code>, then case is
+preserved when reading symbols. The default is <code class=scheme><span class=selfeval>#f</span></code>, and it
+is set to <code class=scheme><span class=selfeval>#f</span></code> while loading a module (see
+section&nbsp;<a href="mzscheme-Z-H-5.html#node_sec_5.8">5.8</a>). A <code class=scheme>#cs</code> or <code class=scheme>#ci</code> prefix
+overrides the parameter setting, as does backslash or vertical-bar
+quoting.</p>
+<p>
+</p>
+</ul><p>
+Case conversions are <em>not</em> sensitive to the current locale (see
+section&nbsp;<a href="mzscheme-Z-H-7.html#node_sec_7.7.1.11">7.7.1.11</a>).</p>
+<p>
+<a name="node_idx_2482"></a>
+<a name="node_idx_2484"></a>
+</p>
+<li><p>Expressions of the form <code class=scheme>#rx<code class=scheme><span class=variable>string</span></code></code> are literal
+regexp values (see section&nbsp;<a href="mzscheme-Z-H-10.html#node_chap_10">10</a>) where <code class=scheme><span class=variable>string</span></code> is a string
+constant.  The regexp produced by <code class=scheme>#rx<code class=scheme><span class=variable>string</span></code></code> is the
+same as produced by <code class=scheme>(regexp <code class=scheme><span class=variable>string</span></code>)</code>. If <code class=scheme><span class=variable>string</span></code>
+is not a valid pattern, the <a name="node_idx_2486"></a><code class=scheme>exn:read</code> exception is raised.</p>
+<p>
+<a name="node_idx_2488"></a>
+<a name="node_idx_2490"></a>
+<a name="node_idx_2492"></a>
+</p>
+<li><p>Expressions of the form <code class=scheme>#hash((<code class=scheme><span class=variable>key-datum</span></code>
+. <code class=scheme><span class=variable>val-datum</span></code>) <tt>&middot;&middot;&middot;</tt>)</code> are literal immutable hash tables.  The
+hash table maps each <code class=scheme><span class=variable>key-datum</span></code> to its <code class=scheme><span class=variable>val-datum</span></code>,
+comparing keys with <code class=scheme><code class=scheme>equal?</code></code>. The table is constructed by
+adding each <code class=scheme><span class=variable>key-datum</span></code> mapping from left to right, so later
+mappings can hide earlier mappings if the <code class=scheme><span class=variable>key-datum</span></code>s are
+<code class=scheme><code class=scheme>equal?</code></code>. An expression of the form
+<code class=scheme>#hasheq((<code class=scheme><span class=variable>key-datum</span></code> . <code class=scheme><span class=variable>val-datum</span></code>) <tt>&middot;&middot;&middot;</tt>)</code>
+produces an immutable hash table with keys compared using
+<code class=scheme><code class=scheme>eq?</code></code>. If the value of <a name="node_idx_2494"></a><code class=scheme>read-square-bracket-as-paren</code>
+parameter (see section&nbsp;<a href="mzscheme-Z-H-7.html#node_sec_7.7.1.3">7.7.1.3</a>) is true,
+matching parentheses in a <code class=scheme>#hash</code> or <code class=scheme>#hasheq</code>
+constant can be replaced by matching square brackets. Similarly,
+matching curly braces can be used if
+<a name="node_idx_2496"></a><code class=scheme>read-curly-brace-as-paren</code> is true.</p>
+<p>
+<a name="node_idx_2498"></a> <a name="node_idx_2500"></a> <a name="node_idx_2502"></a>
+</p>
+<li><p>S-expressions with shared structure are expressed using 
+<code class=scheme>#<code class=scheme><span class=variable>n</span></code>=</code> and <code class=scheme>#<code class=scheme><span class=variable>n</span></code>#</code>, where <code class=scheme><span class=variable>n</span></code> is
+a decimal integer. See section&nbsp;<a href="#node_sec_14.5">14.5</a>.</p>
+<p>
+<a name="node_idx_2504"></a>
+</p>
+<li><p>Expressions of the form <code class=scheme>#%<code class=scheme><span class=variable>x</span></code></code> are symbols, where
+<code class=scheme><span class=variable>x</span></code> can be a symbol or a number.</p>
+<p>
+<a name="node_idx_2506"></a>
+</p>
+<li><p>Expressions beginning with <code class=scheme><span class=selfeval>#~</span></code> are interpreted as
+compiled MzScheme code. See section&nbsp;<a href="#node_sec_14.6">14.6</a>.</p>
+<p>
+<a name="node_idx_2508"></a>
+</p>
+<li><p>Multi-line comments are started with <code class=scheme>#<tt>|</tt></code> and terminated
+with <code class=scheme><tt>|</tt>#</code>. Comments of this form can be nested arbitrarily.</p>
+<p>
+<a name="node_idx_2510"></a>
+<a name="node_idx_2512"></a>
+</p>
+<li><p>A <code class=scheme>#;</code> comments out the next S-expression. Whitespace
+and comments (including <code class=scheme>#;</code> comments) may appear between the
+<code class=scheme>#;</code> and the commented-out S-expression. Graph structure
+annotations with <code class=scheme>#<code class=scheme><span class=variable>n</span></code>=</code> and <code class=scheme>#<code class=scheme><span class=variable>n</span></code>#</code> work
+within the comment as if the S-expression were not commented out
+(e.g., bindings can be introduced with <code class=scheme>#<code class=scheme><span class=variable>n</span></code>=</code> for use in
+parts of the S-expression that are not commented out).</p>
+<p>
+<a name="node_idx_2514"></a>
+<a name="node_idx_2516"></a>
+</p>
+<li><p>If the first line of a <code class=scheme><code class=scheme>load</code></code>ed file begins with
+<code class=scheme><span class=selfeval>#!</span></code>, it is ignored by the default load handler. If an ignored
+line ends with a backslash (``<tt>\</tt>''), then the next line is
+also ignored. (The <code class=scheme><span class=selfeval>#!</span></code> convention is for shell scripts; see
+Chapter&nbsp;<a href="mzscheme-Z-H-18.html#node_chap_18">18</a> for details.)</p>
+<p>
+</p>
+</ul><p></p>
+<p>
+Reading from a custom port can produce arbitrary values generated by
+the port; see section&nbsp;<a href="mzscheme-Z-H-11.html#node_sec_11.1.6">11.1.6</a> for details. If the port generates
+a non-character value in a position where a character is required
+(e.g., within a string), the <a name="node_idx_2518"></a><code class=scheme>exn:read:non-char</code> exception is raised.</p>
+<p>
+</p>
+<a name="node_sec_14.4"></a>
+<h2><a href="mzscheme.html#node_toc_node_sec_14.4">14.4&nbsp;&nbsp;Output Printing</a></h2>
+<p><a name="node_idx_2520"></a></p>
+<p>
+MzScheme's printer obeys the following non-standard rules:
+</p>
+<ul><p>
+<a name="node_idx_2522"></a>
+</p>
+<li><p>A vector can be printed by <code class=scheme><code class=scheme>write</code></code> and <code class=scheme><code class=scheme>print</code></code> using
+the shorthand described in section&nbsp;<a href="#node_sec_14.3">14.3</a>, where the vector's
+length is printed between the leading <code class=scheme><span class=selfeval>#</span></code> and the opening
+parenthesis and repeated tail elements are omitted. For example,
+<code class=scheme><span class=selfeval>#</span>(<span class=selfeval>1</span> <span class=selfeval>2</span> <span class=selfeval>2</span> <span class=selfeval>2</span>)</code> is printed as <code class=scheme><span class=selfeval>#4</span>(<span class=selfeval>1</span> <span class=selfeval>2</span>)</code>. The <code class=scheme><code class=scheme>display</code></code>
+procedure does not output vectors using this shorthand. Shorthand
+vector printing is controlled with the <a name="node_idx_2524"></a><code class=scheme>print-vector-length</code>
+boolean parameter (see section&nbsp;<a href="mzscheme-Z-H-7.html#node_sec_7.7.1.4">7.7.1.4</a>). Shorthand
+vector printing is enabled by default.</p>
+<p>
+<a name="node_idx_2526"></a>
+</p>
+<li><p>Boxes (see section&nbsp;<a href="mzscheme-Z-H-3.html#node_sec_3.9">3.9</a>) can be printed with the <code class=scheme><span class=selfeval>#&amp;</span></code>
+notation (see section&nbsp;<a href="#node_sec_14.3">14.3</a>). When box printing is disabled, all
+boxes are printed as <code class=scheme><span class=selfeval>#&lt;box&gt;</span></code>. Box printing is controlled with
+the <a name="node_idx_2528"></a><code class=scheme>print-box</code> boolean parameter (see
+section&nbsp;<a href="mzscheme-Z-H-7.html#node_sec_7.7.1.4">7.7.1.4</a>). Box printing is enabled by default.</p>
+<p>
+<a name="node_idx_2530"></a>
+</p>
+<li><p>Structures (see Chapter&nbsp;<a href="mzscheme-Z-H-4.html#node_chap_4">4</a>) can be printed using
+vector notation. In the vector, the first item is a symbol of the
+form <code class=scheme>struct:<code class=scheme><span class=variable>s</span></code></code>  --  where <code class=scheme><span class=variable>s</span></code> is the name of the
+structure  --  and the remaining elements are the elements of the
+structure, but the vector exposes only as much information about the
+structure as the current inspector can access (see
+section&nbsp;<a href="mzscheme-Z-H-4.html#node_sec_4.5">4.5</a>). When structure printing is disabled, or when no
+part of the structure is accessible to the current inspector, a
+structure is printed as <code class=scheme>#&lt;struct:<code class=scheme><span class=variable>s</span></code>&gt;</code>. Structure printing is
+controlled with the <a name="node_idx_2532"></a><code class=scheme>print-struct</code> boolean parameter (see
+section&nbsp;<a href="mzscheme-Z-H-7.html#node_sec_7.7.1.4">7.7.1.4</a>). Structure printing is disabled by default.</p>
+<p>
+<a name="node_idx_2534"></a>
+</p>
+<li><p>Symbols containing spaces or special characters <code class=scheme><code class=scheme>write</code></code>
+using escaping backslashes and quoting vertical bars.  When the
+<a name="node_idx_2536"></a><code class=scheme>read-case-sensitive</code> parameter is set to <code class=scheme><span class=selfeval>#f</span></code>, then
+symbols containing uppercase characters also use escaping backslashes
+or quoting vertical bars. In addition, symbols are quoted with
+vertical bars or a leading backslash when they would otherwise print
+the same as a numerical constant. If the value of the
+<a name="node_idx_2538"></a><code class=scheme>read-accept-bar-quote</code> boolean parameter is <code class=scheme><span class=selfeval>#f</span></code>
+(see section&nbsp;<a href="mzscheme-Z-H-7.html#node_sec_7.7.1.3">7.7.1.3</a>), then backslashes are always
+used to escape special characters instead of quoting them with
+vertical bars, and a vertical bar is not treated as a special
+character. Otherwise, quoting bars are used in printing when bar at
+the beginning and one at the end suffices to correctly print the
+symbol. See section&nbsp;<a href="#node_sec_14.3">14.3</a> for more information about symbol
+parsing. Symbols <code class=scheme><code class=scheme>display</code></code> without escaping or quoting special
+characters.</p>
+<p>
+<a name="node_idx_2540"></a> 
+</p>
+<li><p>Characters with the special names described in section&nbsp;<a href="#node_sec_14.3">14.3</a>
+<code class=scheme><code class=scheme>write</code></code> using the same name.  (Some characters have multiple
+names; the <code class=scheme><span class=selfeval>#\newline</span></code> and <code class=scheme><span class=selfeval>#\nul</span></code> names are used
+instead of <code class=scheme><span class=selfeval>#\linefeed</span></code> and <code class=scheme><span class=selfeval>#\null</span></code>). Other
+``printable'' characters <code class=scheme><code class=scheme>write</code></code> as <code class=scheme><span class=selfeval>#\ </span></code> followed by
+the single-byte character value, and ``unprintable'' characters are
+written in octal notation; unprintable-character detection depends on
+locale sensitivity (see section&nbsp;<a href="mzscheme-Z-H-7.html#node_sec_7.7.1.11">7.7.1.11</a>), and when the
+current locale is disabled, a character whose <code class=scheme><code class=scheme>char-&gt;integer</code></code>
+value is greater than 127 is always treated as unprintable. All
+characters <code class=scheme><code class=scheme>display</code></code> as the single-byte character value.</p>
+<p>
+<a name="node_idx_2542"></a> 
+</p>
+<li><p>Strings containing ``unprintable'' characters (see above)
+<code class=scheme><code class=scheme>write</code></code> using the escape sequences described in
+section&nbsp;<a href="#node_sec_14.3">14.3</a>. All strings <code class=scheme><code class=scheme>display</code></code> as their literal
+character sequences.</p>
+<p>
+<a name="node_idx_2544"></a>
+</p>
+<li><p>Regular expressions print using the
+form <code class=scheme>#rx<code class=scheme><span class=variable>string</span></code></code>, where <code class=scheme><span class=variable>string</span></code> is the
+<code class=scheme><code class=scheme>write</code></code> form of the regexp's source string.</p>
+<p>
+<a name="node_idx_2546"></a>
+</p>
+<li><p>When the <code class=scheme>print-hash-table</code> parameter is set to true
+(see section&nbsp;<a href="mzscheme-Z-H-7.html#node_sec_7.7.1.4">7.7.1.4</a>), hash tables print using the form
+<code class=scheme>#hash((<code class=scheme><span class=variable>key</span></code> . <code class=scheme><span class=variable>val</span></code>) <tt>&middot;&middot;&middot;</tt>)</code> or
+<code class=scheme>#hasheq((<code class=scheme><span class=variable>key</span></code> . <code class=scheme><span class=variable>val</span></code>) <tt>&middot;&middot;&middot;</tt>)</code> for tables using
+<code class=scheme><code class=scheme>equal?</code></code> or <code class=scheme><code class=scheme>eq?</code></code> key comparisons, respectively.  If the
+<code class=scheme>print-hash-table</code> parameter's value is <code class=scheme><span class=selfeval>#f</span></code>, hash
+tables print as <code class=scheme><span class=selfeval>#&lt;hash-table&gt;</span></code>. Hash tables with weakly held
+keys always print as <code class=scheme><span class=selfeval>#&lt;hash-table&gt;</span></code>.</p>
+<p>
+<a name="node_idx_2548"></a>
+</p>
+<li><p>S-expressions with shared structure can be printed using
+<code class=scheme>#<code class=scheme><span class=variable>n</span></code>=</code> and <code class=scheme>#<code class=scheme><span class=variable>n</span></code>#</code>, where <code class=scheme><span class=variable>n</span></code> is a decimal
+integer. See section&nbsp;<a href="#node_sec_14.5">14.5</a>.</p>
+<p>
+</p>
+</ul><p></p>
+<p>
+</p>
+<a name="node_sec_14.5"></a>
+<h2><a href="mzscheme.html#node_toc_node_sec_14.5">14.5&nbsp;&nbsp;Data Sharing in Input and Output</a></h2>
+<p><a name="node_idx_2550"></a></p>
+<p>
+<a name="node_idx_2552"></a> <a name="node_idx_2554"></a>
+<a name="node_idx_2556"></a>
+<a name="node_idx_2558"></a>
+MzScheme can read and print <strong>graphs</strong>, S-expressions with
+shared structure (e.g., a cycle).  Graphs are described by tagging
+the shared structure once with <code class=scheme>#<code class=scheme><span class=variable>n</span></code>=</code> (using some decimal
+integer <code class=scheme><span class=variable>n</span></code> with no more than eight digits) and then referencing
+it later with <code class=scheme>#<code class=scheme><span class=variable>n</span></code>#</code> (using the same number <code class=scheme><span class=variable>n</span></code>).  For
+example, the following S-expression describes the infinite list of
+ones:
+</p>
+<div align=left><pre class=scheme><span class=selfeval>#0=</span>(<span class=selfeval>1</span> . <span class=selfeval>#0#</span>)
+</pre></div><p>
+If this graph is entered into MzScheme's <code class=scheme>read</code>-<code class=scheme>eval</code>-<code class=scheme>print</code> loop, MzScheme's compiler
+will loop forever, trying to compile an infinite expression. In
+contrast, the following expression defines <code class=scheme><span class=variable>ones</span></code> to the
+infinite list of ones, using <code class=scheme><span class=keyword>quote</span></code> to hide the infinite list
+from the compiler:
+</p>
+<div align=left><pre class=scheme>(<span class=keyword>define</span> <span class=variable>ones</span> (<span class=keyword>quote</span> <span class=selfeval>#0=</span>(<span class=selfeval>1</span> . <span class=selfeval>#0#</span>)))
+</pre></div><p>
+A tagged structure can be referenced multiple
+times. Here, <code class=scheme><span class=variable>v</span></code> is defined to be a vector containing the same
+<code class=scheme><code class=scheme>cons</code></code> cell in all three slots:
+</p>
+<div align=left><pre class=scheme>(<span class=keyword>define</span> <span class=variable>v</span> <span class=selfeval>#</span>(<span class=selfeval>#1=</span>(<code class=scheme>cons</code> <span class=selfeval>1</span> <span class=selfeval>2</span>) <span class=selfeval>#1#</span> <span class=selfeval>#1#</span>))
+</pre></div><p>
+A tag <code class=scheme>#<code class=scheme><span class=variable>n</span></code>=</code> must appear to the left of all references
+<code class=scheme>#<code class=scheme><span class=variable>n</span></code>#</code>, and all references must appear in the same top-level
+S-expression as the tag. By default, MzScheme's printer will display
+a value without showing the shared structure:
+</p>
+<div align=left><pre class=schemeresponse><span class=selfeval>#</span>((<span class=selfeval>1</span> . <span class=selfeval>2</span>) (<span class=selfeval>1</span> . <span class=selfeval>2</span>) (<span class=selfeval>1</span> . <span class=selfeval>2</span>))
+</pre></div><p></p>
+<p>
+Graph reading and printing are controlled with the
+<a name="node_idx_2560"></a><code class=scheme>read-accept-graph</code> and <a name="node_idx_2562"></a><code class=scheme>print-graph</code> boolean
+parameters (see section&nbsp;<a href="mzscheme-Z-H-7.html#node_sec_7.7.1.4">7.7.1.4</a>).  Graph reading is enabled by
+default, and graph printing is disabled by default. However, when the
+printer encounters an graph containing a <a name="node_idx_2564"></a> cycle, graph
+printing is automatically enabled, temporarily. (For this reason, the
+<a name="node_idx_2566"></a><code class=scheme>display</code>, <a name="node_idx_2568"></a><code class=scheme>write</code>, and <a name="node_idx_2570"></a><code class=scheme>print</code> procedures
+require memory proportional to the depth of the value being printed.)
+When graph reading is disabled and a graph is provided as input, the
+<a name="node_idx_2572"></a><code class=scheme>exn:read</code> exception is raised.</p>
+<p>
+If the <code class=scheme><span class=variable>n</span></code> in a <code class=scheme>#<code class=scheme><span class=variable>n</span></code>=</code> form or a <code class=scheme>#<code class=scheme><span class=variable>n</span></code>#</code> form
+contains more than eight digits, the <a name="node_idx_2574"></a><code class=scheme>exn:read</code> exception is raised. If a
+<code class=scheme>#<code class=scheme><span class=variable>n</span></code>#</code> form is not preceded by a <code class=scheme>#<code class=scheme><span class=variable>n</span></code>=</code> form
+using the same <code class=scheme><span class=variable>n</span></code>, the <a name="node_idx_2576"></a><code class=scheme>exn:read</code> exception is raised. If two
+<code class=scheme>#<code class=scheme><span class=variable>n</span></code>=</code> forms are in the same expression for the same
+<code class=scheme><span class=variable>n</span></code>, the <a name="node_idx_2578"></a><code class=scheme>exn:read</code> exception is raised.</p>
+<p>
+</p>
+<a name="node_sec_14.6"></a>
+<h2><a href="mzscheme.html#node_toc_node_sec_14.6">14.6&nbsp;&nbsp;Compilation</a></h2>
+<p><a name="node_idx_2580"></a></p>
+<p>
+<a name="node_idx_2582"></a><a name="node_idx_2584"></a>
+Normally, compilation happens automatically: when an S-expression is
+evaluated, it is first compiled and then the compiled code is
+executed.  However, MzScheme can also write and read compiled
+code. MzScheme can read compiled code much faster than reading
+S-expression code and compiling it, so compilation can be used to
+speed up program loading. The MzLib procedure <code class=scheme><code class=scheme>compile-file</code></code>
+(see Chapter&nbsp;<a href="../mzlib/mzlib-Z-H-12.html#node_chap_12">12</a>
+in <a href="../mzlib/mzlib.html"><i>PLT MzLib: Libraries Manual</i></a>) is sufficient for most compilation
+purposes.
+</p>
+<ul><p>
+</p>
+<li><p><a name="node_idx_2586"></a><a name="node_kw_definitioncompile"></a><code class=scheme>(compile</code><tt>&nbsp;</tt><code class=scheme><span class=variable>expr</span></code><code class=scheme>)</code> returns a compiled expression for
+<code class=scheme><span class=variable>expr</span></code> such that <code class=scheme>(eval (compile <code class=scheme><span class=variable>expr</span></code>))</code>
+is the same as <code class=scheme><span class=variable>(eval <code class=scheme><span class=variable>expr</span></code>)</span></code>.</p>
+<p>
+</p>
+<li><p><a name="node_idx_2588"></a><a name="node_kw_definitioncompile-syntax"></a><code class=scheme>(compile-syntax</code><tt>&nbsp;</tt><code class=scheme><span class=variable>stx</span></code><code class=scheme>)</code> returns a compiled expression for
+<code class=scheme><span class=variable>stx</span></code> such that <code class=scheme>(eval (compile-syntax <code class=scheme><span class=variable>stx</span></code>))</code> is the
+same as <code class=scheme><span class=variable>(eval-syntax <code class=scheme><span class=variable>stx</span></code>)</span></code>.</p>
+<p>
+</p>
+<li><p><a name="node_idx_2590"></a><a name="node_kw_definitioncompiled-expression_Q_"></a><code class=scheme>(compiled-expression?</code><tt>&nbsp;</tt><code class=scheme><span class=variable>v</span></code><code class=scheme>)</code> returns <code class=scheme><span class=selfeval>#t</span></code> if <code class=scheme><span class=variable>v</span></code> is
+a compiled expression, <code class=scheme><span class=selfeval>#f</span></code> otherwise.</p>
+<p>
+</p>
+</ul><p>
+When a compiled expression is written to an output port, the written
+form starts with <code class=scheme><span class=selfeval>#~</span></code>.  These expressions are essentially
+assembly code for the MzScheme interpreter, and reading such an
+expression produces a compiled expression.
+<a name="node_idx_2592"></a>
+<a name="node_idx_2594"></a>
+When a compiled expression contains syntax object constants, the
+<code class=scheme><span class=selfeval>#~</span></code> form of the expression drops location information and
+properties for the syntax objects (see section&nbsp;<a href="mzscheme-Z-H-12.html#node_sec_12.2">12.2</a> and
+section&nbsp;<a href="mzscheme-Z-H-12.html#node_sec_12.6.2">12.6.2</a>).</p>
+<p>
+The <code class=scheme><code class=scheme>read</code></code> procedure will not parse input beginning with
+<code class=scheme><span class=selfeval>#~</span></code> unless it is specifically enabled through the
+<a name="node_idx_2596"></a><code class=scheme>read-accept-compiled</code> boolean parameter (see
+section&nbsp;<a href="mzscheme-Z-H-7.html#node_sec_7.7.1.3">7.7.1.3</a>). When the default load handler is
+used to load a file, compiled expression reading is automatically
+(temporarily) enabled as each expression is read.</p>
+<p>
+A compiled-expression object may contain uninterned symbols (see
+section&nbsp;<a href="mzscheme-Z-H-3.html#node_sec_3.6">3.6</a>) that were created by <code class=scheme><code class=scheme>gensym</code></code> or
+<code class=scheme><code class=scheme>string-&gt;uninterned-symbol</code></code>. When the compiled object is read
+via <code class=scheme><span class=selfeval>#~</span></code>, each uninterned symbol in the original expression is
+mapped to a new uninterned symbol, where multiple instances of a
+single symbol are consistently mapped to the same new symbol. The
+original and new symbols have the same printed representation.</p>
+<p>
+Due to the above restrictions, do not use <code class=scheme><code class=scheme>gensym</code></code> or
+<code class=scheme><code class=scheme>string-&gt;uninterned-symbol</code></code> to construct an identifier for a
+top-level or module binding. Instead, generate distinct identifiers
+either with <code class=scheme>generate-temporaries</code> (see section&nbsp;<a href="mzscheme-Z-H-12.html#node_sec_12.2.2">12.2.2</a>) or by
+applying the result of <code class=scheme>make-syntax-introducer</code> (see
+section&nbsp;<a href="mzscheme-Z-H-12.html#node_sec_12.6">12.6</a>) to an existing identifier.</p>
+<p>
+</p>
+<a name="node_sec_14.7"></a>
+<h2><a href="mzscheme.html#node_toc_node_sec_14.7">14.7&nbsp;&nbsp;Dynamic Extensions</a></h2>
+<p><a name="node_idx_2598"></a></p>
+<p>
+<a name="node_idx_2600"></a>
+A dynamically-linked extension library is loaded into MzScheme with
+<a name="node_idx_2602"></a><a name="node_kw_definitionload-extension"></a><code class=scheme>(load-extension</code><tt>&nbsp;</tt><code class=scheme><span class=variable>file-path</span></code><code class=scheme>)</code>. The separate document
+<a href="../insidemz/insidemz.html"><i>Inside PLT MzScheme</i></a> contains information about writing MzScheme
+extensions. An extension can only be loaded once during a MzScheme
+session, although the extension-writer can provide functionality to
+handle extra calls to <code class=scheme><code class=scheme>load-extension</code></code> for a single extension.</p>
+<p>
+As with <code class=scheme><code class=scheme>load</code></code>, the current <code class=scheme><code class=scheme>load-relative</code></code> directory (the
+value of the <a name="node_idx_2604"></a><code class=scheme>current-load-relative-directory</code> parameter;
+see section&nbsp;<a href="mzscheme-Z-H-7.html#node_sec_7.7.1.6">7.7.1.6</a>) is set while the
+extension is loaded. The <a name="node_idx_2606"></a><code class=scheme>load-relative-extension</code> procedure
+is like <code class=scheme><code class=scheme>load-extension</code></code>, but it loads an extension with a
+pathname that is relative to the current <code class=scheme><code class=scheme>load-relative</code></code>
+directory instead of the current directory.</p>
+<p>
+The <code class=scheme><code class=scheme>load-extension</code></code> procedure actually just dispatches to the
+current load extension handler (see
+section&nbsp;<a href="mzscheme-Z-H-7.html#node_sec_7.7.1.6">7.7.1.6</a>). The result of calling
+<code class=scheme><code class=scheme>load-extension</code></code> is determined by the extension. If the extension
+cannot be loaded, the <a name="node_idx_2608"></a><code class=scheme>exn:i/o:filesystem</code> exception is raised. The <code class=scheme><span class=variable>detail</span></code>
+field of the exception is <code class=scheme><span class=selfeval>'wrong-version</span></code><a name="node_idx_2610"></a> if the load
+fails because the extension has the wrong version.</p>
+<p>
+</p>
+<a name="node_sec_14.8"></a>
+<h2><a href="mzscheme.html#node_toc_node_sec_14.8">14.8&nbsp;&nbsp;Saving and Restoring Program Images</a></h2>
+<p><a name="node_idx_2612"></a></p>
+<p>
+An <strong>image</strong> is a memory dump from a running MzScheme program
+that can be later restored (one or more times) to continue running
+the program from the point of the dump. Images are only supported for
+statically-linked Unix versions of MzScheme (and MrEd).  There are a
+few special restrictions on images:
+</p>
+<ul><p>
+</p>
+<li><p>All files, TCP connections, and UDP connections must be closed
+when an image is created.</p>
+<p>
+</p>
+<li><p>No dynamic extensions can be loaded before an image is created.</p>
+<p>
+</p>
+<li><p>No operating system subprocesses can be active when an image 
+is created.</p>
+<p>
+</p>
+</ul><p></p>
+<p>
+<a name="node_idx_2614"></a><a name="node_kw_definitionwrite-image-to-file"></a><code class=scheme>(write-image-to-file</code><tt>&nbsp;</tt><code class=scheme><span class=variable>file-path</span></code><tt>&nbsp;</tt>[<code class=scheme><span class=variable>cont-proc</span></code>]<code class=scheme>)</code>
+copies the state of the entire MzScheme process<a name="call_footnote_Temp_42"></a><a href="#footnote_Temp_42"><sup><small>38</small></sup></a> to <code class=scheme><span class=variable>file-path</span></code>, replacing <code class=scheme><span class=variable>file-path</span></code>
+if it already exists. If images are not supported, the
+<a name="node_idx_2616"></a><code class=scheme>exn:misc:unsupported</code> exception is raised. If <code class=scheme><span class=variable>cont-proc</span></code> is <code class=scheme><span class=selfeval>#f</span></code>,
+then the MzScheme or MrEd process exits immediately after creating
+the image. Otherwise, <code class=scheme><span class=variable>cont-proc</span></code> must be a procedure of no
+arguments, and the return value(s) of the call to
+<code class=scheme><code class=scheme>write-image-to-file</code></code> is <code class=scheme>(<span class=variable>cont-proc</span>)</code>. The default
+value for <code class=scheme><span class=variable>cont-proc</span></code> is <code class=scheme><code class=scheme>void</code></code>.</p>
+<p>
+<a name="node_idx_2618"></a><a name="node_kw_definitionread-image-from-file"></a><code class=scheme>(read-image-from-file</code><tt>&nbsp;</tt><code class=scheme><span class=variable>file-path arg-vector</span></code><code class=scheme>)</code> restores the image
+saved to <code class=scheme><span class=variable>file-path</span></code>. Once the image is restored, execution of
+the original program continues with the return from
+<code class=scheme><code class=scheme>write-image-to-file</code></code>; the return value in the restored program
+is the a vector of strings <code class=scheme><span class=variable>arg-vector</span></code>. A successful call to
+<code class=scheme><code class=scheme>read-image-from-file</code></code> never returns because the restored program
+is overlayed over the current program. The vector <code class=scheme><span class=variable>arg-vector</span></code>
+must contain no more than 20 strings, and the total length of the
+strings must be no more than 2048 characters.</p>
+<p>
+If an error is encountered while reading or writing an image, the
+<a name="node_idx_2620"></a><code class=scheme>exn:i/o:filesystem</code> exception is raised or <a name="node_idx_2622"></a><code class=scheme>exn:misc</code> exception is raised. Certain errors
+during <code class=scheme><code class=scheme>read-image-from-file</code></code> are unrecoverable; in case of such
+errors, MzScheme prints an error message and exits immediately.</p>
+<p>
+An image can also be restored by starting the stand-alone version of
+MzScheme or MrEd with the <tt>--restore</tt><a name="node_idx_2624"></a> flag followed by the
+image filename. The return value from <code class=scheme><code class=scheme>write-image-to-file</code></code> in
+the restored program is a vector of strings that are the extra
+arguments provided on the command line after the image filename (if
+any).</p>
+<p>
+</p>
+<p>
+</p>
+<div class=footnoterule><hr></div><p></p>
+<div class=footnote><p><a name="footnote_Temp_39"></a><a href="#call_footnote_Temp_39"><sup><small>35</small></sup></a> The <code class=scheme><code class=scheme>eval</code></code> procedure actually calls the
+current evaluation handler (see section&nbsp;<a href="mzscheme-Z-H-7.html#node_sec_7.7.1.5">7.7.1.5</a>) to evaluate
+the expression.</p>
+<p><a name="footnote_Temp_40"></a><a href="#call_footnote_Temp_40"><sup><small>36</small></sup></a> The <code class=scheme><code class=scheme>load</code></code>
+procedure actually just sets the current <code class=scheme><code class=scheme>load-relative</code></code>
+directory and calls the current load handler (see
+section&nbsp;<a href="mzscheme-Z-H-7.html#node_sec_7.7.1.6">7.7.1.6</a>) with <code class=scheme><span class=variable>file-path</span></code> to load the file. The
+description of <code class=scheme><code class=scheme>load</code></code> here is actually a description of the
+default load handler.</p>
+<p><a name="footnote_Temp_41"></a><a href="#call_footnote_Temp_41"><sup><small>37</small></sup></a> The <code class=scheme><code class=scheme>load/use-compiled</code></code> procedure actually
+just calls the current load/use-compiled handler (see
+section&nbsp;<a href="mzscheme-Z-H-7.html#node_sec_7.7.1.6">7.7.1.6</a>). The default handler, in turn,
+calls the load or load-extension handler, depending on the type of
+file that is loaded.</p>
+<p><a name="footnote_Temp_42"></a><a href="#call_footnote_Temp_42"><sup><small>38</small></sup></a> The set of
+environment variables is not saved. When an image is restored, the
+environment variables of the restoring program are transferred into
+the restored program.</p>
+</div>
+<div align=right class=navigation><i>[Go to <span><a href="mzscheme.html">first</a>, <a href="mzscheme-Z-H-13.html">previous</a></span><span>, <a href="mzscheme-Z-H-15.html">next</a></span> page<span>; &nbsp;&nbsp;</span><span><a href="mzscheme.html#node_toc_start">contents</a></span><span><span>; &nbsp;&nbsp;</span><a href="mzscheme-Z-H-19.html#node_index_start">index</a></span>]</i></div><p></p>
+</body>
+</html>

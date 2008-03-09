@@ -1,0 +1,522 @@
+<!doctype html public "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!--
+
+Generated from mzscheme.tex by tex2page, v 2004-09-11
+(running on MzScheme 209, unix), 
+(c) Dorai Sitaram, 
+http://www.ccs.neu.edu/~dorai/tex2page/tex2page-doc.html
+
+-->
+<head>
+<title>
+PLT MzScheme: Language Manual
+</title>
+<link rel="stylesheet" type="text/css" href="mzscheme-Z-S.css" title=default>
+<meta name=robots content="noindex,follow">
+</head>
+<body>
+<div align=right class=navigation><i>[Go to <span><a href="mzscheme.html">first</a>, <a href="mzscheme-Z-H-14.html">previous</a></span><span>, <a href="mzscheme-Z-H-16.html">next</a></span> page<span>; &nbsp;&nbsp;</span><span><a href="mzscheme.html#node_toc_start">contents</a></span><span><span>; &nbsp;&nbsp;</span><a href="mzscheme-Z-H-19.html#node_index_start">index</a></span>]</i></div><p></p>
+<a name="node_chap_15"></a>
+<h1 class=chapter>
+<div class=chapterheading><a href="mzscheme.html#node_toc_node_chap_15">Chapter 15</a></div><br>
+<a href="mzscheme.html#node_toc_node_chap_15">System Utilities</a></h1>
+<p><a name="node_idx_2626"></a></p>
+<p>
+</p>
+<a name="node_sec_15.1"></a>
+<h2><a href="mzscheme.html#node_toc_node_sec_15.1">15.1&nbsp;&nbsp;Time</a></h2>
+<p><a name="node_idx_2628"></a></p>
+<p>
+<a name="node_idx_2630"></a></p>
+<p>
+</p>
+<a name="node_sec_15.1.1"></a>
+<h3><a href="mzscheme.html#node_toc_node_sec_15.1.1">15.1.1&nbsp;&nbsp;Real Time and Date</a></h3>
+<p><a name="node_idx_2632"></a>
+<a name="node_idx_2634"></a><a name="node_kw_definitioncurrent-seconds"></a><code class=scheme>(current-seconds</code><code class=scheme>)</code> returns the current time in seconds. This time
+is always an exact integer based on a platform-specific starting date
+(with a platform-specific minimum and maximum value).</p>
+<p>
+The value of <code class=scheme>(<code class=scheme>current-seconds</code>)</code> increases as time passes
+(increasing by 1 for each second that passes). The current time in
+seconds can be compared with a time returned by
+<code class=scheme><code class=scheme>file-or-directory-modify-seconds</code></code> (see section&nbsp;<a href="mzscheme-Z-H-11.html#node_sec_11.3.2">11.3.2</a>).</p>
+<p>
+<a name="node_idx_2636"></a><a name="node_kw_definitionseconds->date"></a><code class=scheme>(seconds-&gt;date</code><tt>&nbsp;</tt><code class=scheme><span class=variable>secs-n</span></code><code class=scheme>)</code> takes <code class=scheme><span class=variable>secs-n</span></code>, a platform-specific
+time in seconds (an exact integer) returned by
+<a name="node_idx_2638"></a><code class=scheme>current-seconds</code> or
+<a name="node_idx_2640"></a><code class=scheme>file-or-directory-modify-seconds</code>, and returns an instance
+of the <a name="node_idx_2642"></a><code class=scheme>date</code> structure type, which has the following fields:
+</p>
+<ul><li><p><a name="node_idx_2644"></a> <code class=scheme>second</code> : <code class=scheme><span class=selfeval>0</span></code> to <code class=scheme><span class=selfeval>61</span></code> (<code class=scheme><span class=selfeval>60</span></code> and <code class=scheme><span class=selfeval>61</span></code> are for unusual leap-seconds)
+</p>
+<li><p><a name="node_idx_2646"></a> <code class=scheme>minute</code> : <code class=scheme><span class=selfeval>0</span></code> to <code class=scheme><span class=selfeval>59</span></code>
+</p>
+<li><p><a name="node_idx_2648"></a> <code class=scheme>hour</code> : <code class=scheme><span class=selfeval>0</span></code> to <code class=scheme><span class=selfeval>23</span></code>
+</p>
+<li><p><a name="node_idx_2650"></a> <code class=scheme>day</code> : <code class=scheme><span class=selfeval>1</span></code> to <code class=scheme><span class=selfeval>31</span></code>
+</p>
+<li><p><a name="node_idx_2652"></a> <code class=scheme>month</code> : <code class=scheme><span class=selfeval>1</span></code> to <code class=scheme><span class=selfeval>12</span></code>
+</p>
+<li><p><a name="node_idx_2654"></a> <code class=scheme>year</code> : e.g., <code class=scheme><span class=selfeval>1996</span></code>
+</p>
+<li><p><a name="node_idx_2656"></a> <code class=scheme>week-day</code> : <code class=scheme><span class=selfeval>0</span></code> (Sunday) to <code class=scheme><span class=selfeval>6</span></code> (Saturday)
+</p>
+<li><p><a name="node_idx_2658"></a> <code class=scheme>year-day</code> : <code class=scheme><span class=selfeval>0</span></code> to <code class=scheme><span class=selfeval>365</span></code> (<code class=scheme><span class=selfeval>364</span></code> in non-leap years)
+</p>
+<li><p><a name="node_idx_2660"></a> <code class=scheme>dst?</code> : <code class=scheme><span class=selfeval>#t</span></code> (daylight savings time) or <code class=scheme><span class=selfeval>#f</span></code>
+</p>
+<li><p><a name="node_idx_2662"></a> <code class=scheme>time-zone-offset</code> : the number of seconds east of
+GMT for this time zone (e.g., Pacific Standard Time
+is <code class=scheme><span class=selfeval>-28800</span></code>), an exact integer
+<a name="call_footnote_Temp_43"></a><a href="#footnote_Temp_43"><sup><small>39</small></sup></a></p>
+<p>
+</p>
+</ul><p>
+All fields of the <code class=scheme>date</code> structure type are accessible by all
+inspectors (see section&nbsp;<a href="mzscheme-Z-H-4.html#node_sec_4.5">4.5</a>).</p>
+<p>
+The value returned by <a name="node_idx_2664"></a><code class=scheme>current-seconds</code> or
+<a name="node_idx_2666"></a><code class=scheme>file-or-directory-modify-seconds</code> is not portable among
+platforms. Convert a time in seconds using <code class=scheme><code class=scheme>seconds-&gt;date</code></code> when
+portability is needed.</p>
+<p>
+See also Chapter&nbsp;<a href="../mzlib/mzlib-Z-H-14.html#node_chap_14">14</a>
+in <a href="../mzlib/mzlib.html"><i>PLT MzLib: Libraries Manual</i></a> for additional date utilities.</p>
+<p>
+</p>
+<a name="node_sec_15.1.2"></a>
+<h3><a href="mzscheme.html#node_toc_node_sec_15.1.2">15.1.2&nbsp;&nbsp;Machine Time</a></h3>
+<p></p>
+<p>
+<a name="node_idx_2668"></a></p>
+<p>
+<a name="node_idx_2670"></a><a name="node_kw_definitioncurrent-milliseconds"></a><code class=scheme>(current-milliseconds</code><code class=scheme>)</code> returns the current ``time'' in fixnum
+milliseconds (possibly negative). This time is based on a
+platform-specific starting date or on the machine's startup
+time. Since the result is a fixnum, the value increases only over a
+limited (though reasonably long) time.</p>
+<p>
+<a name="node_idx_2672"></a><a name="node_kw_definitioncurrent-inexact-milliseconds"></a><code class=scheme>(current-inexact-milliseconds</code><code class=scheme>)</code> returns the current ``time'' in
+positive milliseconds, not necessarily an integer. This time is based
+on a platform-specific starting date or on the machine's startup
+time, but it never decreases (until the machine is turned off).</p>
+<p>
+<a name="node_idx_2674"></a><a name="node_kw_definitioncurrent-process-milliseconds"></a><code class=scheme>(current-process-milliseconds</code><code class=scheme>)</code> returns the amount of processor
+time in fixnum milliseconds that has been consumed by the MzScheme
+process on the underlying operating system. (Under Unix and Mac OS X, this
+includes both user and system time.) The precision of the result is
+platform-specific, and since the result is a fixnum, the value
+increases only over a limited (though reasonably long) time.</p>
+<p>
+<a name="node_idx_2676"></a><a name="node_kw_definitioncurrent-gc-milliseconds"></a><code class=scheme>(current-gc-milliseconds</code><code class=scheme>)</code> returns the amount of processor time in
+fixnum milliseconds that has been consumed by MzScheme's garbage
+collection so far. This time is a portion of the time reported by
+<code class=scheme>(<code class=scheme>current-process-milliseconds</code>)</code>.</p>
+<p>
+</p>
+<a name="node_sec_15.1.3"></a>
+<h3><a href="mzscheme.html#node_toc_node_sec_15.1.3">15.1.3&nbsp;&nbsp;Timing Execution</a></h3>
+<p>The <code class=scheme><code class=scheme>time-apply</code></code> procedure collects timing information for a
+procedure application:
+</p>
+<ul><p>
+</p>
+<li><p><a name="node_idx_2678"></a><a name="node_kw_definitiontime-apply"></a><code class=scheme>(time-apply</code><tt>&nbsp;</tt><code class=scheme><span class=variable>proc arg-list</span></code><code class=scheme>)</code> invokes the procedure <code class=scheme><span class=variable>proc</span></code>
+with the arguments in <code class=scheme><span class=variable>arg-list</span></code>. Four values are returned: a
+list containing the result(s) of applying <code class=scheme><span class=variable>proc</span></code>, the number of
+milliseconds of CPU time required to obtain this result, the number
+of ``real'' milliseconds required for the result, and the number of
+milliseconds of CPU time (included in the first result) spent on
+garbage collection.</p>
+<p>
+</p>
+</ul><p></p>
+<p>
+The reliability of the timing numbers depends on the platform; see
+section&nbsp;<a href="#node_sec_15.1.2">15.1.2</a> for more information on time accounting. If
+multiple MzScheme threads are running, then the reported time may
+include work performed by other threads.</p>
+<p>
+The <a name="node_kw_definitiontime"></a><a name="node_idx_2680"></a><code class=scheme><span class=keyword>time</span></code> syntactic form reports timing information
+directly to the current output port:
+</p>
+<ul><p>
+</p>
+<li><p><code class=scheme>(time <code class=scheme><span class=variable>expr</span></code>)</code> times the evaluation of <code class=scheme><span class=variable>expr</span></code>,
+printing timing information to the current output port. The result of
+the <code class=scheme><code class=scheme>time</code></code> expression is the result of <code class=scheme><span class=variable>expr</span></code>.</p>
+<p>
+</p>
+</ul><p></p>
+<p>
+</p>
+<a name="node_sec_15.2"></a>
+<h2><a href="mzscheme.html#node_toc_node_sec_15.2">15.2&nbsp;&nbsp;Operating System Processes</a></h2>
+<p><a name="node_idx_2682"></a></p>
+<p>
+<a name="node_idx_2684"></a>
+<a name="node_idx_2686"></a>
+<a name="node_idx_2688"></a><a name="node_kw_definitionsubprocess"></a><code class=scheme>(subprocess</code><tt>&nbsp;</tt><code class=scheme><span class=variable>stdout-output-port stdin-input-port
+stderr-output-port command-path arg-string</span></code><tt>&nbsp;</tt><tt>&middot;&middot;&middot;</tt><code class=scheme>)</code> creates a new process in
+the underlying operating system to execute <code class=scheme><span class=variable>command-path</span></code>
+asynchronously. The <code class=scheme><span class=variable>command-path</span></code> argument is a path to a
+program executable, and the <code class=scheme><span class=variable>arg-string</span></code>s are command-line
+arguments for the program.</p>
+<p>
+Under Mac OS Classic, arguments are not supported. However, a single
+<code class=scheme><span class=variable>arg-string</span></code> argument triggers a hack specific to Mac OS Classic; in
+that case, <code class=scheme><span class=variable>command-path</span></code> must be
+<code class=scheme><span class=selfeval>&quot;by-id&quot;</span></code>
+and the <code class=scheme><span class=variable>arg-string</span></code> argument is a four-character string
+specifying an application ID, which is used to find the application
+instead of an executable path.</p>
+<p>
+Under Windows, the first <code class=scheme><span class=variable>arg-string</span></code> can be <code class=scheme><span class=selfeval>'exact</span></code><a name="node_idx_2690"></a>,
+which triggers a Windows-specific hack: the second <code class=scheme><span class=variable>arg-string</span></code>
+is used exactly as the command-line for the subprocess, and no
+additional <code class=scheme><span class=variable>arg-string</span></code>s can be supplied.  Otherwise, a
+command-line string is constructed from <code class=scheme><span class=variable>command-path</span></code> and
+<code class=scheme><span class=variable>arg-string</span></code> so that a typical Windows console application can
+parse it back to an array of arguments.<a name="call_footnote_Temp_44"></a><a href="#footnote_Temp_44"><sup><small>40</small></sup></a> If <code class=scheme><span class=selfeval>'exact</span></code> is
+provided on a non-Windows platform, the
+<a name="node_idx_2692"></a><code class=scheme>exn:application:mismatch</code> exception is raised.</p>
+<p>
+Unless it is <code class=scheme><span class=selfeval>#f</span></code>, <code class=scheme><span class=variable>stdout-output-port</span></code> is used for the
+launched process's standard output, <code class=scheme><span class=variable>stdin-input-port</span></code> is used
+for the process's standard input, and <code class=scheme><span class=variable>stderr-output-port</span></code> is
+used for the process's standard error.  All provided ports must be
+file-stream ports. Any of the ports can be <code class=scheme><span class=selfeval>#f</span></code>, in which case
+a system pipe is created and returned by <code class=scheme><code class=scheme>subprocess</code></code>. For
+each port that is provided, no pipe is created and the corresponding
+returned value is <code class=scheme><span class=selfeval>#f</span></code>.</p>
+<p>
+The <code class=scheme><code class=scheme>subprocess</code></code> procedure returns four values:
+</p>
+<ul> <p>
+</p>
+<li><p>a subprocess value representing the created process;</p>
+<p>
+</p>
+<li><p>an input port piped from the process's standard output, or
+<code class=scheme><span class=selfeval>#f</span></code> if <code class=scheme><span class=variable>stdout-output-port</span></code> was a port;</p>
+<p>
+</p>
+<li><p>an output port piped to the process standard input, or
+<code class=scheme><span class=selfeval>#f</span></code> if <code class=scheme><span class=variable>stdin-input-port</span></code> was a port;</p>
+<p>
+</p>
+<li><p>an input port piped from the process's standard error, or
+<code class=scheme><span class=selfeval>#f</span></code> if <code class=scheme><span class=variable>stderr-output-port</span></code> was a port.</p>
+<p>
+</p>
+</ul><p>
+<strong>Important:</strong> All ports returned from <code class=scheme><code class=scheme>subprocess</code></code> must be
+explicitly closed with <code class=scheme><code class=scheme>close-input-port</code></code> and
+<code class=scheme><code class=scheme>close-output-port</code></code>.</p>
+<p>
+The returned ports are file-stream ports (see section&nbsp;<a href="mzscheme-Z-H-11.html#node_sec_11.1.5">11.1.5</a>),
+and they are placed into the management of the current custodian (see
+section&nbsp;<a href="mzscheme-Z-H-9.html#node_sec_9.2">9.2</a>).  The <a name="node_idx_2694"></a><code class=scheme>exn:misc</code> exception is raised when a low-level error
+prevents the spawning of a process or the creation of operating
+system pipes for process communication.</p>
+<p>
+A subprocess value can be used to obtain further information about the
+process:
+</p>
+<ul><p>
+</p>
+<li><p><a name="node_idx_2696"></a><a name="node_kw_definitionsubprocess-wait"></a><code class=scheme>(subprocess-wait</code><tt>&nbsp;</tt><code class=scheme><span class=variable>subprocess</span></code><code class=scheme>)</code> blocks until the process
+terminates, then returns void.</p>
+<p>
+</p>
+<li><p><a name="node_idx_2698"></a><a name="node_kw_definitionsubprocess-status"></a><code class=scheme>(subprocess-status</code><tt>&nbsp;</tt><code class=scheme><span class=variable>subprocess</span></code><code class=scheme>)</code> returns
+<code class=scheme><span class=selfeval>'running</span></code><a name="node_idx_2700"></a> if the process is still running, or its exit
+code otherwise. The exit code is an exact integer, and <code class=scheme><span class=selfeval>0</span></code>
+typically indicates success. If the process terminated due to a fault
+or signal, the exit code is non-zero.</p>
+<p>
+</p>
+<li><p><a name="node_idx_2702"></a><a name="node_kw_definitionsubprocess-kill"></a><code class=scheme>(subprocess-kill</code><tt>&nbsp;</tt><code class=scheme><span class=variable>subprocess force?</span></code><code class=scheme>)</code> terminates the
+subprocess if <code class=scheme><span class=variable>force?</span></code> is true and if the process still
+running, then returns void. If an error occurs during termination,
+the <a name="node_idx_2704"></a><code class=scheme>exn:misc</code> exception is raised.</p>
+<p>
+If <code class=scheme><span class=variable>force?</span></code> is <code class=scheme><span class=selfeval>#f</span></code> under Unix and Mac OS X, the subprocess is
+sent an interrupt signal instead of a kill signal (and the subprocess
+might handle the signal without terminating). Under Windows, no
+action is taken when <code class=scheme><span class=variable>force?</span></code> is <code class=scheme><span class=selfeval>#f</span></code>.</p>
+<p>
+</p>
+<li><p><a name="node_idx_2706"></a><a name="node_kw_definitionsubprocess-pid"></a><code class=scheme>(subprocess-pid</code><tt>&nbsp;</tt><code class=scheme><span class=variable>subprocess</span></code><code class=scheme>)</code> returns the operating system's
+numerical ID for the process (if any), valid only as long as the
+process is running. The ID is an exact integer. Under Mac OS Classic, the
+reported ID is always <code class=scheme><span class=selfeval>0</span></code>.</p>
+<p>
+</p>
+<li><p><a name="node_idx_2708"></a><a name="node_kw_definitionsubprocess_Q_"></a><code class=scheme>(subprocess?</code><tt>&nbsp;</tt><code class=scheme><span class=variable>v</span></code><code class=scheme>)</code> returns <code class=scheme><span class=selfeval>#t</span></code> if <code class=scheme><span class=variable>v</span></code> is a
+subprocess value, <code class=scheme><span class=selfeval>#f</span></code> otherwise.</p>
+<p>
+</p>
+</ul><p>
+MzLib provides procedures for executing shell commands (as opposed to
+directly executing a program); see Chapter&nbsp;<a href="../mzlib/mzlib-Z-H-29.html#node_chap_29">29</a>
+in <a href="../mzlib/mzlib.html"><i>PLT MzLib: Libraries Manual</i></a> for details.</p>
+<p>
+</p>
+<a name="node_sec_15.3"></a>
+<h2><a href="mzscheme.html#node_toc_node_sec_15.3">15.3&nbsp;&nbsp;Windows Actions</a></h2>
+<p><a name="node_idx_2710"></a></p>
+<p>
+<a name="node_idx_2712"></a>
+<a name="node_idx_2714"></a><a name="node_kw_definitionshell-execute"></a><code class=scheme>(shell-execute</code><tt>&nbsp;</tt><code class=scheme><span class=variable>verb-string target-string parameters-string dir-path show-mode-symbol</span></code><code class=scheme>)</code>
+performs the action specified by <code class=scheme><span class=variable>verb-string</span></code> on <code class=scheme><span class=variable>target-string</span></code>
+in Windows. For example, 
+</p>
+<div align=left><pre class=scheme>(<code class=scheme>shell-execute</code> <span class=selfeval>#f</span> <span class=selfeval>&quot;http://www.plt-scheme.org&quot;</span> <span class=selfeval>&quot;&quot;</span> (<code class=scheme>current-directory</code>) <span class=keyword>'</span><span class=variable>sw_shownormal</span>)
+</pre></div><p>
+opens the PLT Scheme home page in a browser window. For platforms
+other than Windows, the <a name="node_idx_2716"></a><code class=scheme>exn:misc:unsupported</code> exception is raised.</p>
+<p>
+The <code class=scheme><span class=variable>verb-string</span></code> can be <code class=scheme><span class=selfeval>#f</span></code>, in which case the operating
+system will use a default verb. Common verbs include <code class=scheme><span class=selfeval>&quot;open&quot;</span></code>,
+<code class=scheme><span class=selfeval>&quot;edit&quot;</span></code>, <code class=scheme><span class=selfeval>&quot;find&quot;</span></code>, <code class=scheme><span class=selfeval>&quot;explore&quot;</span></code>, and
+<code class=scheme><span class=selfeval>&quot;print&quot;</span></code>.</p>
+<p>
+The <code class=scheme><span class=variable>target-string</span></code> is the target for the action, usually a
+filename path. The file could be executable, or it could be a file
+with a recognized extension that can be handled by an installed
+application.</p>
+<p>
+The <code class=scheme><span class=variable>parameters-string</span></code> argument is passed on to the system to
+perform the action. For example, in the case of opening an
+executable, the <code class=scheme><span class=variable>parameters-string</span></code> is used as the command line
+(after the executable name).</p>
+<p>
+The <code class=scheme><span class=variable>dir-path</span></code> is used as the current directory when performing
+the action.</p>
+<p>
+The <code class=scheme><span class=variable>show-mode-symbol</span></code> sets the display mode for an Window
+affected by the action. It must be one of the following symbols; the
+description of each symbol's meaning is taken from the Windows API
+documentation.
+</p>
+<ul><p>
+</p>
+<li><p><code class=scheme><span class=selfeval>'sw_hide</span></code><a name="node_idx_2718"></a>  --  Hides the window and activates another window.</p>
+<p>
+</p>
+<li><p><code class=scheme><span class=selfeval>'sw_maximize</span></code><a name="node_idx_2720"></a>  --  Maximizes the window.</p>
+<p>
+</p>
+<li><p><code class=scheme><span class=selfeval>'sw_minimize</span></code><a name="node_idx_2722"></a>  --  Minimizes the window and
+activates the next top-level window in the z-order.</p>
+<p>
+</p>
+<li><p><code class=scheme><span class=selfeval>'sw_restore</span></code><a name="node_idx_2724"></a>  --  Activates and displays the
+window. If the window is minimized or maximized, Windows restores it
+to its original size and position.</p>
+<p>
+</p>
+<li><p><code class=scheme><span class=selfeval>'sw_show</span></code><a name="node_idx_2726"></a>  --  Activates the window and displays it
+in its current size and position.</p>
+<p>
+</p>
+<li><p><code class=scheme><span class=selfeval>'sw_showdefault</span></code><a name="node_idx_2728"></a>  --  Uses a default.</p>
+<p>
+</p>
+<li><p><code class=scheme><span class=selfeval>'sw_showmaximized</span></code><a name="node_idx_2730"></a>  --  Activates the window and
+displays it as a maximized window.</p>
+<p>
+</p>
+<li><p><code class=scheme><span class=selfeval>'sw_showminimized</span></code><a name="node_idx_2732"></a>  --  Activates the window and
+displays it as a minimized window.</p>
+<p>
+</p>
+<li><p><code class=scheme><span class=selfeval>'sw_showminnoactive</span></code><a name="node_idx_2734"></a>  --  Displays the window as a
+minimized window. The active window remains active.</p>
+<p>
+</p>
+<li><p><code class=scheme><span class=selfeval>'sw_showna</span></code><a name="node_idx_2736"></a>  --  Displays the window in its current
+state. The active window remains active.</p>
+<p>
+</p>
+<li><p><code class=scheme><span class=selfeval>'sw_shownoactivate</span></code><a name="node_idx_2738"></a>  --  Displays a window in its
+most recent size and position. The active window remains active.</p>
+<p>
+</p>
+<li><p><code class=scheme><span class=selfeval>'sw_shownormal</span></code><a name="node_idx_2740"></a>  --  Activates and displays a
+window. If the window is minimized or maximized, Windows restores it
+to its original size and position.</p>
+<p>
+</p>
+</ul><p></p>
+<p>
+If the action fails, the <a name="node_idx_2742"></a><code class=scheme>exn:misc</code> exception is raised. If the action succeeds,
+the result is <code class=scheme><span class=selfeval>#f</span></code>. In future versions of MzScheme, the
+result may be a subprocess value (see section&nbsp;<a href="#node_sec_15.2">15.2</a>) if the
+operating system did returns a process handle (but if a subprocess
+value is returned, its process ID will be <code class=scheme><span class=selfeval>0</span></code> instead of the
+real process ID).</p>
+<p>
+</p>
+<a name="node_sec_15.4"></a>
+<h2><a href="mzscheme.html#node_toc_node_sec_15.4">15.4&nbsp;&nbsp;Operating System Environment Variables</a></h2>
+<p><a name="node_idx_2744"></a></p>
+<p>
+<a name="node_idx_2746"></a><a name="node_kw_definitiongetenv"></a><code class=scheme>(getenv</code><tt>&nbsp;</tt><code class=scheme><span class=variable>name-string</span></code><code class=scheme>)</code> gets the value of an operating system
+environment variable. The <code class=scheme><span class=variable>name-string</span></code> argument cannot contain a
+null character; if an environment variable named by <code class=scheme><span class=variable>name-string</span></code>
+exists, its value is returned (as a string); otherwise, <code class=scheme><span class=selfeval>#f</span></code> is
+returned.</p>
+<p>
+<a name="node_idx_2748"></a><a name="node_kw_definitionputenv"></a><code class=scheme>(putenv</code><tt>&nbsp;</tt><code class=scheme><span class=variable>name-string value-string</span></code><code class=scheme>)</code> sets the value of an operating
+system environment variable. The <code class=scheme><span class=variable>name-string</span></code> and
+<code class=scheme><span class=variable>value-string</span></code> arguments are strings that cannot contain a null
+character; the environment variable named by <code class=scheme><span class=variable>name-string</span></code> is set
+to <code class=scheme><span class=variable>value-string</span></code>. The return value is <code class=scheme><span class=selfeval>#t</span></code> if the
+assignment succeeds, <code class=scheme><span class=selfeval>#f</span></code> otherwise.</p>
+<p>
+Although Mac OS Classic does not have operating system environment
+variables, <code class=scheme><code class=scheme>getenv</code></code> returns values installed with
+<code class=scheme><code class=scheme>putenv</code></code> (which always succeeds) in the same MzScheme session.
+When MzScheme is started, an initial environment is read from an
+<tt><strong>Environment</strong></tt> file in the current directory if it exists. An
+<tt><strong>Environment</strong></tt> file must contain a sequence of two-item lists
+where the <code class=scheme><span class=variable>name</span></code> string is the first item in the list and the
+<code class=scheme><span class=variable>value</span></code> string is the second. For example, an <tt><strong>Environment</strong></tt>
+file might contain the following:
+</p>
+<div align=left><pre class=scheme>(<span class=selfeval>&quot;PLTCOLLECTS&quot;</span> <span class=selfeval>&quot;;My Disk:Extra Collections:&quot;</span>)
+(<span class=selfeval>&quot;USER&quot;</span> <span class=selfeval>&quot;joeuser&quot;</span>)
+</pre></div><p></p>
+<p>
+</p>
+<a name="node_sec_15.5"></a>
+<h2><a href="mzscheme.html#node_toc_node_sec_15.5">15.5&nbsp;&nbsp;Runtime Information</a></h2>
+<p><a name="node_idx_2750"></a></p>
+<p>
+<a name="node_idx_2752"></a> 
+<a name="node_idx_2754"></a><a name="node_kw_definitionsystem-type"></a><code class=scheme>(system-type</code><tt>&nbsp;</tt>[<code class=scheme><span class=variable>details?</span></code>]<code class=scheme>)</code> returns a symbol indicating the type of
+the operating system for a running MzScheme if <code class=scheme><span class=variable>details?</span></code> is
+<code class=scheme><span class=selfeval>#f</span></code> or not provided. The possible values are:
+</p>
+<ul><li><p><code class=scheme><span class=selfeval>'unix</span></code><a name="node_idx_2756"></a>
+</p>
+<li><p><code class=scheme><span class=selfeval>'windows</span></code><a name="node_idx_2758"></a>
+</p>
+<li><p><code class=scheme><span class=selfeval>'macos</span></code><a name="node_idx_2760"></a>
+</p>
+<li><p><code class=scheme><span class=selfeval>'macosx</span></code><a name="node_idx_2762"></a>
+</p>
+<li><p><code class=scheme><span class=selfeval>'oskit</span></code><a name="node_idx_2764"></a>
+</p>
+</ul><p>
+Future ports of MzScheme will expand this list of system types.  If
+<code class=scheme><span class=variable>details?</span></code> is not <code class=scheme><span class=selfeval>#f</span></code>, then the result is a string, which
+contains further details about the operating system and the current
+machine in a platform-specific format.</p>
+<p>
+<a name="node_idx_2766"></a><a name="node_kw_definitionsystem-library-subpath"></a><code class=scheme>(system-library-subpath</code><tt>&nbsp;</tt>[<code class=scheme><span class=variable>variant?</span></code>]<code class=scheme>)</code> returns a relative directory
+pathname string. This string can be used to build pathnames to
+system-specific files. For example, when MzScheme is running under
+Solaris on a Sparc architecture, the subpath is
+<code class=scheme><span class=selfeval>&quot;sparc-solaris&quot;</span></code>, while the subpath for Windows on an Intel
+architecture is <code class=scheme><span class=selfeval>&quot;win32\\i386&quot;</span></code>. The subpath also
+distinguishes among MzScheme variants (e.g., the ``3m'' variant with
+more precise garbage collection) by extending the ``normal'' variant
+path with a subdirectory. If <code class=scheme><span class=variable>variant?</span></code> is <code class=scheme><span class=selfeval>#f</span></code>, then
+the returned path is for the ``normal'' variant.</p>
+<p>
+<a name="node_idx_2768"></a><a name="node_kw_definitionversion"></a><code class=scheme>(version</code><code class=scheme>)</code> returns an immutable string indicating the currently
+executing version of MzScheme.</p>
+<p>
+<a name="node_idx_2770"></a><a name="node_kw_definitionbanner"></a><code class=scheme>(banner</code><code class=scheme>)</code> returns an immutable string for MzScheme's start-up
+banner text (or the banner text for an embedding program, such as
+MrEd). The banner string ends with a newline.</p>
+<p>
+<a name="node_idx_2772"></a><a name="node_kw_definitionvector-set-performance-stats!"></a><code class=scheme>(vector-set-performance-stats!</code><tt>&nbsp;</tt><code class=scheme><span class=variable>mutable-vector</span></code><tt>&nbsp;</tt>[<code class=scheme><span class=variable>thread</span></code>]<code class=scheme>)</code> sets
+elements in <code class=scheme><span class=variable>mutable-vector</span></code> to report current performance
+statistics. If <code class=scheme><span class=variable>thread</span></code> is specified, a particular set of
+thread-specific statistics are reported, otherwise a different set of
+global statics are reported.</p>
+<p>
+For global statistics, up to 6 elements are set in the vector,
+starting from the beginning. (In future versions of MzScheme,
+additional elements will be set.) If <code class=scheme><span class=variable>mutable-vector</span></code> has <em>n</em>
+elements where <em>n</em> &lt; 6, then the <em>n</em> elements are set to the first
+<em>n</em> performance-statistics values. The reported statistics values are
+as follows, in the order that they are set within
+<code class=scheme><span class=variable>mutable-vector</span></code>:</p>
+<p>
+</p>
+<ul><p>
+</p>
+<li><p><code class=scheme><span class=selfeval>0</span></code>: The same value as returned
+by <code class=scheme>current-process-milliseconds</code> (see section&nbsp;<a href="#node_sec_15.1.2">15.1.2</a>).</p>
+<p>
+</p>
+<li><p><code class=scheme><span class=selfeval>1</span></code>: The same value as returned
+by <code class=scheme>current-milliseconds</code> (see section&nbsp;<a href="#node_sec_15.1.2">15.1.2</a>).</p>
+<p>
+</p>
+<li><p><code class=scheme><span class=selfeval>2</span></code>: The same value as returned
+by <code class=scheme>current-gc-milliseconds</code> (see section&nbsp;<a href="#node_sec_15.1.2">15.1.2</a>).</p>
+<p>
+</p>
+<li><p><code class=scheme><span class=selfeval>3</span></code>: The number of garbage collections performed since
+start-up.</p>
+<p>
+</p>
+<li><p><code class=scheme><span class=selfeval>4</span></code>: The number of thread context switches performed since
+start-up.</p>
+<p>
+</p>
+<li><p><code class=scheme><span class=selfeval>5</span></code>: The number of internal stack overflows handled since
+start-up.</p>
+<p>
+</p>
+</ul><p></p>
+<p>
+For thread-specific statistics, up to 4 elements are set in the
+vector:</p>
+<p>
+</p>
+<ul><p>
+</p>
+<li><p><code class=scheme><span class=selfeval>0</span></code>: <code class=scheme><span class=selfeval>#t</span></code> if the thread is running, <code class=scheme><span class=selfeval>#f</span></code>
+otherwise (same result as <code class=scheme>thread-running?</code>).</p>
+<p>
+</p>
+<li><p><code class=scheme><span class=selfeval>1</span></code>: <code class=scheme><span class=selfeval>#t</span></code> if the thread has terminated,
+<code class=scheme><span class=selfeval>#f</span></code> otherwise (same result as <code class=scheme>thread-dead?</code>).</p>
+<p>
+</p>
+<li><p><code class=scheme><span class=selfeval>2</span></code>: <code class=scheme><span class=selfeval>#t</span></code> if the thread is currently blocked on a
+waitable (or sleeping for some number of milliseconds), <code class=scheme><span class=selfeval>#f</span></code>
+otherwise.</p>
+<p>
+</p>
+<li><p><code class=scheme><span class=selfeval>3</span></code>: The number of bytes currently in use for the
+thread's continuation.</p>
+<p>
+</p>
+</ul><p></p>
+<p>
+</p>
+<p>
+</p>
+<div class=footnoterule><hr></div><p></p>
+<div class=footnote><p><a name="footnote_Temp_43"></a><a href="#call_footnote_Temp_43"><sup><small>39</small></sup></a> The value produced for the <code class=scheme>time-zone-offset</code> field
+tends to be sensitive to the value of the <code class=scheme><span class=selfeval>&quot;TZ&quot;</span></code>
+environment variable, especially on Unix
+platforms. Consult the system documentation (usually
+under <tt>tzset</tt>) for details.</p>
+<p><a name="footnote_Temp_44"></a><a href="#call_footnote_Temp_44"><sup><small>40</small></sup></a> For information on
+the Windows command-line conventions, search for ``command line
+parsing'' at <tt><a href="http://msdn.microsoft.com/">http://msdn.microsoft.com/</a></tt>.</p>
+</div>
+<div align=right class=navigation><i>[Go to <span><a href="mzscheme.html">first</a>, <a href="mzscheme-Z-H-14.html">previous</a></span><span>, <a href="mzscheme-Z-H-16.html">next</a></span> page<span>; &nbsp;&nbsp;</span><span><a href="mzscheme.html#node_toc_start">contents</a></span><span><span>; &nbsp;&nbsp;</span><a href="mzscheme-Z-H-19.html#node_index_start">index</a></span>]</i></div><p></p>
+</body>
+</html>

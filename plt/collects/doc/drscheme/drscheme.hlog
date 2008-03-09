@@ -1,0 +1,17 @@
+This is TeX2page, Version 2004-09-11 (MzScheme 209, unix)
+(drscheme.t2p (plt.t2p (css.t2p))) (drscheme.tex (pretitl.tex)
+(mzlabels.tex) (mrlabels.tex) (sltxconfig.tex) (mrsltxconfig.tex)
+(dateman.tex) (pltcopy.tex (precopy.tex) (copy.tex)) (weblink.tex)
+(manual-typesetting.tex) (posttitl.tex) (mredmacro.tex) (mzmacro.tex)
+[0] [1] {drscheme-Z-G-1.tex -> drscheme/drscheme-Z-G-1.gif}
+(drscheme/drscheme-Z-G-1.gif) {drscheme-Z-G-2.tex -> drscheme/drscheme-Z-G-2.gif}
+(drscheme/drscheme-Z-G-2.gif) {drscheme-Z-G-3.tex -> drscheme/drscheme-Z-G-3.gif}
+(drscheme/drscheme-Z-G-3.gif) {drscheme-Z-G-4.tex -> drscheme/drscheme-Z-G-4.gif}
+(drscheme/drscheme-Z-G-4.gif) {drscheme-Z-G-5.tex -> drscheme/drscheme-Z-G-5.gif}
+(drscheme/drscheme-Z-G-5.gif) {drscheme-Z-G-6.tex -> drscheme/drscheme-Z-G-6.gif}
+(drscheme/drscheme-Z-G-6.gif) {drscheme-Z-G-7.tex -> drscheme/drscheme-Z-G-7.gif}
+(drscheme/drscheme-Z-G-7.gif) {drscheme-Z-G-8.tex -> drscheme/drscheme-Z-G-8.gif}
+(drscheme/drscheme-Z-G-8.gif) [2] (pref-location.tex) [3]
+[4] (faq.tex) (postdoc.tex [5] (drscheme/drscheme--h.ind)))
+[6]
+Output written on drscheme/drscheme.html, ... (7 pages, 8 images).

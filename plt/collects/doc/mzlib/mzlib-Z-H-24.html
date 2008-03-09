@@ -1,0 +1,434 @@
+<!doctype html public "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!--
+
+Generated from mzlib.tex by tex2page, v 2004-09-11
+(running on MzScheme 209, unix), 
+(c) Dorai Sitaram, 
+http://www.ccs.neu.edu/~dorai/tex2page/tex2page-doc.html
+
+-->
+<head>
+<title>
+PLT MzLib: Libraries Manual
+</title>
+<link rel="stylesheet" type="text/css" href="mzlib-Z-S.css" title=default>
+<meta name=robots content="noindex,follow">
+</head>
+<body>
+<div align=right class=navigation><i>[Go to <span><a href="mzlib.html">first</a>, <a href="mzlib-Z-H-23.html">previous</a></span><span>, <a href="mzlib-Z-H-25.html">next</a></span> page<span>; &nbsp;&nbsp;</span><span><a href="mzlib.html#node_toc_start">contents</a></span><span><span>; &nbsp;&nbsp;</span><a href="mzlib-Z-H-42.html#node_index_start">index</a></span>]</i></div><p></p>
+<a name="node_chap_24"></a>
+<h1 class=chapter>
+<div class=chapterheading><a href="mzlib.html#node_toc_node_chap_24">Chapter 24</a></div><br>
+<a href="mzlib.html#node_toc_node_chap_24"><tt><strong>package.ss</strong></tt>: Local-Definition Scope Control</a></h1>
+<p><a name="node_idx_838"></a><a name="node_idx_840"></a></p>
+<p>
+The <code class=scheme><span class=keyword>package</span></code> form provides fine-grained control over binding
+visibility.  A package is an expansion-time entity only; it has no
+run-time identity.The <code class=scheme><span class=keyword>package</span></code> and <code class=scheme><span class=keyword>open</span></code> constructs
+correspond to <code class=scheme><span class=keyword>module</span></code> and <code class=scheme><span class=keyword>import</span></code> in Chez Scheme. The
+<code class=scheme><span class=keyword>package*</span></code> and <code class=scheme><span class=keyword>open*</span></code> constructs correspond to structures
+in Standard ML (without types).</p>
+<p>
+</p>
+<p>
+
+<a name="node_kw_definitionpackage"></a><a name="node_idx_842"></a>
+</p>
+<p></p>
+<p>
+
+<code class=scheme>(<code class=scheme><span class=keyword>package</span></code> <code class=scheme><span class=variable>name <code class=scheme>(</code>export <code class=scheme><tt>&middot;&middot;&middot;</tt>)</code> body-expr-or-defn <tt>&middot;&middot;&middot;</tt><sup>1</sup></span></code>)</code> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<small>S</small><small>Y</small><small>N</small><small>T</small><small>A</small><small>X</small>
+</p>
+<p>
+
+<a name="node_kw_definitionpackage"></a><a name="node_idx_844"></a>
+</p>
+<p></p>
+<p>
+
+<code class=scheme>(<code class=scheme><span class=keyword>package</span></code> <code class=scheme><span class=variable>name <code class=scheme><span class=keyword>all-defined</span></code> body-expr-or-defn <tt>&middot;&middot;&middot;</tt><sup>1</sup></span></code>)</code> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<small>S</small><small>Y</small><small>N</small><small>T</small><small>A</small><small>X</small>
+</p>
+<p>
+Defines <code class=scheme><span class=variable>name</span></code> (in any definition context) to a compile-time
+package description, much in the way that <code class=scheme>(<code class=scheme><span class=keyword>define-syntax</span></code> <span class=variable>a</span>
+ (<span class=keyword>syntax-rules</span> ...))</code> binds <code class=scheme><span class=variable>a</span></code> to a syntax expander, or
+<code class=scheme>(<span class=keyword>define-struct</span> <span class=variable>a</span> ())</code> binds <code class=scheme><span class=variable>a</span></code> to a compile-time
+structure type description.</p>
+<p>
+Each <code class=scheme><span class=variable>export</span></code> must be an identifier that is defined within the
+package body. The <code class=scheme><span class=keyword>all-defined</span></code> variant is shorthand for listing
+all identifiers that are defined in the package body.</p>
+<p>
+Although <code class=scheme><span class=keyword>package</span></code> does not introduce a new binding scope, it
+hides all of the definitions in its body from definitions and
+expressions that are outside the package. The exported definitions
+become visible only when the package is opened with forms such as
+<code class=scheme><span class=keyword>open</span></code>.</p>
+<p>
+Each <code class=scheme><span class=variable>body-expr-or-defn</span></code> can be a definition or expression. Each
+defined identifier is visible in the entire package body, except
+definitions introduced by <code class=scheme><span class=keyword>define*</span></code>, <code class=scheme><span class=keyword>define*-syntax</span></code>,
+<code class=scheme><span class=keyword>define*-values</span></code>, <code class=scheme><span class=keyword>define*-syntaxes</span></code>, <code class=scheme><span class=keyword>open*</span></code>,
+<code class=scheme><span class=keyword>package*</span></code>, or <code class=scheme><span class=keyword>define*-dot</span></code>. The <code class=scheme><span class=keyword>*</span></code> forms expose
+identifiers to expressions and definitions that appear later in the
+package body, only, much like the sequential binding of
+<code class=scheme><span class=keyword>let*</span></code>. As with <code class=scheme><span class=keyword>let*</span></code>, an identifier can be defined
+multiple times within the package using <code class=scheme><span class=keyword>*</span></code> forms; if such an
+identifier is exported, the export corresponds to the last
+definition. For any other form of definition, the identifiers that it
+defines must be defined only once within the package.</p>
+<p>
+When used in an internal-definition context (see
+section&nbsp;<a href="../mzscheme/mzscheme-Z-H-2.html#node_sec_2.8.5">2.8.5</a> in <a href="../mzscheme/mzscheme.html"><i>PLT MzScheme: Language Manual</i></a>), <code class=scheme><span class=variable>name</span></code> is immediately available for use
+with other forms, such as <code class=scheme><span class=keyword>open</span></code>, in the same
+internal-definition sequence.</p>
+<p>
+For example, see <code class=scheme><span class=keyword>open</span></code>, below.</p>
+<p>
+</p>
+<p>
+
+<a name="node_kw_definitionpackage*"></a><a name="node_idx_846"></a>
+</p>
+<p></p>
+<p>
+
+<code class=scheme>(<code class=scheme><span class=keyword>package*</span></code> <code class=scheme><span class=variable>name <code class=scheme>(</code>export <code class=scheme><tt>&middot;&middot;&middot;</tt>)</code> body-expr-or-defn <tt>&middot;&middot;&middot;</tt><sup>1</sup></span></code>)</code> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<small>S</small><small>Y</small><small>N</small><small>T</small><small>A</small><small>X</small>
+</p>
+<p>
+
+<a name="node_kw_definitionpackage*"></a><a name="node_idx_848"></a>
+</p>
+<p></p>
+<p>
+
+<code class=scheme>(<code class=scheme><span class=keyword>package*</span></code> <code class=scheme><span class=variable>name <code class=scheme><span class=keyword>all-defined</span></code> body-expr-or-defn <tt>&middot;&middot;&middot;</tt><sup>1</sup></span></code>)</code> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<small>S</small><small>Y</small><small>N</small><small>T</small><small>A</small><small>X</small>
+</p>
+<p>
+Like <code class=scheme><span class=keyword>package</span></code>, but within a package body, the package name is
+visible only to later definitions and expressions.</p>
+<p>
+</p>
+<p>
+
+<a name="node_kw_definitionopen"></a><a name="node_idx_850"></a>
+</p>
+<p></p>
+<p>
+
+<code class=scheme>(<code class=scheme><span class=keyword>open</span></code> <code class=scheme><span class=variable>name <tt>&middot;&middot;&middot;</tt><sup>1</sup></span></code>)</code> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<small>S</small><small>Y</small><small>N</small><small>T</small><small>A</small><small>X</small>
+</p>
+<p>
+If a single <code class=scheme><span class=variable>name</span></code> is provided, it must be defined as a package,
+and the package's exports are exposed in the definition context of
+the <code class=scheme><span class=keyword>open</span></code> declaration.</p>
+<p>
+The <code class=scheme><span class=keyword>open</span></code> form acts like a definition form, in that it
+introduces bindings in a definition context, and such bindings can be
+exported from a package (even using <code class=scheme><span class=keyword>all-defined</span></code>). More
+precisely, however, <code class=scheme><span class=keyword>open</span></code> exposes bindings hidden by a package,
+rather than introducing identifiers. This exposure overrides any
+identifier that would shadow the binding (were it not hidden by the
+package in the first place).</p>
+<p>
+If multiple <code class=scheme><span class=variable>name</span></code>s are provided, the first name must correspond
+to a defined package, the second must correspond to a package
+exported from the first, and so on. Only the package corresponding to
+the last name is opened into the <code class=scheme><span class=keyword>open</span></code>'s definition context.</p>
+<p>
+Examples:
+</p>
+<div align=left><pre class=scheme>(<span class=keyword>package</span> <span class=variable>p</span> (<span class=variable>f</span>)
+  (<span class=keyword>define</span> (<span class=variable>f</span> <span class=variable>a</span>) (<span class=variable>+</span> <span class=variable>a</span> <span class=variable>x</span>))
+  (<span class=keyword>define</span> <span class=variable>x</span> <span class=selfeval>1</span>))
+(<span class=variable>f</span> <span class=selfeval>0</span>) <span class=comment>; =&gt; error: reference to undefined identifier <code class=scheme><span class=variable>f</span></code></span>
+(<span class=keyword>let</span> ([<span class=variable>p</span> <span class=selfeval>5</span>])
+  (<span class=keyword>open</span> <span class=variable>p</span>) ...)  <span class=comment>; =&gt; error: <code class=scheme><span class=variable>p</span></code> is not a package name</span>
+(<span class=keyword>open</span> <span class=variable>p</span>)
+(<span class=variable>f</span> <span class=selfeval>0</span>) <span class=comment>; =&gt; <code class=schemeresponse><span class=selfeval>1</span></code></span>
+
+(<span class=keyword>let</span> ([<span class=variable>f</span> (<span class=keyword>lambda</span> (<span class=variable>x</span>) <span class=variable>x</span>)])
+  (<span class=keyword>open</span> <span class=variable>p</span>)
+  (<span class=variable>f</span> <span class=selfeval>0</span>)) <span class=comment>; =&gt; <code class=schemeresponse><span class=selfeval>1</span></code></span>
+
+(<span class=keyword>let</span> ([<span class=variable>x</span> <span class=selfeval>2</span>])
+  (<span class=keyword>open</span> <span class=variable>p</span>)
+  (<span class=variable>f</span> <span class=selfeval>0</span>)) <span class=comment>; =&gt; <code class=schemeresponse><span class=selfeval>1</span></code></span>
+
+(<span class=keyword>package</span> <span class=variable>p</span> (<span class=variable>p2</span>)
+  (<span class=keyword>package</span> <span class=variable>p2</span> (<span class=variable>f</span>)
+    (<span class=keyword>define</span> (<span class=variable>f</span> <span class=variable>a</span>) (<span class=variable>-</span> <span class=variable>a</span> <span class=variable>x</span>)))
+  (<span class=keyword>define</span> <span class=variable>x</span> <span class=selfeval>2</span>))
+(<span class=keyword>open</span> <span class=variable>p</span> <span class=variable>p2</span>)
+(<span class=variable>f</span> <span class=selfeval>3</span>) <span class=comment>; =&gt; <code class=schemeresponse><span class=selfeval>1</span></code></span>
+
+(<span class=keyword>package</span> <span class=variable>p</span> (<span class=variable>p2</span>)
+  (<span class=keyword>package</span> <span class=variable>p2</span> (<span class=variable>f</span>)
+    (<span class=keyword>define</span> (<span class=variable>f</span> <span class=variable>a</span>) (<span class=variable>-</span> <span class=variable>a</span> <span class=variable>x</span>)))
+  (<span class=keyword>define</span> <span class=variable>x</span> <span class=selfeval>2</span>))
+(<span class=keyword>open</span> <span class=variable>p</span> <span class=variable>p2</span>)
+(<span class=variable>f</span> <span class=selfeval>3</span>) <span class=comment>; =&gt; <code class=schemeresponse><span class=selfeval>1</span></code></span>
+
+(<span class=keyword>package</span> <span class=variable>p1</span> (<span class=variable>x</span> <span class=variable>f1</span> <span class=variable>p2</span> <span class=variable>p3</span>)
+  (<span class=keyword>define</span> <span class=variable>x</span> <span class=selfeval>1</span>)
+  (<span class=keyword>define</span> (<span class=variable>f1</span>) <span class=variable>x</span>)
+  (<span class=keyword>package</span> <span class=variable>p2</span> (<span class=variable>x</span> <span class=variable>f2</span>)
+    (<span class=keyword>define</span> <span class=variable>x</span> <span class=selfeval>2</span>)
+    (<span class=keyword>define</span> (<span class=variable>f2</span>) <span class=variable>x</span>))
+  (<span class=keyword>package</span> <span class=variable>p3</span> (<span class=variable>f3</span>)
+    (<span class=keyword>open</span> <span class=variable>p2</span>)
+    (<span class=keyword>define</span> (<span class=variable>f3</span>) <span class=variable>x</span>)))
+(<span class=keyword>open</span> <span class=variable>p1</span>)
+<span class=variable>x</span> <span class=comment>; =&gt; <code class=schemeresponse><span class=selfeval>1</span></code></span>
+(<span class=variable>f1</span>) <span class=comment>; =&gt; <code class=schemeresponse><span class=selfeval>1</span></code></span>
+(<span class=keyword>open</span> <span class=variable>p2</span>)
+<span class=variable>x</span> <span class=comment>; =&gt; <code class=schemeresponse><span class=selfeval>2</span></code></span>
+(<span class=variable>f2</span>) <span class=comment>; =&gt; <code class=schemeresponse><span class=selfeval>2</span></code></span>
+(<span class=keyword>open</span> <span class=variable>p3</span>)
+(<span class=variable>f3</span>) <span class=comment>; =&gt; <code class=schemeresponse><span class=selfeval>2</span></code></span>
+(<span class=keyword>open</span> <span class=variable>p1</span>)
+<span class=variable>x</span> <span class=comment>; =&gt; <code class=schemeresponse><span class=selfeval>1</span></code></span>
+
+(<code class=scheme><span class=keyword>define-syntax</span></code> <span class=variable>package2</span>
+  (<span class=keyword>syntax-rules</span> ()
+   [(<span class=variable>_</span> <span class=variable>name</span> <span class=variable>id</span> <span class=variable>def</span>)
+    (<span class=keyword>package</span> <span class=variable>name</span> (<span class=variable>id</span> <span class=variable>foo</span>)
+      <span class=variable>def</span>
+      (<span class=keyword>define</span> <span class=variable>foo</span> <span class=selfeval>3</span>))]))
+(<span class=keyword>let</span> ()
+  (<span class=variable>package2</span> <span class=variable>p</span> <span class=variable>foo</span> (<span class=keyword>define</span> <span class=variable>foo</span> <span class=selfeval>1</span>))
+  (<span class=keyword>open</span> <span class=variable>p</span>)
+  <span class=variable>foo</span>) <span class=comment>; =&gt; <code class=schemeresponse><span class=selfeval>1</span></code></span>
+(<span class=keyword>let</span> ()
+  (<span class=variable>package2</span> <span class=variable>p</span> <span class=variable>bar</span> (<span class=keyword>define</span> <span class=variable>bar</span> <span class=selfeval>1</span>))
+  (<span class=keyword>open</span> <span class=variable>p</span>)
+  <span class=variable>foo</span>) <span class=comment>; =&gt; error:  reference to undefined identifier <code class=scheme><span class=variable>foo</span></code></span>
+
+(<code class=scheme><span class=keyword>define-syntax</span></code> <span class=variable>open2</span>
+  (<span class=keyword>syntax-rules</span> ()
+   [(<span class=variable>_</span> <span class=variable>name</span>) (<span class=keyword>open</span> <span class=variable>name</span>)]))
+(<span class=keyword>let</span> ()
+  (<span class=keyword>package</span> <span class=variable>p</span> (<span class=variable>x</span>) (<span class=keyword>define</span> <span class=variable>x</span> <span class=selfeval>1</span>))
+  (<span class=variable>open2</span> <span class=variable>p</span>)
+  <span class=variable>x</span>) <span class=comment>; =&gt; <code class=schemeresponse><span class=selfeval>1</span></code></span>
+
+(<code class=scheme><span class=keyword>define-syntax</span></code> <span class=variable>package3</span>
+  (<span class=keyword>syntax-rules</span> ()
+   [(<span class=variable>_</span> <span class=variable>name</span> <span class=variable>id</span>)
+    (<span class=keyword>package</span> <span class=variable>name</span> (<span class=variable>id</span> <span class=variable>foo</span>)
+      (<span class=keyword>define</span> (<span class=variable>id</span>) <span class=variable>foo</span>)
+      (<span class=keyword>define</span> <span class=variable>foo</span> <span class=selfeval>3</span>))]))
+(<span class=keyword>let</span> ([<span class=variable>foo</span> <span class=selfeval>17</span>])
+  (<span class=variable>package3</span> <span class=variable>p</span> <span class=variable>f</span>)
+  (<span class=keyword>open</span> <span class=variable>p</span>)
+  (<span class=variable>+</span> <span class=variable>foo</span> (<span class=variable>f</span>))) <span class=comment>; =&gt; <code class=schemeresponse><span class=selfeval>20</span></code></span>
+</pre></div><p></p>
+<p>
+
+<a name="node_kw_definitionopen*"></a><a name="node_idx_852"></a>
+</p>
+<p></p>
+<p>
+
+<code class=scheme>(<code class=scheme><span class=keyword>open*</span></code> <code class=scheme><span class=variable>name <tt>&middot;&middot;&middot;</tt><sup>1</sup></span></code>)</code> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<small>S</small><small>Y</small><small>N</small><small>T</small><small>A</small><small>X</small>
+</p>
+<p>
+Like <code class=scheme><span class=keyword>open</span></code>, but within a package, the opened package's exports
+are exposed only to later definitions and expressions.</p>
+<p>
+</p>
+<p>
+
+<a name="node_kw_definitiondot"></a><a name="node_idx_854"></a>
+</p>
+<p></p>
+<p>
+
+<code class=scheme>(<code class=scheme><span class=keyword>dot</span></code> <code class=scheme><span class=variable>name <tt>&middot;&middot;&middot;</tt><sup>1</sup>export</span></code>)</code> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<small>S</small><small>Y</small><small>N</small><small>T</small><small>A</small><small>X</small>
+</p>
+<p>
+Equivalent to <code class=scheme>(<code class=scheme><span class=keyword>let</span></code> () (<code class=scheme><span class=keyword>open</span></code> <code class=scheme><span class=variable>name</span></code> <tt>&middot;&middot;&middot;</tt><sup>1</sup>)
+<code class=scheme><span class=variable>export</span></code>)</code> when <code class=scheme><span class=variable>export</span></code> is exported from the package
+selected by <code class=scheme><code class=scheme><span class=variable>name</span></code> <tt>&middot;&middot;&middot;</tt><sup>1</sup></code>.</p>
+<p>
+Example:
+</p>
+<div align=left><pre class=scheme>(<span class=keyword>package</span> <span class=variable>p</span> (<span class=variable>x</span>)
+  (<span class=keyword>define</span> <span class=variable>x</span> <span class=selfeval>1</span>))
+(<span class=variable>+</span> <span class=selfeval>2</span> (<code class=scheme><span class=keyword>dot</span></code> <span class=variable>p</span> <span class=variable>x</span>)) <span class=comment>; =&gt; <code class=schemeresponse><span class=selfeval>3</span></code></span>
+</pre></div><p></p>
+<p>
+</p>
+<p>
+
+<a name="node_kw_definitiondefine-dot"></a><a name="node_idx_856"></a>
+</p>
+<p></p>
+<p>
+
+<code class=scheme>(<code class=scheme><span class=keyword>define-dot</span></code> <code class=scheme><span class=variable>variable name <tt>&middot;&middot;&middot;</tt><sup>1</sup></span></code>)</code> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<small>S</small><small>Y</small><small>N</small><small>T</small><small>A</small><small>X</small>
+</p>
+<p>
+Defines <code class=scheme><span class=variable>variable</span></code> as an alias for the package export selected by
+<code class=scheme><code class=scheme><span class=variable>name</span></code> <tt>&middot;&middot;&middot;</tt><sup>1</sup></code>. The export can correspond to a nested
+package, in which case the alias is available for immediate use in
+forms like <code class=scheme><span class=keyword>open</span></code> or <code class=scheme><span class=keyword>define-dot</span></code>.</p>
+<p>
+
+<a name="node_kw_definitiondefine*-dot"></a><a name="node_idx_858"></a>
+</p>
+<p></p>
+<p>
+
+<code class=scheme>(<code class=scheme><span class=keyword>define*-dot</span></code> <code class=scheme><span class=variable>variable name <tt>&middot;&middot;&middot;</tt><sup>1</sup></span></code>)</code> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<small>S</small><small>Y</small><small>N</small><small>T</small><small>A</small><small>X</small>
+</p>
+<p>
+Like <code class=scheme><span class=keyword>define-dot</span></code>, but within a package, the alias applies only
+to later definitions and expressions.</p>
+<p>
+</p>
+<p>
+
+<a name="node_kw_definitionrename-potential-package"></a><a name="node_idx_860"></a>
+</p>
+<p></p>
+<p>
+
+<code class=scheme>(<code class=scheme><span class=keyword>rename-potential-package</span></code> <code class=scheme><span class=variable>old-name new-name</span></code>)</code> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<small>S</small><small>Y</small><small>N</small><small>T</small><small>A</small><small>X</small>
+</p>
+<p>
+Introduces <code class=scheme><span class=variable>old-name</span></code> as an alias for <code class=scheme><span class=variable>new-name</span></code>.</p>
+<p>
+Although <code class=scheme>make-rename-transformer</code> (see section&nbsp;<a href="../mzscheme/mzscheme-Z-H-12.html#node_sec_12.6">12.6</a> in <a href="../mzscheme/mzscheme.html"><i>PLT MzScheme: Language Manual</i></a>)
+can be used to create an alias for a package name, only an alias
+created by <code class=scheme><span class=keyword>rename-potential-package</span></code>, <code class=scheme><span class=keyword>define-dot</span></code>, or
+<code class=scheme><span class=keyword>define*-dot</span></code> is available for immediate use by forms such as
+<code class=scheme><span class=keyword>open</span></code>.</p>
+<p>
+</p>
+<p>
+
+<a name="node_kw_definitiondefine*"></a><a name="node_idx_862"></a>
+</p>
+<p></p>
+<p>
+
+<code class=scheme>(<code class=scheme><span class=keyword>define*</span></code> <code class=scheme><span class=variable>variable expr</span></code>)</code> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<small>S</small><small>Y</small><small>N</small><small>T</small><small>A</small><small>X</small>
+</p>
+<p>
+
+<a name="node_kw_definitiondefine*"></a><a name="node_idx_864"></a>
+</p>
+<p></p>
+<p>
+
+<code class=scheme>(<code class=scheme><span class=keyword>define*</span></code> <code class=scheme><span class=variable><code class=scheme>(<code class=scheme><span class=variable>header</span></code> . <code class=scheme><span class=variable>formals</span></code>)</code> expr <tt>&middot;&middot;&middot;</tt><sup>1</sup></span></code>)</code> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<small>S</small><small>Y</small><small>N</small><small>T</small><small>A</small><small>X</small>
+</p>
+<p>
+
+<a name="node_kw_definitiondefine*-syntax"></a><a name="node_idx_866"></a>
+</p>
+<p></p>
+<p>
+
+<code class=scheme>(<code class=scheme><span class=keyword>define*-syntax</span></code> <code class=scheme><span class=variable>variable expr</span></code>)</code> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<small>S</small><small>Y</small><small>N</small><small>T</small><small>A</small><small>X</small>
+</p>
+<p>
+
+<a name="node_kw_definitiondefine*-syntax"></a><a name="node_idx_868"></a>
+</p>
+<p></p>
+<p>
+
+<code class=scheme>(<code class=scheme><span class=keyword>define*-syntax</span></code> <code class=scheme><span class=variable><code class=scheme>(<code class=scheme><span class=variable>header</span></code> . <code class=scheme><span class=variable>formals</span></code>)</code> expr <tt>&middot;&middot;&middot;</tt><sup>1</sup></span></code>)</code> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<small>S</small><small>Y</small><small>N</small><small>T</small><small>A</small><small>X</small>
+</p>
+<p>
+
+<a name="node_kw_definitiondefine*-values"></a><a name="node_idx_870"></a>
+</p>
+<p></p>
+<p>
+
+<code class=scheme>(<code class=scheme><span class=keyword>define*-values</span></code> <code class=scheme><span class=variable><code class=scheme>(<code class=scheme><span class=variable>variable</span></code> <tt>&middot;&middot;&middot;</tt>)</code> expr</span></code>)</code> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<small>S</small><small>Y</small><small>N</small><small>T</small><small>A</small><small>X</small>
+</p>
+<p>
+
+<a name="node_kw_definitiondefine*-syntaxes"></a><a name="node_idx_872"></a>
+</p>
+<p></p>
+<p>
+
+<code class=scheme>(<code class=scheme><span class=keyword>define*-syntaxes</span></code> <code class=scheme><span class=variable><code class=scheme>(<code class=scheme><span class=variable>variable</span></code> <tt>&middot;&middot;&middot;</tt>)</code> expr</span></code>)</code> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<small>S</small><small>Y</small><small>N</small><small>T</small><small>A</small><small>X</small>
+</p>
+<p>
+
+<a name="node_kw_definitionrename*-potential-package"></a><a name="node_idx_874"></a>
+</p>
+<p></p>
+<p>
+
+<code class=scheme>(<code class=scheme><span class=keyword>rename*-potential-package</span></code> <code class=scheme><span class=variable>old-name new-name</span></code>)</code> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<small>S</small><small>Y</small><small>N</small><small>T</small><small>A</small><small>X</small>
+</p>
+<p>
+Like <code class=scheme><span class=keyword>define</span></code>, etc., but when used in a package, they define
+identifiers that are visible only to later definitions and
+expressions.</p>
+<p>
+</p>
+<p>
+
+<a name="node_kw_definitionpackage/derived"></a><a name="node_idx_876"></a>
+</p>
+<p></p>
+<p>
+
+<code class=scheme>(<code class=scheme><span class=keyword>package/derived</span></code> <code class=scheme><span class=variable>expr name <code class=scheme>(</code>export <code class=scheme><tt>&middot;&middot;&middot;</tt>)</code> body-expr-or-defn <tt>&middot;&middot;&middot;</tt><sup>1</sup></span></code>)</code> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<small>S</small><small>Y</small><small>N</small><small>T</small><small>A</small><small>X</small>
+</p>
+<p>
+
+<a name="node_kw_definitionpackage/derived"></a><a name="node_idx_878"></a>
+</p>
+<p></p>
+<p>
+
+<code class=scheme>(<code class=scheme><span class=keyword>package/derived</span></code> <code class=scheme><span class=variable>expr name <code class=scheme><span class=keyword>all-defined</span></code> body-expr-or-defn <tt>&middot;&middot;&middot;</tt><sup>1</sup></span></code>)</code> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<small>S</small><small>Y</small><small>N</small><small>T</small><small>A</small><small>X</small>
+</p>
+<p>
+Like <code class=scheme><span class=keyword>package</span></code>, but syntax errors (such as duplicate definitions)
+are reported as originating from <code class=scheme><span class=variable>expr</span></code>.</p>
+<p>
+This form is useful for writing macros that expand to <code class=scheme><span class=keyword>package</span></code>
+and rely on the syntax checks of the <code class=scheme><span class=keyword>package</span></code> transformer, but
+where syntax errors should be reported in terms of the source
+expression or declaration.</p>
+<p>
+
+<a name="node_kw_definitionopen/derived"></a><a name="node_idx_880"></a>
+</p>
+<p></p>
+<p>
+
+<code class=scheme>(<code class=scheme><span class=keyword>open/derived</span></code> <code class=scheme><span class=variable>expr orig-name name <tt>&middot;&middot;&middot;</tt><sup>1</sup></span></code>)</code> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<small>S</small><small>Y</small><small>N</small><small>T</small><small>A</small><small>X</small>
+</p>
+<p>
+
+<a name="node_kw_definitionopen*/derived"></a><a name="node_idx_882"></a>
+</p>
+<p></p>
+<p>
+
+<code class=scheme>(<code class=scheme><span class=keyword>open*/derived</span></code> <code class=scheme><span class=variable>expr orig-name name <tt>&middot;&middot;&middot;</tt><sup>1</sup></span></code>)</code> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<small>S</small><small>Y</small><small>N</small><small>T</small><small>A</small><small>X</small>
+</p>
+<p>
+Like <code class=scheme><span class=keyword>open</span></code> and <code class=scheme><span class=keyword>open*</span></code>, but syntax errors (such as
+duplicate definitions) are reported as originating from <code class=scheme><span class=variable>expr</span></code>.
+Furthermore, if <code class=scheme><span class=variable>name</span></code> is not a package name, the error message
+reports that <code class=scheme><span class=variable>orig-name</span></code> is not defined as a package.</p>
+<p>
+</p>
+<p>
+</p>
+<div align=right class=navigation><i>[Go to <span><a href="mzlib.html">first</a>, <a href="mzlib-Z-H-23.html">previous</a></span><span>, <a href="mzlib-Z-H-25.html">next</a></span> page<span>; &nbsp;&nbsp;</span><span><a href="mzlib.html#node_toc_start">contents</a></span><span><span>; &nbsp;&nbsp;</span><a href="mzlib-Z-H-42.html#node_index_start">index</a></span>]</i></div><p></p>
+</body>
+</html>

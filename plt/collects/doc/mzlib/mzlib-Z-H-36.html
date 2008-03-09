@@ -1,0 +1,253 @@
+<!doctype html public "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!--
+
+Generated from mzlib.tex by tex2page, v 2004-09-11
+(running on MzScheme 209, unix), 
+(c) Dorai Sitaram, 
+http://www.ccs.neu.edu/~dorai/tex2page/tex2page-doc.html
+
+-->
+<head>
+<title>
+PLT MzLib: Libraries Manual
+</title>
+<link rel="stylesheet" type="text/css" href="mzlib-Z-S.css" title=default>
+<meta name=robots content="noindex,follow">
+</head>
+<body>
+<div align=right class=navigation><i>[Go to <span><a href="mzlib.html">first</a>, <a href="mzlib-Z-H-35.html">previous</a></span><span>, <a href="mzlib-Z-H-37.html">next</a></span> page<span>; &nbsp;&nbsp;</span><span><a href="mzlib.html#node_toc_start">contents</a></span><span><span>; &nbsp;&nbsp;</span><a href="mzlib-Z-H-42.html#node_index_start">index</a></span>]</i></div><p></p>
+<a name="node_chap_36"></a>
+<h1 class=chapter>
+<div class=chapterheading><a href="mzlib.html#node_toc_node_chap_36">Chapter 36</a></div><br>
+<a href="mzlib.html#node_toc_node_chap_36"><tt><strong>thread.ss</strong></tt>: Thread Utilities</a></h1>
+<p><a name="node_idx_1130"></a><a name="node_idx_1132"></a></p>
+<p>
+
+
+</p>
+<p></p>
+<p>
+
+<a name="node_idx_1134"></a><a name="node_kw_definitionconsumer-thread"></a><code class=scheme>(consumer-thread</code><tt>&nbsp;</tt><code class=scheme><span class=variable>f</span></code><tt>&nbsp;</tt>[<code class=scheme><span class=variable>init</span></code>]<code class=scheme>)</code> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<small>P</small><small>R</small><small>O</small><small>C</small><small>E</small><small>D</small><small>U</small><small>R</small><small>E</small>
+</p>
+<p>
+Returns two values: a thread descriptor for a new thread, and a
+procedure with the same arity as <code class=scheme><span class=variable>f</span></code>.<a name="call_footnote_Temp_15"></a><a href="#footnote_Temp_15"><sup><small>10</small></sup></a> When the returned procedure is applied,
+its arguments are queued to be passed on to <code class=scheme><span class=variable>f</span></code>, and void is
+immediately returned.  The thread created by <code class=scheme>consumer-thread</code>
+dequeues arguments and applies <code class=scheme><span class=variable>f</span></code> to them, removing a new
+set of arguments from the queue only when the previous application of
+<code class=scheme><span class=variable>f</span></code> has completed; if <code class=scheme><span class=variable>f</span></code> escapes from a normal return (via
+an exception or a continuation), the <code class=scheme><span class=variable>f</span></code>-applying thread
+terminates.</p>
+<p>
+The <code class=scheme><span class=variable>init</span></code> argument is a procedure of no arguments; if it is
+provided, <code class=scheme><span class=variable>init</span></code> is called in the new thread immediately after the
+thread is created.</p>
+<p>
+
+
+</p>
+<p></p>
+<p>
+
+<a name="node_idx_1136"></a><a name="node_kw_definitioncopy-port"></a><code class=scheme>(copy-port</code><tt>&nbsp;</tt><code class=scheme><span class=variable>input-port output-port</span></code><tt>&nbsp;</tt><tt>&middot;&middot;&middot;</tt><sup>1</sup><code class=scheme>)</code> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<small>P</small><small>R</small><small>O</small><small>C</small><small>E</small><small>D</small><small>U</small><small>R</small><small>E</small>
+</p>
+<p>
+Reads data from <code class=scheme><span class=variable>input-port</span></code> and writes it back out to
+<code class=scheme><span class=variable>output-port</span></code>, returning when <code class=scheme><span class=variable>input-port</span></code> produces
+<code class=scheme>eof</code>.  The copy is efficient, and without significant buffer
+delays (i.e., a character that becomes available on <code class=scheme><span class=variable>input-port</span></code>
+is immediately transferred to <code class=scheme><span class=variable>output-port</span></code>, even if future reads
+on <code class=scheme><span class=variable>input-port</span></code> must block).</p>
+<p>
+This function is often called from a ``background'' thread to
+continuously pump data from one stream to another.</p>
+<p>
+If multiple <code class=scheme><span class=variable>output-port</span></code>s are provided, case data from
+<code class=scheme><span class=variable>input-port</span></code> is written to every <code class=scheme><span class=variable>output-port</span></code>. The different
+<code class=scheme><span class=variable>output-port</span></code>s block output to each other, because each quantum
+of data read from <code class=scheme><span class=variable>input-port</span></code> is written completely to one
+<code class=scheme><span class=variable>output-port</span></code> before moving to the next <code class=scheme><span class=variable>output-port</span></code>. The
+<code class=scheme><span class=variable>output-port</span></code>s are written in the provided order, so non-blocking
+ports (e.g., to a file) should be placed first in the argument list.</p>
+<p>
+
+
+</p>
+<p></p>
+<p>
+
+<a name="node_idx_1138"></a><a name="node_kw_definitiondynamic-disable-break"></a><code class=scheme>(dynamic-disable-break</code><tt>&nbsp;</tt><code class=scheme><span class=variable>thunk</span></code><code class=scheme>)</code> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<small>P</small><small>R</small><small>O</small><small>C</small><small>E</small><small>D</small><small>U</small><small>R</small><small>E</small>
+</p>
+<p>
+Invokes <code class=scheme><span class=variable>thunk</span></code> and returns the result. During the application of
+<code class=scheme><span class=variable>thunk</span></code>, breaks are disabled.</p>
+<p>
+
+
+</p>
+<p></p>
+<p>
+
+<a name="node_idx_1140"></a><a name="node_kw_definitiondynamic-enable-break"></a><code class=scheme>(dynamic-enable-break</code><tt>&nbsp;</tt><code class=scheme><span class=variable>thunk</span></code><code class=scheme>)</code> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<small>P</small><small>R</small><small>O</small><small>C</small><small>E</small><small>D</small><small>U</small><small>R</small><small>E</small>
+</p>
+<p>
+Invokes <code class=scheme><span class=variable>thunk</span></code> and returns the result. During the application of
+<code class=scheme><span class=variable>thunk</span></code>, breaks are enabled.</p>
+<p>
+
+
+</p>
+<p></p>
+<p>
+
+<a name="node_idx_1142"></a><a name="node_kw_definitioninput-port-append"></a><code class=scheme>(input-port-append</code><tt>&nbsp;</tt><code class=scheme><span class=variable>close-at-eof? input-port</span></code><tt>&nbsp;</tt><tt>&middot;&middot;&middot;</tt><code class=scheme>)</code> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<small>P</small><small>R</small><small>O</small><small>C</small><small>E</small><small>D</small><small>U</small><small>R</small><small>E</small>
+</p>
+<p>
+Takes any number of input ports and returns an input port. Reading
+from the input port draws characters from the given input ports in
+order. If <code class=scheme><span class=variable>close-at-eof?</span></code> is true, then each port is closed
+when an end-of-file is encountered from the port, or when the result
+input port is closed. Otherwise, data not read from the returned
+input port remains available for reading in its original input port.</p>
+<p>
+See also <code class=scheme>merge-input</code>, which interleaves data from multiple
+input ports as it becomes available.</p>
+<p>
+
+
+</p>
+<p></p>
+<p>
+
+<a name="node_idx_1144"></a><a name="node_kw_definitionmake-limited-input-port"></a><code class=scheme>(make-limited-input-port</code><tt>&nbsp;</tt><code class=scheme><span class=variable>input-port limit-k</span></code><tt>&nbsp;</tt>[<code class=scheme><span class=variable>close-orig?</span></code>]<code class=scheme>)</code> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<small>P</small><small>R</small><small>O</small><small>C</small><small>E</small><small>D</small><small>U</small><small>R</small><small>E</small>
+</p>
+<p>
+Returns a port whose content is drawn from <code class=scheme><span class=variable>input-port</span></code>, but where
+an end-of-file is reported after <code class=scheme><span class=variable>limit-k</span></code> characters are read.
+If <code class=scheme><span class=variable>close-orig?</span></code> is true, then the original port is closed if
+the returned port is closed.</p>
+<p>
+Characters are consumed from <code class=scheme><span class=variable>input-port</span></code> only when they are
+consumed from the returned port. In particular, peeking into the
+returned port peeks into the original port.</p>
+<p>
+If <code class=scheme><span class=variable>input-port</span></code> is used directly while the resulting port is also
+used, then the <code class=scheme><span class=variable>limit-k</span></code> characters provided by the port need not
+be contiguous parts of the original port's stream.</p>
+<p>
+
+
+</p>
+<p></p>
+<p>
+
+<a name="node_idx_1146"></a><a name="node_kw_definitionmake-single-threader"></a><code class=scheme>(make-single-threader</code><code class=scheme>)</code> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<small>P</small><small>R</small><small>O</small><small>C</small><small>E</small><small>D</small><small>U</small><small>R</small><small>E</small>
+</p>
+<p>
+Returns a new procedure that takes any thunk and applies it. When this
+procedure is applied to any collection of thunks by any collection of
+threads, the thunks are applied sequentially across all threads.</p>
+<p>
+
+
+</p>
+<p></p>
+<p>
+
+<a name="node_idx_1148"></a><a name="node_kw_definitionmerge-input"></a><code class=scheme>(merge-input</code><tt>&nbsp;</tt><code class=scheme><span class=variable>a-input-port b-input-port</span></code><tt>&nbsp;</tt>[<code class=scheme><span class=variable>limit-k</span></code>]<code class=scheme>)</code> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<small>P</small><small>R</small><small>O</small><small>C</small><small>E</small><small>D</small><small>U</small><small>R</small><small>E</small>
+</p>
+<p>
+Accepts two input ports and returns a new input port. The new port
+merges the data from two original ports, so data can be read from the
+new port whenever it is available from either original port. The data
+from the original ports are interleaved. When EOF has been read from
+an original port, it no longer contributes characters to the new
+port. After EOF has been read from both original ports, the new port
+returns EOF. Closing the merged port does not close the original
+ports.</p>
+<p>
+The optional <code class=scheme><span class=variable>limit-k</span></code> argument limits the number of characters to
+be buffered from <code class=scheme><span class=variable>a-input-port</span></code> and <code class=scheme><span class=variable>b-input-port</span></code>, so that
+the merge process does not advance arbitrarily beyond the rate of
+consumption of the merged data. A <code class=scheme><span class=selfeval>#f</span></code> value disables the
+limit; the default is <code class=scheme><span class=selfeval>4096</span></code>.</p>
+<p>
+See also <code class=scheme>input-port-append</code>, which concatenates input streams
+instead of interleaving them.</p>
+<p>
+
+
+</p>
+<p></p>
+<p>
+
+<a name="node_idx_1150"></a><a name="node_kw_definitionrun-server"></a><code class=scheme>(run-server</code><tt>&nbsp;</tt><code class=scheme><span class=variable>port-k session-proc session-timeout</span></code><tt>&nbsp;</tt>[<code class=scheme><span class=variable>handler-proc listen-proc close-proc accept-proc accept/break-proc</span></code>]<code class=scheme>)</code> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<small>P</small><small>R</small><small>O</small><small>C</small><small>E</small><small>D</small><small>U</small><small>R</small><small>E</small>
+</p>
+<p>
+Executes a TCP server on the port indicated by <code class=scheme><span class=variable>port-k</span></code>. When a
+connection is made by a client, <code class=scheme><span class=variable>session-proc</span></code> is called with two
+values: an input port to receive from the client, and an output port
+to send to the client.</p>
+<p>
+Each client connection, or <strong>session</strong>, is managed by a new
+custodian, and each call to <code class=scheme><span class=variable>session-proc</span></code> occurs in a new thread
+(managed by the session's custodian). If the thread executing
+<code class=scheme><span class=variable>session-proc</span></code> terminates for any reason (e.g., <code class=scheme><span class=variable>session-proc</span></code>
+returns), the session's custodian is shut down. Consequently,
+<code class=scheme><span class=variable>session-proc</span></code> need not close the ports provided to it. Breaks are
+enabled in the session thread if breaks are enabled when
+<code class=scheme><span class=variable>run-server</span></code> is called.</p>
+<p>
+If <code class=scheme><span class=variable>session-timeout</span></code> is not <code class=scheme><span class=selfeval>#f</span></code>, then it must be a
+non-negative number specifying the time in seconds that a session
+thread is allowed to run before it is sent a break signal. Then, if
+the thread runs longer than <code class=scheme>(<span class=variable>*</span> <span class=variable>session-timeout</span> <span class=selfeval>2</span>)</code> seconds,
+then the session's custodian is shut down. If <code class=scheme><span class=variable>session-timeout</span></code>
+is <code class=scheme><span class=selfeval>#f</span></code>, a session thread can run indefinitely.</p>
+<p>
+If <code class=scheme><span class=variable>handler-proc</span></code> is provided, it is passed exceptions related to
+connections (i.e., exceptions not caught by <code class=scheme><span class=variable>session-proc</span></code>, or
+exceptions that occur when trying to accept a connection). The
+default handler ignores the exception and returns void.</p>
+<p>
+The <code class=scheme><span class=variable>listen-proc</span></code>, <code class=scheme><span class=variable>close-proc</span></code>, <code class=scheme><span class=variable>accept-proc</span></code> and
+<code class=scheme><span class=variable>accept/break-proc</span></code> arguments default to the <code class=scheme>tcp-listen</code>,
+<code class=scheme>tcp-close</code>, <code class=scheme>tcp-accept</code>, and
+<code class=scheme>tcp-accept/enable-break</code> procedures, respectively. The
+<code class=scheme>run-server</code> function calls these procedures without optional
+arguments. Provide alternate procedures to use an alternate
+communication protocol (such as SLL) or to supply optional arguments
+in the use of <code class=scheme>tcp-listen</code>.</p>
+<p>
+The <code class=scheme><span class=variable>run-server</span></code> procedure loops to serve client connections, so
+it never returns. If a break occurs, the loop will cleanly shut down
+the server, but it will not terminate active sessions.</p>
+<p>
+
+
+</p>
+<p></p>
+<p>
+
+<a name="node_idx_1152"></a><a name="node_kw_definitionwith-semaphore"></a><code class=scheme>(with-semaphore</code><tt>&nbsp;</tt><code class=scheme><span class=variable>s thunk</span></code><code class=scheme>)</code> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<small>P</small><small>R</small><small>O</small><small>C</small><small>E</small><small>D</small><small>U</small><small>R</small><small>E</small>
+</p>
+<p>
+Calls <code class=scheme>semaphore-wait</code> on <code class=scheme><span class=variable>s</span></code>, then invokes <code class=scheme><span class=variable>thunk</span></code> with
+no arguments, and then calls <code class=scheme>semaphore-post</code> on <code class=scheme><span class=variable>s</span></code>. The
+return value is the result of calling <code class=scheme><span class=variable>thunk</span></code>.</p>
+<p>
+</p>
+<p>
+</p>
+<div class=footnoterule><hr></div><p></p>
+<div class=footnote><p><a name="footnote_Temp_15"></a><a href="#call_footnote_Temp_15"><sup><small>10</small></sup></a> The returned
+procedure actually accepts any number of arguments, but immediately
+raises <code class=scheme>exn:fail:contract:arity</code> if <code class=scheme><span class=variable>f</span></code> cannot accept the
+provided number of arguments.</p>
+</div>
+<div align=right class=navigation><i>[Go to <span><a href="mzlib.html">first</a>, <a href="mzlib-Z-H-35.html">previous</a></span><span>, <a href="mzlib-Z-H-37.html">next</a></span> page<span>; &nbsp;&nbsp;</span><span><a href="mzlib.html#node_toc_start">contents</a></span><span><span>; &nbsp;&nbsp;</span><a href="mzlib-Z-H-42.html#node_index_start">index</a></span>]</i></div><p></p>
+</body>
+</html>

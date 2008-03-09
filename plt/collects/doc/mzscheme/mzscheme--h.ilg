@@ -1,0 +1,12 @@
+This is makeindex, version 2.14 [02-Oct-2002] (kpathsea + Thai support).
+Scanning input file mzscheme/mzscheme--h.idx....
+!! Input index error (file = mzscheme/mzscheme--h.idx, line = 571):
+   -- Illegal null field.
+.
+!! Input index error (file = mzscheme/mzscheme--h.idx, line = 1234):
+   -- Extra `@' at position 2 of first argument.
+done (1465 entries accepted, 2 rejected).
+Sorting entries...............done (16720 comparisons).
+Generating output file mzscheme/mzscheme--h.ind.....done (1440 lines written, 0 warnings).
+Output written in mzscheme/mzscheme--h.ind.
+Transcript written in mzscheme/mzscheme--h.ilg.

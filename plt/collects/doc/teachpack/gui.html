@@ -1,0 +1,90 @@
+<html>
+<head>
+<title>Teachpack : GUI</title>
+</head>
+<body bgcolor="#ffffff" text="#000000"
+      link="#009900" vlink="#007700" alink="#cc0000">
+
+<a href="index.html">Teachpacks for How to Design Programs</a>
+
+<h1>GUI</h1>
+
+<hr> <h3><a name="gui.ss">gui.ss</a></h3> <!-- DOCNOTE="teach=gui.ss" -->
+
+<p>The teachpack <code>gui.ss</code> provides the following operations:
+<menu>
+<li> <code><a name="show-window">show-window</a> : window -> true</code>
+     <br>to show the window
+
+<li> <code><a name="hide-window">hide-window</a> : window -> true</code>
+     <br>to hide the window
+
+<li> <code><a name="create-window">create-window</a> : (listof (listof gui-item)) -> window</code>
+     <br>to add gui-items to a window and to show the window
+     <br>each list of gui-items defines one row of gui items in the window
+
+<li> <code><a name="make-button">make-button</a> : str (event% -> boolean) -> gui-item</code>
+     <br>to create a button with label and call-back function
+
+<li> <code><a name="make-message">make-message</a> : str -> gui-item</code>
+     <br>to create an item that displays a message
+
+<li> <code><a name="draw-message">draw-message</a> : gui-item[message%] stri -> true</code>
+     <br>to display a message in a message item
+     <br>it earses the current message
+
+<li> <code><a name="make-text">make-text</a> : str -> gui-item</code>
+     <br>to create an item (with label) that allows users to enter text
+
+<li> <code><a name="text-contents">text-contents</a> : gui-item[text%] -> str</code>
+     <br>to determine the contents of a text field
+
+<li> <code><a name="make-choice">make-choice</a> : (listof str) -> gui-item</code>
+     <br>to create a choice menu that permits users to choose from some
+     string alternatives
+
+<li> <code><a name="choice-index">choice-index</a> : gui-item[choice%] -> num</code>
+     <br>to determine which choice is currently selected in a choice-item
+     <br>the result is the 0-based index in the choice menu
+</menu>
+
+<p>Example 1:
+<pre>
+> (define w (create-window (list (list (make-button "QUIT" (lambda (e) (hide-window w)))))))
+</pre>
+A button appears on the screen. Click on the button and it will disappear.
+<pre>
+> (show-window)
+</pre>
+The frame reappears.
+
+<p>Example 2:
+<pre>
+; text1 : GUI-ITEM
+(define text1
+  (make-text "Please enter your name"))
+
+; msg1 : GUI-ITEM
+(define msg1
+  (make-message (string-append "Hello, World" (make-string 33 #\SPACE))))
+
+; Event -> true
+; draws the current contents of text1 into msg1, prepended with "Hello, "
+(define (respond e)
+  (draw-message msg1 (string-append "Hello, " (text-contents text1))))
+
+; set up window with three "lines": a text field, a message, and two buttons
+; fill in text and click OKAY
+(define w 
+ (create-window
+  (list
+   (list text1)
+   (list msg1)
+   (list (make-button "OKAY" respond)
+	 (make-button "QUIT" (lambda (e) (hide-window w)))))))
+</pre>
+
+<br>
+<br>
+</body>
+</html>

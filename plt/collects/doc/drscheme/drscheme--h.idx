@@ -1,0 +1,360 @@
+\indexentry{About {\drscheme}|expandhtmlindex}{2}
+\indexentry{Interface Essentials|expandhtmlindex}{4}
+\indexentry{graphical interface|expandhtmlindex}{6}
+\indexentry{definitions window|expandhtmlindex}{8}
+\indexentry{interactions window|expandhtmlindex}{10}
+\indexentry{status line|expandhtmlindex}{12}
+\indexentry{recycling icon|expandhtmlindex}{14}
+\indexentry{Buttons|expandhtmlindex}{16}
+\indexentry{filename button|expandhtmlindex}{18}
+\indexentry{(define ...) button|expandhtmlindex}{20}
+\indexentry{Save button|expandhtmlindex}{22}
+\indexentry{Step button|expandhtmlindex}{24}
+\indexentry{stepper|expandhtmlindex}{26}
+\indexentry{The Stepper|expandhtmlindex}{28}
+\indexentry{Check Syntax|expandhtmlindex}{30}
+\indexentry{alpha renaming|expandhtmlindex}{32}
+\indexentry{tail calls|expandhtmlindex}{34}
+\indexentry{Break button|expandhtmlindex}{36}
+\indexentry{The Editor|expandhtmlindex}{38}
+\indexentry{editors|expandhtmlindex}{40}
+\indexentry{flashing parenthesis matches|expandhtmlindex}{42}
+\indexentry{gray highlight regions|expandhtmlindex}{44}
+\indexentry{formatting Scheme code|expandhtmlindex}{46}
+\indexentry{indenting Scheme code|expandhtmlindex}{48}
+\indexentry{The Interactions Window|expandhtmlindex}{50}
+\indexentry{interactions window|expandhtmlindex}{52}
+\indexentry{{\tt >} prompt|expandhtmlindex}{54}
+\indexentry{evaluating expressions|expandhtmlindex}{56}
+\indexentry{Run button|expandhtmlindex}{58}
+\indexentry{Errors|expandhtmlindex}{60}
+\indexentry{error highlighting|expandhtmlindex}{62}
+\indexentry{Languages|expandhtmlindex}{64}
+\indexentry{language levels|see{ languages}}{66}
+\indexentry{languages|expandhtmlindex}{68}
+\indexentry{languages!changing|expandhtmlindex}{70}
+\indexentry{Beginning Student language|expandhtmlindex}{72}
+\indexentry{Beginning Student language with List Abbreviations|expandhtmlindex}{74}
+\indexentry{Intermediate Student language|expandhtmlindex}{76}
+\indexentry{Intermediate Student with Lambda        language|expandhtmlindex}{78}
+\indexentry{Advanced Student language|expandhtmlindex}{80}
+\indexentry{R5RS|expandhtmlindex}{82}
+\indexentry{PLT Textual (MzScheme) language|expandhtmlindex}{84}
+\indexentry{PLT Graphical (MrEd) language|expandhtmlindex}{86}
+\indexentry{PLT Pretty Big language|expandhtmlindex}{88}
+\indexentry{module language@{\tt module} language|expandhtmlindex}{90}
+\indexentry{numbers!printing|expandhtmlindex}{92}
+\indexentry{Executables|expandhtmlindex}{94}
+\indexentry{launcher executables|expandhtmlindex}{96}
+\indexentry{stand-alone executables|expandhtmlindex}{98}
+\indexentry{DLLs|expandhtmlindex}{100}
+\indexentry{libmzsch[vers].dll@\File{libmzsch[vers].dll}|expandhtmlindex}{102}
+\indexentry{libmzgc[vers].dll@\File{libmzgc[vers].dll}|expandhtmlindex}{104}
+\indexentry{libmred[vers].dll@\File{libmred[vers].dll}|expandhtmlindex}{106}
+\indexentry{PLT\_MzScheme@\File{PLT\_MzScheme}|expandhtmlindex}{108}
+\indexentry{/Library/Frameworks@\File{/Library/Frameworks}|expandhtmlindex}{110}
+\indexentry{PLT\_MrEd@\File{PLT\_MrEd}|expandhtmlindex}{112}
+\indexentry{Printed Results|expandhtmlindex}{114}
+\indexentry{output format|expandhtmlindex}{116}
+\indexentry{printing format|expandhtmlindex}{118}
+\indexentry{read-eval-print loop|expandhtmlindex}{120}
+\indexentry{constructor-style output|expandhtmlindex}{122}
+\indexentry{quasiquote-style output|expandhtmlindex}{124}
+\indexentry{Input and Output|expandhtmlindex}{126}
+\indexentry{I/O|expandhtmlindex}{128}
+\indexentry{read@\rawscm{read}|expandhtmlindex}{130}
+\indexentry{read-char@\rawscm{read-char}|expandhtmlindex}{132}
+\indexentry{display@\rawscm{display}|expandhtmlindex}{134}
+\indexentry{write@\rawscm{write}|expandhtmlindex}{136}
+\indexentry{XML|expandhtmlindex}{138}
+\indexentry{XML|expandhtmlindex}{140}
+\indexentry{Test Cases|expandhtmlindex}{142}
+\indexentry{Interface Reference|expandhtmlindex}{144}
+\indexentry{graphical interface!details|expandhtmlindex}{146}
+\indexentry{Menus|expandhtmlindex}{148}
+\indexentry{menu items|expandhtmlindex}{150}
+\indexentry{New menu item|expandhtmlindex}{152}
+\indexentry{Open... menu item|expandhtmlindex}{154}
+\indexentry{Open Recent menu item|expandhtmlindex}{156}
+\indexentry{Install PLT File... menu item|expandhtmlindex}{158}
+\indexentry{Revert menu item|expandhtmlindex}{160}
+\indexentry{Save Definitions menu item|expandhtmlindex}{162}
+\indexentry{Save Definitions As... menu item|expandhtmlindex}{164}
+\indexentry{Save Other menu item|expandhtmlindex}{166}
+\indexentry{Save Definitions As Text... menu item|expandhtmlindex}{168}
+\indexentry{Save Interactions menu item|expandhtmlindex}{170}
+\indexentry{Save Interactions As... menu item|expandhtmlindex}{172}
+\indexentry{Save Interactions As Text... menu item|expandhtmlindex}{174}
+\indexentry{Log Definitions and Interactions... menu item|expandhtmlindex}{176}
+\indexentry{Print Definitions... menu item|expandhtmlindex}{178}
+\indexentry{Print Interactions... menu item|expandhtmlindex}{180}
+\indexentry{Search in Files... menu item|expandhtmlindex}{182}
+\indexentry{Close menu item|expandhtmlindex}{184}
+\indexentry{Undo menu item|expandhtmlindex}{186}
+\indexentry{Redo menu item|expandhtmlindex}{188}
+\indexentry{Cut menu item|expandhtmlindex}{190}
+\indexentry{Copy menu item|expandhtmlindex}{192}
+\indexentry{Paste menu item|expandhtmlindex}{194}
+\indexentry{Delete menu item|expandhtmlindex}{196}
+\indexentry{Clear menu item|expandhtmlindex}{198}
+\indexentry{Select All menu item|expandhtmlindex}{200}
+\indexentry{Wrap Text menu item|expandhtmlindex}{202}
+\indexentry{Find menu item|expandhtmlindex}{204}
+\indexentry{Find Again menu item|expandhtmlindex}{206}
+\indexentry{Replace \& Find Again menu item|expandhtmlindex}{208}
+\indexentry{Keybindings menu item|expandhtmlindex}{210}
+\indexentry{Preferences... menu item|expandhtmlindex}{212}
+\indexentry{Show Definitions menu item|expandhtmlindex}{214}
+\indexentry{Hide Definitions menu item|expandhtmlindex}{216}
+\indexentry{Show Interactions menu item|expandhtmlindex}{218}
+\indexentry{Hide Interactions menu item|expandhtmlindex}{220}
+\indexentry{Show Program Contour menu item|expandhtmlindex}{222}
+\indexentry{Hide Program Contour menu item|expandhtmlindex}{224}
+\indexentry{Show Profile menu item|expandhtmlindex}{226}
+\indexentry{Hide Profile menu item|expandhtmlindex}{228}
+\indexentry{Split menu item|expandhtmlindex}{230}
+\indexentry{Collapse menu item|expandhtmlindex}{232}
+\indexentry{Choose Language menu item|expandhtmlindex}{234}
+\indexentry{Add Teachpack... menu item|expandhtmlindex}{236}
+\indexentry{Clear All Teachpacks menu item|expandhtmlindex}{238}
+\indexentry{Run menu item|expandhtmlindex}{240}
+\indexentry{Break menu item|expandhtmlindex}{242}
+\indexentry{Kill menu item|expandhtmlindex}{244}
+\indexentry{Clear Error Highlight menu item|expandhtmlindex}{246}
+\indexentry{Create Executable... menu item|expandhtmlindex}{248}
+\indexentry{Create Servlet... menu item|expandhtmlindex}{250}
+\indexentry{Module Browser... menu item|expandhtmlindex}{252}
+\indexentry{Reindent menu item|expandhtmlindex}{254}
+\indexentry{Reindent All menu item|expandhtmlindex}{256}
+\indexentry{Comment Out with Semicolons menu item|expandhtmlindex}{258}
+\indexentry{Comment Out with a Box menu item|expandhtmlindex}{260}
+\indexentry{Uncomment menu item|expandhtmlindex}{262}
+\indexentry{Disable All Test Cases menu item|expandhtmlindex}{264}
+\indexentry{Insert Comment Box menu item|expandhtmlindex}{266}
+\indexentry{Insert Image... menu item|expandhtmlindex}{268}
+\indexentry{Insert Fraction... menu item|expandhtmlindex}{270}
+\indexentry{Insert Large Letters... menu item|expandhtmlindex}{272}
+\indexentry{Insert Lambda menu item|expandhtmlindex}{274}
+\indexentry{Insert Delta (define) menu item|expandhtmlindex}{276}
+\indexentry{Insert Java Comment Box menu item|expandhtmlindex}{278}
+\indexentry{Insert Java Interactions Box menu item|expandhtmlindex}{280}
+\indexentry{Insert XML Box menu item|expandhtmlindex}{282}
+\indexentry{Insert Scheme Box menu item|expandhtmlindex}{284}
+\indexentry{Insert Scheme Splice Box menu item|expandhtmlindex}{286}
+\indexentry{Insert Test Case menu item|expandhtmlindex}{288}
+\indexentry{Bring Frame to Front... menu item|expandhtmlindex}{290}
+\indexentry{Most Recent Window menu item|expandhtmlindex}{292}
+\indexentry{Help Desk menu item|expandhtmlindex}{294}
+\indexentry{About DrScheme... menu item|expandhtmlindex}{296}
+\indexentry{Check for Updates... menu item|expandhtmlindex}{298}
+\indexentry{Related Web Sites menu item|expandhtmlindex}{300}
+\indexentry{Tool Web Sites menu item|expandhtmlindex}{302}
+\indexentry{Interact with DrScheme in English menu item|expandhtmlindex}{304}
+\indexentry{Help menu item|expandhtmlindex}{306}
+\indexentry{Preferences|expandhtmlindex}{308}
+\indexentry{preferences|expandhtmlindex}{310}
+\indexentry{font preference|expandhtmlindex}{312}
+\indexentry{Indenting preferences|expandhtmlindex}{314}
+\indexentry{Number of recent items preference|expandhtmlindex}{316}
+\indexentry{Auto-save files preference|expandhtmlindex}{318}
+\indexentry{Backup files preference|expandhtmlindex}{320}
+\indexentry{.bak@\File{.bak}|expandhtmlindex}{322}
+\indexentry{$\sim$@\File{$\sim$}|expandhtmlindex}{324}
+\indexentry{Map delete to backspace preference|expandhtmlindex}{326}
+\indexentry{Show status-line preference|expandhtmlindex}{328}
+\indexentry{Count column numbers from one preference|expandhtmlindex}{330}
+\indexentry{Display line numbers in buffer; not character     offsets preference|expandhtmlindex}{332}
+\indexentry{Wrap words in editor buffers preference|expandhtmlindex}{334}
+\indexentry{Use separate dialog for searching preference|expandhtmlindex}{336}
+\indexentry{Find menu item|expandhtmlindex}{338}
+\indexentry{Find menu item|expandhtmlindex}{340}
+\indexentry{Reuse existing frames when opening new files preference|expandhtmlindex}{342}
+\indexentry{Enable keybindings in menus preference|expandhtmlindex}{344}
+\indexentry{Color syntax interactively preference|expandhtmlindex}{346}
+\indexentry{Automatically print to postscript file preference|expandhtmlindex}{348}
+\indexentry{Open files in separate tabs (not separate     windows) preference|expandhtmlindex}{350}
+\indexentry{Limit interactions size preference|expandhtmlindex}{352}
+\indexentry{Highlight between matching parens preference|expandhtmlindex}{354}
+\indexentry{Correct parens preference|expandhtmlindex}{356}
+\indexentry{Flash paren match preference|expandhtmlindex}{358}
+\indexentry{Parenthesis highlight color preference|expandhtmlindex}{360}
+\indexentry{Ask before changing save format preference|expandhtmlindex}{362}
+\indexentry{Verify exit preference|expandhtmlindex}{364}
+\indexentry{Only warn once when executions and interactions are not     synchronized preference|expandhtmlindex}{366}
+\indexentry{Ask about clearing test coverage preference|expandhtmlindex}{368}
+\indexentry{proxy|expandhtmlindex}{370}
+\indexentry{Keyboard Shortcuts|expandhtmlindex}{372}
+\indexentry{keyboard shortcuts|expandhtmlindex}{374}
+\indexentry{keybindings|expandhtmlindex}{376}
+\indexentry{Emacs keybindings|expandhtmlindex}{378}
+\indexentry{keybindings!C-f|expandhtmlindex}{380}
+\indexentry{keybindings!move forward one character|expandhtmlindex}{382}
+\indexentry{keybindings!C-b|expandhtmlindex}{384}
+\indexentry{keybindings!move backward one character|expandhtmlindex}{386}
+\indexentry{keybindings!M-f|expandhtmlindex}{388}
+\indexentry{keybindings!move forward one word|expandhtmlindex}{390}
+\indexentry{keybindings!M-b|expandhtmlindex}{392}
+\indexentry{keybindings!move backward one word|expandhtmlindex}{394}
+\indexentry{keybindings!C-v|expandhtmlindex}{396}
+\indexentry{keybindings!move forward one page|expandhtmlindex}{398}
+\indexentry{keybindings!M-v|expandhtmlindex}{400}
+\indexentry{keybindings!move backward one page|expandhtmlindex}{402}
+\indexentry{keybindings!M-$<$|expandhtmlindex}{404}
+\indexentry{keybindings!move to beginning of file|expandhtmlindex}{406}
+\indexentry{keybindings!M-$>$|expandhtmlindex}{408}
+\indexentry{keybindings!move to end of file|expandhtmlindex}{410}
+\indexentry{keybindings!C-a|expandhtmlindex}{412}
+\indexentry{keybindings!move to beginning of line (left)|expandhtmlindex}{414}
+\indexentry{keybindings!C-e|expandhtmlindex}{416}
+\indexentry{keybindings!move to end of line (right)|expandhtmlindex}{418}
+\indexentry{keybindings!C-n|expandhtmlindex}{420}
+\indexentry{keybindings!move to next line (down)|expandhtmlindex}{422}
+\indexentry{keybindings!C-p|expandhtmlindex}{424}
+\indexentry{keybindings!move to previous line (up)|expandhtmlindex}{426}
+\indexentry{keybindings!M-C-f|expandhtmlindex}{428}
+\indexentry{keybindings!move forward one S-expression|expandhtmlindex}{430}
+\indexentry{keybindings!M-C-b|expandhtmlindex}{432}
+\indexentry{keybindings!move backward one S-expression|expandhtmlindex}{434}
+\indexentry{keybindings!M-C-u|expandhtmlindex}{436}
+\indexentry{keybindings!move up out of an S-expression|expandhtmlindex}{438}
+\indexentry{keybindings!M-C-d|expandhtmlindex}{440}
+\indexentry{keybindings!move down into a nested S-expression|expandhtmlindex}{442}
+\indexentry{keybindings!M-C-SPACE|expandhtmlindex}{444}
+\indexentry{keybindings!select forward S-expression|expandhtmlindex}{446}
+\indexentry{keybindings!M-C-p|expandhtmlindex}{448}
+\indexentry{keybindings!match parentheses backward|expandhtmlindex}{450}
+\indexentry{keybindings!M-C-left|expandhtmlindex}{452}
+\indexentry{keybindings!move backwards to the nearest editor box|expandhtmlindex}{454}
+\indexentry{keybindings!A-C-left|expandhtmlindex}{456}
+\indexentry{keybindings!move backwards to the nearest editor box|expandhtmlindex}{458}
+\indexentry{keybindings!M-C-right|expandhtmlindex}{460}
+\indexentry{keybindings!move forward to the nearest editor box|expandhtmlindex}{462}
+\indexentry{keybindings!A-C-right|expandhtmlindex}{464}
+\indexentry{keybindings!move forward to the nearest editor box|expandhtmlindex}{466}
+\indexentry{keybindings!M-C-up|expandhtmlindex}{468}
+\indexentry{keybindings!move up out of an embedded editor|expandhtmlindex}{470}
+\indexentry{keybindings!A-C-up|expandhtmlindex}{472}
+\indexentry{keybindings!move up out of an embedded editor|expandhtmlindex}{474}
+\indexentry{keybindings!M-C-down|expandhtmlindex}{476}
+\indexentry{keybindings!move down into an embedded editor|expandhtmlindex}{478}
+\indexentry{keybindings!A-C-down|expandhtmlindex}{480}
+\indexentry{keybindings!move down into an embedded editor|expandhtmlindex}{482}
+\indexentry{keybindings!C-d|expandhtmlindex}{484}
+\indexentry{keybindings!delete forward one character|expandhtmlindex}{486}
+\indexentry{keybindings!C-h|expandhtmlindex}{488}
+\indexentry{keybindings!delete backward one character|expandhtmlindex}{490}
+\indexentry{keybindings!M-d|expandhtmlindex}{492}
+\indexentry{keybindings!delete forward one word|expandhtmlindex}{494}
+\indexentry{keybindings!M-DEL|expandhtmlindex}{496}
+\indexentry{keybindings!delete backward one word|expandhtmlindex}{498}
+\indexentry{keybindings!C-k|expandhtmlindex}{500}
+\indexentry{keybindings!delete forward to end of line|expandhtmlindex}{502}
+\indexentry{keybindings!M-C-k|expandhtmlindex}{504}
+\indexentry{keybindings!delete forward one S-expression|expandhtmlindex}{506}
+\indexentry{keybindings!M-w|expandhtmlindex}{508}
+\indexentry{keybindings!copy selection to clipboard|expandhtmlindex}{510}
+\indexentry{keybindings!C-w|expandhtmlindex}{512}
+\indexentry{keybindings!delete selection to clipboard (cut)|expandhtmlindex}{514}
+\indexentry{keybindings!C-y|expandhtmlindex}{516}
+\indexentry{keybindings!paste from clipboard (yank)|expandhtmlindex}{518}
+\indexentry{keybindings!C-t|expandhtmlindex}{520}
+\indexentry{keybindings!transpose characters|expandhtmlindex}{522}
+\indexentry{keybindings!M-t|expandhtmlindex}{524}
+\indexentry{keybindings!transpose words|expandhtmlindex}{526}
+\indexentry{keybindings!M-C-t|expandhtmlindex}{528}
+\indexentry{keybindings!transpose sexpressions|expandhtmlindex}{530}
+\indexentry{keybindings!M-C-m|expandhtmlindex}{532}
+\indexentry{keybindings!toggle dark green marking of matching parenthesis|expandhtmlindex}{534}
+\indexentry{keybindings!M-C-k|expandhtmlindex}{536}
+\indexentry{keybindings!cut complete sexpression|expandhtmlindex}{538}
+\indexentry{keybindings!M-(|expandhtmlindex}{540}
+\indexentry{keybindings!wrap selection in parentheses|expandhtmlindex}{542}
+\indexentry{keybindings!M-[|expandhtmlindex}{544}
+\indexentry{keybindings!wrap selection in square brackets|expandhtmlindex}{546}
+\indexentry{keybindings!M-\{|expandhtmlindex}{548}
+\indexentry{keybindings!wrap selection in curly brackets|expandhtmlindex}{550}
+\indexentry{keybindings!M-S-L|expandhtmlindex}{552}
+\indexentry{keybindings!wrap selection in {\tt (lambda () ...)} and put the insertion point in the arglist of the lambda|expandhtmlindex}{554}
+\indexentry{keybindings!C-\_|expandhtmlindex}{556}
+\indexentry{keybindings!undo|expandhtmlindex}{558}
+\indexentry{keybindings!C-+|expandhtmlindex}{560}
+\indexentry{keybindings!redo|expandhtmlindex}{562}
+\indexentry{keybindings!C-x u|expandhtmlindex}{564}
+\indexentry{keybindings!undo|expandhtmlindex}{566}
+\indexentry{overwrite mode|expandhtmlindex}{568}
+\indexentry{keybindings!M-o|expandhtmlindex}{570}
+\indexentry{keybindings!toggle overwrite mode|expandhtmlindex}{572}
+\indexentry{keybindings!C-x C-s|expandhtmlindex}{574}
+\indexentry{keybindings!save file|expandhtmlindex}{576}
+\indexentry{keybindings!C-x C-w|expandhtmlindex}{578}
+\indexentry{keybindings!save file under new name|expandhtmlindex}{580}
+\indexentry{keybindings!C-s|expandhtmlindex}{582}
+\indexentry{keybindings!search for string forward|expandhtmlindex}{584}
+\indexentry{keybindings!C-r|expandhtmlindex}{586}
+\indexentry{keybindings!search for string backward|expandhtmlindex}{588}
+\indexentry{keybindings!f5|expandhtmlindex}{590}
+\indexentry{keybindings!Run|expandhtmlindex}{592}
+\indexentry{keybindings!M-p|expandhtmlindex}{594}
+\indexentry{keybindings!b|expandhtmlindex}{596}
+\indexentry{keybindings!M-n|expandhtmlindex}{598}
+\indexentry{keybindings!b|expandhtmlindex}{600}
+\indexentry{DrScheme Files|expandhtmlindex}{602}
+\indexentry{file extensions|expandhtmlindex}{604}
+\indexentry{.scm@\File{.scm}|expandhtmlindex}{606}
+\indexentry{.ss@\File{.ss}|expandhtmlindex}{608}
+\indexentry{.sch@\File{.sch}|expandhtmlindex}{610}
+\indexentry{plain-text file format|expandhtmlindex}{612}
+\indexentry{multimedia file format|expandhtmlindex}{614}
+\indexentry{backup files|expandhtmlindex}{616}
+\indexentry{.bak@\File{.bak}|expandhtmlindex}{618}
+\indexentry{autosave files|expandhtmlindex}{620}
+\indexentry{preference files|expandhtmlindex}{622}
+\indexentry{configuration files|expandhtmlindex}{624}
+\indexentry{.plt-prefs.ss@\File{.plt-prefs.ss}|expandhtmlindex}{626}
+\indexentry{plt-prefs.ss@\File{plt-prefs.ss}|expandhtmlindex}{628}
+\indexentry{.plt-prefs.ss@\File{.plt-prefs.ss}|expandhtmlindex}{630}
+\indexentry{plt-prefs.ss@\File{plt-prefs.ss}|expandhtmlindex}{632}
+\indexentry{.LOCKplt-prefs.ss@\File{.LOCKplt-prefs.ss}|expandhtmlindex}{634}
+\indexentry{.LOCK.plt-prefs.ss@\File{.LOCK.plt-prefs.ss}|expandhtmlindex}{636}
+\indexentry{preferences!site-specific|expandhtmlindex}{638}
+\indexentry{defaults!site-specific|expandhtmlindex}{640}
+\indexentry{plt-prefs.ss@\File{plt-prefs.ss}|expandhtmlindex}{642}
+\indexentry{defaults@\File{defaults}|expandhtmlindex}{644}
+\indexentry{Extending DrScheme|expandhtmlindex}{646}
+\indexentry{languages!extending|expandhtmlindex}{648}
+\indexentry{DrScheme Teachpacks|expandhtmlindex}{650}
+\indexentry{tools|expandhtmlindex}{652}
+\indexentry{Teachpacks|expandhtmlindex}{654}
+\indexentry{Teachpacks!implementing|expandhtmlindex}{656}
+\indexentry{Tools|expandhtmlindex}{658}
+\indexentry{Environment Variables|expandhtmlindex}{660}
+\indexentry{DrScheme!Environment Variables|expandhtmlindex}{662}
+\indexentry{PLTNOTOOLS|expandhtmlindex}{664}
+\indexentry{PLTONLYTOOL|expandhtmlindex}{666}
+\indexentry{PLTDRCM|expandhtmlindex}{668}
+\indexentry{PLTHDCM|expandhtmlindex}{670}
+\indexentry{PLTDRDEBUG|expandhtmlindex}{672}
+\indexentry{PLTDRBREAK|expandhtmlindex}{674}
+\indexentry{PLTDRTESTS|expandhtmlindex}{676}
+\indexentry{PLTSTRINGCONSTANTS|expandhtmlindex}{678}
+\indexentry{Frequently Asked Questions|expandhtmlindex}{680}
+\indexentry{frequently asked questions|expandhtmlindex}{682}
+\indexentry{Supported Operating Systems and Installation|expandhtmlindex}{684}
+\indexentry{documentation!downloading|expandhtmlindex}{686}
+\indexentry{license|expandhtmlindex}{688}
+\indexentry{supported platforms|expandhtmlindex}{690}
+\indexentry{memory requirements|expandhtmlindex}{692}
+\indexentry{installation instructions|expandhtmlindex}{694}
+\indexentry{storage requirements|expandhtmlindex}{696}
+\indexentry{disk requirements|expandhtmlindex}{698}
+\indexentry{Using DrScheme|expandhtmlindex}{700}
+\indexentry{Help Desk|expandhtmlindex}{702}
+\indexentry{MrFlow|expandhtmlindex}{704}
+\indexentry{MrSpidey|expandhtmlindex}{706}
+\indexentry{changing keybindings|expandhtmlindex}{708}
+\indexentry{yellow and black messages|expandhtmlindex}{710}
+\indexentry{compiler|expandhtmlindex}{712}
+\indexentry{stand-alone executables|expandhtmlindex}{714}
+\indexentry{Memory and Performance|expandhtmlindex}{716}
+\indexentry{execution speed|expandhtmlindex}{718}
+\indexentry{Troubleshooting|expandhtmlindex}{720}

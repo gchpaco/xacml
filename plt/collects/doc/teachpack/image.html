@@ -1,0 +1,165 @@
+<html>
+<head>
+<title>Teachpack : Composing Images</title>
+</head>
+<body bgcolor="#ffffff" text="#000000"
+      link="#009900" vlink="#007700" alink="#cc0000">
+
+<a href="index.html">Teachpacks for How to Design Programs</a>
+
+<h1>Composing Images</h1>
+
+<hr> <h3><a name="image.ss">image.ss</a></h3> <!-- DOCNOTE="teach=image.ss" -->
+
+This teachpack provides primitives for constructing and
+manipulating images.
+
+These functions create basic shapes. The mode can be either
+<code>'solid</code>, meaning the shape is filled in, or
+<code>'outline</code>, meaning the shape is hollow. Image
+colors can be either symbols (like <code>'blue</code>),
+strings (like <code>"blue"</code>), or color structs (like
+<code>(make-color 0 0 255)</code>) -- see below for
+more information about color structs.
+
+<menu>
+<li><code><a name="rectangle">rectangle</a></code> :  int int mode image-color -> image <br>
+ to create a rectangle using the given width, height, mode, and color
+<li><code><a name="circle">circle</a></code> : int mode image-color -> image <br>
+ to create a circle using the given radius, mode, and color
+<li><code><a name="ellipse">ellipse</a></code> : int int mode image-color -> image <br>
+ to create an ellipse using the given width, height, and color
+<li><code><a name="triangle">triangle</a></code> : int mode iamge-color -> image <br>
+ to create an upward pointing equilateral triangle using the given edge size and color
+<li><code><a name="line">line</a></code> : int int image-color -> image <br>
+ to create an image with a colored line from (0,0) to the
+ point with the given coordinates
+<li><code><a name="add-line">add-line</a></code> : image int int int int image-color -> image <br>
+ to add a line to an existing image, drawn between the two given points
+<li><code><a name="text">text</a></code> : string size image-color -> image <br>
+ to create an image of the text in the given string, with the point size, and color specified by the last two arguments
+</menu>
+
+These functions build complex images from the basic
+shapes.  When two images are laid on top of each other, the
+are lined up at their <i>pinhole</i>. Most shapes have their
+pinholes in the middle. The exceptions are
+<code>text</code> and <code>line</code> which have their
+pinholes in the top-left corner.
+<menu>
+<li><code><a name="overlay">overlay</a></code> : image image image ... -> image <br> 
+ to add the pixels of the second image onto the first image, lining up the pinholes
+<li><code><a name="overlay/xy">overlay/xy</a></code> :  image int int image -> image <br>
+ to add the pixels of the second image onto the first image. Instead of lining up
+ on the pinhole, the second image's pinhole is lined up with an offset from the 
+ first image's pinhole. The two coordinates specify how far down and to the right 
+ the offset should be.
+ The pinhole of the resulting image is the same place as the pinhole
+ in the first image.
+</menu>
+
+After an image has been built up using overlays, it is
+possible to recover the position of the pieces of the image,
+using the next two functions.
+<menu>
+<li><code><a name="image-inside?">image-inside?</a></code> : image image -> boolean <br>
+ to determine whether the pixels of the second image appear in the first
+<li><code><a name="find-image">find-image</a></code> : image image -> posn <br>
+ to determine where the pixels of the second image appear in the first, with
+ respect to the pinhole of the first image.
+</menu>
+
+These functions provide information about the image's size.
+
+<menu>
+<li><code><a name="image-width">image-width</a></code> :  image -> number <br>
+ to obtain an image's width in pixels
+<li><code><a name="image-height">image-height</a></code> :  image -> number <br>
+ to obtain an image's height in pixels
+</menu>
+
+This functions provide information and manipulate an image's
+pinhole.
+
+<menu>
+<li><code><a name="pinhole-x">pinhole-x</a></code> :  image -> number <br>
+ to determine the x coordinate of the pinhole, measuring from
+ the left of the image
+<li><code><a name="pinhole-y">pinhole-y</a></code> :  image -> number <br>
+ to determine the y coordinate of the pinhole, measuring down from 
+ the left of the image
+<li><code><a name="move-pinhole">move-pinhole</a></code> :  image number number -> image <br>
+ to move the pinhole down and to the right (by the specified amounts) of 
+ its current location. Use negative numbers to move it up or to the left.
+</menu>
+
+ This function precisely specifies what a valid image color is.
+
+<menu>
+<li><code><a name="image-color?">image-color?</a></code> :  anything -> boolean <br>
+ to determine if the input is a valid image color
+</menu>
+
+The next functions separate an image into its consitiuent
+colors and combine pixels together to build an image.
+
+<menu>
+<li><code><a name="image->color-list">image->color-list</a></code> : image -> list-of-color <br>
+ to convert an image to a list of colors
+
+<li><code><a name="color-list->image">color-list->image</a></code> : list-of-color int int int int -> image <br>
+ to convert a list of colors to an image with the given
+ width and height, and pinhole coordinates (the pinhole
+ coordinates are with respect to the top-left of the image).
+
+ <li><code><a name="make-color">make-color</a></code> : int int int -> color <br>
+ to construct a color
+<li><code><a name="color?">color?</a></code> : anything -> boolean <br>
+ to determine if its input is a color
+<li><code><a name="color-red">color-red</a></code> : color -> int <br>
+ to extract the red component of a color
+<li><code><a name="color-green">color-green</a></code> : color -> int <br>
+ to extract the green component of a color
+<li><code><a name="color-blue">color-blue</a></code> : color -> int <br>
+ to extract the blue component of a color
+</menu>
+
+ Like the last group of functions, these functions separate
+an image into its consitiuent colors and combine pixels
+together to build an image, but these provide alpha-channel
+information as well. Alpha channels are a measure of
+transparency; 0 indicates fully opaque and 255 indicates
+fully transparent.
+
+<menu>
+<li><code><a name="image->alpha-color-list">image->alpha-color-list</a></code> : image -> list-of-alpha-color <br>
+ to convert an image to a list of alpha colors
+<li><code><a name="alpha-color-list->image">alpha-color-list->image</a></code> : list-of-alpha-color int int int int -> image <br>
+ to convert a list of alpha colors to an image with the given
+ width and height, and pinhole coordinates (the pinhole
+ coordinates are with respect to the top-left of the image).
+<li><code><a name="make-alpha-color">make-alpha-color</a></code> : int int int int -> color <br>
+ to construct an alpha color
+<li><code><a name="alpha-color?">alpha-color?</a></code> : anything -> boolean <br>
+ to determine if its input is a color
+<li><code><a name="alpha-color-alpha">alpha-color-alpha</a></code> : color -> int <br>
+ to extract the alpha value of a color
+<li><code><a name="alpha-color-red">alpha-color-red</a></code> : color -> int <br>
+ to extract the red component of a color
+<li><code><a name="alpha-color-green">alpha-color-green</a></code> : color -> int <br>
+ to extract the green component of a color
+<li><code><a name="alpha-color-blue">alpha-color-blue</a></code> : color -> int <br>
+ to extract the blue component of a color"
+</menu>
+
+
+<br>
+<br>
+</body>
+</html>
+
+
+<br>
+<br>
+</body>
+</html>

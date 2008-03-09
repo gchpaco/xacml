@@ -1,0 +1,713 @@
+\begin{theindex}
+
+  \item \Symbol{american}, \expandhtmlindex{554}
+  \item \Symbol{chinese}, \expandhtmlindex{556}
+  \item \Symbol{dir}, \expandhtmlindex{688}
+  \item \Symbol{done-error}, \expandhtmlindex{1028}
+  \item \Symbol{done-ok}, \expandhtmlindex{1026}
+  \item \Symbol{file}, \expandhtmlindex{686}
+  \item \Symbol{final}, \expandhtmlindex{330}
+  \item \Symbol{german}, \expandhtmlindex{558}
+  \item \Symbol{help-labels}, \expandhtmlindex{332}
+  \item \Symbol{indian}, \expandhtmlindex{560}
+  \item \Symbol{infinity}, \expandhtmlindex{966}
+  \item \Symbol{interrupt}, \expandhtmlindex{1020}
+  \item \Symbol{irish}, \expandhtmlindex{562}
+  \item \Symbol{iso-8601}, \expandhtmlindex{564}
+  \item \Symbol{julian}, \expandhtmlindex{568}
+  \item \Symbol{kill}, \expandhtmlindex{1022}
+  \item \Symbol{link}, \expandhtmlindex{690}, \expandhtmlindex{692}
+  \item \Symbol{multi}, \expandhtmlindex{328}
+  \item \Symbol{once-any}, \expandhtmlindex{326}
+  \item \Symbol{once-each}, \expandhtmlindex{324}
+  \item \Symbol{rfc2822}, \expandhtmlindex{566}
+  \item \Symbol{running}, \expandhtmlindex{1024}
+  \item \Symbol{status}, \expandhtmlindex{1016}
+  \item \Symbol{truncate}, \expandhtmlindex{700}
+  \item \Symbol{wait}, \expandhtmlindex{1018}
+  \item \scmk{->}, \expandhtmlindex{476}, \expandhtmlindex{478}
+  \item \scmk{->*}, \expandhtmlindex{480}, \expandhtmlindex{482}, 
+		\expandhtmlindex{484}, \expandhtmlindex{486}
+  \item \scmk{->d}, \expandhtmlindex{488}
+  \item \scmk{->d*}, \expandhtmlindex{490}, \expandhtmlindex{492}
+  \item \scmk{->r}, \expandhtmlindex{494}, \expandhtmlindex{496}, 
+		\expandhtmlindex{498}, \expandhtmlindex{500}, 
+		\expandhtmlindex{502}, \expandhtmlindex{504}
+  \item \rawscm{:}, \expandhtmlindex{1074}
+  \item \rawscm{</c}, \expandhtmlindex{418}
+  \item <=/c, \expandhtmlindex{414}
+  \item \rawscm{<=/c}, \expandhtmlindex{412}
+  \item \rawscm{>/c}, \expandhtmlindex{416}
+  \item \rawscm{>=/c}, \expandhtmlindex{410}
+  \item \File{async-channel.ss}: Buffered Asynchronous Channels, 
+		\expandhtmlindex{4}
+  \item \File{awk.ss}: Awk-like Syntax, \expandhtmlindex{18}
+  \item \File{class-old.ss}: Version-100 Classes, \expandhtmlindex{270}
+  \item \File{class.ss}: Classes and Objects, \expandhtmlindex{32}
+  \item \File{class100.ss}: Version-100-Style Classes, 
+		\expandhtmlindex{250}
+  \item \File{cm-accomplice.ss}: Compilation Manager Hook for Syntax Transformers, 
+		\expandhtmlindex{294}
+  \item \File{cm.ss}: Compilation Manager, \expandhtmlindex{274}
+  \item \File{cmdline.ss}: Command-line Parsing, \expandhtmlindex{300}
+  \item \File{cml.ss}: Concurrent ML Compatibility, 
+		\expandhtmlindex{334}
+  \item \File{compat.ss}: Compatibility, \expandhtmlindex{364}
+  \item \File{compile.ss}: Compiling Files, \expandhtmlindex{382}
+  \item \File{contract.ss}: Contracts, \expandhtmlindex{388}
+  \item \File{date.ss}: Dates, \expandhtmlindex{542}
+  \item \File{deflate.ss}: Deflating (Compressing) Data, 
+		\expandhtmlindex{576}
+  \item \File{defmacro.ss}: Non-Hygienic Macros, \expandhtmlindex{586}
+  \item \File{etc.ss}: Useful Procedures and Syntax, 
+		\expandhtmlindex{596}
+  \item \File{file.ss}: Filesystem Utilities, \expandhtmlindex{648}
+  \item \File{include.ss}: Textually Including Source, 
+		\expandhtmlindex{708}
+  \item \File{inflate.ss}: Inflating Compressed Data, 
+		\expandhtmlindex{720}
+  \item \File{list.ss}: List Utilities, \expandhtmlindex{736}
+  \item \File{match.ss}: Pattern Matching, \expandhtmlindex{796}
+  \item \File{math.ss}: Math, \expandhtmlindex{820}
+  \item \File{package.ss}: Local-Definition Scope Control, 
+		\expandhtmlindex{838}
+  \item \File{pconvert.ss}: Converted Printing, \expandhtmlindex{884}
+  \item \File{plt-match.ss}: Pattern Matching, \expandhtmlindex{922}
+  \item \File{pregexp.ss}: Perl-Style Regular Expressions, 
+		\expandhtmlindex{926}
+  \item \File{pretty.ss}: Pretty Printing, \expandhtmlindex{954}
+  \item \File{process.ss}: Process and Shell-Command Execution, 
+		\expandhtmlindex{994}
+  \item \File{restart.ss}: Simulating Stand-alone MzScheme, 
+		\expandhtmlindex{1036}
+  \item \File{sendevent.ss}: AppleEvents, \expandhtmlindex{1042}
+  \item \File{shared.ss}: Graph Constructor Syntax, 
+		\expandhtmlindex{1062}
+  \item \File{spidey.ss}: MrSpidey Annotations, \expandhtmlindex{1068}
+  \item \File{string.ss}: String Utilities, \expandhtmlindex{1086}
+  \item \File{surrogate.ss}: Proxy-like Design Pattern, 
+		\expandhtmlindex{1124}
+  \item \File{thread.ss}: Thread Utilities, \expandhtmlindex{1130}
+  \item \File{trace.ss}: Tracing Top-level Procedure Calls, 
+		\expandhtmlindex{1154}
+  \item \File{traceld.ss}: Tracing File Loads, \expandhtmlindex{1162}
+  \item \File{transcr.ss}: Transcripts, \expandhtmlindex{1166}
+  \item \File{unit.ss}: Core Units, \expandhtmlindex{1176}
+  \item \File{unitsig.ss}: Units with Signatures, 
+		\expandhtmlindex{1226}
+
+  \indexspace
+
+  \item \rawscm{abbreviate-cons-as-list}, \expandhtmlindex{888}
+  \item Adding a Signature to Primitive Units, \expandhtmlindex{1298}
+  \item An extended example, \expandhtmlindex{952}
+  \item \rawscm{anaphoric-contracts}, \expandhtmlindex{468}, 
+		\expandhtmlindex{470}
+  \item \rawscm{and/c}, \expandhtmlindex{406}
+  \item \rawscm{any?}, \expandhtmlindex{402}
+  \item AppleEvents, \expandhtmlindex{1046}
+  \item \rawscm{assf}, \expandhtmlindex{754}
+  \item \rawscm{async-channel-get}, \expandhtmlindex{10}
+  \item \rawscm{async-channel-put}, \expandhtmlindex{14}
+  \item \rawscm{async-channel-try-get}, \expandhtmlindex{12}
+  \item \File{async-channel.ss}, \expandhtmlindex{6}
+  \item \rawscm{atom?}, \expandhtmlindex{368}
+  \item Attaching Contracts to Values, \expandhtmlindex{522}
+  \item \scmk{awk}, \expandhtmlindex{22}
+  \item \File{awk.ss}, \expandhtmlindex{20}
+
+  \indexspace
+
+  \item \rawscm{boolean=?}, \expandhtmlindex{600}
+  \item \rawscm{booleans-as-true/false}, \expandhtmlindex{890}
+  \item \rawscm{box-immutable/c}, \expandhtmlindex{454}
+  \item \rawscm{box/p}, \expandhtmlindex{452}
+  \item \rawscm{build-absolute-path}, \expandhtmlindex{652}
+  \item \rawscm{build-list}, \expandhtmlindex{604}
+  \item \rawscm{build-path}, \expandhtmlindex{654}, 
+		\expandhtmlindex{658}
+  \item \rawscm{build-relative-path}, \expandhtmlindex{656}
+  \item \rawscm{build-share}, \expandhtmlindex{896}
+  \item \rawscm{build-string}, \expandhtmlindex{606}
+  \item \rawscm{build-vector}, \expandhtmlindex{608}
+
+  \indexspace
+
+  \item \rawscm{call-with-input-file*}, \expandhtmlindex{660}
+  \item \rawscm{call-with-output-file*}, \expandhtmlindex{662}
+  \item \scmk{case->}, \expandhtmlindex{506}
+  \item \rawscm{channel}, \expandhtmlindex{344}
+  \item \rawscm{channel-recv-evt}, \expandhtmlindex{346}
+  \item \rawscm{channel-send-evt}, \expandhtmlindex{348}
+  \item \rawscm{choice-evt}, \expandhtmlindex{350}
+  \item \scmk{class}, \expandhtmlindex{92}
+  \item \scmk{class*}, \expandhtmlindex{90}
+  \item \scmk{class*/names}, \expandhtmlindex{68}
+  \item \rawscm{class->interface}, \expandhtmlindex{228}
+  \item \scmk{class-field-accessor}, \expandhtmlindex{204}
+  \item \scmk{class-field-mutator}, \expandhtmlindex{206}
+  \item \rawscm{class-info}, \expandhtmlindex{248}
+  \item \File{class-old.ss}, \expandhtmlindex{272}
+  \item \File{class.ss}, \expandhtmlindex{34}
+  \item \scmk{class100}, \expandhtmlindex{254}, \expandhtmlindex{264}
+  \item \scmk{class100*}, \expandhtmlindex{256}, \expandhtmlindex{262}
+  \item \scmk{class100*-asi}, \expandhtmlindex{268}
+  \item \scmk{class100*/names}, \expandhtmlindex{258}, 
+		\expandhtmlindex{260}
+  \item \scmk{class100-asi}, \expandhtmlindex{266}
+  \item \File{class100.ss}, \expandhtmlindex{252}
+  \item \rawscm{class?}, \expandhtmlindex{220}
+  \item classes, \expandhtmlindex{38}
+    \subitem creating, \expandhtmlindex{66}
+  \item \File{cm-accomplice.ss}, \expandhtmlindex{296}
+  \item \File{cm.ss}, \expandhtmlindex{276}
+  \item \File{cmdline.ss}, \expandhtmlindex{302}
+  \item \File{cml.ss}, \expandhtmlindex{336}
+  \item \scmk{command-line}, \expandhtmlindex{304}
+  \item \File{compat.ss}, \expandhtmlindex{366}
+  \item \rawscm{compile-file}, \expandhtmlindex{386}
+  \item \File{compile.ss}, \expandhtmlindex{384}
+  \item \rawscm{compose}, \expandhtmlindex{610}
+  \item \scmk{compound-unit}, \expandhtmlindex{1208}
+  \item \scmk{compound-unit/sig}, \expandhtmlindex{1264}, 
+		\expandhtmlindex{1272}
+  \item \rawscm{conjugate}, \expandhtmlindex{824}
+  \item \rawscm{cons-immutable/c}, \expandhtmlindex{458}
+  \item \rawscm{cons/p}, \expandhtmlindex{456}
+  \item \rawscm{cons?}, \expandhtmlindex{756}
+  \item \rawscm{constructor-style-printing}, \expandhtmlindex{898}
+  \item \rawscm{consumer-thread}, \expandhtmlindex{1134}
+  \item \scmk{contract}, \expandhtmlindex{530}, \expandhtmlindex{532}
+  \item Contract Utility, \expandhtmlindex{534}
+  \item \File{contract.ss}, \expandhtmlindex{390}, 
+		\expandhtmlindex{392}
+  \item \rawscm{contract?}, \expandhtmlindex{536}
+  \item Contracts on Values, \expandhtmlindex{524}
+  \item \rawscm{copy-directory/files}, \expandhtmlindex{664}
+  \item \rawscm{copy-port}, \expandhtmlindex{1136}
+  \item \rawscm{cosh}, \expandhtmlindex{826}
+  \item Creating Classes, \expandhtmlindex{62}
+  \item Creating Interfaces, \expandhtmlindex{50}
+  \item Creating Objects, \expandhtmlindex{158}
+  \item Creating Units, \expandhtmlindex{1182}
+  \item \rawscm{current-build-share-hook}, \expandhtmlindex{900}
+  \item \rawscm{current-build-share-name-hook}, \expandhtmlindex{902}
+  \item \rawscm{current-print-convert-hook}, \expandhtmlindex{904}
+  \item \rawscm{current-read-eval-convert-print-prompt}, 
+		\expandhtmlindex{906}
+  \item \rawscm{current-time}, \expandhtmlindex{360}
+
+  \indexspace
+
+  \item date, \expandhtmlindex{548}
+  \item \rawscm{date->julian/scalinger}, \expandhtmlindex{572}
+  \item \rawscm{date->string}, \expandhtmlindex{546}
+  \item \rawscm{date-display-format}, \expandhtmlindex{552}
+  \item \File{date.ss}, \expandhtmlindex{544}
+  \item \scmk{define*}, \expandhtmlindex{862}, \expandhtmlindex{864}
+  \item \scmk{define*-dot}, \expandhtmlindex{858}
+  \item \scmk{define*-syntax}, \expandhtmlindex{866}, 
+		\expandhtmlindex{868}
+  \item \scmk{define*-syntaxes}, \expandhtmlindex{872}
+  \item \scmk{define*-values}, \expandhtmlindex{870}
+  \item \rawscm{define-constructor}, \expandhtmlindex{1078}
+  \item \scmk{define-dot}, \expandhtmlindex{856}
+  \item \scmk{define-local-member-name}, \expandhtmlindex{156}
+  \item \scmk{define-macro}, \expandhtmlindex{590}, 
+		\expandhtmlindex{592}
+  \item \scmk{define-signature}, \expandhtmlindex{1254}
+  \item \scmk{define-structure}, \expandhtmlindex{370}, 
+		\expandhtmlindex{372}
+  \item \scmk{define-syntax-set}, \expandhtmlindex{612}
+  \item \rawscm{define-type}, \expandhtmlindex{1080}
+  \item \scmk{define-values/invoke-unit}, \expandhtmlindex{1198}
+  \item \scmk{define-values/invoke-unit/sig}, \expandhtmlindex{1288}
+  \item \scmk{define/contract}, \expandhtmlindex{528}
+  \item \scmk{define/override}, \expandhtmlindex{108}
+  \item \scmk{define/override-final}, \expandhtmlindex{110}
+  \item \scmk{define/private}, \expandhtmlindex{112}
+  \item \scmk{define/public}, \expandhtmlindex{104}
+  \item \scmk{define/public-final}, \expandhtmlindex{106}
+  \item \rawscm{deflate}, \expandhtmlindex{584}
+  \item \File{deflate.ss}, \expandhtmlindex{578}
+  \item \scmk{defmacro}, \expandhtmlindex{594}
+  \item \File{defmacro.ss}, \expandhtmlindex{588}
+  \item \rawscm{delete-directory/files}, \expandhtmlindex{668}
+  \item derived class, \expandhtmlindex{44}
+  \item \scmk{dot}, \expandhtmlindex{854}
+  \item \rawscm{dynamic-disable-break}, \expandhtmlindex{1138}
+  \item \rawscm{dynamic-enable-break}, \expandhtmlindex{1140}
+
+  \indexspace
+
+  \item \rawscm{e}, \expandhtmlindex{828}
+  \item effective  signature, \expandhtmlindex{1274}
+  \item \rawscm{eighth}, \expandhtmlindex{752}
+  \item Embedded Units, \expandhtmlindex{1268}
+  \item \rawscm{empty}, \expandhtmlindex{758}
+  \item \rawscm{empty?}, \expandhtmlindex{760}
+  \item \File{etc.ss}, \expandhtmlindex{598}
+  \item \rawscm{eval-string}, \expandhtmlindex{1090}
+  \item \scmk{evcase}, \expandhtmlindex{614}
+  \item Examples, \expandhtmlindex{818}
+  \item \rawscm{exn:fail}, \expandhtmlindex{310}, \expandhtmlindex{314}, 
+		\expandhtmlindex{318}, \expandhtmlindex{322}, 
+		\expandhtmlindex{726}, \expandhtmlindex{730}, 
+		\expandhtmlindex{734}, \expandhtmlindex{1058}, 
+		\expandhtmlindex{1060}, \expandhtmlindex{1100}, 
+		\expandhtmlindex{1110}, \expandhtmlindex{1118}
+  \item \rawscm{exn:fail:contract}, \expandhtmlindex{164}, 
+		\expandhtmlindex{190}, \expandhtmlindex{280}, 
+		\expandhtmlindex{602}, \expandhtmlindex{640}, 
+		\expandhtmlindex{1004}, \expandhtmlindex{1052}, 
+		\expandhtmlindex{1054}
+  \item \rawscm{exn:fail:filesystem}, \expandhtmlindex{666}, 
+		\expandhtmlindex{670}
+  \item \rawscm{exn:fail:object}, \expandhtmlindex{56}, 
+		\expandhtmlindex{58}, \expandhtmlindex{60}, 
+		\expandhtmlindex{82}, \expandhtmlindex{84}, 
+		\expandhtmlindex{86}, \expandhtmlindex{88}, 
+		\expandhtmlindex{122}, \expandhtmlindex{124}, 
+		\expandhtmlindex{126}, \expandhtmlindex{134}, 
+		\expandhtmlindex{146}, \expandhtmlindex{148}, 
+		\expandhtmlindex{154}, \expandhtmlindex{170}, 
+		\expandhtmlindex{172}, \expandhtmlindex{174}, 
+		\expandhtmlindex{192}, \expandhtmlindex{212}
+  \item \rawscm{exn:fail:unit}, \expandhtmlindex{1200}, 
+		\expandhtmlindex{1216}, \expandhtmlindex{1218}, 
+		\expandhtmlindex{1220}, \expandhtmlindex{1276}, 
+		\expandhtmlindex{1278}, \expandhtmlindex{1280}, 
+		\expandhtmlindex{1282}, \expandhtmlindex{1314}, 
+		\expandhtmlindex{1318}
+  \item \rawscm{exn:fail:unsupported}, \expandhtmlindex{1008}, 
+		\expandhtmlindex{1050}, \expandhtmlindex{1056}, 
+		\expandhtmlindex{1174}
+  \item Expanding Signed Unit Expressions, \expandhtmlindex{1302}
+  \item \rawscm{explode-path}, \expandhtmlindex{672}
+  \item \scmk{export}, \expandhtmlindex{1190}, \expandhtmlindex{1214}
+  \item export signature, \expandhtmlindex{1248}
+  \item \rawscm{expr->string}, \expandhtmlindex{1092}
+  \item Extracting a Primitive Unit from a Signed Unit, 
+		\expandhtmlindex{1294}
+
+  \indexspace
+
+  \item \rawscm{false}, \expandhtmlindex{616}
+  \item \rawscm{false?}, \expandhtmlindex{428}
+  \item \scmk{field}, \expandhtmlindex{128}
+  \item Field and Method Access, \expandhtmlindex{176}
+  \item \scmk{field-bound?}, \expandhtmlindex{200}
+  \item \rawscm{field-names}, \expandhtmlindex{202}
+  \item fields
+    \subitem accessing, \expandhtmlindex{178}
+  \item \rawscm{fifth}, \expandhtmlindex{746}
+  \item \rawscm{file-name-from-path}, \expandhtmlindex{674}
+  \item \File{file.ss}, \expandhtmlindex{650}
+  \item \rawscm{filename-extension}, \expandhtmlindex{676}
+  \item \rawscm{filter}, \expandhtmlindex{762}
+  \item \scmk{final}, \expandhtmlindex{316}
+  \item \rawscm{find-files}, \expandhtmlindex{678}
+  \item \rawscm{find-library}, \expandhtmlindex{680}
+  \item \rawscm{find-relative-path}, \expandhtmlindex{682}
+  \item \rawscm{find-seconds}, \expandhtmlindex{570}
+  \item \rawscm{first}, \expandhtmlindex{764}
+  \item Flat Contracts, \expandhtmlindex{394}, \expandhtmlindex{396}
+  \item \rawscm{flat-contract}, \expandhtmlindex{398}
+  \item \rawscm{flat-contract-predicate}, \expandhtmlindex{540}
+  \item \rawscm{flat-contract?}, \expandhtmlindex{538}
+  \item \scmk{flat-murec-contract}, \expandhtmlindex{466}
+  \item \rawscm{flat-named-contract}, \expandhtmlindex{400}
+  \item \scmk{flat-rec-contract}, \expandhtmlindex{464}
+  \item \rawscm{fold-files}, \expandhtmlindex{684}
+  \item \rawscm{foldl}, \expandhtmlindex{766}
+  \item \rawscm{foldr}, \expandhtmlindex{768}
+  \item \rawscm{fourth}, \expandhtmlindex{744}
+  \item Function Contracts, \expandhtmlindex{472}, 
+		\expandhtmlindex{474}
+
+  \indexspace
+
+  \item \scmk{generic}, \expandhtmlindex{208}
+  \item \scmk{get-field}, \expandhtmlindex{198}
+  \item \rawscm{get-preference}, \expandhtmlindex{694}
+  \item \rawscm{get-shared}, \expandhtmlindex{908}
+  \item \rawscm{getprop}, \expandhtmlindex{374}
+  \item \rawscm{guard-evt}, \expandhtmlindex{354}
+  \item \rawscm{gunzip}, \expandhtmlindex{724}
+  \item \rawscm{gunzip-through-ports}, \expandhtmlindex{728}
+  \item \rawscm{gzip}, \expandhtmlindex{580}
+  \item \rawscm{gzip-through-ports}, \expandhtmlindex{582}
+
+  \indexspace
+
+  \item \scmk{hash-table}, \expandhtmlindex{646}
+
+  \indexspace
+
+  \item \rawscm{identity}, \expandhtmlindex{618}
+  \item \rawscm{implementation?}, \expandhtmlindex{238}
+  \item \rawscm{implementation?/c}, \expandhtmlindex{436}
+  \item \scmk{import}, \expandhtmlindex{1188}, \expandhtmlindex{1210}
+  \item import signature, \expandhtmlindex{1246}
+  \item Importing and Exporting with Signatures, \expandhtmlindex{1242}
+  \item \scmk{include}, \expandhtmlindex{712}
+  \item \scmk{include-at/relative-to}, \expandhtmlindex{714}
+  \item \scmk{include-at/relative-to/reader}, \expandhtmlindex{716}
+  \item \File{include.ss}, \expandhtmlindex{710}
+  \item \scmk{include/reader}, \expandhtmlindex{718}
+  \item \rawscm{inflate}, \expandhtmlindex{732}
+  \item \File{inflate.ss}, \expandhtmlindex{722}
+  \item \scmk{inherit}, \expandhtmlindex{150}
+  \item \scmk{inherit-field}, \expandhtmlindex{132}
+  \item inheritance, \expandhtmlindex{40}
+  \item \scmk{init}, \expandhtmlindex{114}
+  \item \scmk{init-field}, \expandhtmlindex{116}, \expandhtmlindex{130}
+  \item \scmk{init-rest}, \expandhtmlindex{118}
+  \item \rawscm{input-port-append}, \expandhtmlindex{1142}
+  \item \rawscm{install-converting-printer}, \expandhtmlindex{910}
+  \item \scmk{instantiate}, \expandhtmlindex{168}
+  \item \rawscm{integer-in}, \expandhtmlindex{420}
+  \item \scmk{interface}, \expandhtmlindex{54}
+  \item \rawscm{interface->method-names}, \expandhtmlindex{244}
+  \item \rawscm{interface-extension?}, \expandhtmlindex{240}
+  \item \rawscm{interface?}, \expandhtmlindex{222}
+  \item interfaces
+    \subitem creating, \expandhtmlindex{52}
+  \item Introduction, \expandhtmlindex{932}
+  \item \scmk{invoke-unit}, \expandhtmlindex{1196}
+  \item \scmk{invoke-unit/sig}, \expandhtmlindex{1286}
+  \item Invoking Signed Units, \expandhtmlindex{1284}
+  \item Invoking Units, \expandhtmlindex{1192}
+  \item \rawscm{is-a?}, \expandhtmlindex{232}, \expandhtmlindex{234}
+  \item \rawscm{is-a?/c}, \expandhtmlindex{434}
+
+  \indexspace
+
+  \item \rawscm{julian/scalinger->string}, \expandhtmlindex{574}
+
+  \indexspace
+
+  \item \rawscm{last-pair}, \expandhtmlindex{770}
+  \item \scmk{let+}, \expandhtmlindex{620}
+  \item \scmk{link}, \expandhtmlindex{1212}
+  \item Linking Units and Creating Compound Units, 
+		\expandhtmlindex{1204}
+  \item Linking with Signatures, \expandhtmlindex{1262}
+  \item \rawscm{list-immutable/c}, \expandhtmlindex{462}
+  \item \rawscm{list-immutableof}, \expandhtmlindex{442}
+  \item \File{list.ss}, \expandhtmlindex{738}
+  \item \rawscm{list/p}, \expandhtmlindex{460}
+  \item \rawscm{listof}, \expandhtmlindex{440}
+  \item \scmk{local}, \expandhtmlindex{622}
+  \item \rawscm{loop-until}, \expandhtmlindex{624}
+
+  \indexspace
+
+  \item \rawscm{make-async-channel}, \expandhtmlindex{8}
+  \item \rawscm{make-async-channel-put-waitable}, \expandhtmlindex{16}
+  \item \rawscm{make-caching-managed-compile-zo}, \expandhtmlindex{288}
+  \item \rawscm{make-compilation-manager-load/use-compiled-handler}, 
+		\expandhtmlindex{278}
+  \item \rawscm{make-directory*}, \expandhtmlindex{696}
+  \item \rawscm{make-generic}, \expandhtmlindex{210}
+  \item \rawscm{make-limited-input-port}, \expandhtmlindex{1144}
+  \item \rawscm{make-mixin-contract}, \expandhtmlindex{520}
+  \item \rawscm{make-object}, \expandhtmlindex{120}, 
+		\expandhtmlindex{162}
+  \item \rawscm{make-single-threader}, \expandhtmlindex{1146}
+  \item \rawscm{make-temporary-file}, \expandhtmlindex{698}
+  \item \rawscm{managed-compile-zo}, \expandhtmlindex{282}
+  \item \rawscm{manager-compile-notify-handler}, \expandhtmlindex{290}
+  \item \rawscm{manager-trace-handler}, \expandhtmlindex{284}, 
+		\expandhtmlindex{292}
+  \item \scmk{match}, \expandhtmlindex{802}
+  \item \scmk{match-define}, \expandhtmlindex{814}
+  \item \scmk{match-lambda}, \expandhtmlindex{804}
+  \item \scmk{match-lambda*}, \expandhtmlindex{806}
+  \item \scmk{match-let}, \expandhtmlindex{808}
+  \item \scmk{match-let*}, \expandhtmlindex{810}
+  \item \scmk{match-letrec}, \expandhtmlindex{812}
+  \item \File{match.ss}, \expandhtmlindex{798}
+  \item \rawscm{match:end}, \expandhtmlindex{26}
+  \item \rawscm{match:start}, \expandhtmlindex{24}
+  \item \rawscm{match:substring}, \expandhtmlindex{28}
+  \item \File{math.ss}, \expandhtmlindex{822}
+  \item \rawscm{memf}, \expandhtmlindex{772}
+  \item \rawscm{merge-input}, \expandhtmlindex{1148}
+  \item \rawscm{mergesort}, \expandhtmlindex{774}
+  \item \rawscm{method-in-interface?}, \expandhtmlindex{242}
+  \item methods
+    \subitem accessing, \expandhtmlindex{180}
+    \subitem applying, \expandhtmlindex{184}
+  \item \rawscm{mixin-contract}, \expandhtmlindex{518}
+  \item MrSpidey, \expandhtmlindex{1072}
+  \item \rawscm{mrspidey:control}, \expandhtmlindex{1082}
+  \item \scmk{multi}, \expandhtmlindex{306}
+  \item MzLib, \expandhtmlindex{2}
+
+  \indexspace
+
+  \item \rawscm{nack-guard-evt}, \expandhtmlindex{356}
+  \item \rawscm{namespace-defined?}, \expandhtmlindex{626}
+  \item \scmk{namespace-variable-bind/invoke-unit}, 
+		\expandhtmlindex{1202}
+  \item \scmk{namespace-variable-bind/invoke-unit/sig}, 
+		\expandhtmlindex{1290}
+  \item \scmk{nand}, \expandhtmlindex{628}
+  \item \rawscm{natural-number?}, \expandhtmlindex{424}
+  \item \scmk{new}, \expandhtmlindex{166}
+  \item \rawscm{new-cafe}, \expandhtmlindex{376}
+  \item \scmk{nor}, \expandhtmlindex{630}
+  \item \rawscm{normalize-path}, \expandhtmlindex{702}
+  \item \rawscm{not/f}, \expandhtmlindex{408}
+
+  \indexspace
+
+  \item Object and Class Contracts, \expandhtmlindex{514}
+  \item Object Contracts, \expandhtmlindex{516}
+  \item Object Example, \expandhtmlindex{48}
+  \item Object, Class, and Interface Utilities, \expandhtmlindex{216}
+  \item \rawscm{object->vector}, \expandhtmlindex{226}
+  \item \rawscm{object-info}, \expandhtmlindex{246}
+  \item \rawscm{object-interface}, \expandhtmlindex{230}
+  \item \rawscm{object=?}, \expandhtmlindex{224}
+  \item \rawscm{object?}, \expandhtmlindex{218}
+  \item \rawscm{object\%}, \expandhtmlindex{64}
+  \item objects, \expandhtmlindex{36}
+    \subitem creating, \expandhtmlindex{160}
+  \item \scmk{once-any}, \expandhtmlindex{312}
+  \item \scmk{once-each}, \expandhtmlindex{308}
+  \item \scmk{open}, \expandhtmlindex{850}
+  \item \scmk{open*}, \expandhtmlindex{852}
+  \item \scmk{open*/derived}, \expandhtmlindex{882}
+  \item \scmk{open/derived}, \expandhtmlindex{880}
+  \item \scmk{opt->}, \expandhtmlindex{508}
+  \item \scmk{opt->*}, \expandhtmlindex{510}, \expandhtmlindex{512}
+  \item \scmk{opt-lambda}, \expandhtmlindex{632}
+  \item \scmk{override}, \expandhtmlindex{138}
+  \item \scmk{override*}, \expandhtmlindex{98}
+  \item \scmk{override-final}, \expandhtmlindex{142}
+  \item \scmk{override-final*}, \expandhtmlindex{100}
+  \item overriding, \expandhtmlindex{42}
+
+  \indexspace
+
+  \item \scmk{package}, \expandhtmlindex{842}, \expandhtmlindex{844}
+  \item \scmk{package*}, \expandhtmlindex{846}, \expandhtmlindex{848}
+  \item \File{package.ss}, \expandhtmlindex{840}
+  \item \scmk{package/derived}, \expandhtmlindex{876}, 
+		\expandhtmlindex{878}
+  \item \rawscm{parse-command-line}, \expandhtmlindex{320}
+  \item \rawscm{path-only}, \expandhtmlindex{704}
+  \item pattern matching, \expandhtmlindex{800}
+  \item Patterns, \expandhtmlindex{816}
+  \item \File{pconvert.ss}, \expandhtmlindex{886}
+  \item Perl, \expandhtmlindex{930}
+  \item \rawscm{pi}, \expandhtmlindex{830}
+  \item \File{plt-match.ss}, \expandhtmlindex{924}
+  \item \rawscm{polymorphic}, \expandhtmlindex{1076}
+  \item \rawscm{pregexp}, \expandhtmlindex{936}
+  \item \rawscm{pregexp-match}, \expandhtmlindex{940}
+  \item \rawscm{pregexp-match-positions}, \expandhtmlindex{938}
+  \item \rawscm{pregexp-quote}, \expandhtmlindex{948}
+  \item \rawscm{pregexp-replace}, \expandhtmlindex{944}
+  \item \rawscm{pregexp-replace*}, \expandhtmlindex{946}
+  \item \rawscm{pregexp-split}, \expandhtmlindex{942}
+  \item \File{pregexp.ss}, \expandhtmlindex{928}
+  \item \rawscm{pretty-display}, \expandhtmlindex{958}
+  \item \rawscm{pretty-print}, \expandhtmlindex{960}
+  \item \rawscm{pretty-print-.-symbol-without-bars}, 
+		\expandhtmlindex{992}
+  \item \rawscm{pretty-print-columns}, \expandhtmlindex{964}
+  \item \rawscm{pretty-print-current-style-table}, 
+		\expandhtmlindex{962}
+  \item \rawscm{pretty-print-depth}, \expandhtmlindex{968}
+  \item \rawscm{pretty-print-display-string-handler}, 
+		\expandhtmlindex{970}
+  \item \rawscm{pretty-print-exact-as-decimal}, \expandhtmlindex{972}
+  \item \rawscm{pretty-print-extend-style-table}, \expandhtmlindex{974}
+  \item \rawscm{pretty-print-handler}, \expandhtmlindex{976}
+  \item \rawscm{pretty-print-post-print-hook}, \expandhtmlindex{986}
+  \item \rawscm{pretty-print-pre-print-hook}, \expandhtmlindex{988}
+  \item \rawscm{pretty-print-print-hook}, \expandhtmlindex{978}
+  \item \rawscm{pretty-print-print-line}, \expandhtmlindex{980}
+  \item \rawscm{pretty-print-show-inexactness}, \expandhtmlindex{982}
+  \item \rawscm{pretty-print-size-hook}, \expandhtmlindex{990}
+  \item \rawscm{pretty-print-style-table?}, \expandhtmlindex{984}
+  \item \File{pretty.ss}, \expandhtmlindex{956}
+  \item \rawscm{print-convert}, \expandhtmlindex{912}
+  \item \rawscm{print-convert-expr}, \expandhtmlindex{914}
+  \item \rawscm{printable?}, \expandhtmlindex{430}
+  \item \scmk{private}, \expandhtmlindex{144}
+  \item \scmk{private*}, \expandhtmlindex{102}
+  \item \rawscm{process}, \expandhtmlindex{1014}
+  \item \rawscm{process*}, \expandhtmlindex{1030}
+  \item \rawscm{process*/ports}, \expandhtmlindex{1034}
+  \item \File{process.ss}, \expandhtmlindex{996}
+  \item \rawscm{process/ports}, \expandhtmlindex{1032}
+  \item processes, \expandhtmlindex{998}
+  \item \scmk{provide-signature-elements}, \expandhtmlindex{1292}
+  \item \scmk{provide/contract}, \expandhtmlindex{526}
+  \item \scmk{public}, \expandhtmlindex{136}
+  \item \scmk{public*}, \expandhtmlindex{94}
+  \item \scmk{public-final}, \expandhtmlindex{140}
+  \item \scmk{public-final*}, \expandhtmlindex{96}
+  \item \rawscm{put-preferences}, \expandhtmlindex{706}
+  \item \rawscm{putprop}, \expandhtmlindex{378}
+
+  \indexspace
+
+  \item \rawscm{quasi-read-style-printing}, \expandhtmlindex{916}
+  \item \rawscm{quicksort}, \expandhtmlindex{776}
+
+  \indexspace
+
+  \item \rawscm{read-from-string}, \expandhtmlindex{1094}
+  \item \rawscm{read-from-string-all}, \expandhtmlindex{1096}
+  \item \rawscm{real-in}, \expandhtmlindex{422}
+  \item \scmk{rec}, \expandhtmlindex{636}
+  \item \scmk{recur}, \expandhtmlindex{634}
+  \item Regexp procedures, \expandhtmlindex{934}
+  \item \rawscm{regexp-exec}, \expandhtmlindex{30}
+  \item \rawscm{regexp-match*}, \expandhtmlindex{1098}
+  \item \rawscm{regexp-match-exact?}, \expandhtmlindex{1104}
+  \item \rawscm{regexp-match-peek-positions*}, \expandhtmlindex{1106}
+  \item \rawscm{regexp-match-positions*}, \expandhtmlindex{1108}
+  \item \rawscm{regexp-match/fail-without-reading}, 
+		\expandhtmlindex{1102}
+  \item \rawscm{regexp-quote}, \expandhtmlindex{1112}
+  \item \rawscm{regexp-replace-quote}, \expandhtmlindex{1114}
+  \item \rawscm{regexp-split}, \expandhtmlindex{1116}
+  \item \rawscm{register-external-file}, \expandhtmlindex{298}
+  \item \rawscm{remove}, \expandhtmlindex{778}
+  \item \rawscm{remove*}, \expandhtmlindex{780}
+  \item \rawscm{remq}, \expandhtmlindex{782}
+  \item \rawscm{remq*}, \expandhtmlindex{784}
+  \item \rawscm{remv}, \expandhtmlindex{786}
+  \item \rawscm{remv*}, \expandhtmlindex{788}
+  \item \scmk{rename}, \expandhtmlindex{152}, \expandhtmlindex{1260}
+  \item \scmk{rename*-potential-package}, \expandhtmlindex{874}
+  \item \scmk{rename-potential-package}, \expandhtmlindex{860}
+  \item \rawscm{rest}, \expandhtmlindex{790}
+  \item \rawscm{restart-mzscheme}, \expandhtmlindex{1040}
+  \item \File{restart.ss}, \expandhtmlindex{1038}
+  \item Restricting Signatures, \expandhtmlindex{1266}
+  \item \rawscm{run-server}, \expandhtmlindex{1150}
+
+  \indexspace
+
+  \item \rawscm{second}, \expandhtmlindex{740}
+  \item \rawscm{seconds->date}, \expandhtmlindex{550}
+  \item self (for objects), \see{ \rawscm{this}}{70}
+  \item \scmk{send}, \expandhtmlindex{186}
+  \item \scmk{send*}, \expandhtmlindex{194}
+  \item \rawscm{send-event}, \expandhtmlindex{1048}
+  \item \scmk{send-generic}, \expandhtmlindex{214}
+  \item \scmk{send/apply}, \expandhtmlindex{188}
+  \item \File{sendevent.ss}, \expandhtmlindex{1044}
+  \item \rawscm{set!}, \expandhtmlindex{182}
+  \item \rawscm{set-first!}, \expandhtmlindex{792}
+  \item \rawscm{set-rest!}, \expandhtmlindex{794}
+  \item \rawscm{seventh}, \expandhtmlindex{750}
+  \item \rawscm{sgn}, \expandhtmlindex{834}
+  \item \scmk{shared}, \expandhtmlindex{1066}
+  \item \File{shared.ss}, \expandhtmlindex{1064}
+  \item \rawscm{show-sharing}, \expandhtmlindex{918}
+  \item signature, \expandhtmlindex{1234}
+  \item \scmk{signature->symbols}, \expandhtmlindex{1320}
+  \item Signatures, \expandhtmlindex{1250}
+  \item signatures, \expandhtmlindex{1230}, \expandhtmlindex{1252}
+  \item Signed Compound Units, \expandhtmlindex{1270}
+  \item signed compound units, \expandhtmlindex{1240}
+  \item Signed Units, \expandhtmlindex{1256}
+  \item signed units, \expandhtmlindex{1238}
+  \item \rawscm{signed-unit-exports}, \expandhtmlindex{1310}
+  \item \rawscm{signed-unit-imports}, \expandhtmlindex{1308}
+  \item \rawscm{signed-unit-unit}, \expandhtmlindex{1306}
+  \item \rawscm{signed-unit?}, \expandhtmlindex{1304}
+  \item \rawscm{sinh}, \expandhtmlindex{832}
+  \item \rawscm{sixth}, \expandhtmlindex{748}
+  \item \rawscm{sort}, \expandhtmlindex{380}
+  \item \rawscm{spawn}, \expandhtmlindex{338}
+  \item \File{spidey.ss}, \expandhtmlindex{1070}
+  \item \rawscm{sqr}, \expandhtmlindex{836}
+  \item \rawscm{string-lowercase!}, \expandhtmlindex{1120}
+  \item \rawscm{string-uppercase!}, \expandhtmlindex{1122}
+  \item \File{string.ss}, \expandhtmlindex{1088}
+  \item \rawscm{string/len}, \expandhtmlindex{426}
+  \item \rawscm{subclass?}, \expandhtmlindex{236}
+  \item \rawscm{subclass?/c}, \expandhtmlindex{438}
+  \item subprocesses, \expandhtmlindex{1000}
+  \item \scmk{super-instantiate}, \expandhtmlindex{76}
+  \item \rawscm{super-make-object}, \expandhtmlindex{78}
+  \item \scmk{super-new}, \expandhtmlindex{80}
+  \item superclass, \expandhtmlindex{46}
+  \item superclass initialization, \see{ \rawscm{super-init}}{72}
+  \item \rawscm{surrogate}, \expandhtmlindex{1128}
+  \item \File{surrogate.ss}, \expandhtmlindex{1126}
+  \item \rawscm{symbol=?}, \expandhtmlindex{638}
+  \item \rawscm{symbols}, \expandhtmlindex{432}
+  \item \rawscm{sync}, \expandhtmlindex{340}
+  \item \rawscm{sync/enable-break}, \expandhtmlindex{342}
+  \item \rawscm{system}, \expandhtmlindex{1002}
+  \item \rawscm{system*}, \expandhtmlindex{1006}
+  \item \rawscm{system*/exit-code}, \expandhtmlindex{1012}
+  \item \rawscm{system/exit-code}, \expandhtmlindex{1010}
+
+  \indexspace
+
+  \item The regexp pattern language, \expandhtmlindex{950}
+  \item \rawscm{third}, \expandhtmlindex{742}
+  \item \rawscm{this}, \expandhtmlindex{74}
+  \item \scmk{this-expression-source-directory}, \expandhtmlindex{642}
+  \item \rawscm{thread-done-evt}, \expandhtmlindex{358}
+  \item \File{thread.ss}, \expandhtmlindex{1132}
+  \item \rawscm{time-evt}, \expandhtmlindex{362}
+  \item \rawscm{trace}, \expandhtmlindex{1158}
+  \item \File{trace.ss}, \expandhtmlindex{1156}
+  \item \File{traceld.ss}, \expandhtmlindex{1164}
+  \item \File{transcr.ss}, \expandhtmlindex{1168}
+  \item \rawscm{transcript-off}, \expandhtmlindex{1172}
+  \item \rawscm{transcript-on}, \expandhtmlindex{1170}
+  \item \rawscm{true}, \expandhtmlindex{644}
+  \item \rawscm{trust-existing-zos}, \expandhtmlindex{286}
+  \item \rawscm{type:}, \expandhtmlindex{1084}
+
+  \indexspace
+
+  \item \rawscm{union}, \expandhtmlindex{404}
+  \item \scmk{unit}, \expandhtmlindex{1186}
+  \item Unit Utilities, \expandhtmlindex{1222}
+  \item \scmk{unit->unit/sig}, \expandhtmlindex{1300}
+  \item \File{unit.ss}, \expandhtmlindex{1178}
+  \item \scmk{unit/sig}, \expandhtmlindex{1244}, \expandhtmlindex{1258}
+  \item \scmk{unit/sig->unit}, \expandhtmlindex{1296}
+  \item \rawscm{unit?}, \expandhtmlindex{1224}
+  \item units, \expandhtmlindex{1180}
+    \subitem compound, \expandhtmlindex{1206}
+    \subitem creating, \expandhtmlindex{1184}
+    \subitem invoking, \expandhtmlindex{1194}
+    \subitem signatures, \expandhtmlindex{1232}
+  \item units with signatures, \expandhtmlindex{1236}
+  \item \File{unitsig.ss}, \expandhtmlindex{1228}
+  \item \rawscm{untrace}, \expandhtmlindex{1160}
+  \item \rawscm{use-named/undefined-handler}, \expandhtmlindex{892}, 
+		\expandhtmlindex{894}
+
+  \indexspace
+
+  \item \rawscm{vector-immutable/c}, \expandhtmlindex{450}
+  \item \rawscm{vector-immutableof}, \expandhtmlindex{446}
+  \item \rawscm{vector/p}, \expandhtmlindex{448}
+  \item \rawscm{vectorof}, \expandhtmlindex{444}
+  \item \rawscm{verify-linkage-signature-match}, \expandhtmlindex{1316}
+  \item \rawscm{verify-signature-match}, \expandhtmlindex{1312}
+
+  \indexspace
+
+  \item \rawscm{whole/fractional-exact-numbers}, \expandhtmlindex{920}
+  \item \scmk{with-method}, \expandhtmlindex{196}
+  \item \rawscm{with-semaphore}, \expandhtmlindex{1152}
+  \item \rawscm{wrap-evt}, \expandhtmlindex{352}
+
+\end{theindex}

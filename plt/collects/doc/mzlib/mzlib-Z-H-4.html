@@ -1,0 +1,1169 @@
+<!doctype html public "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!--
+
+Generated from mzlib.tex by tex2page, v 2004-09-11
+(running on MzScheme 209, unix), 
+(c) Dorai Sitaram, 
+http://www.ccs.neu.edu/~dorai/tex2page/tex2page-doc.html
+
+-->
+<head>
+<title>
+PLT MzLib: Libraries Manual
+</title>
+<link rel="stylesheet" type="text/css" href="mzlib-Z-S.css" title=default>
+<meta name=robots content="noindex,follow">
+</head>
+<body>
+<div align=right class=navigation><i>[Go to <span><a href="mzlib.html">first</a>, <a href="mzlib-Z-H-3.html">previous</a></span><span>, <a href="mzlib-Z-H-5.html">next</a></span> page<span>; &nbsp;&nbsp;</span><span><a href="mzlib.html#node_toc_start">contents</a></span><span><span>; &nbsp;&nbsp;</span><a href="mzlib-Z-H-42.html#node_index_start">index</a></span>]</i></div><p></p>
+<a name="node_chap_4"></a>
+<h1 class=chapter>
+<div class=chapterheading><a href="mzlib.html#node_toc_node_chap_4">Chapter 4</a></div><br>
+<a href="mzlib.html#node_toc_node_chap_4"><tt><strong>class.ss</strong></tt>: Classes and Objects</a></h1>
+<p><a name="node_idx_32"></a><a name="node_idx_34"></a></p>
+<p>
+<a name="node_idx_36"></a> <a name="node_idx_38"></a> 
+A <strong>class</strong> specifies
+</p>
+<ul><p>
+</p>
+<li><p>a collection of fields;</p>
+<p>
+</p>
+<li><p>a collection of methods;</p>
+<p>
+</p>
+<li><p>initial value expressions for the fields;  and</p>
+<p>
+</p>
+<li><p>initialization variables that are bound to initialization
+arguments.</p>
+<p>
+</p>
+</ul><p></p>
+<p>
+An <strong>object</strong> is a collection of bindings for fields that are
+instantiated according to a class description.</p>
+<p>
+<a name="node_idx_40"></a> <a name="node_idx_42"></a>
+The primary role of the object system is ability to define a new
+class (a <strong>derived class</strong><a name="node_idx_44"></a>) in terms of an existing class (the
+<strong>superclass</strong><a name="node_idx_46"></a>) using inheritance and overriding:
+</p>
+<ul><p>
+</p>
+<li><p><strong>inheritance</strong>: An object of a derived class supports
+methods and instantiates fields declared by the derived class's
+superclass, as well as methods and fields declared in the derived
+class expression.</p>
+<p>
+</p>
+<li><p><strong>overriding</strong>: A method declared in a superclass can be
+redeclared in the derived class. References to the overridden method
+in the superclass use the implementation in the derived class.</p>
+<p>
+</p>
+</ul><p></p>
+<p>
+An <strong>interface</strong> is a collection of method names to be
+implemented by a class, combined with a derivation requirement. A
+class <strong>implements</strong> an interface when it
+</p>
+<ul><p>
+</p>
+<li><p>declares (or inherits) a public method for each variable in the
+interface;</p>
+<p>
+</p>
+<li><p>is derived from the class required by the interface, if any; and</p>
+<p>
+</p>
+<li><p>specifically declares its intention to implement the interface.</p>
+<p>
+</p>
+</ul><p>
+A class can implement any number of interfaces. A derived class
+automatically implements any interface that its superclass
+implements. Each class also implements an implicitly-defined
+interface that is associated with the class. The implicitly-defined
+interface contains all of the class's public method names, and it
+requires that all other implementations of the interface are derived
+from the class.</p>
+<p>
+A new interface can <strong>extend</strong> one or more interfaces with
+additional method names; each class that implements the extended
+interface also implements the original interfaces. The derivation
+requirements of the original interface must be consistent, and the
+extended interface inherits the most specific derivation requirement
+from the original interfaces.</p>
+<p>
+Classes, objects, and interfaces are all first-class Scheme
+values. However, a MzScheme class or interface is not a MzScheme
+object (i.e., there are no ``meta-classes'' or ``meta-interfaces'').</p>
+<p>
+</p>
+<a name="node_sec_4.1"></a>
+<h2><a href="mzlib.html#node_toc_node_sec_4.1">4.1&nbsp;&nbsp;Object Example</a></h2>
+<p><a name="node_idx_48"></a></p>
+<p>
+The following example conveys the object system's basic style.</p>
+<p>
+</p>
+<div align=left><pre class=scheme>(<span class=keyword>define</span> <span class=variable>stack&lt;%&gt;</span> (<span class=keyword>interface</span> () <span class=variable>push!</span> <span class=variable>pop!</span> <span class=variable>none?</span>))
+
+(<span class=keyword>define</span> <span class=variable>stack%</span> 
+  (<span class=keyword>class*</span> <code class=scheme>object%</code> (<span class=variable>stack&lt;%&gt;</span>)
+    <span class=comment>; Declare public methods:</span>
+    (<span class=keyword>public</span> <span class=variable>push!</span> <span class=variable>pop!</span> <span class=variable>none?</span> <span class=variable>print-name</span>)
+    
+    (<span class=keyword>define</span> <span class=variable>stack</span> <code class=scheme>null</code>)        <span class=comment>; A private field     </span>
+    (<span class=keyword>init-field</span> (<span class=variable>name</span> <span class=keyword>'</span><span class=variable>stack</span>)) <span class=comment>; A public field</span>
+
+    <span class=comment>; Method implementations:</span>
+    (<span class=keyword>define</span> (<span class=variable>push!</span> <span class=variable>v</span>) (<span class=keyword>set!</span> <span class=variable>stack</span> (<code class=scheme>cons</code> <span class=variable>v</span> <span class=variable>stack</span>)))
+    (<span class=keyword>define</span> (<span class=variable>pop!</span>)
+      (<span class=keyword>let</span> ([<span class=variable>v</span> (<code class=scheme>car</code> <span class=variable>stack</span>)]) 
+         (<span class=keyword>set!</span> <span class=variable>stack</span> (<code class=scheme>cdr</code> <span class=variable>stack</span>)) 
+         <span class=variable>v</span>))
+    (<span class=keyword>define</span> (<span class=variable>none?</span>) (<code class=scheme>null?</code> <span class=variable>stack</span>))
+    (<span class=keyword>define</span> (<span class=variable>print-name</span>) (<code class=scheme>display</code> <span class=variable>name</span>) (<code class=scheme>newline</code>))
+
+    <span class=comment>; Call superclass initializer:</span>
+    (<span class=keyword>super-new</span>)))
+
+(<span class=keyword>define</span> <span class=variable>fancy-stack%</span> 
+  (<span class=keyword>class</span> <span class=variable>stack%</span>
+    <span class=comment>; Declare override</span>
+    (<span class=keyword>override</span> <span class=variable>print-name</span>)
+
+    <span class=comment>; Add inherited field to local environment</span>
+    (<span class=keyword>inherit-field</span> <span class=variable>name</span>)
+
+    (<span class=keyword>define</span> (<span class=variable>print-name</span>)
+      (<code class=scheme>display</code> <span class=variable>name</span>)
+      (<code class=scheme>display</code> <span class=selfeval>&quot;, Esq.&quot;</span>)
+      (<code class=scheme>newline</code>))
+
+    (<span class=keyword>super-new</span>)))
+
+(<span class=keyword>define</span> <span class=variable>double-stack%</span> 
+  (<span class=keyword>class</span> <span class=variable>stack%</span>
+    (<span class=keyword>inherit</span> <span class=variable>push!</span>)
+
+    (<span class=keyword>public</span> <span class=variable>double-push!</span>)
+    (<span class=keyword>define</span> (<span class=variable>double-push!</span> <span class=variable>v</span>) (<span class=variable>push!</span> <span class=variable>v</span>) (<span class=variable>push!</span> <span class=variable>v</span>))
+
+    <span class=comment>; Always supply name</span>
+    (<span class=keyword>super-new</span> (<span class=variable>name</span> <span class=keyword>'</span><span class=variable>double-stack</span>))))
+
+(<span class=keyword>define-values</span> (<span class=variable>make-safe-stack-class</span> <span class=variable>is-safe-stack?</span>)
+  (<span class=keyword>let</span> ([<span class=variable>safe-stack&lt;%&gt;</span> (<span class=keyword>interface</span> (<span class=variable>stack&lt;%&gt;</span>))])
+    (<code class=scheme>values</code>
+     (<span class=keyword>lambda</span> (<span class=variable>super%</span>)
+       (<span class=keyword>class*</span> <span class=variable>super%</span> (<span class=variable>safe-stack&lt;%&gt;</span>)
+         (<span class=keyword>inherit</span> <span class=variable>none?</span>)
+         (<span class=keyword>rename</span> [<span class=variable>std-pop!</span> <span class=variable>pop!</span>])
+         (<span class=keyword>override</span> <span class=variable>pop!</span>)
+         (<span class=keyword>define</span> (<span class=variable>pop!</span>) (<span class=keyword>if</span> (<span class=variable>none?</span>) <span class=selfeval>#f</span> (<span class=variable>std-pop!</span>)))
+         (<span class=keyword>super-new</span>)))
+     (<span class=keyword>lambda</span> (<span class=variable>obj</span>)
+       (<code class=scheme>is-a?</code> <span class=variable>obj</span> <span class=variable>safe-stack&lt;%&gt;</span>)))))
+
+(<span class=keyword>define</span> <span class=variable>safe-stack%</span> (<span class=variable>make-safe-stack-class</span> <span class=variable>stack%</span>))
+</pre></div><p></p>
+<p>
+The interface <code class=scheme><span class=variable>stack&lt;%&gt;</span></code><a name="call_footnote_Temp_4"></a><a href="#footnote_Temp_4"><sup><small>1</small></sup></a> defines the ever-popular stack
+interface with the methods <code class=scheme><span class=variable>push!</span></code>, <code class=scheme><span class=variable>pop!</span></code>, and <code class=scheme><span class=variable>none?</span></code>.
+Since it has no superinterfaces, the only derivation requirement of
+<code class=scheme><span class=variable>stack&lt;%&gt;</span></code> is that its classes are derived from the built-in
+empty class, <code class=scheme>object%</code>. The class <code class=scheme><span class=variable>stack%</span></code><a name="call_footnote_Temp_5"></a><a href="#footnote_Temp_5"><sup><small>2</small></sup></a> is derived from
+<code class=scheme>object%</code> and implements the <code class=scheme><span class=variable>stack&lt;%&gt;</span></code> interface. Three
+additional classes are derived from the basic <code class=scheme><span class=variable>stack%</span></code>
+implementation:
+</p>
+<ul><p>
+</p>
+<li><p>The class <code class=scheme><span class=variable>fancy-stack%</span></code> defines a stack that overrides
+<code class=scheme><span class=variable>print-name</span></code> to add an ``Esq.'' suffix.</p>
+<p>
+</p>
+<li><p>The class <code class=scheme><span class=variable>double-stack%</span></code> extends the functionality
+<code class=scheme><span class=variable>stack%</span></code> with a new method, <code class=scheme>double-push!</code>. It also
+supplies a specific <code class=scheme>name</code> to <code class=scheme><span class=variable>stack%</span></code>.</p>
+<p>
+</p>
+<li><p>The class <code class=scheme><span class=variable>safe-stack%</span></code> overrides the
+<code class=scheme><span class=variable>pop!</span></code> method of <code class=scheme><span class=variable>stack%</span></code>, ensuring that <code class=scheme><span class=selfeval>#f</span></code> is
+returned whenever the stack is empty.</p>
+<p>
+</p>
+</ul><p>
+In each derived class, the <code class=scheme>(<span class=keyword>super-new</span> <tt>...</tt>)</code> form causes the
+superclass portion of the object to be initialized, including the
+initialization of its fields.</p>
+<p>
+The creation of <code class=scheme><span class=variable>safe-stack%</span></code> illustrates the use of classes as
+first-class values. Applying <code class=scheme><span class=variable>make-safe-stack-class</span></code> to
+<code class=scheme><span class=variable>named-stack%</span></code> or <code class=scheme><span class=variable>double-stack%</span></code>  --  indeed, <em>any</em>
+class with <code class=scheme><span class=variable>push</span></code>, <code class=scheme><span class=variable>pop!</span></code>, and <code class=scheme><span class=variable>none?</span></code> methods  -- 
+creates a ``safe'' version of the class. A stack object can be
+recognized as a safe stack by testing it with <code class=scheme><span class=variable>is-safe-stack?</span></code>;
+this predicate returns <code class=scheme><span class=selfeval>#t</span></code> only for instances of a class
+created with <code class=scheme><span class=variable>make-safe-stack-class</span></code> (because only those classes
+implement the <code class=scheme><span class=variable>safe-stack&lt;%&gt;</span></code> interface).</p>
+<p>
+In each of the example classes, the field <code class=scheme><span class=variable>name</span></code> contains the
+name of the class. The <code class=scheme><span class=variable>name</span></code> instance variable is introduced
+as a new instance variable in <code class=scheme><span class=variable>stack%</span></code>, and it is declared
+there with the <code class=scheme><span class=keyword>init-field</span></code> keyword, which means that an
+instantiation of the class can specify the initial value, but it
+defaults to <code class=scheme><span class=keyword>'</span><span class=variable>stack</span></code>. The <code class=scheme><span class=variable>double-stack%</span></code> class
+provides <code class=scheme><span class=variable>name</span></code> when initializing the <code class=scheme><span class=variable>stack%</span></code> part of
+the object, so a name cannot be supplied when instantiating
+<code class=scheme><span class=variable>double-stack%</span></code>. When the <code class=scheme>print-name</code> method of an
+object from <code class=scheme><span class=variable>double-stack%</span></code> is invoked, the name printed to
+the screen is always ``double-stack''.</p>
+<p>
+While all of <code class=scheme><span class=variable>named-stack%</span></code>, <code class=scheme><span class=variable>double-stack%</span></code>, and
+<code class=scheme><span class=variable>safe-stack%</span></code> inherit the <code class=scheme><span class=variable>push!</span></code> method of
+<code class=scheme><span class=variable>stack%</span></code>, it is declared with <code class=scheme><span class=keyword>inherit</span></code> only in
+<code class=scheme><span class=variable>double-stack%</span></code>; new declarations in <code class=scheme><span class=variable>named-stack%</span></code> and
+<code class=scheme><span class=variable>safe-stack%</span></code> do not need to refer to <code class=scheme><span class=variable>push!</span></code>, so the
+inheritance does not need to be declared. Similarly, only
+<code class=scheme><span class=variable>safe-stack%</span></code> needs to declare <code class=scheme>(<span class=keyword>inherit</span> <span class=variable>none?</span>)</code>.</p>
+<p>
+The <code class=scheme><span class=variable>safe-stack%</span></code> class overrides <code class=scheme><span class=variable>pop!</span></code> to <em>extend</em> the
+implementation of <code class=scheme><span class=variable>pop!</span></code>. The new definition of <code class=scheme><span class=variable>pop!</span></code>  must
+access the original <code class=scheme><span class=variable>pop!</span></code> method that is defined in
+<code class=scheme><span class=variable>stack%</span></code>. The <code class=scheme><span class=keyword>rename</span></code> declaration binds a new name,
+<code class=scheme><span class=variable>std-pop!</span></code> to the original <code class=scheme><span class=variable>pop!</span></code>.  Then, <code class=scheme><span class=variable>std-pop!</span></code> is
+used in the overriding <code class=scheme><span class=variable>pop!</span></code>. Variables declared with
+<code class=scheme><span class=keyword>rename</span></code> cannot be overridden, so <code class=scheme><span class=variable>std-pop!</span></code> will
+<em>always</em> refer to the superclass's <code class=scheme><span class=variable>pop!</span></code>.</p>
+<p>
+The <code class=scheme><span class=keyword>instantiate</span></code> form, the <code class=scheme><span class=keyword>new</span></code> form, and the
+<code class=scheme><code class=scheme>make-object</code></code> procedure all create an object from a class. The
+<code class=scheme><span class=keyword>instantiate</span></code> form supports initialization arguments by both
+position and name, the <code class=scheme><span class=keyword>new</span></code> form only supports by name
+initialization arguments, and <code class=scheme><code class=scheme>make-object</code></code> supports
+initialization arguments by position only. The following examples
+create objects using the classes above:
+</p>
+<div align=left><pre class=scheme>(<span class=keyword>define</span> <span class=variable>stack</span> (<code class=scheme>make-object</code> <span class=variable>stack%</span>))
+(<span class=keyword>define</span> <span class=variable>fred</span> (<span class=keyword>new</span> <span class=variable>stack%</span> (<span class=variable>name</span> <span class=keyword>'</span><span class=variable>Fred</span>)))
+(<span class=keyword>define</span> <span class=variable>joe</span> (<span class=keyword>instantiate</span> <span class=variable>stack%</span> () (<span class=variable>name</span> <span class=keyword>'</span><span class=variable>Joe</span>)))
+(<span class=keyword>define</span> <span class=variable>double-stack</span> (<code class=scheme>make-object</code> <span class=variable>double-stack%</span>))
+(<span class=keyword>define</span> <span class=variable>safe-stack</span> (<span class=keyword>new</span> <span class=variable>safe-stack%</span> (<span class=variable>name</span> <span class=keyword>'</span><span class=variable>safe</span>)))
+</pre></div><p></p>
+<p>
+The <code class=scheme>send</code> form calls a method on an object, finding the method by
+name. The following example uses the objects created above:
+</p>
+<div align=left><pre class=scheme>(<span class=keyword>send</span> <span class=variable>stack</span> <span class=variable>push!</span> <span class=variable>fred</span>)
+(<span class=keyword>send</span> <span class=variable>stack</span> <span class=variable>push!</span> <span class=variable>double-stack</span>)
+(<span class=keyword>let</span> <span class=variable>loop</span> ()
+  (<span class=keyword>if</span> (<code class=scheme>not</code> (<span class=keyword>send</span> <span class=variable>stack</span> <span class=variable>none?</span>))
+    (<span class=keyword>begin</span>
+      (<span class=keyword>send</span> (<span class=keyword>send</span> <span class=variable>stack</span> <span class=variable>pop!</span>) <span class=variable>print-name</span>)
+      (<span class=variable>loop</span>))))
+</pre></div><p></p>
+<p>
+This loop displays <code class=scheme><span class=selfeval>'double-stack</span></code> and <code class=scheme><span class=selfeval>'Fred</span></code> to the
+standard output port.</p>
+<p>
+</p>
+<a name="node_sec_4.2"></a>
+<h2><a href="mzlib.html#node_toc_node_sec_4.2">4.2&nbsp;&nbsp;Creating Interfaces</a></h2>
+<p><a name="node_idx_50"></a></p>
+<p>
+<a name="node_idx_52"></a> The <a name="node_kw_definitioninterface"></a><a name="node_idx_54"></a><code class=scheme><span class=keyword>interface</span></code> form creates a new interface:
+</p>
+<div align=left><pre class=scheme>(<span class=keyword>interface</span> (<span class=variable>super-interface-expr</span> <tt>&middot;&middot;&middot;</tt>) <span class=variable>variable</span> <tt>&middot;&middot;&middot;</tt>)
+</pre></div><p></p>
+<p>
+All of the <code class=scheme><span class=variable>variable</span></code>s must be distinct.</p>
+<p>
+Each <code class=scheme><span class=variable>super-interface-expr</span></code> is evaluated (in order) when the
+<code class=scheme><span class=keyword>interface</span></code> expression is evaluated. The result of each
+<code class=scheme><span class=variable>super-interface-expr</span></code> must be an interface value, otherwise the
+<a name="node_idx_56"></a><code class=scheme>exn:fail:object</code> exception is raised.  The interfaces returned by the
+<code class=scheme><span class=variable>super-interface-expr</span></code>s are the new interface's superinterfaces,
+which are all extended by the new interface. Any class that
+implements the new interface also implements all of the
+superinterfaces.</p>
+<p>
+The result of an <code class=scheme><span class=keyword>interface</span></code> expression is an interface that
+includes all of the specified <code class=scheme><span class=variable>variable</span></code>s, plus all variables
+from the superinterfaces. Duplicate variable names among the
+superinterfaces are ignored, but if a superinterface contains one of
+the <code class=scheme><span class=variable>variable</span></code>s in the <code class=scheme><span class=keyword>interface</span></code> expression, the
+<a name="node_idx_58"></a><code class=scheme>exn:fail:object</code> exception is raised.</p>
+<p>
+If no <code class=scheme><span class=variable>super-interface-expr</span></code>s are provided, then the derivation
+requirement of the resulting interface is trivial: any class that
+implements the interface must be derived from <code class=scheme>object%</code>.
+Otherwise, the implementation requirement of the resulting interface
+is the most specific requirement from its superinterfaces. If the
+superinterfaces specify inconsistent derivation requirements, the
+<a name="node_idx_60"></a><code class=scheme>exn:fail:object</code> exception is raised.</p>
+<p>
+</p>
+<a name="node_sec_4.3"></a>
+<h2><a href="mzlib.html#node_toc_node_sec_4.3">4.3&nbsp;&nbsp;Creating Classes</a></h2>
+<p><a name="node_idx_62"></a></p>
+<p>
+The built-in class <a name="node_kw_definitionobject\%"></a><a name="node_idx_64"></a><code class=scheme>object%</code> has no methods fields, 
+implements only its own interface, <code class=scheme>(<code class=scheme>class-&gt;interface</code>
+object%)</code>. All other classes are derived from <code class=scheme>object%</code>.</p>
+<p>
+<a name="node_idx_66"></a>
+The <a name="node_kw_definitionclass*/names"></a><a name="node_idx_68"></a><code class=scheme><span class=keyword>class*/names</span></code> form creates a new class:
+</p>
+<div align=left><pre class=scheme>(<span class=keyword>class*/names</span> <span class=variable>local-names</span> <span class=variable>superclass-expr</span> (<span class=variable>interface-expr</span> <tt>&middot;&middot;&middot;</tt>)
+  <span class=variable>class-clause</span>
+  <tt>&middot;&middot;&middot;</tt>)
+
+<span class=variable>local-names</span> is one of
+  (<span class=variable>this-variable</span>)
+  (<span class=variable>this-variable</span> <span class=variable>super-instantiate-variable</span>)
+  (<span class=variable>this-variable</span> <span class=variable>super-instantiate-variable</span> <span class=variable>super-make-object-variable</span>)
+  (<span class=variable>this-variable</span> <span class=variable>super-instantiate-variable</span> <span class=variable>super-make-object-variable</span> <span class=variable>super-new-variable</span>)
+
+<span class=variable>class-clause</span> is one of
+  (<span class=keyword>init</span> <span class=variable>init-declaration</span> <tt>&middot;&middot;&middot;</tt>)
+  (<span class=keyword>init-field</span> <span class=variable>init-declaration</span> <tt>&middot;&middot;&middot;</tt>)
+  (<span class=keyword>field</span> <span class=variable>field-declaration</span> <tt>&middot;&middot;&middot;</tt>)
+  (<span class=keyword>inherit-field</span> <span class=variable>optionally-renamed-variable</span> <tt>&middot;&middot;&middot;</tt>)
+  (<span class=keyword>init-rest</span> <span class=variable>variable</span>)
+  (<span class=keyword>init-rest</span>)
+  (<span class=keyword>public</span> <span class=variable>optionally-renamed-variable</span> <tt>&middot;&middot;&middot;</tt>)
+  (<span class=keyword>override</span> <span class=variable>optionally-renamed-variable</span> <tt>&middot;&middot;&middot;</tt>)
+  (<span class=keyword>public-final</span> <span class=variable>optionally-renamed-variable</span> <tt>&middot;&middot;&middot;</tt>)
+  (<span class=keyword>override-final</span> <span class=variable>optionally-renamed-variable</span> <tt>&middot;&middot;&middot;</tt>)
+  (<span class=keyword>private</span> <span class=variable>variable</span> <tt>&middot;&middot;&middot;</tt>)
+  (<span class=keyword>inherit</span> <span class=variable>optionally-renamed-variable</span> <tt>&middot;&middot;&middot;</tt>)
+  (<span class=keyword>rename</span> <span class=variable>renamed-variable</span> <tt>&middot;&middot;&middot;</tt>)
+  <span class=variable>method-definition</span>
+  <span class=variable>definition</span>
+  <span class=variable>expr</span>
+  (<span class=keyword>begin</span> <span class=variable>class-clause</span> <tt>&middot;&middot;&middot;</tt>)
+
+<span class=variable>init-declaration</span> is one of
+  <span class=variable>variable</span>
+  (<span class=variable>optionally-renamed-variable</span>)
+  (<span class=variable>optionally-renamed-variable</span> <span class=variable>default-value-expr</span>)
+
+<span class=variable>field-declaration</span> is
+  (<span class=variable>optionally-renamed-variable</span> <span class=variable>default-value-expr</span>)
+
+<span class=variable>optionally-renamed-variable</span> is one of
+  <span class=variable>variable</span>
+  <span class=variable>renamed-variable</span>
+
+<span class=variable>renamed-variable</span> is
+  (<span class=variable>internal-variable</span> <span class=variable>external-variable</span>)
+
+<span class=variable>method-definition</span> is
+  (<span class=keyword>define-values</span> (<span class=variable>variable</span>) <span class=variable>method-procedure</span>)
+
+<span class=variable>method-procedure</span> is
+  (<span class=keyword>lambda</span> <span class=variable>formals</span> <span class=variable>expr</span> <tt>&middot;&middot;&middot;</tt><sup>1</sup>)
+  (<span class=keyword>case-lambda</span> (<span class=variable>formals</span> <span class=variable>expr</span> <tt>&middot;&middot;&middot;</tt><sup>1</sup>) <tt>&middot;&middot;&middot;</tt>)
+  (<span class=keyword>let-values</span> (((<span class=variable>variable</span>) <span class=variable>method-procedure</span>) <tt>&middot;&middot;&middot;</tt>) <span class=variable>method-procedure</span>)
+  (<span class=keyword>letrec-values</span> (((<span class=variable>variable</span>) <span class=variable>method-procedure</span>) <tt>&middot;&middot;&middot;</tt>) <span class=variable>method-procedure</span>)
+  (<span class=keyword>let-values</span> (((<span class=variable>variable</span>) <span class=variable>method-procedure</span>) <tt>&middot;&middot;&middot;</tt><sup>1</sup>) <span class=variable>variable</span>)
+  (<span class=keyword>letrec-values</span> (((<span class=variable>variable</span>) <span class=variable>method-procedure</span>) <tt>&middot;&middot;&middot;</tt><sup>1</sup>) <span class=variable>variable</span>)
+</pre></div><p></p>
+<p>
+<a name="node_idx_70"></a> <a name="node_idx_72"></a> The <code class=scheme><span class=variable>this-variable</span></code>, <code class=scheme><span class=variable>super-instantiate-variable</span></code>,
+<code class=scheme><span class=variable>super-make-object-variable</span></code>, and <code class=scheme><span class=variable>super-new-variable</span></code>
+variables (usually <code class=scheme>this</code>, <code class=scheme><span class=keyword>super-instantiate</span></code>,
+<code class=scheme>super-make-object</code>, and <code class=scheme><span class=keyword>super-new</span></code>) are bound in the
+rest of the <code class=scheme><span class=keyword>class*/names</span></code> expression, excluding
+<code class=scheme><span class=variable>superclass-expr</span></code> and the <code class=scheme><span class=variable>interface-expr</span></code>s. In instances of
+the new class, <code class=scheme><span class=variable>this-variable</span></code> (i.e., <a name="node_kw_definitionthis"></a><a name="node_idx_74"></a><code class=scheme>this</code>) is
+bound to the object itself; <code class=scheme><span class=variable>super-instantiate-variable</span></code> (i.e.,
+<a name="node_kw_definitionsuper-instantiate"></a><a name="node_idx_76"></a><code class=scheme><span class=keyword>super-instantiate</span></code>) is bound to a form that must be used
+(once) to initialize fields in the superclass (see
+section&nbsp;<a href="#node_sec_4.4">4.4</a>); <code class=scheme><span class=variable>super-make-object-variable</span></code> (i.e.,
+<a name="node_kw_definitionsuper-make-object"></a><a name="node_idx_78"></a><code class=scheme>super-make-object</code>) can be used instead of
+<code class=scheme><span class=variable>super-instantiate-variable</span></code> to initialize superclass fields;
+<code class=scheme><span class=variable>super-new-variable</span></code> (i.e., <a name="node_kw_definitionsuper-new"></a><a name="node_idx_80"></a><code class=scheme><span class=keyword>super-new</span></code>) also can be
+used instead of <code class=scheme><span class=variable>super-instantiate-variable</span></code> to initialize
+superclass fields.  See section&nbsp;<a href="#node_sec_4.4">4.4</a> for more information
+about <code class=scheme><span class=variable>super-instantiate-variable</span></code>,
+<code class=scheme><span class=variable>super-make-object-variable</span></code>, and <code class=scheme><span class=variable>super-new-variable</span></code>.</p>
+<p>
+The <code class=scheme><span class=variable>superclass-expr</span></code> expression is evaluated when the
+<code class=scheme><span class=keyword>class*/names</span></code> expression is evaluated. The result must be a
+class value (possibly <code class=scheme>object%</code>), otherwise the
+<a name="node_idx_82"></a><code class=scheme>exn:fail:object</code> exception is raised.  The result of the <code class=scheme><span class=variable>superclass-expr</span></code>
+expression is the new class's superclass.</p>
+<p>
+The <code class=scheme><span class=variable>interface-expr</span></code> expressions are also evaluated when the
+<code class=scheme><span class=keyword>class*/names</span></code> expression is evaluated, after
+<code class=scheme><span class=variable>superclass-expr</span></code> is evaluated. The result of each
+<code class=scheme><span class=variable>interface-expr</span></code> must be an interface value, otherwise the
+<a name="node_idx_84"></a><code class=scheme>exn:fail:object</code> exception is raised.  The interfaces returned by the
+<code class=scheme><span class=variable>interface-expr</span></code>s are all implemented by the class. For each
+variable in each interface, the class (or one of its ancestors) must
+declare a public instance variable with the same name, otherwise the
+<a name="node_idx_86"></a><code class=scheme>exn:fail:object</code> exception is raised. The class's superclass must satisfy the
+implementation requirement of each interface, otherwise the
+<a name="node_idx_88"></a><code class=scheme>exn:fail:object</code> exception is raised.</p>
+<p>
+The <code class=scheme><span class=variable>class-clause</span></code>s define initialization arguments, public and
+private fields, and public and private methods. For each
+<code class=scheme><span class=variable>variable</span></code> or <code class=scheme><span class=variable>optionally-renamed-variable</span></code> in a
+<code class=scheme><span class=keyword>public</span></code>, <code class=scheme><span class=keyword>override</span></code>, <code class=scheme><span class=keyword>public-final</span></code>,
+<code class=scheme><span class=keyword>override-final</span></code>, or <code class=scheme><span class=keyword>private</span></code> clause, there must be
+one <code class=scheme><span class=variable>method-definition</span></code>. All other definition
+<code class=scheme><span class=variable>class-clause</span></code>s create private fields. All remaining <code class=scheme><span class=variable>expr</span></code>s
+are initialization expressions to be evaluated when the class is
+instantiated (see section&nbsp;<a href="#node_sec_4.4">4.4</a>).</p>
+<p>
+The result of a <code class=scheme><span class=keyword>class*/names</span></code> expression is a new class,
+derived from the specified superclass and implementing the specified
+interfaces. Instances of the class are created with
+the <code class=scheme><span class=keyword>instantiate</span></code> form or <code class=scheme>make-object</code> procedure, as
+described in section&nbsp;<a href="#node_sec_4.4">4.4</a>. Debugging access to the class is
+controlled by the parent of the current inspector
+(see section&nbsp;<a href="../mzscheme/mzscheme-Z-H-4.html#node_sec_4.5">4.5</a> in <a href="../mzscheme/mzscheme.html"><i>PLT MzScheme: Language Manual</i></a>).</p>
+<p>
+Each <code class=scheme><span class=variable>class-clause</span></code> is (partially) macro-expanded to reveal its
+shapes. If a <code class=scheme><span class=variable>class-clause</span></code> is a <code class=scheme><span class=keyword>begin</span></code> expression,
+its sub-expressions are lifted out of the <code class=scheme><span class=keyword>begin</span></code> and treated
+as <code class=scheme><span class=variable>class-clause</span></code>s, in the same way that <code class=scheme><span class=keyword>begin</span></code> is
+flattened for top-level and embedded definitions.</p>
+<p>
+The <a name="node_kw_definitionclass*"></a><a name="node_idx_90"></a><code class=scheme><span class=keyword>class*</span></code> form is like <code class=scheme><span class=keyword>class*/names</span></code>, but omits
+<code class=scheme><span class=variable>local-names</span></code> and always uses the names <code class=scheme><code class=scheme>this</code></code>,
+<code class=scheme><span class=keyword>super-instantiate</span></code>, <code class=scheme><code class=scheme>super-make-object</code></code>, and
+<code class=scheme><span class=keyword>super-new</span></code>:
+</p>
+<div align=left><pre class=scheme>(<span class=keyword>class*</span> <span class=variable>superclass-expr</span> (<span class=variable>interface-expr</span> <tt>&middot;&middot;&middot;</tt>)
+  <span class=variable>class-clause</span>
+  <tt>&middot;&middot;&middot;</tt>)
+</pre></div><p>
+The <a name="node_kw_definitionclass"></a><a name="node_idx_92"></a><code class=scheme><span class=keyword>class</span></code> form further omits the <code class=scheme><span class=variable>interface-expr</span></code>s,
+for the case that none are needed:
+</p>
+<div align=left><pre class=scheme>(<span class=keyword>class</span> <span class=variable>superclass-expr</span>
+  <span class=variable>class-clause</span>
+  <tt>&middot;&middot;&middot;</tt>)
+</pre></div><p></p>
+<p>
+The <a name="node_kw_definitionpublic*"></a><a name="node_idx_94"></a><code class=scheme><span class=keyword>public*</span></code>, <a name="node_kw_definitionpublic-final*"></a><a name="node_idx_96"></a><code class=scheme><span class=keyword>public-final*</span></code>,
+<a name="node_kw_definitionoverride*"></a><a name="node_idx_98"></a><code class=scheme><span class=keyword>override*</span></code>, <a name="node_kw_definitionoverride-final*"></a><a name="node_idx_100"></a><code class=scheme><span class=keyword>override-final*</span></code>, and
+<a name="node_kw_definitionprivate*"></a><a name="node_idx_102"></a><code class=scheme><span class=keyword>private*</span></code> forms abbreviate a <code class=scheme><span class=keyword>public</span></code>,
+<code class=scheme><span class=keyword>public-final</span></code>, <code class=scheme><span class=keyword>override</span></code>, <code class=scheme><span class=keyword>override-final</span></code>, or
+<code class=scheme><span class=keyword>private</span></code> declaration and a sequence of definitions:
+</p>
+<div align=left><pre class=scheme> (<span class=keyword>public*</span> (<span class=variable>name</span> <span class=variable>expr</span>) <tt>&middot;&middot;&middot;</tt>)
+<tt>=expands=&gt;</tt>
+ (<span class=keyword>begin</span>
+  (<span class=keyword>public</span> <span class=variable>name</span> <tt>&middot;&middot;&middot;</tt>)
+  (<span class=keyword>define</span> <span class=variable>name</span> <span class=variable>expr</span>) <tt>&middot;&middot;&middot;</tt>)
+
+<span class=variable>etc.</span>
+</pre></div><p></p>
+<p>
+The <a name="node_kw_definitiondefine/public"></a><a name="node_idx_104"></a><code class=scheme><span class=keyword>define/public</span></code>, <a name="node_kw_definitiondefine/public-final"></a><a name="node_idx_106"></a><code class=scheme><span class=keyword>define/public-final</span></code>,
+<a name="node_kw_definitiondefine/override"></a><a name="node_idx_108"></a><code class=scheme><span class=keyword>define/override</span></code>, <a name="node_kw_definitiondefine/override-final"></a><a name="node_idx_110"></a><code class=scheme><span class=keyword>define/override-final</span></code>, and
+<a name="node_kw_definitiondefine/private"></a><a name="node_idx_112"></a><code class=scheme><span class=keyword>define/private</span></code> forms similarly abbreviate a
+<code class=scheme><span class=keyword>public</span></code>, <code class=scheme><span class=keyword>override</span></code>, or <code class=scheme><span class=keyword>private</span></code> declaration
+with a definition:
+</p>
+<div align=left><pre class=scheme> (<span class=keyword>define/public</span> <span class=variable>name</span> <span class=variable>expr</span>)
+<tt>=expands=&gt;</tt>
+ (<span class=keyword>begin</span>
+  (<span class=keyword>public</span> <span class=variable>name</span>)
+  (<span class=keyword>define</span> <span class=variable>name</span> <span class=variable>expr</span>))
+
+ (<span class=keyword>define/public</span> (<span class=variable>header</span> . <span class=variable>formals</span>) <span class=variable>expr</span>)
+<tt>=expands=&gt;</tt>
+ (<span class=keyword>begin</span>
+  (<span class=keyword>public</span> <span class=variable>name</span>)
+  (<span class=keyword>define</span> (<span class=variable>header</span> . <span class=variable>formals</span>) <span class=variable>expr</span>))
+
+<span class=variable>etc.</span>
+</pre></div><p></p>
+<p>
+</p>
+<a name="node_sec_4.3.1"></a>
+<h3><a href="mzlib.html#node_toc_node_sec_4.3.1">4.3.1&nbsp;&nbsp;Initialization Variables</a></h3>
+<p></p>
+<p>
+A class's initialization variables, declared with <a name="node_kw_definitioninit"></a><a name="node_idx_114"></a><code class=scheme><span class=keyword>init</span></code>,
+<a name="node_kw_definitioninit-field"></a><a name="node_idx_116"></a><code class=scheme><span class=keyword>init-field</span></code>, and <a name="node_kw_definitioninit-rest"></a><a name="node_idx_118"></a><code class=scheme><span class=keyword>init-rest</span></code>, are instantiated
+for each object of a class. Initialization variables can be used in
+the initial value expressions of fields, default value expressions
+for initialization arguments, and in initialization expressions.  Only
+initialization variables declared with <code class=scheme><span class=keyword>init-field</span></code> can be
+accessed from methods; accessing any other initialization variable
+from a method is a syntax error.</p>
+<p>
+The values bound to initialization variables are
+</p>
+<ul><p>
+</p>
+<li><p>the arguments provided with <code class=scheme><span class=keyword>instantiate</span></code> or passed to
+<a name="node_idx_120"></a><code class=scheme>make-object</code>, if the object is created as a direct instance
+of the class; or,</p>
+<p>
+</p>
+<li><p>the arguments passed to the superclass initialization form or
+procedure, if the object is created as an instance of a derived
+class.</p>
+<p>
+</p>
+</ul><p>
+If an initialization argument is not provided for a initialization
+variable that has an associated <code class=scheme><span class=variable>default-value-expr</span></code>, then the
+<code class=scheme><span class=variable>default-value-expr</span></code> expression is evaluated to obtain a value
+for the variable. A <code class=scheme><span class=variable>default-value-expr</span></code> is only evaluated when
+an argument is not provided for its variable. The environment of
+<code class=scheme><span class=variable>default-value-expr</span></code> includes all of the initialization
+variables, all of the fields, and all of the methods of the class. If
+multiple <code class=scheme><span class=variable>default-value-expr</span></code>s are evaluated, they are evaluated
+from left to right. Object creation and field initialization are
+described in detail in section&nbsp;<a href="#node_sec_4.4">4.4</a>.</p>
+<p>
+If an initialization variable has no <code class=scheme><span class=variable>default-value-expr</span></code>, then
+the object creation or superclass initialization call must supply an
+argument for the variable, otherwise the <a name="node_idx_122"></a><code class=scheme>exn:fail:object</code> exception is raised.</p>
+<p>
+Initialization arguments can be provided by name or by position.  The
+external name of an initialization variable can be used with
+<code class=scheme><span class=keyword>instantiate</span></code> or with the superclass initialization form. Those
+forms also accept by-position arguments. The <code class=scheme>make-object</code>
+procedure and the superclass initialization procedure accept only
+by-position arguments.</p>
+<p>
+Arguments provided by position are converted into by-name arguments
+using the order of <code class=scheme><span class=keyword>init</span></code> and <code class=scheme><span class=keyword>init-field</span></code> clauses and
+the order of variables within each clause. When a <code class=scheme><span class=keyword>instantiate</span></code>
+form provides both by-position and by-name arguments, the converted
+arguments are placed before by-name arguments. (The order can be
+significant; see also section&nbsp;<a href="#node_sec_4.4">4.4</a>.)</p>
+<p>
+Unless a class contains an <code class=scheme><span class=keyword>init-rest</span></code> clause, when the number
+of by-position arguments exceeds the number of declared
+initialization variables, the order of variables in the superclass
+(and so on, up the superclass chain) determines the by-name
+conversion.</p>
+<p>
+If a class expression contains an <code class=scheme><span class=keyword>init-rest</span></code> clause, there
+must be only one, and it must be last. If it declares a variable,
+then the variable receives extra by-position initialization arguments
+as a list (similar to a dotted ``rest argument'' in a procedure).  An
+<code class=scheme><span class=keyword>init-rest</span></code> variable can receive by-position initialization
+arguments that are left over from a by-name conversion for a derived
+class. When a derived class's superclass initialization provides even
+more by-position arguments, they are prefixed onto the by-position
+arguments accumulated so far.</p>
+<p>
+If too few or too many by-position initialization arguments are
+provided to an object creation or superclass initialization, then the
+<a name="node_idx_124"></a><code class=scheme>exn:fail:object</code> exception is raised. Similarly, if extra by-position arguments are
+provided to a class with an <code class=scheme><span class=keyword>init-rest</span></code> clause, the
+<a name="node_idx_126"></a><code class=scheme>exn:fail:object</code> exception is raised.</p>
+<p>
+Unused (by-name) arguments are be propagated to the superclass, as
+described in section&nbsp;<a href="#node_sec_4.4">4.4</a>.  Multiple initialization arguments
+can use the same name if the class derivation contains multiple
+declarations (in different classes) of initialization variables with
+the name. See section&nbsp;<a href="#node_sec_4.4">4.4</a> for further details.</p>
+<p>
+See also section&nbsp;<a href="#node_sec_4.3.3.3">4.3.3.3</a> for information about internal and external
+names.</p>
+<p>
+</p>
+<a name="node_sec_4.3.2"></a>
+<h3><a href="mzlib.html#node_toc_node_sec_4.3.2">4.3.2&nbsp;&nbsp;Fields</a></h3>
+<p></p>
+<p>
+Each <a name="node_kw_definitionfield"></a><a name="node_idx_128"></a><code class=scheme><span class=keyword>field</span></code>, <a name="node_kw_definitioninit-field"></a><a name="node_idx_130"></a><code class=scheme><span class=keyword>init-field</span></code>, and non-method
+<code class=scheme><span class=keyword>define-values</span></code> clause in a class declares one or more new
+fields for the class. Fields declared with <code class=scheme><span class=keyword>field</span></code> or
+<code class=scheme><span class=keyword>init-field</span></code> are public. Public fields can be accessed and
+mutated by subclasses using <code class=scheme><span class=keyword>inherit-field</span></code>. Public fields are
+also accessible outside the class via <code class=scheme><span class=keyword>class-field-accessor</span></code>
+and mutable via <code class=scheme><span class=keyword>class-field-mutator</span></code> (see
+section&nbsp;<a href="#node_sec_4.5">4.5</a>). Fields declared with <code class=scheme><span class=keyword>define-values</span></code> are
+accessible only within the class.</p>
+<p>
+A field declared with <code class=scheme><span class=keyword>init-field</span></code> is both a public field and an
+initialization variable. See section&nbsp;<a href="#node_sec_4.3.1">4.3.1</a> for information
+about initialization variables.</p>
+<p>
+An <a name="node_kw_definitioninherit-field"></a><a name="node_idx_132"></a><code class=scheme><span class=keyword>inherit-field</span></code> declaration makes a public field defined
+by a superclass directly accessible in the class expression. If the
+indicated field is not defined in the superclass, the
+<a name="node_idx_134"></a><code class=scheme>exn:fail:object</code> exception is raised when the class expression is evaluated.  Every
+field in a superclass is present in a derived class, even if it is
+not declared with <code class=scheme><span class=keyword>inherit-field</span></code> in the derived class. The
+<code class=scheme><span class=keyword>inherit-field</span></code> clause does not control inheritance, but
+merely controls lexical scope within a class expression.</p>
+<p>
+When an object is first created, all of its fields have the
+undefined value (see section&nbsp;<a href="../mzscheme/mzscheme-Z-H-3.html#node_sec_3.1">3.1</a> in <a href="../mzscheme/mzscheme.html"><i>PLT MzScheme: Language Manual</i></a>). The fields of a class
+are initialized at the same time that the class's initialization
+expressions are evaluated; see section&nbsp;<a href="#node_sec_4.4">4.4</a> for more information.</p>
+<p>
+See also section&nbsp;<a href="#node_sec_4.3.3.3">4.3.3.3</a> for information about internal and external
+names.</p>
+<p>
+</p>
+<a name="node_sec_4.3.3"></a>
+<h3><a href="mzlib.html#node_toc_node_sec_4.3.3">4.3.3&nbsp;&nbsp;Methods</a></h3>
+<p></p>
+<p>
+</p>
+<a name="node_sec_4.3.3.1"></a>
+<h4><a href="mzlib.html#node_toc_node_sec_4.3.3.1">4.3.3.1&nbsp;&nbsp;Method Definitions</a></h4>
+<p>Each <a name="node_kw_definitionpublic"></a><a name="node_idx_136"></a><code class=scheme><span class=keyword>public</span></code>, <a name="node_kw_definitionoverride"></a><a name="node_idx_138"></a><code class=scheme><span class=keyword>override</span></code>,
+<a name="node_kw_definitionpublic-final"></a><a name="node_idx_140"></a><code class=scheme><span class=keyword>public-final</span></code>, <a name="node_kw_definitionoverride-final"></a><a name="node_idx_142"></a><code class=scheme><span class=keyword>override-final</span></code>, and
+<a name="node_kw_definitionprivate"></a><a name="node_idx_144"></a><code class=scheme><span class=keyword>private</span></code> clause in a class declares one or more method
+names. Each method name must have a corresponding
+<code class=scheme><span class=variable>method-definition</span></code>. The order of <code class=scheme><span class=keyword>public</span></code>,
+<code class=scheme><span class=keyword>override</span></code>, <code class=scheme><span class=keyword>public-final</span></code>, <code class=scheme><span class=keyword>override-final</span></code>,
+<code class=scheme><span class=keyword>private</span></code> clauses and their corresponding definitions (among
+themselves, and with respect to other clauses in the class) does not
+matter.</p>
+<p>
+As shown in section&nbsp;<a href="#node_sec_4.3">4.3</a>, a method definition is syntactically
+restricted to certain procedure forms, as defined by the grammar for
+<code class=scheme><span class=variable>method-procedure</span></code>; in the last two forms of
+<code class=scheme><span class=variable>method-procedure</span></code>, the body <code class=scheme><span class=variable>variable</span></code> must be one of the
+<code class=scheme><span class=variable>variable</span></code>s bound by <code class=scheme><span class=keyword>let-values</span></code> or
+<code class=scheme><span class=keyword>letrec-values</span></code>. A <code class=scheme><span class=variable>method-procedure</span></code> expression is not
+evaluated directly. Instead, for each method, a class-specific method
+procedure is created; it takes an initial object argument, in
+addition to the arguments the procedure would accept if the
+<code class=scheme><span class=variable>method-procedure</span></code> expression were evaluated directly. The
+body of the procedure is transformed to access methods and fields
+through the object argument.</p>
+<p>
+A method declared with <code class=scheme><span class=keyword>public</span></code> or <code class=scheme><span class=keyword>public-final</span></code>
+introduces a new method into a class. The method must not be present
+already in the superclass, otherwise the <a name="node_idx_146"></a><code class=scheme>exn:fail:object</code> exception is raised when
+the class expression is evaluated. A method declared with
+<code class=scheme><span class=keyword>public-final</span></code> cannot be overridden in a subclass.</p>
+<p>
+A method declared with <code class=scheme><span class=keyword>override</span></code> or <code class=scheme><span class=keyword>override-final</span></code>
+overrides a definition already present in the superclass. If the
+method is not already present, the <a name="node_idx_148"></a><code class=scheme>exn:fail:object</code> exception is raised when the
+class expression is evaluated. A method declared with
+<code class=scheme><span class=keyword>override-final</span></code> cannot be overridden in a subclass.</p>
+<p>
+A method declared with <code class=scheme><span class=keyword>private</span></code> is not accessible outside the
+class expression, cannot be overridden, and never overrides a method
+in the superclass.</p>
+<p>
+</p>
+<a name="node_sec_4.3.3.2"></a>
+<h4><a href="mzlib.html#node_toc_node_sec_4.3.3.2">4.3.3.2&nbsp;&nbsp;Inherited and Superclass Methods</a></h4>
+<p>Each <a name="node_kw_definitioninherit"></a><a name="node_idx_150"></a><code class=scheme><span class=keyword>inherit</span></code> and <a name="node_kw_definitionrename"></a><a name="node_idx_152"></a><code class=scheme><span class=keyword>rename</span></code> clause declares one
+or more methods that are not defined in the class, but must be
+present in the superclass. Methods declared with <code class=scheme><span class=keyword>inherit</span></code> are
+subject to overriding, while methods declared with <code class=scheme><span class=keyword>rename</span></code>
+are not. Methods that are present in the superclass but not declared
+with <code class=scheme><span class=keyword>inherit</span></code> or <code class=scheme><span class=keyword>rename</span></code> are not directly accessible
+in the class (through they can be called with <code class=scheme><span class=keyword>send</span></code>).</p>
+<p>
+Every public method in a superclass is present in a derived class,
+even if it is not declared with <code class=scheme><span class=keyword>inherit</span></code> in the derived
+class. The <code class=scheme><span class=keyword>inherit</span></code> clause does not control inheritance, but
+merely controls lexical scope within a class expression.</p>
+<p>
+If a method declared with <code class=scheme><span class=keyword>inherit</span></code> is not present in the
+superclass, the <a name="node_idx_154"></a><code class=scheme>exn:fail:object</code> exception is raised when the class expression is
+evaluated.</p>
+<p>
+</p>
+<a name="node_sec_4.3.3.3"></a>
+<h4><a href="mzlib.html#node_toc_node_sec_4.3.3.3">4.3.3.3&nbsp;&nbsp;Internal and External Names</a></h4>
+<p></p>
+<p>
+Each method declared with <code class=scheme><span class=keyword>public</span></code>, <code class=scheme><span class=keyword>override</span></code>,
+<code class=scheme><span class=keyword>public-final</span></code>, <code class=scheme><span class=keyword>override-final</span></code>, <code class=scheme><span class=keyword>inherit</span></code>, and
+<code class=scheme><span class=keyword>rename</span></code> can have separate internal and external names when
+<code class=scheme>(<span class=variable>internal-variable</span> <span class=variable>external-variable</span>)</code> is used for declaring
+the method. The internal name is used to access the method directly
+within the class expression, while the external name is used with
+<code class=scheme><span class=keyword>send</span></code> and <code class=scheme><span class=keyword>generic</span></code> (see section&nbsp;<a href="#node_sec_4.5">4.5</a>).  If a
+single <code class=scheme><span class=variable>variable</span></code> is provided for a method declaration, the
+variable is used for both the internal and external names.</p>
+<p>
+Method inheritance and overriding are based external names, only.
+Separate internal and external names are <em>required</em> for
+<code class=scheme><span class=keyword>rename</span></code>, because its purpose is to provide access to the
+superclass's version of an overridden method.</p>
+<p>
+Each <code class=scheme><span class=keyword>init</span></code>, <code class=scheme><span class=keyword>init-field</span></code>, <code class=scheme><span class=keyword>field</span></code>, or
+<code class=scheme><span class=keyword>inherit-field</span></code> variable similarly has an internal and an
+external name. The internal name is used within the class to access
+the variable, while the external name is used outside the class when
+providing initialization arguments (e.g., to <code class=scheme><span class=keyword>instantiate</span></code>),
+inheriting a field, or accessing a field externally (e.g., with
+<code class=scheme><span class=keyword>class-field-accessor</span></code>). As for methods, when inheriting a field
+with <code class=scheme><span class=keyword>inherit-field</span></code>, the external name is matched to an
+external field name in the superclass, while the internal name is
+bound in the <code class=scheme><span class=keyword>class</span></code> expression.</p>
+<p>
+A single identifier can be used as an internal variable and an
+external variable, and it is possible to use the same identifier as
+internal and external variables for different bindings. Furthermore,
+within a single class, a single name can be used as an external
+method name, an external field name, and an external
+initialization argument name. Overall, each internal variable must be
+distinct from all other internal variables, each external method name
+must be distinct from all other method names, each external field
+name must be distinct from all other field names, and each
+initialization argument name must be distinct from all other
+initialization argument names</p>
+<p>
+By default, external names have no lexical scope, which means, for
+example, that an external method name matches the same syntactic
+symbol in all uses of <code class=scheme><span class=keyword>send</span></code>. The
+<a name="node_kw_definitiondefine-local-member-name"></a><a name="node_idx_156"></a><code class=scheme><span class=keyword>define-local-member-name</span></code> form introduces a set of scoped
+external names:
+</p>
+<div align=left><pre class=scheme>(<span class=keyword>define-local-member-name</span> <span class=variable>variable</span> <tt>&middot;&middot;&middot;</tt>)
+</pre></div><p>
+This form binds each <code class=scheme><span class=variable>variable</span></code> so that, within the scope of the
+definition, each use of each <code class=scheme><span class=variable>variable</span></code> as an external name is
+resolved to a hidden name generated by the
+<code class=scheme><span class=keyword>define-local-member-name</span></code> declaration. Thus, methods, fields,
+and initialization arguments declared with such external-name
+<code class=scheme><span class=variable>variable</span></code>s are accessible only in the scope of the
+<code class=scheme><span class=keyword>define-local-member-name</span></code> declaration.</p>
+<p>
+The binding introduced by <code class=scheme><span class=keyword>define-local-member-name</span></code> is a syntax
+binding that can be exported and imported with modules (see
+section&nbsp;<a href="../mzscheme/mzscheme-Z-H-5.html#node_chap_5">5</a> in <a href="../mzscheme/mzscheme.html"><i>PLT MzScheme: Language Manual</i></a>). Each execution of a
+<code class=scheme><span class=keyword>define-local-member-name</span></code> declaration generates a distinct
+hidden name. The <code class=scheme>interface-&gt;method-names</code> procedure (see
+section&nbsp;<a href="#node_sec_4.6">4.6</a>) does not expose hidden names.</p>
+<p>
+Example:
+</p>
+<div align=left><pre class=scheme>(<span class=keyword>define</span> <span class=variable>o</span> (<span class=keyword>let</span> ()
+            (<span class=keyword>define-local-member-name</span> <span class=variable>m</span>)
+            (<span class=keyword>define</span> <span class=variable>c%</span> (<span class=keyword>class</span> <code class=scheme>object%</code>
+                         (<span class=keyword>define/public</span> (<span class=variable>m</span>) <span class=selfeval>10</span>)
+                         (<span class=keyword>super-new</span>))
+            (<span class=keyword>define</span> <span class=variable>o</span> (<span class=keyword>new</span> <span class=variable>c%</span>))
+
+            (<span class=keyword>send</span> <span class=variable>o</span> <span class=variable>m</span>) <span class=comment>; =&gt; <code class=schemeresponse><span class=selfeval>10</span></code></span>
+            <span class=variable>o</span>))
+
+(<span class=keyword>send</span> <span class=variable>o</span> <span class=variable>m</span>) <span class=comment>; =&gt; error: no method <code class=scheme><span class=variable>m</span></code></span>
+</pre></div><p></p>
+<p>
+</p>
+<a name="node_sec_4.4"></a>
+<h2><a href="mzlib.html#node_toc_node_sec_4.4">4.4&nbsp;&nbsp;Creating Objects</a></h2>
+<p><a name="node_idx_158"></a></p>
+<p>
+<a name="node_idx_160"></a>
+The <code class=scheme>make-object</code> procedure creates a new object with by-position
+initialization arguments:
+</p>
+<p>
+&nbsp;&nbsp;<a name="node_idx_162"></a><a name="node_kw_definitionmake-object"></a><code class=scheme>(make-object</code><tt>&nbsp;</tt><code class=scheme><span class=variable>class init-v</span></code><tt>&nbsp;</tt><tt>&middot;&middot;&middot;</tt><code class=scheme>)</code>
+</p>
+<p>
+An instance of <code class=scheme><span class=variable>class</span></code> is created, and the <code class=scheme><span class=variable>init-v</span></code>s are
+passed as initialization arguments, bound to the initialization
+variables of <code class=scheme><span class=variable>class</span></code> for the newly created object as described in
+section&nbsp;<a href="#node_sec_4.3.1">4.3.1</a>. If <code class=scheme><span class=variable>class</span></code> is not a class, the
+<a name="node_idx_164"></a><code class=scheme>exn:fail:contract</code> exception is raised.</p>
+<p>
+The <a name="node_kw_definitionnew"></a><a name="node_idx_166"></a><code class=scheme><span class=keyword>new</span></code> form creates a new object with by-name
+initialization arguments:
+</p>
+<div align=left><pre class=scheme>(<span class=keyword>new</span> <span class=variable>class-expr</span> (<span class=variable>variable</span> <span class=variable>by-name-expr</span>) <tt>&middot;&middot;&middot;</tt>)
+</pre></div><p>
+An instance of the value of <code class=scheme><span class=variable>class-expr</span></code> is created, and
+the value of each <code class=scheme><span class=variable>by-name-expr</span></code> is provided as a
+by-name argument for the corresponding <code class=scheme><span class=variable>variable</span></code>.</p>
+<p>
+The <a name="node_kw_definitioninstantiate"></a><a name="node_idx_168"></a><code class=scheme><span class=keyword>instantiate</span></code> form creates a new object with both
+by-position and by-name initialization arguments:
+</p>
+<div align=left><pre class=scheme>(<span class=keyword>instantiate</span> <span class=variable>class-expr</span> (<span class=variable>by-pos-expr</span> <tt>&middot;&middot;&middot;</tt>) (<span class=variable>variable</span> <span class=variable>by-name-expr</span>) <tt>&middot;&middot;&middot;</tt>)
+</pre></div><p>
+An instance of the value of <code class=scheme><span class=variable>class-expr</span></code> is created, and the
+values of the <code class=scheme><span class=variable>by-pos-expr</span></code>s are provided as by-position
+initialization arguments. In addition, the value of each
+<code class=scheme><span class=variable>by-name-expr</span></code> is provided as a by-name argument for the
+corresponding <code class=scheme><span class=variable>variable</span></code>.</p>
+<p>
+All fields in the newly created object are initially bound to the
+special undefined value (see
+section&nbsp;<a href="../mzscheme/mzscheme-Z-H-3.html#node_sec_3.1">3.1</a> in <a href="../mzscheme/mzscheme.html"><i>PLT MzScheme: Language Manual</i></a>). Initialization variables with default value
+expressions (and no provided value) are also initialized to
+undefined. After argument values are assigned to initialization
+variables, expressions in <code class=scheme><span class=keyword>field</span></code> clauses, <code class=scheme><span class=keyword>init-field</span></code>
+clauses with no provided argument, <code class=scheme><span class=keyword>init</span></code> clauses with no
+provided argument, private field definitions, and other expressions
+are evaluated. Those expressions are evaluated as they appear in the
+class expression, from left to right.</p>
+<p>
+Sometime during the evaluation of the expressions, superclass-declared
+initializations must be executed once by invoking the form bound to
+<code class=scheme><span class=variable>super-instantiate-variable</span></code> (usually
+<code class=scheme><span class=keyword>super-instantiate</span></code>):
+</p>
+<div align=left><pre class=scheme>(<span class=variable>super-instantiate-variable</span> (<span class=variable>by-position-super-init-expr</span> <tt>&middot;&middot;&middot;</tt>) (<span class=variable>variable</span> <span class=variable>by-name-super-init-expr</span> <tt>&middot;&middot;&middot;</tt>) <tt>&middot;&middot;&middot;</tt>)
+</pre></div><p>
+or by calling the procedure bound to <code class=scheme><span class=variable>super-make-object-variable</span></code>
+(usually <code class=scheme><code class=scheme>super-make-object</code></code>):
+</p>
+<div align=left><pre class=scheme>(<span class=variable>super-make-object-variable</span> <span class=variable>super-init-v</span> <tt>&middot;&middot;&middot;</tt>)
+</pre></div><p>
+or by invoking the form bound to <code class=scheme><span class=variable>super-new-variable</span></code> (usually
+<code class=scheme><span class=keyword>super-new</span></code>):
+</p>
+<div align=left><pre class=scheme>(<span class=variable>super-new-variable</span> (<span class=variable>variable</span> <span class=variable>by-name-super-init-expr</span> <tt>&middot;&middot;&middot;</tt>) <tt>&middot;&middot;&middot;</tt>)
+</pre></div><p>
+The <code class=scheme><span class=variable>by-position-super-init-expr</span></code>s,
+<code class=scheme><span class=variable>by-name-super-init-exp</span></code>s, and <code class=scheme><span class=variable>super-init-v</span></code>s are mapped to
+initialization variables in the same way as for
+<code class=scheme><span class=keyword>instantiate</span></code>, <code class=scheme><code class=scheme>make-object</code></code>, and <code class=scheme><span class=keyword>new</span></code>.</p>
+<p>
+By-name initialization arguments to a class that have no matching
+initialization variable are implicitly added as by-name arguments to
+a <code class=scheme><span class=variable>super-instantiate-variable</span></code>, <code class=scheme><span class=variable>super-make-object-variable</span></code>,
+or <code class=scheme><span class=variable>super-new-variable</span></code> invocation, after the explicit arguments.
+If multiple initialization arguments are provided for the same name,
+the first (if any) is used, and the unused arguments are propagated
+to the superclass. (Note that converted by-position arguments are
+always placed before explicit by-name arguments.) The initialization
+procedure for the <code class=scheme>object%</code> class accepts zero initialization
+arguments; if it receives any by-name initialization arguments, then
+<a name="node_idx_170"></a><code class=scheme>exn:fail:object</code> exception is raised.</p>
+<p>
+Fields inherited from a superclass will not be initialized until the
+superclass's initialization procedure is invoked. In contrast, all
+methods are available for an object as soon as the object is created;
+the overriding of methods is not affect by initialization (unlike
+objects in C++).</p>
+<p>
+It is an error to reach the end of initialization for any class in the
+hierarchy without invoking superclasses initialization; the
+<a name="node_idx_172"></a><code class=scheme>exn:fail:object</code> exception is raised in such a case. Also, if superclass
+initialization is invoked more than once, the <a name="node_idx_174"></a><code class=scheme>exn:fail:object</code> exception is raised.</p>
+<p>
+</p>
+<a name="node_sec_4.5"></a>
+<h2><a href="mzlib.html#node_toc_node_sec_4.5">4.5&nbsp;&nbsp;Field and Method Access</a></h2>
+<p><a name="node_idx_176"></a></p>
+<p>
+<a name="node_idx_178"></a> <a name="node_idx_180"></a>
+In expressions within a class definition, the initialization
+variables, fields, and methods of the class all part of the
+environment, as are the names bound to
+<code class=scheme><span class=variable>super-instantiate-variable</span></code>, <code class=scheme><span class=variable>super-make-object-variable</span></code>,
+and <code class=scheme><span class=variable>super-new-variable</span></code>. Within a method body, only the fields
+and other methods of the class can be referenced; a reference to any
+other class-introduced identifier is a syntax error.  Elsewhere
+within the class, all class-introduced identifiers are available, and
+fields and initialization variables can be mutated with
+<a name="node_idx_182"></a><code class=scheme><span class=keyword>set!</span></code>.</p>
+<p>
+</p>
+<a name="node_sec_4.5.1"></a>
+<h3><a href="mzlib.html#node_toc_node_sec_4.5.1">4.5.1&nbsp;&nbsp;Methods</a></h3>
+<p><a name="node_idx_184"></a>
+Method names within a class can only be used in the procedure position
+of an application expression; any other use is a syntax error. To
+allow methods to be applied to lists of arguments, a method
+application can have the form
+</p>
+<div align=left><pre class=scheme>(<span class=variable>method-variable</span> <span class=variable>arg-expr</span> <tt>&middot;&middot;&middot;</tt> . <span class=variable>arg-list-expr</span>)
+</pre></div><p>
+which calls the method in a way analogous to <code class=scheme>(<code class=scheme>apply</code>
+ <span class=variable>method-variable</span> <span class=variable>arg-expr</span> <tt>&middot;&middot;&middot;</tt> <span class=variable>arg-list-expr</span>)</code>. The
+<code class=scheme><span class=variable>arg-list-expr</span></code> must not be a parenthesized expression, otherwise
+the dot and the parentheses will cancel each other.</p>
+<p>
+Methods are called from outside a class with the <a name="node_kw_definitionsend"></a><a name="node_idx_186"></a><code class=scheme><span class=keyword>send</span></code>
+and <a name="node_kw_definitionsend/apply"></a><a name="node_idx_188"></a><code class=scheme><span class=keyword>send/apply</span></code> forms:
+</p>
+<div align=left><pre class=scheme>(<span class=keyword>send</span> <span class=variable>obj-expr</span> <span class=variable>method-name</span> <span class=variable>arg-expr</span> <tt>&middot;&middot;&middot;</tt>)
+(<span class=keyword>send</span> <span class=variable>obj-expr</span> <span class=variable>method-name</span> <span class=variable>arg-expr</span> <tt>&middot;&middot;&middot;</tt> . <span class=variable>arg-list-expr</span>)
+(<span class=keyword>send/apply</span> <span class=variable>obj-expr</span> <span class=variable>method-name</span> <span class=variable>arg-expr</span> <tt>&middot;&middot;&middot;</tt> <span class=variable>arg-list-expr</span>)
+</pre></div><p>
+where the last two forms apply the method to a list of argument
+values; in the second form, <code class=scheme><span class=variable>arg-list-expr</span></code> cannot be a
+parenthesized expression.  For any <code class=scheme><span class=keyword>send</span></code> or <code class=scheme><span class=keyword>send/apply</span></code>,
+if <code class=scheme><span class=variable>obj-expr</span></code> does not produce an object, the
+<a name="node_idx_190"></a><code class=scheme>exn:fail:contract</code> exception is raised.  If the object has no public method
+<code class=scheme><span class=variable>method-name</span></code>, the <a name="node_idx_192"></a><code class=scheme>exn:fail:object</code> exception is raised.</p>
+<p>
+The <a name="node_kw_definitionsend*"></a><a name="node_idx_194"></a><code class=scheme><span class=keyword>send*</span></code> form calls multiple methods of an object in the
+specified order:
+</p>
+<div align=left><pre class=scheme>(<span class=keyword>send*</span> <span class=variable>obj-expr</span> <span class=variable>msg</span> <tt>&middot;&middot;&middot;</tt>)
+
+<span class=variable>msg</span> is one of
+  (<span class=variable>method-name</span> <span class=variable>arg-expr</span> <tt>&middot;&middot;&middot;</tt>)
+  (<span class=variable>method-name</span> <span class=variable>arg-expr</span> <tt>&middot;&middot;&middot;</tt> . <span class=variable>arg-list-expr</span>)
+</pre></div><p>
+where <code class=scheme><span class=variable>arg-list-expr</span></code> is not a parenthesized expression.</p>
+<p>
+Example:
+</p>
+<div align=left><pre class=scheme>(<span class=keyword>send*</span> <span class=variable>edit</span> (<span class=variable>begin-edit-sequence</span>)
+            (<span class=variable>insert</span> <span class=selfeval>&quot;Hello&quot;</span>)
+            (<span class=variable>insert</span> <span class=selfeval>#\newline</span>)
+            (<span class=variable>end-edit-sequence</span>))
+</pre></div><p>
+which is the same as
+</p>
+<div align=left><pre class=scheme>(<span class=keyword>let</span> ([<span class=variable>o</span> <span class=variable>edit</span>])
+  (<span class=keyword>send</span> <span class=variable>o</span> <span class=variable>begin-edit-sequence</span>)
+  (<span class=keyword>send</span> <span class=variable>o</span> <span class=variable>insert</span> <span class=selfeval>&quot;Hello&quot;</span>)
+  (<span class=keyword>send</span> <span class=variable>o</span> <span class=variable>insert</span> <span class=selfeval>#\newline</span>)
+  (<span class=keyword>send</span> <span class=variable>o</span> <span class=variable>end-edit-sequence</span>))
+</pre></div><p></p>
+<p>
+The <a name="node_kw_definitionwith-method"></a><a name="node_idx_196"></a><code class=scheme><span class=keyword>with-method</span></code> form extracts a method from an object and
+binds a local name that can be applied directly (in the same way as
+declared methods within a class):
+</p>
+<div align=left><pre class=scheme>(<span class=keyword>with-method</span> ((<span class=variable>variable</span> (<span class=variable>object-expr</span> <span class=variable>method-name</span>)) <tt>&middot;&middot;&middot;</tt>)
+  <span class=variable>expr</span> <tt>&middot;&middot;&middot;</tt><sup>1</sup>)
+</pre></div><p></p>
+<p>
+Example:
+</p>
+<div align=left><pre class=scheme>(<span class=keyword>let</span> ([<span class=variable>s</span> (<span class=keyword>new</span> <span class=variable>stack%</span>)])
+  (<span class=keyword>with-method</span> ([<span class=variable>push</span> (<span class=variable>s</span> <span class=variable>push!</span>)]
+                [<span class=variable>pop</span> (<span class=variable>s</span> <span class=variable>pop!</span>)])
+    (<span class=variable>push</span> <span class=selfeval>10</span>)
+    (<span class=variable>push</span> <span class=selfeval>9</span>)
+    (<span class=variable>pop</span>)))
+</pre></div><p>
+which is the same as
+</p>
+<div align=left><pre class=scheme>(<span class=keyword>let</span> ([<span class=variable>s</span> (<span class=keyword>new</span> <span class=variable>stack%</span>)])
+  (<span class=keyword>send</span> <span class=variable>s</span> <span class=variable>push!</span> <span class=selfeval>10</span>)
+  (<span class=keyword>send</span> <span class=variable>s</span> <span class=variable>push!</span> <span class=selfeval>9</span>)
+  (<span class=keyword>send</span> <span class=variable>s</span> <span class=variable>pop!</span>))
+</pre></div><p></p>
+<p>
+</p>
+<a name="node_sec_4.5.2"></a>
+<h3><a href="mzlib.html#node_toc_node_sec_4.5.2">4.5.2&nbsp;&nbsp;Fields</a></h3>
+<p>The <a name="node_kw_definitionget-field"></a><a name="node_idx_198"></a><code class=scheme><span class=keyword>get-field</span></code> form:
+</p>
+<div align=left><pre class=scheme>(<span class=variable>get-field</span> <span class=variable>identifier</span> <span class=variable>object-expr</span>)
+</pre></div><p>
+extracts the field named by the identifier from the
+value of the <code class=scheme><span class=variable>object-expr</span></code>.</p>
+<p>
+The <a name="node_kw_definitionfield-bound_Q_"></a><a name="node_idx_200"></a><code class=scheme><span class=keyword>field-bound?</span></code> form:
+</p>
+<div align=left><pre class=scheme>(<span class=variable>field-bound?</span> <span class=variable>identifier</span> <span class=variable>object-expr</span>)
+</pre></div><p>
+extracts produces <code class=scheme><span class=selfeval>#t</span></code> if the <code class=scheme><span class=variable>object-expr</span></code>
+evaluates to an object that has a field named
+<code class=scheme><span class=variable>identifier</span></code> and produces <code class=scheme><span class=selfeval>#f</span></code> otherwise.</p>
+<p>
+
+
+</p>
+<p></p>
+<p>
+
+<a name="node_idx_202"></a><a name="node_kw_definitionfield-names"></a><code class=scheme>(field-names</code><tt>&nbsp;</tt><code class=scheme><span class=variable>object</span></code><code class=scheme>)</code> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<small>P</small><small>R</small><small>O</small><small>C</small><small>E</small><small>D</small><small>U</small><small>R</small><small>E</small>
+</p>
+<p>
+The procedure <code class=scheme><span class=variable>field-names</span></code> returns a list of all of
+the names of the fields bound in <code class=scheme><span class=variable>object</span></code>.</p>
+<p>
+If you have access to the class of an object, the
+<a name="node_kw_definitionclass-field-accessor"></a><a name="node_idx_204"></a><code class=scheme><span class=keyword>class-field-accessor</span></code> and
+<a name="node_kw_definitionclass-field-mutator"></a><a name="node_idx_206"></a><code class=scheme><span class=keyword>class-field-mutator</span></code> forms provide efficient
+access to the object's fields.
+</p>
+<ul><p>
+</p>
+<li><p><code class=scheme>(<span class=keyword>class-field-accessor</span> <span class=variable>class-expr</span> <span class=variable>field-name</span>)</code> returns
+an accessor procedure that takes an instance of the class produced by
+<code class=scheme><span class=variable>class-expr</span></code> and returns the value of the object's
+<code class=scheme><span class=variable>field-name</span></code> field.</p>
+<p>
+</p>
+<li><p><code class=scheme>(<span class=keyword>class-field-mutator</span> <span class=variable>class-expr</span> <span class=variable>field-name</span>)</code> returns an
+mutator procedure that takes an instance of the class produced by
+<code class=scheme><span class=variable>class-expr</span></code> and a new value for the field, mutates the field in
+the object named by <code class=scheme><span class=variable>field-name</span></code>, then returns void.</p>
+<p>
+</p>
+</ul><p></p>
+<p>
+</p>
+<a name="node_sec_4.5.3"></a>
+<h3><a href="mzlib.html#node_toc_node_sec_4.5.3">4.5.3&nbsp;&nbsp;Generics</a></h3>
+<p>A <strong>generic</strong> can be used instead of a method name to avoid the
+cost of relocating a method by name within a class. The
+<code class=scheme>make-generic</code> procedure and <a name="node_kw_definitiongeneric"></a><a name="node_idx_208"></a><code class=scheme><span class=keyword>generic</span></code> form create
+generics:
+</p>
+<ul><p>
+</p>
+<li><p><a name="node_idx_210"></a><a name="node_kw_definitionmake-generic"></a><code class=scheme>(make-generic</code><tt>&nbsp;</tt><code class=scheme><span class=variable>class-or-interface symbol</span></code><code class=scheme>)</code> returns a generic
+that works on instances of <code class=scheme><span class=variable>class-or-interface</span></code> (or an instance
+of a class/interface derived from <code class=scheme><span class=variable>class-or-interface</span></code>) to call
+the method named by <code class=scheme><span class=variable>symbol</span></code>.</p>
+<p>
+If <code class=scheme><span class=variable>class-or-interface</span></code> does not contain a method with the
+(external and non-scoped) name <code class=scheme><span class=variable>symbol</span></code>, the
+<a name="node_idx_212"></a><code class=scheme>exn:fail:object</code> exception is raised.</p>
+<p>
+</p>
+<li><p><code class=scheme>(<span class=keyword>generic</span> <span class=variable>class-or-interface-expr</span> <span class=variable>name</span>)</code> is analogous to
+<code class=scheme>(make-generic <code class=scheme><span class=variable>class-or-interface-expr</span></code> '<code class=scheme><span class=variable>name</span></code>)</code>,
+except that <code class=scheme><span class=variable>name</span></code> can be a scoped method name declared by
+<code class=scheme><span class=keyword>define-local-member-name</span></code> (see section&nbsp;<a href="#node_sec_4.3.3.3">4.3.3.3</a>).</p>
+<p>
+</p>
+</ul><p></p>
+<p>
+A generic is applied with <a name="node_kw_definitionsend-generic"></a><a name="node_idx_214"></a><code class=scheme><span class=keyword>send-generic</span></code>:
+</p>
+<div align=left><pre class=scheme>(<span class=keyword>send-generic</span> <span class=variable>obj-expr</span> <span class=variable>generic-expr</span> <span class=variable>arg-expr</span> <tt>&middot;&middot;&middot;</tt>)
+(<span class=keyword>send-generic</span> <span class=variable>obj-expr</span> <span class=variable>generic-expr</span> <span class=variable>arg-expr</span> <tt>&middot;&middot;&middot;</tt> . <span class=variable>arg-list-expr</span>)
+</pre></div><p>
+where the value of <code class=scheme><span class=variable>obj-expr</span></code> is an object and the value of
+<code class=scheme><span class=variable>generic-expr</span></code> is a generic.</p>
+<p>
+</p>
+<a name="node_sec_4.6"></a>
+<h2><a href="mzlib.html#node_toc_node_sec_4.6">4.6&nbsp;&nbsp;Object, Class, and Interface Utilities</a></h2>
+<p><a name="node_idx_216"></a></p>
+<p>
+<a name="node_idx_218"></a><a name="node_kw_definitionobject_Q_"></a><code class=scheme>(object?</code><tt>&nbsp;</tt><code class=scheme><span class=variable>v</span></code><code class=scheme>)</code> returns <code class=scheme><span class=selfeval>#t</span></code> if <code class=scheme><span class=variable>v</span></code> is a object, <code class=scheme><span class=selfeval>#f</span></code>
+otherwise.</p>
+<p>
+<a name="node_idx_220"></a><a name="node_kw_definitionclass_Q_"></a><code class=scheme>(class?</code><tt>&nbsp;</tt><code class=scheme><span class=variable>v</span></code><code class=scheme>)</code> returns <code class=scheme><span class=selfeval>#t</span></code> if <code class=scheme><span class=variable>v</span></code> is a class, <code class=scheme><span class=selfeval>#f</span></code>
+otherwise.</p>
+<p>
+<a name="node_idx_222"></a><a name="node_kw_definitioninterface_Q_"></a><code class=scheme>(interface?</code><tt>&nbsp;</tt><code class=scheme><span class=variable>v</span></code><code class=scheme>)</code> returns <code class=scheme><span class=selfeval>#t</span></code> if <code class=scheme><span class=variable>v</span></code> is an interface,
+<code class=scheme><span class=selfeval>#f</span></code> otherwise.</p>
+<p>
+<a name="node_idx_224"></a><a name="node_kw_definitionobject=_Q_"></a><code class=scheme>(object=?</code><tt>&nbsp;</tt><code class=scheme><span class=variable>object</span></code><tt>&nbsp;</tt>[<code class=scheme><span class=variable>object</span></code>]<code class=scheme>)</code> determines if two objects
+are the same object, or not (uses <code class=scheme><code class=scheme>eq?</code></code>, but also
+works properly with contracts).</p>
+<p>
+<a name="node_idx_226"></a><a name="node_kw_definitionobject->vector"></a><code class=scheme>(object-&gt;vector</code><tt>&nbsp;</tt><code class=scheme><span class=variable>object</span></code><tt>&nbsp;</tt>[<code class=scheme><span class=variable>opaque-v</span></code>]<code class=scheme>)</code> returns a vector
+representing <code class=scheme><span class=variable>object</span></code> that shows its inspectable fields,
+analogous to <code class=scheme>struct-&gt;vector</code> (see section&nbsp;<a href="../mzscheme/mzscheme-Z-H-4.html#node_sec_4.8">4.8</a> in <a href="../mzscheme/mzscheme.html"><i>PLT MzScheme: Language Manual</i></a>).</p>
+<p>
+<a name="node_idx_228"></a><a name="node_kw_definitionclass->interface"></a><code class=scheme>(class-&gt;interface</code><tt>&nbsp;</tt><code class=scheme><span class=variable>class</span></code><code class=scheme>)</code> returns the interface implicitly defined
+by <code class=scheme><span class=variable>class</span></code> (see the overview at the beginning of Chapter&nbsp;<a href="#node_chap_4">4</a>).</p>
+<p>
+<a name="node_idx_230"></a><a name="node_kw_definitionobject-interface"></a><code class=scheme>(object-interface</code><tt>&nbsp;</tt><code class=scheme><span class=variable>object</span></code><code class=scheme>)</code> returns the interface implicitly
+defined by the class of <code class=scheme><span class=variable>object</span></code>.</p>
+<p>
+<a name="node_idx_232"></a><a name="node_kw_definitionis-a_Q_"></a><code class=scheme>(is-a?</code><tt>&nbsp;</tt><code class=scheme><span class=variable>v interface</span></code><code class=scheme>)</code> returns <code class=scheme><span class=selfeval>#t</span></code> if <code class=scheme><span class=variable>v</span></code> is an instance
+of a class that implements <code class=scheme><span class=variable>interface</span></code>, <code class=scheme><span class=selfeval>#f</span></code> otherwise.</p>
+<p>
+<a name="node_idx_234"></a><a name="node_kw_definitionis-a_Q_"></a><code class=scheme>(is-a?</code><tt>&nbsp;</tt><code class=scheme><span class=variable>v class</span></code><code class=scheme>)</code> returns <code class=scheme><span class=selfeval>#t</span></code> if <code class=scheme><span class=variable>v</span></code> is an instance of
+<code class=scheme><span class=variable>class</span></code> (or of a class derived from <code class=scheme><span class=variable>class</span></code>), <code class=scheme><span class=selfeval>#f</span></code>
+otherwise.</p>
+<p>
+<a name="node_idx_236"></a><a name="node_kw_definitionsubclass_Q_"></a><code class=scheme>(subclass?</code><tt>&nbsp;</tt><code class=scheme><span class=variable>v class</span></code><code class=scheme>)</code> returns <code class=scheme><span class=selfeval>#t</span></code> if <code class=scheme><span class=variable>v</span></code> is a class
+derived from (or equal to) <code class=scheme><span class=variable>class</span></code>, <code class=scheme><span class=selfeval>#f</span></code> otherwise.</p>
+<p>
+<a name="node_idx_238"></a><a name="node_kw_definitionimplementation_Q_"></a><code class=scheme>(implementation?</code><tt>&nbsp;</tt><code class=scheme><span class=variable>v interface</span></code><code class=scheme>)</code> returns <code class=scheme><span class=selfeval>#t</span></code> if <code class=scheme><span class=variable>v</span></code> is a
+class that implements <code class=scheme><span class=variable>interface</span></code>, <code class=scheme><span class=selfeval>#f</span></code> otherwise.</p>
+<p>
+<a name="node_idx_240"></a><a name="node_kw_definitioninterface-extension_Q_"></a><code class=scheme>(interface-extension?</code><tt>&nbsp;</tt><code class=scheme><span class=variable>v interface</span></code><code class=scheme>)</code> returns <code class=scheme><span class=selfeval>#t</span></code> if <code class=scheme><span class=variable>v</span></code>
+is an interface that extends <code class=scheme><span class=variable>interface</span></code>, <code class=scheme><span class=selfeval>#f</span></code> otherwise.</p>
+<p>
+<a name="node_idx_242"></a><a name="node_kw_definitionmethod-in-interface_Q_"></a><code class=scheme>(method-in-interface?</code><tt>&nbsp;</tt><code class=scheme><span class=variable>symbol interface</span></code><code class=scheme>)</code> returns <code class=scheme><span class=selfeval>#t</span></code> if
+<code class=scheme><span class=variable>interface</span></code> (or any of its ancestor interfaces) defines an
+instance variable with the name <code class=scheme><span class=variable>symbol</span></code>, <code class=scheme><span class=selfeval>#f</span></code> otherwise.</p>
+<p>
+<a name="node_idx_244"></a><a name="node_kw_definitioninterface->method-names"></a><code class=scheme>(interface-&gt;method-names</code><tt>&nbsp;</tt><code class=scheme><span class=variable>interface</span></code><code class=scheme>)</code> returns a list of symbols for
+the instance variable names in <code class=scheme><span class=variable>interface</span></code> (including instance
+variables inherited from superinterfaces).</p>
+<p>
+<a name="node_idx_246"></a><a name="node_kw_definitionobject-info"></a><code class=scheme>(object-info</code><tt>&nbsp;</tt><code class=scheme><span class=variable>object</span></code><code class=scheme>)</code> returns two values, analogous to the return
+values of <code class=scheme>struct-info</code> (see section&nbsp;<a href="../mzscheme/mzscheme-Z-H-4.html#node_sec_4.5">4.5</a> in <a href="../mzscheme/mzscheme.html"><i>PLT MzScheme: Language Manual</i></a>):
+</p>
+<ul><p>
+</p>
+<li><p><code class=scheme><span class=variable>class</span></code>: a class or <code class=scheme><span class=selfeval>#f</span></code>; the result is <code class=scheme><span class=selfeval>#f</span></code>
+if the current inspector does not control any class for which
+the <code class=scheme><span class=variable>object</span></code> is an instance.</p>
+<p>
+</p>
+<li><p><code class=scheme><span class=variable>skipped?</span></code>: <code class=scheme><span class=selfeval>#f</span></code> if the first result corresponds to
+the most specific class of <code class=scheme><span class=variable>object</span></code>, <code class=scheme><span class=selfeval>#t</span></code> otherwise.</p>
+<p>
+</p>
+</ul><p></p>
+<p>
+<a name="node_idx_248"></a><a name="node_kw_definitionclass-info"></a><code class=scheme>(class-info</code><tt>&nbsp;</tt><code class=scheme><span class=variable>class</span></code><code class=scheme>)</code> returns seven values, analogous to the return
+values of <code class=scheme>struct-type-info</code> (see section&nbsp;<a href="../mzscheme/mzscheme-Z-H-4.html#node_sec_4.5">4.5</a> in <a href="../mzscheme/mzscheme.html"><i>PLT MzScheme: Language Manual</i></a>):
+</p>
+<ul><p>
+</p>
+<li><p><code class=scheme><span class=variable>name-symbol</span></code>: the class's name as a symbol;</p>
+<p>
+</p>
+<li><p><code class=scheme><span class=variable>field-k</span></code>: the number of fields (public and private)
+defined by the class;</p>
+<p>
+</p>
+<li><p><code class=scheme><span class=variable>field-name-list</span></code>: a list of symbols corresponding to the
+class's public fields; this list can be larger than <code class=scheme><span class=variable>field-k</span></code>
+because it includes inherited fields;</p>
+<p>
+</p>
+<li><p><code class=scheme><span class=variable>field-accessor-proc</span></code>: an accessor procedure for obtaining
+field values in instances of the class; the accessor takes an
+instance and a field index between <code class=scheme><span class=selfeval>0</span></code> (inclusive)
+and <code class=scheme><span class=variable>field-k</span></code> (exclusive);</p>
+<p>
+</p>
+<li><p><code class=scheme><span class=variable>field-mutator-proc</span></code>: a mutator procedure for modifying
+field values in instances of the class; the mutator takes an
+instance, a field index between <code class=scheme><span class=selfeval>0</span></code> (inclusive)
+and <code class=scheme><span class=variable>field-k</span></code> (exclusive), and a new field value;</p>
+<p>
+</p>
+<li><p><code class=scheme><span class=variable>super-class</span></code>: a class for the most specific ancestor of
+the given class that is controlled by the current inspector,
+or <code class=scheme><span class=selfeval>#f</span></code> if no ancestor is controlled by the current
+inspector;</p>
+<p>
+</p>
+<li><p><code class=scheme><span class=variable>skipped?</span></code>: <code class=scheme><span class=selfeval>#f</span></code> if the sixth result is the most
+specific ancestor class, <code class=scheme><span class=selfeval>#t</span></code> otherwise.</p>
+<p>
+</p>
+</ul><p></p>
+<p>
+</p>
+<p>
+</p>
+<div class=footnoterule><hr></div><p></p>
+<div class=footnote><p><a name="footnote_Temp_4"></a><a href="#call_footnote_Temp_4"><sup><small>1</small></sup></a> A bracketed percent sign
+(``<code class=scheme>&lt;%&gt;</code>'') is used by convention in MzScheme to indicate that a
+variable's value is a interface.</p>
+<p><a name="footnote_Temp_5"></a><a href="#call_footnote_Temp_5"><sup><small>2</small></sup></a> A
+percent sign (``<code class=scheme>%</code>'') is used by convention in MzScheme to
+indicate that a variable's value is a class.</p>
+</div>
+<div align=right class=navigation><i>[Go to <span><a href="mzlib.html">first</a>, <a href="mzlib-Z-H-3.html">previous</a></span><span>, <a href="mzlib-Z-H-5.html">next</a></span> page<span>; &nbsp;&nbsp;</span><span><a href="mzlib.html#node_toc_start">contents</a></span><span><span>; &nbsp;&nbsp;</span><a href="mzlib-Z-H-42.html#node_index_start">index</a></span>]</i></div><p></p>
+</body>
+</html>

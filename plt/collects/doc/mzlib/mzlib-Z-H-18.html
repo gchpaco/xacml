@@ -1,0 +1,423 @@
+<!doctype html public "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!--
+
+Generated from mzlib.tex by tex2page, v 2004-09-11
+(running on MzScheme 209, unix), 
+(c) Dorai Sitaram, 
+http://www.ccs.neu.edu/~dorai/tex2page/tex2page-doc.html
+
+-->
+<head>
+<title>
+PLT MzLib: Libraries Manual
+</title>
+<link rel="stylesheet" type="text/css" href="mzlib-Z-S.css" title=default>
+<meta name=robots content="noindex,follow">
+</head>
+<body>
+<div align=right class=navigation><i>[Go to <span><a href="mzlib.html">first</a>, <a href="mzlib-Z-H-17.html">previous</a></span><span>, <a href="mzlib-Z-H-19.html">next</a></span> page<span>; &nbsp;&nbsp;</span><span><a href="mzlib.html#node_toc_start">contents</a></span><span><span>; &nbsp;&nbsp;</span><a href="mzlib-Z-H-42.html#node_index_start">index</a></span>]</i></div><p></p>
+<a name="node_chap_18"></a>
+<h1 class=chapter>
+<div class=chapterheading><a href="mzlib.html#node_toc_node_chap_18">Chapter 18</a></div><br>
+<a href="mzlib.html#node_toc_node_chap_18"><tt><strong>file.ss</strong></tt>: Filesystem Utilities</a></h1>
+<p><a name="node_idx_648"></a><a name="node_idx_650"></a></p>
+<p>
+See also section&nbsp;<a href="../mzscheme/mzscheme-Z-H-11.html#node_sec_11.3">11.3</a> in <a href="../mzscheme/mzscheme.html"><i>PLT MzScheme: Language Manual</i></a>.</p>
+<p>
+
+
+</p>
+<p></p>
+<p>
+
+<a name="node_idx_652"></a><a name="node_kw_definitionbuild-absolute-path"></a><code class=scheme>(build-absolute-path</code><tt>&nbsp;</tt><code class=scheme><span class=variable>base path</span></code><tt>&nbsp;</tt><tt>&middot;&middot;&middot;</tt><code class=scheme>)</code> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<small>P</small><small>R</small><small>O</small><small>C</small><small>E</small><small>D</small><small>U</small><small>R</small><small>E</small>
+</p>
+<p>
+Like <a name="node_idx_654"></a><code class=scheme>build-path</code> (see section&nbsp;<a href="../mzscheme/mzscheme-Z-H-11.html#node_sec_11.3">11.3</a> in <a href="../mzscheme/mzscheme.html"><i>PLT MzScheme: Language Manual</i></a>), but <code class=scheme><span class=variable>base</span></code>
+is required to be an absolute pathname. If <code class=scheme><span class=variable>base</span></code> is not an
+absolute pathname, <code class=scheme>error</code> is called.</p>
+<p>
+
+
+</p>
+<p></p>
+<p>
+
+<a name="node_idx_656"></a><a name="node_kw_definitionbuild-relative-path"></a><code class=scheme>(build-relative-path</code><tt>&nbsp;</tt><code class=scheme><span class=variable>base path</span></code><tt>&nbsp;</tt><tt>&middot;&middot;&middot;</tt><code class=scheme>)</code> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<small>P</small><small>R</small><small>O</small><small>C</small><small>E</small><small>D</small><small>U</small><small>R</small><small>E</small>
+</p>
+<p>
+Like <a name="node_idx_658"></a><code class=scheme>build-path</code> (see section&nbsp;<a href="../mzscheme/mzscheme-Z-H-11.html#node_sec_11.3">11.3</a> in <a href="../mzscheme/mzscheme.html"><i>PLT MzScheme: Language Manual</i></a>), but <code class=scheme><span class=variable>base</span></code>
+is required to be a relative pathname. If <code class=scheme><span class=variable>base</span></code> is not a relative
+pathname, <code class=scheme>error</code> is called.</p>
+<p>
+
+
+</p>
+<p></p>
+<p>
+
+<a name="node_idx_660"></a><a name="node_kw_definitioncall-with-input-file*"></a><code class=scheme>(call-with-input-file*</code><tt>&nbsp;</tt><code class=scheme><span class=variable>pathname proc flag-symbol</span></code><tt>&nbsp;</tt><tt>&middot;&middot;&middot;</tt><code class=scheme>)</code> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<small>P</small><small>R</small><small>O</small><small>C</small><small>E</small><small>D</small><small>U</small><small>R</small><small>E</small>
+</p>
+<p>
+Like <code class=scheme><code class=scheme>call-with-input-file</code></code>, except that the opened port is
+closed if control escapes from the body of <code class=scheme><span class=variable>proc</span></code>.</p>
+<p>
+
+
+</p>
+<p></p>
+<p>
+
+<a name="node_idx_662"></a><a name="node_kw_definitioncall-with-output-file*"></a><code class=scheme>(call-with-output-file*</code><tt>&nbsp;</tt><code class=scheme><span class=variable>pathname proc flag-symbol</span></code><tt>&nbsp;</tt><tt>&middot;&middot;&middot;</tt><code class=scheme>)</code> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<small>P</small><small>R</small><small>O</small><small>C</small><small>E</small><small>D</small><small>U</small><small>R</small><small>E</small>
+</p>
+<p>
+Like <code class=scheme><code class=scheme>call-with-output-file</code></code>, except that the opened port is
+closed if control escapes from the body of <code class=scheme><span class=variable>proc</span></code>.</p>
+<p>
+
+
+</p>
+<p></p>
+<p>
+
+<a name="node_idx_664"></a><a name="node_kw_definitioncopy-directory/files"></a><code class=scheme>(copy-directory/files</code><tt>&nbsp;</tt><code class=scheme><span class=variable>src-path dest-path</span></code><code class=scheme>)</code> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<small>P</small><small>R</small><small>O</small><small>C</small><small>E</small><small>D</small><small>U</small><small>R</small><small>E</small>
+</p>
+<p>
+Copies the file or directory <code class=scheme><span class=variable>src-path</span></code> to <code class=scheme><span class=variable>dest-path</span></code>,
+raising <a name="node_idx_666"></a><code class=scheme>exn:fail:filesystem</code> if the file or directory cannot be
+copied, possibly because <code class=scheme><span class=variable>dest-path</span></code> exists already. If
+<code class=scheme><span class=variable>src-path</span></code> is a directory, the copy applies recursively to the
+directory's content. If a source is a link, the target of the link is
+copied rather than the link itself.</p>
+<p>
+
+
+</p>
+<p></p>
+<p>
+
+<a name="node_idx_668"></a><a name="node_kw_definitiondelete-directory/files"></a><code class=scheme>(delete-directory/files</code><tt>&nbsp;</tt><code class=scheme><span class=variable>path</span></code><code class=scheme>)</code> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<small>P</small><small>R</small><small>O</small><small>C</small><small>E</small><small>D</small><small>U</small><small>R</small><small>E</small>
+</p>
+<p>
+Deletes the file or directory specified by <code class=scheme><span class=variable>path</span></code>, raising
+<a name="node_idx_670"></a><code class=scheme>exn:fail:filesystem</code> if the file or directory cannot be
+deleted. If <code class=scheme><span class=variable>path</span></code> is a directory, then
+<code class=scheme>delete-directory/files</code> is first applied to each file and
+directory in <code class=scheme><span class=variable>path</span></code> before the directory is deleted. The return
+value is void.</p>
+<p>
+
+
+</p>
+<p></p>
+<p>
+
+<a name="node_idx_672"></a><a name="node_kw_definitionexplode-path"></a><code class=scheme>(explode-path</code><tt>&nbsp;</tt><code class=scheme><span class=variable>path</span></code><code class=scheme>)</code> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<small>P</small><small>R</small><small>O</small><small>C</small><small>E</small><small>D</small><small>U</small><small>R</small><small>E</small>
+</p>
+<p>
+Returns the list of directories that constitute <code class=scheme><span class=variable>path</span></code>.
+The <code class=scheme><span class=variable>path</span></code> argument must be normalized in the sense of
+<code class=scheme>normalize-path</code> (see below).</p>
+<p>
+
+
+</p>
+<p></p>
+<p>
+
+<a name="node_idx_674"></a><a name="node_kw_definitionfile-name-from-path"></a><code class=scheme>(file-name-from-path</code><tt>&nbsp;</tt><code class=scheme><span class=variable>path</span></code><code class=scheme>)</code> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<small>P</small><small>R</small><small>O</small><small>C</small><small>E</small><small>D</small><small>U</small><small>R</small><small>E</small>
+</p>
+<p>
+If <code class=scheme><span class=variable>path</span></code> is a file pathname, returns just the file name part
+without the directory path. </p>
+<p>
+
+
+</p>
+<p></p>
+<p>
+
+<a name="node_idx_676"></a><a name="node_kw_definitionfilename-extension"></a><code class=scheme>(filename-extension</code><tt>&nbsp;</tt><code class=scheme><span class=variable>path</span></code><code class=scheme>)</code> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<small>P</small><small>R</small><small>O</small><small>C</small><small>E</small><small>D</small><small>U</small><small>R</small><small>E</small>
+</p>
+<p>
+Returns a string that is the extension part of the filename in
+<code class=scheme><span class=variable>path</span></code>. If <code class=scheme><span class=variable>path</span></code> is (syntactically) a directory, 
+<code class=scheme><span class=selfeval>#f</span></code> is returned.</p>
+<p>
+
+
+</p>
+<p></p>
+<p>
+
+<a name="node_idx_678"></a><a name="node_kw_definitionfind-files"></a><code class=scheme>(find-files</code><tt>&nbsp;</tt><code class=scheme><span class=variable>predicate</span></code><tt>&nbsp;</tt>[<code class=scheme><span class=variable>start-pathname</span></code>]<code class=scheme>)</code> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<small>P</small><small>R</small><small>O</small><small>C</small><small>E</small><small>D</small><small>U</small><small>R</small><small>E</small>
+</p>
+<p>
+Traverses the filesystem starting at <code class=scheme><span class=variable>start-pathname</span></code> and creates
+a list of all files and directories for which <code class=scheme><span class=variable>predicate</span></code> returns
+true. If <code class=scheme><span class=variable>start-pathname</span></code> is <code class=scheme><span class=selfeval>#f</span></code> (the default), then the
+traversal starts from the current directory (as determined by
+<code class=scheme><code class=scheme>current-directory</code></code>; see section&nbsp;<a href="../mzscheme/mzscheme-Z-H-7.html#node_sec_7.7.1.1">7.7.1.1</a> in <a href="../mzscheme/mzscheme.html"><i>PLT MzScheme: Language Manual</i></a>).</p>
+<p>
+The <code class=scheme><span class=variable>predicate</span></code> procedure is called with a single argument for
+each file or directory. If <code class=scheme><span class=variable>start-pathname</span></code> is <code class=scheme><span class=selfeval>#f</span></code>, the
+argument is a pathname string that is relative to the current
+directory. Otherwise, it is a pathname that starts with
+<code class=scheme><span class=variable>start-pathname</span></code>. Consequently, supplying
+<code class=scheme>(<code class=scheme>current-directory</code>)</code> for <code class=scheme><span class=variable>start-pathname</span></code> is different
+from supplying <code class=scheme><span class=selfeval>#f</span></code>, because <code class=scheme><span class=variable>predicate</span></code> receives complete
+paths in the former case and relative paths in the latter.  Another
+difference is that <code class=scheme><span class=variable>predicate</span></code> is not called for the current
+directory when <code class=scheme><span class=variable>start-pathname</span></code> is <code class=scheme><span class=selfeval>#f</span></code>.</p>
+<p>
+The <code class=scheme>find-files</code> traversal follows soft links. To avoid
+following links, use the more general <code class=scheme>fold-files</code> procedure.</p>
+<p>
+If <code class=scheme><span class=variable>start-pathname</span></code> does not refer to an existing file or
+directory, then <code class=scheme><span class=variable>predicate</span></code> will be called exactly once with
+<code class=scheme><span class=variable>start-pathname</span></code> as the argument.</p>
+<p>
+
+
+</p>
+<p></p>
+<p>
+
+<a name="node_idx_680"></a><a name="node_kw_definitionfind-library"></a><code class=scheme>(find-library</code><tt>&nbsp;</tt><code class=scheme><span class=variable>name collection</span></code><code class=scheme>)</code> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<small>P</small><small>R</small><small>O</small><small>C</small><small>E</small><small>D</small><small>U</small><small>R</small><small>E</small>
+</p>
+<p>
+Returns the path of the specified library (see Chapter&nbsp;<a href="../mzscheme/mzscheme-Z-H-16.html#node_chap_16">16</a> in <a href="../mzscheme/mzscheme.html"><i>PLT MzScheme: Language Manual</i></a>),
+returning <code class=scheme><span class=selfeval>#f</span></code> if the specified library or collection cannot be
+found. The <code class=scheme><span class=variable>collection</span></code> argument is optional, defaulting to
+<code class=scheme>&quot;mzlib&quot;</code>.</p>
+<p>
+
+
+</p>
+<p></p>
+<p>
+
+<a name="node_idx_682"></a><a name="node_kw_definitionfind-relative-path"></a><code class=scheme>(find-relative-path</code><tt>&nbsp;</tt><code class=scheme><span class=variable>basepath path</span></code><code class=scheme>)</code> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<small>P</small><small>R</small><small>O</small><small>C</small><small>E</small><small>D</small><small>U</small><small>R</small><small>E</small>
+</p>
+<p>
+Finds a relative pathname with respect to <code class=scheme><span class=variable>basepath</span></code> that names
+the same file or directory as <code class=scheme><span class=variable>path</span></code>. Both <code class=scheme><span class=variable>basepath</span></code> and
+<code class=scheme><span class=variable>path</span></code> must be normalized in the sense of <code class=scheme>normalize-path</code> (see below).
+If <code class=scheme><span class=variable>path</span></code> is not a proper subpath of <code class=scheme><span class=variable>basepath</span></code> (i.e., a
+subpath that is strictly longer), <code class=scheme><span class=variable>path</span></code> is returned.</p>
+<p>
+
+
+</p>
+<p></p>
+<p>
+
+<a name="node_idx_684"></a><a name="node_kw_definitionfold-files"></a><code class=scheme>(fold-files</code><tt>&nbsp;</tt><code class=scheme><span class=variable>proc init-val</span></code><tt>&nbsp;</tt>[<code class=scheme><span class=variable>start-pathname follow-links?</span></code>]<code class=scheme>)</code> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<small>P</small><small>R</small><small>O</small><small>C</small><small>E</small><small>D</small><small>U</small><small>R</small><small>E</small>
+</p>
+<p>
+Traverses the filesystem starting at <code class=scheme><span class=variable>start-pathname</span></code>, calling
+<code class=scheme><span class=variable>proc</span></code> on each discovered file, directory, and link. If
+<code class=scheme><span class=variable>start-pathname</span></code> is <code class=scheme><span class=selfeval>#f</span></code> (the default), then the traversal
+starts from the current directory (as determined by
+<code class=scheme><code class=scheme>current-directory</code></code>; see section&nbsp;<a href="../mzscheme/mzscheme-Z-H-7.html#node_sec_7.7.1.1">7.7.1.1</a> in <a href="../mzscheme/mzscheme.html"><i>PLT MzScheme: Language Manual</i></a>).</p>
+<p>
+The <code class=scheme><span class=variable>proc</span></code> procedure is called with three arguments for each file,
+directory, or link:
+</p>
+<ul><p>
+</p>
+<li><p>If <code class=scheme><span class=variable>start-pathname</span></code> is <code class=scheme><span class=selfeval>#f</span></code>, the first argument is a
+pathname string that is relative to the current directory. Otherwise,
+the first argument is a pathname that starts with
+<code class=scheme><span class=variable>start-pathname</span></code>. Consequently, supplying
+<code class=scheme>(<code class=scheme>current-directory</code>)</code> for <code class=scheme><span class=variable>start-pathname</span></code> is different
+from supplying <code class=scheme><span class=selfeval>#f</span></code>, because <code class=scheme><span class=variable>predicate</span></code> receives complete
+paths in the former case and relative paths in the latter. Another
+difference is that <code class=scheme><span class=variable>proc</span></code> is not called for the current directory
+when <code class=scheme><span class=variable>start-pathname</span></code> is <code class=scheme><span class=selfeval>#f</span></code>.</p>
+<p>
+</p>
+<li><p>The second argument is a symbol, either <code class=scheme><span class=selfeval>'file</span></code><a name="node_idx_686"></a>,
+<code class=scheme><span class=selfeval>'dir</span></code><a name="node_idx_688"></a>, or <code class=scheme><span class=selfeval>'link</span></code><a name="node_idx_690"></a>. The second argument can be
+<code class=scheme><span class=selfeval>'link</span></code><a name="node_idx_692"></a> only when <code class=scheme><span class=variable>follow-links?</span></code> is <code class=scheme><span class=selfeval>#f</span></code>,
+in which case the filesystem traversal does not follow links. The
+default for <code class=scheme><span class=variable>follow-links?</span></code> is <code class=scheme><span class=selfeval>#t</span></code>.</p>
+<p>
+</p>
+<li><p>The third argument is the accumulated result. For the first
+call to <code class=scheme><span class=variable>proc</span></code>, the third argument is <code class=scheme><span class=variable>init-val</span></code>. For the
+second call to <code class=scheme><span class=variable>proc</span></code> (if any), the third argument is the result
+from the first call, and so on. The result of the last call to
+<code class=scheme><span class=variable>proc</span></code> is the result of <code class=scheme>fold-files</code>.</p>
+<p>
+</p>
+</ul><p></p>
+<p>
+If <code class=scheme><span class=variable>start-pathname</span></code> does not refer to an existing file or
+directory, then <code class=scheme><span class=variable>proc</span></code> will be called exactly once with
+<code class=scheme><span class=variable>start-pathname</span></code> as the first argument, <code class=scheme><span class=selfeval>'file</span></code> as the
+second argument, and <code class=scheme><span class=variable>init-val</span></code> as the third argument.</p>
+<p>
+
+
+</p>
+<p></p>
+<p>
+
+<a name="node_idx_694"></a><a name="node_kw_definitionget-preference"></a><code class=scheme>(get-preference</code><tt>&nbsp;</tt><code class=scheme><span class=variable>name</span></code><tt>&nbsp;</tt>[<code class=scheme><span class=variable>failure-thunk flush-cache? filename</span></code>]<code class=scheme>)</code> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<small>P</small><small>R</small><small>O</small><small>C</small><small>E</small><small>D</small><small>U</small><small>R</small><small>E</small>
+</p>
+<p>
+Extracts a preference value from the file designated by
+<code class=scheme>(<code class=scheme>find-system-path</code> <span class=keyword>'</span><span class=variable>pref-file</span>)</code> (see section&nbsp;<a href="../mzscheme/mzscheme-Z-H-11.html#node_sec_11.3">11.3</a> in <a href="../mzscheme/mzscheme.html"><i>PLT MzScheme: Language Manual</i></a>),
+or by <code class=scheme><span class=variable>filename</span></code> if it is provided and is not <code class=scheme><span class=selfeval>#f</span></code>.  In
+the former case, if the preference file doesn't exist,
+<code class=scheme>get-preferences</code> attempts to read a <tt><strong>plt-prefs.ss</strong></tt> file
+in the <tt><strong>defaults</strong></tt> collection, instead. If neither file exists,
+the preference set is empty.</p>
+<p>
+The preference file should contain a symbol-keyed association list
+(written to the file with the default parameter settings).  Keys
+starting with <code class=scheme>mzscheme:</code>, <code class=scheme>mred:</code>, and <code class=scheme>plt:</code>
+in any letter case are reserved for use by PLT.</p>
+<p>
+The result of <code class=scheme>get-preference</code> is the value associated with
+<code class=scheme><span class=variable>name</span></code> if it exists in the association list, or the result of
+calling <code class=scheme><span class=variable>failure-thunk</span></code> otherwise. The default
+<code class=scheme><span class=variable>failure-thunk</span></code> returns <code class=scheme><span class=selfeval>#f</span></code>.</p>
+<p>
+Preference settings from the standard preference file are cached
+(weakly) across calls to <code class=scheme>get-preference</code>; if
+<code class=scheme><span class=variable>flush-cache?</span></code> is provided as <code class=scheme><span class=selfeval>#f</span></code>, the cache is used
+instead of the re-consulting the preferences file.</p>
+<p>
+See also <code class=scheme>put-preferences</code>. The <tt><strong>framework</strong></tt> collection
+supports a more elaborate preference system; see <a href="../framework/index.htm"><i>PLT Framework: GUI Application Framework</i></a>
+for details.</p>
+<p>
+
+
+</p>
+<p></p>
+<p>
+
+<a name="node_idx_696"></a><a name="node_kw_definitionmake-directory*"></a><code class=scheme>(make-directory*</code><tt>&nbsp;</tt><code class=scheme><span class=variable>path</span></code><code class=scheme>)</code> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<small>P</small><small>R</small><small>O</small><small>C</small><small>E</small><small>D</small><small>U</small><small>R</small><small>E</small>
+</p>
+<p>
+Creates directory specified by <code class=scheme><span class=variable>path</span></code>, creating intermediate
+directories as necessary.</p>
+<p>
+
+
+</p>
+<p></p>
+<p>
+
+<a name="node_idx_698"></a><a name="node_kw_definitionmake-temporary-file"></a><code class=scheme>(make-temporary-file</code><tt>&nbsp;</tt>[<code class=scheme><span class=variable>format-string copy-from-filename directory</span></code>]<code class=scheme>)</code> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<small>P</small><small>R</small><small>O</small><small>C</small><small>E</small><small>D</small><small>U</small><small>R</small><small>E</small>
+</p>
+<p>
+Creates a new temporary file and returns a pathname string for the
+file.  Instead of merely generating a fresh file name, the file is
+actually created; this prevents other threads or processes from
+picking the same temporary name. If <code class=scheme><span class=variable>copy-from-filename</span></code> is
+provided as path, the temporary file is created as a copy of the
+named file (using <code class=scheme>copy-file</code>). If <code class=scheme><span class=variable>copy-from-filename</span></code> is
+<code class=scheme><span class=selfeval>#f</span></code> or not provided, the temporary file is created as
+empty. If <code class=scheme><span class=variable>directory</span></code> is provided and is not <code class=scheme><span class=selfeval>#f</span></code>, then
+the file name generated from <code class=scheme><span class=variable>format-string</span></code> is combined with
+<code class=scheme><span class=variable>directory</span></code> to obtain a full path.</p>
+<p>
+The temporary file is not opened for reading or writing when the
+pathname is returned. The client program calling
+<code class=scheme>make-temporary-file</code> is expected to open the file with the
+desired access and flags (probably using the <code class=scheme><span class=selfeval>'truncate</span></code><a name="node_idx_700"></a>
+flag; see section&nbsp;<a href="../mzscheme/mzscheme-Z-H-11.html#node_sec_11.1.2">11.1.2</a> in <a href="../mzscheme/mzscheme.html"><i>PLT MzScheme: Language Manual</i></a>) and to delete it when it is no longer
+needed.</p>
+<p>
+If <code class=scheme><span class=variable>format-string</span></code> is specified, it must be a format string
+suitable for use with <code class=scheme>format</code> and one additional string
+argument (where the string contains only digits). If the resulting
+string is a relative path, it is combined with the result of
+<code class=scheme>(<code class=scheme>find-system-path</code> <span class=keyword>'</span><span class=variable>temp-dir</span>)</code>, unless <code class=scheme><span class=variable>directory</span></code> is
+provided and non-<code class=scheme><span class=selfeval>#f</span></code>. The default <code class=scheme><span class=variable>format-string</span></code> is
+<code class=scheme>&quot;mztmp~a&quot;</code>.</p>
+<p>
+
+
+</p>
+<p></p>
+<p>
+
+<a name="node_idx_702"></a><a name="node_kw_definitionnormalize-path"></a><code class=scheme>(normalize-path</code><tt>&nbsp;</tt><code class=scheme><span class=variable>path wrt</span></code><code class=scheme>)</code> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<small>P</small><small>R</small><small>O</small><small>C</small><small>E</small><small>D</small><small>U</small><small>R</small><small>E</small>
+</p>
+<p>
+Returns a normalized, complete version of <code class=scheme><span class=variable>path</span></code>, expanding the
+path and resolving all soft links. If <code class=scheme><span class=variable>path</span></code> is relative, then the
+pathname <code class=scheme><span class=variable>wrt</span></code> is used as the base path. The <code class=scheme><span class=variable>wrt</span></code> argument is
+optional; if is omitted, then the current directory is used as
+the base path.</p>
+<p>
+Letter case is <em>not</em> normalized by <code class=scheme>normalize-path</code>. For
+this and other reasons, the result of <code class=scheme>normalize-path</code> is not
+suitable for comparisons that determine whether two paths refer to the
+same file (i.e., the comparison may produce false negatives).</p>
+<p>
+An error is signaled by <code class=scheme>normalize-path</code> if the input
+path contains an embedded path for a non-existent directory,
+or if an infinite cycle of soft-links is detected.</p>
+<p>
+
+
+</p>
+<p></p>
+<p>
+
+<a name="node_idx_704"></a><a name="node_kw_definitionpath-only"></a><code class=scheme>(path-only</code><tt>&nbsp;</tt><code class=scheme><span class=variable>path</span></code><code class=scheme>)</code> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<small>P</small><small>R</small><small>O</small><small>C</small><small>E</small><small>D</small><small>U</small><small>R</small><small>E</small>
+</p>
+<p>
+If <code class=scheme><span class=variable>path</span></code> is a filename, the file's path is returned. If
+<code class=scheme><span class=variable>path</span></code> is syntactically a directory, <code class=scheme><span class=selfeval>#f</span></code> is returned.</p>
+<p>
+
+
+</p>
+<p></p>
+<p>
+
+<a name="node_idx_706"></a><a name="node_kw_definitionput-preferences"></a><code class=scheme>(put-preferences</code><tt>&nbsp;</tt><code class=scheme><span class=variable>name-list val-list</span></code><tt>&nbsp;</tt>[<code class=scheme><span class=variable>locked-proc filename</span></code>]<code class=scheme>)</code> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<small>P</small><small>R</small><small>O</small><small>C</small><small>E</small><small>D</small><small>U</small><small>R</small><small>E</small>
+</p>
+<p>
+See also <code class=scheme>get-preference</code>.</p>
+<p>
+Installs a set of preference values and writes all current values to
+the preference file designated by <code class=scheme>(<code class=scheme>find-system-path</code>
+ <span class=keyword>'</span><span class=variable>pref-file</span>)</code> (see section&nbsp;<a href="../mzscheme/mzscheme-Z-H-11.html#node_sec_11.3">11.3</a> in <a href="../mzscheme/mzscheme.html"><i>PLT MzScheme: Language Manual</i></a>), or <code class=scheme><span class=variable>filename</span></code> if it is
+supplied and not <code class=scheme><span class=selfeval>#f</span></code>. The <code class=scheme><span class=variable>name-list</span></code> argument must be a
+list of symbols for the preference names, and <code class=scheme><span class=variable>val-list</span></code> must
+have the same length as <code class=scheme><span class=variable>name-list</span></code>.</p>
+<p>
+Current preference values are read from the preference file before
+updating, and an update ``lock'' is held starting before the file
+read, and lasting until after the preferences file is updated. The
+lock is implemented by the existence of a file in the same directory
+as the preference file. If the directory of the preferences file does
+not already exist, it is created.</p>
+<p>
+If the update lock is already held (i.e., the lock file exists), then
+<code class=scheme><span class=variable>locked-proc</span></code> is called with a single argument: the path of the
+lock file. The default <code class=scheme><span class=variable>locked-proc</span></code> reports an error; an
+alternative thunk might wait a while and try again, or give the user
+the choice to delete the lock file (in case a previous update attempt
+encountered disaster).</p>
+<p>
+If <code class=scheme><span class=variable>filename</span></code> is <code class=scheme><span class=selfeval>#f</span></code> or not supplied, and the preference
+file does not already exist, then values read from the
+<tt><strong>defaults</strong></tt> collection (if any) are written for preferences that
+are not mentioned in <code class=scheme><span class=variable>name-list</span></code>.</p>
+<p>
+</p>
+<p>
+</p>
+<div align=right class=navigation><i>[Go to <span><a href="mzlib.html">first</a>, <a href="mzlib-Z-H-17.html">previous</a></span><span>, <a href="mzlib-Z-H-19.html">next</a></span> page<span>; &nbsp;&nbsp;</span><span><a href="mzlib.html#node_toc_start">contents</a></span><span><span>; &nbsp;&nbsp;</span><a href="mzlib-Z-H-42.html#node_index_start">index</a></span>]</i></div><p></p>
+</body>
+</html>

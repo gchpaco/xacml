@@ -1,0 +1,107 @@
+\indexentry{About {\mzc}|expandhtmlindex}{2}
+\indexentry{{\mzc} Is...|expandhtmlindex}{4}
+\indexentry{mzc@{\mzc}|expandhtmlindex}{6}
+\indexentry{byte code|expandhtmlindex}{8}
+\indexentry{.zo@\File{.zo}|expandhtmlindex}{10}
+\indexentry{loading compiled files|expandhtmlindex}{12}
+\indexentry{native code|expandhtmlindex}{14}
+\indexentry{.dll@\File{.dll}|expandhtmlindex}{16}
+\indexentry{.so@\File{.so}|expandhtmlindex}{18}
+\indexentry{loading compiled files|expandhtmlindex}{20}
+\indexentry{cffi.ss@\File{cffi.ss}|expandhtmlindex}{22}
+\indexentry{C compiler|expandhtmlindex}{24}
+\indexentry{{\mzc} Is Not...|expandhtmlindex}{26}
+\indexentry{stand-alone executables|expandhtmlindex}{28}
+\indexentry{Running {\mzc}|expandhtmlindex}{30}
+\indexentry{running {\mzc}|expandhtmlindex}{32}
+\indexentry{command line flags|expandhtmlindex}{34}
+\indexentry{help|expandhtmlindex}{36}
+\indexentry{-h@\Flag{h}|expandhtmlindex}{38}
+\indexentry{--help@\DFlag{help}|expandhtmlindex}{40}
+\indexentry{Native Code Optimization from {\mzc}|expandhtmlindex}{42}
+\indexentry{--prim@\DFlag{prim}|expandhtmlindex}{44}
+\indexentry{Foreign-Function Interface to C|expandhtmlindex}{46}
+\indexentry{foreign-function interface (FFI)|expandhtmlindex}{48}
+\indexentry{cffi.ss@\File{cffi.ss}|expandhtmlindex}{50}
+\indexentry{Gambit-C|expandhtmlindex}{52}
+\indexentry{Feeley, Marc|expandhtmlindex}{54}
+\indexentry{c-lambda@\scmk{c-lambda}|expandhtmlindex}{56}
+\indexentry{c-declare@\scmk{c-declare}|expandhtmlindex}{58}
+\indexentry{c-include@\scmk{c-include}|expandhtmlindex}{60}
+\indexentry{bool@\scmk{bool}|expandhtmlindex}{62}
+\indexentry{char@\scmk{char}|expandhtmlindex}{64}
+\indexentry{unsigned-char@\scmk{unsigned-char}|expandhtmlindex}{66}
+\indexentry{signed-char@\scmk{signed-char}|expandhtmlindex}{68}
+\indexentry{int@\scmk{int}|expandhtmlindex}{70}
+\indexentry{unsigned-int@\scmk{unsigned-int}|expandhtmlindex}{72}
+\indexentry{long@\scmk{long}|expandhtmlindex}{74}
+\indexentry{unsigned-long@\scmk{unsigned-long}|expandhtmlindex}{76}
+\indexentry{short@\scmk{short}|expandhtmlindex}{78}
+\indexentry{unsigned-short@\scmk{unsigned-short}|expandhtmlindex}{80}
+\indexentry{float@\scmk{float}|expandhtmlindex}{82}
+\indexentry{double@\scmk{double}|expandhtmlindex}{84}
+\indexentry{char-string@\scmk{char-string}|expandhtmlindex}{86}
+\indexentry{nonnull-char-string@\scmk{nonnull-char-string}|expandhtmlindex}{88}
+\indexentry{scheme-object@\scmk{scheme-object}|expandhtmlindex}{90}
+\indexentry{pointer@\scmk{pointer}|expandhtmlindex}{92}
+\indexentry{Compiling Individual Files with {\mzc}|expandhtmlindex}{94}
+\indexentry{compiling!files|expandhtmlindex}{96}
+\indexentry{-z@\Flag{z}|expandhtmlindex}{98}
+\indexentry{--zo@\DFlag{zo}|expandhtmlindex}{100}
+\indexentry{-e@\Flag{e}|expandhtmlindex}{102}
+\indexentry{--extension@\DFlag{extension}|expandhtmlindex}{104}
+\indexentry{--extension@\DFlag{extension}|expandhtmlindex}{106}
+\indexentry{.ss@\File{.ss}|expandhtmlindex}{108}
+\indexentry{.scm@\File{.scm}|expandhtmlindex}{110}
+\indexentry{Compiling with Modules|expandhtmlindex}{112}
+\indexentry{module@\scmk{module}|expandhtmlindex}{114}
+\indexentry{Compilation without Modules|expandhtmlindex}{116}
+\indexentry{require@\scmk{require}|expandhtmlindex}{118}
+\indexentry{syntax|expandhtmlindex}{120}
+\indexentry{-p@\Flag{p}|expandhtmlindex}{122}
+\indexentry{--prefix@\DFlag{prefix}|expandhtmlindex}{124}
+\indexentry{eval-when@\scmk{eval-when}|expandhtmlindex}{126}
+\indexentry{Autodetecting Compiled Files for Loading|expandhtmlindex}{128}
+\indexentry{loading compiled files|expandhtmlindex}{130}
+\indexentry{Compiling Multiple Files to a Single Native-Code Library|expandhtmlindex}{132}
+\indexentry{compiling!multiple files|expandhtmlindex}{134}
+\indexentry{-o@\Flag{o}|expandhtmlindex}{136}
+\indexentry{--object@\DFlag{object}|expandhtmlindex}{138}
+\indexentry{-l@\Flag{l}|expandhtmlindex}{140}
+\indexentry{--link-extension@\DFlag{link-extension}|expandhtmlindex}{142}
+\indexentry{\_loader.so@\File{\_loader.so}|expandhtmlindex}{144}
+\indexentry{\_loader.dll@\File{\_loader.dll}|expandhtmlindex}{146}
+\indexentry{Compiling Collections with {\mzc}|expandhtmlindex}{148}
+\indexentry{compiling!collections|expandhtmlindex}{150}
+\indexentry{--collection-zos@\DFlag{collection-zos}|expandhtmlindex}{152}
+\indexentry{--collection-extension@\DFlag{collection-extension}|expandhtmlindex}{154}
+\indexentry{info.ss@\File{info.ss}|expandhtmlindex}{156}
+\indexentry{Building a Stand-alone Executable|expandhtmlindex}{158}
+\indexentry{stand-alone executables|expandhtmlindex}{160}
+\indexentry{Stand-Alone Executables from Scheme Code|expandhtmlindex}{162}
+\indexentry{--exe@\DFlag{exe}|expandhtmlindex}{164}
+\indexentry{--gui-exe@\DFlag{gui-exe}|expandhtmlindex}{166}
+\indexentry{--lib@\DFlag{lib}|expandhtmlindex}{168}
+\indexentry{Stand-Alone Executables from Native Code|expandhtmlindex}{170}
+\indexentry{STANDALONE_WITH_EMBEDDED_EXTENSION@{\tt  STANDALONE\_WITH\_EMBEDDED\_EXTENSION}|expandhtmlindex}{172}
+\indexentry{scheme_initialize@{\tt  scheme\_initialize}|expandhtmlindex}{174}
+\indexentry{-o@\Flag{o}|expandhtmlindex}{176}
+\indexentry{--object@\DFlag{object}|expandhtmlindex}{178}
+\indexentry{--embedded@\DFlag{embedded}|expandhtmlindex}{180}
+\indexentry{-g@\Flag{g}|expandhtmlindex}{182}
+\indexentry{--link-glue@\DFlag{link-glue}|expandhtmlindex}{184}
+\indexentry{-g@\Flag{g}|expandhtmlindex}{186}
+\indexentry{--link-glue@\DFlag{link-glue}|expandhtmlindex}{188}
+\indexentry{Creating Distribution Archives|expandhtmlindex}{190}
+\indexentry{.plt distribution archives|expandhtmlindex}{192}
+\indexentry{--plt@\DFlag{plt}|expandhtmlindex}{194}
+\indexentry{--collection-plt@\DFlag{collection-plt}|expandhtmlindex}{196}
+\indexentry{.plt@\File{.plt}|expandhtmlindex}{198}
+\indexentry{--replace@\DFlag{replace}|expandhtmlindex}{200}
+\indexentry{++setup@\PDFlag{setup}|expandhtmlindex}{202}
+\indexentry{--plt-name@\DFlag{plt-name}|expandhtmlindex}{204}
+\indexentry{--at-plt@\DFlag{at-plt}|expandhtmlindex}{206}
+\indexentry{--all-users@\DFlag{all-users}|expandhtmlindex}{208}
+\indexentry{\File{info.ss} File Format|expandhtmlindex}{210}
+\indexentry{info.ss syntax@\File{info.ss} format|expandhtmlindex}{212}
+\indexentry{infotab.ss library@\File{infotab.ss} library|expandhtmlindex}{214}

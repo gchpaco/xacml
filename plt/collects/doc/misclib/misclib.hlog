@@ -1,0 +1,8 @@
+This is TeX2page, Version 2004-09-11 (MzScheme 209, unix)
+(misclib.t2p (plt.t2p (css.t2p))) (misclib.tex (pretitl.tex)
+(mzlabels.tex) (sltxconfig.tex) (mrsltxconfig.tex) (dateman.tex)
+(pltcopy.tex (precopy.tex) (copy.tex)) (weblink.tex) (mzmacro.tex)
+(posttitl.tex) [0] [1] {misclib-Z-G-1.tex -> misclib/misclib-Z-G-1.gif}
+(misclib/misclib-Z-G-1.gif) [2] (postdoc.tex [3] (misclib/misclib--h.ind)))
+[4]
+Output written on misclib/misclib.html, ... (5 pages, 1 image).

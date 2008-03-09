@@ -1,0 +1,62 @@
+(module sig mzscheme
+  (require (lib "unitsig.ss"))
+  
+  (provide relative-btree^
+           bullet^
+           bullet-export^
+           hyper^
+           html-export^
+           html^)
+
+  (define-signature html-export^
+    (html-img-ok
+     html-eval-ok
+     image-map-snip%))
+  
+  (define-signature html^
+    (html-convert
+     html-status-handler
+     (open html-export^)))
+  
+  (define-signature bullet-export^
+    (bullet-size))
+  
+  (define-signature bullet^
+    (bullet-snip%
+     get-bullet-width
+     (open bullet-export^)))
+  
+  (define-signature hyper^
+    (open-url
+     (struct exn:file-saved-instead (pathname))
+     (struct exn:cancelled ())
+     
+     hyper-text-mixin
+     hyper-text%
+     
+     hyper-canvas-mixin
+     hyper-canvas%
+     
+     hyper-panel-mixin
+     hyper-panel%
+     
+     hyper-frame<%>
+     hyper-frame-mixin
+     hyper-frame%
+     
+     hyper-no-show-frame-mixin
+     hyper-no-show-frame%
+     
+     editor->page
+     page->editor))
+  
+  (define-signature relative-btree^
+    (make-btree
+     
+     btree-get
+     btree-put!
+     
+     btree-shift!
+     
+     btree-for-each
+     btree-map)))

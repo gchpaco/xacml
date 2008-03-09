@@ -1,0 +1,145 @@
+<!doctype html public "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!--
+
+Generated from mzlib.tex by tex2page, v 2004-09-11
+(running on MzScheme 209, unix), 
+(c) Dorai Sitaram, 
+http://www.ccs.neu.edu/~dorai/tex2page/tex2page-doc.html
+
+-->
+<head>
+<title>
+PLT MzLib: Libraries Manual
+</title>
+<link rel="stylesheet" type="text/css" href="mzlib-Z-S.css" title=default>
+<meta name=robots content="noindex,follow">
+</head>
+<body>
+<div align=right class=navigation><i>[Go to <span><a href="mzlib.html">first</a>, <a href="mzlib-Z-H-28.html">previous</a></span><span>, <a href="mzlib-Z-H-30.html">next</a></span> page<span>; &nbsp;&nbsp;</span><span><a href="mzlib.html#node_toc_start">contents</a></span><span><span>; &nbsp;&nbsp;</span><a href="mzlib-Z-H-42.html#node_index_start">index</a></span>]</i></div><p></p>
+<a name="node_chap_29"></a>
+<h1 class=chapter>
+<div class=chapterheading><a href="mzlib.html#node_toc_node_chap_29">Chapter 29</a></div><br>
+<a href="mzlib.html#node_toc_node_chap_29"><tt><strong>process.ss</strong></tt>: Process and Shell-Command Execution</a></h1>
+<p><a name="node_idx_994"></a><a name="node_idx_996"></a></p>
+<p>
+This library builds on MzScheme's <code class=scheme><code class=scheme>subprocess</code></code> procedure; see
+also section&nbsp;<a href="../mzscheme/mzscheme-Z-H-15.html#node_sec_15.2">15.2</a> in <a href="../mzscheme/mzscheme.html"><i>PLT MzScheme: Language Manual</i></a>.</p>
+<p>
+<a name="node_idx_998"></a>
+<a name="node_idx_1000"></a>
+<a name="node_idx_1002"></a><a name="node_kw_definitionsystem"></a><code class=scheme>(system</code><tt>&nbsp;</tt><code class=scheme><span class=variable>command-string</span></code><code class=scheme>)</code> executes a Unix, Windows, or BeOS shell
+command synchronously (i.e., the call to <code class=scheme><code class=scheme>system</code></code> does not return
+until the subprocess has ended), or launches a MacOS application by
+its creator signature (and returns immediately). The
+<code class=scheme><span class=variable>command-string</span></code> argument is a string (of four characters for
+MacOS) containing no null characters. If the command succeeds, the
+return value is <code class=scheme><span class=selfeval>#t</span></code>, <code class=scheme><span class=selfeval>#f</span></code> otherwise.  Under MacOS, if
+<code class=scheme><span class=variable>command-string</span></code> is not four characters, the
+<a name="node_idx_1004"></a><code class=scheme>exn:fail:contract</code> exception is raised.</p>
+<p>
+<a name="node_idx_1006"></a><a name="node_kw_definitionsystem*"></a><code class=scheme>(system*</code><tt>&nbsp;</tt><code class=scheme><span class=variable>command-string arg-string</span></code><tt>&nbsp;</tt><tt>&middot;&middot;&middot;</tt><code class=scheme>)</code> is like <code class=scheme><code class=scheme>system</code></code>,
+except that <code class=scheme><span class=variable>command-string</span></code> is a filename that is executed
+directly (instead of through a shell command or through a MacOS
+creator signature), and the <code class=scheme><span class=variable>arg-string</span></code>s are the arguments.
+Under Unix, Windows and BeOS, the executed file is passed the
+specified string arguments (which must contain no null
+characters). Under MacOS, no arguments can be supplied, otherwise the
+<a name="node_idx_1008"></a><code class=scheme>exn:fail:unsupported</code> exception is raised. Under Windows, the first
+<code class=scheme><span class=variable>arg-string</span></code> can be <code class=scheme><span class=selfeval>'exact</span></code> where the second
+<code class=scheme><span class=variable>arg-string</span></code> is a complete command line; see
+section&nbsp;<a href="../mzscheme/mzscheme-Z-H-15.html#node_sec_15.2">15.2</a> in <a href="../mzscheme/mzscheme.html"><i>PLT MzScheme: Language Manual</i></a> for details.</p>
+<p>
+<a name="node_idx_1010"></a><a name="node_kw_definitionsystem/exit-code"></a><code class=scheme>(system/exit-code</code><tt>&nbsp;</tt><code class=scheme><span class=variable>command-string</span></code><code class=scheme>)</code> is like <code class=scheme><code class=scheme>system</code></code>, except
+that it returns the exit-code returned by the subprocess instead of a
+boolean (a result of 0 indicates success).</p>
+<p>
+<a name="node_idx_1012"></a><a name="node_kw_definitionsystem*/exit-code"></a><code class=scheme>(system*/exit-code</code><tt>&nbsp;</tt><code class=scheme><span class=variable>command-string</span></code><code class=scheme>)</code> is like <code class=scheme><code class=scheme>system*</code></code>, except
+that it returns the exit-code like <code class=scheme><code class=scheme>system/exit-code</code></code> does.</p>
+<p>
+<a name="node_idx_1014"></a><a name="node_kw_definitionprocess"></a><code class=scheme>(process</code><tt>&nbsp;</tt><code class=scheme><span class=variable>command-string</span></code><code class=scheme>)</code> executes a shell command asynchronously
+under Unix, Windows, and BeOS.  (This procedure is not supported for
+MacOS.)  If the subprocess is launched successfully, the result is a
+list of five values:
+</p>
+<ul> <p>
+</p>
+<li><p>an input port piped from the subprocess's standard output,</p>
+<p>
+</p>
+<li><p>an output port piped to the subprocess standard input, </p>
+<p>
+</p>
+<li><p>the system process id of the subprocess,</p>
+<p>
+</p>
+<li><p>an input port piped from the subprocess's standard
+error,<a name="call_footnote_Temp_14"></a><a href="#footnote_Temp_14"><sup><small>9</small></sup></a> and</p>
+<p>
+</p>
+<li><p>a procedure of one argument, either <code class=scheme><span class=selfeval>'status</span></code><a name="node_idx_1016"></a>,
+<code class=scheme><span class=selfeval>'wait</span></code><a name="node_idx_1018"></a>, <code class=scheme><span class=selfeval>'interrupt</span></code><a name="node_idx_1020"></a>, or <code class=scheme><span class=selfeval>'kill</span></code><a name="node_idx_1022"></a>:
+</p>
+<ul><p>
+</p>
+<li><p><code class=scheme><span class=selfeval>'status</span></code> returns the status of the subprocess as one
+of <code class=scheme><span class=selfeval>'running</span></code><a name="node_idx_1024"></a>, <code class=scheme><span class=selfeval>'done-ok</span></code><a name="node_idx_1026"></a>, or
+<code class=scheme><span class=selfeval>'done-error</span></code><a name="node_idx_1028"></a>.</p>
+<p>
+</p>
+<li><p><code class=scheme><span class=selfeval>'exit-code</span></code> returns the integer exit code of the
+subprocess or <code class=scheme><span class=selfeval>#f</span></code> if it is still running.</p>
+<p>
+</p>
+<li><p><code class=scheme><span class=selfeval>'wait</span></code> blocks execution in the current thread until
+the subprocess has completed.</p>
+<p>
+</p>
+<li><p><code class=scheme><span class=selfeval>'interrupt</span></code> sends the subprocess an interrupt signal
+under Unix and Mac OS X and takes no action under Windows. The result is
+void.</p>
+<p>
+</p>
+<li><p><code class=scheme><span class=selfeval>'kill</span></code> terminates the subprocess and returns void.</p>
+<p>
+</p>
+</ul><p></p>
+<p>
+</p>
+</ul><p>
+<strong>Important:</strong> All three ports returned from <code class=scheme><code class=scheme>process</code></code> must
+be explicitly closed with <code class=scheme><code class=scheme>close-input-port</code></code> and
+<code class=scheme><code class=scheme>close-output-port</code></code>.</p>
+<p>
+<a name="node_idx_1030"></a><a name="node_kw_definitionprocess*"></a><code class=scheme>(process*</code><tt>&nbsp;</tt><code class=scheme><span class=variable>command-string arg-string</span></code><tt>&nbsp;</tt><tt>&middot;&middot;&middot;</tt><code class=scheme>)</code> is like <code class=scheme><code class=scheme>process</code></code>
+under Unix for all of Unix, Windows, and BeOS, except that
+<code class=scheme><span class=variable>command-string</span></code> is a filename that is executed directly, and the
+<code class=scheme><span class=variable>arg-string</span></code>s are the arguments. (This procedure is not supported
+for MacOS.) Under Windows, as for <code class=scheme><code class=scheme>system*</code></code>, the first
+<code class=scheme><span class=variable>arg-string</span></code> can be <code class=scheme><span class=selfeval>'exact</span></code>.</p>
+<p>
+<a name="node_idx_1032"></a><a name="node_kw_definitionprocess/ports"></a><code class=scheme>(process/ports</code><tt>&nbsp;</tt><code class=scheme><span class=variable>output-port input-port error-output-port
+command-string</span></code><code class=scheme>)</code> is like <code class=scheme><code class=scheme>process</code></code>, except that <code class=scheme><span class=variable>output-port</span></code>
+is used for the process's standard output, <code class=scheme><span class=variable>input-port</span></code> is used
+for the process's standard input, and <code class=scheme><span class=variable>error-output-port</span></code> is used
+for the process's standard error.  The provided ports need not be
+file-stream ports. Any of the ports can be <code class=scheme><span class=selfeval>#f</span></code>, in which case a
+system pipe is created and returned, as in <code class=scheme><code class=scheme>process</code></code>. For each
+port that is provided, no pipe is created and the corresponding
+returned value is <code class=scheme><span class=selfeval>#f</span></code>.</p>
+<p>
+<a name="node_idx_1034"></a><a name="node_kw_definitionprocess*/ports"></a><code class=scheme>(process*/ports</code><tt>&nbsp;</tt><code class=scheme><span class=variable>output-port input-port error-output-port
+command-string arg-string</span></code><tt>&nbsp;</tt><tt>&middot;&middot;&middot;</tt><code class=scheme>)</code> is like <code class=scheme><code class=scheme>process*</code></code>, but with the port
+handling of <code class=scheme><code class=scheme>process/ports</code></code>.</p>
+<p>
+</p>
+<p>
+</p>
+<div class=footnoterule><hr></div><p></p>
+<div class=footnote><p><a name="footnote_Temp_14"></a><a href="#call_footnote_Temp_14"><sup><small>9</small></sup></a>  The standard error port is placed after the process
+id for compatibility with other Scheme implementations. For the same
+reason, <code class=scheme><code class=scheme>process</code></code> returns a list instead of multiple values.</p>
+</div>
+<div align=right class=navigation><i>[Go to <span><a href="mzlib.html">first</a>, <a href="mzlib-Z-H-28.html">previous</a></span><span>, <a href="mzlib-Z-H-30.html">next</a></span> page<span>; &nbsp;&nbsp;</span><span><a href="mzlib.html#node_toc_start">contents</a></span><span><span>; &nbsp;&nbsp;</span><a href="mzlib-Z-H-42.html#node_index_start">index</a></span>]</i></div><p></p>
+</body>
+</html>

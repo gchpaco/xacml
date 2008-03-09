@@ -1,0 +1,342 @@
+<!doctype html public "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!--
+
+Generated from mzlib.tex by tex2page, v 2004-09-11
+(running on MzScheme 209, unix), 
+(c) Dorai Sitaram, 
+http://www.ccs.neu.edu/~dorai/tex2page/tex2page-doc.html
+
+-->
+<head>
+<title>
+PLT MzLib: Libraries Manual
+</title>
+<link rel="stylesheet" type="text/css" href="mzlib-Z-S.css" title=default>
+<meta name=robots content="noindex,follow">
+</head>
+<body>
+<div align=right class=navigation><i>[Go to <span><a href="mzlib.html">first</a>, <a href="mzlib-Z-H-24.html">previous</a></span><span>, <a href="mzlib-Z-H-26.html">next</a></span> page<span>; &nbsp;&nbsp;</span><span><a href="mzlib.html#node_toc_start">contents</a></span><span><span>; &nbsp;&nbsp;</span><a href="mzlib-Z-H-42.html#node_index_start">index</a></span>]</i></div><p></p>
+<a name="node_chap_25"></a>
+<h1 class=chapter>
+<div class=chapterheading><a href="mzlib.html#node_toc_node_chap_25">Chapter 25</a></div><br>
+<a href="mzlib.html#node_toc_node_chap_25"><tt><strong>pconvert.ss</strong></tt>: Converted Printing</a></h1>
+<p><a name="node_idx_884"></a><a name="node_idx_886"></a></p>
+<p>
+This library defines routines for printing Scheme values as
+<code class=scheme>eval</code>uable S-expressions rather than <code class=scheme>read</code>able
+S-expressions. The <code class=scheme>print-convert</code> procedure does not print
+values; rather, it converts a Scheme value into another Scheme value
+such that the new value pretty-prints as a Scheme expression that
+evaluates to the original value. For example, <code class=scheme>(pretty-print
+(print-convert `(9 ,(box 5) #(6 7)))</code> prints the literal expression
+<code class=scheme>(list 9 (box 5) (vector 6 7))</code> to the current output port.</p>
+<p>
+To install print converting into the <code class=scheme>read</code>-<code class=scheme>eval</code>-<code class=scheme>print</code> loop, require <tt><strong>pconvert.ss</strong></tt>
+and call the procedure <code class=scheme>install-converting-printer</code>.</p>
+<p>
+In addition to <code class=scheme>print-convert</code>, this library provides
+<code class=scheme>print-convert</code>, <code class=scheme>build-share</code>, <code class=scheme>get-shared</code>, 
+and <code class=scheme>print-convert-expr</code>.  The last three are used to convert
+sub-expressions of a larger expression (potentially with shared
+structure).</p>
+<p>
+
+
+</p>
+<p></p>
+<p>
+
+<a name="node_idx_888"></a><a name="node_kw_definitionabbreviate-cons-as-list"></a><code class=scheme>(abbreviate-cons-as-list</code><tt>&nbsp;</tt>[<code class=scheme><span class=variable>abbreviate?</span></code>]<code class=scheme>)</code> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<small>P</small><small>R</small><small>O</small><small>C</small><small>E</small><small>D</small><small>U</small><small>R</small><small>E</small>
+</p>
+<p>
+Parameter that controls how lists are represented with
+constructor-style conversion. If the parameter's value is <code class=scheme><span class=selfeval>#t</span></code>,
+lists are represented using <code class=scheme>list</code>. Otherwise, lists are
+represented using <code class=scheme>cons</code>. The initial value of the parameter is
+<code class=scheme><span class=selfeval>#t</span></code>.</p>
+<p>
+
+
+</p>
+<p></p>
+<p>
+
+<a name="node_idx_890"></a><a name="node_kw_definitionbooleans-as-true/false"></a><code class=scheme>(booleans-as-true/false</code><tt>&nbsp;</tt>[<code class=scheme><span class=variable>use-name?</span></code>]<code class=scheme>)</code> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<small>P</small><small>R</small><small>O</small><small>C</small><small>E</small><small>D</small><small>U</small><small>R</small><small>E</small>
+</p>
+<p>
+Parameter that controls how <code class=scheme><span class=selfeval>#t</span></code> and <code class=scheme><span class=selfeval>#f</span></code> are
+represented. If the parameter's value is <code class=scheme><span class=selfeval>#t</span></code>, then <code class=scheme><span class=selfeval>#t</span></code> is
+represented as <code class=scheme>true</code> and <code class=scheme><span class=selfeval>#f</span></code> is represented as
+<code class=scheme>false</code>.  The initial value of the parameter is <code class=scheme><span class=selfeval>#t</span></code>.</p>
+<p>
+
+
+</p>
+<p></p>
+<p>
+
+<a name="node_idx_892"></a><a name="node_kw_definitionuse-named/undefined-handler"></a><code class=scheme>(use-named/undefined-handler</code><tt>&nbsp;</tt>[<code class=scheme><span class=variable>use-handler</span></code>]<code class=scheme>)</code> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<small>P</small><small>R</small><small>O</small><small>C</small><small>E</small><small>D</small><small>U</small><small>R</small><small>E</small>
+</p>
+<p>
+This parameter that controls how values that have inferred names
+are represented. This parameter is passed a value. If the
+parameter returns <code class=scheme>#t</code>, the
+<code class=scheme><span class=variable>named/undefined-handler</span></code> is invoked to render that
+value. Only values that have inferred names but are not
+defined at the top-level are used with this handler.</p>
+<p>
+The initial value of the parameter is <code class=scheme>(<span class=keyword>lambda</span> (<span class=variable>x</span>) <span class=selfeval>#f</span>)</code>.</p>
+<p>
+
+
+</p>
+<p></p>
+<p>
+
+<a name="node_idx_894"></a><a name="node_kw_definitionuse-named/undefined-handler"></a><code class=scheme>(use-named/undefined-handler</code><tt>&nbsp;</tt>[<code class=scheme><span class=variable>use-handler</span></code>]<code class=scheme>)</code> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<small>P</small><small>R</small><small>O</small><small>C</small><small>E</small><small>D</small><small>U</small><small>R</small><small>E</small>
+</p>
+<p>
+This parameter that controls how values that have inferred
+names are represented. This parameter is only called if
+<code class=scheme><span class=variable>use-named/undefined-handler</span></code> returned true for some
+value. This parameter is passed that same value and the
+result of the parameter is used as the representation for
+the value.</p>
+<p>
+The initial value of the parameter is <code class=scheme>(<span class=keyword>lambda</span> (<span class=variable>x</span>) <span class=selfeval>#f</span>)</code>.</p>
+<p>
+
+
+</p>
+<p></p>
+<p>
+
+<a name="node_idx_896"></a><a name="node_kw_definitionbuild-share"></a><code class=scheme>(build-share</code><tt>&nbsp;</tt><code class=scheme><span class=variable>v</span></code><code class=scheme>)</code> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<small>P</small><small>R</small><small>O</small><small>C</small><small>E</small><small>D</small><small>U</small><small>R</small><small>E</small>
+</p>
+<p>
+Takes a value and computes sharing information used for representing
+the value as an expression. The return value is an opaque structure
+that can be passed back into <code class=scheme>get-shared</code> or
+<code class=scheme>print-convert-expr</code>.</p>
+<p>
+
+
+</p>
+<p></p>
+<p>
+
+<a name="node_idx_898"></a><a name="node_kw_definitionconstructor-style-printing"></a><code class=scheme>(constructor-style-printing</code><tt>&nbsp;</tt>[<code class=scheme><span class=variable>use-constructors?</span></code>]<code class=scheme>)</code> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<small>P</small><small>R</small><small>O</small><small>C</small><small>E</small><small>D</small><small>U</small><small>R</small><small>E</small>
+</p>
+<p>
+Parameter that controls how values are represented after conversion.
+If this parameter is <code class=scheme><span class=selfeval>#t</span></code>, then constructors are used, e.g.,
+pair containing 1 and 2 is represented as <code class=scheme>(cons 1 2)</code>.
+Otherwise, quasiquote-style syntax is used, e.g. the pair containing 1
+and 2 is represented as <code class=scheme>`(1 . 2)</code>. The initial value of the
+parameter is <code class=scheme><span class=selfeval>#f</span></code>. </p>
+<p>
+See also <code class=scheme>quasi-read-style-printing</code>.</p>
+<p>
+
+
+</p>
+<p></p>
+<p>
+
+<a name="node_idx_900"></a><a name="node_kw_definitioncurrent-build-share-hook"></a><code class=scheme>(current-build-share-hook</code><tt>&nbsp;</tt>[<code class=scheme><span class=variable>hook</span></code>]<code class=scheme>)</code> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<small>P</small><small>R</small><small>O</small><small>C</small><small>E</small><small>D</small><small>U</small><small>R</small><small>E</small>
+</p>
+<p>
+Parameter that sets a procedure used by <code class=scheme>print-convert</code> 
+and <code class=scheme>build-share</code> to assemble sharing information. The
+procedure <code class=scheme><span class=variable>hook</span></code> takes three arguments: a value
+<code class=scheme><span class=variable>v</span></code>, a procedure <code class=scheme><span class=variable>basic-share</span></code>, and a procedure 
+<code class=scheme><span class=variable>sub-share</span></code>; the return value is ignored. The <code class=scheme><span class=variable>basic-share</span></code>
+procedure takes <code class=scheme><span class=variable>v</span></code> and performs the built-in sharing analysis,
+while the <code class=scheme><span class=variable>sub-share</span></code> procedure takes a component of
+<code class=scheme><span class=variable>v</span></code> ands analyzes it. These procedures return void; sharing 
+information is accumulated as values are passed to <code class=scheme><span class=variable>basic-share</span></code> 
+and <code class=scheme><span class=variable>sub-share</span></code>.</p>
+<p>
+A <code class=scheme>current-build-share-hook</code> procedure usually works together with
+a <code class=scheme>current-print-convert-hook</code> procedure.</p>
+<p>
+
+
+</p>
+<p></p>
+<p>
+
+<a name="node_idx_902"></a><a name="node_kw_definitioncurrent-build-share-name-hook"></a><code class=scheme>(current-build-share-name-hook</code><tt>&nbsp;</tt>[<code class=scheme><span class=variable>hook</span></code>]<code class=scheme>)</code> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<small>P</small><small>R</small><small>O</small><small>C</small><small>E</small><small>D</small><small>U</small><small>R</small><small>E</small>
+</p>
+<p>
+Parameter that sets a procedure used by <code class=scheme>print-convert</code> and
+<code class=scheme>build-share</code> to generate a new name for a shared value. The
+<code class=scheme><span class=variable>hook</span></code> procedure takes a single value and returns a symbol
+for the value's name. If <code class=scheme><span class=variable>hook</span></code> returns <code class=scheme><span class=selfeval>#f</span></code>, a name is
+generated using the form ``<code class=scheme>-<code class=scheme><span class=variable>n</span></code>-</code>'' (where <code class=scheme><span class=variable>n</span></code> is an
+integer).</p>
+<p>
+
+
+</p>
+<p></p>
+<p>
+
+<a name="node_idx_904"></a><a name="node_kw_definitioncurrent-print-convert-hook"></a><code class=scheme>(current-print-convert-hook</code><tt>&nbsp;</tt>[<code class=scheme><span class=variable>hook</span></code>]<code class=scheme>)</code> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<small>P</small><small>R</small><small>O</small><small>C</small><small>E</small><small>D</small><small>U</small><small>R</small><small>E</small>
+</p>
+<p>
+Parameter that sets a procedure used by <code class=scheme>print-convert</code> and
+<code class=scheme>print-convert-expr</code> to convert values. The procedure <code class=scheme><span class=variable>hook</span></code>
+takes three arguments  --  a value <code class=scheme><span class=variable>v</span></code>, a procedure
+<code class=scheme><span class=variable>basic-convert</span></code>, and a procedure <code class=scheme><span class=variable>sub-convert</span></code>  --  and returns
+the converted representation of <code class=scheme><span class=variable>v</span></code>. The <code class=scheme><span class=variable>basic-convert</span></code>
+procedure takes <code class=scheme><span class=variable>v</span></code> and returns the default conversion, while
+the <code class=scheme><span class=variable>sub-convert</span></code> procedure takes a component of <code class=scheme><span class=variable>v</span></code> and
+returns its conversion.</p>
+<p>
+A <code class=scheme>current-print-convert-hook</code> procedure usually works together
+with a <code class=scheme>current-build-share-hook</code> procedure.</p>
+<p>
+
+
+</p>
+<p></p>
+<p>
+
+<a name="node_idx_906"></a><a name="node_kw_definitioncurrent-read-eval-convert-print-prompt"></a><code class=scheme>(current-read-eval-convert-print-prompt</code><tt>&nbsp;</tt>[<code class=scheme><span class=variable>str</span></code>]<code class=scheme>)</code> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<small>P</small><small>R</small><small>O</small><small>C</small><small>E</small><small>D</small><small>U</small><small>R</small><small>E</small>
+</p>
+<p>
+Parameter that sets the prompt used by
+<code class=scheme>install-converting-printer</code>. The initial value is <code class=scheme>&quot;|- &quot;</code>.</p>
+<p>
+
+
+</p>
+<p></p>
+<p>
+
+<a name="node_idx_908"></a><a name="node_kw_definitionget-shared"></a><code class=scheme>(get-shared</code><tt>&nbsp;</tt><code class=scheme><span class=variable>share-info</span></code><tt>&nbsp;</tt>[<code class=scheme><span class=variable>cycles-only?</span></code>]<code class=scheme>)</code> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<small>P</small><small>R</small><small>O</small><small>C</small><small>E</small><small>D</small><small>U</small><small>R</small><small>E</small>
+</p>
+<p>
+The <code class=scheme><span class=variable>shared-info</span></code> value must be a result from <code class=scheme>build-share</code>.
+The procedure returns a list matching variables to shared values
+within the value passed to <code class=scheme>build-share</code>. For example,
+<tt></p>
+<p> 
+&nbsp;&nbsp;  (get-shared (build-share (shared ([a (cons 1 b)][b (cons 2 a)]) a))) 
+</p>
+<p></tt>
+might return the list 
+<tt></p>
+<p> 
+&nbsp;&nbsp;  ((-1- (cons 1 -2-)) (-2- (cons 2 -1-))) 
+</p>
+<p></tt>
+The default value for <code class=scheme><span class=variable>cycles-only?</span></code> is <code class=scheme><span class=selfeval>#f</span></code>;
+if it is not <code class=scheme><span class=selfeval>#f</span></code>, <code class=scheme>get-shared</code> returns only information
+about cycles.</p>
+<p>
+
+
+</p>
+<p></p>
+<p>
+
+<a name="node_idx_910"></a><a name="node_kw_definitioninstall-converting-printer"></a><code class=scheme>(install-converting-printer</code><code class=scheme>)</code> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<small>P</small><small>R</small><small>O</small><small>C</small><small>E</small><small>D</small><small>U</small><small>R</small><small>E</small>
+</p>
+<p>
+Sets the current print handler to print values using
+<code class=scheme>print-convert</code>. The current read handler is also set to
+use the prompt returned by <code class=scheme>current-read-eval-convert-print-prompt</code>.</p>
+<p>
+
+
+</p>
+<p></p>
+<p>
+
+<a name="node_idx_912"></a><a name="node_kw_definitionprint-convert"></a><code class=scheme>(print-convert</code><tt>&nbsp;</tt><code class=scheme><span class=variable>v</span></code><tt>&nbsp;</tt>[<code class=scheme><span class=variable>cycles-only?</span></code>]<code class=scheme>)</code> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<small>P</small><small>R</small><small>O</small><small>C</small><small>E</small><small>D</small><small>U</small><small>R</small><small>E</small>
+</p>
+<p>
+Converts the value <code class=scheme><span class=variable>v</span></code>. If <code class=scheme><span class=variable>cycles-only?</span></code> is not
+<code class=scheme><span class=selfeval>#f</span></code>, then only circular objects are included in the output. The
+default value of <code class=scheme><span class=variable>cycles-only?</span></code> is the value of <code class=scheme>(show-sharing)</code>.</p>
+<p>
+
+
+</p>
+<p></p>
+<p>
+
+<a name="node_idx_914"></a><a name="node_kw_definitionprint-convert-expr"></a><code class=scheme>(print-convert-expr</code><tt>&nbsp;</tt><code class=scheme><span class=variable>share-info v unroll-once?</span></code><code class=scheme>)</code> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<small>P</small><small>R</small><small>O</small><small>C</small><small>E</small><small>D</small><small>U</small><small>R</small><small>E</small>
+</p>
+<p>
+Converts the value <code class=scheme><span class=variable>v</span></code> using sharing information
+<code class=scheme><span class=variable>share-info</span></code> previously returned by <code class=scheme>build-share</code> for
+a value containing <code class=scheme><span class=variable>v</span></code>. If the most recent call to
+<code class=scheme>get-shared</code> with <code class=scheme><span class=variable>share-info</span></code> requested information
+only for cycles, then <code class=scheme>print-convert-expr</code> will only display
+sharing among values for cycles, rather than showing all value
+sharing.</p>
+<p>
+The <code class=scheme><span class=variable>unroll-once?</span></code> argument is used if <code class=scheme><span class=variable>v</span></code> is a shared
+value in <code class=scheme><span class=variable>share-info</span></code>. In this case, if <code class=scheme><span class=variable>unroll-once?</span></code>  is
+<code class=scheme><span class=selfeval>#f</span></code>, then the return value will be a shared-value identifier;
+otherwise, the returned value shows the internal structure of
+<code class=scheme><span class=variable>v</span></code> (using shared value identifiers within
+<code class=scheme><span class=variable>v</span></code>'s immediate structure as appropriate).</p>
+<p>
+
+
+</p>
+<p></p>
+<p>
+
+<a name="node_idx_916"></a><a name="node_kw_definitionquasi-read-style-printing"></a><code class=scheme>(quasi-read-style-printing</code><tt>&nbsp;</tt>[<code class=scheme><span class=variable>on?</span></code>]<code class=scheme>)</code> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<small>P</small><small>R</small><small>O</small><small>C</small><small>E</small><small>D</small><small>U</small><small>R</small><small>E</small>
+</p>
+<p>
+Parameter that controls how vectors and boxes are represented after
+conversion when the value of <code class=scheme>constructor-style-printing</code> is
+<code class=scheme><span class=selfeval>#f</span></code>. If <code class=scheme>quasi-read-style-printing</code> is set to <code class=scheme><span class=selfeval>#f</span></code>, 
+then boxes and vectors are unquoted and represented using
+constructors. For example, the list of a box containing the
+number 1 and a vector containing the number 1 is represented as
+<code class=scheme>`(,(box 1) ,(vector 1))</code>. If the parameter is
+<code class=scheme><span class=selfeval>#t</span></code>, then <code class=scheme>#&amp;</code> and <code class=scheme>#()</code> are used, e.g., <code class=scheme>`(#&amp;1
+#(1))</code>.  The initial value of the parameter is <code class=scheme><span class=selfeval>#t</span></code>.</p>
+<p>
+
+
+</p>
+<p></p>
+<p>
+
+<a name="node_idx_918"></a><a name="node_kw_definitionshow-sharing"></a><code class=scheme>(show-sharing</code><tt>&nbsp;</tt>[<code class=scheme><span class=variable>show?</span></code>]<code class=scheme>)</code> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<small>P</small><small>R</small><small>O</small><small>C</small><small>E</small><small>D</small><small>U</small><small>R</small><small>E</small>
+</p>
+<p>
+Parameter that determines whether sub-value sharing is conserved
+(and shown) in the converted output by default. The initial value
+of the parameter is <code class=scheme><span class=selfeval>#t</span></code>.</p>
+<p>
+
+
+</p>
+<p></p>
+<p>
+
+<a name="node_idx_920"></a><a name="node_kw_definitionwhole/fractional-exact-numbers"></a><code class=scheme>(whole/fractional-exact-numbers</code><tt>&nbsp;</tt>[<code class=scheme><span class=variable>whole-frac?</span></code>]<code class=scheme>)</code> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<small>P</small><small>R</small><small>O</small><small>C</small><small>E</small><small>D</small><small>U</small><small>R</small><small>E</small>
+</p>
+<p>
+Parameter that controls how exact, non-integer numbers are converted
+when the numerator is greater than the denominator. If the
+parameter's value is <code class=scheme><span class=selfeval>#t</span></code>, the number is converted to the form
+<code class=scheme>(+ <code class=scheme><span class=variable>integer</span></code> <code class=scheme><span class=variable>fraction</span></code>)</code> (i.e., a list containing
+<code class=scheme><span class=selfeval>'+</span></code>, an exact integer, and an exact rational less than <code class=scheme>1</code>
+and greater than <code class=scheme>-1</code>). The initial value of the parameter is
+<code class=scheme><span class=selfeval>#f</span></code>.</p>
+<p>
+</p>
+<div align=right class=navigation><i>[Go to <span><a href="mzlib.html">first</a>, <a href="mzlib-Z-H-24.html">previous</a></span><span>, <a href="mzlib-Z-H-26.html">next</a></span> page<span>; &nbsp;&nbsp;</span><span><a href="mzlib.html#node_toc_start">contents</a></span><span><span>; &nbsp;&nbsp;</span><a href="mzlib-Z-H-42.html#node_index_start">index</a></span>]</i></div><p></p>
+</body>
+</html>

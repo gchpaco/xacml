@@ -1,0 +1,15 @@
+This is TeX2page, Version 2004-09-11 (MzScheme 209, unix)
+(mzscheme.t2p (plt.t2p (css.t2p))) (mzscheme.tex (pretitl.tex)
+(mzliblabels.tex) (mzpre.tex (dots.tex)) (sltxconfig.tex)
+(authm.tex (dateman.tex)) (mcopy.tex (precopy.tex) (copy.tex))
+(libcopy.tex) (gccopy.tex) (gmpcopy.tex) (weblink.tex) (manual-typesetting.tex)
+(posttitl.tex) [0] [1] [2] [3] [4] [5] (mzexn.tex) [6] [7]
+[8] [9] (rxtable.tex) (rx.tex) [10] [11] [12] [13] [14] [15]
+[16] (mzcmdline.tex) [17] (postdoc.tex [18] (mzscheme/mzscheme--h.ind)))
+\end occurred inside a group at level 1
+[19]
+Running: makeindex mzscheme/mzscheme--h 
+Index not refreshed
+Rerun: tex2page mzscheme.tex
+If problem persists, check for missing \label's and \bibitem's
+Output written on mzscheme/mzscheme.html, ... (20 pages).

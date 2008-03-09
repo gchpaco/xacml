@@ -1,0 +1,60 @@
+<!doctype html public "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!--
+
+Generated from mzlib.tex by tex2page, v 2004-09-11
+(running on MzScheme 209, unix), 
+(c) Dorai Sitaram, 
+http://www.ccs.neu.edu/~dorai/tex2page/tex2page-doc.html
+
+-->
+<head>
+<title>
+PLT MzLib: Libraries Manual
+</title>
+<link rel="stylesheet" type="text/css" href="mzlib-Z-S.css" title=default>
+<meta name=robots content="noindex,follow">
+</head>
+<body>
+<div align=right class=navigation><i>[Go to <span><a href="mzlib.html">first</a>, <a href="mzlib-Z-H-11.html">previous</a></span><span>, <a href="mzlib-Z-H-13.html">next</a></span> page<span>; &nbsp;&nbsp;</span><span><a href="mzlib.html#node_toc_start">contents</a></span><span><span>; &nbsp;&nbsp;</span><a href="mzlib-Z-H-42.html#node_index_start">index</a></span>]</i></div><p></p>
+<a name="node_chap_12"></a>
+<h1 class=chapter>
+<div class=chapterheading><a href="mzlib.html#node_toc_node_chap_12">Chapter 12</a></div><br>
+<a href="mzlib.html#node_toc_node_chap_12"><tt><strong>compile.ss</strong></tt>: Compiling Files</a></h1>
+<p><a name="node_idx_382"></a><a name="node_idx_384"></a></p>
+<p>
+
+
+</p>
+<p></p>
+<p>
+
+<a name="node_idx_386"></a><a name="node_kw_definitioncompile-file"></a><code class=scheme>(compile-file</code><tt>&nbsp;</tt><code class=scheme><span class=variable>src</span></code><tt>&nbsp;</tt>[<code class=scheme><span class=variable>dest filter</span></code>]<code class=scheme>)</code> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<small>P</small><small>R</small><small>O</small><small>C</small><small>E</small><small>D</small><small>U</small><small>R</small><small>E</small>
+</p>
+<p>
+Compiles the Scheme file <code class=scheme><span class=variable>src</span></code> and saves the compiled code to
+<code class=scheme><span class=variable>dest</span></code>. If <code class=scheme><span class=variable>dest</span></code> is not specified, a filename is constructed
+by taking <code class=scheme><span class=variable>src</span></code>'s directory path, adding a <tt><strong>compiled</strong></tt>
+subdirectory, and then adding <code class=scheme><span class=variable>src</span></code>'s filename with its suffix
+replaced by <tt><strong>.zo</strong></tt>. Also, if <code class=scheme><span class=variable>dest</span></code> is not provided and the
+<tt><strong>compiled</strong></tt> subdirectory does not already exist, the subdirectory
+is created. If the <code class=scheme><span class=variable>filter</span></code> procedure is provided, it is applied
+to each source expression and the result is compiled (otherwise, the
+identity function is used as the filter).</p>
+<p>
+The <code class=scheme>compile-file</code> function is designed for compiling modules
+files; each expression in <code class=scheme><span class=variable>src</span></code> is compiled independently. If
+<code class=scheme><span class=variable>src</span></code> does not contain a single <code class=scheme><span class=keyword>module</span></code> expression, then
+earlier expressions can affect the compilation of later expressions
+when <code class=scheme><span class=variable>src</span></code> is loaded directly. An appropriate <code class=scheme><span class=variable>filter</span></code> can
+make compilation behave like evaluation, but the problem is also
+solved (as much as possible) by the <code class=scheme>compile-zos</code> function
+provided by the <tt><strong>compiler</strong></tt> collection's <tt><strong>compiler.ss</strong></tt>
+module.</p>
+<p>
+</p>
+<p>
+</p>
+<div align=right class=navigation><i>[Go to <span><a href="mzlib.html">first</a>, <a href="mzlib-Z-H-11.html">previous</a></span><span>, <a href="mzlib-Z-H-13.html">next</a></span> page<span>; &nbsp;&nbsp;</span><span><a href="mzlib.html#node_toc_start">contents</a></span><span><span>; &nbsp;&nbsp;</span><a href="mzlib-Z-H-42.html#node_index_start">index</a></span>]</i></div><p></p>
+</body>
+</html>

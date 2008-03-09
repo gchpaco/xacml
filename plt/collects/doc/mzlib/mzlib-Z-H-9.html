@@ -1,0 +1,319 @@
+<!doctype html public "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!--
+
+Generated from mzlib.tex by tex2page, v 2004-09-11
+(running on MzScheme 209, unix), 
+(c) Dorai Sitaram, 
+http://www.ccs.neu.edu/~dorai/tex2page/tex2page-doc.html
+
+-->
+<head>
+<title>
+PLT MzLib: Libraries Manual
+</title>
+<link rel="stylesheet" type="text/css" href="mzlib-Z-S.css" title=default>
+<meta name=robots content="noindex,follow">
+</head>
+<body>
+<div align=right class=navigation><i>[Go to <span><a href="mzlib.html">first</a>, <a href="mzlib-Z-H-8.html">previous</a></span><span>, <a href="mzlib-Z-H-10.html">next</a></span> page<span>; &nbsp;&nbsp;</span><span><a href="mzlib.html#node_toc_start">contents</a></span><span><span>; &nbsp;&nbsp;</span><a href="mzlib-Z-H-42.html#node_index_start">index</a></span>]</i></div><p></p>
+<a name="node_chap_9"></a>
+<h1 class=chapter>
+<div class=chapterheading><a href="mzlib.html#node_toc_node_chap_9">Chapter 9</a></div><br>
+<a href="mzlib.html#node_toc_node_chap_9"><tt><strong>cmdline.ss</strong></tt>: Command-line Parsing</a></h1>
+<p><a name="node_idx_300"></a><a name="node_idx_302"></a></p>
+<p>
+
+<a name="node_kw_definitioncommand-line"></a><a name="node_idx_304"></a>
+</p>
+<p></p>
+<p>
+
+<code class=scheme>(<code class=scheme><span class=keyword>command-line</span></code> <code class=scheme><span class=variable>program-name-expr argv-expr clause <tt>&middot;&middot;&middot;</tt></span></code>)</code> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<small>S</small><small>Y</small><small>N</small><small>T</small><small>A</small><small>X</small>
+</p>
+<p>
+Parses a command line according to the specification in the
+<code class=scheme><span class=variable>clause</span></code>s. The <code class=scheme><span class=variable>program-name-expr</span></code> should produce a string to be used as the
+program name for reporting errors when the command-line is
+ill-formed.  The <code class=scheme><span class=variable>argv-expr</span></code> must evaluate to a vector of
+strings; typically, it is <code class=scheme>(<code class=scheme>current-command-line-arguments</code>)</code>.</p>
+<p>
+The command-line is disassembled into flags (possibly with
+flag-specific arguments) followed by (non-flag)
+arguments. Command-line strings starting with ``-'' or ``+'' are
+parsed as flags, but arguments to flags are never parsed as flags,
+and integers and decimal numbers that start with ``-'' or ``+'' are
+not treated as flags. Non-flag arguments in the command-line must
+appear after all flags and the flags' arguments. No command-line
+string past the first non-flag argument is parsed as a flag. The
+built-in <tt>--</tt> flag signals the end of command-line flags; any
+command-line string past the <tt>--</tt> flag is parsed as a non-flag
+argument.</p>
+<p>
+For defining the command line, each <code class=scheme><span class=variable>clause</span></code> has one of the following forms:
+</p>
+<div align=left><pre class=scheme>(<code class=scheme><span class=keyword>multi</span></code> <span class=variable>flag-spec</span> <tt>&middot;&middot;&middot;</tt>)
+(<code class=scheme><span class=keyword>once-each</span></code> <span class=variable>flag-spec</span> <tt>&middot;&middot;&middot;</tt>)
+(<code class=scheme><span class=keyword>once-any</span></code> <span class=variable>flag-spec</span> <tt>&middot;&middot;&middot;</tt>)
+(<code class=scheme><span class=keyword>final</span></code> <span class=variable>flag-spec</span> <tt>&middot;&middot;&middot;</tt>)
+(<code class=scheme><span class=keyword>help-labels</span></code> <span class=variable>string</span> <tt>&middot;&middot;&middot;</tt>)
+(<code class=scheme><span class=keyword>args</span></code> <span class=variable>arg-formals</span> <span class=variable>body-expr</span> <tt>&middot;&middot;&middot;</tt><sup>1</sup>)
+(<span class=keyword>=&gt;</span> <span class=variable>finish-proc-expr</span> <span class=variable>arg-help-expr</span> <span class=variable>help-proc-expr</span> <span class=variable>unknown-proc-expr</span>) 
+
+<span class=variable>flag-spec</span> is one of
+  (<span class=variable>flags</span> <span class=variable>variable</span> <tt>&middot;&middot;&middot;</tt>  <span class=variable>help-str</span> <span class=variable>body-expr</span> <tt>&middot;&middot;&middot;</tt><sup>1</sup>) 
+  (<span class=variable>flags</span> <span class=keyword>=&gt;</span> <span class=variable>handler-expr</span> <span class=variable>help-expr</span>) 
+
+<span class=variable>flags</span> is one of
+  <span class=variable>flag-str</span> 
+  (<span class=variable>flag-str</span> <tt>&middot;&middot;&middot;</tt><sup>1</sup>) 
+
+<span class=variable>arg-formals</span> is one of
+  <span class=variable>variable</span> 
+  (<span class=variable>variable</span> <tt>&middot;&middot;&middot;</tt>)
+  (<span class=variable>variable</span> <tt>&middot;&middot;&middot;</tt><sup>1</sup> . <span class=variable>variable</span>)
+</pre></div><p>
+A <code class=scheme><span class=keyword>multi</span></code>, <code class=scheme><span class=keyword>once-each</span></code>, <code class=scheme><span class=keyword>once-any</span></code>, or <code class=scheme><span class=keyword>final</span></code>
+clause introduces a set of command-line flag specifications. The
+clause tag indicates how many times the flag can appear on the
+command line:
+</p>
+<ul><p>
+</p>
+<li><p><a name="node_idx_306"></a><code class=scheme><span class=keyword>multi</span></code>  --  Each flag specified in the set can be
+represented any number of times on the command line; i.e., the flags
+in the set are independent and each flag can be used multiple times.</p>
+<p>
+</p>
+<li><p><a name="node_idx_308"></a><code class=scheme><span class=keyword>once-each</span></code>  --  Each flag specified in the set can be
+represented once on the command line; i.e., the flags in the set are
+independent, but each flag should be specified at most once. If a
+flag specification is represented in the command line more than once,
+the <a name="node_idx_310"></a><code class=scheme>exn:fail</code> exception is raised.</p>
+<p>
+</p>
+<li><p><a name="node_idx_312"></a><code class=scheme><span class=keyword>once-any</span></code>  --  Only one flag specified in the set can
+be represented on the command line; i.e., the flags in the set are
+mutually exclusive. If the set is represented in the command line
+more than once, the <a name="node_idx_314"></a><code class=scheme>exn:fail</code> exception is raised.</p>
+<p>
+</p>
+<li><p><a name="node_idx_316"></a><code class=scheme><span class=keyword>final</span></code>  --  Like <code class=scheme><span class=keyword>multi</span></code>, except that no
+argument after the flag is treated as a flag. Note that multiple
+<code class=scheme><span class=keyword>final</span></code> flags can be specified if they have short names; for
+example, if <tt>-a</tt> is a <code class=scheme><span class=keyword>final</span></code> flag, then <tt>--aa</tt> combines
+two instances of <tt>-a</tt> in a single command-line argument.</p>
+<p>
+</p>
+</ul><p>
+A normal flag specification has four parts:
+</p>
+<ol><p>
+</p>
+<li><p><code class=scheme><span class=variable>flags</span></code>  --  a flag string, or a set of flag strings.  If a
+set of flags is provided, all of the flags are equivalent.  Each flag
+string must be of the form <code class=scheme><span class=selfeval>&quot;-<code class=scheme><span class=variable>x</span></code>&quot;</span></code> or <code class=scheme><span class=selfeval>&quot;+<code class=scheme><span class=variable>x</span></code>&quot;</span></code> for
+some character <code class=scheme><span class=variable>x</span></code>, or <code class=scheme><span class=selfeval>&quot;--<code class=scheme><span class=variable>x</span></code>&quot;</span></code> or <code class=scheme><span class=selfeval>&quot;++<code class=scheme><span class=variable>x</span></code>&quot;</span></code> for
+some sequence of characters <code class=scheme><span class=variable>x</span></code>. An <code class=scheme><span class=variable>x</span></code> cannot contain only
+digits or digits plus a single decimal point, since simple (signed)
+numbers are not treated as flags. In addition, the flags <code class=scheme><span class=selfeval>&quot;--&quot;</span></code>,
+<code class=scheme><span class=selfeval>&quot;-h&quot;</span></code>, and <code class=scheme><span class=selfeval>&quot;--help&quot;</span></code> are predefined and cannot be changed.</p>
+<p>
+</p>
+<li><p><code class=scheme><span class=variable>variable</span></code>s  --  variables that are bound to the flag's
+arguments. The number of variables specified here determines how many
+arguments can be provided on the command line with the flag, and the
+names of these variables will appear in the help message describing
+the flag. The <code class=scheme><span class=variable>variable</span></code>s are bound to string values in the
+<code class=scheme><span class=variable>body-expr</span></code>s for handling the flag.</p>
+<p>
+</p>
+<li><p><code class=scheme><span class=variable>help-str</span></code>  --  a string that describes the flag. This
+string is used in the help message generated by the handler for the
+built-in <tt>-h</tt> (or <tt>--help</tt>) flag.</p>
+<p>
+</p>
+<li><p><code class=scheme><span class=variable>body-expr</span></code>s  --  expressions that are evaluated when one of
+the <code class=scheme><span class=variable>flags</span></code> appears on the command line. The flags are parsed
+left-to-right, and each sequence of <code class=scheme><span class=variable>body-expr</span></code>s is evaluated as
+the corresponding flag is encountered. When the <code class=scheme><span class=variable>body-expr</span></code>s are
+evaluated, the <code class=scheme><span class=variable>variable</span></code>s are bound to the arguments provided
+for the flag on the command line.</p>
+<p>
+</p>
+</ol><p>
+A flag specification using <code class=scheme><span class=keyword>=&gt;</span></code> escapes to a more general method
+of specifying the handler and help strings. In this case, the handler
+procedure and help string list returned by <code class=scheme><span class=variable>handler-expr</span></code> and
+<code class=scheme><span class=variable>help-expr</span></code> are embedded directly in the table for
+<code class=scheme>parse-command-line</code>, the procedure used to implement
+command-line parsing.</p>
+<p>
+A <code class=scheme>help-labels</code> clause inserts text lines into the help table of
+command-line flags. Each string in the clause provides a separate
+line of text.</p>
+<p>
+An <code class=scheme>args</code> clause can be specified as the last clause. The
+variables in <code class=scheme><span class=variable>arg-formals</span></code> are bound to the leftover command-line
+strings in the same way that variables are bound to the <code class=scheme><span class=variable>formals</span></code>
+of a <code class=scheme>lambda</code> expression. Thus, specifying a single
+<code class=scheme><span class=variable>variable</span></code> (without parentheses) collects all of the leftover
+arguments into a list. The effective arity of the <code class=scheme><span class=variable>arg-formals</span></code>
+specification determines the number of extra command-line arguments
+that the user can provide, and the names of the variables in
+<code class=scheme><span class=variable>arg-formals</span></code> are used in the help string. When the command-line
+is parsed, if the number of provided arguments cannot be matched to
+variables in <code class=scheme><span class=variable>arg-formals</span></code>, the <a name="node_idx_318"></a><code class=scheme>exn:fail</code> exception is raised. Otherwise,
+<code class=scheme>args</code> clause's <code class=scheme><span class=variable>body-expr</span></code>s are evaluated to handle the
+leftover arguments, and the result of the last <code class=scheme><span class=variable>body-expr</span></code> is the
+result of the <code class=scheme><span class=keyword>command-line</span></code> expression.</p>
+<p>
+Instead of an <code class=scheme>args</code> clause, the <code class=scheme>=&gt;</code> clause can be used
+to escape to a more general method of handling the leftover
+arguments. In this case, the values of the expressions with
+<code class=scheme>=&gt;</code> are passed on directly as arguments to
+<code class=scheme>parse-command-line</code>.  The <code class=scheme><span class=variable>help-proc-expr</span></code> and
+<code class=scheme><span class=variable>unknown-proc-expr</span></code> expressions are optional.</p>
+<p>
+Example:
+</p>
+<div align=left><pre class=scheme>(<span class=keyword>command-line</span> <span class=selfeval>&quot;compile&quot;</span> (<code class=scheme>current-command-line-arguments</code>)
+  (<code class=scheme><span class=keyword>once-each</span></code>
+     [(<span class=selfeval>&quot;-v&quot;</span> <span class=selfeval>&quot;--verbose&quot;</span>) <span class=selfeval>&quot;Compile with verbose messages&quot;</span>
+                          (<span class=variable>verbose-mode</span> <span class=selfeval>#t</span>)]
+     [(<span class=selfeval>&quot;-p&quot;</span> <span class=selfeval>&quot;--profile&quot;</span>) <span class=selfeval>&quot;Compile with profiling&quot;</span>
+                          (<span class=variable>profiling-on</span> <span class=selfeval>#t</span>)])
+  (<code class=scheme><span class=keyword>once-any</span></code>
+     [(<span class=selfeval>&quot;-o&quot;</span> <span class=selfeval>&quot;--optimize-1&quot;</span>) <span class=selfeval>&quot;Compile with optimization level 1&quot;</span>
+                            (<span class=variable>optimize-level</span> <span class=selfeval>1</span>)]
+     [<span class=selfeval>&quot;--optimize-2&quot;</span>        <span class=selfeval>&quot;Compile with optimization level 2&quot;</span>
+                            (<span class=variable>optimize-level</span> <span class=selfeval>2</span>)])
+  (<code class=scheme><span class=keyword>multi</span></code>
+     [(<span class=selfeval>&quot;-l&quot;</span> <span class=selfeval>&quot;--link-flags&quot;</span>) <span class=variable>lf</span> <span class=comment>; flag takes one argument</span>
+                            <span class=selfeval>&quot;Add a flag for the linker&quot;</span> <span class=selfeval>&quot;flag&quot;</span>
+                            (<span class=variable>link-flags</span> (<code class=scheme>cons</code> <span class=variable>lf</span> (<span class=variable>link-flags</span>)))])
+  (<code class=scheme><span class=keyword>args</span></code> (<span class=variable>filename</span>) <span class=comment>; expects one command-line argument: a filename</span>
+    <span class=variable>filename</span>)) <span class=comment>; return a single filename to compile</span>
+</pre></div><p></p>
+<p>
+
+
+</p>
+<p></p>
+<p>
+
+<a name="node_idx_320"></a><a name="node_kw_definitionparse-command-line"></a><code class=scheme>(parse-command-line</code><tt>&nbsp;</tt><code class=scheme><span class=variable>progname argv table finish-proc arg-help</span></code><tt>&nbsp;</tt>[<code class=scheme><span class=variable>help-proc unknown-proc</span></code>]<code class=scheme>)</code> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<small>P</small><small>R</small><small>O</small><small>C</small><small>E</small><small>D</small><small>U</small><small>R</small><small>E</small>
+</p>
+<p>
+Parses a command-line using the specification in <code class=scheme><span class=variable>table</span></code>. For an
+overview of command-line parsing, see the <code class=scheme>command-line</code> form.
+The <code class=scheme><span class=variable>table</span></code> argument to this procedural form encodes the
+information in <code class=scheme>command-line</code>'s clauses, except for the <code class=scheme>args</code>
+clause.  Instead, arguments are handled by the <code class=scheme><span class=variable>finish-proc</span></code>
+procedure, and help information about non-flag arguments is provided
+in <code class=scheme><span class=variable>arg-help</span></code>. In addition, the <code class=scheme><span class=variable>finish-proc</span></code> procedure receives
+information accumulated while parsing flags. The <code class=scheme><span class=variable>help-proc</span></code> and
+<code class=scheme><span class=variable>unknown-proc</span></code> arguments allow customization that is not
+possible with <code class=scheme>command-line</code>.</p>
+<p>
+When there are no more flags, the <code class=scheme><span class=variable>finish-proc</span></code> procedure is called
+with a list of information accumulated for command-line flags (see
+below) and the remaining non-flag arguments from the command-line. The
+arity of the <code class=scheme><span class=variable>finish-proc</span></code> procedure determines the number of non-flag
+arguments accepted and required from the command-line. For example, if
+<code class=scheme><span class=variable>finish-proc</span></code> accepts either two or three arguments, then either one or
+two non-flag arguments must be provided on the command-line. The
+<code class=scheme><span class=variable>finish-proc</span></code> procedure can have any arity (see section&nbsp;<a href="../mzscheme/mzscheme-Z-H-3.html#node_sec_3.10.1">3.10.1</a> in <a href="../mzscheme/mzscheme.html"><i>PLT MzScheme: Language Manual</i></a>) except
+<code class=scheme>0</code> or a list of <code class=scheme>0</code>s (i.e., the procedure must at least
+accept one or more arguments).</p>
+<p>
+The <code class=scheme><span class=variable>arg-help</span></code> argument is a list of strings identifying the
+expected (non-flag) command-line arguments, one for each argument. (If
+an arbitrary number of arguments are allowed, the last string in
+<code class=scheme><span class=variable>arg-help</span></code> represents all of them.)</p>
+<p>
+The <code class=scheme><span class=variable>help-proc</span></code> procedure is called with a help string if the
+<tt>-h</tt> or <tt>--help</tt> flag is included on the command line. If 
+an unknown flag is encountered, the <code class=scheme><span class=variable>unknown-proc</span></code> procedure is
+called just like a flag-handling procedure (as described below); it
+must at least accept one argument (the unknown flag), but it may also
+accept more arguments. The default
+<code class=scheme><span class=variable>help-proc</span></code> displays the string and exits and the default
+<code class=scheme><span class=variable>unknown-proc</span></code> raises the <a name="node_idx_322"></a><code class=scheme>exn:fail</code> exception.</p>
+<p>
+A <code class=scheme><span class=variable>table</span></code> is a list of flag specification sets. Each set is
+represented as a list of two items: a mode symbol and a list of
+either help strings or flag specifications.  A mode symbol is one of
+<code class=scheme><span class=selfeval>'once-each</span></code><a name="node_idx_324"></a>, <code class=scheme><span class=selfeval>'once-any</span></code><a name="node_idx_326"></a>, <code class=scheme><span class=selfeval>'multi</span></code><a name="node_idx_328"></a>,
+<code class=scheme><span class=selfeval>'final</span></code><a name="node_idx_330"></a>, or <code class=scheme><span class=selfeval>'help-labels</span></code><a name="node_idx_332"></a>, with the same
+meanings as the corresponding clause tags in
+<code class=scheme>command-line</code>. For the <code class=scheme><span class=selfeval>'help-labels</span></code> mode, a list of
+help string is provided. For the other modes, a list of flag
+specifications is provided, where each specification maps a number of
+flags to a single handler procedure. A specification is a list of
+three items:
+</p>
+<ol><p>
+</p>
+<li><p>A list of strings for the flags defined by the spec. See
+<code class=scheme>command-line</code> for information about the format of flag strings.</p>
+<p>
+</p>
+<li><p>A procedure to handle the flag and its arguments when one of
+the flags is found on the command line. The arity of this handler
+procedure determines the number of arguments consumed by the flag: the
+handler procedure is called with a flag string plus the next few
+arguments from the command line to match the arity of the handler
+procedure. The handler procedure must accept at least one argument to
+receive the flag. If the handler accepts arbitrarily many arguments,
+all of the remaining arguments are passed to the handler.  A handler
+procedure's arity must either be a number or an
+<code class=scheme>arity-at-least</code> value (see section&nbsp;<a href="../mzscheme/mzscheme-Z-H-3.html#node_sec_3.10.1">3.10.1</a> in <a href="../mzscheme/mzscheme.html"><i>PLT MzScheme: Language Manual</i></a>).</p>
+<p>
+The return value from the handler is added to a list that is
+eventually passed to <code class=scheme><span class=variable>finish-proc</span></code>. If the handler returns
+void, no value is added onto this list. For all non-void
+values returned by handlers, the order of the values in the list is
+the same as the order of the arguments on the command-line.</p>
+<p>
+</p>
+<li><p>A non-empty list of strings used for constructing help information 
+for the spec. The first string in the list describes the flag, and
+additional strings name the expected arguments for the flag. The
+number of extra help strings provided for a spec must match the number
+of arguments accepted by the spec's handler procedure.
+</p>
+</ol><p></p>
+<p>
+The following example is the same as the example for
+<code class=scheme><span class=keyword>command-line</span></code>, translated to the procedural form:
+</p>
+<div align=left><pre class=scheme>(<code class=scheme>parse-command-line</code> <span class=selfeval>&quot;compile&quot;</span> (<code class=scheme>current-command-line-arguments</code>)
+  <span class=keyword>`</span>((<span class=variable>once-each</span>
+     [(<span class=selfeval>&quot;-v&quot;</span> <span class=selfeval>&quot;--verbose&quot;</span>)
+      <span class=keyword>,</span>(<span class=keyword>lambda</span> (<span class=variable>flag</span>) (<span class=variable>verbose-mode</span> <span class=selfeval>#t</span>))
+      (<span class=selfeval>&quot;Compile with verbose messages&quot;</span>)]
+     [(<span class=selfeval>&quot;-p&quot;</span> <span class=selfeval>&quot;--profile&quot;</span>)
+      <span class=keyword>,</span>(<span class=keyword>lambda</span> (<span class=variable>flag</span>) (<span class=variable>profiling-on</span> <span class=selfeval>#t</span>))
+      (<span class=selfeval>&quot;Compile with profiling&quot;</span>)])
+    (<span class=variable>once-any</span>
+     [(<span class=selfeval>&quot;-o&quot;</span> <span class=selfeval>&quot;--optimize-1&quot;</span>)
+      <span class=keyword>,</span>(<span class=keyword>lambda</span> (<span class=variable>flag</span>) (<span class=variable>optimize-level</span> <span class=selfeval>1</span>))
+      (<span class=selfeval>&quot;Compile with optimization level 1&quot;</span>)]
+     [(<span class=selfeval>&quot;--optimize-2&quot;</span>)
+      <span class=keyword>,</span>(<span class=keyword>lambda</span> (<span class=variable>flag</span>) (<span class=variable>optimize-level</span> <span class=selfeval>2</span>))
+      (<span class=selfeval>&quot;Compile with optimization level 2&quot;</span>)])
+    (<span class=variable>multi</span>
+     [(<span class=selfeval>&quot;-l&quot;</span> <span class=selfeval>&quot;--link-flags&quot;</span>)
+      <span class=keyword>,</span>(<span class=keyword>lambda</span> (<span class=variable>flag</span> <span class=variable>lf</span>) (<span class=variable>link-flags</span> (<code class=scheme>cons</code> <span class=variable>lf</span> (<span class=variable>link-flags</span>))))
+      (<span class=selfeval>&quot;Add a flag for the linker&quot;</span> <span class=selfeval>&quot;flag&quot;</span>)]))
+   (<span class=keyword>lambda</span> (<span class=variable>flag-accum</span> <span class=variable>file</span>) <span class=variable>file</span>)  <span class=comment>; return a single filename to compile</span>
+   <span class=keyword>'</span>(<span class=selfeval>&quot;filename&quot;</span>)) <span class=comment>; expects one command-line argument: a filename</span>
+</pre></div><p></p>
+<p>
+</p>
+<p>
+</p>
+<div align=right class=navigation><i>[Go to <span><a href="mzlib.html">first</a>, <a href="mzlib-Z-H-8.html">previous</a></span><span>, <a href="mzlib-Z-H-10.html">next</a></span> page<span>; &nbsp;&nbsp;</span><span><a href="mzlib.html#node_toc_start">contents</a></span><span><span>; &nbsp;&nbsp;</span><a href="mzlib-Z-H-42.html#node_index_start">index</a></span>]</i></div><p></p>
+</body>
+</html>

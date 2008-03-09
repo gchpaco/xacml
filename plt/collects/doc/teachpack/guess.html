@@ -1,0 +1,62 @@
+<html>
+<head>
+<title>Teachpack : Guess</title>
+</head>
+<body bgcolor="#ffffff" text="#000000"
+      link="#009900" vlink="#007700" alink="#cc0000">
+
+<a href="index.html">Teachpacks for How to Design Programs</a>
+
+<h1>Guess</h1>
+
+<hr> <h3><a name="guess.ss">guess.ss</a></h3> <!-- DOCNOTE="teach=guess.ss" -->
+
+<p>The teachpack <code>guess.ss</code> provides operations to play a
+guess-the-number game. Each operation display a GUI in which a player
+can choose specific values for some number of digits and then check the
+guess. The more advanced operations ask students to implement more of the
+game. </p>
+
+<p> The teachpack provides three operations:
+<menu>
+  <li><code><a name="guess-with-gui">guess-with-gui</a> : check-guess -> true; </code> <br>
+  The check-guess function consumes two numbers: <code>guess</code>, which
+  is the user's guess, and <code>target</code>, which is the randomly
+  chosen number-to-be-guessed. The result is a symbol that reflects the
+  relationship of the player's guess to the target.
+  <br><br>
+
+  <li><code><a name="guess-with-gui-3">guess-with-gui-3</a> : check-guess -> true; </code> <br>
+
+  The check-guess function consumes three digits and one number:
+  <code>digit0, digit1, digit2</code>, which make up the user's guess, and
+  <code>target</code>, which is the randomly chosen
+  number-to-be-guessed. The result is a symbol that reflects the
+  relationship of the player's guess (the digits converted to a number) to
+  the target.
+  <br><br>
+
+  Note: <code>digit0</code> is the <em>least</em> significant digit that
+  the user chose and <code>digit2</code> is the <em>most</em> significant
+  one.
+
+  <li><code><a name="guess-with-gui-list">guess-with-gui-list</a> : check-guess -> true; </code> <br>
+
+  The check-guess function consumes a list of digits and one number:
+  <code>digits</code>, a list that makes up the user's guess, and
+  <code>target</code>, which is the randomly chosen
+  number-to-be-guessed. The result is a symbol that reflects the
+  relationship of the player's guess (the digits converted to a number) to
+  the target.
+  <br><br>
+
+  Note: the first item on <code>digits</code> is the <em>least</em>
+  significant digit that the user chose, and the last one is the
+  <em>most</em> significant digit.
+
+</menu>
+
+<br>
+<br>
+</body>
+</html>

@@ -1,0 +1,41 @@
+<html>
+<head>
+<title>Teachpack : Mastermind</title>
+</head>
+<body bgcolor="#ffffff" text="#000000"
+      link="#009900" vlink="#007700" alink="#cc0000">
+
+<a href="index.html">Teachpacks for How to Design Programs</a>
+
+<h1>Mastermind</h1>
+
+<hr> <h3><a name="master.ss">master.ss</a></h3> <!-- DOCNOTE="teach=master.ss" -->
+
+<p>The teachpack <code>master.ss</code> provides the operation
+<code>master</code>. It implements a GUI for playing a simple
+master mind-like game. The player clicks on two colors and the
+program responds with an answer that indicates how many colors
+and places were correct.</p>
+
+<p>The function <code>master</code> consumes the function
+<code>check-guess</code>, which is the key component of
+TeachMasterMind. The function <code>check-guess</code> consumes the two
+colors that the player guessed and the two players that the master chose
+(randomly at the beginning of the game). It compares the colors and
+produces an appropriate symbol. </p>
+
+<p>The teachpack provides only one operation:
+<menu>
+  <li><code><a name="master">master</a> : check-guess -> symbol; </code> <br>
+  It prompts the user for two colors (symbols) and uses
+  <code>check-guess</code> to play mastermind. <br>
+  If the guesses completely match the set-up, <code>check-guess</code> must
+  return <code>'PerfectGuess</code>; otherwise it must return a different,
+  informative symbol.
+
+</menu>
+
+<br>
+<br>
+</body>
+</html>

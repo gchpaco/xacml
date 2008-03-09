@@ -1,0 +1,367 @@
+<!doctype html public "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!--
+
+Generated from misclib.tex by tex2page, v 2004-09-11
+(running on MzScheme 209, unix), 
+(c) Dorai Sitaram, 
+http://www.ccs.neu.edu/~dorai/tex2page/tex2page-doc.html
+
+-->
+<head>
+<title>
+PLT Miscellaneous Libraries: Reference Manual
+</title>
+<link rel="stylesheet" type="text/css" href="misclib-Z-S.css" title=default>
+<meta name=robots content="noindex,follow">
+</head>
+<body>
+<div align=right class=navigation><i>[Go to <span><a href="misclib.html">first</a>, <a href="misclib-Z-H-2.html">previous</a></span><span>, <a href="misclib-Z-H-4.html">next</a></span> page<span>; &nbsp;&nbsp;</span><span><a href="misclib.html#node_toc_start">contents</a></span><span><span>; &nbsp;&nbsp;</span><a href="misclib-Z-H-4.html#node_index_start">index</a></span>]</i></div><p></p>
+<a name="node_chap_3"></a>
+<h1 class=chapter>
+<div class=chapterheading><a href="misclib.html#node_toc_node_chap_3">Chapter 3</a></div><br>
+<a href="misclib.html#node_toc_node_chap_3">Turtles</a></h1>
+<p><a name="node_idx_178"></a></p>
+<p>
+</p>
+<a name="node_sec_3.1"></a>
+<h2><a href="misclib.html#node_toc_node_sec_3.1">3.1&nbsp;&nbsp;Turtles</a></h2>
+<p><a name="node_idx_180"></a></p>
+<p>
+There are two ways to use the turtles in DrScheme. You can
+use it as a TeachPack (see the DrScheme manual for details
+of TeachPacks) or as a library. Use the
+<tt><strong>turtles.ss</strong></tt><a name="node_idx_182"></a> TeachPack.</p>
+<p>
+In the MrEd language or in a module, load turtles with
+</p>
+<div align=left><pre class=scheme>(<span class=keyword>require</span> (<code class=scheme><span class=keyword>lib</span></code> <span class=selfeval>&quot;turtles.ss&quot;</span> <span class=selfeval>&quot;graphics&quot;</span>))
+</pre></div><p>
+The following are the turtle functions:
+</p>
+<ul>
+<li><p><code class=scheme>(turtles b)</code><a name="node_idx_184"></a><a name="node_kw_definitionturtles"></a>
+shows and hides the turtles window based on the boolean <code class=scheme>b</code>.
+The parameter <code class=scheme>b</code> is optional; if it is left out, it toggles the
+state of the turtles.</p>
+<p>
+</p>
+<li><p><code class=scheme>(move n)</code><a name="node_idx_186"></a><a name="node_kw_definitionmove"></a>
+moves the turtle n pixels.</p>
+<p>
+</p>
+<li><p><code class=scheme>(draw n)</code><a name="node_idx_188"></a><a name="node_kw_definitiondraw"></a>
+moves the turtle n pixels and draws a line on that path.</p>
+<p>
+</p>
+<li><p><code class=scheme>(erase n)</code><a name="node_idx_190"></a><a name="node_kw_definitionerase"></a>
+moves the turtle n pixels and erases along that path.</p>
+<p>
+<a name="node_idx_192"></a><a name="node_kw_definitionmove-offset"></a>
+<a name="node_idx_194"></a><a name="node_kw_definitiondraw-offset"></a>
+<a name="node_idx_196"></a><a name="node_kw_definitionerase-offset"></a>
+</p>
+<li><p> <code class=scheme>(move-offset h v)</code>, <code class=scheme>(draw-offset h v)</code>, <code class=scheme>(erase-offset h v)</code>
+are just like move, draw and erase, except they take a horizontal and
+vertical offset from the turtle's current position.</p>
+<p>
+</p>
+<li><p> <code class=scheme>(turn theta)</code><a name="node_idx_198"></a><a name="node_kw_definitionturn"></a>
+turns the turtle theta degrees counter-clockwise.</p>
+<p>
+</p>
+<li><p> <code class=scheme>(turn/radians theta)</code><a name="node_idx_200"></a><a name="node_kw_definitionturn"></a>
+turns the turtle theta radians counter-clockwise.</p>
+<p>
+</p>
+<li><p><code class=scheme>(clear)</code><a name="node_idx_202"></a><a name="node_kw_definitionclear"></a>
+erases the turtles window.
+</p>
+</ul><p></p>
+<p>
+Turtles also defines these syntactic forms:</p>
+<p>
+</p>
+<ul>
+<li><p><code class=scheme>(split E)</code><a name="node_idx_204"></a><a name="node_kw_definitionsplit"></a>
+spawns a new turtle where
+the turtle is currently located. In order to distinguish the two turtles,
+only the new one evaluates the expression E. For example, if you start
+with a fresh turtle-window and type:
+</p>
+<div align=center><table><tr><td>
+
+</td><td><div align=left><pre class=scheme>(<span class=keyword>split</span> (<code class=scheme>turn/radians</code> (<span class=variable>/</span> <code class=scheme>pi</code> <span class=selfeval>2</span>)))
+</pre></div></td><td>
+</td></tr></table></div>
+
+you will have two turtles, pointing at right angles to each other.
+To see that, try this:
+<div align=center><table><tr><td>
+
+</td><td><div align=left><pre class=scheme>(<code class=scheme>draw</code> <span class=selfeval>100</span>)
+</pre></div></td><td>
+</td></tr></table></div>
+
+You will see two lines. Now, if you evaluate those two expression
+again, you will have four turtles, etc<p>
+</p>
+<li><p><code class=scheme>(split* E ...)</code><a name="node_idx_206"></a><a name="node_kw_definitionsplit*"></a>
+is similar to <code class=scheme>(split E ...)</code>, except it creates as many turtles as
+there are expressions and each turtles does one of the expression. For
+example, to create two turtles, one pointing at pi/2 and one at
+pi/3, evaluate this:
+</p>
+<div align=center><table><tr><td>
+
+</td><td><div align=left><pre class=scheme>(<span class=keyword>split*</span> (<code class=scheme>turn/radians</code> (<span class=variable>/</span> <code class=scheme>pi</code> <span class=selfeval>3</span>)) (<code class=scheme>turn/radians</code> (<span class=variable>/</span> <code class=scheme>pi</code> <span class=selfeval>2</span>)))
+</pre></div></td><td>
+</td></tr></table></div>
+<p>
+</p>
+<li><p><code class=scheme>(tprompt E...)</code><a name="node_idx_208"></a><a name="node_kw_definitiontprompt"></a>
+provides a way to limit the splitting of the turtles. Before
+the expression E is run, the state of the turtles (how many, their
+positions and headings) is &quot;checkpointed,&quot; then E is evaluated and
+the state of the turtles is restored, but all drawing that may have
+occurred during execution of E remains. </p>
+<p>
+For example, if you do this:
+</p>
+<div align=center><table><tr><td>
+
+</td><td><div align=left><pre class=scheme>(<span class=keyword>tprompt</span> (<code class=scheme>draw</code> <span class=selfeval>100</span>))
+</pre></div></td><td>
+</td></tr></table></div>
+
+the turtle will move forward 100 pixels, draw a line there and then
+be immediately put back in it's original position. Also, if you do this:
+<div align=center><table><tr><td>
+
+</td><td><div align=left><pre class=scheme>(<span class=keyword>tprompt</span> (<span class=keyword>split</span> (<code class=scheme>turn/radians</code> (<span class=variable>/</span> <code class=scheme>pi</code> <span class=selfeval>2</span>))))
+</pre></div></td><td>
+</td></tr></table></div>
+
+the turtle will split into two turtles, one will turn 90 degrees and then
+the turtles will be put back into their original state - as if the split
+never took place.<p>
+The fern functions below demonstrate more advanced use of <code class=scheme><span class=keyword>tprompt</span></code>.
+</p>
+</ul><p></p>
+<p>
+In the file <tt><strong>turtles-examples.ss</strong></tt> in the <tt><strong>graphics</strong></tt> library of your PLT
+distribution, you will find these functions and values defined, as
+example turtle programs. (The file is located in the <tt><strong>graphics</strong></tt>
+subdirectory of the <tt><strong>collects</strong></tt> subdirectory of the PLT
+distribution).</p>
+<p>
+</p>
+<ul>
+<li><p><code class=scheme>(regular-poly sides radius)</code>
+draws a regular poly centered at the turtle with 
+sides sides and with radius radius.</p>
+<p>
+</p>
+<li><p><code class=scheme>(regular-polys sides s)</code>
+draws s regular polys spaced evenly outwards with sides sides.</p>
+<p>
+</p>
+<li><p><code class=scheme>(radial-turtles  n)</code>
+places 2<sup><em>n</em></sup> turtles spaced evenly pointing radially outward </p>
+<p>
+</p>
+<li><p><code class=scheme>(spaced-turtles n)</code>
+places 2<sup><em>n</em></sup> turtles pointing in the same direction as the original turtle
+evenly spaced in a line.</p>
+<p>
+</p>
+<li><p><code class=scheme>(spokes)</code>
+draws some spokes, using radial-turtles and spaced-turtles</p>
+<p>
+</p>
+<li><p><code class=scheme>(spyro-gyra)</code>
+draws a spyro-grya reminiscent shape</p>
+<p>
+</p>
+<li><p><code class=scheme>(neato)</code>
+as the name says<tt>...</tt></p>
+<p>
+</p>
+<li><p><code class=scheme>(graphics-bexam)</code>
+draws a fractal that came up on an exam I took.</p>
+<p>
+</p>
+<li><p><code class=scheme>serp-size</code>
+a constant which is a good size for the serp procedures</p>
+<p>
+<a name="node_idx_210"></a>
+</p>
+<li><p><code class=scheme>(serp serp-size)</code>, <code class=scheme>(serp-nosplit serp-size)</code>
+draws the Serpinski triangle in two different ways, the first using split
+heavily. After running the first one, try executing
+<code class=scheme>(draw 10)</code>.</p>
+<p>
+</p>
+<li><p><code class=scheme>koch-size</code>
+a constant which is a good size for the koch procedures</p>
+<p>
+<a name="node_idx_212"></a>
+</p>
+<li><p><code class=scheme>(koch-split koch-size)</code>,<code class=scheme>(koch-draw koch-size)</code>
+draws the same koch snowflake in two different ways.</p>
+<p>
+<a name="node_idx_214"></a>
+<a name="node_idx_216"></a>
+</p>
+<li><p><code class=scheme>(lorenz a b c)</code>
+watch the lorenz &quot;butterfly&quot; attractor with initial values a b and c.</p>
+<p>
+</p>
+<li><p><code class=scheme>(lorenz1)</code>
+a good setting for the lorenz attractor</p>
+<p>
+<a name="node_idx_218"></a>
+</p>
+<li><p><code class=scheme>(peano1 peano-size)</code></p>
+<p>
+This will draw the Peano space-filling curve, using split.</p>
+<p>
+</p>
+<li><p><code class=scheme>(peano2 peano-size)</code></p>
+<p>
+This will draw the Peano space-filling curve, without using split.</p>
+<p>
+<a name="node_idx_220"></a>
+</p>
+<li><p><code class=scheme>fern-size</code>
+a good size for the fern functions</p>
+<p>
+</p>
+<li><p><code class=scheme>(fern1 fern-size)</code>
+You will probably want to point the turtle up before running
+this one, with something like:</p>
+<p>
+</p>
+<div align=center><table><tr><td>
+
+<code class=scheme>(turn/radians (- (/ pi 2)))</code>
+</td></tr></table></div>
+<p>
+</p>
+<li><p><code class=scheme>(fern2 fern-size)</code>
+a fern - you may need to backup a little for this one.</p>
+<p>
+</p>
+</ul><p></p>
+<p>
+</p>
+<a name="node_sec_3.2"></a>
+<h2><a href="misclib.html#node_toc_node_sec_3.2">3.2&nbsp;&nbsp;Value Turtles</a></h2>
+<p><a name="node_idx_222"></a>
+<a name="node_idx_224"></a>
+<a name="node_idx_226"></a></p>
+<p>
+There are two ways to use the turtles in DrScheme. You can
+use it as a TeachPack (see the DrScheme manual for details
+of TeachPacks) or as a library. Use the
+<tt><strong>value-turtles.ss</strong></tt><a name="node_idx_228"></a> TeachPack.</p>
+<p>
+In the MrEd language or in a module, load turtles with
+</p>
+<div align=left><pre class=scheme>(<span class=keyword>require</span> (<code class=scheme><span class=keyword>lib</span></code> <span class=selfeval>&quot;value-turtles.ss&quot;</span> <span class=selfeval>&quot;graphics&quot;</span>))
+</pre></div><p>
+</p>
+<p>
+The value turtles are a variation on the turtles library.
+Rather than having just a single window where each operation
+changes the state of that window, in this library, the
+entire turtles window is treated as a value. This  means
+that each of the primitive operations accepts, in addition
+to the usual arguments, a turtles window value and instead
+of returning nothing, returns a turtles window value.</p>
+<p>
+The following are the value turtle functions:
+</p>
+<ul>
+<li><p><code class=scheme>(turtles number number [number number number])</code><a name="node_idx_230"></a><a name="node_kw_definitionturtles"></a>
+creates a new turtles window. The first two arguments are
+the width and height of the turtles window. The remaining
+arguments specify the x,y position of the initial turtle
+and the angle. The default to a turtle in the middle of
+the window, pointing to the right.</p>
+<p>
+</p>
+<li><p><code class=scheme>(move n turtles)</code><a name="node_idx_232"></a><a name="node_kw_definitionmove"></a>
+moves the turtle n pixels, returning a new turtles window.</p>
+<p>
+</p>
+<li><p><code class=scheme>(draw n turtles)</code><a name="node_idx_234"></a><a name="node_kw_definitiondraw"></a>
+moves the turtle n pixels and draws a line on that path, 
+returning a new turtles window.</p>
+<p>
+</p>
+<li><p><code class=scheme>(erase n turtles)</code><a name="node_idx_236"></a><a name="node_kw_definitionerase"></a>
+moves the turtle n pixels and erases along that path,
+returning a new turtles window.</p>
+<p>
+<a name="node_idx_238"></a><a name="node_kw_definitionmove-offset"></a>
+<a name="node_idx_240"></a><a name="node_kw_definitiondraw-offset"></a>
+<a name="node_idx_242"></a><a name="node_kw_definitionerase-offset"></a>
+</p>
+<li><p><code class=scheme>(move-offset h v turtles)</code>,
+<code class=scheme>(draw-offset h v turtles)</code>,
+<code class=scheme>(erase-offset h v turtles)</code>
+are just like move, draw and erase, except they take a horizontal and
+vertical offset from the turtle's current position.</p>
+<p>
+</p>
+<li><p> <code class=scheme>(turn theta turtles)</code><a name="node_idx_244"></a><a name="node_kw_definitionturn"></a>
+turns the turtle theta degrees counter-clockwise,
+returning a new turtles window.</p>
+<p>
+</p>
+<li><p> <code class=scheme>(turn/radians theta)</code><a name="node_idx_246"></a><a name="node_kw_definitionturn"></a>
+turns the turtle theta radians counter-clockwise,
+returning a new turtles window.</p>
+<p>
+</p>
+<li><p><code class=scheme>(merge turtles turtles)</code><a name="node_idx_248"></a><a name="node_kw_definitionmerge"></a></p>
+<p>
+The <code class=scheme>split</code> and <code class=scheme>tprompt</code> functionality
+provided by the imperative turtles implementation aren't
+needed for this, since the turtles window is itself a
+value. </p>
+<p>
+Instead, the <code class=scheme>merge</code> accepts two turtles windows
+and combines the state of the two turtles windows into a
+single window. The new window contains all of the
+turtles of the previous two windows, but only the line
+drawings of the first turtles argument.</p>
+<p>
+</p>
+</ul><p></p>
+<p>
+In the file <tt><strong>value-turtles-examples.ss</strong></tt> in the
+<tt><strong>graphics</strong></tt> library of your PLT distribution, you will
+find these functions and values defined, as example turtle
+programs. (The file is located in the <tt><strong>graphics</strong></tt>
+subdirectory of the <tt><strong>collects</strong></tt> subdirectory of the PLT
+distribution).</p>
+<p>
+It contains a sampling of the examples from the normal
+turtles implementation, but translated to use <code class=scheme>merge</code>
+and the values turtles.</p>
+<p>
+
+
+
+
+</p>
+<p>
+
+</p>
+<p>
+</p>
+<div align=right class=navigation><i>[Go to <span><a href="misclib.html">first</a>, <a href="misclib-Z-H-2.html">previous</a></span><span>, <a href="misclib-Z-H-4.html">next</a></span> page<span>; &nbsp;&nbsp;</span><span><a href="misclib.html#node_toc_start">contents</a></span><span><span>; &nbsp;&nbsp;</span><a href="misclib-Z-H-4.html#node_index_start">index</a></span>]</i></div><p></p>
+</body>
+</html>

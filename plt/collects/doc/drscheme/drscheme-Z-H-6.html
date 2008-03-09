@@ -1,0 +1,514 @@
+<!doctype html public "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!--
+
+Generated from drscheme.tex by tex2page, v 2004-09-11
+(running on MzScheme 209, unix), 
+(c) Dorai Sitaram, 
+http://www.ccs.neu.edu/~dorai/tex2page/tex2page-doc.html
+
+-->
+<head>
+<title>
+PLT DrScheme: Programming Environment Manual
+</title>
+<link rel="stylesheet" type="text/css" href="drscheme-Z-S.css" title=default>
+<meta name=robots content="noindex,follow">
+</head>
+<body>
+<div align=right class=navigation><i>[Go to <span><a href="drscheme.html">first</a>, <a href="drscheme-Z-H-5.html">previous</a></span><span class=disable>, next</span> page<span>; &nbsp;&nbsp;</span><span><a href="drscheme.html#node_toc_start">contents</a></span><span class=disable><span>; &nbsp;&nbsp;</span>index</span>]</i></div><p></p>
+<a name="node_chap_Temp_7"></a>
+<h1 class=chapter>
+<div class=chapterheading>&nbsp;</div><br>
+<a href="drscheme.html#node_toc_node_chap_Temp_7">Index</a></h1>
+<p>
+<a name="node_index_start"></a></p>
+<p>
+<br>
+<a href="drscheme-Z-H-3.html#node_idx_324"><tt><strong>~</strong></tt></a><br>
+<a href="drscheme-Z-H-2.html#node_idx_20">(define ...) button</a><br>
+<a href="drscheme-Z-H-3.html#node_idx_636"><tt><strong>.LOCK.plt-prefs.ss</strong></tt></a><br>
+<a href="drscheme-Z-H-3.html#node_idx_634"><tt><strong>.LOCKplt-prefs.ss</strong></tt></a><br>
+<a href="drscheme-Z-H-3.html#node_idx_322"><tt><strong>.bak</strong></tt></a>, <a href="drscheme-Z-H-3.html#node_idx_618">[2]</a><br>
+<a href="drscheme-Z-H-3.html#node_idx_626"><tt><strong>.plt-prefs.ss</strong></tt></a>, 
+<a href="drscheme-Z-H-3.html#node_idx_630">[2]</a><br>
+<a href="drscheme-Z-H-3.html#node_idx_610"><tt><strong>.sch</strong></tt></a><br>
+<a href="drscheme-Z-H-3.html#node_idx_606"><tt><strong>.scm</strong></tt></a><br>
+<a href="drscheme-Z-H-3.html#node_idx_608"><tt><strong>.ss</strong></tt></a><br>
+<a href="drscheme-Z-H-2.html#node_idx_110"><tt><strong>/Library/Frameworks</strong></tt></a><br>
+<a href="drscheme-Z-H-2.html#node_idx_54"><tt>&gt;</tt> prompt</a></p>
+<p>
+</p>
+<p></p>
+<p>
+<br>
+<a href="drscheme-Z-H-3.html#node_idx_296">About DrScheme... menu item</a><br>
+<a href="drscheme-Z-H-1.html#node_idx_2">About DrScheme</a><br>
+<a href="drscheme-Z-H-3.html#node_idx_236">Add Teachpack... menu item</a><br>
+<a href="drscheme-Z-H-2.html#node_idx_80">Advanced Student language</a><br>
+<a href="drscheme-Z-H-2.html#node_idx_32">alpha renaming</a><br>
+<a href="drscheme-Z-H-3.html#node_idx_368">Ask about clearing test coverage preference</a><br>
+<a href="drscheme-Z-H-3.html#node_idx_362">Ask before changing save format preference</a><br>
+<a href="drscheme-Z-H-3.html#node_idx_318">Auto-save files preference</a><br>
+<a href="drscheme-Z-H-3.html#node_idx_348">Automatically print to postscript file preference</a><br>
+<a href="drscheme-Z-H-3.html#node_idx_620">autosave files</a></p>
+<p>
+</p>
+<p></p>
+<p>
+<br>
+<a href="drscheme-Z-H-3.html#node_idx_616">backup files</a><br>
+<a href="drscheme-Z-H-3.html#node_idx_320">Backup files preference</a><br>
+<a href="drscheme-Z-H-2.html#node_idx_72">Beginning Student language</a><br>
+<a href="drscheme-Z-H-2.html#node_idx_74">Beginning Student language with List Abbreviations</a><br>
+<a href="drscheme-Z-H-2.html#node_idx_36">Break button</a><br>
+<a href="drscheme-Z-H-3.html#node_idx_242">Break menu item</a><br>
+<a href="drscheme-Z-H-3.html#node_idx_290">Bring Frame to Front... menu item</a><br>
+<a href="drscheme-Z-H-2.html#node_idx_16">Buttons</a></p>
+<p>
+</p>
+<p></p>
+<p>
+<br>
+<a href="drscheme-Z-H-5.html#node_idx_708">changing keybindings</a><br>
+<a href="drscheme-Z-H-3.html#node_idx_298">Check for Updates... menu item</a><br>
+<a href="drscheme-Z-H-2.html#node_idx_30">Check Syntax</a><br>
+<a href="drscheme-Z-H-3.html#node_idx_234">Choose Language menu item</a><br>
+<a href="drscheme-Z-H-3.html#node_idx_238">Clear All Teachpacks menu item</a><br>
+<a href="drscheme-Z-H-3.html#node_idx_246">Clear Error Highlight menu item</a><br>
+<a href="drscheme-Z-H-3.html#node_idx_198">Clear menu item</a><br>
+<a href="drscheme-Z-H-3.html#node_idx_184">Close menu item</a><br>
+<a href="drscheme-Z-H-3.html#node_idx_232">Collapse menu item</a><br>
+<a href="drscheme-Z-H-3.html#node_idx_346">Color syntax interactively preference</a><br>
+<a href="drscheme-Z-H-3.html#node_idx_260">Comment Out with a Box menu item</a><br>
+<a href="drscheme-Z-H-3.html#node_idx_258">Comment Out with Semicolons menu item</a><br>
+<a href="drscheme-Z-H-5.html#node_idx_712">compiler</a><br>
+<a href="drscheme-Z-H-3.html#node_idx_624">configuration files</a><br>
+<a href="drscheme-Z-H-2.html#node_idx_122">constructor-style output</a><br>
+<a href="drscheme-Z-H-3.html#node_idx_192">Copy menu item</a><br>
+<a href="drscheme-Z-H-3.html#node_idx_356">Correct parens preference</a><br>
+<a href="drscheme-Z-H-3.html#node_idx_330">Count column numbers from one preference</a><br>
+<a href="drscheme-Z-H-3.html#node_idx_248">Create Executable... menu item</a><br>
+<a href="drscheme-Z-H-3.html#node_idx_250">Create Servlet... menu item</a><br>
+<a href="drscheme-Z-H-3.html#node_idx_190">Cut menu item</a></p>
+<p>
+</p>
+<p></p>
+<p>
+<br>
+defaults
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="drscheme-Z-H-3.html#node_idx_640">site-specific</a><br>
+<a href="drscheme-Z-H-3.html#node_idx_644"><tt><strong>defaults</strong></tt></a><br>
+<a href="drscheme-Z-H-2.html#node_idx_8">definitions window</a><br>
+<a href="drscheme-Z-H-3.html#node_idx_196">Delete menu item</a><br>
+<a href="drscheme-Z-H-3.html#node_idx_264">Disable All Test Cases menu item</a><br>
+<a href="drscheme-Z-H-5.html#node_idx_698">disk requirements</a><br>
+<a href="drscheme-Z-H-2.html#node_idx_134"><code class=scheme>display</code></a><br>
+<a href="drscheme-Z-H-3.html#node_idx_332">Display line numbers in buffer; not character     offsets preference</a><br>
+<a href="drscheme-Z-H-2.html#node_idx_100">DLLs</a><br>
+documentation
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="drscheme-Z-H-5.html#node_idx_686">downloading</a><br>
+DrScheme
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="drscheme-Z-H-4.html#node_idx_662">Environment Variables</a><br>
+<a href="drscheme-Z-H-3.html#node_idx_602">DrScheme Files</a><br>
+<a href="drscheme-Z-H-4.html#node_idx_650">DrScheme Teachpacks</a></p>
+<p>
+</p>
+<p></p>
+<p>
+<br>
+<a href="drscheme-Z-H-2.html#node_idx_40">editors</a><br>
+<a href="drscheme-Z-H-3.html#node_idx_378">Emacs keybindings</a><br>
+<a href="drscheme-Z-H-3.html#node_idx_344">Enable keybindings in menus preference</a><br>
+<a href="drscheme-Z-H-4.html#node_idx_660">Environment Variables</a><br>
+<a href="drscheme-Z-H-2.html#node_idx_62">error highlighting</a><br>
+<a href="drscheme-Z-H-2.html#node_idx_60">Errors</a><br>
+<a href="drscheme-Z-H-2.html#node_idx_56">evaluating expressions</a><br>
+<a href="drscheme-Z-H-2.html#node_idx_94">Executables</a><br>
+<a href="drscheme-Z-H-5.html#node_idx_718">execution speed</a><br>
+<a href="drscheme-Z-H-4.html#node_idx_646">Extending DrScheme</a></p>
+<p>
+</p>
+<p></p>
+<p>
+<br>
+<a href="drscheme-Z-H-3.html#node_idx_604">file extensions</a><br>
+<a href="drscheme-Z-H-2.html#node_idx_18">filename button</a><br>
+<a href="drscheme-Z-H-3.html#node_idx_206">Find Again menu item</a><br>
+<a href="drscheme-Z-H-3.html#node_idx_204">Find menu item</a>, <a href="drscheme-Z-H-3.html#node_idx_338">[2]</a>, 
+<a href="drscheme-Z-H-3.html#node_idx_340">[3]</a><br>
+<a href="drscheme-Z-H-3.html#node_idx_358">Flash paren match preference</a><br>
+<a href="drscheme-Z-H-2.html#node_idx_42">flashing parenthesis matches</a><br>
+<a href="drscheme-Z-H-3.html#node_idx_312">font preference</a><br>
+<a href="drscheme-Z-H-2.html#node_idx_46">formatting Scheme code</a><br>
+<a href="drscheme-Z-H-5.html#node_idx_680">Frequently Asked Questions</a><br>
+<a href="drscheme-Z-H-5.html#node_idx_682">frequently asked questions</a></p>
+<p>
+</p>
+<p></p>
+<p>
+<br>
+<a href="drscheme-Z-H-2.html#node_idx_6">graphical interface</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="drscheme-Z-H-3.html#node_idx_146">details</a><br>
+<a href="drscheme-Z-H-2.html#node_idx_44">gray highlight regions</a></p>
+<p>
+</p>
+<p></p>
+<p>
+<br>
+<a href="drscheme-Z-H-5.html#node_idx_702">Help Desk</a><br>
+<a href="drscheme-Z-H-3.html#node_idx_294">Help Desk menu item</a><br>
+<a href="drscheme-Z-H-3.html#node_idx_306">Help menu item</a><br>
+<a href="drscheme-Z-H-3.html#node_idx_216">Hide Definitions menu item</a><br>
+<a href="drscheme-Z-H-3.html#node_idx_220">Hide Interactions menu item</a><br>
+<a href="drscheme-Z-H-3.html#node_idx_228">Hide Profile menu item</a><br>
+<a href="drscheme-Z-H-3.html#node_idx_224">Hide Program Contour menu item</a><br>
+<a href="drscheme-Z-H-3.html#node_idx_354">Highlight between matching parens preference</a></p>
+<p>
+</p>
+<p></p>
+<p>
+<br>
+<a href="drscheme-Z-H-2.html#node_idx_128">I/O</a><br>
+<a href="drscheme-Z-H-3.html#node_idx_314">Indenting preferences</a><br>
+<a href="drscheme-Z-H-2.html#node_idx_48">indenting Scheme code</a><br>
+<a href="drscheme-Z-H-2.html#node_idx_126">Input and Output</a><br>
+<a href="drscheme-Z-H-3.html#node_idx_266">Insert Comment Box menu item</a><br>
+<a href="drscheme-Z-H-3.html#node_idx_276">Insert Delta (define) menu item</a><br>
+<a href="drscheme-Z-H-3.html#node_idx_270">Insert Fraction... menu item</a><br>
+<a href="drscheme-Z-H-3.html#node_idx_268">Insert Image... menu item</a><br>
+<a href="drscheme-Z-H-3.html#node_idx_278">Insert Java Comment Box menu item</a><br>
+<a href="drscheme-Z-H-3.html#node_idx_280">Insert Java Interactions Box menu item</a><br>
+<a href="drscheme-Z-H-3.html#node_idx_274">Insert Lambda menu item</a><br>
+<a href="drscheme-Z-H-3.html#node_idx_272">Insert Large Letters... menu item</a><br>
+<a href="drscheme-Z-H-3.html#node_idx_284">Insert Scheme Box menu item</a><br>
+<a href="drscheme-Z-H-3.html#node_idx_286">Insert Scheme Splice Box menu item</a><br>
+<a href="drscheme-Z-H-3.html#node_idx_288">Insert Test Case menu item</a><br>
+<a href="drscheme-Z-H-3.html#node_idx_282">Insert XML Box menu item</a><br>
+<a href="drscheme-Z-H-3.html#node_idx_158">Install PLT File... menu item</a><br>
+<a href="drscheme-Z-H-5.html#node_idx_694">installation instructions</a><br>
+<a href="drscheme-Z-H-3.html#node_idx_304">Interact with DrScheme in English menu item</a><br>
+<a href="drscheme-Z-H-2.html#node_idx_10">interactions window</a>, <a href="drscheme-Z-H-2.html#node_idx_52">[2]</a><br>
+<a href="drscheme-Z-H-2.html#node_idx_4">Interface Essentials</a><br>
+<a href="drscheme-Z-H-3.html#node_idx_144">Interface Reference</a><br>
+<a href="drscheme-Z-H-2.html#node_idx_76">Intermediate Student language</a><br>
+<a href="drscheme-Z-H-2.html#node_idx_78">Intermediate Student with Lambda        language</a></p>
+<p>
+</p>
+<p></p>
+<p>
+<br>
+<a href="drscheme-Z-H-3.html#node_idx_376">keybindings</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="drscheme-Z-H-3.html#node_idx_480">A-C-down</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="drscheme-Z-H-3.html#node_idx_456">A-C-left</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="drscheme-Z-H-3.html#node_idx_464">A-C-right</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="drscheme-Z-H-3.html#node_idx_472">A-C-up</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="drscheme-Z-H-3.html#node_idx_596">b</a>, <a href="drscheme-Z-H-3.html#node_idx_600">[2]</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="drscheme-Z-H-3.html#node_idx_560">C-+</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="drscheme-Z-H-3.html#node_idx_556">C-_</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="drscheme-Z-H-3.html#node_idx_412">C-a</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="drscheme-Z-H-3.html#node_idx_384">C-b</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="drscheme-Z-H-3.html#node_idx_484">C-d</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="drscheme-Z-H-3.html#node_idx_416">C-e</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="drscheme-Z-H-3.html#node_idx_380">C-f</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="drscheme-Z-H-3.html#node_idx_488">C-h</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="drscheme-Z-H-3.html#node_idx_500">C-k</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="drscheme-Z-H-3.html#node_idx_420">C-n</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="drscheme-Z-H-3.html#node_idx_424">C-p</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="drscheme-Z-H-3.html#node_idx_586">C-r</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="drscheme-Z-H-3.html#node_idx_582">C-s</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="drscheme-Z-H-3.html#node_idx_520">C-t</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="drscheme-Z-H-3.html#node_idx_396">C-v</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="drscheme-Z-H-3.html#node_idx_512">C-w</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="drscheme-Z-H-3.html#node_idx_574">C-x C-s</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="drscheme-Z-H-3.html#node_idx_578">C-x C-w</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="drscheme-Z-H-3.html#node_idx_564">C-x u</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="drscheme-Z-H-3.html#node_idx_516">C-y</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="drscheme-Z-H-3.html#node_idx_510">copy selection to clipboard</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="drscheme-Z-H-3.html#node_idx_538">cut complete sexpression</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="drscheme-Z-H-3.html#node_idx_490">delete backward one character</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="drscheme-Z-H-3.html#node_idx_498">delete backward one word</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="drscheme-Z-H-3.html#node_idx_486">delete forward one character</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="drscheme-Z-H-3.html#node_idx_506">delete forward one S-expression</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="drscheme-Z-H-3.html#node_idx_494">delete forward one word</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="drscheme-Z-H-3.html#node_idx_502">delete forward to end of line</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="drscheme-Z-H-3.html#node_idx_514">delete selection to clipboard (cut)</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="drscheme-Z-H-3.html#node_idx_590">f5</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="drscheme-Z-H-3.html#node_idx_404">M-&lt;</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="drscheme-Z-H-3.html#node_idx_408">M-&gt;</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="drscheme-Z-H-3.html#node_idx_540">M-(</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="drscheme-Z-H-3.html#node_idx_544">M-[</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="drscheme-Z-H-3.html#node_idx_548">M-{</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="drscheme-Z-H-3.html#node_idx_392">M-b</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="drscheme-Z-H-3.html#node_idx_432">M-C-b</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="drscheme-Z-H-3.html#node_idx_440">M-C-d</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="drscheme-Z-H-3.html#node_idx_476">M-C-down</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="drscheme-Z-H-3.html#node_idx_428">M-C-f</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="drscheme-Z-H-3.html#node_idx_504">M-C-k</a>, <a href="drscheme-Z-H-3.html#node_idx_536">[2]</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="drscheme-Z-H-3.html#node_idx_452">M-C-left</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="drscheme-Z-H-3.html#node_idx_532">M-C-m</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="drscheme-Z-H-3.html#node_idx_448">M-C-p</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="drscheme-Z-H-3.html#node_idx_460">M-C-right</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="drscheme-Z-H-3.html#node_idx_444">M-C-SPACE</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="drscheme-Z-H-3.html#node_idx_528">M-C-t</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="drscheme-Z-H-3.html#node_idx_436">M-C-u</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="drscheme-Z-H-3.html#node_idx_468">M-C-up</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="drscheme-Z-H-3.html#node_idx_492">M-d</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="drscheme-Z-H-3.html#node_idx_496">M-DEL</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="drscheme-Z-H-3.html#node_idx_388">M-f</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="drscheme-Z-H-3.html#node_idx_598">M-n</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="drscheme-Z-H-3.html#node_idx_570">M-o</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="drscheme-Z-H-3.html#node_idx_594">M-p</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="drscheme-Z-H-3.html#node_idx_552">M-S-L</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="drscheme-Z-H-3.html#node_idx_524">M-t</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="drscheme-Z-H-3.html#node_idx_400">M-v</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="drscheme-Z-H-3.html#node_idx_508">M-w</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="drscheme-Z-H-3.html#node_idx_450">match parentheses backward</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="drscheme-Z-H-3.html#node_idx_386">move backward one character</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="drscheme-Z-H-3.html#node_idx_402">move backward one page</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="drscheme-Z-H-3.html#node_idx_434">move backward one S-expression</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="drscheme-Z-H-3.html#node_idx_394">move backward one word</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="drscheme-Z-H-3.html#node_idx_454">move backwards to the nearest editor box</a>, <a href="drscheme-Z-H-3.html#node_idx_458">[2]</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="drscheme-Z-H-3.html#node_idx_442">move down into a nested S-expression</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="drscheme-Z-H-3.html#node_idx_478">move down into an embedded editor</a>, 
+<a href="drscheme-Z-H-3.html#node_idx_482">[2]</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="drscheme-Z-H-3.html#node_idx_382">move forward one character</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="drscheme-Z-H-3.html#node_idx_398">move forward one page</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="drscheme-Z-H-3.html#node_idx_430">move forward one S-expression</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="drscheme-Z-H-3.html#node_idx_390">move forward one word</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="drscheme-Z-H-3.html#node_idx_462">move forward to the nearest editor box</a>, <a href="drscheme-Z-H-3.html#node_idx_466">[2]</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="drscheme-Z-H-3.html#node_idx_406">move to beginning of file</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="drscheme-Z-H-3.html#node_idx_414">move to beginning of line (left)</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="drscheme-Z-H-3.html#node_idx_410">move to end of file</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="drscheme-Z-H-3.html#node_idx_418">move to end of line (right)</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="drscheme-Z-H-3.html#node_idx_422">move to next line (down)</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="drscheme-Z-H-3.html#node_idx_426">move to previous line (up)</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="drscheme-Z-H-3.html#node_idx_470">move up out of an embedded editor</a>, 
+<a href="drscheme-Z-H-3.html#node_idx_474">[2]</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="drscheme-Z-H-3.html#node_idx_438">move up out of an S-expression</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="drscheme-Z-H-3.html#node_idx_518">paste from clipboard (yank)</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="drscheme-Z-H-3.html#node_idx_562">redo</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="drscheme-Z-H-3.html#node_idx_592">Run</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="drscheme-Z-H-3.html#node_idx_576">save file</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="drscheme-Z-H-3.html#node_idx_580">save file under new name</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="drscheme-Z-H-3.html#node_idx_588">search for string backward</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="drscheme-Z-H-3.html#node_idx_584">search for string forward</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="drscheme-Z-H-3.html#node_idx_446">select forward S-expression</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="drscheme-Z-H-3.html#node_idx_534">toggle dark green marking of matching parenthesis</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="drscheme-Z-H-3.html#node_idx_572">toggle overwrite mode</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="drscheme-Z-H-3.html#node_idx_522">transpose characters</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="drscheme-Z-H-3.html#node_idx_530">transpose sexpressions</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="drscheme-Z-H-3.html#node_idx_526">transpose words</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="drscheme-Z-H-3.html#node_idx_558">undo</a>, <a href="drscheme-Z-H-3.html#node_idx_566">[2]</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="drscheme-Z-H-3.html#node_idx_550">wrap selection in curly brackets</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="drscheme-Z-H-3.html#node_idx_542">wrap selection in parentheses</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="drscheme-Z-H-3.html#node_idx_546">wrap selection in square brackets</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="drscheme-Z-H-3.html#node_idx_554">wrap selection in <tt>(lambda () ...)</tt> and put the insertion point in the arglist of the lambda</a><br>
+<a href="drscheme-Z-H-3.html#node_idx_210">Keybindings menu item</a><br>
+<a href="drscheme-Z-H-3.html#node_idx_372">Keyboard Shortcuts</a><br>
+<a href="drscheme-Z-H-3.html#node_idx_374">keyboard shortcuts</a><br>
+<a href="drscheme-Z-H-3.html#node_idx_244">Kill menu item</a></p>
+<p>
+</p>
+<p></p>
+<p>
+<br>
+language levels, <em>see</em>  languages
+<br>
+<a href="drscheme-Z-H-2.html#node_idx_64">Languages</a><br>
+<a href="drscheme-Z-H-2.html#node_idx_68">languages</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="drscheme-Z-H-2.html#node_idx_70">changing</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="drscheme-Z-H-4.html#node_idx_648">extending</a><br>
+<a href="drscheme-Z-H-2.html#node_idx_96">launcher executables</a><br>
+<a href="drscheme-Z-H-2.html#node_idx_106"><tt><strong>libmred[vers].dll</strong></tt></a><br>
+<a href="drscheme-Z-H-2.html#node_idx_104"><tt><strong>libmzgc[vers].dll</strong></tt></a><br>
+<a href="drscheme-Z-H-2.html#node_idx_102"><tt><strong>libmzsch[vers].dll</strong></tt></a><br>
+<a href="drscheme-Z-H-5.html#node_idx_688">license</a><br>
+<a href="drscheme-Z-H-3.html#node_idx_352">Limit interactions size preference</a><br>
+<a href="drscheme-Z-H-3.html#node_idx_176">Log Definitions and Interactions... menu item</a></p>
+<p>
+</p>
+<p></p>
+<p>
+<br>
+<a href="drscheme-Z-H-3.html#node_idx_326">Map delete to backspace preference</a><br>
+<a href="drscheme-Z-H-5.html#node_idx_716">Memory and Performance</a><br>
+<a href="drscheme-Z-H-5.html#node_idx_692">memory requirements</a><br>
+<a href="drscheme-Z-H-3.html#node_idx_150">menu items</a><br>
+<a href="drscheme-Z-H-3.html#node_idx_148">Menus</a><br>
+<a href="drscheme-Z-H-3.html#node_idx_252">Module Browser... menu item</a><br>
+<a href="drscheme-Z-H-2.html#node_idx_90"><tt>module</tt> language</a><br>
+<a href="drscheme-Z-H-3.html#node_idx_292">Most Recent Window menu item</a><br>
+<a href="drscheme-Z-H-5.html#node_idx_704">MrFlow</a><br>
+<a href="drscheme-Z-H-5.html#node_idx_706">MrSpidey</a><br>
+<a href="drscheme-Z-H-3.html#node_idx_614">multimedia file format</a></p>
+<p>
+</p>
+<p></p>
+<p>
+<br>
+<a href="drscheme-Z-H-3.html#node_idx_152">New menu item</a><br>
+<a href="drscheme-Z-H-3.html#node_idx_316">Number of recent items preference</a><br>
+numbers
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="drscheme-Z-H-2.html#node_idx_92">printing</a></p>
+<p>
+</p>
+<p></p>
+<p>
+<br>
+<a href="drscheme-Z-H-3.html#node_idx_366">Only warn once when executions and interactions are not     synchronized preference</a><br>
+<a href="drscheme-Z-H-3.html#node_idx_350">Open files in separate tabs (not separate     windows) preference</a><br>
+<a href="drscheme-Z-H-3.html#node_idx_156">Open Recent menu item</a><br>
+<a href="drscheme-Z-H-3.html#node_idx_154">Open... menu item</a><br>
+<a href="drscheme-Z-H-2.html#node_idx_116">output format</a><br>
+<a href="drscheme-Z-H-3.html#node_idx_568">overwrite mode</a></p>
+<p>
+</p>
+<p></p>
+<p>
+<br>
+<a href="drscheme-Z-H-3.html#node_idx_360">Parenthesis highlight color preference</a><br>
+<a href="drscheme-Z-H-3.html#node_idx_194">Paste menu item</a><br>
+<a href="drscheme-Z-H-3.html#node_idx_612">plain-text file format</a><br>
+<a href="drscheme-Z-H-2.html#node_idx_86">PLT Graphical (MrEd) language</a><br>
+<a href="drscheme-Z-H-2.html#node_idx_88">PLT Pretty Big language</a><br>
+<a href="drscheme-Z-H-2.html#node_idx_84">PLT Textual (MzScheme) language</a><br>
+<a href="drscheme-Z-H-3.html#node_idx_628"><tt><strong>plt-prefs.ss</strong></tt></a>, 
+<a href="drscheme-Z-H-3.html#node_idx_632">[2]</a>, <a href="drscheme-Z-H-3.html#node_idx_642">[3]</a><br>
+<a href="drscheme-Z-H-2.html#node_idx_112"><tt><strong>PLT_MrEd</strong></tt></a><br>
+<a href="drscheme-Z-H-2.html#node_idx_108"><tt><strong>PLT_MzScheme</strong></tt></a><br>
+<a href="drscheme-Z-H-4.html#node_idx_674">PLTDRBREAK</a><br>
+<a href="drscheme-Z-H-4.html#node_idx_668">PLTDRCM</a><br>
+<a href="drscheme-Z-H-4.html#node_idx_672">PLTDRDEBUG</a><br>
+<a href="drscheme-Z-H-4.html#node_idx_676">PLTDRTESTS</a><br>
+<a href="drscheme-Z-H-4.html#node_idx_670">PLTHDCM</a><br>
+<a href="drscheme-Z-H-4.html#node_idx_664">PLTNOTOOLS</a><br>
+<a href="drscheme-Z-H-4.html#node_idx_666">PLTONLYTOOL</a><br>
+<a href="drscheme-Z-H-4.html#node_idx_678">PLTSTRINGCONSTANTS</a><br>
+<a href="drscheme-Z-H-3.html#node_idx_622">preference files</a><br>
+<a href="drscheme-Z-H-3.html#node_idx_308">Preferences</a><br>
+<a href="drscheme-Z-H-3.html#node_idx_310">preferences</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="drscheme-Z-H-3.html#node_idx_638">site-specific</a><br>
+<a href="drscheme-Z-H-3.html#node_idx_212">Preferences... menu item</a><br>
+<a href="drscheme-Z-H-3.html#node_idx_178">Print Definitions... menu item</a><br>
+<a href="drscheme-Z-H-3.html#node_idx_180">Print Interactions... menu item</a><br>
+<a href="drscheme-Z-H-2.html#node_idx_114">Printed Results</a><br>
+<a href="drscheme-Z-H-2.html#node_idx_118">printing format</a><br>
+<a href="drscheme-Z-H-3.html#node_idx_370">proxy</a></p>
+<p>
+</p>
+<p></p>
+<p>
+<br>
+<a href="drscheme-Z-H-2.html#node_idx_124">quasiquote-style output</a></p>
+<p>
+</p>
+<p></p>
+<p>
+<br>
+<a href="drscheme-Z-H-2.html#node_idx_82">R5RS</a><br>
+<a href="drscheme-Z-H-2.html#node_idx_130"><code class=scheme>read</code></a><br>
+<a href="drscheme-Z-H-2.html#node_idx_132"><code class=scheme>read-char</code></a><br>
+<a href="drscheme-Z-H-2.html#node_idx_120">read-eval-print loop</a><br>
+<a href="drscheme-Z-H-2.html#node_idx_14">recycling icon</a><br>
+<a href="drscheme-Z-H-3.html#node_idx_188">Redo menu item</a><br>
+<a href="drscheme-Z-H-3.html#node_idx_256">Reindent All menu item</a><br>
+<a href="drscheme-Z-H-3.html#node_idx_254">Reindent menu item</a><br>
+<a href="drscheme-Z-H-3.html#node_idx_300">Related Web Sites menu item</a><br>
+<a href="drscheme-Z-H-3.html#node_idx_208">Replace &amp; Find Again menu item</a><br>
+<a href="drscheme-Z-H-3.html#node_idx_342">Reuse existing frames when opening new files preference</a><br>
+<a href="drscheme-Z-H-3.html#node_idx_160">Revert menu item</a><br>
+<a href="drscheme-Z-H-2.html#node_idx_58">Run button</a><br>
+<a href="drscheme-Z-H-3.html#node_idx_240">Run menu item</a></p>
+<p>
+</p>
+<p></p>
+<p>
+<br>
+<a href="drscheme-Z-H-2.html#node_idx_22">Save button</a><br>
+<a href="drscheme-Z-H-3.html#node_idx_168">Save Definitions As Text... menu item</a><br>
+<a href="drscheme-Z-H-3.html#node_idx_164">Save Definitions As... menu item</a><br>
+<a href="drscheme-Z-H-3.html#node_idx_162">Save Definitions menu item</a><br>
+<a href="drscheme-Z-H-3.html#node_idx_174">Save Interactions As Text... menu item</a><br>
+<a href="drscheme-Z-H-3.html#node_idx_172">Save Interactions As... menu item</a><br>
+<a href="drscheme-Z-H-3.html#node_idx_170">Save Interactions menu item</a><br>
+<a href="drscheme-Z-H-3.html#node_idx_166">Save Other menu item</a><br>
+<a href="drscheme-Z-H-3.html#node_idx_182">Search in Files... menu item</a><br>
+<a href="drscheme-Z-H-3.html#node_idx_200">Select All menu item</a><br>
+<a href="drscheme-Z-H-3.html#node_idx_214">Show Definitions menu item</a><br>
+<a href="drscheme-Z-H-3.html#node_idx_218">Show Interactions menu item</a><br>
+<a href="drscheme-Z-H-3.html#node_idx_226">Show Profile menu item</a><br>
+<a href="drscheme-Z-H-3.html#node_idx_222">Show Program Contour menu item</a><br>
+<a href="drscheme-Z-H-3.html#node_idx_328">Show status-line preference</a><br>
+<a href="drscheme-Z-H-3.html#node_idx_230">Split menu item</a><br>
+<a href="drscheme-Z-H-2.html#node_idx_98">stand-alone executables</a>, 
+<a href="drscheme-Z-H-5.html#node_idx_714">[2]</a><br>
+<a href="drscheme-Z-H-2.html#node_idx_12">status line</a><br>
+<a href="drscheme-Z-H-2.html#node_idx_24">Step button</a><br>
+<a href="drscheme-Z-H-2.html#node_idx_26">stepper</a><br>
+<a href="drscheme-Z-H-5.html#node_idx_696">storage requirements</a><br>
+<a href="drscheme-Z-H-5.html#node_idx_684">Supported Operating Systems and Installation</a><br>
+<a href="drscheme-Z-H-5.html#node_idx_690">supported platforms</a></p>
+<p>
+</p>
+<p></p>
+<p>
+<br>
+<a href="drscheme-Z-H-2.html#node_idx_34">tail calls</a><br>
+<a href="drscheme-Z-H-4.html#node_idx_654">Teachpacks</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="drscheme-Z-H-4.html#node_idx_656">implementing</a><br>
+<a href="drscheme-Z-H-2.html#node_idx_142">Test Cases</a><br>
+<a href="drscheme-Z-H-2.html#node_idx_38">The Editor</a><br>
+<a href="drscheme-Z-H-2.html#node_idx_50">The Interactions Window</a><br>
+<a href="drscheme-Z-H-2.html#node_idx_28">The Stepper</a><br>
+<a href="drscheme-Z-H-3.html#node_idx_302">Tool Web Sites menu item</a><br>
+<a href="drscheme-Z-H-4.html#node_idx_658">Tools</a><br>
+<a href="drscheme-Z-H-4.html#node_idx_652">tools</a><br>
+<a href="drscheme-Z-H-5.html#node_idx_720">Troubleshooting</a></p>
+<p>
+</p>
+<p></p>
+<p>
+<br>
+<a href="drscheme-Z-H-3.html#node_idx_262">Uncomment menu item</a><br>
+<a href="drscheme-Z-H-3.html#node_idx_186">Undo menu item</a><br>
+<a href="drscheme-Z-H-3.html#node_idx_336">Use separate dialog for searching preference</a><br>
+<a href="drscheme-Z-H-5.html#node_idx_700">Using DrScheme</a></p>
+<p>
+</p>
+<p></p>
+<p>
+<br>
+<a href="drscheme-Z-H-3.html#node_idx_364">Verify exit preference</a></p>
+<p>
+</p>
+<p></p>
+<p>
+<br>
+<a href="drscheme-Z-H-3.html#node_idx_202">Wrap Text menu item</a><br>
+<a href="drscheme-Z-H-3.html#node_idx_334">Wrap words in editor buffers preference</a><br>
+<a href="drscheme-Z-H-2.html#node_idx_136"><code class=scheme>write</code></a></p>
+<p>
+</p>
+<p></p>
+<p>
+<br>
+<a href="drscheme-Z-H-2.html#node_idx_138">XML</a>, <a href="drscheme-Z-H-2.html#node_idx_140">[2]</a></p>
+<p>
+</p>
+<p></p>
+<p>
+<br>
+<a href="drscheme-Z-H-5.html#node_idx_710">yellow and black messages</a></p>
+<p>
+</p>
+
+<p>
+</p>
+<div align=right class=navigation><i>[Go to <span><a href="drscheme.html">first</a>, <a href="drscheme-Z-H-5.html">previous</a></span><span class=disable>, next</span> page<span>; &nbsp;&nbsp;</span><span><a href="drscheme.html#node_toc_start">contents</a></span><span class=disable><span>; &nbsp;&nbsp;</span>index</span>]</i></div><p></p>
+</body>
+</html>

@@ -1,0 +1,108 @@
+<!doctype html public "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!--
+
+Generated from mzlib.tex by tex2page, v 2004-09-11
+(running on MzScheme 209, unix), 
+(c) Dorai Sitaram, 
+http://www.ccs.neu.edu/~dorai/tex2page/tex2page-doc.html
+
+-->
+<head>
+<title>
+PLT MzLib: Libraries Manual
+</title>
+<link rel="stylesheet" type="text/css" href="mzlib-Z-S.css" title=default>
+<meta name=robots content="noindex,follow">
+</head>
+<body>
+<div align=right class=navigation><i>[Go to <span><a href="mzlib.html">first</a>, <a href="mzlib-Z-H-30.html">previous</a></span><span>, <a href="mzlib-Z-H-32.html">next</a></span> page<span>; &nbsp;&nbsp;</span><span><a href="mzlib.html#node_toc_start">contents</a></span><span><span>; &nbsp;&nbsp;</span><a href="mzlib-Z-H-42.html#node_index_start">index</a></span>]</i></div><p></p>
+<a name="node_chap_31"></a>
+<h1 class=chapter>
+<div class=chapterheading><a href="mzlib.html#node_toc_node_chap_31">Chapter 31</a></div><br>
+<a href="mzlib.html#node_toc_node_chap_31"><tt><strong>sendevent.ss</strong></tt>: AppleEvents</a></h1>
+<p><a name="node_idx_1042"></a><a name="node_idx_1044"></a></p>
+<p>
+</p>
+<a name="node_sec_31.1"></a>
+<h2><a href="mzlib.html#node_toc_node_sec_31.1">31.1&nbsp;&nbsp;AppleEvents</a></h2>
+<p><a name="node_idx_1046"></a></p>
+<p>
+
+
+</p>
+<p></p>
+<p>
+
+<a name="node_idx_1048"></a><a name="node_kw_definitionsend-event"></a><code class=scheme>(send-event</code><tt>&nbsp;</tt><code class=scheme><span class=variable>receiver-byte-string event-class-byte-string event-id-byte-string</span></code><tt>&nbsp;</tt>[<code class=scheme><span class=variable>direct-argument-v argument-list</span></code>]<code class=scheme>)</code> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<small>P</small><small>R</small><small>O</small><small>C</small><small>E</small><small>D</small><small>U</small><small>R</small><small>E</small>
+</p>
+<p>
+Sends an AppleEvent or raises <a name="node_idx_1050"></a><code class=scheme>exn:fail:unsupported</code>. Currently
+AppleEvents are supported only within MrEd under Mac OS Classic and
+Mac OS X.</p>
+<p>
+The <code class=scheme><span class=variable>receiver-byte-string</span></code>, <code class=scheme><span class=variable>event-class-byte-string</span></code>, and
+<code class=scheme><span class=variable>event-id-byte-string</span></code> arguments specify the signature of the
+receiving application, the class of the AppleEvent, and the ID of the
+AppleEvent. Each of these must be a four-character byte string,
+otherwise the <a name="node_idx_1052"></a><code class=scheme>exn:fail:contract</code> exception is raised.</p>
+<p>
+The <code class=scheme><span class=variable>direct-argument-v</span></code> value is converted (see below) and passed
+as the main argument of the event; if <code class=scheme><span class=variable>direct-argument-v</span></code> is
+void, no main argument is sent in the event. The
+<code class=scheme><span class=variable>argument-list</span></code> argument is a list of two-element lists
+containing a typestring and value; each typestring is used ad the
+keyword name of an AppleEvent argument for the associated converted
+value.  Each typestring must be a four-character string, otherwise
+the <a name="node_idx_1054"></a><code class=scheme>exn:fail:contract</code> exception is raised.  The default values for
+<code class=scheme><span class=variable>direct-argument</span></code> and <code class=scheme><span class=variable>arguments</span></code> are void and
+<code class=scheme><code class=scheme>null</code></code>, respectively.</p>
+<p>
+The following types of MzScheme values can be converted to AppleEvent
+values passed to the receiver:
+</p>
+<div align=center><table><tr><td>
+
+<table border=0><tr><td valign=top ><code class=scheme><span class=selfeval>#t</span></code> or <code class=scheme><span class=selfeval>#f</span></code> </td><td valign=top >Boolean </td></tr>
+<tr><td valign=top >small integer </td><td valign=top >Long Integer </td></tr>
+<tr><td valign=top >inexact real number </td><td valign=top >Double </td></tr>
+<tr><td valign=top >string </td><td valign=top >Characters </td></tr>
+<tr><td valign=top >list of convertible values </td><td valign=top >List of converted values </td></tr>
+<tr><td valign=top ><code class=scheme><span class=selfeval>#</span>(<code class=scheme><span class=keyword>file</span></code> <span class=variable>pathname</span>)</code> </td><td valign=top >Alias (file exists) or FSSpec (does not exist) </td></tr>
+<tr><td valign=top ><code class=scheme><span class=selfeval>#</span>(<code class=scheme><span class=keyword>record</span></code> (<span class=variable>typestring</span> <span class=variable>v</span>) <tt>&middot;&middot;&middot;</tt>)</code> </td><td valign=top >Record of keyword-tagged values </td></tr>
+<tr><td valign=top ></td></tr></table>
+</td></tr></table></div>
+<p>
+If other types of values are passed to <code class=scheme><code class=scheme>send-event</code></code> for
+conversion, the <a name="node_idx_1056"></a><code class=scheme>exn:fail:unsupported</code> exception is raised.</p>
+<p>
+The <code class=scheme><code class=scheme>send-event</code></code> procedure does not return until the receiver of
+the AppleEvent replies. The result of <code class=scheme><code class=scheme>send-event</code></code> is the
+reverse-converted reply value (see below), or the
+<a name="node_idx_1058"></a><code class=scheme>exn:fail</code> exception is raised if there is an error. If there is no error or
+return value, <code class=scheme><code class=scheme>send-event</code></code> returns void.</p>
+<p>
+The following types of AppleEvent values can be reverse-converted into
+a MzScheme value returned by <code class=scheme><code class=scheme>send-event</code></code>:
+</p>
+<div align=center><table><tr><td>
+
+<table border=0><tr><td valign=top >Boolean </td><td valign=top ><code class=scheme><span class=selfeval>#t</span></code> or <code class=scheme><span class=selfeval>#f</span></code> </td></tr>
+<tr><td valign=top >Signed Integer </td><td valign=top >integer </td></tr>
+<tr><td valign=top >Float, Double, or Extended </td><td valign=top >inexact real number </td></tr>
+<tr><td valign=top >Characters </td><td valign=top >string </td></tr>
+<tr><td valign=top >list of reverse-convertible values </td><td valign=top >List of reverse-converted values </td></tr>
+<tr><td valign=top >Alias or FSSpec </td><td valign=top ><code class=scheme><span class=selfeval>#</span>(<code class=scheme><span class=keyword>file</span></code> <span class=variable>pathname</span>)</code> </td></tr>
+<tr><td valign=top >Record of keyword-tagged values </td><td valign=top ><code class=scheme><span class=selfeval>#</span>(<code class=scheme><span class=keyword>record</span></code> (<span class=variable>typestring</span> <span class=variable>v</span>) <tt>&middot;&middot;&middot;</tt>)</code> </td></tr>
+<tr><td valign=top ></td></tr></table>
+</td></tr></table></div>
+<p>
+If the AppleEvent reply contains a value that cannot be
+reverse-converted, the <a name="node_idx_1060"></a><code class=scheme>exn:fail</code> exception is raised.</p>
+<p>
+</p>
+<p>
+</p>
+<div align=right class=navigation><i>[Go to <span><a href="mzlib.html">first</a>, <a href="mzlib-Z-H-30.html">previous</a></span><span>, <a href="mzlib-Z-H-32.html">next</a></span> page<span>; &nbsp;&nbsp;</span><span><a href="mzlib.html#node_toc_start">contents</a></span><span><span>; &nbsp;&nbsp;</span><a href="mzlib-Z-H-42.html#node_index_start">index</a></span>]</i></div><p></p>
+</body>
+</html>

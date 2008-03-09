@@ -1,0 +1,328 @@
+<!doctype html public "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!--
+
+Generated from mzlib.tex by tex2page, v 2004-09-11
+(running on MzScheme 209, unix), 
+(c) Dorai Sitaram, 
+http://www.ccs.neu.edu/~dorai/tex2page/tex2page-doc.html
+
+-->
+<head>
+<title>
+PLT MzLib: Libraries Manual
+</title>
+<link rel="stylesheet" type="text/css" href="mzlib-Z-S.css" title=default>
+<meta name=robots content="noindex,follow">
+</head>
+<body>
+<div align=right class=navigation><i>[Go to <span><a href="mzlib.html">first</a>, <a href="mzlib-Z-H-20.html">previous</a></span><span>, <a href="mzlib-Z-H-22.html">next</a></span> page<span>; &nbsp;&nbsp;</span><span><a href="mzlib.html#node_toc_start">contents</a></span><span><span>; &nbsp;&nbsp;</span><a href="mzlib-Z-H-42.html#node_index_start">index</a></span>]</i></div><p></p>
+<a name="node_chap_21"></a>
+<h1 class=chapter>
+<div class=chapterheading><a href="mzlib.html#node_toc_node_chap_21">Chapter 21</a></div><br>
+<a href="mzlib.html#node_toc_node_chap_21"><tt><strong>list.ss</strong></tt>: List Utilities</a></h1>
+<p><a name="node_idx_736"></a><a name="node_idx_738"></a></p>
+<p>
+The procedures <a name="node_idx_740"></a><code class=scheme>second</code>, <a name="node_idx_742"></a><code class=scheme>third</code>, <a name="node_idx_744"></a><code class=scheme>fourth</code>,
+<a name="node_idx_746"></a><code class=scheme>fifth</code>, <a name="node_idx_748"></a><code class=scheme>sixth</code>, <a name="node_idx_750"></a><code class=scheme>seventh</code>, and
+<a name="node_idx_752"></a><code class=scheme>eighth</code> access the corresponding element from a list.</p>
+<p>
+
+
+</p>
+<p></p>
+<p>
+
+<a name="node_idx_754"></a><a name="node_kw_definitionassf"></a><code class=scheme>(assf</code><tt>&nbsp;</tt><code class=scheme><span class=variable>f l</span></code><code class=scheme>)</code> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<small>P</small><small>R</small><small>O</small><small>C</small><small>E</small><small>D</small><small>U</small><small>R</small><small>E</small>
+</p>
+<p>
+Applies <code class=scheme><span class=variable>f</span></code> to the <code class=scheme>car</code> of each element of <code class=scheme><span class=variable>l</span></code> (from
+left to right) until <code class=scheme><span class=variable>f</span></code> returns a true value, in which case that
+element is returned. If <code class=scheme><span class=variable>f</span></code> does not return a true value for the
+<code class=scheme>car</code> of any element of <code class=scheme><span class=variable>l</span></code>, <code class=scheme><span class=selfeval>#f</span></code> is returned.</p>
+<p>
+
+
+</p>
+<p></p>
+<p>
+
+<a name="node_idx_756"></a><a name="node_kw_definitioncons_Q_"></a><code class=scheme>(cons?</code><tt>&nbsp;</tt><code class=scheme><span class=variable>v</span></code><code class=scheme>)</code> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<small>P</small><small>R</small><small>O</small><small>C</small><small>E</small><small>D</small><small>U</small><small>R</small><small>E</small>
+</p>
+<p>
+Returns <code class=scheme><span class=selfeval>#t</span></code> if <code class=scheme><span class=variable>v</span></code> is a value created with <code class=scheme>cons</code>,
+<code class=scheme><span class=selfeval>#f</span></code> otherwise.</p>
+<p>
+
+<a name="node_kw_definitionempty"></a>
+</p>
+<p></p>
+<p>
+
+<a name="node_idx_758"></a><code class=scheme>empty</code> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<small>E</small><small>M</small><small>P</small><small>T</small><small>Y</small> <small>L</small><small>I</small><small>S</small><small>T</small>
+</p>
+<p>
+The empty list.</p>
+<p>
+
+
+</p>
+<p></p>
+<p>
+
+<a name="node_idx_760"></a><a name="node_kw_definitionempty_Q_"></a><code class=scheme>(empty?</code><tt>&nbsp;</tt><code class=scheme><span class=variable>v</span></code><code class=scheme>)</code> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<small>P</small><small>R</small><small>O</small><small>C</small><small>E</small><small>D</small><small>U</small><small>R</small><small>E</small>
+</p>
+<p>
+Returns <code class=scheme><span class=selfeval>#t</span></code> if <code class=scheme><span class=variable>v</span></code> is the empty list, <code class=scheme><span class=selfeval>#f</span></code> otherwise.</p>
+<p>
+
+
+</p>
+<p></p>
+<p>
+
+<a name="node_idx_762"></a><a name="node_kw_definitionfilter"></a><code class=scheme>(filter</code><tt>&nbsp;</tt><code class=scheme><span class=variable>f l</span></code><code class=scheme>)</code> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<small>P</small><small>R</small><small>O</small><small>C</small><small>E</small><small>D</small><small>U</small><small>R</small><small>E</small>
+</p>
+<p>
+Applies <code class=scheme><span class=variable>f</span></code> to each element in <code class=scheme><span class=variable>l</span></code> (from left to right) and
+returns a new list that is the same as <code class=scheme><span class=variable>l</span></code>, but omitting all the
+elements for which <code class=scheme><span class=variable>f</span></code> returned <code class=scheme><span class=selfeval>#f</span></code>.</p>
+<p>
+
+
+</p>
+<p></p>
+<p>
+
+<a name="node_idx_764"></a><a name="node_kw_definitionfirst"></a><code class=scheme>(first</code><tt>&nbsp;</tt><code class=scheme><span class=variable>l</span></code><code class=scheme>)</code> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<small>P</small><small>R</small><small>O</small><small>C</small><small>E</small><small>D</small><small>U</small><small>R</small><small>E</small>
+</p>
+<p>
+Returns the first element of the list <code class=scheme><span class=variable>l</span></code>.  (The <code class=scheme>first</code>
+procedure is a synonym for <code class=scheme>car</code>.)</p>
+<p>
+
+
+</p>
+<p></p>
+<p>
+
+<a name="node_idx_766"></a><a name="node_kw_definitionfoldl"></a><code class=scheme>(foldl</code><tt>&nbsp;</tt><code class=scheme><span class=variable>f init l</span></code><tt>&nbsp;</tt><tt>&middot;&middot;&middot;</tt><sup>1</sup><code class=scheme>)</code> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<small>P</small><small>R</small><small>O</small><small>C</small><small>E</small><small>D</small><small>U</small><small>R</small><small>E</small>
+</p>
+<p>
+Like <code class=scheme>map</code>, <code class=scheme>foldl</code> applies a procedure <code class=scheme><span class=variable>f</span></code> to the
+elements of one or more lists. While <code class=scheme>map</code> combines the return
+values into a list, <code class=scheme>foldl</code> combines the return values in an
+arbitrary way that is determined by <code class=scheme><span class=variable>f</span></code>.  Unlike <code class=scheme>foldr</code>,
+<code class=scheme>foldl</code> processes <code class=scheme><span class=variable>l</span></code> in constant space (plus the space
+for each call to <code class=scheme><span class=variable>f</span></code>).</p>
+<p>
+If <code class=scheme>foldl</code> is called with <code class=scheme><span class=variable>n</span></code> lists, the <code class=scheme><span class=variable>f</span></code> procedure
+takes <code class=scheme><span class=variable>n</span></code>+1 arguments. The extra value is the combined return
+values so far. The <code class=scheme><span class=variable>f</span></code> procedure is initially invoked with the
+first item of each list; the final argument is <code class=scheme><span class=variable>init</span></code>.  In
+subsequent invocations of <code class=scheme><span class=variable>f</span></code>, the last argument is the return
+value from the previous invocation of <code class=scheme><span class=variable>f</span></code>. The input lists are
+traversed from left to right, and the result of the whole
+<code class=scheme>foldl</code> application is the result of the last application of
+<code class=scheme><span class=variable>f</span></code>. (If the lists are empty, the result is <code class=scheme><span class=variable>init</span></code>.)</p>
+<p>
+For example, <code class=scheme>reverse</code> can be defined in terms of <code class=scheme>foldl</code>:
+</p>
+<div align=left><pre class=scheme>  (<span class=keyword>define</span> <code class=scheme>reverse</code>
+    (<span class=keyword>lambda</span> (<span class=variable>l</span>)
+      (<code class=scheme>foldl</code> <code class=scheme>cons</code> <span class=keyword>'</span>() <span class=variable>l</span>)))
+</pre></div><p></p>
+<p>
+
+
+</p>
+<p></p>
+<p>
+
+<a name="node_idx_768"></a><a name="node_kw_definitionfoldr"></a><code class=scheme>(foldr</code><tt>&nbsp;</tt><code class=scheme><span class=variable>f init l</span></code><tt>&nbsp;</tt><tt>&middot;&middot;&middot;</tt><sup>1</sup><code class=scheme>)</code> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<small>P</small><small>R</small><small>O</small><small>C</small><small>E</small><small>D</small><small>U</small><small>R</small><small>E</small>
+</p>
+<p>
+Like <code class=scheme>foldl</code>, but the lists are traversed from right to left.
+Unlike <code class=scheme>foldl</code>, <code class=scheme>foldr</code> processes <code class=scheme><span class=variable>l</span></code> in space
+proportional to the length of <code class=scheme><span class=variable>l</span></code> (plus the space for each call
+to <code class=scheme><span class=variable>f</span></code>).</p>
+<p>
+For example, a restricted <code class=scheme>map</code> (that works only on single-argument
+procedures) can be defined in terms of <code class=scheme>foldr</code>:
+</p>
+<div align=left><pre class=scheme>  (<span class=keyword>define</span> <span class=variable>simple-map</span>
+    (<span class=keyword>lambda</span> (<span class=variable>f</span> <code class=scheme>list</code>)
+      (<code class=scheme>foldr</code> (<span class=keyword>lambda</span> (<span class=variable>v</span> <span class=variable>l</span>) (<code class=scheme>cons</code> (<span class=variable>f</span> <span class=variable>v</span>) <span class=variable>l</span>)) <span class=keyword>'</span>() <code class=scheme>list</code>)))
+</pre></div><p></p>
+<p>
+
+
+</p>
+<p></p>
+<p>
+
+<a name="node_idx_770"></a><a name="node_kw_definitionlast-pair"></a><code class=scheme>(last-pair</code><tt>&nbsp;</tt><code class=scheme><span class=variable>list</span></code><code class=scheme>)</code> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<small>P</small><small>R</small><small>O</small><small>C</small><small>E</small><small>D</small><small>U</small><small>R</small><small>E</small>
+</p>
+<p>
+Returns the last pair in <code class=scheme><span class=variable>list</span></code>, raising an error if
+<code class=scheme><span class=variable>list</span></code> is not a pair (but <code class=scheme><span class=variable>list</span></code> does not have
+to be a proper list).</p>
+<p>
+
+
+</p>
+<p></p>
+<p>
+
+<a name="node_idx_772"></a><a name="node_kw_definitionmemf"></a><code class=scheme>(memf</code><tt>&nbsp;</tt><code class=scheme><span class=variable>f l</span></code><code class=scheme>)</code> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<small>P</small><small>R</small><small>O</small><small>C</small><small>E</small><small>D</small><small>U</small><small>R</small><small>E</small>
+</p>
+<p>
+Applies <code class=scheme><span class=variable>f</span></code> to each element of <code class=scheme><span class=variable>l</span></code> (from left to right) until
+<code class=scheme><span class=variable>f</span></code> returns a true value for some element, in which case the
+tail of <code class=scheme><span class=variable>l</span></code> starting with that element is returned. If
+<code class=scheme><span class=variable>f</span></code> does not return a true value for any element of
+<code class=scheme><span class=variable>l</span></code>, <code class=scheme><span class=selfeval>#f</span></code> is returned.</p>
+<p>
+
+
+</p>
+<p></p>
+<p>
+
+<a name="node_idx_774"></a><a name="node_kw_definitionmergesort"></a><code class=scheme>(mergesort</code><tt>&nbsp;</tt><code class=scheme><span class=variable>list less-than?</span></code><code class=scheme>)</code> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<small>P</small><small>R</small><small>O</small><small>C</small><small>E</small><small>D</small><small>U</small><small>R</small><small>E</small>
+</p>
+<p>
+Sorts <code class=scheme><span class=variable>list</span></code> using the comparison procedure <code class=scheme><span class=variable>less-than?</span></code>.
+This implementation is not stable (i.e., if two elements in the input
+are ``equal,'' their relative positions in the output may be
+reversed).</p>
+<p>
+
+
+</p>
+<p></p>
+<p>
+
+<a name="node_idx_776"></a><a name="node_kw_definitionquicksort"></a><code class=scheme>(quicksort</code><tt>&nbsp;</tt><code class=scheme><span class=variable>list less-than?</span></code><code class=scheme>)</code> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<small>P</small><small>R</small><small>O</small><small>C</small><small>E</small><small>D</small><small>U</small><small>R</small><small>E</small>
+</p>
+<p>
+Sorts <code class=scheme><span class=variable>list</span></code> using the comparison procedure <code class=scheme><span class=variable>less-than?</span></code>.
+This implementation is not stable (i.e., if two elements in the input
+are ``equal,'' their relative positions in the output may be
+reversed).</p>
+<p>
+
+
+</p>
+<p></p>
+<p>
+
+<a name="node_idx_778"></a><a name="node_kw_definitionremove"></a><code class=scheme>(remove</code><tt>&nbsp;</tt><code class=scheme><span class=variable>item list</span></code><tt>&nbsp;</tt>[<code class=scheme><span class=variable>equal?</span></code>]<code class=scheme>)</code> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<small>P</small><small>R</small><small>O</small><small>C</small><small>E</small><small>D</small><small>U</small><small>R</small><small>E</small>
+</p>
+<p>
+Returns <code class=scheme><span class=variable>list</span></code> without the first instance of <code class=scheme><span class=variable>item</span></code>, where an
+instance is found by comparing <code class=scheme><span class=variable>item</span></code> to the list items using
+<code class=scheme><span class=variable>equal?</span></code>. The default value for <code class=scheme><span class=variable>equal?</span></code> is <code class=scheme>equal?</code>. When
+<code class=scheme><span class=variable>equal?</span></code> is invoked, <code class=scheme><span class=variable>item</span></code> is the first argument.</p>
+<p>
+
+
+</p>
+<p></p>
+<p>
+
+<a name="node_idx_780"></a><a name="node_kw_definitionremove*"></a><code class=scheme>(remove*</code><tt>&nbsp;</tt><code class=scheme><span class=variable>items list</span></code><tt>&nbsp;</tt>[<code class=scheme><span class=variable>equal?</span></code>]<code class=scheme>)</code> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<small>P</small><small>R</small><small>O</small><small>C</small><small>E</small><small>D</small><small>U</small><small>R</small><small>E</small>
+</p>
+<p>
+Like <code class=scheme>remove</code>, except that the first argument is a list of items
+to remove instead of a single item, and all instances of these items are
+removed rather than just the first.</p>
+<p>
+
+
+</p>
+<p></p>
+<p>
+
+<a name="node_idx_782"></a><a name="node_kw_definitionremq"></a><code class=scheme>(remq</code><tt>&nbsp;</tt><code class=scheme><span class=variable>item list</span></code><code class=scheme>)</code> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<small>P</small><small>R</small><small>O</small><small>C</small><small>E</small><small>D</small><small>U</small><small>R</small><small>E</small>
+</p>
+<p>
+Calls <code class=scheme>remove</code> with <code class=scheme>eq?</code> as the comparison procedure.</p>
+<p>
+
+
+</p>
+<p></p>
+<p>
+
+<a name="node_idx_784"></a><a name="node_kw_definitionremq*"></a><code class=scheme>(remq*</code><tt>&nbsp;</tt><code class=scheme><span class=variable>items list</span></code><code class=scheme>)</code> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<small>P</small><small>R</small><small>O</small><small>C</small><small>E</small><small>D</small><small>U</small><small>R</small><small>E</small>
+</p>
+<p>
+Calls <code class=scheme>remove*</code> with <code class=scheme>eq?</code> as the comparison procedure.</p>
+<p>
+
+
+</p>
+<p></p>
+<p>
+
+<a name="node_idx_786"></a><a name="node_kw_definitionremv"></a><code class=scheme>(remv</code><tt>&nbsp;</tt><code class=scheme><span class=variable>item list</span></code><code class=scheme>)</code> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<small>P</small><small>R</small><small>O</small><small>C</small><small>E</small><small>D</small><small>U</small><small>R</small><small>E</small>
+</p>
+<p>
+Calls <code class=scheme>remove</code> with <code class=scheme>eqv?</code> as the comparison procedure.</p>
+<p>
+
+
+</p>
+<p></p>
+<p>
+
+<a name="node_idx_788"></a><a name="node_kw_definitionremv*"></a><code class=scheme>(remv*</code><tt>&nbsp;</tt><code class=scheme><span class=variable>items list</span></code><code class=scheme>)</code> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<small>P</small><small>R</small><small>O</small><small>C</small><small>E</small><small>D</small><small>U</small><small>R</small><small>E</small>
+</p>
+<p>
+Calls <code class=scheme>remove*</code> with <code class=scheme>eqv?</code> as the comparison procedure.</p>
+<p>
+
+
+</p>
+<p></p>
+<p>
+
+<a name="node_idx_790"></a><a name="node_kw_definitionrest"></a><code class=scheme>(rest</code><tt>&nbsp;</tt><code class=scheme><span class=variable>l</span></code><code class=scheme>)</code> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<small>P</small><small>R</small><small>O</small><small>C</small><small>E</small><small>D</small><small>U</small><small>R</small><small>E</small>
+</p>
+<p>
+Returns a list that contains all but the first element of the
+non-empty list <code class=scheme><span class=variable>l</span></code>. (The <code class=scheme>rest</code> procedure is a synonym for
+<code class=scheme>cdr</code>.)</p>
+<p>
+
+
+</p>
+<p></p>
+<p>
+
+<a name="node_idx_792"></a><a name="node_kw_definitionset-first!"></a><code class=scheme>(set-first!</code><tt>&nbsp;</tt><code class=scheme><span class=variable>l v</span></code><code class=scheme>)</code> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<small>P</small><small>R</small><small>O</small><small>C</small><small>E</small><small>D</small><small>U</small><small>R</small><small>E</small>
+</p>
+<p>
+Destructively modifies <code class=scheme><span class=variable>l</span></code> so that its first element is <code class=scheme><span class=variable>v</span></code>.
+(The <code class=scheme>set-first!</code> procedure is a synonym for <code class=scheme><code class=scheme>set-car!</code></code>.)</p>
+<p>
+
+
+</p>
+<p></p>
+<p>
+
+<a name="node_idx_794"></a><a name="node_kw_definitionset-rest!"></a><code class=scheme>(set-rest!</code><tt>&nbsp;</tt><code class=scheme><span class=variable>l1 l2</span></code><code class=scheme>)</code> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<small>P</small><small>R</small><small>O</small><small>C</small><small>E</small><small>D</small><small>U</small><small>R</small><small>E</small>
+</p>
+<p>
+Destructively modifies <code class=scheme><span class=variable>l1</span></code> so that the rest of the list (after
+the first element) is <code class=scheme><span class=variable>l2</span></code>.  (The <code class=scheme>set-rest!</code> procedure is
+a synonym for <code class=scheme><code class=scheme>set-cdr!</code></code>.)</p>
+<p>
+</p>
+<p>
+</p>
+<div align=right class=navigation><i>[Go to <span><a href="mzlib.html">first</a>, <a href="mzlib-Z-H-20.html">previous</a></span><span>, <a href="mzlib-Z-H-22.html">next</a></span> page<span>; &nbsp;&nbsp;</span><span><a href="mzlib.html#node_toc_start">contents</a></span><span><span>; &nbsp;&nbsp;</span><a href="mzlib-Z-H-42.html#node_index_start">index</a></span>]</i></div><p></p>
+</body>
+</html>

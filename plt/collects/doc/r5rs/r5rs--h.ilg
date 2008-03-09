@@ -1,0 +1,6 @@
+This is makeindex, version 2.13 [07-Mar-1997] (using kpathsea).
+Scanning input file ../r5rs/r5rs--h.idx....done (343 entries accepted, 0 rejected).
+Sorting entries......done (3094 comparisons).
+Generating output file ../r5rs/r5rs--h.ind....done (373 lines written, 0 warnings).
+Output written in ../r5rs/r5rs--h.ind.
+Transcript written in ../r5rs/r5rs--h.ilg.

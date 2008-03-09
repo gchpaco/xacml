@@ -1,0 +1,47 @@
+<html>
+<head>
+<title>Teachpack : Arrows GUI</title>
+</head>
+<body bgcolor="#ffffff" text="#000000"
+      link="#009900" vlink="#007700" alink="#cc0000">
+
+<a href="index.html">Teachpacks for How to Design Programs</a>
+
+<h1>Arrows GUI</h1>
+
+<hr> <h3><a name="arrow-gui.ss">arrow-gui.ss</a></h3> <!-- DOCNOTE="teach=arrow-gui.ss" -->
+
+<p>The teachpack <code>arrow-gui.ss</code> implements three functions:
+<menu>
+<li> <code><a name="control">control</a> : -> symbol</code> <br>
+     to read out the current state of the message field
+
+<li> <code><a name="view">view</a> : (union string symbol) -> true</code> <br>
+     to display its argument in the message field
+
+<li> <code>modelT = (button% event% -> true)</code> <br>
+     <code><a name="connect">connect</a> : modelT modelT modelT modelT -> true</code> <br>
+     to connect four controllers with the four directions in the arrow window
+</menu>
+
+<p>Example:
+<pre>
+> (define (make-model dir)
+   (lambda (b e)
+     (begin
+       (view dir)
+       (printf "~a ~n" (control)))))
+
+> (connect
+   (make-model "left")
+   (make-model "right")
+   (make-model "up")
+   (make-model "down"))
+</pre>
+Now click on the four arrows. The message field will contain the current
+direction, the print-out the prior contents of the message field.
+
+<br>
+<br>
+</body>
+</html>

@@ -1,0 +1,94 @@
+<!doctype html public "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!--
+
+Generated from mzlib.tex by tex2page, v 2004-09-11
+(running on MzScheme 209, unix), 
+(c) Dorai Sitaram, 
+http://www.ccs.neu.edu/~dorai/tex2page/tex2page-doc.html
+
+-->
+<head>
+<title>
+PLT MzLib: Libraries Manual
+</title>
+<link rel="stylesheet" type="text/css" href="mzlib-Z-S.css" title=default>
+<meta name=robots content="noindex,follow">
+</head>
+<body>
+<div align=right class=navigation><i>[Go to <span><a href="mzlib.html">first</a>, <a href="mzlib-Z-H-19.html">previous</a></span><span>, <a href="mzlib-Z-H-21.html">next</a></span> page<span>; &nbsp;&nbsp;</span><span><a href="mzlib.html#node_toc_start">contents</a></span><span><span>; &nbsp;&nbsp;</span><a href="mzlib-Z-H-42.html#node_index_start">index</a></span>]</i></div><p></p>
+<a name="node_chap_20"></a>
+<h1 class=chapter>
+<div class=chapterheading><a href="mzlib.html#node_toc_node_chap_20">Chapter 20</a></div><br>
+<a href="mzlib.html#node_toc_node_chap_20"><tt><strong>inflate.ss</strong></tt>: Inflating Compressed Data</a></h1>
+<p><a name="node_idx_720"></a><a name="node_idx_722"></a></p>
+<p>
+
+
+</p>
+<p></p>
+<p>
+
+<a name="node_idx_724"></a><a name="node_kw_definitiongunzip"></a><code class=scheme>(gunzip</code><tt>&nbsp;</tt><code class=scheme><span class=variable>file</span></code><tt>&nbsp;</tt>[<code class=scheme><span class=variable>output-name-filter</span></code>]<code class=scheme>)</code> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<small>P</small><small>R</small><small>O</small><small>C</small><small>E</small><small>D</small><small>U</small><small>R</small><small>E</small>
+</p>
+<p>
+Extracts data that was compressed using the GNU <tt>gzip</tt> utility (or
+<code class=scheme>gzip</code> in the <tt><strong>deflate.ss</strong></tt> library; see
+section&nbsp;<a href="mzlib-Z-H-15.html#node_chap_15">15</a>), writing the uncompressed data directly to a
+file. The <code class=scheme><span class=variable>file</span></code> argument is the name of the file containing
+compressed data. The default output file name is the original name of
+the compressed file as stored in <code class=scheme><span class=variable>file</span></code>. If a file by this name
+exists, it will be overwritten. If no original name is stored in the
+source file, <code class=scheme>&quot;unzipped&quot;</code> is used as the default output file
+name.</p>
+<p>
+The <code class=scheme><span class=variable>output-name-filter</span></code> procedure is applied to two arguments  -- 
+the default destination file name and a Boolean that is <code class=scheme><span class=selfeval>#t</span></code> if
+this name was read from <code class=scheme><span class=variable>file</span></code>  --  before the destination file is
+created. The return value of the file is used as the actual
+destination file name (opened with the <code class=scheme><span class=selfeval>'truncate</span></code> flag). The
+default <code class=scheme><span class=variable>output-name-filter</span></code> procedure returns its first
+argument.</p>
+<p>
+The return value is void. If the compressed data is corrupted, the
+<a name="node_idx_726"></a><code class=scheme>exn:fail</code> exception is raised.</p>
+<p>
+
+
+</p>
+<p></p>
+<p>
+
+<a name="node_idx_728"></a><a name="node_kw_definitiongunzip-through-ports"></a><code class=scheme>(gunzip-through-ports</code><tt>&nbsp;</tt><code class=scheme><span class=variable>in out</span></code><code class=scheme>)</code> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<small>P</small><small>R</small><small>O</small><small>C</small><small>E</small><small>D</small><small>U</small><small>R</small><small>E</small>
+</p>
+<p>
+Reads the port <code class=scheme><span class=variable>in</span></code> for compressed data that was created using the
+GNU <tt>gzip</tt> utility, writing the uncompressed data to the port
+<code class=scheme><span class=variable>out</span></code>. </p>
+<p>
+The return value is void. If the compressed data is corrupted, the
+<a name="node_idx_730"></a><code class=scheme>exn:fail</code> exception is raised.</p>
+<p>
+
+
+</p>
+<p></p>
+<p>
+
+<a name="node_idx_732"></a><a name="node_kw_definitioninflate"></a><code class=scheme>(inflate</code><tt>&nbsp;</tt><code class=scheme><span class=variable>in out</span></code><code class=scheme>)</code> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<small>P</small><small>R</small><small>O</small><small>C</small><small>E</small><small>D</small><small>U</small><small>R</small><small>E</small>
+</p>
+<p>
+Reads <tt>pkzip</tt>-format ``deflated'' data from the port <code class=scheme><span class=variable>in</span></code> and
+writes the uncompressed (``inflated'') data to the port <code class=scheme><span class=variable>out</span></code>.
+The data in a file created by <tt>gzip</tt> uses this format (preceded
+with some header information).</p>
+<p>
+The return value is void. If the compressed data is corrupted, the
+<a name="node_idx_734"></a><code class=scheme>exn:fail</code> exception is raised.</p>
+<p>
+</p>
+<p>
+</p>
+<div align=right class=navigation><i>[Go to <span><a href="mzlib.html">first</a>, <a href="mzlib-Z-H-19.html">previous</a></span><span>, <a href="mzlib-Z-H-21.html">next</a></span> page<span>; &nbsp;&nbsp;</span><span><a href="mzlib.html#node_toc_start">contents</a></span><span><span>; &nbsp;&nbsp;</span><a href="mzlib-Z-H-42.html#node_index_start">index</a></span>]</i></div><p></p>
+</body>
+</html>

@@ -1,0 +1,223 @@
+<!doctype html public "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!--
+
+Generated from mzc.tex by tex2page, v 2004-09-11
+(running on MzScheme 209, unix), 
+(c) Dorai Sitaram, 
+http://www.ccs.neu.edu/~dorai/tex2page/tex2page-doc.html
+
+-->
+<head>
+<title>
+PLT mzc: MzScheme Compiler Manual
+</title>
+<link rel="stylesheet" type="text/css" href="mzc-Z-S.css" title=default>
+<meta name=robots content="noindex,follow">
+</head>
+<body>
+<div align=right class=navigation><i>[Go to <span><a href="mzc.html">first</a>, <a href="mzc-Z-H-2.html">previous</a></span><span>, <a href="mzc-Z-H-4.html">next</a></span> page<span>; &nbsp;&nbsp;</span><span><a href="mzc.html#node_toc_start">contents</a></span><span><span>; &nbsp;&nbsp;</span><a href="mzc-Z-H-8.html#node_index_start">index</a></span>]</i></div><p></p>
+<a name="node_chap_3"></a>
+<h1 class=chapter>
+<div class=chapterheading><a href="mzc.html#node_toc_node_chap_3">Chapter 3</a></div><br>
+<a href="mzc.html#node_toc_node_chap_3">Compiling Individual Files with <tt><strong>mzc</strong></tt></a></h1>
+<p><a name="node_idx_94"></a></p>
+<p>
+<a name="node_idx_96"></a>
+To compile an individual file with <tt><strong>mzc</strong></tt>, provide the file name as
+the command line argument to <tt><strong>mzc</strong></tt>. To compile to byte code, use the
+<tt>-z</tt><a name="node_idx_98"></a> or <tt>--zo</tt><a name="node_idx_100"></a> flag; to compile to native code, use
+the <tt>-e</tt><a name="node_idx_102"></a> or <tt>--extension</tt><a name="node_idx_104"></a> flag. If no compilation
+mode flag is specified, <tt>--extension</tt><a name="node_idx_106"></a> is assumed.</p>
+<p>
+The input file must have a file extension that designates it as a
+Scheme file, either <tt><strong>.ss</strong></tt><a name="node_idx_108"></a> or <tt><strong>.scm</strong></tt><a name="node_idx_110"></a>.  The output
+file will have the same base name and same directory (by default) as
+the input file, but with an extension appropriate to the type of the
+output file (either <tt><strong>.zo</strong></tt>, <tt><strong>.dll</strong></tt>, or <tt><strong>.so</strong></tt>).</p>
+<p>
+Example:
+</p>
+<p>  <tt><strong>mzc <tt>--extension</tt> file.ss</strong></tt></p>
+<p>Under Windows, the above command reads <tt><strong>file.ss</strong></tt> from the current
+directory and produces <tt><strong>file.dll</strong></tt> in the current directory.</p>
+<p>
+Multiple Scheme files can be specified for compilation at once. A
+separate compiled file is produced for each Scheme file. By default,
+each compiled file is placed in the directory containing the
+corresponding input file. When multiple files are compiled at once,
+macros defined in a file are visible in the files that are compiled
+afterwards.</p>
+<p>
+</p>
+<a name="node_sec_3.1"></a>
+<h2><a href="mzc.html#node_toc_node_sec_3.1">3.1&nbsp;&nbsp;Compiling with Modules</a></h2>
+<p><a name="node_idx_112"></a></p>
+<p>
+<a name="node_idx_114"></a>
+In terms of both optimization and proper loading of syntax
+definitions, <tt><strong>mzc</strong></tt> works best with programs that are encapulated
+within per-file <code class=scheme><span class=keyword>module</span></code> expressions. Using a single
+<code class=scheme><span class=keyword>module</span></code> expression in a file eliminates the code's dependence
+on the top-level environment. Consequently, all dependencies of the
+code on loadable syntax extensions are evident to the compiler.</p>
+<p>
+When compiling a module that <code class=scheme><span class=keyword>require</span></code>s another module (that is
+not built into MzScheme), <tt><strong>mzc</strong></tt> loads the required module, but does
+not invoke it. Instead, <tt><strong>mzc</strong></tt> uses the loaded module only for its
+syntax exports, if any (which means that <tt><strong>mzc</strong></tt> executes the
+transformer code in the module, but not any of its normal code).</p>
+<p>
+</p>
+<a name="node_sec_3.2"></a>
+<h2><a href="mzc.html#node_toc_node_sec_3.2">3.2&nbsp;&nbsp;Compilation without Modules</a></h2>
+<p><a name="node_idx_116"></a></p>
+<p>
+<a name="node_idx_118"></a> <a name="node_idx_120"></a>
+Top-level <code class=scheme><span class=keyword>define-syntax</span></code>(<code class=scheme><span class=keyword>es</span></code>), <code class=scheme><span class=keyword>module</span></code>,
+<code class=scheme><span class=keyword>require</span></code>, <code class=scheme><span class=keyword>require-for-syntax</span></code>, and <code class=scheme><span class=keyword>begin</span></code>
+expressions are handled specially by <tt><strong>mzc</strong></tt>: the compile-time portion
+of the expression is evaluated, because it might affects later
+expressions.<a name="call_footnote_Temp_3"></a><a href="#footnote_Temp_3"><sup><small>2</small></sup></a> For example, when compiling the file
+containing
+</p>
+<div align=left><pre class=scheme>(<span class=keyword>require</span> (<code class=scheme><span class=keyword>lib</span></code> <span class=selfeval>&quot;etc.ss&quot;</span>))
+(<span class=keyword>define</span> <span class=variable>f</span> (<span class=keyword>opt-lambda</span> (<span class=variable>a</span> [<span class=variable>b</span> <span class=selfeval>7</span>]) (<span class=variable>+</span> <span class=variable>a</span> <span class=variable>b</span>)))
+</pre></div><p>
+the <code class=scheme><span class=keyword>opt-lambda</span></code> syntax from the <code class=scheme><span class=selfeval>&quot;etc.ss&quot;</span></code> library must be
+bound in the compilation namespace at compile time. Thus, the
+<code class=scheme><span class=keyword>require</span></code> expression is both compiled (to appear in the output
+code) and evaluated (for further computation).</p>
+<p>
+Many definition forms expand to <code class=scheme><span class=keyword>define-syntax</span></code>. For example,
+<code class=scheme><span class=keyword>define-signature</span></code> expands to a <code class=scheme><span class=keyword>define-syntax</span></code>
+definition. <tt><strong>mzc</strong></tt> detects <code class=scheme><span class=keyword>define-syntax</span></code> and other expressions
+after expansion, so top-level <code class=scheme><span class=keyword>define-signature</span></code> expressions
+affect the compilation of later expressions, as a programmer would
+expect.</p>
+<p>
+In contrast, a <code class=scheme>load</code> or <code class=scheme>eval</code> expression in a source
+file is compiled -- but <em>not evaluated!</em> -- as the source file is
+compiled.  Even if the <code class=scheme>load</code> expression loads syntax or
+signature definitions, these will not be loaded as the file is
+compiled. The same is true of application expressions that affect the
+reader, such as <code class=scheme>(<code class=scheme>read-case-sensitive</code> <span class=selfeval>#t</span>)</code>.</p>
+<p>
+<tt><strong>mzc</strong></tt>'s <tt>-p</tt><a name="node_idx_122"></a> or <tt>--prefix</tt><a name="node_idx_124"></a> flag takes a file and
+loads it before compiling the source files specified on the command
+line. In general, a better solution is to put all compiled code into
+<code class=scheme><span class=keyword>module</span></code> expressions, as explained in section&nbsp;<a href="#node_sec_3.1">3.1</a>.</p>
+<p>
+Note that MzScheme provides no <a name="node_idx_126"></a><code class=scheme><span class=keyword>eval-when</span></code> form for
+controlling the evaluation of compiled code, because <code class=scheme><span class=keyword>module</span></code>
+provides a simpler and more consistent interface for separating
+compile-time and run-time code.</p>
+<p>
+</p>
+<a name="node_sec_3.3"></a>
+<h2><a href="mzc.html#node_toc_node_sec_3.3">3.3&nbsp;&nbsp;Autodetecting Compiled Files for Loading</a></h2>
+<p><a name="node_idx_128"></a></p>
+<p>
+<a name="node_idx_130"></a>
+When MzScheme's <code class=scheme>load/use-compiled</code>, <code class=scheme>load-relative</code>, or
+<code class=scheme><span class=keyword>require</span></code> is used to load a file, MzScheme automatically detects
+an alternate byte-code and/or native-code file that resides near the
+requested file.  Byte-code files are found in a <tt><strong>compiled</strong></tt>
+subdirectory in the directory of the requested file. Native-code
+files are found in <code class=scheme>(<code class=scheme>build-path</code> <span class=variable>dir</span> <span class=selfeval>&quot;compiled&quot;</span> <span class=selfeval>&quot;native&quot;</span>
+ (<code class=scheme>system-library-subpath</code>))</code> where <code class=scheme><span class=variable>dir</span></code> is the directory of the
+requested file. A byte-code or native-code file is used in place of
+the requested file only if its modification date is later than the
+requested file, or if the requested file does not exist. If both
+byte-code and native-code files can be loaded, the native-code file
+is loaded.</p>
+<p>
+Example:
+</p>
+<p>  <tt><strong>mzc <tt>--extension</tt> <tt>--destination</tt> compiled/native/i386-linux file.ss </strong></tt></p>
+<p>Under Linux, the above command compiles <tt><strong>file.ss</strong></tt> in the current
+directory and produces <tt><strong>compiled/native/i386-linux/file.so</strong></tt>.
+Evaluating <code class=scheme>(<code class=scheme>load/use-compiled</code> <span class=selfeval>&quot;file.ss&quot;</span>)</code> in MzScheme will then
+load <tt><strong>compiled/native/i386-linux/file.so</strong></tt> instead of
+<tt><strong>file.ss</strong></tt>.  If <tt><strong>file.ss</strong></tt> is changed without recreating
+<tt><strong>file.so</strong></tt>, then <code class=scheme>load/use-compiled</code> loads <tt><strong>file.ss</strong></tt>,
+because <tt><strong>file.so</strong></tt> is out-of-date.</p>
+<p>
+</p>
+<a name="node_sec_3.4"></a>
+<h2><a href="mzc.html#node_toc_node_sec_3.4">3.4&nbsp;&nbsp;Compiling Multiple Files to a Single Native-Code Library</a></h2>
+<p><a name="node_idx_132"></a></p>
+<p>
+<a name="node_idx_134"></a>
+When the <tt>-o</tt><a name="node_idx_136"></a> or <tt>--object</tt><a name="node_idx_138"></a> flag is provided to
+<tt><strong>mzc</strong></tt>, <tt><strong>.kp</strong></tt> and <tt><strong>.o</strong></tt>/<tt><strong>.obj</strong></tt> files are produced
+instead of a loadable library. The <tt><strong>.o</strong></tt>/<tt><strong>.obj</strong></tt> files
+contain the native code for a single source file. The <tt><strong>.kp</strong></tt>
+files contain information used for global optimizations.</p>
+<p>
+Multiple <tt><strong>.kp</strong></tt> and <tt><strong>.o</strong></tt>/<tt><strong>.obj</strong></tt> files are linked into a
+single library using <tt><strong>mzc</strong></tt> with the <tt>-l</tt><a name="node_idx_140"></a> or
+<tt>--link-extension</tt><a name="node_idx_142"></a> flag. All of the <tt><strong>.kp</strong></tt> and
+<tt><strong>.o</strong></tt>/<tt><strong>.obj</strong></tt> files to be linked together are provided on the
+command line to <tt><strong>mzc</strong></tt>. The output library is always named
+<tt><strong>_loader.so</strong></tt><a name="node_idx_144"></a> or <tt><strong>_loader.dll</strong></tt><a name="node_idx_146"></a>.</p>
+<p>
+Example:
+</p>
+<p>  <tt><strong>mzc <tt>--object</tt> file1.ss </strong></tt><br>
+  <tt><strong>mzc <tt>--object</tt> file2.ss </strong></tt><br>
+  <tt><strong>mzc <tt>--link-extension</tt> file1.kp file1.o file2.kp file2.o </strong></tt>
+</p>
+<p>
+Under Unix, the above commands produce a <tt><strong>_loader.so</strong></tt> library
+that encapsulates both <tt><strong>file1.ss</strong></tt> and <tt><strong>file2.ss</strong></tt>.</p>
+<p>
+Loading <tt><strong>_loader</strong></tt> into MzScheme is not quite the same as loading
+all of the Source files that are encapsulated by <tt><strong>_loader</strong></tt>. The
+return value from <code class=scheme>(<code class=scheme>load-extension</code> <span class=selfeval>&quot;_loader.so&quot;</span>)</code> is a
+procedure that takes a symbol or <code class=scheme><span class=selfeval>#t</span></code>. If a symbol is provided
+and it is the same as the base name of a source file (i.e., the name
+without a path or file extension) encapsulated by <tt><strong>_loader</strong></tt>,
+then a thunk is returned, along with a symbol (or <code class=scheme><span class=selfeval>#f</span></code>)
+indicating a module name declared by the file. Applying the thunk has
+the same effect as loading the corresponding source file. If a symbol
+is not recognized by the <tt><strong>_loader</strong></tt> procedure, <code class=scheme><span class=selfeval>#f</span></code> is
+returned instead of a thunk. If <code class=scheme><span class=selfeval>#t</span></code> is provided, a thunk is
+returned that ``loads'' all of the files (using the order of the
+<tt><strong>.o</strong></tt>/<tt><strong>.obj</strong></tt> files provided to <tt><strong>mzc</strong></tt>) and returns the
+result from loading the last one.</p>
+<p>
+The <tt><strong>_loader</strong></tt> procedure can be called any number of times to
+obtain thunks, and each thunk can be applied any number of times
+(where each application has the same effect as loading the source
+file again).  Evaluating <code class=scheme>(<code class=scheme>load-extension</code> <span class=selfeval>&quot;_loader.so&quot;</span>)</code>
+multiple times returns an equivalent loader procedure each time.</p>
+<p>
+Given the <tt><strong>_loader.so</strong></tt> constructed by the example commands
+above, the following Scheme expressions have the same effect as
+loading <tt><strong>file1.ss</strong></tt> and <tt><strong>file2.ss</strong></tt>:
+</p>
+<div align=left><pre class=scheme>(<span class=keyword>let-values</span> ([(<span class=variable>go</span> <span class=variable>modname</span>) ((<code class=scheme>load-extension</code> <span class=selfeval>&quot;_loader.so&quot;</span>) <span class=keyword>'</span><span class=variable>file1</span>)]) (<span class=variable>go</span>))
+(<span class=keyword>let-values</span> ([(<span class=variable>go</span> <span class=variable>modname</span>) ((<code class=scheme>load-extension</code> <span class=selfeval>&quot;_loader.so&quot;</span>) <span class=keyword>'</span><span class=variable>file2</span>)]) (<span class=variable>go</span>))
+</pre></div><p>
+or, equivalently:
+</p>
+<div align=left><pre class=scheme>(<span class=keyword>let-values</span> ([(<span class=variable>go</span> <span class=variable>modname</span>) ((<code class=scheme>load-extension</code> <span class=selfeval>&quot;_loader.so&quot;</span>) <span class=selfeval>#t</span>)]) (<span class=variable>go</span>))
+</pre></div><p></p>
+<p>
+The special <tt><strong>_loader</strong></tt> convention is recognized by MzScheme's
+<code class=scheme>load/use-compiled</code>, <code class=scheme>load-relative</code>, and
+<code class=scheme><span class=keyword>require</span></code>. MzScheme automatically detects <tt><strong>_loader.so</strong></tt> or
+<tt><strong>_loader.dll</strong></tt> in the same directory as individual native-code
+files (see&nbsp;section&nbsp;<a href="#node_sec_3.3">3.3</a>). If both an individual native-code
+file and a <tt><strong>_loader</strong></tt> are available, the <tt><strong>_loader</strong></tt> file is
+used.</p>
+<p>
+</p>
+<div class=footnoterule><hr></div><p></p>
+<div class=footnote><p><a name="footnote_Temp_3"></a><a href="#call_footnote_Temp_3"><sup><small>2</small></sup></a> The <tt>-m</tt> or <tt>--module</tt> flag turns off
+this special handling.</p>
+</div>
+<div align=right class=navigation><i>[Go to <span><a href="mzc.html">first</a>, <a href="mzc-Z-H-2.html">previous</a></span><span>, <a href="mzc-Z-H-4.html">next</a></span> page<span>; &nbsp;&nbsp;</span><span><a href="mzc.html#node_toc_start">contents</a></span><span><span>; &nbsp;&nbsp;</span><a href="mzc-Z-H-8.html#node_index_start">index</a></span>]</i></div><p></p>
+</body>
+</html>

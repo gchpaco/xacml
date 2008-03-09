@@ -1,0 +1,100 @@
+<!doctype html public "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!--
+
+Generated from mzc.tex by tex2page, v 2004-09-11
+(running on MzScheme 209, unix), 
+(c) Dorai Sitaram, 
+http://www.ccs.neu.edu/~dorai/tex2page/tex2page-doc.html
+
+-->
+<head>
+<title>
+PLT mzc: MzScheme Compiler Manual
+</title>
+<link rel="stylesheet" type="text/css" href="mzc-Z-S.css" title=default>
+<meta name=robots content="noindex,follow">
+</head>
+<body>
+<div align=right class=navigation><i>[Go to <span><a href="mzc.html">first</a>, <a href="mzc-Z-H-3.html">previous</a></span><span>, <a href="mzc-Z-H-5.html">next</a></span> page<span>; &nbsp;&nbsp;</span><span><a href="mzc.html#node_toc_start">contents</a></span><span><span>; &nbsp;&nbsp;</span><a href="mzc-Z-H-8.html#node_index_start">index</a></span>]</i></div><p></p>
+<a name="node_chap_4"></a>
+<h1 class=chapter>
+<div class=chapterheading><a href="mzc.html#node_toc_node_chap_4">Chapter 4</a></div><br>
+<a href="mzc.html#node_toc_node_chap_4">Compiling Collections with <tt><strong>mzc</strong></tt></a></h1>
+<p><a name="node_idx_148"></a></p>
+<p>
+<a name="node_idx_150"></a>
+A <strong>collection</strong> is a group of files that conform to MzScheme's
+library collection system; see&nbsp;section&nbsp;<a href="../mzscheme/mzscheme-Z-H-16.html#node_chap_16">16</a> in <a href="../mzscheme/mzscheme.html"><i>PLT MzScheme: Language Manual</i></a> for details. Every
+source file in a collection should contain a single <code class=scheme><span class=keyword>module</span></code>
+declaration.</p>
+<p>
+The <tt>--collection-zos</tt><a name="node_idx_152"></a> and <tt>--collection-extension</tt><a name="node_idx_154"></a>
+flags direct <tt><strong>mzc</strong></tt> to compile a whole collection. The
+<tt>--collection-zos</tt> flag produces individual <tt><strong>.zo</strong></tt> files for
+each library in the collection. The <tt>--collection-extension</tt> flag
+produces a single <tt><strong>_loader</strong></tt> library for the collection.</p>
+<p>
+The (sub-)collection to compile is specified on the command line for
+<tt><strong>mzc</strong></tt>. The specified collection must contain an <tt><strong>info.ss</strong></tt><a name="node_idx_156"></a>
+library that provides information about how to compile the
+collection. (See section&nbsp;<a href="mzc-Z-H-7.html#node_chap_7">7</a> for information on the format
+of <tt><strong>info.ss</strong></tt>.)</p>
+<p>
+To compile a collection, <tt><strong>mzc</strong></tt> extracts <tt><strong>info.ss</strong></tt> information
+for the following fields:
+</p>
+<ul><p>
+</p>
+<li><p><code class=scheme>name</code>  --  the name of the collection as a string.</p>
+<p>
+</p>
+<li><p><code class=scheme>compile-omit-files</code>  --  a list of library filenames
+(without paths); all Scheme files in the collection are
+compiled except for the files in this list. This information is optional.</p>
+<p>
+</p>
+<li><p><code class=scheme>compile-zo-omit-files</code>  --  a list of library filenames
+that should not be compiled to byte code (but possibly to
+native code).  This information is optional.</p>
+<p>
+</p>
+<li><p><code class=scheme>compile-extension-omit-files</code>  --  a list of library
+filenames that should not be compiled to native code (but
+possibly to byte code).  This information is optional.</p>
+<p>
+</p>
+<li><p><code class=scheme>compile-subcollections</code>  --  a list of sub-collection
+sub-paths, where each sub-path is a list of strings; each full
+sub-collection path is formed by appending the sub-path to the
+path of the collection being compiled. Each sub-collection is
+compiled in the same way as the current collection, using
+the <tt><strong>info.ss</strong></tt> library of the sub-collection. This information is optional.</p>
+<p>
+</p>
+</ul><p>
+When compiling a collection to byte-code files, <tt><strong>mzc</strong></tt> automatically
+creates a <tt><strong>compiled</strong></tt> directory in the collection directory and
+puts <tt><strong>.zo</strong></tt> files there.</p>
+<p>
+When compiling a collection to native code, <tt><strong>mzc</strong></tt> automatically
+created a <tt><strong>compiled</strong></tt> directory in the collection directory, a
+<tt><strong>native</strong></tt> directory in that <tt><strong>compiled</strong></tt> directory, and a
+platform-specific directory in <tt><strong>native</strong></tt> using the directory name
+returned by <code class=scheme>system-library-subpath</code>. Intermediate <tt><strong>.c</strong></tt> and
+<tt><strong>.kp</strong></tt> files are kept in <tt><strong>native</strong></tt>. The platform-specific
+directory gets intermediate <tt><strong>.o</strong></tt>/<tt><strong>.obj</strong></tt> files and the
+final <tt><strong>_loader.so</strong></tt> or <tt><strong>_loader.dll</strong></tt>.</p>
+<p>
+To compile a collection, <tt><strong>mzc</strong></tt> compiles only the library files that
+have changed since the last compilation. This form of
+dependency checking is usually too weak. For example, when a
+signature file changes, <tt><strong>mzc</strong></tt> does not automatically recompile all
+files that rely on the signatures. In this case, delete the
+<tt><strong>compiled</strong></tt> directory when a macro or signature file changes to
+ensure that the collection is compiled correctly.</p>
+<p>
+</p>
+<div align=right class=navigation><i>[Go to <span><a href="mzc.html">first</a>, <a href="mzc-Z-H-3.html">previous</a></span><span>, <a href="mzc-Z-H-5.html">next</a></span> page<span>; &nbsp;&nbsp;</span><span><a href="mzc.html#node_toc_start">contents</a></span><span><span>; &nbsp;&nbsp;</span><a href="mzc-Z-H-8.html#node_index_start">index</a></span>]</i></div><p></p>
+</body>
+</html>

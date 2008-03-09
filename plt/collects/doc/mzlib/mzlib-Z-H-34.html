@@ -1,0 +1,251 @@
+<!doctype html public "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!--
+
+Generated from mzlib.tex by tex2page, v 2004-09-11
+(running on MzScheme 209, unix), 
+(c) Dorai Sitaram, 
+http://www.ccs.neu.edu/~dorai/tex2page/tex2page-doc.html
+
+-->
+<head>
+<title>
+PLT MzLib: Libraries Manual
+</title>
+<link rel="stylesheet" type="text/css" href="mzlib-Z-S.css" title=default>
+<meta name=robots content="noindex,follow">
+</head>
+<body>
+<div align=right class=navigation><i>[Go to <span><a href="mzlib.html">first</a>, <a href="mzlib-Z-H-33.html">previous</a></span><span>, <a href="mzlib-Z-H-35.html">next</a></span> page<span>; &nbsp;&nbsp;</span><span><a href="mzlib.html#node_toc_start">contents</a></span><span><span>; &nbsp;&nbsp;</span><a href="mzlib-Z-H-42.html#node_index_start">index</a></span>]</i></div><p></p>
+<a name="node_chap_34"></a>
+<h1 class=chapter>
+<div class=chapterheading><a href="mzlib.html#node_toc_node_chap_34">Chapter 34</a></div><br>
+<a href="mzlib.html#node_toc_node_chap_34"><tt><strong>string.ss</strong></tt>: String Utilities</a></h1>
+<p><a name="node_idx_1086"></a><a name="node_idx_1088"></a></p>
+<p>
+
+
+</p>
+<p></p>
+<p>
+
+<a name="node_idx_1090"></a><a name="node_kw_definitioneval-string"></a><code class=scheme>(eval-string</code><tt>&nbsp;</tt><code class=scheme><span class=variable>str</span></code><tt>&nbsp;</tt>[<code class=scheme><span class=variable>err-display err-result</span></code>]<code class=scheme>)</code> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<small>P</small><small>R</small><small>O</small><small>C</small><small>E</small><small>D</small><small>U</small><small>R</small><small>E</small>
+</p>
+<p>
+Reads and evaluates S-expressions from the string <code class=scheme><span class=variable>str</span></code>, returning
+a result for each expression. Note that if <code class=scheme><span class=variable>str</span></code> contains only
+whitespace and comments, zero values are returned, while if <code class=scheme><span class=variable>str</span></code>
+contains two expressions, two values are returned.</p>
+<p>
+If <code class=scheme><span class=variable>err-display</span></code> is not <code class=scheme><span class=selfeval>#f</span></code> (the default), then errors are
+caught and <code class=scheme><span class=variable>err-display</span></code> is used as the error display handler.  If
+<code class=scheme><span class=variable>err-result</span></code> is specified, it must be a thunk
+that returns a value to be returned when an error is caught;
+otherwise, <code class=scheme><span class=selfeval>#f</span></code> is returned when an error is caught.</p>
+<p>
+
+
+</p>
+<p></p>
+<p>
+
+<a name="node_idx_1092"></a><a name="node_kw_definitionexpr->string"></a><code class=scheme>(expr-&gt;string</code><tt>&nbsp;</tt><code class=scheme><span class=variable>expr</span></code><code class=scheme>)</code> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<small>P</small><small>R</small><small>O</small><small>C</small><small>E</small><small>D</small><small>U</small><small>R</small><small>E</small>
+</p>
+<p>
+Prints <code class=scheme><span class=variable>expr</span></code> into a string and returns the string.</p>
+<p>
+
+
+</p>
+<p></p>
+<p>
+
+<a name="node_idx_1094"></a><a name="node_kw_definitionread-from-string"></a><code class=scheme>(read-from-string</code><tt>&nbsp;</tt><code class=scheme><span class=variable>str</span></code><tt>&nbsp;</tt>[<code class=scheme><span class=variable>err-display err-result</span></code>]<code class=scheme>)</code> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<small>P</small><small>R</small><small>O</small><small>C</small><small>E</small><small>D</small><small>U</small><small>R</small><small>E</small>
+</p>
+<p>
+Reads the first S-expression from the string <code class=scheme><span class=variable>str</span></code> and returns it.
+The <code class=scheme><span class=variable>err-display</span></code> and <code class=scheme><span class=variable>err-result</span></code> are as in <code class=scheme>eval-str</code>.</p>
+<p>
+
+
+</p>
+<p></p>
+<p>
+
+<a name="node_idx_1096"></a><a name="node_kw_definitionread-from-string-all"></a><code class=scheme>(read-from-string-all</code><tt>&nbsp;</tt><code class=scheme><span class=variable>str</span></code><tt>&nbsp;</tt>[<code class=scheme><span class=variable>err-display err-result</span></code>]<code class=scheme>)</code> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<small>P</small><small>R</small><small>O</small><small>C</small><small>E</small><small>D</small><small>U</small><small>R</small><small>E</small>
+</p>
+<p>
+Reads all S-expressions from the string <code class=scheme><span class=variable>str</span></code> and returns them in a list.
+The <code class=scheme><span class=variable>err-display</span></code> and <code class=scheme><span class=variable>err-result</span></code> are as in <code class=scheme>eval-str</code>.</p>
+<p>
+
+
+</p>
+<p></p>
+<p>
+
+<a name="node_idx_1098"></a><a name="node_kw_definitionregexp-match*"></a><code class=scheme>(regexp-match*</code><tt>&nbsp;</tt><code class=scheme><span class=variable>pattern string-or-input-port</span></code><tt>&nbsp;</tt>[<code class=scheme><span class=variable>start-k end-k</span></code>]<code class=scheme>)</code> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<small>P</small><small>R</small><small>O</small><small>C</small><small>E</small><small>D</small><small>U</small><small>R</small><small>E</small>
+</p>
+<p>
+Like <code class=scheme>regexp-match</code> (see section&nbsp;<a href="../mzscheme/mzscheme-Z-H-10.html#node_chap_10">10</a> in <a href="../mzscheme/mzscheme.html"><i>PLT MzScheme: Language Manual</i></a>), but the result is
+a list of strings corresponding to a sequence of matches of
+<code class=scheme><span class=variable>pattern</span></code> in <code class=scheme><span class=variable>string-or-input-port</span></code>. (Unlike
+<code class=scheme>regexp-match</code>, results for parenthesized sub-patterns in
+<code class=scheme><span class=variable>pattern</span></code> are not returned.)  If <code class=scheme><span class=variable>pattern</span></code> matches a
+zero-length string along the way, the <a name="node_idx_1100"></a><code class=scheme>exn:fail</code> exception is raised.</p>
+<p>
+If <code class=scheme><span class=variable>string-or-input-port</span></code> contains no matches (in the range
+<code class=scheme><span class=variable>start-k</span></code> to <code class=scheme><span class=variable>end-k</span></code>), <code class=scheme>null</code> is returned. Otherwise,
+each string in the resulting list is a distinct substring in
+<code class=scheme><span class=variable>string-or-input-port</span></code> that matches <code class=scheme><span class=variable>pattern</span></code>. The
+<code class=scheme><span class=variable>end-k</span></code> argument can be <code class=scheme><span class=selfeval>#f</span></code> to match to the end of
+<code class=scheme><span class=variable>string-or-input-port</span></code>.</p>
+<p>
+
+
+</p>
+<p></p>
+<p>
+
+<a name="node_idx_1102"></a><a name="node_kw_definitionregexp-match/fail-without-reading"></a><code class=scheme>(regexp-match/fail-without-reading</code><tt>&nbsp;</tt><code class=scheme><span class=variable>pattern input-port</span></code><tt>&nbsp;</tt>[<code class=scheme><span class=variable>start-k end-k output-port</span></code>]<code class=scheme>)</code> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<small>P</small><small>R</small><small>O</small><small>C</small><small>E</small><small>D</small><small>U</small><small>R</small><small>E</small>
+</p>
+<p>
+Like <code class=scheme>regexp-match</code> on input ports (see section&nbsp;<a href="../mzscheme/mzscheme-Z-H-10.html#node_chap_10">10</a> in <a href="../mzscheme/mzscheme.html"><i>PLT MzScheme: Language Manual</i></a>),
+except that if the match fails, no characters are read and discarded
+from <code class=scheme><span class=variable>input-port</span></code>.</p>
+<p>
+This procedure is especially useful with a <code class=scheme><span class=variable>pattern</span></code> that begins
+with a start-of-string caret (``<tt>^</tt>'') or with a non-<code class=scheme><span class=selfeval>#f</span></code>
+<code class=scheme><span class=variable>end-k</span></code>, since each limits the amount of peeking into the port.</p>
+<p>
+
+
+</p>
+<p></p>
+<p>
+
+<a name="node_idx_1104"></a><a name="node_kw_definitionregexp-match-exact_Q_"></a><code class=scheme>(regexp-match-exact?</code><tt>&nbsp;</tt><code class=scheme><span class=variable>pattern string-or-input-port</span></code><code class=scheme>)</code> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<small>P</small><small>R</small><small>O</small><small>C</small><small>E</small><small>D</small><small>U</small><small>R</small><small>E</small>
+</p>
+<p>
+This procedure is like MzScheme's built-in <code class=scheme>regexp-match</code> (see
+section&nbsp;<a href="../mzscheme/mzscheme-Z-H-10.html#node_chap_10">10</a> in <a href="../mzscheme/mzscheme.html"><i>PLT MzScheme: Language Manual</i></a>), but the result is always <code class=scheme><span class=selfeval>#t</span></code> or
+<code class=scheme><span class=selfeval>#f</span></code>; <code class=scheme><span class=selfeval>#t</span></code> is only returned when the entire content of
+<code class=scheme><span class=variable>string-or-input-port</span></code> matches <code class=scheme><span class=variable>pattern</span></code>.</p>
+<p>
+
+
+</p>
+<p></p>
+<p>
+
+<a name="node_idx_1106"></a><a name="node_kw_definitionregexp-match-peek-positions*"></a><code class=scheme>(regexp-match-peek-positions*</code><tt>&nbsp;</tt><code class=scheme><span class=variable>pattern input-port</span></code><tt>&nbsp;</tt>[<code class=scheme><span class=variable>start-k end-k</span></code>]<code class=scheme>)</code> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<small>P</small><small>R</small><small>O</small><small>C</small><small>E</small><small>D</small><small>U</small><small>R</small><small>E</small>
+</p>
+<p>
+Like <code class=scheme>regexp-match-positions*</code>, but it works only on input ports, and
+the port is peeked instead of read for matches.</p>
+<p>
+
+
+</p>
+<p></p>
+<p>
+
+<a name="node_idx_1108"></a><a name="node_kw_definitionregexp-match-positions*"></a><code class=scheme>(regexp-match-positions*</code><tt>&nbsp;</tt><code class=scheme><span class=variable>pattern string-or-input-port</span></code><tt>&nbsp;</tt>[<code class=scheme><span class=variable>start-k end-k</span></code>]<code class=scheme>)</code> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<small>P</small><small>R</small><small>O</small><small>C</small><small>E</small><small>D</small><small>U</small><small>R</small><small>E</small>
+</p>
+<p>
+Like <code class=scheme>regexp-match-positions</code> (see section&nbsp;<a href="../mzscheme/mzscheme-Z-H-10.html#node_chap_10">10</a> in <a href="../mzscheme/mzscheme.html"><i>PLT MzScheme: Language Manual</i></a>), but the
+result is a list of integer pairs corresponding to a sequence of
+matches of <code class=scheme><span class=variable>pattern</span></code> in <code class=scheme><span class=variable>string-or-input-port</span></code>. (Unlike
+<code class=scheme>regexp-match-positions</code>, results for parenthesized
+sub-patterns in <code class=scheme><span class=variable>pattern</span></code> are not returned.) If <code class=scheme><span class=variable>pattern</span></code>
+matches a zero-length string along the way, the <a name="node_idx_1110"></a><code class=scheme>exn:fail</code> exception is raised.</p>
+<p>
+If <code class=scheme><span class=variable>string-or-input-port</span></code> contains no matches (in the range
+<code class=scheme><span class=variable>start-k</span></code> to <code class=scheme><span class=variable>end-k</span></code>), <code class=scheme>null</code> is returned. Otherwise,
+each position pair in the resulting list corresponds to a distinct
+substring in <code class=scheme><span class=variable>string-or-input-port</span></code> that matches
+<code class=scheme><span class=variable>pattern</span></code>. The <code class=scheme><span class=variable>end-k</span></code> argument can be <code class=scheme><span class=selfeval>#f</span></code> to match
+to the end of <code class=scheme><span class=variable>string-or-input-port</span></code>.</p>
+<p>
+
+
+</p>
+<p></p>
+<p>
+
+<a name="node_idx_1112"></a><a name="node_kw_definitionregexp-quote"></a><code class=scheme>(regexp-quote</code><tt>&nbsp;</tt><code class=scheme><span class=variable>str</span></code><tt>&nbsp;</tt>[<code class=scheme><span class=variable>case-sensitive?</span></code>]<code class=scheme>)</code> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<small>P</small><small>R</small><small>O</small><small>C</small><small>E</small><small>D</small><small>U</small><small>R</small><small>E</small>
+</p>
+<p>
+Produces a string suitable for use with <code class=scheme><code class=scheme>regexp</code></code> (see
+section&nbsp;<a href="../mzscheme/mzscheme-Z-H-10.html#node_chap_10">10</a> in <a href="../mzscheme/mzscheme.html"><i>PLT MzScheme: Language Manual</i></a>) to match the literal sequence of characters in
+<code class=scheme><span class=variable>str</span></code>. If <code class=scheme><span class=variable>case-sensitive?</span></code>  is true, the resulting regexp
+matches letters in <code class=scheme><span class=variable>str</span></code> case-insensitively, otherwise (and by
+default) it matches case-sensitively.</p>
+<p>
+
+
+</p>
+<p></p>
+<p>
+
+<a name="node_idx_1114"></a><a name="node_kw_definitionregexp-replace-quote"></a><code class=scheme>(regexp-replace-quote</code><tt>&nbsp;</tt><code class=scheme><span class=variable>str</span></code><code class=scheme>)</code> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<small>P</small><small>R</small><small>O</small><small>C</small><small>E</small><small>D</small><small>U</small><small>R</small><small>E</small>
+</p>
+<p>
+Produces a string suitable for use as the third argument to
+<code class=scheme><code class=scheme>regexp-replace</code></code> (see section&nbsp;<a href="../mzscheme/mzscheme-Z-H-10.html#node_chap_10">10</a> in <a href="../mzscheme/mzscheme.html"><i>PLT MzScheme: Language Manual</i></a>) to insert the literal
+sequence of characters in <code class=scheme><span class=variable>str</span></code> as a replacement. Concretely,
+every backslash and ampersand in <code class=scheme><span class=variable>str</span></code> is protected by a quoting
+backslash.</p>
+<p>
+
+
+</p>
+<p></p>
+<p>
+
+<a name="node_idx_1116"></a><a name="node_kw_definitionregexp-split"></a><code class=scheme>(regexp-split</code><tt>&nbsp;</tt><code class=scheme><span class=variable>pattern string-or-input-port</span></code><tt>&nbsp;</tt>[<code class=scheme><span class=variable>start-k end-k</span></code>]<code class=scheme>)</code> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<small>P</small><small>R</small><small>O</small><small>C</small><small>E</small><small>D</small><small>U</small><small>R</small><small>E</small>
+</p>
+<p>
+The complement of <code class=scheme>regexp-match*</code> (see above): the result is a
+list of sub-strings in <code class=scheme><span class=variable>string-or-input-port</span></code> that are separated by
+matches to <code class=scheme><span class=variable>pattern</span></code>; adjacent matches are separated with
+<code class=scheme><span class=selfeval>&quot;&quot;</span></code>.  If <code class=scheme><span class=variable>pattern</span></code> matches a zero-length string along the
+way, the <a name="node_idx_1118"></a><code class=scheme>exn:fail</code> exception is raised.</p>
+<p>
+If <code class=scheme><span class=variable>string-or-input-port</span></code> contains no matches (in the range
+<code class=scheme><span class=variable>start-k</span></code> to <code class=scheme><span class=variable>end-k</span></code>), the result will be a list containing
+<code class=scheme><span class=variable>string-or-input-port</span></code> (from <code class=scheme><span class=variable>start-k</span></code> to <code class=scheme><span class=variable>end-k</span></code>). If a
+match occurs at the beginning of <code class=scheme><span class=variable>string-or-input-port</span></code> (at
+<code class=scheme><span class=variable>start-k</span></code>), the resulting list will start with an empty string,
+and if a match occurs at the end (at <code class=scheme><span class=variable>end-k</span></code>), the list will end
+with an empty string. The <code class=scheme><span class=variable>end-k</span></code> argument can be <code class=scheme><span class=selfeval>#f</span></code>, in
+which case splitting goes to the end of <code class=scheme><span class=variable>string-or-input-port</span></code>.</p>
+<p>
+
+
+</p>
+<p></p>
+<p>
+
+<a name="node_idx_1120"></a><a name="node_kw_definitionstring-lowercase!"></a><code class=scheme>(string-lowercase!</code><tt>&nbsp;</tt><code class=scheme><span class=variable>str</span></code><code class=scheme>)</code> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<small>P</small><small>R</small><small>O</small><small>C</small><small>E</small><small>D</small><small>U</small><small>R</small><small>E</small>
+</p>
+<p>
+Destructively changes <code class=scheme><span class=variable>str</span></code> to contain only lowercase characters.</p>
+<p>
+
+
+</p>
+<p></p>
+<p>
+
+<a name="node_idx_1122"></a><a name="node_kw_definitionstring-uppercase!"></a><code class=scheme>(string-uppercase!</code><tt>&nbsp;</tt><code class=scheme><span class=variable>str</span></code><code class=scheme>)</code> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<small>P</small><small>R</small><small>O</small><small>C</small><small>E</small><small>D</small><small>U</small><small>R</small><small>E</small>
+</p>
+<p>
+Destructively changes <code class=scheme><span class=variable>str</span></code> to contain only uppercase characters.</p>
+<p>
+</p>
+<p>
+</p>
+<div align=right class=navigation><i>[Go to <span><a href="mzlib.html">first</a>, <a href="mzlib-Z-H-33.html">previous</a></span><span>, <a href="mzlib-Z-H-35.html">next</a></span> page<span>; &nbsp;&nbsp;</span><span><a href="mzlib.html#node_toc_start">contents</a></span><span><span>; &nbsp;&nbsp;</span><a href="mzlib-Z-H-42.html#node_index_start">index</a></span>]</i></div><p></p>
+</body>
+</html>

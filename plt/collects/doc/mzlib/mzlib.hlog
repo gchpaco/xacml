@@ -1,0 +1,15 @@
+This is TeX2page, Version 2004-09-11 (MzScheme 209, unix)
+(mzlib.t2p (plt.t2p (css.t2p))) (mzlib.tex (pretitl.tex)
+(mzlabels.tex) (mzpre.tex (dots.tex)) (sltxconfig.tex) (dateman.tex)
+(pltcopy.tex (precopy.tex) (copy.tex)) (weblink.tex) (manual-typesetting.tex)
+(posttitl.tex) [0] (scmutils.tex) [1] [2] [3] [4] [5] [6]
+[7] [8] [9] [10] [11] [12] [13] [14] [15] [16] [17] [18]
+[19] [20] [21] (rxtable.tex) (match-grammar.tex) [22] [23]
+[24] [25] (plt-match-grammar.tex) (pregexp.tex [26]) [27]
+[28] [29] [30] [31] [32] [33] [34] [35] [36] [37] [38] [39]
+[40] (postdoc.tex [41] (mzlib/mzlib--h.ind))) [42]
+Running: makeindex mzlib/mzlib--h 
+Index not refreshed
+Rerun: tex2page mzlib.tex
+If problem persists, check for missing \label's and \bibitem's
+Output written on mzlib/mzlib.html, ... (43 pages).

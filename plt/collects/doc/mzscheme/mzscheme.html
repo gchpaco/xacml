@@ -1,0 +1,1619 @@
+<!doctype html public "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!--
+
+Generated from mzscheme.tex by tex2page, v 2004-09-11
+(running on MzScheme 209, unix), 
+(c) Dorai Sitaram, 
+http://www.ccs.neu.edu/~dorai/tex2page/tex2page-doc.html
+
+-->
+<head>
+<title>
+PLT MzScheme: Language Manual
+</title>
+<link rel="stylesheet" type="text/css" href="mzscheme-Z-S.css" title=default>
+<meta name=robots content="index,follow">
+</head>
+<body>
+<div align=right class=navigation><i>[Go to <span class=disable>first, previous</span><span><span class=disable>, </span><a href="mzscheme-Z-H-1.html">next</a></span> page<span>; &nbsp;&nbsp;</span><span class=disable>contents</span><span><span class=disable>; &nbsp;&nbsp;</span><a href="mzscheme-Z-H-19.html#node_index_start">index</a></span>]</i></div><p></p>
+<p>
+</p>
+<p>
+</p>
+<p>
+</p>
+<p>
+
+</p>
+<p>
+</p>
+<p>
+
+
+</p>
+<p>
+</p>
+<p>
+</p>
+<p>
+</p>
+<p>
+</p>
+<p>
+</p>
+<p>
+
+
+</p>
+<p>
+</p>
+<p>
+</p>
+<p>
+</p>
+<p>
+</p>
+<p>
+</p>
+<p>
+</p>
+<p>
+</p>
+<p>
+</p>
+<p>
+</p>
+<p>
+</p>
+<p>
+</p>
+<p>
+</p>
+<p>
+</p>
+<p>
+</p>
+<p>
+</p>
+<p>
+</p>
+<p>
+</p>
+<p>
+
+
+
+
+
+
+
+
+
+
+
+
+</p>
+<p>
+</p>
+<p>
+</p>
+<p>
+</p>
+<p>
+</p>
+<p>
+
+</p>
+<p>
+
+
+
+
+</p>
+<p>
+
+</p>
+<p>
+
+
+</p>
+<p>
+
+
+</p>
+<p>
+
+
+</p>
+<p>
+</p>
+<p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</p>
+<p>
+
+
+</p>
+<p>
+</p>
+<p>
+</p>
+<p>
+</p>
+<p>
+
+</p>
+<p>
+</p>
+<p>
+</p>
+<p>
+</p>
+<p>
+
+</p>
+<p>
+
+
+
+</p>
+<p>
+
+</p>
+<p>
+
+
+
+
+
+</p>
+<p>
+
+
+
+
+</p>
+<p>
+
+
+
+
+
+
+
+
+
+
+</p>
+<p>
+</p>
+<p>
+
+
+
+</p>
+<p>
+
+
+</p>
+<p>
+
+
+
+</p>
+<p>
+
+
+</p>
+<p>
+
+
+</p>
+<p>
+
+
+
+</p>
+<p>
+
+</p>
+<p>
+
+
+</p>
+<p>
+</p>
+<p>
+</p>
+<p>
+
+</p>
+<p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+</p>
+<p>
+
+
+
+
+</p>
+<p>
+</p>
+<p>
+
+</p>
+<p>
+
+
+</p>
+<p>
+
+
+
+
+
+</p>
+<p>
+
+
+
+</p>
+<p>
+
+</p>
+<p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</p>
+<p>
+
+</p>
+<p>
+</p>
+<p>
+
+
+</p>
+<p>
+</p>
+<p>
+</p>
+<p>
+</p>
+<p>
+
+
+
+
+
+</p>
+<p>
+</p>
+<p>
+
+
+</p>
+<p>
+
+
+
+
+
+
+
+
+
+
+</p>
+<p>
+</p>
+<p>
+
+
+
+
+
+
+
+</p>
+<p>
+</p>
+<p>
+</p>
+<p>
+
+
+</p>
+<p>
+</p>
+<p>
+
+
+
+
+
+</p>
+<p>
+
+
+
+</p>
+<p>
+</p>
+<p>
+
+</p>
+<p>
+
+
+</p>
+<p>
+
+</p>
+<p>
+</p>
+<p>
+</p>
+<p>
+</p>
+<p>
+
+
+
+
+</p>
+<p>
+
+
+
+
+
+</p>
+<p>
+
+
+
+
+</p>
+<p>
+
+
+
+</p>
+<p>
+</p>
+<p>
+</p>
+<p>
+
+
+</p>
+<p>
+</p>
+<p>
+
+
+
+
+</p>
+<p>
+
+</p>
+<p>
+
+
+</p>
+<p>
+</p>
+<p>
+</p>
+<p>
+</p>
+<p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</p>
+<p>
+
+</p>
+<p>
+
+</p>
+<p>
+
+</p>
+<p>
+
+
+</p>
+<p>
+
+</p>
+<p>
+
+
+
+</p>
+<p>
+</p>
+<p>
+</p>
+<p>
+</p>
+<p>
+
+
+
+
+
+
+
+
+
+</p>
+<p>
+
+
+</p>
+<p>
+
+
+</p>
+<p>
+
+
+</p>
+<p>
+</p>
+<p>
+
+
+</p>
+<p>
+</p>
+<p>
+
+</p>
+<p>
+</p>
+<p>
+
+
+
+</p>
+<p>
+</p>
+<p>
+</p>
+<p>
+
+</p>
+<p>
+
+</p>
+<p>
+</p>
+<p>
+</p>
+<p>
+</p>
+<p>
+
+
+
+
+
+</p>
+<h1><br><br>PLT MzScheme: Language Manual</h1><hr>
+<p></p>
+<div align=left><strong>Matthew Flatt (mflatt@plt-scheme.org)</strong>&nbsp;</div>
+
+<p></p>
+<div align=left><strong>209<br>
+Released December 2004</strong>&nbsp;</div>
+<p>
+<a name="node_toc_start"></a></p>
+<p><b>
+&nbsp; &nbsp; <a name="node_toc_node_chap_1"></a><a href="mzscheme-Z-H-1.html#node_chap_1">1&nbsp;&nbsp;Introduction</a></b><br>
+&nbsp; &nbsp; &nbsp; &nbsp; <a name="node_toc_node_sec_1.1"></a><a href="mzscheme-Z-H-1.html#node_sec_1.1">1.1&nbsp;&nbsp;MrEd, DrScheme, and <tt><strong>mzc</strong></tt></a><br>
+&nbsp; &nbsp; &nbsp; &nbsp; <a name="node_toc_node_sec_1.2"></a><a href="mzscheme-Z-H-1.html#node_sec_1.2">1.2&nbsp;&nbsp;Notation</a><br>
+</p>
+<p><b>
+&nbsp; &nbsp; <a name="node_toc_node_chap_2"></a><a href="mzscheme-Z-H-2.html#node_chap_2">2&nbsp;&nbsp;Basic Syntax Extensions</a></b><br>
+&nbsp; &nbsp; &nbsp; &nbsp; <a name="node_toc_node_sec_2.1"></a><a href="mzscheme-Z-H-2.html#node_sec_2.1">2.1&nbsp;&nbsp;Evaluation Order</a><br>
+&nbsp; &nbsp; &nbsp; &nbsp; <a name="node_toc_node_sec_2.2"></a><a href="mzscheme-Z-H-2.html#node_sec_2.2">2.2&nbsp;&nbsp;Multiple Return Values</a><br>
+&nbsp; &nbsp; &nbsp; &nbsp; <a name="node_toc_node_sec_2.3"></a><a href="mzscheme-Z-H-2.html#node_sec_2.3">2.3&nbsp;&nbsp;Cond and Case</a><br>
+&nbsp; &nbsp; &nbsp; &nbsp; <a name="node_toc_node_sec_2.4"></a><a href="mzscheme-Z-H-2.html#node_sec_2.4">2.4&nbsp;&nbsp;When and Unless</a><br>
+&nbsp; &nbsp; &nbsp; &nbsp; <a name="node_toc_node_sec_2.5"></a><a href="mzscheme-Z-H-2.html#node_sec_2.5">2.5&nbsp;&nbsp;And and Or</a><br>
+&nbsp; &nbsp; &nbsp; &nbsp; <a name="node_toc_node_sec_2.6"></a><a href="mzscheme-Z-H-2.html#node_sec_2.6">2.6&nbsp;&nbsp;Sequences</a><br>
+&nbsp; &nbsp; &nbsp; &nbsp; <a name="node_toc_node_sec_2.7"></a><a href="mzscheme-Z-H-2.html#node_sec_2.7">2.7&nbsp;&nbsp;Quote and Quasiquote</a><br>
+&nbsp; &nbsp; &nbsp; &nbsp; <a name="node_toc_node_sec_2.8"></a><a href="mzscheme-Z-H-2.html#node_sec_2.8">2.8&nbsp;&nbsp;Binding Forms</a><br>
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <a name="node_toc_node_sec_2.8.1"></a><a href="mzscheme-Z-H-2.html#node_sec_2.8.1">2.8.1&nbsp;&nbsp;Definitions</a><br>
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <a name="node_toc_node_sec_2.8.2"></a><a href="mzscheme-Z-H-2.html#node_sec_2.8.2">2.8.2&nbsp;&nbsp;Local Bindings</a><br>
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <a name="node_toc_node_sec_2.8.3"></a><a href="mzscheme-Z-H-2.html#node_sec_2.8.3">2.8.3&nbsp;&nbsp;Assignments</a><br>
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <a name="node_toc_node_sec_2.8.4"></a><a href="mzscheme-Z-H-2.html#node_sec_2.8.4">2.8.4&nbsp;&nbsp;Fluid-Let</a><br>
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <a name="node_toc_node_sec_2.8.5"></a><a href="mzscheme-Z-H-2.html#node_sec_2.8.5">2.8.5&nbsp;&nbsp;Syntax Expansion and Internal Definitions</a><br>
+&nbsp; &nbsp; &nbsp; &nbsp; <a name="node_toc_node_sec_2.9"></a><a href="mzscheme-Z-H-2.html#node_sec_2.9">2.9&nbsp;&nbsp;Case-Lambda</a><br>
+&nbsp; &nbsp; &nbsp; &nbsp; <a name="node_toc_node_sec_2.10"></a><a href="mzscheme-Z-H-2.html#node_sec_2.10">2.10&nbsp;&nbsp;Procedure Application</a><br>
+</p>
+<p><b>
+&nbsp; &nbsp; <a name="node_toc_node_chap_3"></a><a href="mzscheme-Z-H-3.html#node_chap_3">3&nbsp;&nbsp;Basic Data Extensions</a></b><br>
+&nbsp; &nbsp; &nbsp; &nbsp; <a name="node_toc_node_sec_3.1"></a><a href="mzscheme-Z-H-3.html#node_sec_3.1">3.1&nbsp;&nbsp;Void and Undefined</a><br>
+&nbsp; &nbsp; &nbsp; &nbsp; <a name="node_toc_node_sec_3.2"></a><a href="mzscheme-Z-H-3.html#node_sec_3.2">3.2&nbsp;&nbsp;Booleans</a><br>
+&nbsp; &nbsp; &nbsp; &nbsp; <a name="node_toc_node_sec_3.3"></a><a href="mzscheme-Z-H-3.html#node_sec_3.3">3.3&nbsp;&nbsp;Numbers</a><br>
+&nbsp; &nbsp; &nbsp; &nbsp; <a name="node_toc_node_sec_3.4"></a><a href="mzscheme-Z-H-3.html#node_sec_3.4">3.4&nbsp;&nbsp;Characters</a><br>
+&nbsp; &nbsp; &nbsp; &nbsp; <a name="node_toc_node_sec_3.5"></a><a href="mzscheme-Z-H-3.html#node_sec_3.5">3.5&nbsp;&nbsp;Strings</a><br>
+&nbsp; &nbsp; &nbsp; &nbsp; <a name="node_toc_node_sec_3.6"></a><a href="mzscheme-Z-H-3.html#node_sec_3.6">3.6&nbsp;&nbsp;Symbols</a><br>
+&nbsp; &nbsp; &nbsp; &nbsp; <a name="node_toc_node_sec_3.7"></a><a href="mzscheme-Z-H-3.html#node_sec_3.7">3.7&nbsp;&nbsp;Vectors</a><br>
+&nbsp; &nbsp; &nbsp; &nbsp; <a name="node_toc_node_sec_3.8"></a><a href="mzscheme-Z-H-3.html#node_sec_3.8">3.8&nbsp;&nbsp;Lists</a><br>
+&nbsp; &nbsp; &nbsp; &nbsp; <a name="node_toc_node_sec_3.9"></a><a href="mzscheme-Z-H-3.html#node_sec_3.9">3.9&nbsp;&nbsp;Boxes</a><br>
+&nbsp; &nbsp; &nbsp; &nbsp; <a name="node_toc_node_sec_3.10"></a><a href="mzscheme-Z-H-3.html#node_sec_3.10">3.10&nbsp;&nbsp;Procedures</a><br>
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <a name="node_toc_node_sec_3.10.1"></a><a href="mzscheme-Z-H-3.html#node_sec_3.10.1">3.10.1&nbsp;&nbsp;Arity</a><br>
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <a name="node_toc_node_sec_3.10.2"></a><a href="mzscheme-Z-H-3.html#node_sec_3.10.2">3.10.2&nbsp;&nbsp;Primitives</a><br>
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <a name="node_toc_node_sec_3.10.3"></a><a href="mzscheme-Z-H-3.html#node_sec_3.10.3">3.10.3&nbsp;&nbsp;Procedure Names</a><br>
+&nbsp; &nbsp; &nbsp; &nbsp; <a name="node_toc_node_sec_3.11"></a><a href="mzscheme-Z-H-3.html#node_sec_3.11">3.11&nbsp;&nbsp;Promises</a><br>
+&nbsp; &nbsp; &nbsp; &nbsp; <a name="node_toc_node_sec_3.12"></a><a href="mzscheme-Z-H-3.html#node_sec_3.12">3.12&nbsp;&nbsp;Hash Tables</a><br>
+</p>
+<p><b>
+&nbsp; &nbsp; <a name="node_toc_node_chap_4"></a><a href="mzscheme-Z-H-4.html#node_chap_4">4&nbsp;&nbsp;Structures</a></b><br>
+&nbsp; &nbsp; &nbsp; &nbsp; <a name="node_toc_node_sec_4.1"></a><a href="mzscheme-Z-H-4.html#node_sec_4.1">4.1&nbsp;&nbsp;Defining Structure Types</a><br>
+&nbsp; &nbsp; &nbsp; &nbsp; <a name="node_toc_node_sec_4.2"></a><a href="mzscheme-Z-H-4.html#node_sec_4.2">4.2&nbsp;&nbsp;Creating Subtypes</a><br>
+&nbsp; &nbsp; &nbsp; &nbsp; <a name="node_toc_node_sec_4.3"></a><a href="mzscheme-Z-H-4.html#node_sec_4.3">4.3&nbsp;&nbsp;Structure Types with Automatic Fields, Immutable Fields, and Properties</a><br>
+&nbsp; &nbsp; &nbsp; &nbsp; <a name="node_toc_node_sec_4.4"></a><a href="mzscheme-Z-H-4.html#node_sec_4.4">4.4&nbsp;&nbsp;Structure Type Properties</a><br>
+&nbsp; &nbsp; &nbsp; &nbsp; <a name="node_toc_node_sec_4.5"></a><a href="mzscheme-Z-H-4.html#node_sec_4.5">4.5&nbsp;&nbsp;Structure Inspectors</a><br>
+&nbsp; &nbsp; &nbsp; &nbsp; <a name="node_toc_node_sec_4.6"></a><a href="mzscheme-Z-H-4.html#node_sec_4.6">4.6&nbsp;&nbsp;Structures as Procedures</a><br>
+&nbsp; &nbsp; &nbsp; &nbsp; <a name="node_toc_node_sec_4.7"></a><a href="mzscheme-Z-H-4.html#node_sec_4.7">4.7&nbsp;&nbsp;Structures as Waitable Objects</a><br>
+&nbsp; &nbsp; &nbsp; &nbsp; <a name="node_toc_node_sec_4.8"></a><a href="mzscheme-Z-H-4.html#node_sec_4.8">4.8&nbsp;&nbsp;Structure Utilities</a><br>
+</p>
+<p><b>
+&nbsp; &nbsp; <a name="node_toc_node_chap_5"></a><a href="mzscheme-Z-H-5.html#node_chap_5">5&nbsp;&nbsp;Modules</a></b><br>
+&nbsp; &nbsp; &nbsp; &nbsp; <a name="node_toc_node_sec_5.1"></a><a href="mzscheme-Z-H-5.html#node_sec_5.1">5.1&nbsp;&nbsp;Module Expansion and Execution</a><br>
+&nbsp; &nbsp; &nbsp; &nbsp; <a name="node_toc_node_sec_5.2"></a><a href="mzscheme-Z-H-5.html#node_sec_5.2">5.2&nbsp;&nbsp;Module Bodies</a><br>
+&nbsp; &nbsp; &nbsp; &nbsp; <a name="node_toc_node_sec_5.3"></a><a href="mzscheme-Z-H-5.html#node_sec_5.3">5.3&nbsp;&nbsp;Modules and Macros</a><br>
+&nbsp; &nbsp; &nbsp; &nbsp; <a name="node_toc_node_sec_5.4"></a><a href="mzscheme-Z-H-5.html#node_sec_5.4">5.4&nbsp;&nbsp;Module Paths</a><br>
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <a name="node_toc_node_sec_5.4.1"></a><a href="mzscheme-Z-H-5.html#node_sec_5.4.1">5.4.1&nbsp;&nbsp;Module Name Resolver</a><br>
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <a name="node_toc_node_sec_5.4.2"></a><a href="mzscheme-Z-H-5.html#node_sec_5.4.2">5.4.2&nbsp;&nbsp;Module Names and Compilation</a><br>
+&nbsp; &nbsp; &nbsp; &nbsp; <a name="node_toc_node_sec_5.5"></a><a href="mzscheme-Z-H-5.html#node_sec_5.5">5.5&nbsp;&nbsp;Dynamic Module Access</a><br>
+&nbsp; &nbsp; &nbsp; &nbsp; <a name="node_toc_node_sec_5.6"></a><a href="mzscheme-Z-H-5.html#node_sec_5.6">5.6&nbsp;&nbsp;Re-declaring Modules</a><br>
+&nbsp; &nbsp; &nbsp; &nbsp; <a name="node_toc_node_sec_5.7"></a><a href="mzscheme-Z-H-5.html#node_sec_5.7">5.7&nbsp;&nbsp;Built-in Modules</a><br>
+&nbsp; &nbsp; &nbsp; &nbsp; <a name="node_toc_node_sec_5.8"></a><a href="mzscheme-Z-H-5.html#node_sec_5.8">5.8&nbsp;&nbsp;Modules and Load Handlers</a><br>
+</p>
+<p><b>
+&nbsp; &nbsp; <a name="node_toc_node_chap_6"></a><a href="mzscheme-Z-H-6.html#node_chap_6">6&nbsp;&nbsp;Exceptions and Control Flow</a></b><br>
+&nbsp; &nbsp; &nbsp; &nbsp; <a name="node_toc_node_sec_6.1"></a><a href="mzscheme-Z-H-6.html#node_sec_6.1">6.1&nbsp;&nbsp;Exceptions</a><br>
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <a name="node_toc_node_sec_6.1.1"></a><a href="mzscheme-Z-H-6.html#node_sec_6.1.1">6.1.1&nbsp;&nbsp;Primitive Exceptions</a><br>
+&nbsp; &nbsp; &nbsp; &nbsp; <a name="node_toc_node_sec_6.2"></a><a href="mzscheme-Z-H-6.html#node_sec_6.2">6.2&nbsp;&nbsp;Errors</a><br>
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <a name="node_toc_node_sec_6.2.1"></a><a href="mzscheme-Z-H-6.html#node_sec_6.2.1">6.2.1&nbsp;&nbsp;Application Type Errors</a><br>
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <a name="node_toc_node_sec_6.2.2"></a><a href="mzscheme-Z-H-6.html#node_sec_6.2.2">6.2.2&nbsp;&nbsp;Application Mismatch Errors</a><br>
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <a name="node_toc_node_sec_6.2.3"></a><a href="mzscheme-Z-H-6.html#node_sec_6.2.3">6.2.3&nbsp;&nbsp;Syntax Errors</a><br>
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <a name="node_toc_node_sec_6.2.4"></a><a href="mzscheme-Z-H-6.html#node_sec_6.2.4">6.2.4&nbsp;&nbsp;Inferred Value Names</a><br>
+&nbsp; &nbsp; &nbsp; &nbsp; <a name="node_toc_node_sec_6.3"></a><a href="mzscheme-Z-H-6.html#node_sec_6.3">6.3&nbsp;&nbsp;Continuations</a><br>
+&nbsp; &nbsp; &nbsp; &nbsp; <a name="node_toc_node_sec_6.4"></a><a href="mzscheme-Z-H-6.html#node_sec_6.4">6.4&nbsp;&nbsp;Dynamic Wind</a><br>
+&nbsp; &nbsp; &nbsp; &nbsp; <a name="node_toc_node_sec_6.5"></a><a href="mzscheme-Z-H-6.html#node_sec_6.5">6.5&nbsp;&nbsp;Continuation Marks</a><br>
+&nbsp; &nbsp; &nbsp; &nbsp; <a name="node_toc_node_sec_6.6"></a><a href="mzscheme-Z-H-6.html#node_sec_6.6">6.6&nbsp;&nbsp;Breaks</a><br>
+&nbsp; &nbsp; &nbsp; &nbsp; <a name="node_toc_node_sec_6.7"></a><a href="mzscheme-Z-H-6.html#node_sec_6.7">6.7&nbsp;&nbsp;Error Escape Handler</a><br>
+</p>
+<p><b>
+&nbsp; &nbsp; <a name="node_toc_node_chap_7"></a><a href="mzscheme-Z-H-7.html#node_chap_7">7&nbsp;&nbsp;Threads</a></b><br>
+&nbsp; &nbsp; &nbsp; &nbsp; <a name="node_toc_node_sec_7.1"></a><a href="mzscheme-Z-H-7.html#node_sec_7.1">7.1&nbsp;&nbsp;Suspending, Resuming, and Killing Threads</a><br>
+&nbsp; &nbsp; &nbsp; &nbsp; <a name="node_toc_node_sec_7.2"></a><a href="mzscheme-Z-H-7.html#node_sec_7.2">7.2&nbsp;&nbsp;Synchronizing Thread State</a><br>
+&nbsp; &nbsp; &nbsp; &nbsp; <a name="node_toc_node_sec_7.3"></a><a href="mzscheme-Z-H-7.html#node_sec_7.3">7.3&nbsp;&nbsp;Additional Thread Utilities</a><br>
+&nbsp; &nbsp; &nbsp; &nbsp; <a name="node_toc_node_sec_7.4"></a><a href="mzscheme-Z-H-7.html#node_sec_7.4">7.4&nbsp;&nbsp;Semaphores</a><br>
+&nbsp; &nbsp; &nbsp; &nbsp; <a name="node_toc_node_sec_7.5"></a><a href="mzscheme-Z-H-7.html#node_sec_7.5">7.5&nbsp;&nbsp;Channels</a><br>
+&nbsp; &nbsp; &nbsp; &nbsp; <a name="node_toc_node_sec_7.6"></a><a href="mzscheme-Z-H-7.html#node_sec_7.6">7.6&nbsp;&nbsp;Synchronizing Multiple Objects with Timeout</a><br>
+&nbsp; &nbsp; &nbsp; &nbsp; <a name="node_toc_node_sec_7.7"></a><a href="mzscheme-Z-H-7.html#node_sec_7.7">7.7&nbsp;&nbsp;Parameters</a><br>
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <a name="node_toc_node_sec_7.7.1"></a><a href="mzscheme-Z-H-7.html#node_sec_7.7.1">7.7.1&nbsp;&nbsp;Built-in Parameters</a><br>
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <a name="node_toc_node_sec_7.7.1.1"></a><a href="mzscheme-Z-H-7.html#node_sec_7.7.1.1">7.7.1.1&nbsp;&nbsp;Current Directory</a><br>
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <a name="node_toc_node_sec_7.7.1.2"></a><a href="mzscheme-Z-H-7.html#node_sec_7.7.1.2">7.7.1.2&nbsp;&nbsp;Ports</a><br>
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <a name="node_toc_node_sec_7.7.1.3"></a><a href="mzscheme-Z-H-7.html#node_sec_7.7.1.3">7.7.1.3&nbsp;&nbsp;Parsing</a><br>
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <a name="node_toc_node_sec_7.7.1.4"></a><a href="mzscheme-Z-H-7.html#node_sec_7.7.1.4">7.7.1.4&nbsp;&nbsp;Printing</a><br>
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <a name="node_toc_node_sec_7.7.1.5"></a><a href="mzscheme-Z-H-7.html#node_sec_7.7.1.5">7.7.1.5&nbsp;&nbsp;Read-Eval-Print</a><br>
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <a name="node_toc_node_sec_7.7.1.6"></a><a href="mzscheme-Z-H-7.html#node_sec_7.7.1.6">7.7.1.6&nbsp;&nbsp;Loading</a><br>
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <a name="node_toc_node_sec_7.7.1.7"></a><a href="mzscheme-Z-H-7.html#node_sec_7.7.1.7">7.7.1.7&nbsp;&nbsp;Exceptions</a><br>
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <a name="node_toc_node_sec_7.7.1.8"></a><a href="mzscheme-Z-H-7.html#node_sec_7.7.1.8">7.7.1.8&nbsp;&nbsp;Security</a><br>
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <a name="node_toc_node_sec_7.7.1.9"></a><a href="mzscheme-Z-H-7.html#node_sec_7.7.1.9">7.7.1.9&nbsp;&nbsp;Exiting</a><br>
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <a name="node_toc_node_sec_7.7.1.10"></a><a href="mzscheme-Z-H-7.html#node_sec_7.7.1.10">7.7.1.10&nbsp;&nbsp;Random Numbers</a><br>
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <a name="node_toc_node_sec_7.7.1.11"></a><a href="mzscheme-Z-H-7.html#node_sec_7.7.1.11">7.7.1.11&nbsp;&nbsp;Locale</a><br>
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <a name="node_toc_node_sec_7.7.1.12"></a><a href="mzscheme-Z-H-7.html#node_sec_7.7.1.12">7.7.1.12&nbsp;&nbsp;Modules</a><br>
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <a name="node_toc_node_sec_7.7.2"></a><a href="mzscheme-Z-H-7.html#node_sec_7.7.2">7.7.2&nbsp;&nbsp;Parameter Utilities</a><br>
+</p>
+<p><b>
+&nbsp; &nbsp; <a name="node_toc_node_chap_8"></a><a href="mzscheme-Z-H-8.html#node_chap_8">8&nbsp;&nbsp;Namespaces</a></b><br>
+&nbsp; &nbsp; &nbsp; &nbsp; <a name="node_toc_node_sec_8.1"></a><a href="mzscheme-Z-H-8.html#node_sec_8.1">8.1&nbsp;&nbsp;Identifier Resolution in Namespaces</a><br>
+&nbsp; &nbsp; &nbsp; &nbsp; <a name="node_toc_node_sec_8.2"></a><a href="mzscheme-Z-H-8.html#node_sec_8.2">8.2&nbsp;&nbsp;Initial Namespace</a><br>
+&nbsp; &nbsp; &nbsp; &nbsp; <a name="node_toc_node_sec_8.3"></a><a href="mzscheme-Z-H-8.html#node_sec_8.3">8.3&nbsp;&nbsp;Namespace Utilities</a><br>
+</p>
+<p><b>
+&nbsp; &nbsp; <a name="node_toc_node_chap_9"></a><a href="mzscheme-Z-H-9.html#node_chap_9">9&nbsp;&nbsp;Security</a></b><br>
+&nbsp; &nbsp; &nbsp; &nbsp; <a name="node_toc_node_sec_9.1"></a><a href="mzscheme-Z-H-9.html#node_sec_9.1">9.1&nbsp;&nbsp;Security Guards</a><br>
+&nbsp; &nbsp; &nbsp; &nbsp; <a name="node_toc_node_sec_9.2"></a><a href="mzscheme-Z-H-9.html#node_sec_9.2">9.2&nbsp;&nbsp;Custodians</a><br>
+&nbsp; &nbsp; &nbsp; &nbsp; <a name="node_toc_node_sec_9.3"></a><a href="mzscheme-Z-H-9.html#node_sec_9.3">9.3&nbsp;&nbsp;Thread Groups</a><br>
+</p>
+<p><b>
+&nbsp; &nbsp; <a name="node_toc_node_chap_10"></a><a href="mzscheme-Z-H-10.html#node_chap_10">10&nbsp;&nbsp;Regular Expressions</a></b><br>
+</p>
+<p><b>
+&nbsp; &nbsp; <a name="node_toc_node_chap_11"></a><a href="mzscheme-Z-H-11.html#node_chap_11">11&nbsp;&nbsp;Input and Output</a></b><br>
+&nbsp; &nbsp; &nbsp; &nbsp; <a name="node_toc_node_sec_11.1"></a><a href="mzscheme-Z-H-11.html#node_sec_11.1">11.1&nbsp;&nbsp;Ports</a><br>
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <a name="node_toc_node_sec_11.1.1"></a><a href="mzscheme-Z-H-11.html#node_sec_11.1.1">11.1.1&nbsp;&nbsp;Current Ports</a><br>
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <a name="node_toc_node_sec_11.1.2"></a><a href="mzscheme-Z-H-11.html#node_sec_11.1.2">11.1.2&nbsp;&nbsp;Opening File Ports</a><br>
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <a name="node_toc_node_sec_11.1.3"></a><a href="mzscheme-Z-H-11.html#node_sec_11.1.3">11.1.3&nbsp;&nbsp;Pipes</a><br>
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <a name="node_toc_node_sec_11.1.4"></a><a href="mzscheme-Z-H-11.html#node_sec_11.1.4">11.1.4&nbsp;&nbsp;String Ports</a><br>
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <a name="node_toc_node_sec_11.1.5"></a><a href="mzscheme-Z-H-11.html#node_sec_11.1.5">11.1.5&nbsp;&nbsp;File-Stream Ports</a><br>
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <a name="node_toc_node_sec_11.1.6"></a><a href="mzscheme-Z-H-11.html#node_sec_11.1.6">11.1.6&nbsp;&nbsp;Custom Ports</a><br>
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <a name="node_toc_node_sec_11.1.6.1"></a><a href="mzscheme-Z-H-11.html#node_sec_11.1.6.1">11.1.6.1&nbsp;&nbsp;Custom Input</a><br>
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <a name="node_toc_node_sec_11.1.6.2"></a><a href="mzscheme-Z-H-11.html#node_sec_11.1.6.2">11.1.6.2&nbsp;&nbsp;Custom Output</a><br>
+&nbsp; &nbsp; &nbsp; &nbsp; <a name="node_toc_node_sec_11.2"></a><a href="mzscheme-Z-H-11.html#node_sec_11.2">11.2&nbsp;&nbsp;Reading and Writing</a><br>
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <a name="node_toc_node_sec_11.2.1"></a><a href="mzscheme-Z-H-11.html#node_sec_11.2.1">11.2.1&nbsp;&nbsp;Reading</a><br>
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <a name="node_toc_node_sec_11.2.2"></a><a href="mzscheme-Z-H-11.html#node_sec_11.2.2">11.2.2&nbsp;&nbsp;Writing</a><br>
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <a name="node_toc_node_sec_11.2.3"></a><a href="mzscheme-Z-H-11.html#node_sec_11.2.3">11.2.3&nbsp;&nbsp;Counting Positions, Lines, and Columns</a><br>
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <a name="node_toc_node_sec_11.2.4"></a><a href="mzscheme-Z-H-11.html#node_sec_11.2.4">11.2.4&nbsp;&nbsp;Customizing Read</a><br>
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <a name="node_toc_node_sec_11.2.5"></a><a href="mzscheme-Z-H-11.html#node_sec_11.2.5">11.2.5&nbsp;&nbsp;Customizing Display, Write, and Print</a><br>
+&nbsp; &nbsp; &nbsp; &nbsp; <a name="node_toc_node_sec_11.3"></a><a href="mzscheme-Z-H-11.html#node_sec_11.3">11.3&nbsp;&nbsp;Filesystem Utilities</a><br>
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <a name="node_toc_node_sec_11.3.1"></a><a href="mzscheme-Z-H-11.html#node_sec_11.3.1">11.3.1&nbsp;&nbsp;Pathnames</a><br>
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <a name="node_toc_node_sec_11.3.2"></a><a href="mzscheme-Z-H-11.html#node_sec_11.3.2">11.3.2&nbsp;&nbsp;Files</a><br>
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <a name="node_toc_node_sec_11.3.3"></a><a href="mzscheme-Z-H-11.html#node_sec_11.3.3">11.3.3&nbsp;&nbsp;Directories</a><br>
+&nbsp; &nbsp; &nbsp; &nbsp; <a name="node_toc_node_sec_11.4"></a><a href="mzscheme-Z-H-11.html#node_sec_11.4">11.4&nbsp;&nbsp;Networking</a><br>
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <a name="node_toc_node_sec_11.4.1"></a><a href="mzscheme-Z-H-11.html#node_sec_11.4.1">11.4.1&nbsp;&nbsp;TCP</a><br>
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <a name="node_toc_node_sec_11.4.2"></a><a href="mzscheme-Z-H-11.html#node_sec_11.4.2">11.4.2&nbsp;&nbsp;UDP</a><br>
+</p>
+<p><b>
+&nbsp; &nbsp; <a name="node_toc_node_chap_12"></a><a href="mzscheme-Z-H-12.html#node_chap_12">12&nbsp;&nbsp;Syntax and Macros</a></b><br>
+&nbsp; &nbsp; &nbsp; &nbsp; <a name="node_toc_node_sec_12.1"></a><a href="mzscheme-Z-H-12.html#node_sec_12.1">12.1&nbsp;&nbsp;<code class=scheme><span class=keyword>syntax-rules</span></code> Extensions</a><br>
+&nbsp; &nbsp; &nbsp; &nbsp; <a name="node_toc_node_sec_12.2"></a><a href="mzscheme-Z-H-12.html#node_sec_12.2">12.2&nbsp;&nbsp;Syntax Objects</a><br>
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <a name="node_toc_node_sec_12.2.1"></a><a href="mzscheme-Z-H-12.html#node_sec_12.2.1">12.2.1&nbsp;&nbsp;Syntax Patterns</a><br>
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <a name="node_toc_node_sec_12.2.1.1"></a><a href="mzscheme-Z-H-12.html#node_sec_12.2.1.1">12.2.1.1&nbsp;&nbsp;Binding Pattern Variables</a><br>
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <a name="node_toc_node_sec_12.2.1.2"></a><a href="mzscheme-Z-H-12.html#node_sec_12.2.1.2">12.2.1.2&nbsp;&nbsp;Quasiquoting Templates</a><br>
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <a name="node_toc_node_sec_12.2.1.3"></a><a href="mzscheme-Z-H-12.html#node_sec_12.2.1.3">12.2.1.3&nbsp;&nbsp;Assigning Source Location</a><br>
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <a name="node_toc_node_sec_12.2.2"></a><a href="mzscheme-Z-H-12.html#node_sec_12.2.2">12.2.2&nbsp;&nbsp;Syntax Object Content</a><br>
+&nbsp; &nbsp; &nbsp; &nbsp; <a name="node_toc_node_sec_12.3"></a><a href="mzscheme-Z-H-12.html#node_sec_12.3">12.3&nbsp;&nbsp;Syntax and Lexical Scope</a><br>
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <a name="node_toc_node_sec_12.3.1"></a><a href="mzscheme-Z-H-12.html#node_sec_12.3.1">12.3.1&nbsp;&nbsp;Syntax Object Comparisons</a><br>
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <a name="node_toc_node_sec_12.3.2"></a><a href="mzscheme-Z-H-12.html#node_sec_12.3.2">12.3.2&nbsp;&nbsp;Syntax Object Bindings</a><br>
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <a name="node_toc_node_sec_12.3.3"></a><a href="mzscheme-Z-H-12.html#node_sec_12.3.3">12.3.3&nbsp;&nbsp;Transformer Environments</a><br>
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <a name="node_toc_node_sec_12.3.4"></a><a href="mzscheme-Z-H-12.html#node_sec_12.3.4">12.3.4&nbsp;&nbsp;Module Environments</a><br>
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <a name="node_toc_node_sec_12.3.5"></a><a href="mzscheme-Z-H-12.html#node_sec_12.3.5">12.3.5&nbsp;&nbsp;Macro-Generated Top-Level and Module Definitions</a><br>
+&nbsp; &nbsp; &nbsp; &nbsp; <a name="node_toc_node_sec_12.4"></a><a href="mzscheme-Z-H-12.html#node_sec_12.4">12.4&nbsp;&nbsp;Binding Multiple and Fluid Syntax Identifiers</a><br>
+&nbsp; &nbsp; &nbsp; &nbsp; <a name="node_toc_node_sec_12.5"></a><a href="mzscheme-Z-H-12.html#node_sec_12.5">12.5&nbsp;&nbsp;Special Syntax Identifiers</a><br>
+&nbsp; &nbsp; &nbsp; &nbsp; <a name="node_toc_node_sec_12.6"></a><a href="mzscheme-Z-H-12.html#node_sec_12.6">12.6&nbsp;&nbsp;Macro Expansion</a><br>
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <a name="node_toc_node_sec_12.6.1"></a><a href="mzscheme-Z-H-12.html#node_sec_12.6.1">12.6.1&nbsp;&nbsp;Expanding Expressions to Primitive Syntax</a><br>
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <a name="node_toc_node_sec_12.6.2"></a><a href="mzscheme-Z-H-12.html#node_sec_12.6.2">12.6.2&nbsp;&nbsp;Syntax Object Properties</a><br>
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <a name="node_toc_node_sec_12.6.3"></a><a href="mzscheme-Z-H-12.html#node_sec_12.6.3">12.6.3&nbsp;&nbsp;Information on Structure Types</a><br>
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <a name="node_toc_node_sec_12.6.4"></a><a href="mzscheme-Z-H-12.html#node_sec_12.6.4">12.6.4&nbsp;&nbsp;Information on Expanded and Compiled Modules</a><br>
+</p>
+<p><b>
+&nbsp; &nbsp; <a name="node_toc_node_chap_13"></a><a href="mzscheme-Z-H-13.html#node_chap_13">13&nbsp;&nbsp;Memory Management</a></b><br>
+&nbsp; &nbsp; &nbsp; &nbsp; <a name="node_toc_node_sec_13.1"></a><a href="mzscheme-Z-H-13.html#node_sec_13.1">13.1&nbsp;&nbsp;Weak Boxes</a><br>
+&nbsp; &nbsp; &nbsp; &nbsp; <a name="node_toc_node_sec_13.2"></a><a href="mzscheme-Z-H-13.html#node_sec_13.2">13.2&nbsp;&nbsp;Will Executors</a><br>
+&nbsp; &nbsp; &nbsp; &nbsp; <a name="node_toc_node_sec_13.3"></a><a href="mzscheme-Z-H-13.html#node_sec_13.3">13.3&nbsp;&nbsp;Garbage Collection</a><br>
+</p>
+<p><b>
+&nbsp; &nbsp; <a name="node_toc_node_chap_14"></a><a href="mzscheme-Z-H-14.html#node_chap_14">14&nbsp;&nbsp;Support Facilities</a></b><br>
+&nbsp; &nbsp; &nbsp; &nbsp; <a name="node_toc_node_sec_14.1"></a><a href="mzscheme-Z-H-14.html#node_sec_14.1">14.1&nbsp;&nbsp;Eval and Load</a><br>
+&nbsp; &nbsp; &nbsp; &nbsp; <a name="node_toc_node_sec_14.2"></a><a href="mzscheme-Z-H-14.html#node_sec_14.2">14.2&nbsp;&nbsp;Exiting</a><br>
+&nbsp; &nbsp; &nbsp; &nbsp; <a name="node_toc_node_sec_14.3"></a><a href="mzscheme-Z-H-14.html#node_sec_14.3">14.3&nbsp;&nbsp;Input Parsing</a><br>
+&nbsp; &nbsp; &nbsp; &nbsp; <a name="node_toc_node_sec_14.4"></a><a href="mzscheme-Z-H-14.html#node_sec_14.4">14.4&nbsp;&nbsp;Output Printing</a><br>
+&nbsp; &nbsp; &nbsp; &nbsp; <a name="node_toc_node_sec_14.5"></a><a href="mzscheme-Z-H-14.html#node_sec_14.5">14.5&nbsp;&nbsp;Data Sharing in Input and Output</a><br>
+&nbsp; &nbsp; &nbsp; &nbsp; <a name="node_toc_node_sec_14.6"></a><a href="mzscheme-Z-H-14.html#node_sec_14.6">14.6&nbsp;&nbsp;Compilation</a><br>
+&nbsp; &nbsp; &nbsp; &nbsp; <a name="node_toc_node_sec_14.7"></a><a href="mzscheme-Z-H-14.html#node_sec_14.7">14.7&nbsp;&nbsp;Dynamic Extensions</a><br>
+&nbsp; &nbsp; &nbsp; &nbsp; <a name="node_toc_node_sec_14.8"></a><a href="mzscheme-Z-H-14.html#node_sec_14.8">14.8&nbsp;&nbsp;Saving and Restoring Program Images</a><br>
+</p>
+<p><b>
+&nbsp; &nbsp; <a name="node_toc_node_chap_15"></a><a href="mzscheme-Z-H-15.html#node_chap_15">15&nbsp;&nbsp;System Utilities</a></b><br>
+&nbsp; &nbsp; &nbsp; &nbsp; <a name="node_toc_node_sec_15.1"></a><a href="mzscheme-Z-H-15.html#node_sec_15.1">15.1&nbsp;&nbsp;Time</a><br>
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <a name="node_toc_node_sec_15.1.1"></a><a href="mzscheme-Z-H-15.html#node_sec_15.1.1">15.1.1&nbsp;&nbsp;Real Time and Date</a><br>
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <a name="node_toc_node_sec_15.1.2"></a><a href="mzscheme-Z-H-15.html#node_sec_15.1.2">15.1.2&nbsp;&nbsp;Machine Time</a><br>
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <a name="node_toc_node_sec_15.1.3"></a><a href="mzscheme-Z-H-15.html#node_sec_15.1.3">15.1.3&nbsp;&nbsp;Timing Execution</a><br>
+&nbsp; &nbsp; &nbsp; &nbsp; <a name="node_toc_node_sec_15.2"></a><a href="mzscheme-Z-H-15.html#node_sec_15.2">15.2&nbsp;&nbsp;Operating System Processes</a><br>
+&nbsp; &nbsp; &nbsp; &nbsp; <a name="node_toc_node_sec_15.3"></a><a href="mzscheme-Z-H-15.html#node_sec_15.3">15.3&nbsp;&nbsp;Windows Actions</a><br>
+&nbsp; &nbsp; &nbsp; &nbsp; <a name="node_toc_node_sec_15.4"></a><a href="mzscheme-Z-H-15.html#node_sec_15.4">15.4&nbsp;&nbsp;Operating System Environment Variables</a><br>
+&nbsp; &nbsp; &nbsp; &nbsp; <a name="node_toc_node_sec_15.5"></a><a href="mzscheme-Z-H-15.html#node_sec_15.5">15.5&nbsp;&nbsp;Runtime Information</a><br>
+</p>
+<p><b>
+&nbsp; &nbsp; <a name="node_toc_node_chap_16"></a><a href="mzscheme-Z-H-16.html#node_chap_16">16&nbsp;&nbsp;Library Collections and MzLib</a></b><br>
+</p>
+<p><b>
+&nbsp; &nbsp; <a name="node_toc_node_chap_17"></a><a href="mzscheme-Z-H-17.html#node_chap_17">17&nbsp;&nbsp;Running MzScheme</a></b><br>
+&nbsp; &nbsp; &nbsp; &nbsp; <a name="node_toc_node_sec_17.1"></a><a href="mzscheme-Z-H-17.html#node_sec_17.1">17.1&nbsp;&nbsp;Flag Conventions</a><br>
+&nbsp; &nbsp; &nbsp; &nbsp; <a name="node_toc_node_sec_17.2"></a><a href="mzscheme-Z-H-17.html#node_sec_17.2">17.2&nbsp;&nbsp;Executable Name</a><br>
+&nbsp; &nbsp; &nbsp; &nbsp; <a name="node_toc_node_sec_17.3"></a><a href="mzscheme-Z-H-17.html#node_sec_17.3">17.3&nbsp;&nbsp;Initialization</a><br>
+</p>
+<p><b>
+&nbsp; &nbsp; <a name="node_toc_node_chap_18"></a><a href="mzscheme-Z-H-18.html#node_chap_18">18&nbsp;&nbsp;Writing and Running Scripts</a></b><br>
+</p>
+<p>
+
+</p>
+<p>
+</p>
+<a name="node_sec_Temp_1"></a>
+<h2><a href="#node_toc_node_sec_Temp_1">Copyright notice</a></h2>
+<p></p>
+<p>
+
+
+</p>
+<p>
+
+</p>
+<div align=center><table><tr><td>
+
+Copyright <span class=small>&copy;</span>1995-2004 Matthew Flatt
+</td></tr></table></div>
+<p>
+Permission to make digital/hard copies and/or distribute this
+documentation for any purpose is hereby granted without fee,
+provided that the above copyright notice, author, and this
+permission notice appear in all copies of this documentation.</p>
+<p>
+
+libscheme: 
+Copyright <span class=small>&copy;</span>1994 Brent Benson.
+All rights reserved.</p>
+<p>
+</p>
+<p>
+Conservative garbage collector:
+Copyright <span class=small>&copy;</span>1988, 1989 Hans-J. Boehm, Alan J. Demers.
+Copyright <span class=small>&copy;</span>1991-1996 by Xerox Corporation.  
+Copyright <span class=small>&copy;</span>1996-1999 by Silicon Graphics.
+Copyright <span class=small>&copy;</span>1999-2001 by Hewlett Packard Company.
+All rights reserved.</p>
+<p>
+Collector C++ extension by Jesse Hull and John Ellis:
+Copyright <span class=small>&copy;</span>1994 by Xerox Corporation.
+All rights reserved.
+
+GNU MP Library:
+Copyright <span class=small>&copy;</span>1992, 1993, 1994, 1996 by Free Software Foundation, Inc.
+</p>
+<p>
+</p>
+<p>
+</p>
+<p>
+</p>
+<a name="node_sec_Temp_2"></a>
+<h2><a href="#node_toc_node_sec_Temp_2">Send us your Web links</a></h2>
+<p>If you use any parts or all of the PLT Scheme package (software, lecture
+notes) for one of your courses, for your research, or for your work, we
+would like to know about it. Furthermore, if you use it and publicize the
+fact on some Web page, we would like to link to that page. Please drop
+us a line at <i>scheme@plt-scheme.org</i>.
+Evidence of interest helps the DrScheme Project to maintain the 
+necessary intellectual and financial support. We appreciate your help. </p>
+<p>
+</p>
+<p>
+</p>
+<a name="node_sec_Temp_3"></a>
+<h2><a href="#node_toc_node_sec_Temp_3">Thanks</a></h2>
+<p>Thanks to Brent Benson for <tt>libscheme</tt>, and to Hans Boehm for the
+<a href="http://reality.sgi.com/employees/boehm_mti/gc.html">conservative garbage
+collector</a> and
+their help.</p>
+<p>
+This manual was typeset using L<small>A</small>T<small>E</small>X, 
+<a href="http://www.ccs.neu.edu/~dorai/slatex/">SLaTeX</a>, and 
+<a href="http://www.ccs.neu.edu/~dorai/tex2page/"><tt>tex2page</tt></a>. 
+Some typesetting macros were originally taken from Julian
+Smart's <i>Reference Manual for wxWindows 1.60: a portable C++ GUI
+toolkit</i>.</p>
+<p>
+This manual was typeset on Sunday, December 19th, 2004.
+</p>
+<p>
+
+</p>
+<p>
+
+</p>
+<p>
+</p>
+<p>
+</p>
+<p>
+</p>
+<p>
+
+</p>
+<p>
+</p>
+<p>
+</p>
+<p>
+</p>
+<div align=right class=navigation><i>[Go to <span class=disable>first, previous</span><span><span class=disable>, </span><a href="mzscheme-Z-H-1.html">next</a></span> page<span>; &nbsp;&nbsp;</span><span class=disable>contents</span><span><span class=disable>; &nbsp;&nbsp;</span><a href="mzscheme-Z-H-19.html#node_index_start">index</a></span>]</i></div><p></p>
+<div align=right class=colophon>
+<i>Last modified: Sunday, December 19th, 2004<br>
+HTML conversion by <a href="http://www.ccs.neu.edu/~dorai/tex2page/tex2page-doc.html">TeX2page 2004-09-11</a></i>
+</div>
+</body>
+</html>

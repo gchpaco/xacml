@@ -1,0 +1,933 @@
+<!doctype html public "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!--
+
+Generated from mzscheme.tex by tex2page, v 2004-09-11
+(running on MzScheme 209, unix), 
+(c) Dorai Sitaram, 
+http://www.ccs.neu.edu/~dorai/tex2page/tex2page-doc.html
+
+-->
+<head>
+<title>
+PLT MzScheme: Language Manual
+</title>
+<link rel="stylesheet" type="text/css" href="mzscheme-Z-S.css" title=default>
+<meta name=robots content="noindex,follow">
+</head>
+<body>
+<div align=right class=navigation><i>[Go to <span><a href="mzscheme.html">first</a>, <a href="mzscheme-Z-H-5.html">previous</a></span><span>, <a href="mzscheme-Z-H-7.html">next</a></span> page<span>; &nbsp;&nbsp;</span><span><a href="mzscheme.html#node_toc_start">contents</a></span><span><span>; &nbsp;&nbsp;</span><a href="mzscheme-Z-H-19.html#node_index_start">index</a></span>]</i></div><p></p>
+<a name="node_chap_6"></a>
+<h1 class=chapter>
+<div class=chapterheading><a href="mzscheme.html#node_toc_node_chap_6">Chapter 6</a></div><br>
+<a href="mzscheme.html#node_toc_node_chap_6">Exceptions and Control Flow</a></h1>
+<p><a name="node_idx_718"></a></p>
+<p>
+</p>
+<a name="node_sec_6.1"></a>
+<h2><a href="mzscheme.html#node_toc_node_sec_6.1">6.1&nbsp;&nbsp;Exceptions</a></h2>
+<p><a name="node_idx_720"></a></p>
+<p>
+<a name="node_idx_722"></a>
+MzScheme supports the exception system proposed by
+<a name="node_idx_724"></a>Friedman,
+<a name="node_idx_726"></a>Haynes, and
+<a name="node_idx_728"></a>Dybvig.<a name="call_footnote_Temp_10"></a><a href="#footnote_Temp_10"><sup><small>7</small></sup></a>
+MzScheme's implementation extends that proposal by defining the
+specific exception values that are raised by each primitive error.</p>
+<p>
+</p>
+<ul><p>
+</p>
+<li><p><a name="node_idx_730"></a><a name="node_kw_definitionraise"></a><code class=scheme>(raise</code><tt>&nbsp;</tt><code class=scheme><span class=variable>exn</span></code><code class=scheme>)</code> raises an exception, where <code class=scheme><span class=variable>exn</span></code> represents
+the exception being raised. The <code class=scheme><span class=variable>exn</span></code> argument can be anything;
+it is passed to the current <strong>exception handler</strong>.  Breaks are
+disabled while the exception handler is called; see
+section&nbsp;<a href="#node_sec_6.6">6.6</a> for more information.</p>
+<p>
+</p>
+<li><p><a name="node_idx_732"></a><a name="node_kw_definitioncurrent-exception-handler"></a><code class=scheme>(current-exception-handler</code><code class=scheme>)</code> returns the current exception
+handler that is used by <code class=scheme><code class=scheme>raise</code></code>, and
+<code class=scheme>(current-exception-handler <code class=scheme><span class=variable>f</span></code>)</code> installs the procedure
+<code class=scheme><span class=variable>f</span></code> as the current exception handler. The
+<code class=scheme><code class=scheme>current-exception-handler</code></code> procedure is a parameter; see
+section&nbsp;<a href="mzscheme-Z-H-7.html#node_sec_7.7.1.7">7.7.1.7</a> for more information.</p>
+<p>
+Any procedure that takes one argument can be an exception handler,
+but it is an error if the exception handler returns to its caller
+when invoked by <code class=scheme><code class=scheme>raise</code></code>. (If an exception handler returns, the
+current error display handler and current error escape handler are
+called directly to report the handler's mistake.)</p>
+<p>
+The default exception handler prints an error message using the
+current error display handler (see <code class=scheme><code class=scheme>error-display-handler</code></code> in
+section&nbsp;<a href="mzscheme-Z-H-7.html#node_sec_7.7.1.7">7.7.1.7</a>) and then escapes by calling the
+current error escape handler (see <code class=scheme><code class=scheme>error-escape-handler</code></code> in
+section&nbsp;<a href="mzscheme-Z-H-7.html#node_sec_7.7.1.7">7.7.1.7</a>). If an exception is raised while an
+exception handler is executing, an error message is printed using a
+primitive error printer and the primitive error escape handler is
+invoked.</p>
+<p>
+</p>
+<li><p><code class=scheme>(<a name="node_kw_definitionwith-handlers"></a><a name="node_idx_734"></a><code class=scheme><span class=keyword>with-handlers</span></code> ((<code class=scheme><span class=variable>pred</span></code> <code class=scheme><span class=variable>handler</span></code>)
+<tt>&middot;&middot;&middot;</tt>) <code class=scheme><span class=variable>expr</span></code> <tt>&middot;&middot;&middot;</tt><sup>1</sup>)</code> is a syntactic form that evaluates the
+<code class=scheme><span class=variable>expr</span></code> body, installing a new exception handler before evaluating
+the <code class=scheme><span class=variable>expr</span></code>s and restoring the handler when a value is returned
+(or when control escapes from the expression). The <code class=scheme><span class=variable>pred</span></code> and
+<code class=scheme><span class=variable>handler</span></code> expressions are evaluated in the order that they are
+specified, before the first <code class=scheme><span class=variable>expr</span></code> and before the exception
+handler is changed. The exception handler is installed and restored
+with <code class=scheme><span class=keyword>parameterize</span></code> (see section&nbsp;<a href="mzscheme-Z-H-7.html#node_sec_7.7.2">7.7.2</a>).</p>
+<p>
+The new exception handler processes an exception only if one of the
+<code class=scheme><span class=variable>pred</span></code> procedures returns a true value when applied to the
+exception, otherwise the original exception handler is invoked (by
+raising the exception again). If an exception is handled by one of
+the <code class=scheme><span class=variable>handler</span></code> procedures, the result of the entire
+<code class=scheme><span class=keyword>with-handlers</span></code> expression is the return value of the handler.</p>
+<p>
+When an exception is raised during the evaluation of <code class=scheme><span class=variable>expr</span></code>s,
+each predicate procedure <code class=scheme><span class=variable>pred</span></code> is applied to the exception
+value; if a predicate returns a true value, the corresponding
+<code class=scheme><span class=variable>handler</span></code> procedure is invoked with the exception as an
+argument. The predicates are tried in the order that they are
+specified.</p>
+<p>
+Before any predicate or handler procedure is invoked, the
+continuation of the entire <code class=scheme><span class=keyword>with-handlers</span></code> expression is
+restored. The ``original'' exception handler (the one present before
+the <code class=scheme><span class=keyword>with-handlers</span></code> expression was evaluated) is therefore
+re-installed before any predicate or handler procedure is invoked.</p>
+<p>
+A particularly useful predicate procedure is <code class=scheme><code class=scheme>not-break-exn?</code></code>.
+<a name="node_idx_736"></a><a name="node_kw_definitionnot-break-exn_Q_"></a><code class=scheme>(not-break-exn?</code><tt>&nbsp;</tt><code class=scheme><span class=variable>v</span></code><code class=scheme>)</code> returns <code class=scheme><span class=selfeval>#f</span></code> if <code class=scheme><span class=variable>v</span></code> is an instance
+of <a name="node_idx_738"></a><code class=scheme>exn:break</code> (representing an asynchronous break exception),
+<code class=scheme><span class=selfeval>#t</span></code> otherwise.</p>
+<p>
+</p>
+</ul><p></p>
+<p>
+The following example defines a divide procedure that returns
+<code class=scheme><span class=selfeval>+inf.0</span></code> when dividing by zero instead of signaling an exception
+(other exceptions raised by <code class=scheme><span class=variable>/</span></code> are signaled):
+</p>
+<div align=left><pre class=scheme>(<span class=keyword>define</span> <span class=variable>div-w-inf</span>
+  (<span class=keyword>lambda</span> (<span class=variable>n</span> <span class=variable>d</span>)
+    (<span class=keyword>with-handlers</span> ([<code class=scheme>exn:application:divide-by-zero?</code> 
+                     (<span class=keyword>lambda</span> (<span class=variable>exn</span>) <span class=selfeval>+inf.0</span>)])
+      (<span class=variable>/</span> <span class=variable>n</span> <span class=variable>d</span>))))
+</pre></div><p></p>
+<p>
+The following example catches and ignores file exceptions, but lets
+the enclosing context handle breaks:
+</p>
+<div align=left><pre class=scheme>(<span class=keyword>define</span> (<span class=variable>file-date-if-there</span> <span class=variable>filename</span>)
+  (<span class=keyword>with-handlers</span> ([<code class=scheme>not-break-exn?</code> (<span class=keyword>lambda</span> (<span class=variable>exn</span>) <span class=selfeval>#f</span>)])
+    (<code class=scheme>file-or-directory-modify-seconds</code> <span class=variable>filename</span>)))
+</pre></div><p></p>
+<p>
+</p>
+<a name="node_sec_6.1.1"></a>
+<h3><a href="mzscheme.html#node_toc_node_sec_6.1.1">6.1.1&nbsp;&nbsp;Primitive Exceptions</a></h3>
+<p><a name="node_idx_740"></a>
+<a name="node_idx_742"></a>
+Whenever a primitive error occurs in MzScheme, an exception is raised.
+The value that is passed to the current exception handler is always
+an instance of the <a name="node_idx_744"></a><code class=scheme>exn</code> structure type. Every <code class=scheme>exn</code>
+structure value has a <code class=scheme>message</code> field that is a string, the
+primitive error message.  The default exception handler recognizes
+exception values with the <a name="node_idx_746"></a><code class=scheme>exn?</code> predicate and passes the
+error message to the current error display handler (see
+<code class=scheme><code class=scheme>error-display-handler</code></code> in section&nbsp;<a href="mzscheme-Z-H-7.html#node_sec_7.7.1.7">7.7.1.7</a>).</p>
+<p>
+
+
+</p>
+<p>
+Primitive errors do not create immediate instances of the <code class=scheme>exn</code>
+structure type. Instead, an instance from a hierarchy of subtypes of
+<code class=scheme>exn</code> is instantiated. The subtype more precisely identifies the
+error that occurred and may contain additional information about the
+error. The table below defines the type hierarchy that is used by
+primitive errors and matches each subtype with the primitive errors
+that instantiate it.
+In the table, each bulleted line is a separate structure type. A type
+is nested under another when it is a subtype. </p>
+<p>
+For example, applying a procedure to the wrong number of arguments
+raises an exception as an instance of <code class=scheme>exn:application:arity</code>.
+An exception handler can test for this kind of exception using the
+global <code class=scheme><code class=scheme>exn:application:arity?</code></code> predicate. Given such an
+exception, the (incorrect) number of arguments provided is obtained
+from the exception with <code class=scheme><code class=scheme>exn:application-value</code></code>, while
+<code class=scheme><code class=scheme>exn:application:arity-expected</code></code> accesses the actual arity of the
+procedure.</p>
+<p>
+</p>
+<p>
+
+
+
+
+</p>
+<p>
+
+
+</p>
+<p>
+
+
+
+</p>
+<p>
+</p>
+<p>
+</p>
+<p>
+
+
+
+
+</p>
+<p>
+
+
+</p>
+<p>
+
+
+
+</p>
+<p>
+</p>
+<p>
+</p>
+<ul>
+<li><p><a name="node_kw_definitionexn_Q_"></a> <a name="node_kw_definitionmake-exn"></a> <a name="node_kw_definitionstruct_C_exn"></a> <code class=scheme>exn</code> : <em>not instantiated directly</em> </p>
+<blockquote> <blockquote><a name="node_kw_definitionexn-message"></a> <code class=scheme>message</code> field, <code class=scheme><span class=variable>immutable-string</span></code>  --  error message</blockquote> <blockquote><a name="node_kw_definitionexn-continuation-marks"></a> <code class=scheme>continuation-marks</code> field, <code class=scheme><span class=variable>mark-set</span></code>  --  value returned by <a name="node_idx_748"></a><code class=scheme>current-continuation-marks</code> immediately after the error is detected</blockquote> </blockquote>
+<ul><li><p><a name="node_kw_definitionexn_C_user_Q_"></a> <a name="node_kw_definitionmake-exn_C_user"></a> <a name="node_kw_definitionstruct_C_exn_C_user"></a> <code class=scheme>exn:user</code> : raised by calling <a name="node_idx_750"></a><code class=scheme>error</code> </p>
+</ul><p>
+</p>
+<ul><li><p><a name="node_kw_definitionexn_C_variable_Q_"></a> <a name="node_kw_definitionmake-exn_C_variable"></a> <a name="node_kw_definitionstruct_C_exn_C_variable"></a> <code class=scheme>exn:variable</code> : unbound or not-yet-defined global or module variable at run time </p>
+<blockquote> <blockquote><a name="node_kw_definitionexn_C_variable-id"></a> <code class=scheme>id</code> field, <code class=scheme><span class=variable>symbol</span></code>  --  the variable's identifier</blockquote> </blockquote></ul><p>
+</p>
+<ul><li><p><a name="node_kw_definitionexn_C_application_Q_"></a> <a name="node_kw_definitionmake-exn_C_application"></a> <a name="node_kw_definitionstruct_C_exn_C_application"></a> <code class=scheme>exn:application</code> : <em>not instantiated directly</em> </p>
+<blockquote> <blockquote><a name="node_kw_definitionexn_C_application-value"></a> <code class=scheme>value</code> field, <code class=scheme><span class=variable>value</span></code>  --  the error-specific inappropriate value</blockquote> </blockquote></ul><p>
+</p>
+<blockquote><ul><li><p><a name="node_kw_definitionexn_C_application_C_arity_Q_"></a> <a name="node_kw_definitionmake-exn_C_application_C_arity"></a> <a name="node_kw_definitionstruct_C_exn_C_application_C_arity"></a> <code class=scheme>exn:application:arity</code> : application with the wrong number of arguments </p>
+<blockquote> <blockquote><a name="node_kw_definitionexn_C_application_C_arity-expected"></a> <code class=scheme>expected</code> field, <code class=scheme><span class=variable>arity</span></code>  --  the correct procedure arity as returned by <a name="node_idx_752"></a><code class=scheme>arity</code></blockquote> </blockquote></blockquote></ul><p>
+</p>
+<blockquote><ul><li><p><a name="node_kw_definitionexn_C_application_C_type_Q_"></a> <a name="node_kw_definitionmake-exn_C_application_C_type"></a> <a name="node_kw_definitionstruct_C_exn_C_application_C_type"></a> <code class=scheme>exn:application:type</code> : wrong argument type to a procedure, not including divide-by-zero </p>
+<blockquote> <blockquote><a name="node_kw_definitionexn_C_application_C_type-expected"></a> <code class=scheme>expected</code> field, <code class=scheme><span class=variable>symbol</span></code>  --  name of the expected type</blockquote> </blockquote></blockquote></ul><p>
+</p>
+<blockquote><ul><li><p><a name="node_kw_definitionexn_C_application_C_mismatch_Q_"></a> <a name="node_kw_definitionmake-exn_C_application_C_mismatch"></a> <a name="node_kw_definitionstruct_C_exn_C_application_C_mismatch"></a> <code class=scheme>exn:application:mismatch</code> : bad argument combination (e.g., out-of-range index for a vector) or platform-specific integer range error </p>
+</blockquote></ul><p>
+</p>
+<blockquote><ul><li><p><a name="node_kw_definitionexn_C_application_C_divide-by-zero_Q_"></a> <a name="node_kw_definitionmake-exn_C_application_C_divide-by-zero"></a> <a name="node_kw_definitionstruct_C_exn_C_application_C_divide-by-zero"></a> <code class=scheme>exn:application:divide-by-zero</code> : divide by zero; <code class=scheme>application-value</code> is always zero </p>
+</blockquote></ul><p>
+</p>
+<blockquote><ul><li><p><a name="node_kw_definitionexn_C_application_C_continuation_Q_"></a> <a name="node_kw_definitionmake-exn_C_application_C_continuation"></a> <a name="node_kw_definitionstruct_C_exn_C_application_C_continuation"></a> <code class=scheme>exn:application:continuation</code> : attempt to cross a continuation boundary or apply another thread's continuation </p>
+</blockquote></ul><p>
+</p>
+<ul><li><p><a name="node_kw_definitionexn_C_syntax_Q_"></a> <a name="node_kw_definitionmake-exn_C_syntax"></a> <a name="node_kw_definitionstruct_C_exn_C_syntax"></a> <code class=scheme>exn:syntax</code> : syntax error, but not a <a name="node_idx_754"></a><code class=scheme>read</code> error </p>
+<blockquote> <blockquote><a name="node_kw_definitionexn_C_syntax-expr"></a> <code class=scheme>expr</code> field, <code class=scheme><span class=variable>syntax object or #f</span></code>  --  illegal expression (or #f if unknown)</blockquote> <blockquote><a name="node_kw_definitionexn_C_syntax-form"></a> <code class=scheme>form</code> field, <code class=scheme><span class=variable>symbol or #f</span></code>  --  the syntactic form name that detected the error (or #f if unknown)</blockquote> <blockquote><a name="node_kw_definitionexn_C_syntax-module"></a> <code class=scheme>module</code> field, <code class=scheme><span class=variable>symbol, module path index, or #f</span></code>  --  the form-defining module (or #f if unknown)</blockquote> </blockquote></ul><p>
+</p>
+<ul><li><p><a name="node_kw_definitionexn_C_read_Q_"></a> <a name="node_kw_definitionmake-exn_C_read"></a> <a name="node_kw_definitionstruct_C_exn_C_read"></a> <code class=scheme>exn:read</code> : <code class=scheme>read</code> parsing error </p>
+<blockquote> <blockquote><a name="node_kw_definitionexn_C_read-source"></a> <code class=scheme>source</code> field, <code class=scheme><span class=variable>value</span></code>  --  source name</blockquote> <blockquote><a name="node_kw_definitionexn_C_read-line"></a> <code class=scheme>line</code> field, <code class=scheme><span class=variable>positive exact integer or #f</span></code>  --  source line</blockquote> <blockquote><a name="node_kw_definitionexn_C_read-column"></a> <code class=scheme>column</code> field, <code class=scheme><span class=variable>non-negative exact integer or #f</span></code>  --  source column</blockquote> <blockquote><a name="node_kw_definitionexn_C_read-position"></a> <code class=scheme>position</code> field, <code class=scheme><span class=variable>positive exact integer or #f</span></code>  --  source position</blockquote> <blockquote><a name="node_kw_definitionexn_C_read-span"></a> <code class=scheme>span</code> field, <code class=scheme><span class=variable>non-negative exact integer or #f</span></code>  --  source span</blockquote> </blockquote></ul><p>
+</p>
+<blockquote><ul><li><p><a name="node_kw_definitionexn_C_read_C_eof_Q_"></a> <a name="node_kw_definitionmake-exn_C_read_C_eof"></a> <a name="node_kw_definitionstruct_C_exn_C_read_C_eof"></a> <code class=scheme>exn:read:eof</code> : unexpected end-of-file </p>
+</blockquote></ul><p>
+</p>
+<blockquote><ul><li><p><a name="node_kw_definitionexn_C_read_C_non-char_Q_"></a> <a name="node_kw_definitionmake-exn_C_read_C_non-char"></a> <a name="node_kw_definitionstruct_C_exn_C_read_C_non-char"></a> <code class=scheme>exn:read:non-char</code> : unexpected non-character </p>
+</blockquote></ul><p>
+</p>
+<ul><li><p><a name="node_kw_definitionexn_C_i/o_Q_"></a> <a name="node_kw_definitionmake-exn_C_i/o"></a> <a name="node_kw_definitionstruct_C_exn_C_i/o"></a> <code class=scheme>exn:i/o</code> : <em>not instantiated directly</em> </p>
+</ul><p>
+</p>
+<blockquote><ul><li><p><a name="node_kw_definitionexn_C_i/o_C_port_Q_"></a> <a name="node_kw_definitionmake-exn_C_i/o_C_port"></a> <a name="node_kw_definitionstruct_C_exn_C_i/o_C_port"></a> <code class=scheme>exn:i/o:port</code> : <em>not instantiated directly</em> </p>
+<blockquote> <blockquote><a name="node_kw_definitionexn_C_i/o_C_port-port"></a> <code class=scheme>port</code> field, <code class=scheme><span class=variable>port</span></code>  --  port for attempted operation</blockquote> </blockquote></blockquote></ul><p>
+</p>
+<blockquote><blockquote><ul><li><p><a name="node_kw_definitionexn_C_i/o_C_port_C_read_Q_"></a> <a name="node_kw_definitionmake-exn_C_i/o_C_port_C_read"></a> <a name="node_kw_definitionstruct_C_exn_C_i/o_C_port_C_read"></a> <code class=scheme>exn:i/o:port:read</code> : error reading from a port </p>
+</blockquote></blockquote></ul><p>
+</p>
+<blockquote><blockquote><ul><li><p><a name="node_kw_definitionexn_C_i/o_C_port_C_write_Q_"></a> <a name="node_kw_definitionmake-exn_C_i/o_C_port_C_write"></a> <a name="node_kw_definitionstruct_C_exn_C_i/o_C_port_C_write"></a> <code class=scheme>exn:i/o:port:write</code> : error writing to a port </p>
+</blockquote></blockquote></ul><p>
+</p>
+<blockquote><blockquote><ul><li><p><a name="node_kw_definitionexn_C_i/o_C_port_C_closed_Q_"></a> <a name="node_kw_definitionmake-exn_C_i/o_C_port_C_closed"></a> <a name="node_kw_definitionstruct_C_exn_C_i/o_C_port_C_closed"></a> <code class=scheme>exn:i/o:port:closed</code> : attempt to operate on a closed port </p>
+</blockquote></blockquote></ul><p>
+</p>
+<blockquote><ul><li><p><a name="node_kw_definitionexn_C_i/o_C_filesystem_Q_"></a> <a name="node_kw_definitionmake-exn_C_i/o_C_filesystem"></a> <a name="node_kw_definitionstruct_C_exn_C_i/o_C_filesystem"></a> <code class=scheme>exn:i/o:filesystem</code> : illegal pathname or error manipulating a filesystem object </p>
+<blockquote> <blockquote><a name="node_kw_definitionexn_C_i/o_C_filesystem-pathname"></a> <code class=scheme>pathname</code> field, <code class=scheme><span class=variable>path</span></code>  --  file or directory pathname</blockquote> <blockquote><a name="node_kw_definitionexn_C_i/o_C_filesystem-detail"></a> <code class=scheme>detail</code> field, <code class=scheme><span class=variable>symbol or #f</span></code>  --  <code class=scheme><span class=selfeval>'ill-formed-path</span></code><a name="node_idx_756"></a>, <code class=scheme><span class=selfeval>'already-exists</span></code><a name="node_idx_758"></a>, or <code class=scheme><span class=selfeval>'wrong-version</span></code><a name="node_idx_760"></a>, indicating the reason for the exception (if available), or <code class=scheme>#f</code></blockquote> </blockquote></blockquote></ul><p>
+</p>
+<blockquote><ul><li><p><a name="node_kw_definitionexn_C_i/o_C_tcp_Q_"></a> <a name="node_kw_definitionmake-exn_C_i/o_C_tcp"></a> <a name="node_kw_definitionstruct_C_exn_C_i/o_C_tcp"></a> <code class=scheme>exn:i/o:tcp</code> : TCP errors </p>
+</blockquote></ul><p>
+</p>
+<blockquote><ul><li><p><a name="node_kw_definitionexn_C_i/o_C_udp_Q_"></a> <a name="node_kw_definitionmake-exn_C_i/o_C_udp"></a> <a name="node_kw_definitionstruct_C_exn_C_i/o_C_udp"></a> <code class=scheme>exn:i/o:udp</code> : UDP errors </p>
+</blockquote></ul><p>
+</p>
+<ul><li><p><a name="node_kw_definitionexn_C_thread_Q_"></a> <a name="node_kw_definitionmake-exn_C_thread"></a> <a name="node_kw_definitionstruct_C_exn_C_thread"></a> <code class=scheme>exn:thread</code> : raised by <a name="node_idx_762"></a><code class=scheme>call-with-custodian</code> </p>
+</ul><p>
+</p>
+<ul><li><p><a name="node_kw_definitionexn_C_module_Q_"></a> <a name="node_kw_definitionmake-exn_C_module"></a> <a name="node_kw_definitionstruct_C_exn_C_module"></a> <code class=scheme>exn:module</code> : raised by <a name="node_idx_764"></a><code class=scheme><span class=keyword>module</span></code>, <a name="node_idx_766"></a><code class=scheme><span class=keyword>require</span></code>, etc. </p>
+</ul><p>
+</p>
+<ul><li><p><a name="node_kw_definitionexn_C_break_Q_"></a> <a name="node_kw_definitionmake-exn_C_break"></a> <a name="node_kw_definitionstruct_C_exn_C_break"></a> <code class=scheme>exn:break</code> : asynchronous thread break </p>
+<blockquote> <blockquote><a name="node_kw_definitionexn_C_break-continuation"></a> <code class=scheme>continuation</code> field, <code class=scheme><span class=variable>continuation</span></code>  --  a continuation that resumes from the break</blockquote> </blockquote></ul><p>
+</p>
+<ul><li><p><a name="node_kw_definitionexn_C_special-comment_Q_"></a> <a name="node_kw_definitionmake-exn_C_special-comment"></a> <a name="node_kw_definitionstruct_C_exn_C_special-comment"></a> <code class=scheme>exn:special-comment</code> : raised by a custom input port's special-reading procedure </p>
+<blockquote> <blockquote><a name="node_kw_definitionexn_C_special-comment-width"></a> <code class=scheme>width</code> field, <code class=scheme><span class=variable>non-negative exact integer</span></code>  --  width of the special comment in port positions</blockquote> </blockquote></ul><p>
+</p>
+<ul><li><p><a name="node_kw_definitionexn_C_misc_Q_"></a> <a name="node_kw_definitionmake-exn_C_misc"></a> <a name="node_kw_definitionstruct_C_exn_C_misc"></a> <code class=scheme>exn:misc</code> : low-level or MzScheme-specific error </p>
+</ul><p>
+</p>
+<blockquote><ul><li><p><a name="node_kw_definitionexn_C_misc_C_unsupported_Q_"></a> <a name="node_kw_definitionmake-exn_C_misc_C_unsupported"></a> <a name="node_kw_definitionstruct_C_exn_C_misc_C_unsupported"></a> <code class=scheme>exn:misc:unsupported</code> : unsupported feature </p>
+</blockquote></ul><p>
+</p>
+<blockquote><ul><li><p><a name="node_kw_definitionexn_C_misc_C_out-of-memory_Q_"></a> <a name="node_kw_definitionmake-exn_C_misc_C_out-of-memory"></a> <a name="node_kw_definitionstruct_C_exn_C_misc_C_out-of-memory"></a> <code class=scheme>exn:misc:out-of-memory</code> : out of memory </p>
+</blockquote></ul><p>
+</p>
+</ul><p>
+</p>
+<p>
+Primitive procedures that accept a procedure argument with a
+particular required arity (e.g., <code class=scheme><code class=scheme>call-with-input-file</code></code>,
+<code class=scheme><code class=scheme>call/cc</code></code>) check the argument's arity immediately, raising
+<a name="node_idx_768"></a><code class=scheme>exn:application:type</code> if the arity is incorrect.</p>
+<p>
+</p>
+<a name="node_sec_6.2"></a>
+<h2><a href="mzscheme.html#node_toc_node_sec_6.2">6.2&nbsp;&nbsp;Errors</a></h2>
+<p><a name="node_idx_770"></a></p>
+<p>
+<a name="node_idx_772"></a>
+<a name="node_idx_774"></a></p>
+<p>
+The procedure <code class=scheme><code class=scheme>error</code></code> raises the exception <a name="node_idx_776"></a><code class=scheme>exn:user</code> (which
+contains an error string). The <code class=scheme><code class=scheme>error</code></code> procedure has three forms:
+</p>
+<ul><p>
+</p>
+<li><p><a name="node_idx_778"></a><a name="node_kw_definitionerror"></a><code class=scheme>(error</code><tt>&nbsp;</tt><code class=scheme><span class=variable>symbol</span></code><code class=scheme>)</code> creates a message string by concatenating
+<code class=scheme><span class=selfeval>&quot;error: &quot;</span></code> with the string form of <code class=scheme><span class=variable>symbol</span></code>.</p>
+<p>
+</p>
+<li><p><a name="node_idx_780"></a><a name="node_kw_definitionerror"></a><code class=scheme>(error</code><tt>&nbsp;</tt><code class=scheme><span class=variable>msg-string v</span></code><tt>&nbsp;</tt><tt>&middot;&middot;&middot;</tt><code class=scheme>)</code> creates a message string by
+concatenating <code class=scheme><span class=variable>msg-string</span></code> with string versions of the <code class=scheme><span class=variable>v</span></code>s
+(as produced by the current error value conversion handler; see
+section&nbsp;<a href="mzscheme-Z-H-7.html#node_sec_7.7.1.7">7.7.1.7</a>). A space is inserted before
+each <code class=scheme><span class=variable>v</span></code>.</p>
+<p>
+</p>
+<li><p><a name="node_idx_782"></a><a name="node_kw_definitionerror"></a><code class=scheme>(error</code><tt>&nbsp;</tt><code class=scheme><span class=variable>src-symbol format-string v</span></code><tt>&nbsp;</tt><tt>&middot;&middot;&middot;</tt><code class=scheme>)</code> creates a message
+string equivalent to the string created by:
+</p>
+<div align=center><table><tr><td>
+
+</td><td><div align=left><pre class=scheme>(<code class=scheme>format</code> (<code class=scheme>string-append</code> <span class=selfeval>&quot;~s: &quot;</span> <span class=variable>format-string</span>) 
+  <span class=variable>src-symbol</span> <span class=variable>v</span> <tt>&middot;&middot;&middot;</tt>)
+</pre></div></td><td>
+</td></tr></table></div>
+<p>
+</p>
+</ul><p></p>
+<p>
+In all cases, the constructed message string is passed to
+<code class=scheme><code class=scheme>make-exn:user</code></code> and the resulting exception is raised.</p>
+<p>
+</p>
+<a name="node_sec_6.2.1"></a>
+<h3><a href="mzscheme.html#node_toc_node_sec_6.2.1">6.2.1&nbsp;&nbsp;Application Type Errors</a></h3>
+<p><a name="node_idx_784"></a>
+<a name="node_idx_786"></a><a name="node_kw_definitionraise-type-error"></a><code class=scheme>(raise-type-error</code><tt>&nbsp;</tt><code class=scheme><span class=variable>name-symbol expected-string v</span></code><code class=scheme>)</code> creates an
+<a name="node_idx_788"></a><code class=scheme>exn:application:type</code> value and <code class=scheme><code class=scheme>raise</code></code>s it as an exception.
+The <code class=scheme><span class=variable>name-symbol</span></code> argument is used as the source procedure's name
+in the error message. The <code class=scheme><span class=variable>expected-string</span></code> argument is used as a
+description of the expected type, and <code class=scheme><span class=variable>v</span></code> is the value
+received by the procedure that does not have the expected type.</p>
+<p>
+<a name="node_idx_790"></a><a name="node_kw_definitionraise-type-error"></a><code class=scheme>(raise-type-error</code><tt>&nbsp;</tt><code class=scheme><span class=variable>name-symbol expected-string bad-k v</span></code><code class=scheme>)</code> is
+similar, except that the bad argument is indicated by an index (from
+0), and all of the original arguments <code class=scheme><span class=variable>v</span></code> are provided (in
+order). The resulting error message names the bad argument and also
+lists the other arguments. If <code class=scheme><span class=variable>bad-k</span></code> is not less than the number
+of <code class=scheme><span class=variable>v</span></code>s, the <a name="node_idx_792"></a><code class=scheme>exn:application:mismatch</code> exception is raised.</p>
+<p>
+</p>
+<a name="node_sec_6.2.2"></a>
+<h3><a href="mzscheme.html#node_toc_node_sec_6.2.2">6.2.2&nbsp;&nbsp;Application Mismatch Errors</a></h3>
+<p><a name="node_idx_794"></a>
+<a name="node_idx_796"></a><a name="node_kw_definitionraise-mismatch-error"></a><code class=scheme>(raise-mismatch-error</code><tt>&nbsp;</tt><code class=scheme><span class=variable>name-symbol message-string v</span></code><code class=scheme>)</code> creates an
+<a name="node_idx_798"></a><code class=scheme>exn:application:mismatch</code> value and <code class=scheme><code class=scheme>raise</code></code>s it as an
+exception.  The <code class=scheme><span class=variable>name-symbol</span></code> is used as the source procedure's
+name in the error message. The <code class=scheme><span class=variable>message-string</span></code> is the error
+message. The <code class=scheme><span class=variable>v</span></code> argument is the improper argument received by
+the procedure. The printed form of <code class=scheme><span class=variable>v</span></code> is appended to
+<code class=scheme><span class=variable>message-string</span></code> (using the error value conversion handler; see
+section&nbsp;<a href="mzscheme-Z-H-7.html#node_sec_7.7.1.7">7.7.1.7</a>).</p>
+<p>
+</p>
+<a name="node_sec_6.2.3"></a>
+<h3><a href="mzscheme.html#node_toc_node_sec_6.2.3">6.2.3&nbsp;&nbsp;Syntax Errors</a></h3>
+<p><a name="node_idx_800"></a>
+<a name="node_idx_802"></a><a name="node_kw_definitionraise-syntax-error"></a><code class=scheme>(raise-syntax-error</code><tt>&nbsp;</tt><code class=scheme><span class=variable>name message-string</span></code><tt>&nbsp;</tt>[<code class=scheme><span class=variable>expr sub-expr</span></code>]<code class=scheme>)</code> creates
+an <a name="node_idx_804"></a><code class=scheme>exn:syntax</code> value and <code class=scheme><code class=scheme>raise</code></code>s it as an exception.
+Macros use this procedure to report syntax errors.  The <code class=scheme><span class=variable>name</span></code>
+argument is usually <code class=scheme><span class=selfeval>#f</span></code> when <code class=scheme><span class=variable>expr</span></code> is provided; it is
+described in more detail below. The <code class=scheme><span class=variable>message-string</span></code> is used as
+the main body of the error message.  The optional <code class=scheme><span class=variable>expr</span></code> argument
+is the erroneous source syntax object or S-expression. The optional
+<code class=scheme><span class=variable>sub-expr</span></code> argument is a syntax object or S-expression within
+<code class=scheme><span class=variable>expr</span></code> that more precisely locates the error. If <code class=scheme><span class=variable>sub-expr</span></code>
+is provided, it is used (in syntax form) as the <code class=scheme>expr</code> field
+of the generated exception record, else the <code class=scheme><span class=variable>expr</span></code> is used if
+provided, otherwise the <code class=scheme>expr</code> field is <code class=scheme><span class=selfeval>#f</span></code>. Source
+location information for the error message is similarly extracted
+from <code class=scheme><span class=variable>sub-expr</span></code> or <code class=scheme><span class=variable>expr</span></code>, when at least one is a syntax
+object.</p>
+<p>
+The form name used in the generated error message and the values of
+the <code class=scheme>form</code> and <code class=scheme>module</code> fields of the generated
+exception are determined through a combination of the <code class=scheme><span class=variable>name</span></code>,
+<code class=scheme><span class=variable>expr</span></code>, and <code class=scheme><span class=variable>sub-expr</span></code> arguments.  The <code class=scheme><span class=variable>name</span></code> argument
+can be any of three kinds of values:</p>
+<p>
+</p>
+<ul><p>
+</p>
+<li><p><code class=scheme><span class=selfeval>#f</span></code>: When <code class=scheme><span class=variable>name</span></code> is <code class=scheme><span class=selfeval>#f</span></code>, and when
+<code class=scheme><span class=variable>expr</span></code> is either an identifier or a syntax pair containing an
+identifier as its first element, then the form name from the error
+message is the identifier's symbol, the <code class=scheme>form</code> field of the
+exception is the third result of <code class=scheme>identifier-binding</code> applied
+to the identifier, and the <code class=scheme>module</code> field of the exception is
+the fourth result of <code class=scheme>identifier-binding</code> applied to the
+identifier. (See section&nbsp;<a href="mzscheme-Z-H-12.html#node_sec_12.3.2">12.3.2</a> for information about
+<code class=scheme>identifier-binding</code>.)</p>
+<p>
+If <code class=scheme><span class=variable>expr</span></code> is not provided, or if it is not an identifier or a
+syntax pair containing and identifier as its first element, then the
+form name in the error message is <code class=scheme><span class=selfeval>&quot;?&quot;</span></code>, the <code class=scheme>form</code>
+field of the exception is <code class=scheme><span class=selfeval>#f</span></code>, and the <code class=scheme>module</code> field
+of the exception is <code class=scheme><span class=selfeval>#f</span></code>.</p>
+<p>
+</p>
+<li><p><code class=scheme><span class=variable>symbol</span></code>: When <code class=scheme><span class=variable>name</span></code> is a symbol, then the symbol
+is used as the form name in the generated error message. If
+<code class=scheme><span class=variable>expr</span></code> is provided, and it is either an identifier or a syntax
+pair whose first element is an identifier, then the exception fields
+are computed in the same way as when <code class=scheme><span class=variable>name</span></code> is
+<code class=scheme><span class=selfeval>#f</span></code>. Otherwise, the <code class=scheme>form</code> field of the exception is
+<code class=scheme><span class=variable>name</span></code>, and the <code class=scheme>module</code> field of the exception is
+<code class=scheme><span class=selfeval>#f</span></code>.</p>
+<p>
+</p>
+<li><p><code class=scheme>(<code class=scheme>list</code> <span class=variable>msg-symbol</span> <span class=variable>form</span> <span class=variable>mod</span>)</code>: When <code class=scheme><span class=variable>name</span></code> is a
+list of three items, the first is used as the form name in the
+generated error message, the second (which can be a symbol or
+<code class=scheme><span class=selfeval>#f</span></code>) is used as the <code class=scheme>form</code> field of the generated
+exception, and the last (which can be a module index path, a symbol,
+or <code class=scheme><span class=selfeval>#f</span></code>) is used as the <code class=scheme>module</code> field of the
+generated exception.</p>
+<p>
+</p>
+</ul><p></p>
+<p>
+See also section&nbsp;<a href="mzscheme-Z-H-7.html#node_sec_7.7.1.7">7.7.1.7</a>.</p>
+<p>
+</p>
+<a name="node_sec_6.2.4"></a>
+<h3><a href="mzscheme.html#node_toc_node_sec_6.2.4">6.2.4&nbsp;&nbsp;Inferred Value Names</a></h3>
+<p></p>
+<p>
+To improve error reporting, names are inferred at compile-time for
+certain kinds of values, such as procedures. For example, evaluating
+the following expression:
+</p>
+<div align=left><pre class=scheme>(<span class=keyword>let</span> ([<span class=variable>f</span> (<span class=keyword>lambda</span> () <span class=selfeval>0</span>)]) (<span class=variable>f</span> <span class=selfeval>1</span> <span class=selfeval>2</span> <span class=selfeval>3</span>))
+</pre></div><p>
+produces an error message because too many arguments are provided to
+the procedure. The error message is able to report ``f'' as the name
+of the procedure. In this case, MzScheme decides, at compile-time, to
+name as <code class=scheme><span class=variable>f</span></code> all procedures created by the <code class=scheme><span class=keyword>let</span></code>-bound
+<code class=scheme><span class=keyword>lambda</span></code>.</p>
+<p>
+Names are inferred whenever possible for procedures. Names closer to
+an expression take precedence. For example, in
+</p>
+<div align=left><pre class=scheme>(<span class=keyword>define</span> <span class=variable>my-f</span>
+  (<span class=keyword>let</span> ([<span class=variable>f</span> (<span class=keyword>lambda</span> () <span class=selfeval>0</span>)]) <span class=variable>f</span>))
+</pre></div><p>
+the procedure bound to <code class=scheme><span class=variable>my-f</span></code> will have the inferred name ``f''.</p>
+<p>
+When an <code class=scheme><span class=selfeval>'inferred-name</span></code><a name="node_idx_806"></a> property is attached to a syntax
+object for an expression (see section&nbsp;<a href="mzscheme-Z-H-12.html#node_sec_12.6.2">12.6.2</a>), the property value
+is used for naming the expression, and it overrides any name that was
+inferred from the expression's context.</p>
+<p>
+When an inferred name is not available, but a source location is
+available, a name is constructed using the source location
+information. Inferred and property-assigned names are also available
+to syntax transformers, via <code class=scheme><span class=variable>syntax-local-name</span></code>; see
+section&nbsp;<a href="mzscheme-Z-H-12.html#node_sec_12.6">12.6</a> for more information.</p>
+<p>
+<a name="node_idx_808"></a><a name="node_kw_definitionobject-name"></a><code class=scheme>(object-name</code><tt>&nbsp;</tt><code class=scheme><span class=variable>v</span></code><code class=scheme>)</code> returns a symbol or immutable string for the name
+of <code class=scheme><span class=variable>v</span></code> if <code class=scheme><span class=variable>v</span></code> has a name, <code class=scheme><span class=selfeval>#f</span></code> otherwise. The argument
+<code class=scheme><span class=variable>v</span></code> can be any value, but only (some) procedures, structs, struct
+types, struct type properties, regexp values, and input ports have
+names. Only regexp values and input ports have string names (the
+source of the regexp, or an absolute path for file input ports);
+other names are symbols. All primitive procedures have names (see
+section&nbsp;<a href="mzscheme-Z-H-3.html#node_sec_3.10.2">3.10.2</a>).</p>
+<p>
+</p>
+<a name="node_sec_6.3"></a>
+<h2><a href="mzscheme.html#node_toc_node_sec_6.3">6.3&nbsp;&nbsp;Continuations</a></h2>
+<p><a name="node_idx_810"></a></p>
+<p>
+<a name="node_idx_812"></a>
+<a name="node_idx_814"></a>
+<a name="node_idx_816"></a>
+<a name="node_idx_818"></a>
+<a name="node_idx_820"></a>
+MzScheme supports fully re-entrant
+<a name="node_idx_822"></a><code class=scheme>call-with-current-continuation</code> (or
+<a name="node_kw_definitioncall/cc"></a><a name="node_idx_824"></a><code class=scheme>call/cc</code>). The macro <a name="node_kw_definitionlet/cc"></a><a name="node_idx_826"></a><code class=scheme><span class=keyword>let/cc</span></code> binds a
+variable to the continuation in an immediate body of expressions:
+</p>
+<div align=left><pre class=scheme> (<span class=keyword>let/cc</span> <span class=variable>k</span> <span class=variable>expr</span> <tt>&middot;&middot;&middot;</tt><sup>1</sup>)
+<tt>=expands=&gt;</tt>
+ (<code class=scheme>call/cc</code> (<span class=keyword>lambda</span> (<span class=variable>k</span>) <span class=variable>expr</span> <tt>&middot;&middot;&middot;</tt><sup>1</sup>))
+</pre></div><p>
+A continuation can only be invoked from the thread (see
+Chapter&nbsp;<a href="mzscheme-Z-H-7.html#node_chap_7">7</a>) in which it was captured. Multiple return values
+can be passed to a continuation (see section&nbsp;<a href="mzscheme-Z-H-2.html#node_sec_2.2">2.2</a>).</p>
+<p>
+<a name="node_idx_828"></a>
+<a name="node_idx_830"></a>
+MzScheme installs a <strong>continuation boundary</strong> around evaluation
+in the following contexts, preventing full-continuation jumps across
+the boundary:
+</p>
+<ul>
+<li><p>applying an exception handler, an error escape handler, or an
+error display handler (see section&nbsp;<a href="#node_sec_6.1">6.1</a>);</p>
+<p>
+</p>
+<li><p>applying a macro transformer (see section&nbsp;<a href="mzscheme-Z-H-12.html#node_sec_12.6">12.6</a>),
+evaluating a compile-time expression, or applying a module name
+resolver (see section&nbsp;<a href="mzscheme-Z-H-5.html#node_sec_5.4.1">5.4.1</a>);</p>
+<p>
+</p>
+<li><p>applying a custom-port procedure (see section&nbsp;<a href="mzscheme-Z-H-11.html#node_sec_11.1.6">11.1.6</a>), a
+waitable guard procedure (see section&nbsp;<a href="mzscheme-Z-H-7.html#node_sec_7.6">7.6</a>), or a parameter guard
+procedure (see section&nbsp;<a href="mzscheme-Z-H-7.html#node_sec_7.7">7.7</a>);</p>
+<p>
+</p>
+<li><p>applying a security-guard procedure (see
+section&nbsp;<a href="mzscheme-Z-H-9.html#node_sec_9.1">9.1</a>);</p>
+<p>
+</p>
+<li><p>applying a will procedure (see section&nbsp;<a href="mzscheme-Z-H-13.html#node_sec_13.2">13.2</a>); or</p>
+<p>
+</p>
+<li><p>evaluating or loading code from the stand-alone MzScheme
+command line (see section&nbsp;<a href="mzscheme-Z-H-17.html#node_chap_17">17</a>).</p>
+<p>
+</p>
+</ul><p>
+In addition, extensions of MzScheme may install boundaries in
+additional contexts. In particular, MrEd installs a continuation
+boundary around most every callback.</p>
+<p>
+<a name="node_idx_832"></a>
+<a name="node_idx_834"></a> <a name="node_idx_836"></a>
+<a name="node_idx_838"></a>
+In addition to regular <code class=scheme><code class=scheme>call/cc</code></code>, MzScheme provides
+<a name="node_kw_definitioncall-with-escape-continuation"></a><a name="node_idx_840"></a><code class=scheme>call-with-escape-continuation</code> (or
+<a name="node_kw_definitioncall/ec"></a><a name="node_idx_842"></a><code class=scheme>call/ec</code>) and <a name="node_kw_definitionlet/ec"></a><a name="node_idx_844"></a><code class=scheme><span class=keyword>let/ec</span></code>.  A continuation
+obtained from <code class=scheme><code class=scheme>call/ec</code></code> can only be used to <em>escape</em> back to
+the continuation; i.e., an escape continuation is only valid when the
+current continuation is an extension of the escape continuation.  The
+application of <code class=scheme><code class=scheme>call/ec</code></code>'s argument is not a tail
+call. <a name="node_idx_846"></a></p>
+<p>
+Escape continuations are provided for two reasons: 1) they are
+significantly cheaper than full continuations; and 2) they can cross
+continuation boundaries (which full continuations cannot cross).</p>
+<p>
+The <a name="node_idx_848"></a><code class=scheme>exn:application:continuation</code> exception is raised when a continuation is
+applied by the wrong thread, a continuation application would violate
+a continuation boundary, or an escape continuation is applied outside
+of its dynamic scope.</p>
+<p>
+</p>
+<a name="node_sec_6.4"></a>
+<h2><a href="mzscheme.html#node_toc_node_sec_6.4">6.4&nbsp;&nbsp;Dynamic Wind</a></h2>
+<p><a name="node_idx_850"></a></p>
+<p>
+<a name="node_idx_852"></a><a name="node_kw_definitiondynamic-wind"></a><code class=scheme>(dynamic-wind</code><tt>&nbsp;</tt><code class=scheme><span class=variable>pre-thunk value-thunk post-thunk</span></code><code class=scheme>)</code> applies its three
+thunk arguments in order.  The value of a <code class=scheme><code class=scheme>dynamic-wind</code></code>
+expression is the value returned by <code class=scheme><span class=variable>value-thunk</span></code>. The
+<code class=scheme><span class=variable>pre-thunk</span></code> procedure is invoked before calling <code class=scheme><span class=variable>value-thunk</span></code>
+and <code class=scheme><span class=variable>post-thunk</span></code> is invoked after <code class=scheme><span class=variable>value-thunk</span></code> returns. The
+special properties of <code class=scheme><code class=scheme>dynamic-wind</code></code> are manifest when control
+jumps into or out of the <code class=scheme><span class=variable>value-thunk</span></code> application (either due to
+an exception or a continuation invocation): every time control jumps
+into the <code class=scheme><span class=variable>value-thunk</span></code> application, <code class=scheme><span class=variable>pre-thunk</span></code> is invoked,
+and every time control jumps out of <code class=scheme><span class=variable>value-thunk</span></code>,
+<code class=scheme><span class=variable>post-thunk</span></code> is invoked. (No special handling is performed for
+jumps into or out of the <code class=scheme><span class=variable>pre-thunk</span></code> and <code class=scheme><span class=variable>post-thunk</span></code>
+applications.)</p>
+<p>
+When <code class=scheme><code class=scheme>dynamic-wind</code></code> calls <code class=scheme><span class=variable>pre-thunk</span></code> for normal evaluation of
+<code class=scheme><span class=variable>value-thunk</span></code>, the continuation of the <code class=scheme><span class=variable>pre-thunk</span></code>
+application calls <code class=scheme><span class=variable>value-thunk</span></code> (with <code class=scheme><code class=scheme>dynamic-wind</code></code>'s
+special jump handling) and then <code class=scheme><span class=variable>post-thunk</span></code>.  Similarly,
+the continuation of the <code class=scheme><span class=variable>post-thunk</span></code> application returns the
+value of the preceding <code class=scheme><span class=variable>value-thunk</span></code> application to the
+continuation of the entire <code class=scheme><code class=scheme>dynamic-wind</code></code> application.</p>
+<p>
+When <code class=scheme><span class=variable>pre-thunk</span></code> is called due to a continuation jump, the
+continuation of <code class=scheme><span class=variable>pre-thunk</span></code>
+</p>
+<ol><p>
+</p>
+<li><p>jumps to a more deeply nested <code class=scheme><span class=variable>pre-thunk</span></code>, if any, or jumps
+to the destination continuation; then</p>
+<p>
+</p>
+<li><p>continues with the context of the <code class=scheme><span class=variable>pre-thunk</span></code>'s
+<code class=scheme><code class=scheme>dynamic-wind</code></code> call.</p>
+<p>
+</p>
+</ol><p>
+Normally, the second part of this continuation is never reached, due
+to a jump in the first part. However, the second part is relevant
+because it enables jumps to escape continuations that are contained
+in the context of the <code class=scheme><code class=scheme>dynamic-wind</code></code> call. Similarly, when
+<code class=scheme><span class=variable>post-thunk</span></code> is called due to a continuation jump, the
+continuation of <code class=scheme><span class=variable>post-thunk</span></code> jumps to a less deeply nested
+<code class=scheme><span class=variable>post-thunk</span></code>, if any, or jumps to a <code class=scheme><span class=variable>pre-thunk</span></code> protecting
+the destination, if any, or jumps to the destination continuation,
+then continues from the <code class=scheme><span class=variable>post-thunk</span></code>'s <code class=scheme><code class=scheme>dynamic-wind</code></code>
+application.</p>
+<p>
+Example:
+</p>
+<div align=left><pre class=scheme>(<span class=keyword>let</span> ([<span class=variable>v</span> (<span class=keyword>let/ec</span> <span class=variable>out</span> 
+           (<code class=scheme>dynamic-wind</code>
+            (<span class=keyword>lambda</span> () (<code class=scheme>display</code> <span class=selfeval>&quot;in &quot;</span>)) 
+            (<span class=keyword>lambda</span> () 
+              (<code class=scheme>display</code> <span class=selfeval>&quot;pre &quot;</span>) 
+              (<code class=scheme>display</code> (<code class=scheme>call/cc</code> <span class=variable>out</span>))
+              <span class=selfeval>#f</span>) 
+            (<span class=keyword>lambda</span> () (<code class=scheme>display</code> <span class=selfeval>&quot;out &quot;</span>))))])  
+  (<span class=keyword>when</span> <span class=variable>v</span> (<span class=variable>v</span> <span class=selfeval>&quot;post &quot;</span>))) 
+<span class=comment> =&gt; <code class=scheme><code class=scheme>display</code></code>s <code class=schemeresponse><span class=variable>in</span> <span class=variable>pre</span> <span class=variable>out</span> <span class=variable>in</span> <span class=variable>post</span> <span class=variable>out</span></code></span>
+</pre></div><p>
+</p>
+<div align=left><pre class=scheme>(<span class=keyword>let/ec</span> <span class=variable>k0</span>
+  (<span class=keyword>let/ec</span> <span class=variable>k1</span>
+    (<code class=scheme>dynamic-wind</code>
+     <code class=scheme>void</code>
+     (<span class=keyword>lambda</span> () (<span class=variable>k0</span> <span class=keyword>'</span><span class=variable>cancel</span>))
+     (<span class=keyword>lambda</span> () (<span class=variable>k1</span> <span class=keyword>'</span><span class=variable>cancel-canceled</span>)))))
+<span class=comment> =&gt; <code class=schemeresponse><span class=keyword>'</span><span class=variable>cancel-canceled</span></code></span>
+</pre></div><p></p>
+<p>
+</p>
+<a name="node_sec_6.5"></a>
+<h2><a href="mzscheme.html#node_toc_node_sec_6.5">6.5&nbsp;&nbsp;Continuation Marks</a></h2>
+<p><a name="node_idx_854"></a></p>
+<p>
+To evaluate a sub-expression, MzScheme creates a continuation for the
+sub-expression that extends the current continuation. For example, to
+evaluate <code class=scheme><code class=scheme><span class=variable>expr<sub>1</sub></span></code></code> in the expression
+</p>
+<div align=left><pre class=scheme>(<span class=keyword>begin</span> 
+  <code class=scheme><span class=variable>expr<sub>1</sub></span></code>
+  <code class=scheme><span class=variable>expr<sub>2</sub></span></code>)
+</pre></div><p>
+MzScheme extends the continuation of the <code class=scheme><span class=keyword>begin</span></code> expression
+with one <strong>continuation frame</strong> to create the continuation for
+<code class=scheme><code class=scheme><span class=variable>expr<sub>1</sub></span></code></code>. In contrast, <code class=scheme><code class=scheme><span class=variable>expr<sub>2</sub></span></code></code> is in <strong>tail
+position</strong> for the <code class=scheme><span class=keyword>begin</span></code> expression, so its continuation is the
+same as the continuation of the <code class=scheme><span class=keyword>begin</span></code> expression.</p>
+<p>
+A <strong>continuation mark</strong> is a keyed mark in a continuation frame.
+A program can install a mark in the first frame of its current
+continuation, and it can extract the marks from all of the frames in
+any continuation. Continuation marks support debuggers and other
+program-tracing facilities; in particular, continuation frames
+roughly correspond to stack frames in traditional languages. For
+example, a debugger can annotate a source program to store
+continuation marks that relate each expression to its source
+location; when an exception occurs, the marks are extracted from the
+current continuation to produce a ``stack trace'' for the exception.</p>
+<p>
+The list of continuation marks for a key <code class=scheme><span class=variable>k</span></code> and a continuation
+<code class=scheme><span class=variable>C</span></code> that extends <code class=scheme><span class=variable>C<sub>0</sub></span></code> is defined as follows:
+</p>
+<ul><p>
+</p>
+<li><p>If <code class=scheme><span class=variable>C</span></code> is an empty continuation, then the mark list is
+<code class=scheme><code class=scheme>null</code></code>.</p>
+<p>
+</p>
+<li><p>If <code class=scheme><span class=variable>C</span></code>'s first frame contains a mark <code class=scheme><span class=variable>m</span></code> for <code class=scheme><span class=variable>k</span></code>,
+then the mark list for <code class=scheme><span class=variable>C</span></code> is <code class=scheme>(cons <code class=scheme><span class=variable>m</span></code> <code class=scheme><span class=variable>l<sub>0</sub></span></code>)</code>,
+where <code class=scheme><span class=variable>l<sub>0</sub></span></code> is the mark list for <code class=scheme><span class=variable>k</span></code> in <code class=scheme><span class=variable>C<sub>0</sub></span></code>.</p>
+<p>
+</p>
+<li><p>If <code class=scheme><span class=variable>C</span></code>'s first frame does not contain a mark keyed by
+<code class=scheme><span class=variable>k</span></code>, then the mark list for <code class=scheme><span class=variable>C</span></code> is the mark list for
+<code class=scheme><span class=variable>C<sub>0</sub></span></code>.</p>
+<p>
+</p>
+</ul><p></p>
+<p>
+The <a name="node_kw_definitionwith-continuation-mark"></a><a name="node_idx_856"></a><code class=scheme><span class=keyword>with-continuation-mark</span></code> form installs a mark on the
+first frame of the current continuation:
+</p>
+<div align=left><pre class=scheme>(<span class=keyword>with-continuation-mark</span> <span class=variable>key-expr</span> <span class=variable>mark-expr</span> 
+   <span class=variable>body-expr</span>)
+</pre></div><p>
+The <code class=scheme><span class=variable>key-expr</span></code>, <code class=scheme><span class=variable>mark-expr</span></code>, and <code class=scheme><span class=variable>body-expr</span></code> expressions
+are evaluated in order. After <code class=scheme><span class=variable>key-expr</span></code> is evaluated to obtain a
+key and <code class=scheme><span class=variable>mark-expr</span></code> is evaluated to obtain a mark, the key is
+mapped to the mark in the current continuation's initial frame. If
+the frame already has a mark for the key, it is replaced. Finally,
+the <code class=scheme><span class=variable>body-expr</span></code> is evaluated; the continuation for evaluating
+<code class=scheme><span class=variable>body-expr</span></code> is the continuation of the
+<code class=scheme><span class=keyword>with-continuation-mark</span></code> expression (so the result of the
+<code class=scheme><span class=variable>body-expr</span></code> is the result of the <code class=scheme><span class=keyword>with-continuation-mark</span></code>
+expression, and <code class=scheme><span class=variable>body-expr</span></code> is in tail position for the
+<code class=scheme><span class=keyword>with-continuation-mark</span></code> expression).</p>
+<p>
+The <code class=scheme><code class=scheme>continuation-marks</code></code> procedure extracts the complete
+set of continuation marks from a continuation:
+</p>
+<ul><p>
+</p>
+<li><p><a name="node_idx_858"></a><a name="node_kw_definitioncontinuation-marks"></a><code class=scheme>(continuation-marks</code><tt>&nbsp;</tt><code class=scheme><span class=variable>cont</span></code><code class=scheme>)</code> returns an opaque value
+containing the set of continuation marks for all keys in the
+continuation <code class=scheme><span class=variable>cont</span></code>.</p>
+<p>
+</p>
+<li><p><a name="node_idx_860"></a><a name="node_kw_definitioncurrent-continuation-marks"></a><code class=scheme>(current-continuation-marks</code><code class=scheme>)</code> returns an opaque value
+containing the set of continuation marks for all keys in the current
+continuation. In other words, it produces the same value as
+<code class=scheme>(<code class=scheme>call-with-current-continuation</code> <code class=scheme>continuation-marks</code>)</code>.</p>
+<p>
+</p>
+</ul><p></p>
+<p>
+The <code class=scheme><code class=scheme>continuation-mark-set-&gt;list</code></code> procedure extracts mark values
+for a particular key from a continuation mark set:
+</p>
+<ul><p>
+</p>
+<li><p><a name="node_idx_862"></a><a name="node_kw_definitioncontinuation-mark-set->list"></a><code class=scheme>(continuation-mark-set-&gt;list</code><tt>&nbsp;</tt><code class=scheme><span class=variable>mark-set key-v</span></code><tt>&nbsp;</tt>[<code class=scheme><span class=variable>skip-v</span></code>]<code class=scheme>)</code>
+returns a newly-created list containing the marks for <code class=scheme><span class=variable>key-v</span></code> in
+<code class=scheme><span class=variable>mark-set</span></code>, which is a set of marks returned by
+<code class=scheme><code class=scheme>current-continuation-marks</code></code>. If <code class=scheme><span class=variable>skip-v</span></code> is provided,
+then it is inserted into the list once for every consecutive sequence
+of frames without a <code class=scheme><span class=variable>key-v</span></code> mark.</p>
+<p>
+</p>
+<li><p><a name="node_idx_864"></a><a name="node_kw_definitioncontinuation-mark-set_Q_"></a><code class=scheme>(continuation-mark-set?</code><tt>&nbsp;</tt><code class=scheme><span class=variable>v</span></code><code class=scheme>)</code> returns <code class=scheme><span class=selfeval>#t</span></code> if <code class=scheme><span class=variable>v</span></code>
+is a mark set created by <code class=scheme><code class=scheme>continuation-marks</code></code> or
+<code class=scheme><code class=scheme>current-continuation-marks</code></code>, <code class=scheme><span class=selfeval>#f</span></code> otherwise.</p>
+<p>
+</p>
+</ul><p></p>
+<p>
+Examples:
+</p>
+<div align=left><pre class=scheme>(<span class=keyword>define</span> (<span class=variable>extract-current-continuation-marks</span> <span class=variable>key</span>) 
+   (<code class=scheme>continuation-mark-set-&gt;list</code> 
+    (<code class=scheme>current-continuation-marks</code>) 
+    <span class=variable>key</span>)) 
+
+(<span class=keyword>with-continuation-mark</span> <span class=keyword>'</span><span class=variable>key</span> <span class=keyword>'</span><span class=variable>mark</span> 
+  (<span class=variable>extract-current-continuation-marks</span> <span class=keyword>'</span><span class=variable>key</span>)) <span class=comment>; =&gt; <code class=schemeresponse><span class=keyword>'</span>(<span class=variable>mark</span>)</code> </span>
+
+(<span class=keyword>with-continuation-mark</span> <span class=keyword>'</span><span class=variable>key1</span> <span class=keyword>'</span><span class=variable>mark1</span> 
+  (<span class=keyword>with-continuation-mark</span> <span class=keyword>'</span><span class=variable>key2</span> <span class=keyword>'</span><span class=variable>mark2</span> 
+    (<code class=scheme>list</code> 
+     (<span class=variable>extract-current-continuation-marks</span> <span class=keyword>'</span><span class=variable>key1</span>) 
+     (<span class=variable>extract-current-continuation-marks</span> <span class=keyword>'</span><span class=variable>key2</span>)))) <span class=comment>; =&gt; <code class=schemeresponse><span class=keyword>'</span>((<span class=variable>mark1</span>) (<span class=variable>mark2</span>))</code> </span>
+
+(<span class=keyword>with-continuation-mark</span> <span class=keyword>'</span><span class=variable>key</span> <span class=keyword>'</span><span class=variable>mark1</span> 
+  (<span class=keyword>with-continuation-mark</span> <span class=keyword>'</span><span class=variable>key</span> <span class=keyword>'</span><span class=variable>mark2</span> <span class=comment>; replaces the previous mark </span>
+    (<span class=variable>extract-current-continuation-marks</span> <span class=keyword>'</span><span class=variable>key</span>)))) <span class=comment>; =&gt; <code class=schemeresponse><span class=keyword>'</span>(<span class=variable>mark2</span>)</code> </span>
+
+(<span class=keyword>with-continuation-mark</span> <span class=keyword>'</span><span class=variable>key</span> <span class=keyword>'</span><span class=variable>mark1</span> 
+  (<code class=scheme>list</code> <span class=comment>; continuation extended to evaluate the argument </span>
+   (<span class=keyword>with-continuation-mark</span> <span class=keyword>'</span><span class=variable>key</span> <span class=keyword>'</span><span class=variable>mark2</span> 
+      (<span class=variable>extract-current-continuation-marks</span> <span class=keyword>'</span><span class=variable>key</span>)))) <span class=comment>; =&gt; <code class=schemeresponse><span class=keyword>'</span>((<span class=variable>mark1</span> <span class=variable>mark2</span>))</code> </span>
+
+(<span class=keyword>let</span> <span class=variable>loop</span> ([<span class=variable>n</span> <span class=selfeval>1000</span>])
+  (<span class=keyword>if</span> (<code class=scheme>zero?</code> <span class=variable>n</span>) 
+      (<span class=variable>extract-current-continuation-marks</span> <span class=keyword>'</span><span class=variable>key</span>) 
+      (<span class=keyword>with-continuation-mark</span> <span class=keyword>'</span><span class=variable>key</span> <span class=variable>n</span>
+        (<span class=variable>loop</span> (<code class=scheme>sub1</code> <span class=variable>n</span>))))) <span class=comment>; =&gt; <code class=schemeresponse><span class=keyword>'</span>(<span class=selfeval>1</span>)</code></span>
+</pre></div><p></p>
+<p>
+In the final example, the continuation mark is set 1000 times, but
+<code class=scheme><span class=variable>extract-current-continuation-marks</span></code> returns only one mark
+value. Because <code class=scheme><span class=variable>loop</span></code> is called tail-recursively, the
+continuation of each call to <code class=scheme><span class=variable>loop</span></code> is always the continuation of
+the entire expression. Therefore, the <code class=scheme><span class=keyword>with-continuation-mark</span></code>
+expression replaces the existing mark each time rather than adding a
+new one.</p>
+<p>
+Whenever MzScheme creates an exception record, it fills the
+<code class=scheme><code class=scheme>continuation-marks</code></code> field with the value of
+<code class=scheme>(current-continuation-marks)</code>, thus providing a snapshot of the
+continuation marks at the time of the exception.</p>
+<p>
+When a continuation procedure returned by
+<code class=scheme><code class=scheme>call-with-current-continuation</code></code> is invoked, it restores the
+captured continuation, and also restores the marks in the
+continuation's frames to the marks that were present when
+<code class=scheme><code class=scheme>call-with-current-continuation</code></code> was invoked.</p>
+<p>
+</p>
+<a name="node_sec_6.6"></a>
+<h2><a href="mzscheme.html#node_toc_node_sec_6.6">6.6&nbsp;&nbsp;Breaks</a></h2>
+<p><a name="node_idx_866"></a></p>
+<p>
+<a name="node_idx_868"></a><a name="node_idx_870"></a>
+A <strong>break</strong> is an asynchronous exception, usually triggered
+through an external source controlled by the user, or through the
+<a name="node_idx_872"></a><code class=scheme>break-thread</code> procedure (see section&nbsp;<a href="mzscheme-Z-H-7.html#node_sec_7.3">7.3</a>). A break
+exception can only occur in a thread while breaks are enabled. When a
+break is detected and enabled, the <a name="node_idx_874"></a><code class=scheme>exn:break</code> exception is raised in the thread
+sometime afterward; if breaking is disabled when
+<code class=scheme><code class=scheme>break-thread</code></code> is called, the break is suspended until
+breaking is again enabled for the thread. While a thread has a
+suspended break, additional breaks are ignored.</p>
+<p>
+Breaks are enabled through the <code class=scheme><code class=scheme>break-enabled</code></code> parameter (see
+section&nbsp;<a href="mzscheme-Z-H-7.html#node_sec_7.7.1.8">7.7.1.8</a>). Certain procedures, such as
+<code class=scheme><code class=scheme>semaphore-wait/enable-break</code></code>, enable breaks temporarily while
+performing a blocking action. However, breaks are always disabled
+while an exception handler is executing, and cannot be enabled
+through <code class=scheme><code class=scheme>break-enabled</code></code> or uses of procedures like
+<code class=scheme><code class=scheme>semaphore-wait/enable-break</code></code>. Note that the handling
+procedures supplied to <code class=scheme><span class=keyword>with-handlers</span></code> are <em>not</em> exception
+handlers, so breaking within such procedures is controlled by
+<code class=scheme><code class=scheme>break-enabled</code></code>. Breaks are also disabled (independent of
+<code class=scheme><code class=scheme>break-enabled</code></code> and <code class=scheme>.../enable-break</code>) during the
+evaluation of the ``pre'' and ``post'' thunks for a
+<code class=scheme><code class=scheme>dynamic-wind</code></code>, whether called during the normal
+<code class=scheme><code class=scheme>dynamic-wind</code></code> calling sequence or via a continuation
+jump.</p>
+<p>
+If breaks are enabled for a thread, and if a break is triggered for
+the thread but not yet delivered as an <a name="node_idx_876"></a><code class=scheme>exn:break</code> exception,
+then the break is guaranteed to be delivered before breaks can be
+disabled in the thread. The timing of <a name="node_idx_878"></a><code class=scheme>exn:break</code> exceptions is
+not guaranteed in any other way.</p>
+<p>
+If a break is triggered for a thread that is blocked on a nested
+thread (see <code class=scheme><code class=scheme>call-in-nested-thread</code></code>), and if breaks are
+enabled in the blocked thread, the break is implicitly handled by
+transferring it to the nested thread.</p>
+<p>
+When breaks are enabled, they can occur at any point within execution,
+which makes certain implementation tasks subtle. For example,
+assuming breaks are enabled when the following code is executed,
+</p>
+<div align=left><pre class=scheme>(<span class=keyword>with-handlers</span> ([<code class=scheme>exn:break?</code> (<span class=keyword>lambda</span> (<span class=variable>x</span>) (<code class=scheme>void</code>))])
+  (<code class=scheme>semaphore-wait</code> <span class=variable>s</span>))
+</pre></div><p>
+then it is <em>not</em> the case that a void result means the
+semaphore was decremented or a break was received, <em>exclusively</em>. It is possible that <em>both</em> occur: the break may
+occur after the semaphore is successfully decremented but before a
+void result is returned by <code class=scheme><code class=scheme>semaphore-wait</code></code>. A break
+exception will never damage a semaphore, or any other built-in
+construct, but many built-in procedures (including
+<code class=scheme><code class=scheme>semaphore-wait</code></code>) contain internal sub-expressions that can be
+interrupted by a break.</p>
+<p>
+In general, it is impossible using only <code class=scheme><code class=scheme>semaphore-wait</code></code> to
+implement the guarantee that either the semaphore is decremented or
+an exception is raised, but not both.  MzScheme therefore supplies
+<code class=scheme><code class=scheme>semaphore-wait/enable-break</code></code> (see section&nbsp;<a href="mzscheme-Z-H-7.html#node_sec_7.4">7.4</a>), which
+does permit the implementation of such an exclusive guarantee:
+</p>
+<div align=left><pre class=scheme>(<span class=keyword>parameterize</span> ([<code class=scheme>break-enabled</code> <span class=selfeval>#f</span>])
+  (<span class=keyword>with-handlers</span> ([<code class=scheme>exn:break?</code> (<span class=keyword>lambda</span> (<span class=variable>x</span>) (<code class=scheme>void</code>))])
+    (<code class=scheme>semaphore-wait/enable-break</code> <span class=variable>s</span>)))
+</pre></div><p>
+In the above expression, a break can occur at any point until break
+are disabled, in which case a break exception is propagated to the
+enclosing exception handler. Otherwise, the break can only occur
+within <code class=scheme><code class=scheme>semaphore-wait/enable-break</code></code>, which guarantees that if a
+break exception is raised, the semaphore will not have been
+decremented.</p>
+<p>
+To allow similar implementation patterns over blocking port
+operations, MzScheme provides
+<code class=scheme><code class=scheme>read-string-avail!/enable-break</code></code> (see section&nbsp;<a href="mzscheme-Z-H-11.html#node_sec_11.2.1">11.2.1</a>),
+<code class=scheme><code class=scheme>write-string-avail/enable-break</code></code> (see section&nbsp;<a href="mzscheme-Z-H-11.html#node_sec_11.2.2">11.2.2</a>), and
+other procedures.</p>
+<p>
+</p>
+<a name="node_sec_6.7"></a>
+<h2><a href="mzscheme.html#node_toc_node_sec_6.7">6.7&nbsp;&nbsp;Error Escape Handler</a></h2>
+<p><a name="node_idx_880"></a></p>
+<p>
+<a name="node_idx_882"></a>
+Special control flow for exceptions is performed by an <strong>error
+escape handler</strong> that is called by the default exception handler. An
+error escape handler takes no arguments and must escape from the
+expression that raised the exception. The error escape handler is
+obtained or set using the <a name="node_idx_884"></a><code class=scheme>error-escape-handler</code> parameter
+(see section&nbsp;<a href="mzscheme-Z-H-7.html#node_sec_7.7.1.7">7.7.1.7</a>).</p>
+<p>
+An error escape handler cannot invoke a full continuation that was
+created prior to the exception, but it <em>can</em> invoke an escape
+continuation (see section&nbsp;<a href="#node_sec_6.3">6.3</a>).</p>
+<p>
+The error escape handler is normally called directly by an exception
+handler. To escape from a run-time error, use <code class=scheme><code class=scheme>raise</code></code> (see
+section&nbsp;<a href="#node_sec_6.1">6.1</a>) or <code class=scheme><code class=scheme>error</code></code> (see section&nbsp;<a href="#node_sec_6.2">6.2</a>) instead.</p>
+<p>
+If an exception is raised while the error escape handler is executing,
+an error message is printed using a primitive error printer and a
+primitive error escape handler is invoked.</p>
+<p>
+In the following example, the error escape handler is set so that
+errors do not escape from a custom <code class=scheme>read</code>-<code class=scheme>eval</code>-<code class=scheme>print</code> loop:
+</p>
+<div align=left><pre class=scheme>(<span class=keyword>let</span> ([<span class=variable>orig</span> (<code class=scheme>error-escape-handler</code>)])
+  (<span class=keyword>let/ec</span> <code class=scheme>exit</code>
+    (<span class=keyword>let</span> <span class=variable>retry-loop</span> ()
+      (<span class=keyword>let/ec</span> <span class=variable>escape</span>
+        (<code class=scheme>error-escape-handler</code>
+         (<span class=keyword>lambda</span> () (<span class=variable>escape</span> <span class=selfeval>#f</span>)))
+        (<span class=keyword>let</span> <span class=variable>loop</span> ()
+          (<span class=keyword>let</span> ([<code class=scheme>e</code> (<span class=variable>my-read</span>)])
+            (<span class=keyword>if</span> (<span class=variable>eof-object?</span> <code class=scheme>e</code>)
+                (<code class=scheme>exit</code> <span class=keyword>'</span><span class=variable>done</span>)
+                (<span class=keyword>let</span> ([<span class=variable>v</span> (<span class=variable>my-eval</span> <code class=scheme>e</code>)])
+                  (<span class=variable>my-print</span> <span class=variable>v</span>)
+                  (<span class=variable>loop</span>))))))
+      (<span class=variable>retry-loop</span>)))
+  (<code class=scheme>error-escape-handler</code> <span class=variable>orig</span>))
+</pre></div><p></p>
+<p>
+See also <code class=scheme><code class=scheme>read-eval-print-loop</code></code> in section&nbsp;<a href="mzscheme-Z-H-14.html#node_sec_14.1">14.1</a> for a simpler
+implementation of this example.</p>
+<p>
+</p>
+<div class=footnoterule><hr></div><p></p>
+<div class=footnote><p><a name="footnote_Temp_10"></a><a href="#call_footnote_Temp_10"><sup><small>7</small></sup></a> See
+<a href="http://www.cs.indiana.edu/scheme-repository/doc.proposals.exceptions.html">http://www.cs.indiana.edu/scheme-repository/doc.proposals.exceptions.html</a></p>
+</div>
+<div align=right class=navigation><i>[Go to <span><a href="mzscheme.html">first</a>, <a href="mzscheme-Z-H-5.html">previous</a></span><span>, <a href="mzscheme-Z-H-7.html">next</a></span> page<span>; &nbsp;&nbsp;</span><span><a href="mzscheme.html#node_toc_start">contents</a></span><span><span>; &nbsp;&nbsp;</span><a href="mzscheme-Z-H-19.html#node_index_start">index</a></span>]</i></div><p></p>
+</body>
+</html>

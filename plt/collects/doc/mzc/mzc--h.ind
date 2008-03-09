@@ -1,0 +1,155 @@
+\begin{theindex}
+
+  \item \PDFlag{setup}, \expandhtmlindex{202}
+  \item \DFlag{all-users}, \expandhtmlindex{208}
+  \item \DFlag{at-plt}, \expandhtmlindex{206}
+  \item \DFlag{collection-extension}, \expandhtmlindex{154}
+  \item \DFlag{collection-plt}, \expandhtmlindex{196}
+  \item \DFlag{collection-zos}, \expandhtmlindex{152}
+  \item \DFlag{embedded}, \expandhtmlindex{180}
+  \item \DFlag{exe}, \expandhtmlindex{164}
+  \item \DFlag{extension}, \expandhtmlindex{104}, \expandhtmlindex{106}
+  \item \DFlag{gui-exe}, \expandhtmlindex{166}
+  \item \DFlag{help}, \expandhtmlindex{40}
+  \item \DFlag{lib}, \expandhtmlindex{168}
+  \item \DFlag{link-extension}, \expandhtmlindex{142}
+  \item \DFlag{link-glue}, \expandhtmlindex{184}, \expandhtmlindex{188}
+  \item \DFlag{object}, \expandhtmlindex{138}, \expandhtmlindex{178}
+  \item \DFlag{plt}, \expandhtmlindex{194}
+  \item \DFlag{plt-name}, \expandhtmlindex{204}
+  \item \DFlag{prefix}, \expandhtmlindex{124}
+  \item \DFlag{prim}, \expandhtmlindex{44}
+  \item \DFlag{replace}, \expandhtmlindex{200}
+  \item \DFlag{zo}, \expandhtmlindex{100}
+  \item \Flag{e}, \expandhtmlindex{102}
+  \item \Flag{g}, \expandhtmlindex{182}, \expandhtmlindex{186}
+  \item \Flag{h}, \expandhtmlindex{38}
+  \item \Flag{l}, \expandhtmlindex{140}
+  \item \Flag{o}, \expandhtmlindex{136}, \expandhtmlindex{176}
+  \item \Flag{p}, \expandhtmlindex{122}
+  \item \Flag{z}, \expandhtmlindex{98}
+  \item \File{.dll}, \expandhtmlindex{16}
+  \item \File{.plt}, \expandhtmlindex{198}
+  \item .plt distribution archives, \expandhtmlindex{192}
+  \item \File{.scm}, \expandhtmlindex{110}
+  \item \File{.so}, \expandhtmlindex{18}
+  \item \File{.ss}, \expandhtmlindex{108}
+  \item \File{.zo}, \expandhtmlindex{10}
+  \item \File{info.ss} File Format, \expandhtmlindex{210}
+  \item \File{\_loader.dll}, \expandhtmlindex{146}
+  \item \File{\_loader.so}, \expandhtmlindex{144}
+  \item {\mzc} Is Not..., \expandhtmlindex{26}
+  \item {\mzc} Is..., \expandhtmlindex{4}
+
+  \indexspace
+
+  \item About {\mzc}, \expandhtmlindex{2}
+  \item Autodetecting Compiled Files for Loading, \expandhtmlindex{128}
+
+  \indexspace
+
+  \item \scmk{bool}, \expandhtmlindex{62}
+  \item Building a Stand-alone Executable, \expandhtmlindex{158}
+  \item byte code, \expandhtmlindex{8}
+
+  \indexspace
+
+  \item C compiler, \expandhtmlindex{24}
+  \item \scmk{c-declare}, \expandhtmlindex{58}
+  \item \scmk{c-include}, \expandhtmlindex{60}
+  \item \scmk{c-lambda}, \expandhtmlindex{56}
+  \item \File{cffi.ss}, \expandhtmlindex{22}, \expandhtmlindex{50}
+  \item \scmk{char}, \expandhtmlindex{64}
+  \item \scmk{char-string}, \expandhtmlindex{86}
+  \item command line flags, \expandhtmlindex{34}
+  \item Compilation without Modules, \expandhtmlindex{116}
+  \item compiling
+    \subitem collections, \expandhtmlindex{150}
+    \subitem files, \expandhtmlindex{96}
+    \subitem multiple files, \expandhtmlindex{134}
+  \item Compiling Collections with {\mzc}, \expandhtmlindex{148}
+  \item Compiling Individual Files with {\mzc}, \expandhtmlindex{94}
+  \item Compiling Multiple Files to a Single Native-Code Library, 
+		\expandhtmlindex{132}
+  \item Compiling with Modules, \expandhtmlindex{112}
+  \item Creating Distribution Archives, \expandhtmlindex{190}
+
+  \indexspace
+
+  \item \scmk{double}, \expandhtmlindex{84}
+
+  \indexspace
+
+  \item \scmk{eval-when}, \expandhtmlindex{126}
+
+  \indexspace
+
+  \item Feeley, Marc, \expandhtmlindex{54}
+  \item \scmk{float}, \expandhtmlindex{82}
+  \item foreign-function interface (FFI), \expandhtmlindex{48}
+  \item Foreign-Function Interface to C, \expandhtmlindex{46}
+
+  \indexspace
+
+  \item Gambit-C, \expandhtmlindex{52}
+
+  \indexspace
+
+  \item help, \expandhtmlindex{36}
+
+  \indexspace
+
+  \item \File{info.ss}, \expandhtmlindex{156}
+  \item \File{info.ss} format, \expandhtmlindex{212}
+  \item \File{infotab.ss} library, \expandhtmlindex{214}
+  \item \scmk{int}, \expandhtmlindex{70}
+
+  \indexspace
+
+  \item loading compiled files, \expandhtmlindex{12}, 
+		\expandhtmlindex{20}, \expandhtmlindex{130}
+  \item \scmk{long}, \expandhtmlindex{74}
+
+  \indexspace
+
+  \item \scmk{module}, \expandhtmlindex{114}
+  \item {\mzc}, \expandhtmlindex{6}
+
+  \indexspace
+
+  \item native code, \expandhtmlindex{14}
+  \item Native Code Optimization from {\mzc}, \expandhtmlindex{42}
+  \item \scmk{nonnull-char-string}, \expandhtmlindex{88}
+
+  \indexspace
+
+  \item \scmk{pointer}, \expandhtmlindex{92}
+
+  \indexspace
+
+  \item \scmk{require}, \expandhtmlindex{118}
+  \item Running {\mzc}, \expandhtmlindex{30}
+  \item running {\mzc}, \expandhtmlindex{32}
+
+  \indexspace
+
+  \item \scmk{scheme-object}, \expandhtmlindex{90}
+  \item {\tt  scheme\_initialize}, \expandhtmlindex{174}
+  \item \scmk{short}, \expandhtmlindex{78}
+  \item \scmk{signed-char}, \expandhtmlindex{68}
+  \item stand-alone executables, \expandhtmlindex{28}, 
+		\expandhtmlindex{160}
+  \item Stand-Alone Executables from Native Code, \expandhtmlindex{170}
+  \item Stand-Alone Executables from Scheme Code, \expandhtmlindex{162}
+  \item {\tt  STANDALONE\_WITH\_EMBEDDED\_EXTENSION}, 
+		\expandhtmlindex{172}
+  \item syntax, \expandhtmlindex{120}
+
+  \indexspace
+
+  \item \scmk{unsigned-char}, \expandhtmlindex{66}
+  \item \scmk{unsigned-int}, \expandhtmlindex{72}
+  \item \scmk{unsigned-long}, \expandhtmlindex{76}
+  \item \scmk{unsigned-short}, \expandhtmlindex{80}
+
+\end{theindex}

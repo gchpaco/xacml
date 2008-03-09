@@ -1,0 +1,110 @@
+<!doctype html public "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!--
+
+Generated from mzlib.tex by tex2page, v 2004-09-11
+(running on MzScheme 209, unix), 
+(c) Dorai Sitaram, 
+http://www.ccs.neu.edu/~dorai/tex2page/tex2page-doc.html
+
+-->
+<head>
+<title>
+PLT MzLib: Libraries Manual
+</title>
+<link rel="stylesheet" type="text/css" href="mzlib-Z-S.css" title=default>
+<meta name=robots content="noindex,follow">
+</head>
+<body>
+<div align=right class=navigation><i>[Go to <span><a href="mzlib.html">first</a>, <a href="mzlib-Z-H-1.html">previous</a></span><span>, <a href="mzlib-Z-H-3.html">next</a></span> page<span>; &nbsp;&nbsp;</span><span><a href="mzlib.html#node_toc_start">contents</a></span><span><span>; &nbsp;&nbsp;</span><a href="mzlib-Z-H-42.html#node_index_start">index</a></span>]</i></div><p></p>
+<a name="node_chap_2"></a>
+<h1 class=chapter>
+<div class=chapterheading><a href="mzlib.html#node_toc_node_chap_2">Chapter 2</a></div><br>
+<a href="mzlib.html#node_toc_node_chap_2"><tt><strong>async-channel.ss</strong></tt>: Buffered Asynchronous Channels</a></h1>
+<p><a name="node_idx_4"></a><a name="node_idx_6"></a></p>
+<p>
+This library implemented buffered asynchronous channels to complement
+MzScheme's synchronous channels (see section&nbsp;<a href="../mzscheme/mzscheme-Z-H-7.html#node_sec_7.5">7.5</a> in <a href="../mzscheme/mzscheme.html"><i>PLT MzScheme: Language Manual</i></a>).</p>
+<p>
+
+
+</p>
+<p></p>
+<p>
+
+<a name="node_idx_8"></a><a name="node_kw_definitionmake-async-channel"></a><code class=scheme>(make-async-channel</code><tt>&nbsp;</tt>[<code class=scheme><span class=variable>limit-k</span></code>]<code class=scheme>)</code> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<small>P</small><small>R</small><small>O</small><small>C</small><small>E</small><small>D</small><small>U</small><small>R</small><small>E</small>
+</p>
+<p>
+Returns an asynchronous channel with a buffer limit of <code class=scheme><span class=variable>limit-k</span></code>
+items. A get operation blocks when the channel is empty, and a put
+operation blocks when the channel has <code class=scheme><span class=variable>limit-k</span></code> items already.</p>
+<p>
+If <code class=scheme><span class=variable>limit-k</span></code> is <code class=scheme><span class=selfeval>#f</span></code> (the default), the channel buffer has
+no limited (so a put never blocks). Otherwise, <code class=scheme><span class=variable>limit-k</span></code> must be
+a positive exact integer.</p>
+<p>
+The asynchronous channel value can be used directly
+with <code class=scheme>object-wait-multiple</code> (see section&nbsp;<a href="../mzscheme/mzscheme-Z-H-7.html#node_sec_7.6">7.6</a> in <a href="../mzscheme/mzscheme.html"><i>PLT MzScheme: Language Manual</i></a>). The channel
+blocks until <code class=scheme>async-channel-get</code> would return a value, and the
+unblock result is the received value.</p>
+<p>
+
+
+</p>
+<p></p>
+<p>
+
+<a name="node_idx_10"></a><a name="node_kw_definitionasync-channel-get"></a><code class=scheme>(async-channel-get</code><tt>&nbsp;</tt><code class=scheme><span class=variable>async-channel</span></code><code class=scheme>)</code> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<small>P</small><small>R</small><small>O</small><small>C</small><small>E</small><small>D</small><small>U</small><small>R</small><small>E</small>
+</p>
+<p>
+Blocks until at least one value is available in <code class=scheme><span class=variable>async-channel</span></code>,
+and then returns the first of the values that was put
+into <code class=scheme><span class=variable>async-channel</span></code>.</p>
+<p>
+
+
+</p>
+<p></p>
+<p>
+
+<a name="node_idx_12"></a><a name="node_kw_definitionasync-channel-try-get"></a><code class=scheme>(async-channel-try-get</code><tt>&nbsp;</tt><code class=scheme><span class=variable>async-channel</span></code><code class=scheme>)</code> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<small>P</small><small>R</small><small>O</small><small>C</small><small>E</small><small>D</small><small>U</small><small>R</small><small>E</small>
+</p>
+<p>
+If at least one value is immediately available in <code class=scheme><span class=variable>async-channel</span></code>,
+returns the first of the values that was put
+into <code class=scheme><span class=variable>async-channel</span></code>. If <code class=scheme><span class=variable>async-channel</span></code> is empty, the result
+is <code class=scheme><span class=selfeval>#f</span></code>.</p>
+<p>
+
+
+</p>
+<p></p>
+<p>
+
+<a name="node_idx_14"></a><a name="node_kw_definitionasync-channel-put"></a><code class=scheme>(async-channel-put</code><tt>&nbsp;</tt><code class=scheme><span class=variable>async-channel v</span></code><code class=scheme>)</code> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<small>P</small><small>R</small><small>O</small><small>C</small><small>E</small><small>D</small><small>U</small><small>R</small><small>E</small>
+</p>
+<p>
+Puts <code class=scheme><span class=variable>v</span></code> into <code class=scheme><span class=variable>async-channel</span></code>, blocking
+if <code class=scheme><span class=variable>async-channel</span></code>'s buffer is full until space is available.
+The result is void.</p>
+<p>
+
+
+</p>
+<p></p>
+<p>
+
+<a name="node_idx_16"></a><a name="node_kw_definitionmake-async-channel-put-waitable"></a><code class=scheme>(make-async-channel-put-waitable</code><tt>&nbsp;</tt><code class=scheme><span class=variable>async-channel v</span></code><code class=scheme>)</code> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<small>P</small><small>R</small><small>O</small><small>C</small><small>E</small><small>D</small><small>U</small><small>R</small><small>E</small>
+</p>
+<p>
+Returns a waitable object that is blocked
+while <code class=scheme>(async-channel-put <code class=scheme><span class=variable>async-channel</span></code> <code class=scheme><span class=variable>v</span></code>)</code> would
+block. The unblock result is the waitable object itself.
+See also section&nbsp;<a href="../mzscheme/mzscheme-Z-H-7.html#node_sec_7.6">7.6</a> in <a href="../mzscheme/mzscheme.html"><i>PLT MzScheme: Language Manual</i></a>.</p>
+<p>
+</p>
+<p>
+</p>
+<div align=right class=navigation><i>[Go to <span><a href="mzlib.html">first</a>, <a href="mzlib-Z-H-1.html">previous</a></span><span>, <a href="mzlib-Z-H-3.html">next</a></span> page<span>; &nbsp;&nbsp;</span><span><a href="mzlib.html#node_toc_start">contents</a></span><span><span>; &nbsp;&nbsp;</span><a href="mzlib-Z-H-42.html#node_index_start">index</a></span>]</i></div><p></p>
+</body>
+</html>

@@ -1,0 +1,324 @@
+<!doctype html public "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!--
+
+Generated from mzc.tex by tex2page, v 2004-09-11
+(running on MzScheme 209, unix), 
+(c) Dorai Sitaram, 
+http://www.ccs.neu.edu/~dorai/tex2page/tex2page-doc.html
+
+-->
+<head>
+<title>
+PLT mzc: MzScheme Compiler Manual
+</title>
+<link rel="stylesheet" type="text/css" href="mzc-Z-S.css" title=default>
+<meta name=robots content="noindex,follow">
+</head>
+<body>
+<div align=right class=navigation><i>[Go to <span><a href="mzc.html">first</a>, <a href="mzc.html">previous</a></span><span>, <a href="mzc-Z-H-2.html">next</a></span> page<span>; &nbsp;&nbsp;</span><span><a href="mzc.html#node_toc_start">contents</a></span><span><span>; &nbsp;&nbsp;</span><a href="mzc-Z-H-8.html#node_index_start">index</a></span>]</i></div><p></p>
+<a name="node_chap_1"></a>
+<h1 class=chapter>
+<div class=chapterheading><a href="mzc.html#node_toc_node_chap_1">Chapter 1</a></div><br>
+<a href="mzc.html#node_toc_node_chap_1">About <tt><strong>mzc</strong></tt></a></h1>
+<p><a name="node_idx_2"></a></p>
+<p>
+</p>
+<a name="node_sec_1.1"></a>
+<h2><a href="mzc.html#node_toc_node_sec_1.1">1.1&nbsp;&nbsp;<tt><strong>mzc</strong></tt> Is...</a></h2>
+<p><a name="node_idx_4"></a></p>
+<p>
+<a name="node_idx_6"></a></p>
+<p>
+The <tt><strong>mzc</strong></tt> compiler takes MzScheme (or MrEd) source code and produces
+either platform-independent byte-code compiled files (<tt><strong>.zo</strong></tt>
+files) or platform-specific native-code libraries (<tt><strong>.so</strong></tt> or
+<tt><strong>.dll</strong></tt> files) to be loaded into MzScheme (or MrEd). In the
+latter mode, <tt><strong>mzc</strong></tt> provides limited suport for interfacing directly
+to C libraries.</p>
+<p>
+<tt><strong>mzc</strong></tt> works on either individual files or on collections. (A
+<strong>collection</strong> is a group of files that conform to MzScheme's
+library collection system; see&nbsp;section&nbsp;<a href="../mzscheme/mzscheme-Z-H-16.html#node_chap_16">16</a> in <a href="../mzscheme/mzscheme.html"><i>PLT MzScheme: Language Manual</i></a>). In general, <tt><strong>mzc</strong></tt>
+works best with code using the <code class=scheme><span class=keyword>module</span></code> form.</p>
+<p>
+As a convenience for programmers writing low-level MzScheme
+extensions, <tt><strong>mzc</strong></tt> can compile and link plain C files that use
+MzScheme's <tt><strong>escheme.h</strong></tt> header. This facility is described in
+<a href="../insidemz/insidemz.html"><i>Inside PLT MzScheme</i></a>.</p>
+<p>
+Finally, <tt><strong>mzc</strong></tt> can perform miscellaneous tasks, such as embedding
+Scheme code in a copy of the MzScheme (or MrEd) binary to produce a
+stand-alone executable, or creating <tt><strong>.plt</strong></tt> distribution
+archives.</p>
+<p>
+</p>
+<a name="node_sec_1.1.1"></a>
+<h3><a href="mzc.html#node_toc_node_sec_1.1.1">1.1.1&nbsp;&nbsp;Byte-Code Compilation</a></h3>
+<p><a name="node_idx_8"></a>
+A byte-code file typically uses the file extension
+<tt><strong>.zo</strong></tt><a name="node_idx_10"></a>. The file starts with <code class=scheme>#~</code> followed by
+the byte-code data.</p>
+<p>
+<a name="node_idx_12"></a>
+Byte-code files are loaded into MzScheme in the same way as regular
+Scheme source files (e.g., with <code class=scheme>load</code>). The
+<code class=scheme>#~</code> marker causes MzScheme's reader to load byte
+codes instead of normal Scheme expressions. When a <tt><strong>.zo</strong></tt> file
+exists in a <tt><strong>compiled</strong></tt> subdirectory, it is sometimes loaded in
+place of a source file; see section&nbsp;<a href="mzc-Z-H-3.html#node_sec_3.3">3.3</a> for details.</p>
+<p>
+Byte-code programs produced by <tt><strong>mzc</strong></tt> run exactly the same as source
+code compiled by MzScheme directly (assuming the same set of bindings
+are in place at compile time and load time). In other words,
+byte-code compilation does not optimize the code any more than
+MzScheme's normal evaluator. However, a byte-code file can be loaded
+into MzScheme much faster than a source-code file.</p>
+<p>
+</p>
+<a name="node_sec_1.1.2"></a>
+<h3><a href="mzc.html#node_toc_node_sec_1.1.2">1.1.2&nbsp;&nbsp;Native-Code Compilation</a></h3>
+<p><a name="node_idx_14"></a>
+A native-code file is a platform-specific shared library. Under
+Windows, native-code files typically use the extension
+<tt><strong>.dll</strong></tt><a name="node_idx_16"></a>. Under Unix and MacOS, native-code files typically
+use the extension <tt><strong>.so</strong></tt><a name="node_idx_18"></a>.</p>
+<p>
+<a name="node_idx_20"></a>
+Native-code files are loaded into MzScheme with the
+<code class=scheme>load-extension</code> procedure (see section&nbsp;<a href="../mzscheme/mzscheme-Z-H-14.html#node_sec_14.7">14.7</a> in <a href="../mzscheme/mzscheme.html"><i>PLT MzScheme: Language Manual</i></a>). When a
+native-code file exists in a <tt><strong>compiled</strong></tt> subdirectory, it is
+sometimes loaded in place of a source file; see section&nbsp;<a href="mzc-Z-H-3.html#node_sec_3.3">3.3</a>
+for details.</p>
+<p>
+The native-code compiler attempts to optimize a source program so that
+it runs faster than the source-code or byte-code version of the
+program. See section&nbsp;<a href="#node_sec_1.4">1.4</a> for information on obtaining the best
+possible performance from <tt><strong>mzc</strong></tt>-compiled programs.</p>
+<p>
+The <tt><strong>cffi.ss</strong></tt><a name="node_idx_22"></a> library of the <tt><strong>compiler</strong></tt> collection
+defines Scheme forms, such as <code class=scheme><span class=keyword>c-lambda</span></code>, for accessing C
+functions from Scheme. The forms produce run-time errors when
+interpreted directly or compiled to byte code. See section&nbsp;<a href="mzc-Z-H-2.html#node_chap_2">2</a> for
+further information.</p>
+<p>
+<a name="node_idx_24"></a>
+Native-code compilation produces C source code in an intermediate
+stage; your system must provide an external C compiler to produce
+native code. The <tt><strong>mzc</strong></tt> compiler cannot produce native code directly
+from Scheme code.</p>
+<p>
+</p>
+<ul><p>
+</p>
+<li><p>Under Unix, <tt><strong>gcc</strong></tt> is used as the C compiler if it can be
+found in any of the directories listed in the PATH environment
+variable.  If <tt><strong>gcc</strong></tt> is not found, <tt><strong>cc</strong></tt> is used if it can be
+found.</p>
+<p>
+</p>
+<li><p>Under Windows, <tt><strong>cl.exe</strong></tt>, Microsoft Visual C, is used as
+the C compiler if it can be found in any of the directories listed in
+the PATH environment variable. If <tt><strong>cl.exe</strong></tt> is not found, then
+<tt><strong>gcc.exe</strong></tt> is used if it can be found. If neither <tt><strong>cl.exe</strong></tt>
+nor <tt><strong>gcc.exe</strong></tt> is found, then <tt><strong>bcc32.exe</strong></tt> (Borland) is used
+if it can be found.</p>
+<p>
+</p>
+<li><p>Under MacOS, Metrowerks CodeWarrior is used as the C compiler
+if it can be found.</p>
+<p>
+</p>
+</ul><p></p>
+<p>
+Except for MacOS, the C compiler and compiler flags used by <tt><strong>mzc</strong></tt> can
+be adjusted via command line flags.</p>
+<p>
+</p>
+<a name="node_sec_1.2"></a>
+<h2><a href="mzc.html#node_toc_node_sec_1.2">1.2&nbsp;&nbsp;<tt><strong>mzc</strong></tt> Is Not...</a></h2>
+<p><a name="node_idx_26"></a></p>
+<p>
+<a name="node_idx_28"></a>
+<tt><strong>mzc</strong></tt> does not generally produce stand-alone executables from Scheme
+source code. The compiler's output is intended to be loaded into
+MzScheme (or MrEd or DrScheme). However, see also section&nbsp;<a href="mzc-Z-H-5.html#node_chap_5">5</a>
+for information about embedding code into a copy of the MzScheme (or
+MrEd) executable.</p>
+<p>
+<tt><strong>mzc</strong></tt> does not translate Scheme code into similar C code. Native-code
+compilation produces C code that relies on MzScheme to provide
+run-time support, which includes memory management, closure creation,
+procedure application, and primitive operations.</p>
+<p>
+</p>
+<a name="node_sec_1.3"></a>
+<h2><a href="mzc.html#node_toc_node_sec_1.3">1.3&nbsp;&nbsp;Running <tt><strong>mzc</strong></tt></a></h2>
+<p><a name="node_idx_30"></a></p>
+<p>
+<a name="node_idx_32"></a> <a name="node_idx_34"></a>
+Under Unix and Windows, run <tt><strong>mzc</strong></tt> from a shell, passing in flags and
+arguments on the command line.</p>
+<p>
+Under MacOS, double-click on the <tt><strong>mzc</strong></tt> launcher application with the
+Command key pressed, then provide arguments in the command line
+dialog that appears. (Close the <tt><strong>MzScheme</strong></tt> application first if
+it is already running, since <tt><strong>mzc</strong></tt> is itself a MzScheme-based
+application.) If the Command key is not pressed while <tt><strong>mzc</strong></tt> is
+started, the command-line dialog will not appear. If a file is
+dragged onto the <tt><strong>mzc</strong></tt> icon, then the command-line will contain the
+file's path; this is useful for compiling a Scheme file directly to
+an extension. If a file is dragged onto the <tt><strong>mzc</strong></tt> icon, additional
+command-line argument can be provided by holding down the Command
+key, but the arguments will go after the file name, which is almost
+never useful (since the order of command-line arguments is
+important).</p>
+<p>
+In this manual, each example command line is shown as follows:
+</p>
+<p>  <tt><strong>mzc <tt>--extension</tt> <tt>--prefix</tt> macros.ss file.ss</strong></tt></p>
+<p>To run this example under Unix or Windows, type the command line into
+a shell (replacing <tt><strong>mzc</strong></tt> with the path to <tt><strong>mzc</strong></tt> on your
+system, if necessary). Under MacOS, launch <tt><strong>mzc</strong></tt> with the Command
+key pressed, and enter everything <em>after</em> <tt><strong><tt><strong>mzc</strong></tt></strong></tt> into the
+dialog that appears.</p>
+<p>
+Simple on-line <a name="node_idx_36"></a>help is available for <tt><strong>mzc</strong></tt>'s command-line
+arguments by running <tt><strong>mzc</strong></tt> with the <tt>-h</tt><a name="node_idx_38"></a> or
+<tt>--help</tt><a name="node_idx_40"></a> flag.</p>
+<p>
+</p>
+<a name="node_sec_1.4"></a>
+<h2><a href="mzc.html#node_toc_node_sec_1.4">1.4&nbsp;&nbsp;Native Code Optimization from <tt><strong>mzc</strong></tt></a></h2>
+<p><a name="node_idx_42"></a></p>
+<p>
+Compiling a program to native code with <tt><strong>mzc</strong></tt> can provide significant
+speedups compared to interpreting byte code (or running the program
+directly from source code), but only for certain kinds of
+programs. The speedup from native-code compilation is typically due
+to two optimizations:
+</p>
+<ul><p>
+</p>
+<li><p><strong>Loop Optimization</strong>  --  When <tt><strong>mzc</strong></tt> statically detects a
+tail-recursive loop, it compiles the Scheme loop to a C loop that has
+no interpreter overhead. For example, given the program
+</p>
+<div align=center><table><tr><td>
+
+</td><td><div align=left><pre class=scheme>(<span class=keyword>letrec</span> ([<span class=variable>odd</span> (<span class=keyword>lambda</span> (<span class=variable>x</span>) 
+                (<span class=keyword>if</span> (<code class=scheme>zero?</code> <span class=variable>x</span>) 
+                    <span class=selfeval>#f</span> 
+                    (<span class=variable>even</span> (<code class=scheme>sub1</code> <span class=variable>x</span>))))] 
+         [<span class=variable>even</span> (<span class=keyword>lambda</span> (<span class=variable>x</span>) 
+                 (<span class=keyword>if</span> (<code class=scheme>zero?</code> <span class=variable>x</span>) 
+                     <span class=selfeval>#t</span> 
+                     (<span class=variable>odd</span> (<code class=scheme>sub1</code> <span class=variable>x</span>))))]) 
+  (<span class=variable>odd</span> <span class=selfeval>40000</span>))
+</pre></div></td><td>
+</td></tr></table></div>
+
+<tt><strong>mzc</strong></tt> can detect the <code class=scheme><span class=variable>odd</span></code>-<code class=scheme><span class=variable>even</span></code> loop and produce
+native code that runs twice as fast as byte-code interpretation. In
+contrast, given a similar program using top-level definitions,
+<div align=center><table><tr><td>
+
+</td><td><div align=left><pre class=scheme>(<span class=keyword>define</span> (<span class=variable>odd</span> <span class=variable>x</span>) ...)
+(<span class=keyword>define</span> (<span class=variable>even</span> <span class=variable>x</span>) ...)
+</pre></div></td><td>
+</td></tr></table></div>
+
+the compiler cannot assume an <code class=scheme><span class=variable>odd</span></code>-<code class=scheme><span class=variable>even</span></code> loop,
+because the global variables <code class=scheme><span class=variable>odd</span></code> and <code class=scheme><span class=variable>even</span></code> can be
+redefined at any time. Note that <code class=scheme><span class=keyword>define</span></code>d variables in a
+<code class=scheme><span class=keyword>module</span></code> expression are lexically scoped like <code class=scheme><span class=keyword>letrec</span></code>
+variables, and <code class=scheme><span class=keyword>module</span></code> definitions therefore permit loop
+optimizations.<a name="call_footnote_Temp_2"></a><a href="#footnote_Temp_2"><sup><small>1</small></sup></a><p>
+</p>
+<li><p><strong>Primitive Inlining</strong>  --  When <tt><strong>mzc</strong></tt> encounters the
+application of certain primitives, it inlines the primitive
+procedure. However, the compiler must be certain that a variable
+reference will resolve to a primitive procedure when the code is
+loaded into MzScheme. In the preceding example, the compiler cannot
+inline the application of <code class=scheme>sub1</code> because the global variable
+<code class=scheme>sub1</code> might be redefined. To encourage the inlining of
+primitives -- which produces native code that runs <em>30 times
+faster</em> than byte-code interpretation for the preceding example -- the
+programmer has three options:
+</p>
+<ul><p>
+</p>
+<li><p><strong>Use <code class=scheme><span class=keyword>module</span></code></strong>  --  If the original example is
+encapsulated in a module that imports <code class=scheme>mzscheme</code>, then each
+primitive name, such as <code class=scheme>sub1</code>, is guranteed to access the
+primitive procedure (assuming that the name is not lexically
+bound). The ``modulized'' version of the preceding program follows:
+</p>
+<div align=center><table><tr><td>
+
+</td></tr><tr><td>
+<p></p>
+</td></tr><tr><td>
+<p>
+</p>
+</td><td><div align=left><pre class=scheme>(<span class=keyword>module</span> <span class=variable>oe</span> <code class=scheme>mzscheme</code> 
+  (<span class=keyword>letrec</span> ([<span class=variable>odd</span> (<span class=keyword>lambda</span> (<span class=variable>x</span>) 
+                  (<span class=keyword>if</span> (<code class=scheme>zero?</code> <span class=variable>x</span>) 
+                      <span class=selfeval>#f</span> 
+                      (<span class=variable>even</span> (<code class=scheme>sub1</code> <span class=variable>x</span>))))] 
+           [<span class=variable>even</span> (<span class=keyword>lambda</span> (<span class=variable>x</span>) 
+                   (<span class=keyword>if</span> (<code class=scheme>zero?</code> <span class=variable>x</span>) 
+                       <span class=selfeval>#t</span> 
+                       (<span class=variable>odd</span> (<code class=scheme>sub1</code> <span class=variable>x</span>))))]) 
+      (<span class=variable>odd</span> <span class=selfeval>40000</span>)))
+</pre></div></td><td>
+</td></tr></table></div>
+
+To run this program, the <code class=scheme><span class=variable>oe</span></code> module must be
+<code class=scheme><span class=keyword>require</span></code>d at the top level.<p>
+</p>
+</ul><p></p>
+<p>
+</p>
+<li><p><strong>Use a <code class=scheme>(<code class=scheme><span class=keyword>require</span></code> mzscheme)</code> prefix</strong>  --  If the
+preceding example is prefixed with <code class=scheme>(<code class=scheme><span class=keyword>require</span></code> mzscheme)</code>,
+then <code class=scheme>sub1</code> refers not to the global variable, but to the
+<code class=scheme>sub1</code> export of the <code class=scheme>mzscheme</code> module. See section&nbsp;<a href="mzc-Z-H-3.html#node_sec_3.2">3.2</a>
+for more information about prefixing compilation.</p>
+<p>
+</p>
+<li><p><strong>Use the <tt>--prim</tt><a name="node_idx_44"></a> flag</strong>  --  The <tt>--prim</tt> flag
+alters the semantics of the langugage for compilation such that
+every reference to a global variable that is built into MzScheme is
+converted to its keyword form. Actually, specifying the
+<tt>--prim</tt> flag causes <tt><strong>mzc</strong></tt> to automatically prefix the program
+with <code class=scheme>(<code class=scheme><span class=keyword>require</span></code> mzscheme)</code>.</p>
+<p>
+</p>
+</ul><p>
+Programs that permit these optimizations also to encourage a host of
+other optimizations, such as procedure inlining (for
+programmer-defined procedures) and static closure detection. In
+general, <code class=scheme><span class=keyword>module</span></code>-based programs provide the most opportunities
+for optimization.</p>
+<p>
+Native-code compilation rarely produces significant speedup for
+programs that are not loop-intensive, programs that are heavily
+object-oriented, programs that are allocation-intensive, or programs
+that exploit built-in procedures (e.g., list operations, regular
+expression matching, or file manipulations) to perform most of the
+program's work.</p>
+<p>
+</p>
+<div class=footnoterule><hr></div><p></p>
+<div class=footnote><p><a name="footnote_Temp_2"></a><a href="#call_footnote_Temp_2"><sup><small>1</small></sup></a> The compiler cannot always prove that
+<code class=scheme><span class=keyword>module</span></code> definitions have been evaluated before the
+corresponding variable is used in an expression. Use the <tt>-v</tt> or
+<tt>--verbose</tt> flag to check whether <tt><strong>mzc</strong></tt> reports a ``last known
+module binding'' warning when compiling a <code class=scheme><span class=keyword>module</span></code> expression,
+which indicates that definitions after a particular line in the
+source file might be referenced before they are defined.</p>
+</div>
+<div align=right class=navigation><i>[Go to <span><a href="mzc.html">first</a>, <a href="mzc.html">previous</a></span><span>, <a href="mzc-Z-H-2.html">next</a></span> page<span>; &nbsp;&nbsp;</span><span><a href="mzc.html#node_toc_start">contents</a></span><span><span>; &nbsp;&nbsp;</span><a href="mzc-Z-H-8.html#node_index_start">index</a></span>]</i></div><p></p>
+</body>
+</html>

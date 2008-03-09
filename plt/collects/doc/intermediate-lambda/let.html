@@ -1,0 +1,6 @@
+<html><head><title>let</title><h1>let</h1></head><body><code class="scheme">(<code class="scheme"><span class="keyword">let</span></code> ((<b>NAME</b> <b>EXPRESSION</b>) ...) <b>EXPRESSION</b>) </code><br /> The <code class="scheme"><span class="keyword">let</span></code> expression is similar to the <code class="scheme"><span class="keyword">letrec</span></code> expression, except that the scope of the bindings is different. Like <code class="scheme"><span class="keyword">letrec</span></code>, the body expression may refer to the bindings created by the <code class="scheme"><span class="keyword">let</span></code>. However, the binding expressions (those on the right-hand sides) may not refer to these bindings. To illustrate this, consider the following expressions and its result: <pre>(define a 3)
+(let ((a 16)
+      (b a))
+  (+ b a))
+19
+</pre> In other words, <code class="scheme"><span class="variable">b</span></code>'s reference to <code class="scheme"><span class="variable">a</span></code> is bound to the top-level <code class="scheme"><span class="variable">a</span></code>, rather than the inner one. <br /><p><a href="index.htm">Intermediate Student with Lambda Language</a></p></body></html>

@@ -1,0 +1,28 @@
+This is TeX2page, Version 2004-09-11 (MzScheme 209, unix)
+(t-y-scheme.tex (docmacro.tex) (title.tex [0]) (toc.tex)
+(preface.tex [1]) (hello.tex [2]) (data.tex [3]) (form.tex
+[4]) (if.tex [5]) (let.tex [6]) (rec.tex [7]) (io.tex [8])
+(macro.tex [9]) (struct.tex [10]) (table.tex [11]) (os.tex
+[12]) (obj.tex [13] (obj1.tex) (obj2.tex) (mulinh.tex)) (callcc.tex
+[14]) (amb.tex [15]) (engine.tex [16]) (script.tex [17])
+(cgi.tex [18]) (dialect.tex [19]) (dos.tex [20]) (numint.tex
+[21] (../html/t-y-scheme-Z-G-1.gif) (../html/t-y-scheme-Z-G-2.gif)
+(../html/t-y-scheme-Z-G-3.gif) (../html/t-y-scheme-Z-G-D-1.gif)
+(../html/t-y-scheme-Z-G-D-1.gif) (../html/t-y-scheme-Z-G-D-2.gif)
+(../html/t-y-scheme-Z-G-D-1.gif) (../html/t-y-scheme-Z-G-D-3.gif)
+(../html/t-y-scheme-Z-G-D-2.gif) (../html/t-y-scheme-Z-G-D-3.gif)
+(../html/t-y-scheme-Z-G-D-2.gif) (gamma.tex (../html/t-y-scheme-Z-G-D-4.gif)
+(../html/t-y-scheme-Z-G-D-4.gif) (../html/t-y-scheme-Z-G-4.gif)
+(../html/t-y-scheme-Z-G-D-4.gif) (../html/t-y-scheme-Z-G-D-4.gif)
+(../html/t-y-scheme-Z-G-D-4.gif) (../html/t-y-scheme-Z-G-D-4.gif)
+(../html/t-y-scheme-Z-G-D-4.gif) (../html/t-y-scheme-Z-G-D-4.gif)
+(../html/t-y-scheme-Z-G-D-4.gif) (../html/t-y-scheme-Z-G-D-4.gif)
+(../html/t-y-scheme-Z-G-D-5.gif) (../html/t-y-scheme-Z-G-D-5.gif)
+(../html/t-y-scheme-Z-G-D-5.gif) (../html/t-y-scheme-Z-G-5.gif)
+(../html/t-y-scheme-Z-G-D-4.gif) (../html/t-y-scheme-Z-G-D-4.gif)
+(../html/t-y-scheme-Z-G-D-4.gif) (../html/t-y-scheme-Z-G-D-4.gif)
+(../html/t-y-scheme-Z-G-D-4.gif) (../html/t-y-scheme-Z-G-D-3.gif)))
+(clock.tex [22]) (ref.tex [23] (../html/t-y-scheme--h.bbl))
+(indexf.tex [24] (../html/t-y-scheme--h.ind))) [25]
+Running: metapost numint.mp
+Output written on ../html/t-y-scheme.html, ... (26 pages, 10 images).

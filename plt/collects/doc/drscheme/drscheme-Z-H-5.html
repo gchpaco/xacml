@@ -1,0 +1,492 @@
+<!doctype html public "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!--
+
+Generated from drscheme.tex by tex2page, v 2004-09-11
+(running on MzScheme 209, unix), 
+(c) Dorai Sitaram, 
+http://www.ccs.neu.edu/~dorai/tex2page/tex2page-doc.html
+
+-->
+<head>
+<title>
+PLT DrScheme: Programming Environment Manual
+</title>
+<link rel="stylesheet" type="text/css" href="drscheme-Z-S.css" title=default>
+<meta name=robots content="noindex,follow">
+</head>
+<body>
+<div align=right class=navigation><i>[Go to <span><a href="drscheme.html">first</a>, <a href="drscheme-Z-H-4.html">previous</a></span><span>, <a href="drscheme-Z-H-6.html">next</a></span> page<span>; &nbsp;&nbsp;</span><span><a href="drscheme.html#node_toc_start">contents</a></span><span><span>; &nbsp;&nbsp;</span><a href="drscheme-Z-H-6.html#node_index_start">index</a></span>]</i></div><p></p>
+<a name="node_chap_5"></a>
+<h1 class=chapter>
+<div class=chapterheading><a href="drscheme.html#node_toc_node_chap_5">Chapter 5</a></div><br>
+<a href="drscheme.html#node_toc_node_chap_5">Frequently Asked Questions</a></h1>
+<p><a name="node_idx_680"></a></p>
+<p>
+<a name="node_idx_682"></a></p>
+<p>
+
+</p>
+<a name="node_sec_5.1"></a>
+<h2><a href="drscheme.html#node_toc_node_sec_5.1">5.1&nbsp;&nbsp;Supported Operating Systems and Installation</a></h2>
+<p><a name="node_idx_684"></a></p>
+<p>
+
+</p>
+<p></p>
+<p>
+<strong>Where can I get DrScheme and/or documentation?</strong>
+</p>
+<p>
+<a name="node_idx_686"></a>
+DrScheme is available for download at </p>
+<p>
+</p>
+<div align=center><table><tr><td>
+
+<a href="http://www.drscheme.org/"><tt>http://www.drscheme.org/</tt></a>
+</td></tr></table></div>
+<p>
+Some documentation is provided with DrScheme, accessible through 
+Help Desk.  Other documentation is provided online in HTML format and is also 
+available for download in Adobe PDF format at</p>
+<p>
+</p>
+<div align=center><table><tr><td>
+
+<a href="http://download.plt-scheme.org/doc/"><tt>http://download.plt-scheme.org/doc/</tt></a>
+</td></tr></table></div>
+<p>
+
+</p>
+<p></p>
+<p>
+<strong>How much does DrScheme cost?</strong>
+</p>
+<p>
+<a name="node_idx_688"></a>
+DrScheme is absolutely free for anyone to use. However, there are
+restrictions on the way that DrScheme can modified and
+redistributed. Please read the GNU Library General Public License in
+the distribution for details.</p>
+<p>
+
+</p>
+<p></p>
+<p>
+<strong>What operating systems are supported for DrScheme?</strong>
+</p>
+<p>
+<a name="node_idx_690"></a>
+Windows (95 and up), Mac OS X, and Unix with the X Window System.</p>
+<p>
+
+</p>
+<p></p>
+<p>
+<strong>How much memory is needed to run DrScheme?</strong>
+</p>
+<p>
+<a name="node_idx_692"></a>
+To run DrScheme comfortably, your machine should have at least 128 MB
+of RAM.</p>
+<p>
+
+</p>
+<p></p>
+<p>
+<strong>I don't have that much memory. Are there any other PLT options?</strong>
+</p>
+<p>
+MrEd is PLT's raw graphical Scheme implementation (used to
+run DrScheme itself).  MrEd provides a minimal
+read-eval-print loop, but MrEd does not provide DrScheme's
+various languages, and error messages in MrEd do not
+provide a source code location.</p>
+<p>
+MzScheme is PLT's Scheme implementation. The language is the same as
+MrEd without graphics.  MzScheme provides little programming support,
+so its memory requirements are minimal (a few MB usually suffices).</p>
+<p>
+The standard DrScheme distribution includes all of the above programs.
+MzScheme distributions can be downloaded through</p>
+<p>
+</p>
+<div align=center><table><tr><td>
+
+<a href="http://www.plt-scheme.org/software/mzscheme/"><tt>http://www.plt-scheme.org/software/mzscheme/</tt></a>
+</td></tr></table></div>
+<p>
+
+</p>
+<p></p>
+<p>
+<strong>Does DrScheme run under Mac OS versions earlier than Mac OS X?</strong>
+</p>
+<p>
+No. </p>
+<p>
+
+</p>
+<p></p>
+<p>
+<strong>Does DrScheme run under DOS or Windows 3.1?</strong>
+</p>
+<p>
+No.</p>
+<p>
+
+</p>
+<p></p>
+<p>
+<strong>Does MzScheme (PLT's text-only Scheme) run under DOS or Windows 3.1?</strong>
+</p>
+<p>
+No.</p>
+<p>
+
+</p>
+<p></p>
+<p>
+<strong>How do I install DrScheme?</strong>
+</p>
+<p>
+<a name="node_idx_694"></a>
+Obtain a DrScheme distribution from the above address. For Windows, the
+distribution is an installer program; running this program installs DrScheme.
+For MacOS, the distributiton is a disk image containing a meta-package (mpkg)
+installer. For Unix/X, the distribution is a self-extracting shell program;
+running it will unpack and install the archive, and can help in setting up some
+standard links. In all cases, the final download page provides detailed,
+platform-specific installation instructions.</p>
+<p>
+
+</p>
+<p></p>
+<p>
+<strong>How large is the distribution archive?</strong>
+</p>
+<p>
+Distribution archives vary in sizes.  From the download page, select your
+platform and click the download button  --  the next screen will have download
+links as well as the file size at the top of the page.</p>
+<p>
+
+</p>
+<p></p>
+<p>
+<strong>How much disk space does DrScheme consume?</strong>
+</p>
+<p>
+<a name="node_idx_696"></a><a name="node_idx_698"></a>
+Around 35 MB in its normal configuration, not including the optional
+documentation.</p>
+<p>
+</p>
+<a name="node_sec_5.2"></a>
+<h2><a href="drscheme.html#node_toc_node_sec_5.2">5.2&nbsp;&nbsp;Using DrScheme</a></h2>
+<p><a name="node_idx_700"></a></p>
+<p>
+
+</p>
+<p></p>
+<p>
+<strong>How do I find general help for DrScheme?</strong>
+</p>
+<p>
+<a name="node_idx_702"></a>
+Select <tt>Help Desk</tt> in DrScheme's <tt>Help</tt> menu.</p>
+<p>
+
+</p>
+<p></p>
+<p>
+<strong>How can I get my browser to find Help Desk when it's configured to use a Web proxy?</strong>
+</p>
+<p>
+</p>
+<p>
+
+</p>
+<p></p>
+<p>
+<strong>How do I run MrFlow, DrScheme's program analyzer (and the successor to MrSpidey)?</strong>
+</p>
+<p>
+<a name="node_idx_704"></a><a name="node_idx_706"></a>
+MrFlow is distributed separately from the standard DrScheme
+distribution. Download MrFlow from</p>
+<p>
+</p>
+<div align=center><table><tr><td>
+
+<a href="http://www.plt-scheme.org/software/mrflow/"><tt>http://www.plt-scheme.org/software/mrflow/</tt></a>
+</td></tr></table></div>
+<p>
+
+</p>
+<p></p>
+<p>
+<strong>What happened to the <tt>Analyze</tt> button?</strong>
+</p>
+<p>
+Starting with version 51, PLT distributes DrScheme without the
+analysis tool. See the previous answer for information about
+obtaining MrFlow.</p>
+<p>
+
+</p>
+<p></p>
+<p>
+<strong>How do I customize DrScheme?</strong>
+</p>
+<p>
+The <tt>Edit</tt> menu contains a <tt>Preferences</tt> item that
+opens the preferences dialog.</p>
+<p>
+
+</p>
+<p></p>
+<p>
+<strong>How do I turn off parenthesis-flashing and the gray background 
+behind expressions?</strong>
+</p>
+<p>
+Use the <tt>Edit|Preferences</tt> menu item.</p>
+<p>
+
+</p>
+<p></p>
+<p>
+<strong>What are the key bindings in DrScheme?</strong>
+</p>
+<p>
+Some basic key bindings are listed in the DrScheme manual, which is
+accessible via the <tt>Help</tt> button in DrScheme. See
+also the <tt>Keybindings</tt> menu item in the <tt>Edit</tt> menu.</p>
+<p>
+
+</p>
+<p></p>
+<p>
+<strong>Can I change the key bindings in DrScheme?</strong>
+</p>
+<p>
+<a name="node_idx_708"></a></p>
+<p>
+Technically, yes, but that requires in-depth information about the way
+that DrScheme is implemented. (The necessary information is part of
+the MrEd toolbox manual.) DrScheme currently provides no simple way
+to adjust the keyboard mappings, other than to set the behavior of
+the Delete key (via the preferences dialog).</p>
+<p>
+
+</p>
+<p></p>
+<p>
+<strong>What do those yellow-and-black messages mean, and how do I 
+get rid of them?</strong>
+</p>
+<p>
+<a name="node_idx_710"></a>
+When text in the definitions window is modified, the current language
+is changed, or the current library is changed, DrScheme
+pessimistically assumes that some definition has been changed.  In
+this case, expressions evaluated in the interaction window would use
+definitions that do not match those currently displayed in the
+definitions windows. A yellow-and-black message warns you about this
+potential inconsistency, and suggests that you resolve the
+inconsistency by clicking the <tt>Run</tt> button. To suppress
+all but the first warning, see the <tt>Warnings</tt> tab in the
+<tt>Preferences</tt> dialog.</p>
+<p>
+
+</p>
+<p></p>
+<p>
+<strong>Why can't I type in the interaction window before the the current
+prompt?</strong>
+</p>
+<p>
+To prevent accidental revisions of the interaction history, DrScheme
+disallows editing before the current prompt. While old expressions
+cannot be edited in place, you can copy old expressions to the
+current prompt by typing Esc-p. Alternatively, place the insertion
+caret at the end of any old expression in the interactions window and
+type Enter or Return to copy the expression down to the current
+prompt.</p>
+<p>
+</p>
+
+
+<p></p>
+<p>
+<strong>Why doesn't <code class=scheme><span class=keyword>let</span></code> work? (or <code class=scheme><span class=keyword>letrec</span></code>
+or <code class=scheme><span class=keyword>lambda</span></code> or <code class=scheme><span class=keyword>set!</span></code>, etc)</strong>
+</p>
+<p>
+</p>
+<p>
+DrScheme is initially configured to use the ``Beginning Student''
+teaching language.  This language prevents many common student errors, 
+but will not evaluate all Scheme programs.  To remedy this, choose a 
+language such as 'Standard' or 'Pretty Big'.</p>
+<p>
+
+</p>
+<p></p>
+<p>
+<strong>Is there a DrScheme compiler?</strong>
+</p>
+<p>
+<a name="node_idx_712"></a>
+Technically, DrScheme is a compiler as well as an interpreter. Each
+time the user loads a program or enters expression in the
+interactions window, DrScheme compiles and then runs the program
+or expression.</p>
+<p>
+PLT's <tt><strong>mzc</strong></tt> transforms Scheme programs into C programs, and then uses
+a third-party C compiler to produce executable code.  Under Windows,
+either Microsoft Visual C or gcc (a free compiler from Cygnus
+Solutions) works as the C compiler. Under MacOS, CodeWarrior
+works. Under Unix, most any compiler works.</p>
+<p>
+For details, see the <tt><strong>mzc</strong></tt> documentation, available from:</p>
+<p>
+</p>
+<div align=center><table><tr><td>
+
+<a href="http://download.plt-scheme.org/doc/"><tt>http://download.plt-scheme.org/doc/</tt></a>
+</td></tr></table></div>
+<p>
+
+</p>
+<p></p>
+<p>
+<strong>Can I produce stand-alone executables from Scheme code?</strong>
+</p>
+<p>
+To produce a standalone executable that only works for your particular
+installation of DrScheme, see <a href="drscheme-Z-H-2.html#node_sec_2.6">the executables section</a>.</p>
+<p>
+<a name="node_idx_714"></a>
+In addition, the <tt><strong>mzc</strong></tt> compiler can be used to produce stand-alone
+executables. See the <tt><strong>mzc</strong></tt> documentation for more information.</p>
+<p>
+
+</p>
+<p></p>
+<p>
+<strong>Can files saved in DrScheme be transferred between platforms?</strong>
+</p>
+<p>
+DrScheme saves files in two formats: <em>text</em> and <em>multimedia</em>. </p>
+<p>
+The text format is the usual platform-specific text format. Tools for
+moving files between platforms typically support a ``text'' transfer
+mode that adjusts newlines and carriage returns in the test as
+appropriate. </p>
+<p>
+The multimedia format, used for saving files that contain pictures or
+formatted text, is platform-indepdendent.  Although no other program
+is able to read DrScheme's special format, a multimedia-format file
+can be moved between different platforms (in ``binary'' mode) and
+DrScheme will read it correctly on the destination platform.</p>
+<p>
+</p>
+<a name="node_sec_5.3"></a>
+<h2><a href="drscheme.html#node_toc_node_sec_5.3">5.3&nbsp;&nbsp;Memory and Performance</a></h2>
+<p><a name="node_idx_716"></a></p>
+<p>
+
+</p>
+<p></p>
+<p>
+<strong>Does DrScheme really require at least 128 MB of memory?</strong>
+</p>
+<p>
+Yes.</p>
+<p>
+
+</p>
+<p></p>
+<p>
+<strong>Why do programs run more slowly in DrScheme than in other
+Scheme implementations (including PLT's own MzScheme)?</strong>
+</p>
+<p>
+<a name="node_idx_718"></a>
+Programs run more slowly in DrScheme because DrScheme inserts extra
+checks into a program to provide information about the location of
+run-time errors. For many languages, these checks can be disabled by
+un-checking <tt>Debugging</tt> in the details portion of the
+language-selection dialog.</p>
+<p>
+</p>
+<a name="node_sec_5.4"></a>
+<h2><a href="drscheme.html#node_toc_node_sec_5.4">5.4&nbsp;&nbsp;Troubleshooting</a></h2>
+<p><a name="node_idx_720"></a></p>
+<p>
+
+</p>
+<p></p>
+<p>
+<strong>When I run DrScheme, it is very slow and the disk is
+constantly running. Why?</strong>
+</p>
+<p>
+You do not have enough memory to run DrScheme.  If DrScheme works well
+for a while, and then starts paging (using the disk a lot), then your
+memory configuration is borderline for DrScheme.  If DrScheme usually
+works well and has only suddenly started this bad behavior, then
+perhaps you have written a program that consumes an infinite amount of
+memory.</p>
+<p>
+
+</p>
+<p></p>
+<p>
+<strong>I think I found a bug. What should I do?</strong>
+</p>
+<p>
+First, read this section to make sure your problem does not have a
+standard answer. If you need to, submit a bug report using the
+form available from the home page of Help Desk.  Alternatively, 
+you may submit a bug report using the Web at</p>
+<p>
+</p>
+<div align=center><table><tr><td>
+
+<a href="http://bugs.plt-scheme.org/"><tt>http://bugs.plt-scheme.org/</tt></a>
+</td></tr></table></div>
+<p>
+
+</p>
+<p></p>
+<p>
+<strong>How do I send PLT a question?</strong>
+</p>
+<p>
+If you have a question that is not answered in the documentation or
+this list of ``Frequently Asked Questions'', send mail to</p>
+<p>
+</p>
+<div align=center><table><tr><td>
+
+<tt>scheme@plt-scheme.org</tt>
+</td></tr></table></div>
+
+<p>
+
+
+
+
+</p>
+<p>
+
+</p>
+<p>
+</p>
+<div align=right class=navigation><i>[Go to <span><a href="drscheme.html">first</a>, <a href="drscheme-Z-H-4.html">previous</a></span><span>, <a href="drscheme-Z-H-6.html">next</a></span> page<span>; &nbsp;&nbsp;</span><span><a href="drscheme.html#node_toc_start">contents</a></span><span><span>; &nbsp;&nbsp;</span><a href="drscheme-Z-H-6.html#node_index_start">index</a></span>]</i></div><p></p>
+</body>
+</html>

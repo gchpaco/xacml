@@ -1,0 +1,1440 @@
+\begin{theindex}
+
+  \item \Symbol{addon-dir}, \expandhtmlindex{1782}
+  \item \Symbol{all}, \expandhtmlindex{1198}
+  \item \Symbol{already-exists}, \expandhtmlindex{758}
+  \item \Symbol{any}, \expandhtmlindex{1602}
+  \item \Symbol{any-one}, \expandhtmlindex{1604}
+  \item \Symbol{append}, \expandhtmlindex{1492}
+  \item \Symbol{binary}, \expandhtmlindex{1474}
+  \item \Symbol{block}, \expandhtmlindex{1548}
+  \item \Symbol{client}, \expandhtmlindex{1382}
+  \item \Symbol{delete}, \expandhtmlindex{1378}
+  \item \Symbol{disappeared-binding}, \expandhtmlindex{2230}, 
+		\expandhtmlindex{2258}
+  \item \Symbol{disappeared-use}, \expandhtmlindex{2232}, 
+		\expandhtmlindex{2260}
+  \item \Symbol{empty}, \expandhtmlindex{1320}
+  \item \Symbol{equal}, \expandhtmlindex{484}, \expandhtmlindex{490}
+  \item \Symbol{error}, \expandhtmlindex{1482}
+  \item \Symbol{exact}, \expandhtmlindex{2690}
+  \item \Symbol{exec-file}, \expandhtmlindex{1786}
+  \item \Symbol{execute}, \expandhtmlindex{1376}, 
+		\expandhtmlindex{1838}
+  \item \Symbol{exists}, \expandhtmlindex{1380}
+  \item \Symbol{home-dir}, \expandhtmlindex{1764}
+  \item \Symbol{ill-formed-path}, \expandhtmlindex{756}
+  \item \Symbol{inferred-name}, \expandhtmlindex{806}
+  \item \Symbol{init-dir}, \expandhtmlindex{1774}
+  \item \Symbol{init-file}, \expandhtmlindex{1776}
+  \item \Symbol{initial}, \expandhtmlindex{1318}
+  \item \Symbol{lexical}, \expandhtmlindex{2140}
+  \item \Symbol{line}, \expandhtmlindex{1546}
+  \item \Symbol{linefeed}, \expandhtmlindex{1596}
+  \item \Symbol{macos}, \expandhtmlindex{2760}
+  \item \Symbol{macosx}, \expandhtmlindex{2762}
+  \item \Symbol{method-arity-error}, \expandhtmlindex{452}
+  \item \Symbol{module-direct-for-syntax-requires}, 
+		\expandhtmlindex{2276}
+  \item \Symbol{module-direct-requires}, \expandhtmlindex{2274}
+  \item \Symbol{module-indirect-provides}, \expandhtmlindex{2282}
+  \item \Symbol{module-kernel-reprovide-hint}, \expandhtmlindex{2284}
+  \item \Symbol{module-self-path-index}, \expandhtmlindex{2286}
+  \item \Symbol{module-syntax-provides}, \expandhtmlindex{2280}
+  \item \Symbol{module-variable-provides}, \expandhtmlindex{2278}
+  \item \Symbol{none}, \expandhtmlindex{1200}, \expandhtmlindex{1544}
+  \item \Symbol{origin}, \expandhtmlindex{2254}
+  \item \Symbol{oskit}, \expandhtmlindex{2764}
+  \item \Symbol{pref-dir}, \expandhtmlindex{1766}
+  \item \Symbol{pref-file}, \expandhtmlindex{1768}
+  \item \Symbol{read}, \expandhtmlindex{1372}, \expandhtmlindex{1834}
+  \item \Symbol{relative}, \expandhtmlindex{1746}
+  \item \Symbol{replace}, \expandhtmlindex{1486}
+  \item \Symbol{return}, \expandhtmlindex{1598}
+  \item \Symbol{return-linefeed}, \expandhtmlindex{1600}
+  \item \Symbol{running}, \expandhtmlindex{2700}
+  \item \Symbol{same}, \expandhtmlindex{1718}, \expandhtmlindex{1750}, 
+		\expandhtmlindex{1754}
+  \item \Symbol{server}, \expandhtmlindex{1384}
+  \item \Symbol{sw\_hide}, \expandhtmlindex{2718}
+  \item \Symbol{sw\_maximize}, \expandhtmlindex{2720}
+  \item \Symbol{sw\_minimize}, \expandhtmlindex{2722}
+  \item \Symbol{sw\_restore}, \expandhtmlindex{2724}
+  \item \Symbol{sw\_show}, \expandhtmlindex{2726}
+  \item \Symbol{sw\_showdefault}, \expandhtmlindex{2728}
+  \item \Symbol{sw\_showmaximized}, \expandhtmlindex{2730}
+  \item \Symbol{sw\_showminimized}, \expandhtmlindex{2732}
+  \item \Symbol{sw\_showminnoactive}, \expandhtmlindex{2734}
+  \item \Symbol{sw\_showna}, \expandhtmlindex{2736}
+  \item \Symbol{sw\_shownoactivate}, \expandhtmlindex{2738}
+  \item \Symbol{sw\_shownormal}, \expandhtmlindex{2740}
+  \item \Symbol{sys-dir}, \expandhtmlindex{1784}
+  \item \Symbol{temp-dir}, \expandhtmlindex{1770}
+  \item \Symbol{text}, \expandhtmlindex{1476}
+  \item \Symbol{truncate}, \expandhtmlindex{1488}
+  \item \Symbol{truncate/replace}, \expandhtmlindex{1490}
+  \item \Symbol{unix}, \expandhtmlindex{2756}
+  \item \Symbol{up}, \expandhtmlindex{1716}, \expandhtmlindex{1748}, 
+		\expandhtmlindex{1752}
+  \item \Symbol{update}, \expandhtmlindex{1494}
+  \item \Symbol{weak}, \expandhtmlindex{482}
+  \item \Symbol{windows}, \expandhtmlindex{2758}
+  \item \Symbol{write}, \expandhtmlindex{1374}, \expandhtmlindex{1836}
+  \item \Symbol{wrong-version}, \expandhtmlindex{760}, 
+		\expandhtmlindex{2610}
+  \item \rawscm{+inf.0}, \expandhtmlindex{148}, \expandhtmlindex{158}
+  \item \rawscm{+nan.0}, \expandhtmlindex{152}
+  \item ,, \expandhtmlindex{2458}
+  \item ,\, \expandhtmlindex{2460}
+  \item \Flag{-}, \expandhtmlindex{2882}
+  \item \DFlag{Load}, \expandhtmlindex{2818}
+  \item \DFlag{Load-cd}, \expandhtmlindex{2822}
+  \item \DFlag{Require}, \expandhtmlindex{2826}
+  \item \DFlag{awk}, \expandhtmlindex{2850}
+  \item \DFlag{case-sens}, \expandhtmlindex{2874}
+  \item \DFlag{eval}, \expandhtmlindex{2802}
+  \item \DFlag{help}, \expandhtmlindex{2894}
+  \item \DFlag{load}, \expandhtmlindex{2806}
+  \item \DFlag{load-cd}, \expandhtmlindex{2810}
+  \item \DFlag{main}, \expandhtmlindex{2856}
+  \item \DFlag{mute-banner}, \expandhtmlindex{2886}
+  \item \DFlag{mzlib}, \expandhtmlindex{2830}
+  \item \DFlag{no-argv}, \expandhtmlindex{2870}
+  \item \DFlag{no-init-file}, \expandhtmlindex{2866}
+  \item \DFlag{no-lib-path}, \expandhtmlindex{2860}
+  \item \DFlag{persistent}, \expandhtmlindex{2898}
+  \item \DFlag{require}, \expandhtmlindex{2814}
+  \item \DFlag{require-script}, \expandhtmlindex{2846}
+  \item \DFlag{restore}, \expandhtmlindex{2624}, \expandhtmlindex{2902}
+  \item \DFlag{script}, \expandhtmlindex{2838}
+  \item \DFlag{script-cd}, \expandhtmlindex{2842}
+  \item \DFlag{set-undef}, \expandhtmlindex{2878}
+  \item \DFlag{version}, \expandhtmlindex{2890}
+  \item \Flag{A}, \expandhtmlindex{2868}
+  \item \Flag{C}, \expandhtmlindex{2854}
+  \item \Flag{D}, \expandhtmlindex{2820}
+  \item \Flag{F}, \expandhtmlindex{2816}
+  \item \Flag{L}, \expandhtmlindex{2832}
+  \item \Flag{M}, \expandhtmlindex{2834}
+  \item \Flag{R}, \expandhtmlindex{2900}
+  \item \Flag{T}, \expandhtmlindex{2824}
+  \item \Flag{d}, \expandhtmlindex{2808}
+  \item \Flag{e}, \expandhtmlindex{2800}
+  \item \Flag{f}, \expandhtmlindex{2804}
+  \item \Flag{g}, \expandhtmlindex{2872}
+  \item \Flag{h}, \expandhtmlindex{2892}
+  \item \Flag{i}, \expandhtmlindex{2840}
+  \item \rawscm{-inf.0}, \expandhtmlindex{150}
+  \item \Flag{k}, \expandhtmlindex{2852}
+  \item \Flag{l}, \expandhtmlindex{2828}
+  \item \Flag{m}, \expandhtmlindex{2884}
+  \item \rawscm{-nan.0}, \expandhtmlindex{154}
+  \item \Flag{p}, \expandhtmlindex{2896}
+  \item \Flag{q}, \expandhtmlindex{2864}
+  \item \Flag{r}, \expandhtmlindex{2836}
+  \item \Flag{s}, \expandhtmlindex{2876}
+  \item \Flag{t}, \expandhtmlindex{2812}
+  \item \Flag{u}, \expandhtmlindex{2844}
+  \item \Flag{v}, \expandhtmlindex{2888}
+  \item \Flag{w}, \expandhtmlindex{2848}
+  \item \Flag{x}, \expandhtmlindex{2858}
+  \item ., \expandhtmlindex{2454}
+  \item \rawscm{...}, \expandhtmlindex{2040}
+  \item \File{.mzschemerc}, \expandhtmlindex{1778}
+  \item \rawscm{=>}, \expandhtmlindex{28}
+  \item \rawscm{[~]}, \expandhtmlindex{1072}
+  \item \rawscm{\#!}, \expandhtmlindex{2516}, \expandhtmlindex{2934}
+  \item \rawscm{\#'}, \expandhtmlindex{2386}
+  \item \rawscm{\#,}, \expandhtmlindex{2390}
+  \item \rawscm{\#,\atsign}, \expandhtmlindex{2392}
+  \item \constantfont{\#{\tt {\TTBackslash}}backspace}, 
+		\expandhtmlindex{2400}
+  \item \constantfont{\#{\tt {\TTBackslash}}linefeed}, 
+		\expandhtmlindex{2406}
+  \item \constantfont{\#{\tt {\TTBackslash}}newline}, 
+		\expandhtmlindex{2404}
+  \item \constantfont{\#{\tt {\TTBackslash}}nul}, 
+		\expandhtmlindex{2396}
+  \item \constantfont{\#{\tt {\TTBackslash}}null}, 
+		\expandhtmlindex{2398}
+  \item \constantfont{\#{\tt {\TTBackslash}}page}, 
+		\expandhtmlindex{2410}
+  \item \constantfont{\#{\tt {\TTBackslash}}return}, 
+		\expandhtmlindex{2412}
+  \item \constantfont{\#{\tt {\TTBackslash}}rubout}, 
+		\expandhtmlindex{2416}
+  \item \constantfont{\#{\tt {\TTBackslash}}space}, 
+		\expandhtmlindex{2414}
+  \item \constantfont{\#{\tt {\TTBackslash}}tab}, 
+		\expandhtmlindex{2402}
+  \item \constantfont{\#{\tt {\TTBackslash}}vtab}, 
+		\expandhtmlindex{2408}
+  \item \rawscm{\#;}, \expandhtmlindex{2512}
+  \item \rawscm{\#<undefined>}, \expandhtmlindex{114}
+  \item \rawscm{\#<void>}, \expandhtmlindex{106}
+  \item \rawscm{\#\%}, \expandhtmlindex{2504}
+  \item \scmk{\#\%app}, \expandhtmlindex{2180}
+  \item \scmk{\#\%datum}, \expandhtmlindex{2184}
+  \item \scmk{\#\%module-begin}, \expandhtmlindex{2186}
+  \item \scmk{\#\%top}, \expandhtmlindex{2182}
+  \item \rawscm{\#\&amp;}, \expandhtmlindex{2380}
+  \item \rawscm{\#\var{n}=}, \expandhtmlindex{2500}, 
+		\expandhtmlindex{2556}
+  \item \rawscm{\#\var{n}\#}, \expandhtmlindex{2502}, 
+		\expandhtmlindex{2558}
+  \item \rawscm{\#`}, \expandhtmlindex{2388}
+  \item \rawscm{\#ci}, \expandhtmlindex{2478}
+  \item \rawscm{\#cs}, \expandhtmlindex{2476}
+  \item \rawscm{\#hash}, \expandhtmlindex{2490}
+  \item \rawscm{\#hasheq}, \expandhtmlindex{2492}
+  \item \rawscm{\#rx}, \expandhtmlindex{2484}
+  \item \rawscm{\#{\Tilde}}, \expandhtmlindex{2506}
+  \item \stresc{a}, \expandhtmlindex{2422}
+  \item \stresc{b}, \expandhtmlindex{2424}
+  \item \stresc{e}, \expandhtmlindex{2436}
+  \item \stresc{f}, \expandhtmlindex{2432}
+  \item \stresc{n}, \expandhtmlindex{2428}
+  \item \stresc{\var{o}}, \expandhtmlindex{2438}
+  \item \stresc{\var{ooo}}, \expandhtmlindex{2442}
+  \item \stresc{\var{oo}}, \expandhtmlindex{2440}
+  \item \stresc{r}, \expandhtmlindex{2434}
+  \item \stresc{t}, \expandhtmlindex{2426}
+  \item \stresc{v}, \expandhtmlindex{2430}
+  \item \stresc{x\var{hh}}, \expandhtmlindex{2446}
+  \item \stresc{x\var{h}}, \expandhtmlindex{2444}
+  \item \File{\_loader.so}, \expandhtmlindex{2352}
+  \item \keywordfont{syntax-rules} Extensions, \expandhtmlindex{2036}
+  \item \rawscm{\{~\}}, \expandhtmlindex{1078}
+  \item `, \expandhtmlindex{2456}
+  \item {\Backslash}, \expandhtmlindex{2470}
+
+  \indexspace
+
+  \item \rawscm{absolute-path?}, \expandhtmlindex{1724}
+  \item \rawscm{add1}, \expandhtmlindex{172}
+  \item Additional Thread Utilities, \expandhtmlindex{930}
+  \item \scmk{all-defined}, \expandhtmlindex{652}
+  \item \scmk{all-defined-except}, \expandhtmlindex{654}
+  \item \scmk{all-except}, \expandhtmlindex{636}, \expandhtmlindex{638}
+  \item \scmk{all-from}, \expandhtmlindex{648}
+  \item \scmk{all-from-except}, \expandhtmlindex{650}
+  \item \scmk{and}, \expandhtmlindex{38}
+  \item And and Or, \expandhtmlindex{36}
+  \item \rawscm{andmap}, \expandhtmlindex{122}
+  \item \rawscm{append!}, \expandhtmlindex{386}
+  \item \rawscm{argv}, \expandhtmlindex{1212}, \expandhtmlindex{2912}
+  \item \rawscm{arithmetic-shift}, \expandhtmlindex{194}
+  \item \rawscm{arity}, \expandhtmlindex{464}, \expandhtmlindex{752}
+  \item \rawscm{arity-at-least-value}, \expandhtmlindex{446}
+  \item \rawscm{arity-at-least?}, \expandhtmlindex{448}
+  \item \rawscm{assoc}, \expandhtmlindex{416}
+  \item \rawscm{assq}, \expandhtmlindex{420}
+  \item \rawscm{assv}, \expandhtmlindex{418}
+
+  \indexspace
+
+  \item \rawscm{banner}, \expandhtmlindex{2770}
+  \item Basic Data Extensions, \expandhtmlindex{98}
+  \item Basic Syntax Extensions, \expandhtmlindex{12}
+  \item \scmk{begin}, \expandhtmlindex{46}, \expandhtmlindex{88}
+  \item \scmk{begin0}, \expandhtmlindex{44}
+  \item bignum, \expandhtmlindex{132}
+  \item Binding Forms, \expandhtmlindex{56}
+  \item Binding Multiple and Fluid Syntax Identifiers, 
+		\expandhtmlindex{2166}
+  \item bitwise operators, \expandhtmlindex{184}
+  \item \rawscm{bitwise-and}, \expandhtmlindex{188}
+  \item \rawscm{bitwise-ior}, \expandhtmlindex{186}
+  \item \rawscm{bitwise-not}, \expandhtmlindex{192}
+  \item \rawscm{bitwise-xor}, \expandhtmlindex{190}
+  \item Booleans, \expandhtmlindex{116}
+  \item \rawscm{bound-identifier=?}, \expandhtmlindex{2128}
+  \item \rawscm{box}, \expandhtmlindex{428}
+  \item \rawscm{box-immutable}, \expandhtmlindex{430}
+  \item \rawscm{box?}, \expandhtmlindex{436}
+  \item Boxes, \expandhtmlindex{424}
+  \item boxes, \expandhtmlindex{426}, \expandhtmlindex{1080}, 
+		\expandhtmlindex{2378}
+    \subitem printing, \expandhtmlindex{1108}, \expandhtmlindex{2526}
+  \item \rawscm{break-enabled}, \expandhtmlindex{1236}
+  \item \rawscm{break-thread}, \expandhtmlindex{872}, 
+		\expandhtmlindex{946}
+  \item Breaks, \expandhtmlindex{866}
+  \item breaks, \see{ threads, breaking}{870}
+  \item Bruggeman, Carl, \expandhtmlindex{2032}
+  \item \rawscm{build-path}, \expandhtmlindex{1714}
+  \item Built-in Modules, \expandhtmlindex{706}
+  \item byte codes, \expandhtmlindex{2584}
+
+  \indexspace
+
+  \item \rawscm{call-in-nested-thread}, \expandhtmlindex{950}
+  \item \rawscm{call-with-current-continuation}, \expandhtmlindex{820}, 
+		\expandhtmlindex{822}
+  \item \rawscm{call-with-custodian}, \expandhtmlindex{762}
+  \item \rawscm{call-with-escape-continuation}, \expandhtmlindex{838}, 
+		\expandhtmlindex{840}
+  \item \rawscm{call-with-input-file}, \expandhtmlindex{1500}
+  \item \rawscm{call-with-output-file}, \expandhtmlindex{1504}, 
+		\expandhtmlindex{1510}
+  \item \rawscm{call/cc}, \expandhtmlindex{816}, \expandhtmlindex{824}
+  \item \rawscm{call/ec}, \expandhtmlindex{834}, \expandhtmlindex{842}
+  \item case sensitivity, \expandhtmlindex{1064}
+  \item Case-Lambda, \expandhtmlindex{90}
+  \item \scmk{case-lambda}, \expandhtmlindex{92}
+  \item \rawscm{channel-get}, \expandhtmlindex{998}
+  \item \rawscm{channel-put}, \expandhtmlindex{1002}
+  \item \rawscm{channel-try-get}, \expandhtmlindex{1000}
+  \item \rawscm{channel?}, \expandhtmlindex{996}
+  \item Channels, \expandhtmlindex{984}
+  \item \rawscm{char->integer}, \expandhtmlindex{240}
+  \item \rawscm{char->latin-1-integer}, \expandhtmlindex{248}
+  \item \rawscm{char-alphabetic?}, \expandhtmlindex{278}
+  \item \rawscm{char-ci<=?}, \expandhtmlindex{268}
+  \item \rawscm{char-ci<?}, \expandhtmlindex{266}
+  \item \rawscm{char-ci=?}, \expandhtmlindex{264}
+  \item \rawscm{char-ci>=?}, \expandhtmlindex{272}
+  \item \rawscm{char-ci>?}, \expandhtmlindex{270}
+  \item \rawscm{char-downcase}, \expandhtmlindex{286}
+  \item \rawscm{char-locale-alphabetic?}, \expandhtmlindex{300}
+  \item \rawscm{char-locale-ci<?}, \expandhtmlindex{294}
+  \item \rawscm{char-locale-ci=?}, \expandhtmlindex{292}
+  \item \rawscm{char-locale-ci>?}, \expandhtmlindex{296}
+  \item \rawscm{char-locale-downcase}, \expandhtmlindex{310}
+  \item \rawscm{char-locale-lower-case?}, \expandhtmlindex{306}
+  \item \rawscm{char-locale-numeric?}, \expandhtmlindex{302}
+  \item \rawscm{char-locale-upcase}, \expandhtmlindex{308}
+  \item \rawscm{char-locale-upper-case?}, \expandhtmlindex{304}
+  \item \rawscm{char-locale-whitespace?}, \expandhtmlindex{298}
+  \item \rawscm{char-locale<?}, \expandhtmlindex{288}
+  \item \rawscm{char-locale>?}, \expandhtmlindex{290}
+  \item \rawscm{char-numeric?}, \expandhtmlindex{280}
+  \item \rawscm{char-upcase}, \expandhtmlindex{284}
+  \item \rawscm{char-upper-case?}, \expandhtmlindex{282}
+  \item \rawscm{char-whitespace?}, \expandhtmlindex{276}
+  \item \rawscm{char<=?}, \expandhtmlindex{258}
+  \item \rawscm{char<?}, \expandhtmlindex{256}
+  \item \rawscm{char=?}, \expandhtmlindex{254}
+  \item \rawscm{char>=?}, \expandhtmlindex{262}
+  \item \rawscm{char>?}, \expandhtmlindex{260}
+  \item Characters, \expandhtmlindex{236}
+  \item characters, \expandhtmlindex{238}, \expandhtmlindex{2394}
+    \subitem printing, \expandhtmlindex{2540}
+  \item Check Syntax, \expandhtmlindex{2228}, \expandhtmlindex{2264}
+  \item \rawscm{check-duplicate-identifier}, \expandhtmlindex{2136}
+  \item \rawscm{check-parameter-procedure}, \expandhtmlindex{1292}
+  \item \rawscm{collect-garbage}, \expandhtmlindex{2326}
+  \item \rawscm{collection-path}, \expandhtmlindex{2788}
+  \item collections, \expandhtmlindex{2778}
+  \item column numbers, \expandhtmlindex{1672}
+  \item command-line arguments, \expandhtmlindex{1208}, 
+		\expandhtmlindex{2798}
+  \item comments, \expandhtmlindex{2508}
+    \subitem \rawscm{comments
+      \subsubitem S-expression}, \expandhtmlindex{2510}
+  \item communication, \expandhtmlindex{958}, \expandhtmlindex{988}
+  \item communications, \expandhtmlindex{1916}
+  \item Compilation, \expandhtmlindex{2580}
+  \item \rawscm{compile}, \expandhtmlindex{2586}
+  \item \rawscm{compile-allow-set!-undefined}, \expandhtmlindex{1140}
+  \item \rawscm{compile-syntax}, \expandhtmlindex{2588}
+  \item compiled code, \expandhtmlindex{1084}
+  \item \rawscm{compiled-expression?}, \expandhtmlindex{2590}
+  \item \rawscm{compiled-module-expression?}, \expandhtmlindex{2288}
+  \item compiling, \expandhtmlindex{2582}
+  \item \rawscm{complete-path?}, \expandhtmlindex{1728}
+  \item complex, \expandhtmlindex{138}
+  \item concatenate strings, \expandhtmlindex{388}
+  \item Cond and Case, \expandhtmlindex{24}
+  \item \rawscm{cons-immutable}, \expandhtmlindex{394}
+  \item Continuation Marks, \expandhtmlindex{854}
+  \item \rawscm{continuation-mark-set->list}, \expandhtmlindex{862}
+  \item \rawscm{continuation-mark-set?}, \expandhtmlindex{864}
+  \item \rawscm{continuation-marks}, \expandhtmlindex{858}
+  \item Continuations, \expandhtmlindex{810}
+  \item continuations, \expandhtmlindex{812}
+    \subitem boundaries, \expandhtmlindex{830}
+    \subitem boundary crossings, \expandhtmlindex{828}
+    \subitem escape, \expandhtmlindex{832}
+  \item control flow, \expandhtmlindex{814}
+  \item \rawscm{copy-file}, \expandhtmlindex{1850}
+  \item Creating Subtypes, \expandhtmlindex{534}
+  \item curly braces, \expandhtmlindex{1074}
+  \item current namespace, \expandhtmlindex{1134}
+  \item \rawscm{current-command-line-arguments}, \expandhtmlindex{1210}, 
+		\expandhtmlindex{2908}
+  \item \rawscm{current-continuation-marks}, \expandhtmlindex{748}, 
+		\expandhtmlindex{860}
+  \item \rawscm{current-custodian}, \expandhtmlindex{1244}, 
+		\expandhtmlindex{1392}
+  \item \rawscm{current-directory}, \expandhtmlindex{1044}, 
+		\expandhtmlindex{1866}
+  \item \rawscm{current-drive}, \expandhtmlindex{1868}
+  \item \rawscm{current-error-port}, \expandhtmlindex{1054}
+  \item \rawscm{current-eval}, \expandhtmlindex{1128}
+  \item \rawscm{current-exception-handler}, \expandhtmlindex{732}, 
+		\expandhtmlindex{1218}
+  \item \rawscm{current-gc-milliseconds}, \expandhtmlindex{2676}
+  \item \rawscm{current-inexact-milliseconds}, \expandhtmlindex{2672}
+  \item \rawscm{current-input-port}, \expandhtmlindex{1050}, 
+		\expandhtmlindex{1466}
+  \item \rawscm{current-inspector}, \expandhtmlindex{1252}
+  \item \rawscm{current-library-collection-paths}, 
+		\expandhtmlindex{1206}, \expandhtmlindex{2782}, 
+		\expandhtmlindex{2862}, \expandhtmlindex{2920}
+  \item \rawscm{current-load}, \expandhtmlindex{1146}
+  \item \rawscm{current-load-extension}, \expandhtmlindex{1160}
+  \item \rawscm{current-load-relative-directory}, 
+		\expandhtmlindex{1178}, \expandhtmlindex{2346}, 
+		\expandhtmlindex{2604}
+  \item \rawscm{current-load/use-compiled}, \expandhtmlindex{1172}
+  \item \rawscm{current-locale}, \expandhtmlindex{1278}
+  \item \rawscm{current-memory-use}, \expandhtmlindex{2328}
+  \item \rawscm{current-milliseconds}, \expandhtmlindex{206}, 
+		\expandhtmlindex{2670}
+  \item \rawscm{current-module-name-prefix}, \expandhtmlindex{1282}
+  \item \rawscm{current-module-name-resolver}, \expandhtmlindex{1280}
+  \item \rawscm{current-namespace}, \expandhtmlindex{1132}
+  \item \rawscm{current-output-port}, \expandhtmlindex{1052}, 
+		\expandhtmlindex{1468}
+  \item \rawscm{current-print}, \expandhtmlindex{1136}
+  \item \rawscm{current-process-milliseconds}, \expandhtmlindex{2674}
+  \item \rawscm{current-prompt-read}, \expandhtmlindex{1122}
+  \item \rawscm{current-pseudo-random-generator}, \expandhtmlindex{200}, 
+		\expandhtmlindex{202}, \expandhtmlindex{1264}
+  \item \rawscm{current-seconds}, \expandhtmlindex{2634}, 
+		\expandhtmlindex{2638}, \expandhtmlindex{2664}
+  \item \rawscm{current-security-guard}, \expandhtmlindex{1240}, 
+		\expandhtmlindex{1368}
+  \item \rawscm{current-thread}, \expandhtmlindex{932}
+  \item \rawscm{current-thread-group}, \expandhtmlindex{1248}
+  \item \rawscm{current-wait-pseudo-random-generator}, 
+		\expandhtmlindex{1270}
+  \item \rawscm{custodian-limit-memory}, \expandhtmlindex{1410}
+  \item \rawscm{custodian-managed-list}, \expandhtmlindex{1402}
+  \item \rawscm{custodian-require-memory}, \expandhtmlindex{1406}
+  \item \rawscm{custodian-shutdown-all}, \expandhtmlindex{1398}
+  \item \rawscm{custodian?}, \expandhtmlindex{1400}
+  \item Custodians, \expandhtmlindex{1388}
+  \item custodians, \expandhtmlindex{1242}, \expandhtmlindex{1390}
+  \item cycles, \expandhtmlindex{2564}
+
+  \indexspace
+
+  \item Data Sharing in Input and Output, \expandhtmlindex{2550}
+  \item date, \expandhtmlindex{2632}
+  \item \rawscm{date}, \expandhtmlindex{2642}
+  \item \rawscm{date-day}, \expandhtmlindex{2650}
+  \item \rawscm{date-dst?}, \expandhtmlindex{2660}
+  \item \rawscm{date-hour}, \expandhtmlindex{2648}
+  \item \rawscm{date-minute}, \expandhtmlindex{2646}
+  \item \rawscm{date-month}, \expandhtmlindex{2652}
+  \item \rawscm{date-second}, \expandhtmlindex{2644}
+  \item \rawscm{date-time-zone-offset}, \expandhtmlindex{2662}
+  \item \rawscm{date-week-day}, \expandhtmlindex{2656}
+  \item \rawscm{date-year}, \expandhtmlindex{2654}
+  \item \rawscm{date-year-day}, \expandhtmlindex{2658}
+  \item \rawscm{datum->syntax-object}, \expandhtmlindex{2112}
+  \item decimal input, \expandhtmlindex{140}
+  \item \scmk{define}, \expandhtmlindex{58}
+  \item {\tt define}
+    \subitem internal, \expandhtmlindex{86}
+  \item \scmk{define-struct}, \expandhtmlindex{528}
+  \item \scmk{define-syntax}, \expandhtmlindex{2064}
+  \item \scmk{define-syntaxes}, \expandhtmlindex{2168}
+  \item \scmk{define-values}, \expandhtmlindex{64}
+  \item Defining Structure Types, \expandhtmlindex{526}
+  \item \rawscm{delete-directory}, \expandhtmlindex{1886}
+  \item \rawscm{delete-file}, \expandhtmlindex{1812}
+  \item directories
+    \subitem contents, \expandhtmlindex{1904}
+    \subitem creating, \expandhtmlindex{1878}
+    \subitem current, \expandhtmlindex{1042}, \expandhtmlindex{1864}
+    \subitem dates, \expandhtmlindex{1896}
+    \subitem deleting, \expandhtmlindex{1884}
+    \subitem moving, \expandhtmlindex{1890}
+    \subitem of currently loading file, \expandhtmlindex{1176}, 
+		\expandhtmlindex{2342}, \expandhtmlindex{2600}
+    \subitem pathnames, \see{ pathnames}{1862}
+    \subitem permissions, \expandhtmlindex{1900}
+    \subitem renaming, \expandhtmlindex{1892}
+    \subitem root, \expandhtmlindex{1908}
+    \subitem testing, \expandhtmlindex{1872}
+  \item \rawscm{directory-exists?}, \expandhtmlindex{1874}
+  \item \rawscm{directory-list}, \expandhtmlindex{1906}
+  \item \rawscm{display}, \expandhtmlindex{2566}
+  \item division by inexact zero, \expandhtmlindex{156}
+  \item \rawscm{dump-memory-stats}, \expandhtmlindex{2330}
+  \item Dybvig, Kent, \expandhtmlindex{728}, \expandhtmlindex{2028}
+  \item Dynamic Extensions, \expandhtmlindex{2598}
+  \item Dynamic Module Access, \expandhtmlindex{682}
+  \item Dynamic Wind, \expandhtmlindex{850}
+  \item \rawscm{dynamic-require}, \expandhtmlindex{686}
+  \item \rawscm{dynamic-require-for-syntax}, \expandhtmlindex{690}
+  \item \rawscm{dynamic-wind}, \expandhtmlindex{852}
+
+  \indexspace
+
+  \item \rawscm{else}, \expandhtmlindex{26}
+  \item \rawscm{en:application:type}, \expandhtmlindex{506}
+  \item environments
+    \subitem top-level, \expandhtmlindex{2034}, \expandhtmlindex{2148}
+  \item \rawscm{eof}, \expandhtmlindex{1460}
+  \item \rawscm{eof-object?}, \expandhtmlindex{1462}
+  \item \rawscm{eq-hash-code}, \expandhtmlindex{514}
+  \item \rawscm{eq?}, \expandhtmlindex{274}, \expandhtmlindex{594}
+  \item \rawscm{equal-hash-code}, \expandhtmlindex{516}
+  \item \rawscm{equal?}, \expandhtmlindex{118}, \expandhtmlindex{438}, 
+		\expandhtmlindex{596}
+  \item \rawscm{eqv?}, \expandhtmlindex{120}, \expandhtmlindex{164}, 
+		\expandhtmlindex{592}
+  \item \rawscm{error}, \expandhtmlindex{750}, \expandhtmlindex{774}, 
+		\expandhtmlindex{778}, \expandhtmlindex{780}, 
+		\expandhtmlindex{782}
+  \item error display  handler, \expandhtmlindex{1226}
+  \item Error Escape Handler, \expandhtmlindex{880}
+  \item error escape handlers, \expandhtmlindex{882}, 
+		\expandhtmlindex{894}
+  \item error value conversion handler, \expandhtmlindex{1232}
+  \item \rawscm{error-display-handler}, \expandhtmlindex{1224}
+  \item \rawscm{error-escape-handler}, \expandhtmlindex{884}, 
+		\expandhtmlindex{1222}
+  \item \rawscm{error-print-source-location}, \expandhtmlindex{1234}
+  \item \rawscm{error-print-width}, \expandhtmlindex{1228}
+  \item \rawscm{error-value->string-handler}, \expandhtmlindex{1230}
+  \item Errors, \expandhtmlindex{770}
+  \item errors, \expandhtmlindex{742}, \expandhtmlindex{772}, 
+		\expandhtmlindex{1216}
+    \subitem mismatch, \expandhtmlindex{794}
+    \subitem syntax, \expandhtmlindex{800}
+    \subitem type, \expandhtmlindex{784}
+  \item \rawscm{eval}, \expandhtmlindex{1126}, \expandhtmlindex{2336}
+  \item Eval and Load, \expandhtmlindex{2334}
+  \item \rawscm{eval-syntax}, \expandhtmlindex{2338}
+  \item evaluation handler, \expandhtmlindex{1130}
+  \item Evaluation Order, \expandhtmlindex{14}
+  \item evaluation order, \expandhtmlindex{16}
+  \item \rawscm{even?}, \expandhtmlindex{160}
+  \item exception handlers, \expandhtmlindex{896}
+  \item Exceptions, \expandhtmlindex{720}
+  \item exceptions, \expandhtmlindex{722}, \expandhtmlindex{1214}
+    \subitem primitive hierarchy, \expandhtmlindex{740}
+  \item Exceptions and Control Flow, \expandhtmlindex{718}
+  \item Executable Name, \expandhtmlindex{2916}
+  \item \rawscm{exit}, \expandhtmlindex{1260}, \expandhtmlindex{2366}
+  \item exit handler, \expandhtmlindex{1258}
+  \item \rawscm{exit-handler}, \expandhtmlindex{1256}
+  \item Exiting, \expandhtmlindex{2364}
+  \item exiting, \expandhtmlindex{1254}
+  \item \rawscm{exn}, \expandhtmlindex{744}
+  \item \rawscm{exn:application:arity}, \expandhtmlindex{22}, 
+		\expandhtmlindex{454}, \expandhtmlindex{456}
+  \item \rawscm{exn:application:continuation}, \expandhtmlindex{848}
+  \item \rawscm{exn:application:fprintf:mismatch}, 
+		\expandhtmlindex{1666}
+  \item \rawscm{exn:application:mismatch}, \expandhtmlindex{170}, 
+		\expandhtmlindex{406}, \expandhtmlindex{414}, 
+		\expandhtmlindex{422}, \expandhtmlindex{486}, 
+		\expandhtmlindex{494}, \expandhtmlindex{502}, 
+		\expandhtmlindex{542}, \expandhtmlindex{544}, 
+		\expandhtmlindex{572}, \expandhtmlindex{688}, 
+		\expandhtmlindex{792}, \expandhtmlindex{798}, 
+		\expandhtmlindex{906}, \expandhtmlindex{916}, 
+		\expandhtmlindex{966}, \expandhtmlindex{1354}, 
+		\expandhtmlindex{1394}, \expandhtmlindex{1404}, 
+		\expandhtmlindex{1512}, \expandhtmlindex{1556}, 
+		\expandhtmlindex{1580}, \expandhtmlindex{1582}, 
+		\expandhtmlindex{1584}, \expandhtmlindex{1590}, 
+		\expandhtmlindex{1610}, \expandhtmlindex{1632}, 
+		\expandhtmlindex{1642}, \expandhtmlindex{1652}, 
+		\expandhtmlindex{1654}, \expandhtmlindex{1656}, 
+		\expandhtmlindex{1658}, \expandhtmlindex{1668}, 
+		\expandhtmlindex{1970}, \expandhtmlindex{1976}, 
+		\expandhtmlindex{1996}, \expandhtmlindex{2210}, 
+		\expandhtmlindex{2692}
+  \item \rawscm{exn:application:type}, \expandhtmlindex{246}, 
+		\expandhtmlindex{252}, \expandhtmlindex{316}, 
+		\expandhtmlindex{380}, \expandhtmlindex{440}, 
+		\expandhtmlindex{498}, \expandhtmlindex{556}, 
+		\expandhtmlindex{768}, \expandhtmlindex{788}, 
+		\expandhtmlindex{1014}, \expandhtmlindex{1578}, 
+		\expandhtmlindex{1664}
+  \item \rawscm{exn:application;mismatch}, \expandhtmlindex{2114}
+  \item \rawscm{exn:break}, \expandhtmlindex{738}, 
+		\expandhtmlindex{874}, \expandhtmlindex{876}, 
+		\expandhtmlindex{878}, \expandhtmlindex{980}, 
+		\expandhtmlindex{1018}, \expandhtmlindex{1616}, 
+		\expandhtmlindex{1648}, \expandhtmlindex{1932}, 
+		\expandhtmlindex{1944}, \expandhtmlindex{1990}, 
+		\expandhtmlindex{2002}
+  \item \rawscm{exn:fail:contract}, \expandhtmlindex{324}
+  \item \rawscm{exn:i/o:filesystem}, \expandhtmlindex{1046}, 
+		\expandhtmlindex{1478}, \expandhtmlindex{1484}, 
+		\expandhtmlindex{1496}, \expandhtmlindex{1712}, 
+		\expandhtmlindex{1720}, \expandhtmlindex{1722}, 
+		\expandhtmlindex{1732}, \expandhtmlindex{1740}, 
+		\expandhtmlindex{1802}, \expandhtmlindex{1808}, 
+		\expandhtmlindex{1814}, \expandhtmlindex{1822}, 
+		\expandhtmlindex{1828}, \expandhtmlindex{1840}, 
+		\expandhtmlindex{1846}, \expandhtmlindex{1852}, 
+		\expandhtmlindex{1858}, \expandhtmlindex{1876}, 
+		\expandhtmlindex{1882}, \expandhtmlindex{1888}, 
+		\expandhtmlindex{2608}, \expandhtmlindex{2620}, 
+		\expandhtmlindex{2790}
+  \item \rawscm{exn:i/o:port}, \expandhtmlindex{1550}, 
+		\expandhtmlindex{1558}, \expandhtmlindex{1560}, 
+		\expandhtmlindex{1568}
+  \item \rawscm{exn:i/o:port:closed}, \expandhtmlindex{1566}
+  \item \rawscm{exn:i/o:tcp}, \expandhtmlindex{1924}, 
+		\expandhtmlindex{1928}, \expandhtmlindex{1936}, 
+		\expandhtmlindex{1940}, \expandhtmlindex{1948}, 
+		\expandhtmlindex{1956}
+  \item \rawscm{exn:i/o:udp}, \expandhtmlindex{1966}, 
+		\expandhtmlindex{1972}, \expandhtmlindex{1978}, 
+		\expandhtmlindex{1982}, \expandhtmlindex{2006}
+  \item \rawscm{exn:misc}, \expandhtmlindex{972}, 
+		\expandhtmlindex{2622}, \expandhtmlindex{2694}, 
+		\expandhtmlindex{2704}, \expandhtmlindex{2742}
+  \item \rawscm{exn:misc:application}, \expandhtmlindex{224}, 
+		\expandhtmlindex{226}, \expandhtmlindex{232}
+  \item \rawscm{exn:misc:unsupported}, \expandhtmlindex{1408}, 
+		\expandhtmlindex{1412}, \expandhtmlindex{1860}, 
+		\expandhtmlindex{1870}, \expandhtmlindex{2616}, 
+		\expandhtmlindex{2716}
+  \item \rawscm{exn:module}, \expandhtmlindex{702}, 
+		\expandhtmlindex{704}, \expandhtmlindex{716}
+  \item \rawscm{exn:read}, \expandhtmlindex{2376}, 
+		\expandhtmlindex{2384}, \expandhtmlindex{2418}, 
+		\expandhtmlindex{2486}, \expandhtmlindex{2572}, 
+		\expandhtmlindex{2574}, \expandhtmlindex{2576}, 
+		\expandhtmlindex{2578}
+  \item \rawscm{exn:read:non-char}, \expandhtmlindex{2518}
+  \item \rawscm{exn:special-comment}, \expandhtmlindex{1586}, 
+		\expandhtmlindex{1628}
+  \item \rawscm{exn:syntax}, \expandhtmlindex{804}, 
+		\expandhtmlindex{1328}, \expandhtmlindex{1336}, 
+		\expandhtmlindex{2060}, \expandhtmlindex{2070}, 
+		\expandhtmlindex{2194}
+  \item \rawscm{exn:thread}, \expandhtmlindex{952}
+  \item \rawscm{exn:user}, \expandhtmlindex{776}
+  \item \rawscm{exn:variable}, \expandhtmlindex{1330}, 
+		\expandhtmlindex{1332}, \expandhtmlindex{1334}
+  \item \rawscm{exn;application:mismatch}, \expandhtmlindex{578}
+  \item \rawscm{exn?}, \expandhtmlindex{746}
+  \item \rawscm{expand}, \expandhtmlindex{2236}
+  \item \rawscm{expand-once}, \expandhtmlindex{2240}
+  \item \rawscm{expand-path}, \expandhtmlindex{1736}
+  \item \rawscm{expand-syntax}, \expandhtmlindex{2238}
+  \item \rawscm{expand-syntax-once}, \expandhtmlindex{2242}
+  \item \rawscm{expand-syntax-to-top-form}, \expandhtmlindex{2246}
+  \item \rawscm{expand-to-top-form}, \expandhtmlindex{2244}
+  \item exponential input, \expandhtmlindex{142}
+  \item expressions
+    \subitem shared structure, \expandhtmlindex{2554}
+
+  \indexspace
+
+  \item fields, \expandhtmlindex{522}
+  \item \scmk{file}, \expandhtmlindex{670}
+  \item \rawscm{file-exists?}, \expandhtmlindex{1800}
+  \item \rawscm{file-or-directory-modify-seconds}, 
+		\expandhtmlindex{1826}, \expandhtmlindex{1898}, 
+		\expandhtmlindex{2640}, \expandhtmlindex{2666}
+  \item \rawscm{file-or-directory-permissions}, \expandhtmlindex{1832}, 
+		\expandhtmlindex{1902}
+  \item \rawscm{file-position}, \expandhtmlindex{1552}, 
+		\expandhtmlindex{1554}
+  \item \rawscm{file-size}, \expandhtmlindex{1844}
+  \item \rawscm{file-stream-buffer-mode}, \expandhtmlindex{1542}
+  \item \rawscm{file-stream-port?}, \expandhtmlindex{1536}
+  \item files, \expandhtmlindex{1534}
+    \subitem copying, \expandhtmlindex{1848}
+    \subitem deleting, \expandhtmlindex{1810}
+    \subitem loading, \expandhtmlindex{2340}
+    \subitem modification dates, \expandhtmlindex{1824}
+    \subitem moving, \expandhtmlindex{1816}
+    \subitem pathnames, \see{ pathnames}{1796}
+    \subitem permissions, \expandhtmlindex{1830}
+    \subitem renaming, \expandhtmlindex{1818}
+    \subitem sizes, \expandhtmlindex{1842}
+    \subitem testing, \expandhtmlindex{1798}
+  \item Filesystem Utilities, \expandhtmlindex{1706}
+  \item \rawscm{filesystem-root-list}, \expandhtmlindex{1910}
+  \item finalization, \see{ will executors}{2310}
+  \item \rawscm{find-executable-path}, \expandhtmlindex{1756}
+  \item \rawscm{find-library-collection-paths}, \expandhtmlindex{2784}
+  \item \rawscm{find-system-path}, \expandhtmlindex{1760}, 
+		\expandhtmlindex{2910}, \expandhtmlindex{2922}
+  \item fixnum, \expandhtmlindex{130}
+  \item Flag Conventions, \expandhtmlindex{2906}
+  \item \rawscm{floating-point-byte-string->real}, 
+		\expandhtmlindex{228}
+  \item flonum, \expandhtmlindex{136}
+  \item \scmk{fluid-let}, \expandhtmlindex{84}
+  \item \scmk{fluid-let-syntax}, \expandhtmlindex{2176}
+  \item \rawscm{flush-output}, \expandhtmlindex{1538}
+  \item \rawscm{force}, \expandhtmlindex{472}
+  \item formals, \expandhtmlindex{62}
+  \item \rawscm{format}, \expandhtmlindex{1662}
+  \item \rawscm{fprintf}, \expandhtmlindex{1650}
+  \item fraction, \expandhtmlindex{134}
+  \item \rawscm{free-identifier=?}, \expandhtmlindex{2130}
+  \item Friedman, Dan, \expandhtmlindex{724}
+
+  \indexspace
+
+  \item Garbage Collection, \expandhtmlindex{2324}
+  \item \rawscm{generate-temporaries}, \expandhtmlindex{2122}
+  \item \rawscm{gensym}, \expandhtmlindex{370}
+  \item \rawscm{get-output-string}, \expandhtmlindex{1530}
+  \item \rawscm{getenv}, \expandhtmlindex{2746}
+  \item global port print  handler, \expandhtmlindex{1058}
+  \item \rawscm{global-port-print-handler}, \expandhtmlindex{1056}, 
+		\expandhtmlindex{1638}, \expandhtmlindex{1704}
+  \item graphs, \expandhtmlindex{2498}, \expandhtmlindex{2552}
+    \subitem printing, \expandhtmlindex{2548}
+  \item guardians, \see{ will executors}{2312}
+
+  \indexspace
+
+  \item Hash Tables, \expandhtmlindex{476}
+  \item hash tables, \expandhtmlindex{478}
+    \subitem constants, \expandhtmlindex{2488}
+    \subitem printing, \expandhtmlindex{1116}, \expandhtmlindex{2546}
+  \item \rawscm{hash-table-count}, \expandhtmlindex{512}
+  \item \rawscm{hash-table-for-each}, \expandhtmlindex{510}
+  \item \rawscm{hash-table-get}, \expandhtmlindex{500}
+  \item \rawscm{hash-table-map}, \expandhtmlindex{508}
+  \item \rawscm{hash-table-put!}, \expandhtmlindex{496}
+  \item \rawscm{hash-table-remove!}, \expandhtmlindex{504}
+  \item \rawscm{hash-table?}, \expandhtmlindex{492}
+  \item Haynes, Chris, \expandhtmlindex{726}
+  \item header, \expandhtmlindex{60}
+  \item Hieb, Rob, \expandhtmlindex{2030}
+  \item \File{HOMEDRIVE}, \expandhtmlindex{1790}
+  \item \File{HOMEPATH}, \expandhtmlindex{1792}
+
+  \indexspace
+
+  \item identifier macro, \expandhtmlindex{2044}, 
+		\expandhtmlindex{2198}, \expandhtmlindex{2204}
+  \item Identifier Resolution in Namespaces, \expandhtmlindex{1306}
+  \item \rawscm{identifier-binding}, \expandhtmlindex{2138}
+  \item \rawscm{identifier-binding-export-position}, 
+		\expandhtmlindex{2144}
+  \item \rawscm{identifier-transformer-binding}, \expandhtmlindex{2142}
+  \item \rawscm{identifier-transformer-binding-export-position}, 
+		\expandhtmlindex{2146}
+  \item \rawscm{identifier?}, \expandhtmlindex{2120}
+  \item \rawscm{immutable?}, \expandhtmlindex{400}
+  \item infinity, \expandhtmlindex{144}
+  \item infix, \expandhtmlindex{2452}
+  \item \File{info.ss}, \expandhtmlindex{2780}
+  \item Initial Namespace, \expandhtmlindex{1308}
+  \item \rawscm{initial-exception-handler}, \expandhtmlindex{1220}
+  \item Initialization, \expandhtmlindex{2918}
+  \item inode, \expandhtmlindex{1564}
+  \item Input and Output, \expandhtmlindex{1454}
+  \item Input Parsing, \expandhtmlindex{2368}
+  \item input ports
+    \subitem pattern matching, \expandhtmlindex{1434}
+  \item \rawscm{inspector?}, \expandhtmlindex{566}
+  \item inspectors, \expandhtmlindex{562}, \expandhtmlindex{1250}
+  \item \rawscm{integer->char}, \expandhtmlindex{242}, 
+		\expandhtmlindex{244}
+  \item \rawscm{integer->integer-byte-string}, \expandhtmlindex{222}
+  \item \rawscm{integer-byte-string->integer}, \expandhtmlindex{220}
+  \item \rawscm{integer-sqrt}, \expandhtmlindex{178}
+  \item \rawscm{integer-sqrt/remainder}, \expandhtmlindex{180}
+  \item Introduction, \expandhtmlindex{2}
+
+  \indexspace
+
+  \item \rawscm{kill-thread}, \expandhtmlindex{914}
+
+  \indexspace
+
+  \item \rawscm{latin-1-integer->char}, \expandhtmlindex{250}
+  \item \scmk{let}, \expandhtmlindex{66}
+  \item \scmk{let*}, \expandhtmlindex{68}
+  \item \scmk{let*-values}, \expandhtmlindex{76}
+  \item \scmk{let-struct}, \expandhtmlindex{532}
+  \item \scmk{let-syntaxes}, \expandhtmlindex{2170}
+  \item \scmk{let-values}, \expandhtmlindex{74}
+  \item \scmk{let/cc}, \expandhtmlindex{818}, \expandhtmlindex{826}
+  \item \rawscm{let/ec}, \expandhtmlindex{836}
+  \item \scmk{let/ec}, \expandhtmlindex{844}
+  \item \scmk{letrec}, \expandhtmlindex{70}, \expandhtmlindex{72}
+  \item \scmk{letrec-syntaxes}, \expandhtmlindex{2172}
+  \item \scmk{letrec-syntaxes+values}, \expandhtmlindex{2174}
+  \item \scmk{letrec-values}, \expandhtmlindex{78}, 
+		\expandhtmlindex{112}
+  \item \scmk{lib}, \expandhtmlindex{672}
+  \item libraries, \expandhtmlindex{2776}
+  \item Library Collections and MzLib, \expandhtmlindex{2774}
+  \item line numbers, \expandhtmlindex{1670}
+  \item \rawscm{link-exists?}, \expandhtmlindex{1806}
+  \item links
+    \subitem creating, \expandhtmlindex{1854}
+    \subitem testing, \expandhtmlindex{1804}
+  \item \rawscm{list}, \expandhtmlindex{392}
+  \item \rawscm{list*}, \expandhtmlindex{390}
+  \item \rawscm{list*-immutable}, \expandhtmlindex{398}
+  \item \rawscm{list-immutable}, \expandhtmlindex{396}
+  \item \rawscm{list-ref}, \expandhtmlindex{402}
+  \item \rawscm{list-tail}, \expandhtmlindex{404}
+  \item Lists, \expandhtmlindex{378}
+  \item \rawscm{load}, \expandhtmlindex{1144}, \expandhtmlindex{1150}, 
+		\expandhtmlindex{1180}, \expandhtmlindex{2344}, 
+		\expandhtmlindex{2514}
+  \item load extension handler, \expandhtmlindex{1162}
+  \item load handler, \expandhtmlindex{1148}
+  \item \rawscm{load-extension}, \expandhtmlindex{1158}, 
+		\expandhtmlindex{1164}, \expandhtmlindex{1186}, 
+		\expandhtmlindex{2602}
+  \item \rawscm{load-relative}, \expandhtmlindex{1152}, 
+		\expandhtmlindex{1166}, \expandhtmlindex{1182}, 
+		\expandhtmlindex{1190}, \expandhtmlindex{2348}
+  \item \rawscm{load-relative-extension}, \expandhtmlindex{1188}, 
+		\expandhtmlindex{1194}, \expandhtmlindex{2606}
+  \item \rawscm{load/cd}, \expandhtmlindex{1156}, 
+		\expandhtmlindex{2354}
+  \item \rawscm{load/use-compiled}, \expandhtmlindex{1154}, 
+		\expandhtmlindex{1168}, \expandhtmlindex{1170}, 
+		\expandhtmlindex{1184}, \expandhtmlindex{1192}, 
+		\expandhtmlindex{2350}
+  \item load/use-compiled handler, \expandhtmlindex{1174}
+  \item \rawscm{load/used-compiled}, \expandhtmlindex{1202}
+  \item \rawscm{local-expand}, \expandhtmlindex{2222}
+  \item locales, \expandhtmlindex{1276}
+  \item logical operators, \see{ bitwise operators}{182}
+
+  \indexspace
+
+  \item Macro Expansion, \expandhtmlindex{2188}
+  \item macros, \see{ syntax}{2022}
+  \item \rawscm{make-channel}, \expandhtmlindex{994}
+  \item \rawscm{make-channel-put-waitable}, \expandhtmlindex{1004}
+  \item \rawscm{make-custodian}, \expandhtmlindex{1396}
+  \item \rawscm{make-custom-input-port}, \expandhtmlindex{1576}
+  \item \rawscm{make-custom-output-port}, \expandhtmlindex{1588}
+  \item \rawscm{make-directory}, \expandhtmlindex{1880}
+  \item \rawscm{make-file-or-directory-link}, \expandhtmlindex{1856}
+  \item \rawscm{make-guard-waitable}, \expandhtmlindex{1024}
+  \item \rawscm{make-hash-table}, \expandhtmlindex{480}
+  \item \rawscm{make-immutable-hash-table}, \expandhtmlindex{488}
+  \item make-input-port, \expandhtmlindex{1572}
+  \item \rawscm{make-inspector}, \expandhtmlindex{564}
+  \item \rawscm{make-nack-guard-waitable}, \expandhtmlindex{1026}
+  \item \rawscm{make-namespace}, \expandhtmlindex{1316}
+  \item make-output-port, \expandhtmlindex{1574}
+  \item \rawscm{make-parameter}, \expandhtmlindex{1284}
+  \item \rawscm{make-pipe}, \expandhtmlindex{1518}
+  \item \rawscm{make-poll-guard-waitable}, \expandhtmlindex{1028}
+  \item \rawscm{make-pseudo-random-generator}, \expandhtmlindex{204}
+  \item \rawscm{make-rename-transformer}, \expandhtmlindex{2202}
+  \item \rawscm{make-security-guard}, \expandhtmlindex{1370}
+  \item \rawscm{make-semaphore}, \expandhtmlindex{964}
+  \item \rawscm{make-semaphore-peek}, \expandhtmlindex{982}
+  \item \rawscm{make-set!-transformer}, \expandhtmlindex{2196}
+  \item \rawscm{make-string}, \expandhtmlindex{326}
+  \item \rawscm{make-struct-field-accessor}, \expandhtmlindex{546}
+  \item \rawscm{make-struct-field-mutator}, \expandhtmlindex{548}
+  \item \rawscm{make-struct-type}, \expandhtmlindex{540}
+  \item \rawscm{make-struct-type-property}, \expandhtmlindex{554}
+  \item \rawscm{make-syntax-introducer}, \expandhtmlindex{2226}
+  \item \rawscm{make-thread-group}, \expandhtmlindex{1420}
+  \item \rawscm{make-weak-box}, \expandhtmlindex{2300}
+  \item \rawscm{make-will-executor}, \expandhtmlindex{2314}
+  \item \rawscm{make-wrapped-waitable}, \expandhtmlindex{1022}
+  \item \rawscm{member}, \expandhtmlindex{408}
+  \item Memory Management, \expandhtmlindex{2294}
+  \item \rawscm{memq}, \expandhtmlindex{412}
+  \item \rawscm{memv}, \expandhtmlindex{410}
+  \item \scmk{module}, \expandhtmlindex{614}, \expandhtmlindex{764}
+  \item Module Bodies, \expandhtmlindex{624}
+  \item Module Expansion and Execution, \expandhtmlindex{618}
+  \item module name resolver, \expandhtmlindex{676}
+  \item module path index, \expandhtmlindex{2266}
+  \item Module Paths, \expandhtmlindex{662}
+  \item module registry, \expandhtmlindex{1304}
+  \item \rawscm{module->namespace}, \expandhtmlindex{1358}
+  \item \rawscm{module-compiled-imports}, \expandhtmlindex{2292}
+  \item \rawscm{module-compiled-name}, \expandhtmlindex{2290}
+  \item \rawscm{module-identifier=?}, \expandhtmlindex{2132}
+  \item \rawscm{module-path-index-join}, \expandhtmlindex{2272}
+  \item \rawscm{module-path-index-split}, \expandhtmlindex{2270}
+  \item \rawscm{module-path-index?}, \expandhtmlindex{2268}
+  \item \rawscm{module-transformer-identifier=?}, 
+		\expandhtmlindex{2134}
+  \item Modules, \expandhtmlindex{608}
+  \item modules, \expandhtmlindex{610}
+    \subitem body, \expandhtmlindex{626}
+    \subitem built-in, \expandhtmlindex{708}
+    \subitem compiling, \expandhtmlindex{680}
+    \subitem dynamic imports, \expandhtmlindex{684}
+    \subitem execution, \expandhtmlindex{622}
+    \subitem expansion, \expandhtmlindex{620}
+    \subitem exports, \expandhtmlindex{630}
+    \subitem for-syntax imports, \expandhtmlindex{2158}
+    \subitem imports, \expandhtmlindex{628}
+    \subitem in files, \expandhtmlindex{666}
+    \subitem libraries, \expandhtmlindex{668}
+    \subitem macros, \expandhtmlindex{658}, \expandhtmlindex{2156}
+    \subitem paths, \expandhtmlindex{664}
+    \subitem pre-defined, \expandhtmlindex{712}
+    \subitem predefined, \expandhtmlindex{710}
+    \subitem re-declaring, \expandhtmlindex{694}
+    \subitem re-defining, \expandhtmlindex{696}
+    \subitem redeclaring, \expandhtmlindex{698}
+    \subitem redefining, \expandhtmlindex{700}
+    \subitem syntax, \expandhtmlindex{660}
+  \item Modules and Load Handlers, \expandhtmlindex{714}
+  \item Modules and Macros, \expandhtmlindex{656}
+  \item MrEd, DrScheme, and {\mzc}, \expandhtmlindex{6}
+  \item Multiple Return Values, \expandhtmlindex{18}
+  \item multiple return values, \expandhtmlindex{20}
+  \item MzLib library, \expandhtmlindex{2792}
+  \item MzScheme
+    \subitem stand-alone, \expandhtmlindex{4}, \expandhtmlindex{2796}
+  \item \rawscm{mzscheme}, \expandhtmlindex{616}
+  \item MzScheme3m, \expandhtmlindex{8}
+  \item \File{mzschemerc.ss}, \expandhtmlindex{1780}
+
+  \indexspace
+
+  \item Namespace Utilities, \expandhtmlindex{1314}
+  \item \rawscm{namespace-attach-module}, \expandhtmlindex{678}, 
+		\expandhtmlindex{1352}
+  \item \rawscm{namespace-mapped-symbols}, \expandhtmlindex{1342}
+  \item \rawscm{namespace-module-registry}, \expandhtmlindex{1356}
+  \item \rawscm{namespace-require}, \expandhtmlindex{1344}
+  \item \rawscm{namespace-require/copy}, \expandhtmlindex{1348}
+  \item \rawscm{namespace-require/expansion-time}, 
+		\expandhtmlindex{1350}
+  \item \rawscm{namespace-set-variable-value!}, \expandhtmlindex{1338}
+  \item \rawscm{namespace-symbol->identifier}, \expandhtmlindex{1324}
+  \item \rawscm{namespace-syntax-introduce}, \expandhtmlindex{1360}
+  \item \rawscm{namespace-transformer-require}, \expandhtmlindex{1346}
+  \item \rawscm{namespace-undefine-variable!}, \expandhtmlindex{1340}
+  \item \rawscm{namespace-variable-value}, \expandhtmlindex{1326}
+  \item \rawscm{namespace?}, \expandhtmlindex{1322}
+  \item Namespaces, \expandhtmlindex{1294}
+  \item namespaces, \expandhtmlindex{1298}
+    \subitem initial, \expandhtmlindex{1310}
+    \subitem initial environment, \expandhtmlindex{1312}
+    \subitem initial transformer environment, \expandhtmlindex{2150}
+  \item Networking, \expandhtmlindex{1912}
+  \item networking, \expandhtmlindex{1914}
+  \item \rawscm{normal-case-path}, \expandhtmlindex{1742}
+  \item not-a-number, \expandhtmlindex{146}
+  \item \rawscm{not-break-exn?}, \expandhtmlindex{736}
+  \item Notation, \expandhtmlindex{10}
+  \item \rawscm{null}, \expandhtmlindex{382}
+  \item \rawscm{null-environment}, \expandhtmlindex{1302}
+  \item \rawscm{number->string}, \expandhtmlindex{168}
+  \item Numbers, \expandhtmlindex{126}
+  \item numbers, \expandhtmlindex{128}, \expandhtmlindex{2448}
+    \subitem big-endian, \expandhtmlindex{214}
+    \subitem converting, \expandhtmlindex{218}
+    \subitem floating-point, \expandhtmlindex{212}
+    \subitem little-endian, \expandhtmlindex{216}
+    \subitem machine representations, \expandhtmlindex{210}
+
+  \indexspace
+
+  \item \rawscm{object-name}, \expandhtmlindex{808}
+  \item \rawscm{object-wait-multiple}, \expandhtmlindex{1012}, 
+		\expandhtmlindex{1272}
+  \item \rawscm{object-wait-multiple/enable-break}, 
+		\expandhtmlindex{1016}, \expandhtmlindex{1274}
+  \item \rawscm{object-waitable?}, \expandhtmlindex{1030}
+  \item \rawscm{odd?}, \expandhtmlindex{162}
+  \item \rawscm{open-input-file}, \expandhtmlindex{1470}
+  \item \rawscm{open-input-output-file}, \expandhtmlindex{1498}
+  \item \rawscm{open-input-string}, \expandhtmlindex{1526}
+  \item \rawscm{open-output-file}, \expandhtmlindex{1472}, 
+		\expandhtmlindex{1480}
+  \item \rawscm{open-output-string}, \expandhtmlindex{1528}
+  \item Operating System Environment Variables, \expandhtmlindex{2744}
+  \item Operating System Processes, \expandhtmlindex{2682}
+  \item \scmk{or}, \expandhtmlindex{40}
+  \item \rawscm{ormap}, \expandhtmlindex{124}
+  \item Output Printing, \expandhtmlindex{2520}
+
+  \indexspace
+
+  \item packages, \expandhtmlindex{612}
+  \item parameter, \expandhtmlindex{1036}
+  \item parameter procedure, \expandhtmlindex{1038}
+  \item \rawscm{parameter-procedure=?}, \expandhtmlindex{1288}
+  \item \rawscm{parameter?}, \expandhtmlindex{1286}
+  \item \scmk{parameterize}, \expandhtmlindex{1290}
+  \item Parameters, \expandhtmlindex{1032}
+  \item parameters, \expandhtmlindex{1034}
+    \subitem built-in, \expandhtmlindex{1040}
+  \item parsing, \expandhtmlindex{1062}
+  \item \File{PATH}, \expandhtmlindex{1758}
+  \item \rawscm{path->complete-path}, \expandhtmlindex{1730}
+  \item \rawscm{path-list-string->path-list}, \expandhtmlindex{1794}
+  \item pathnames, \expandhtmlindex{1708}
+    \subitem expansion, \expandhtmlindex{1710}
+  \item pattern matching, \expandhtmlindex{1430}
+  \item \rawscm{peek-char}, \expandhtmlindex{1630}
+  \item \rawscm{peek-char-or-special}, \expandhtmlindex{1634}
+  \item \rawscm{peek-string}, \expandhtmlindex{1618}
+  \item \rawscm{peek-string-avail!}, \expandhtmlindex{1620}
+  \item \rawscm{peek-string-avail!*}, \expandhtmlindex{1622}
+  \item \rawscm{peek-string-avail!/enable-break}, 
+		\expandhtmlindex{1624}
+  \item \scmk{planet}, \expandhtmlindex{674}
+  \item platform, \expandhtmlindex{1762}, \expandhtmlindex{2752}
+  \item PLTCOLLECTS, \expandhtmlindex{2786}
+  \item poll, \see{ {\tt object-wait-multiple}}{1010}
+  \item port display handler, \expandhtmlindex{1686}
+  \item port positions, \expandhtmlindex{1674}
+  \item port print  handler, \expandhtmlindex{1690}
+  \item port read handler, \expandhtmlindex{1680}
+  \item port write handler, \expandhtmlindex{1688}
+  \item \rawscm{port-count-lines!}, \expandhtmlindex{1676}
+  \item \rawscm{port-count-lines-enabled}, \expandhtmlindex{1060}
+  \item \rawscm{port-display-handler}, \expandhtmlindex{1692}, 
+		\expandhtmlindex{1694}
+  \item \rawscm{port-file-identity}, \expandhtmlindex{1562}
+  \item \rawscm{port-next-location}, \expandhtmlindex{1678}
+  \item \rawscm{port-print-handler}, \expandhtmlindex{1700}, 
+		\expandhtmlindex{1702}
+  \item \rawscm{port-read-handler}, \expandhtmlindex{1682}, 
+		\expandhtmlindex{1684}
+  \item \rawscm{port-write-handler}, \expandhtmlindex{1696}, 
+		\expandhtmlindex{1698}
+  \item \rawscm{port?}, \expandhtmlindex{1464}
+  \item Ports, \expandhtmlindex{1456}
+  \item ports, \expandhtmlindex{898}, \expandhtmlindex{1048}, 
+		\expandhtmlindex{1458}
+    \subitem custom, \expandhtmlindex{1570}
+    \subitem file, \expandhtmlindex{1532}
+    \subitem flushing, \expandhtmlindex{1540}
+    \subitem string, \expandhtmlindex{1520}
+  \item \scmk{prefix}, \expandhtmlindex{634}
+  \item primitive procedure, \expandhtmlindex{458}
+  \item \rawscm{primitive-closure?}, \expandhtmlindex{466}
+  \item \rawscm{primitive-result-arity}, \expandhtmlindex{462}
+  \item \rawscm{primitive?}, \expandhtmlindex{460}
+  \item \rawscm{print}, \expandhtmlindex{1636}, \expandhtmlindex{2570}
+  \item print handler, \expandhtmlindex{1138}
+  \item \rawscm{print-box}, \expandhtmlindex{1110}, 
+		\expandhtmlindex{2528}
+  \item \rawscm{print-graph}, \expandhtmlindex{1102}, 
+		\expandhtmlindex{2562}
+  \item \rawscm{print-hash-table}, \expandhtmlindex{1118}
+  \item \rawscm{print-struct}, \expandhtmlindex{1106}, 
+		\expandhtmlindex{2532}
+  \item \rawscm{print-vector-length}, \expandhtmlindex{1114}, 
+		\expandhtmlindex{2524}
+  \item \rawscm{printf}, \expandhtmlindex{1660}
+  \item printing sharing, \expandhtmlindex{1100}
+  \item Procedure Application, \expandhtmlindex{96}
+  \item \rawscm{procedure-arity}, \expandhtmlindex{444}
+  \item \rawscm{procedure-arity-includes?}, \expandhtmlindex{450}
+  \item \rawscm{procedure?}, \expandhtmlindex{94}, 
+		\expandhtmlindex{576}
+  \item Procedures, \expandhtmlindex{442}
+  \item processes, \expandhtmlindex{2684}
+  \item \rawscm{program}, \expandhtmlindex{1788}, 
+		\expandhtmlindex{2914}
+  \item \rawscm{promise?}, \expandhtmlindex{474}
+  \item Promises, \expandhtmlindex{468}
+  \item promises, \expandhtmlindex{470}
+  \item prompt read handler, \expandhtmlindex{1124}
+  \item \scmk{provide}, \expandhtmlindex{642}
+  \item \rawscm{pseudo-random-generator?}, \expandhtmlindex{208}
+  \item \rawscm{putenv}, \expandhtmlindex{2748}
+
+  \indexspace
+
+  \item \scmk{quasiquote}, \expandhtmlindex{50}
+  \item \scmk{quasisyntax}, \expandhtmlindex{2072}
+  \item \scmk{quasisyntax/loc}, \expandhtmlindex{2080}
+  \item Quote and Quasiquote, \expandhtmlindex{48}
+  \item \scmk{quote-syntax}, \expandhtmlindex{2054}
+  \item \rawscm{quotient/remainder}, \expandhtmlindex{176}
+
+  \indexspace
+
+  \item \rawscm{raise}, \expandhtmlindex{730}
+  \item \rawscm{raise-mismatch-error}, \expandhtmlindex{796}
+  \item \rawscm{raise-syntax-error}, \expandhtmlindex{802}
+  \item \rawscm{raise-type-error}, \expandhtmlindex{786}, 
+		\expandhtmlindex{790}
+  \item \rawscm{random}, \expandhtmlindex{196}, \expandhtmlindex{1266}
+  \item random numbers, \expandhtmlindex{1262}
+  \item \rawscm{random-seed}, \expandhtmlindex{198}, 
+		\expandhtmlindex{1268}
+  \item Re-declaring Modules, \expandhtmlindex{692}
+  \item \rawscm{read}, \expandhtmlindex{754}
+  \item \rawscm{read-accept-bar-quote}, \expandhtmlindex{1090}, 
+		\expandhtmlindex{2472}, \expandhtmlindex{2538}
+  \item \rawscm{read-accept-box}, \expandhtmlindex{1082}, 
+		\expandhtmlindex{2382}
+  \item \rawscm{read-accept-compiled}, \expandhtmlindex{1086}, 
+		\expandhtmlindex{2596}
+  \item \rawscm{read-accept-dot}, \expandhtmlindex{1096}, 
+		\expandhtmlindex{2462}
+  \item \rawscm{read-accept-graph}, \expandhtmlindex{1092}, 
+		\expandhtmlindex{2560}
+  \item \rawscm{read-accept-quasiquote}, \expandhtmlindex{1098}, 
+		\expandhtmlindex{2464}
+  \item \rawscm{read-case-sensitive}, \expandhtmlindex{1066}, 
+		\expandhtmlindex{2480}, \expandhtmlindex{2536}
+  \item \rawscm{read-char-or-special}, \expandhtmlindex{1626}
+  \item \rawscm{read-curly-brace-as-paren}, \expandhtmlindex{1076}, 
+		\expandhtmlindex{2372}, \expandhtmlindex{2496}
+  \item \rawscm{read-decimal-as-inexact}, \expandhtmlindex{1094}, 
+		\expandhtmlindex{2450}
+  \item read-eval-print loop, \expandhtmlindex{1120}
+    \subitem {\repl}
+      \subsubitem customized, \expandhtmlindex{2358}
+  \item {\repl}, \expandhtmlindex{2356}
+  \item \rawscm{read-eval-print-loop}, \expandhtmlindex{2360}, 
+		\expandhtmlindex{2362}, \expandhtmlindex{2924}, 
+		\expandhtmlindex{2926}
+  \item \rawscm{read-image-from-file}, \expandhtmlindex{2618}
+  \item \rawscm{read-line}, \expandhtmlindex{1594}
+  \item \rawscm{read-square-bracket-as-paren}, \expandhtmlindex{1070}, 
+		\expandhtmlindex{2370}, \expandhtmlindex{2494}
+  \item \rawscm{read-string}, \expandhtmlindex{1606}
+  \item \rawscm{read-string-avail!}, \expandhtmlindex{1608}
+  \item \rawscm{read-string-avail!*}, \expandhtmlindex{1612}
+  \item \rawscm{read-string-avail!/enable-break}, 
+		\expandhtmlindex{1614}
+  \item \rawscm{read-syntax}, \expandhtmlindex{2052}, 
+		\expandhtmlindex{2262}
+  \item Reading and Writing, \expandhtmlindex{1592}
+  \item \rawscm{real->floating-point-byte-string}, 
+		\expandhtmlindex{230}
+  \item \rawscm{regexp}, \expandhtmlindex{1436}
+  \item \rawscm{regexp-match}, \expandhtmlindex{1440}, 
+		\expandhtmlindex{1442}
+  \item \rawscm{regexp-match-peek}, \expandhtmlindex{1446}
+  \item \rawscm{regexp-match-peek-positions}, \expandhtmlindex{1448}
+  \item \rawscm{regexp-match-positions}, \expandhtmlindex{1444}
+  \item \rawscm{regexp-replace}, \expandhtmlindex{1450}
+  \item \rawscm{regexp-replace*}, \expandhtmlindex{1452}
+  \item \rawscm{regexp?}, \expandhtmlindex{1438}
+  \item regexps, \see{ regular expressions}{1428}
+  \item Regular Expressions, \expandhtmlindex{1424}
+  \item regular expressions, \expandhtmlindex{1426}
+    \subitem constants, \expandhtmlindex{2482}
+    \subitem printing, \expandhtmlindex{2544}
+  \item \rawscm{relative-path?}, \expandhtmlindex{1726}
+  \item \scmk{rename}, \expandhtmlindex{640}, \expandhtmlindex{644}
+  \item \rawscm{rename-file-or-directory}, \expandhtmlindex{1820}, 
+		\expandhtmlindex{1894}
+  \item \rawscm{rename-transformer?}, \expandhtmlindex{2206}
+  \item \scmk{require}, \expandhtmlindex{632}, \expandhtmlindex{766}, 
+		\expandhtmlindex{1204}
+  \item \scmk{require-for-syntax}, \expandhtmlindex{2152}, 
+		\expandhtmlindex{2162}
+  \item \rawscm{resolve-path}, \expandhtmlindex{1734}
+  \item \rawscm{reverse!}, \expandhtmlindex{384}
+  \item run-time hierarchy, \expandhtmlindex{2164}
+  \item Running MzScheme, \expandhtmlindex{2794}
+  \item Runtime Information, \expandhtmlindex{2750}
+
+  \indexspace
+
+  \item Saving and Restoring Program Images, \expandhtmlindex{2612}
+  \item \rawscm{scheme-report-environment}, \expandhtmlindex{1300}
+  \item scripts, \expandhtmlindex{2932}
+  \item \rawscm{seconds->date}, \expandhtmlindex{2636}
+  \item Security, \expandhtmlindex{1362}
+  \item Security Guards, \expandhtmlindex{1364}
+  \item security guards, \expandhtmlindex{1238}, \expandhtmlindex{1366}
+  \item \rawscm{security-guard?}, \expandhtmlindex{1386}
+  \item select, \see{ {\tt object-wait-multiple}}{1008}
+  \item \rawscm{semaphore-post}, \expandhtmlindex{970}
+  \item \rawscm{semaphore-try-wait?}, \expandhtmlindex{976}
+  \item \rawscm{semaphore-wait}, \expandhtmlindex{974}
+  \item \rawscm{semaphore-wait/enable-break}, \expandhtmlindex{978}
+  \item \rawscm{semaphore?}, \expandhtmlindex{968}
+  \item Semaphores, \expandhtmlindex{954}
+  \item semaphores, \expandhtmlindex{956}
+  \item Sequences, \expandhtmlindex{42}
+  \item \rawscm{set!}, \expandhtmlindex{2880}
+  \item \scmk{set!}, \expandhtmlindex{80}
+  \item \rawscm{set!-transformer?}, \expandhtmlindex{2200}
+  \item \scmk{set!-values}, \expandhtmlindex{82}
+  \item \rawscm{set-box!}, \expandhtmlindex{434}
+  \item shell scripts, \expandhtmlindex{2930}
+  \item \rawscm{shell-execute}, \expandhtmlindex{2714}
+  \item ShellExecute, \expandhtmlindex{2712}
+  \item \rawscm{simplify-path}, \expandhtmlindex{1738}
+  \item \rawscm{sleep}, \expandhtmlindex{936}
+  \item sockets, \expandhtmlindex{1918}
+  \item Special Syntax Identifiers, \expandhtmlindex{2178}
+  \item \rawscm{split-path}, \expandhtmlindex{1744}
+  \item square brackets, \expandhtmlindex{1068}
+  \item \rawscm{string->immutable-string}, \expandhtmlindex{318}
+  \item \rawscm{string->number}, \expandhtmlindex{166}
+  \item \rawscm{string->symbol}, \expandhtmlindex{368}
+  \item \rawscm{string->uninterned-symbol}, \expandhtmlindex{366}
+  \item \rawscm{string-ci<=?}, \expandhtmlindex{342}
+  \item \rawscm{string-ci<?}, \expandhtmlindex{340}
+  \item \rawscm{string-ci=?}, \expandhtmlindex{338}
+  \item \rawscm{string-ci>=?}, \expandhtmlindex{346}
+  \item \rawscm{string-ci>?}, \expandhtmlindex{344}
+  \item \rawscm{string-copy!}, \expandhtmlindex{322}
+  \item \rawscm{string-locale-ci<?}, \expandhtmlindex{354}
+  \item \rawscm{string-locale-ci=?}, \expandhtmlindex{352}
+  \item \rawscm{string-locale-ci>?}, \expandhtmlindex{356}
+  \item \rawscm{string-locale<?}, \expandhtmlindex{348}
+  \item \rawscm{string-locale>?}, \expandhtmlindex{350}
+  \item \rawscm{string<=?}, \expandhtmlindex{332}
+  \item \rawscm{string<?}, \expandhtmlindex{330}
+  \item \rawscm{string=?}, \expandhtmlindex{328}
+  \item \rawscm{string>=?}, \expandhtmlindex{336}
+  \item \rawscm{string>?}, \expandhtmlindex{334}
+  \item Strings, \expandhtmlindex{312}
+  \item strings, \expandhtmlindex{2420}
+    \subitem as ports, \expandhtmlindex{1524}
+    \subitem immutable, \expandhtmlindex{314}
+    \subitem pattern matching, \expandhtmlindex{1432}
+    \subitem printing, \expandhtmlindex{2542}
+    \subitem reading to and writing from, \expandhtmlindex{1522}
+  \item \scmk{struct}, \expandhtmlindex{646}
+  \item \rawscm{struct->vector}, \expandhtmlindex{584}
+  \item \rawscm{struct-accessor-procedure?}, \expandhtmlindex{604}
+  \item \rawscm{struct-constructor-procedure?}, \expandhtmlindex{600}
+  \item \rawscm{struct-info}, \expandhtmlindex{568}
+  \item \rawscm{struct-mutator-procedure?}, \expandhtmlindex{606}
+  \item \rawscm{struct-predicate-procedure?}, \expandhtmlindex{602}
+  \item \rawscm{struct-type-info}, \expandhtmlindex{570}
+  \item \rawscm{struct-type-property?}, \expandhtmlindex{558}
+  \item \rawscm{struct-type?}, \expandhtmlindex{598}
+  \item \rawscm{struct?}, \expandhtmlindex{588}
+  \item structs
+    \subitem printing, \expandhtmlindex{1104}
+  \item Structure Inspectors, \expandhtmlindex{560}
+  \item structure subtypes, \expandhtmlindex{536}
+  \item structure type descriptors, \expandhtmlindex{530}
+  \item Structure Type Properties, \expandhtmlindex{550}
+  \item structure type properties, \expandhtmlindex{552}
+  \item structure types, \expandhtmlindex{520}
+    \subitem predicates, \expandhtmlindex{586}
+  \item Structure Types with Automatic Fields, Immutable Fields, and Properties, 
+		\expandhtmlindex{538}
+  \item Structure Utilities, \expandhtmlindex{582}
+  \item Structures, \expandhtmlindex{518}
+  \item structures, \expandhtmlindex{524}
+    \subitem equality, \expandhtmlindex{590}
+    \subitem printing, \expandhtmlindex{2530}
+  \item Structures as Procedures, \expandhtmlindex{574}
+  \item Structures as Waitable Objects, \expandhtmlindex{580}
+  \item \rawscm{sub1}, \expandhtmlindex{174}
+  \item \rawscm{subprocess}, \expandhtmlindex{2688}
+  \item \rawscm{subprocess-kill}, \expandhtmlindex{2702}
+  \item \rawscm{subprocess-pid}, \expandhtmlindex{2706}
+  \item \rawscm{subprocess-status}, \expandhtmlindex{2698}
+  \item \rawscm{subprocess-wait}, \expandhtmlindex{2696}
+  \item \rawscm{subprocess?}, \expandhtmlindex{2708}
+  \item subprocesses, \expandhtmlindex{2686}
+  \item \rawscm{substring}, \expandhtmlindex{320}
+  \item Support Facilities, \expandhtmlindex{2332}
+  \item Suspending, Resuming, and Killing Threads, 
+		\expandhtmlindex{900}
+  \item Symbols, \expandhtmlindex{358}
+  \item symbols, \expandhtmlindex{2466}
+    \subitem case sensitivity, \expandhtmlindex{2474}
+    \subitem generating, \expandhtmlindex{360}
+    \subitem printing, \expandhtmlindex{2534}
+    \subitem unique, \expandhtmlindex{362}
+  \item Synchronizing Multiple Objects with Timeout, 
+		\expandhtmlindex{1006}
+  \item Synchronizing Thread State, \expandhtmlindex{920}
+  \item synchronous channels, \expandhtmlindex{986}
+  \item syntax, \expandhtmlindex{2020}
+    \subitem expanding, \expandhtmlindex{2234}
+    \subitem macro calls, \expandhtmlindex{2192}
+    \subitem modules, \expandhtmlindex{2154}
+    \subitem partial expansion, \expandhtmlindex{2220}
+  \item \scmk{syntax}, \expandhtmlindex{2062}
+  \item Syntax and Lexical Scope, \expandhtmlindex{2124}
+  \item Syntax and Macros, \expandhtmlindex{2018}
+  \item Syntax Objects, \expandhtmlindex{2048}
+  \item syntax objects, \expandhtmlindex{2050}
+    \subitem comparisons, \expandhtmlindex{2126}
+    \subitem identifier, \expandhtmlindex{2118}
+    \subitem operations, \expandhtmlindex{2082}
+    \subitem pattern-matching, \expandhtmlindex{2056}
+    \subitem properties, \expandhtmlindex{2248}, \expandhtmlindex{2594}
+    \subitem source location, \expandhtmlindex{2086}, 
+		\expandhtmlindex{2592}
+    \subitem source module, \expandhtmlindex{2100}
+  \item syntax pair, \expandhtmlindex{2106}
+  \item \rawscm{syntax->list}, \expandhtmlindex{2108}
+  \item \scmk{syntax-case}, \expandhtmlindex{2058}
+  \item \scmk{syntax-case*}, \expandhtmlindex{2066}
+  \item \rawscm{syntax-column}, \expandhtmlindex{2092}
+  \item \rawscm{syntax-e}, \expandhtmlindex{2104}
+  \item \rawscm{syntax-graph?}, \expandhtmlindex{2116}
+  \item \scmk{syntax-id-rules}, \expandhtmlindex{2042}, 
+		\expandhtmlindex{2046}
+  \item \rawscm{syntax-line}, \expandhtmlindex{2090}
+  \item \rawscm{syntax-local-context}, \expandhtmlindex{2214}
+  \item \rawscm{syntax-local-get-shadower}, \expandhtmlindex{2216}
+  \item \rawscm{syntax-local-introduce}, \expandhtmlindex{2224}
+  \item \rawscm{syntax-local-module-introduce}, \expandhtmlindex{2218}
+  \item \rawscm{syntax-local-name}, \expandhtmlindex{2212}
+  \item \rawscm{syntax-local-value}, \expandhtmlindex{2208}
+  \item \rawscm{syntax-object->datum}, \expandhtmlindex{2110}
+  \item \rawscm{syntax-original?}, \expandhtmlindex{2098}
+  \item \rawscm{syntax-position}, \expandhtmlindex{2094}
+  \item \rawscm{syntax-property}, \expandhtmlindex{2250}, 
+		\expandhtmlindex{2252}
+  \item \scmk{syntax-rules}, \expandhtmlindex{2038}
+  \item \rawscm{syntax-source}, \expandhtmlindex{2088}
+  \item \rawscm{syntax-source-module}, \expandhtmlindex{2102}
+  \item \rawscm{syntax-span}, \expandhtmlindex{2096}
+  \item \rawscm{syntax-track-origin}, \expandhtmlindex{2256}
+  \item \scmk{syntax/loc}, \expandhtmlindex{2078}
+  \item \rawscm{syntax?}, \expandhtmlindex{2084}
+  \item System Utilities, \expandhtmlindex{2626}
+  \item \rawscm{system-big-endian?}, \expandhtmlindex{234}
+  \item \rawscm{system-library-subpath}, \expandhtmlindex{2766}
+  \item \rawscm{system-type}, \expandhtmlindex{2754}
+
+  \indexspace
+
+  \item tail calls, \expandhtmlindex{846}
+  \item \rawscm{tcp-abandon-port}, \expandhtmlindex{1952}
+  \item \rawscm{tcp-accept}, \expandhtmlindex{1934}
+  \item \rawscm{tcp-accept-ready?}, \expandhtmlindex{1938}
+  \item \rawscm{tcp-accept/enable-break}, \expandhtmlindex{1942}
+  \item \rawscm{tcp-addresses}, \expandhtmlindex{1954}
+  \item \rawscm{tcp-close}, \expandhtmlindex{1946}
+  \item \rawscm{tcp-connect}, \expandhtmlindex{1926}
+  \item \rawscm{tcp-connect/enable-break}, \expandhtmlindex{1930}
+  \item \rawscm{tcp-listen}, \expandhtmlindex{1922}
+  \item \rawscm{tcp-listener?}, \expandhtmlindex{1950}
+  \item \rawscm{tcp-port?}, \expandhtmlindex{1958}
+  \item TCP/IP, \expandhtmlindex{1920}
+  \item thread
+    \subitem groups, \see{ thread groups}{1418}
+  \item \rawscm{thread}, \expandhtmlindex{890}
+  \item thread descriptor, \expandhtmlindex{892}
+  \item Thread Groups, \expandhtmlindex{1414}
+  \item thread groups, \expandhtmlindex{1246}, \expandhtmlindex{1416}
+  \item \rawscm{thread-dead-waitable}, \expandhtmlindex{924}
+  \item \rawscm{thread-dead?}, \expandhtmlindex{942}
+  \item \rawscm{thread-group?}, \expandhtmlindex{1422}
+  \item \rawscm{thread-resume}, \expandhtmlindex{910}
+  \item \rawscm{thread-resume-waitable}, \expandhtmlindex{926}
+  \item \rawscm{thread-running?}, \expandhtmlindex{940}
+  \item \rawscm{thread-suspend}, \expandhtmlindex{904}
+  \item \rawscm{thread-suspend-waitable}, \expandhtmlindex{928}
+  \item \rawscm{thread-wait}, \expandhtmlindex{922}
+  \item \rawscm{thread/suspend-to-kill}, \expandhtmlindex{918}
+  \item \rawscm{thread?}, \expandhtmlindex{934}
+  \item Threads, \expandhtmlindex{886}
+  \item threads, \expandhtmlindex{888}
+    \subitem breaking, \expandhtmlindex{868}, \expandhtmlindex{944}
+    \subitem communication, \expandhtmlindex{960}, 
+		\expandhtmlindex{990}
+    \subitem killing, \expandhtmlindex{912}
+    \subitem nesting, \expandhtmlindex{948}
+    \subitem resuming, \expandhtmlindex{908}
+    \subitem run state, \expandhtmlindex{938}
+    \subitem suspending, \expandhtmlindex{902}
+    \subitem synchronization, \expandhtmlindex{962}, 
+		\expandhtmlindex{992}
+  \item Time, \expandhtmlindex{2628}
+  \item time, \expandhtmlindex{2630}
+    \subitem machine, \expandhtmlindex{2668}
+  \item \scmk{time}, \expandhtmlindex{2680}
+  \item \rawscm{time-apply}, \expandhtmlindex{2678}
+  \item \File{TMPDIR}, \expandhtmlindex{1772}
+  \item top-level environment, \see{ namespaces}{1296}
+  \item transformer environments, \expandhtmlindex{2026}
+    \subitem in modules, \expandhtmlindex{2160}
+  \item transformers, \expandhtmlindex{2024}
+    \subitem application, \expandhtmlindex{2190}
+
+  \indexspace
+
+  \item UDP, \expandhtmlindex{1960}
+  \item \rawscm{udp->receive-waitable}, \expandhtmlindex{2016}
+  \item \rawscm{udp->send-waitable}, \expandhtmlindex{2014}
+  \item \rawscm{udp-bind!}, \expandhtmlindex{1964}
+  \item \rawscm{udp-bound?}, \expandhtmlindex{2010}
+  \item \rawscm{udp-close}, \expandhtmlindex{2004}
+  \item \rawscm{udp-connect!}, \expandhtmlindex{1968}
+  \item \rawscm{udp-connected?}, \expandhtmlindex{2012}
+  \item \rawscm{udp-open-socket}, \expandhtmlindex{1962}
+  \item \rawscm{udp-receive!}, \expandhtmlindex{1994}
+  \item \rawscm{udp-receive!*}, \expandhtmlindex{1998}
+  \item \rawscm{udp-receive!/enable-break}, \expandhtmlindex{2000}
+  \item \rawscm{udp-send}, \expandhtmlindex{1980}
+  \item \rawscm{udp-send*}, \expandhtmlindex{1986}
+  \item \rawscm{udp-send-to}, \expandhtmlindex{1974}
+  \item \rawscm{udp-send-to*}, \expandhtmlindex{1984}
+  \item \rawscm{udp-send-to/enable-break}, \expandhtmlindex{1988}
+  \item \rawscm{udp-send/enable-break}, \expandhtmlindex{1992}
+  \item \rawscm{udp?}, \expandhtmlindex{2008}
+  \item \rawscm{unbox}, \expandhtmlindex{432}
+  \item \rawscm{undefined values}, \expandhtmlindex{102}
+  \item uninterned  symbol, \expandhtmlindex{364}
+  \item \scmk{unless}, \expandhtmlindex{34}
+  \item \scmk{unquote}, \expandhtmlindex{52}
+  \item \scmk{unquote-splicing}, \expandhtmlindex{54}
+  \item \scmk{unsyntax}, \expandhtmlindex{2074}
+  \item \scmk{unsyntax-splicing}, \expandhtmlindex{2076}
+  \item \rawscm{use-compiled-file-kinds}, \expandhtmlindex{1196}
+
+  \indexspace
+
+  \item \rawscm{vector->immutable-vector}, \expandhtmlindex{374}
+  \item \rawscm{vector-immutable}, \expandhtmlindex{376}
+  \item \rawscm{vector-set-performance-stats!}, \expandhtmlindex{2772}
+  \item Vectors, \expandhtmlindex{372}
+  \item vectors, \expandhtmlindex{2374}
+    \subitem printing, \expandhtmlindex{1112}, \expandhtmlindex{2522}
+  \item \rawscm{version}, \expandhtmlindex{2768}
+  \item vertical bar, \expandhtmlindex{1088}
+  \item \rawscm{void}, \expandhtmlindex{104}, \expandhtmlindex{108}
+  \item Void and Undefined, \expandhtmlindex{100}
+  \item \rawscm{void?}, \expandhtmlindex{110}
+
+  \indexspace
+
+  \item \rawscm{waitables->waitable-set}, \expandhtmlindex{1020}
+  \item Weak Boxes, \expandhtmlindex{2296}
+  \item weak boxes, \expandhtmlindex{2298}
+  \item \rawscm{weak-box-value}, \expandhtmlindex{2302}
+  \item \rawscm{weak-box?}, \expandhtmlindex{2304}
+  \item \scmk{when}, \expandhtmlindex{32}
+  \item When and Unless, \expandhtmlindex{30}
+  \item Will Executors, \expandhtmlindex{2306}
+  \item will executors, \expandhtmlindex{2308}
+  \item \rawscm{will-execute}, \expandhtmlindex{2320}
+  \item \rawscm{will-executor?}, \expandhtmlindex{2316}
+  \item \rawscm{will-register}, \expandhtmlindex{2318}
+  \item \rawscm{will-try-execute}, \expandhtmlindex{2322}
+  \item Windows Actions, \expandhtmlindex{2710}
+  \item \scmk{with-continuation-mark}, \expandhtmlindex{856}
+  \item \scmk{with-handlers}, \expandhtmlindex{734}
+  \item \rawscm{with-input-from-file}, \expandhtmlindex{1502}, 
+		\expandhtmlindex{1514}
+  \item \rawscm{with-output-to-file}, \expandhtmlindex{1506}, 
+		\expandhtmlindex{1508}, \expandhtmlindex{1516}
+  \item \scmk{with-syntax}, \expandhtmlindex{2068}
+  \item \rawscm{write}, \expandhtmlindex{2568}
+  \item \rawscm{write-image-to-file}, \expandhtmlindex{2614}, 
+		\expandhtmlindex{2904}
+  \item \rawscm{write-string-avail}, \expandhtmlindex{1640}
+  \item \rawscm{write-string-avail*}, \expandhtmlindex{1644}
+  \item \rawscm{write-string-avail/enable-break}, 
+		\expandhtmlindex{1646}
+  \item Writing and Running Scripts, \expandhtmlindex{2928}
+
+\end{theindex}

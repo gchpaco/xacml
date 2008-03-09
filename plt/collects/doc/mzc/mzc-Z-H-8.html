@@ -1,0 +1,217 @@
+<!doctype html public "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!--
+
+Generated from mzc.tex by tex2page, v 2004-09-11
+(running on MzScheme 209, unix), 
+(c) Dorai Sitaram, 
+http://www.ccs.neu.edu/~dorai/tex2page/tex2page-doc.html
+
+-->
+<head>
+<title>
+PLT mzc: MzScheme Compiler Manual
+</title>
+<link rel="stylesheet" type="text/css" href="mzc-Z-S.css" title=default>
+<meta name=robots content="noindex,follow">
+</head>
+<body>
+<div align=right class=navigation><i>[Go to <span><a href="mzc.html">first</a>, <a href="mzc-Z-H-7.html">previous</a></span><span class=disable>, next</span> page<span>; &nbsp;&nbsp;</span><span><a href="mzc.html#node_toc_start">contents</a></span><span class=disable><span>; &nbsp;&nbsp;</span>index</span>]</i></div><p></p>
+<a name="node_chap_Temp_4"></a>
+<h1 class=chapter>
+<div class=chapterheading>&nbsp;</div><br>
+<a href="mzc.html#node_toc_node_chap_Temp_4">Index</a></h1>
+<p>
+<a name="node_index_start"></a></p>
+<p>
+<br>
+<a href="mzc-Z-H-6.html#node_idx_202"><tt>++setup</tt></a><br>
+<a href="mzc-Z-H-6.html#node_idx_208"><tt>--all-users</tt></a><br>
+<a href="mzc-Z-H-6.html#node_idx_206"><tt>--at-plt</tt></a><br>
+<a href="mzc-Z-H-4.html#node_idx_154"><tt>--collection-extension</tt></a><br>
+<a href="mzc-Z-H-6.html#node_idx_196"><tt>--collection-plt</tt></a><br>
+<a href="mzc-Z-H-4.html#node_idx_152"><tt>--collection-zos</tt></a><br>
+<a href="mzc-Z-H-5.html#node_idx_180"><tt>--embedded</tt></a><br>
+<a href="mzc-Z-H-5.html#node_idx_164"><tt>--exe</tt></a><br>
+<a href="mzc-Z-H-3.html#node_idx_104"><tt>--extension</tt></a>, <a href="mzc-Z-H-3.html#node_idx_106">[2]</a><br>
+<a href="mzc-Z-H-5.html#node_idx_166"><tt>--gui-exe</tt></a><br>
+<a href="mzc-Z-H-1.html#node_idx_40"><tt>--help</tt></a><br>
+<a href="mzc-Z-H-5.html#node_idx_168"><tt>--lib</tt></a><br>
+<a href="mzc-Z-H-3.html#node_idx_142"><tt>--link-extension</tt></a><br>
+<a href="mzc-Z-H-5.html#node_idx_184"><tt>--link-glue</tt></a>, <a href="mzc-Z-H-5.html#node_idx_188">[2]</a><br>
+<a href="mzc-Z-H-3.html#node_idx_138"><tt>--object</tt></a>, <a href="mzc-Z-H-5.html#node_idx_178">[2]</a><br>
+<a href="mzc-Z-H-6.html#node_idx_194"><tt>--plt</tt></a><br>
+<a href="mzc-Z-H-6.html#node_idx_204"><tt>--plt-name</tt></a><br>
+<a href="mzc-Z-H-3.html#node_idx_124"><tt>--prefix</tt></a><br>
+<a href="mzc-Z-H-1.html#node_idx_44"><tt>--prim</tt></a><br>
+<a href="mzc-Z-H-6.html#node_idx_200"><tt>--replace</tt></a><br>
+<a href="mzc-Z-H-3.html#node_idx_100"><tt>--zo</tt></a><br>
+<a href="mzc-Z-H-3.html#node_idx_102"><tt>-e</tt></a><br>
+<a href="mzc-Z-H-5.html#node_idx_182"><tt>-g</tt></a>, <a href="mzc-Z-H-5.html#node_idx_186">[2]</a><br>
+<a href="mzc-Z-H-1.html#node_idx_38"><tt>-h</tt></a><br>
+<a href="mzc-Z-H-3.html#node_idx_140"><tt>-l</tt></a><br>
+<a href="mzc-Z-H-3.html#node_idx_136"><tt>-o</tt></a>, <a href="mzc-Z-H-5.html#node_idx_176">[2]</a><br>
+<a href="mzc-Z-H-3.html#node_idx_122"><tt>-p</tt></a><br>
+<a href="mzc-Z-H-3.html#node_idx_98"><tt>-z</tt></a><br>
+<a href="mzc-Z-H-1.html#node_idx_16"><tt><strong>.dll</strong></tt></a><br>
+<a href="mzc-Z-H-6.html#node_idx_198"><tt><strong>.plt</strong></tt></a><br>
+<a href="mzc-Z-H-6.html#node_idx_192">.plt distribution archives</a><br>
+<a href="mzc-Z-H-3.html#node_idx_110"><tt><strong>.scm</strong></tt></a><br>
+<a href="mzc-Z-H-1.html#node_idx_18"><tt><strong>.so</strong></tt></a><br>
+<a href="mzc-Z-H-3.html#node_idx_108"><tt><strong>.ss</strong></tt></a><br>
+<a href="mzc-Z-H-1.html#node_idx_10"><tt><strong>.zo</strong></tt></a><br>
+<a href="mzc-Z-H-7.html#node_idx_210"><tt><strong>info.ss</strong></tt> File Format</a><br>
+<a href="mzc-Z-H-3.html#node_idx_146"><tt><strong>_loader.dll</strong></tt></a><br>
+<a href="mzc-Z-H-3.html#node_idx_144"><tt><strong>_loader.so</strong></tt></a><br>
+<a href="mzc-Z-H-1.html#node_idx_26"><tt><strong>mzc</strong></tt> Is Not...</a><br>
+<a href="mzc-Z-H-1.html#node_idx_4"><tt><strong>mzc</strong></tt> Is...</a></p>
+<p>
+</p>
+<p></p>
+<p>
+<br>
+<a href="mzc-Z-H-1.html#node_idx_2">About <tt><strong>mzc</strong></tt></a><br>
+<a href="mzc-Z-H-3.html#node_idx_128">Autodetecting Compiled Files for Loading</a></p>
+<p>
+</p>
+<p></p>
+<p>
+<br>
+<a href="mzc-Z-H-2.html#node_idx_62"><code class=scheme><span class=keyword>bool</span></code></a><br>
+<a href="mzc-Z-H-5.html#node_idx_158">Building a Stand-alone Executable</a><br>
+<a href="mzc-Z-H-1.html#node_idx_8">byte code</a></p>
+<p>
+</p>
+<p></p>
+<p>
+<br>
+<a href="mzc-Z-H-1.html#node_idx_24">C compiler</a><br>
+<a href="mzc-Z-H-2.html#node_idx_58"><code class=scheme><span class=keyword>c-declare</span></code></a><br>
+<a href="mzc-Z-H-2.html#node_idx_60"><code class=scheme><span class=keyword>c-include</span></code></a><br>
+<a href="mzc-Z-H-2.html#node_idx_56"><code class=scheme><span class=keyword>c-lambda</span></code></a><br>
+<a href="mzc-Z-H-1.html#node_idx_22"><tt><strong>cffi.ss</strong></tt></a>, <a href="mzc-Z-H-2.html#node_idx_50">[2]</a><br>
+<a href="mzc-Z-H-2.html#node_idx_64"><code class=scheme><span class=keyword>char</span></code></a><br>
+<a href="mzc-Z-H-2.html#node_idx_86"><code class=scheme><span class=keyword>char-string</span></code></a><br>
+<a href="mzc-Z-H-1.html#node_idx_34">command line flags</a><br>
+<a href="mzc-Z-H-3.html#node_idx_116">Compilation without Modules</a><br>
+compiling
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="mzc-Z-H-4.html#node_idx_150">collections</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="mzc-Z-H-3.html#node_idx_96">files</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="mzc-Z-H-3.html#node_idx_134">multiple files</a><br>
+<a href="mzc-Z-H-4.html#node_idx_148">Compiling Collections with <tt><strong>mzc</strong></tt></a><br>
+<a href="mzc-Z-H-3.html#node_idx_94">Compiling Individual Files with <tt><strong>mzc</strong></tt></a><br>
+<a href="mzc-Z-H-3.html#node_idx_132">Compiling Multiple Files to a Single Native-Code Library</a><br>
+<a href="mzc-Z-H-3.html#node_idx_112">Compiling with Modules</a><br>
+<a href="mzc-Z-H-6.html#node_idx_190">Creating Distribution Archives</a></p>
+<p>
+</p>
+<p></p>
+<p>
+<br>
+<a href="mzc-Z-H-2.html#node_idx_84"><code class=scheme><span class=keyword>double</span></code></a></p>
+<p>
+</p>
+<p></p>
+<p>
+<br>
+<a href="mzc-Z-H-3.html#node_idx_126"><code class=scheme><span class=keyword>eval-when</span></code></a></p>
+<p>
+</p>
+<p></p>
+<p>
+<br>
+<a href="mzc-Z-H-2.html#node_idx_54">Feeley, Marc</a><br>
+<a href="mzc-Z-H-2.html#node_idx_82"><code class=scheme><span class=keyword>float</span></code></a><br>
+<a href="mzc-Z-H-2.html#node_idx_48">foreign-function interface (FFI)</a><br>
+<a href="mzc-Z-H-2.html#node_idx_46">Foreign-Function Interface to C</a></p>
+<p>
+</p>
+<p></p>
+<p>
+<br>
+<a href="mzc-Z-H-2.html#node_idx_52">Gambit-C</a></p>
+<p>
+</p>
+<p></p>
+<p>
+<br>
+<a href="mzc-Z-H-1.html#node_idx_36">help</a></p>
+<p>
+</p>
+<p></p>
+<p>
+<br>
+<a href="mzc-Z-H-4.html#node_idx_156"><tt><strong>info.ss</strong></tt></a><br>
+<a href="mzc-Z-H-7.html#node_idx_212"><tt><strong>info.ss</strong></tt> format</a><br>
+<a href="mzc-Z-H-7.html#node_idx_214"><tt><strong>infotab.ss</strong></tt> library</a><br>
+<a href="mzc-Z-H-2.html#node_idx_70"><code class=scheme><span class=keyword>int</span></code></a></p>
+<p>
+</p>
+<p></p>
+<p>
+<br>
+<a href="mzc-Z-H-1.html#node_idx_12">loading compiled files</a>, 
+<a href="mzc-Z-H-1.html#node_idx_20">[2]</a>, <a href="mzc-Z-H-3.html#node_idx_130">[3]</a><br>
+<a href="mzc-Z-H-2.html#node_idx_74"><code class=scheme><span class=keyword>long</span></code></a></p>
+<p>
+</p>
+<p></p>
+<p>
+<br>
+<a href="mzc-Z-H-3.html#node_idx_114"><code class=scheme><span class=keyword>module</span></code></a><br>
+<a href="mzc-Z-H-1.html#node_idx_6"><tt><strong>mzc</strong></tt></a></p>
+<p>
+</p>
+<p></p>
+<p>
+<br>
+<a href="mzc-Z-H-1.html#node_idx_14">native code</a><br>
+<a href="mzc-Z-H-1.html#node_idx_42">Native Code Optimization from <tt><strong>mzc</strong></tt></a><br>
+<a href="mzc-Z-H-2.html#node_idx_88"><code class=scheme><span class=keyword>nonnull-char-string</span></code></a></p>
+<p>
+</p>
+<p></p>
+<p>
+<br>
+<a href="mzc-Z-H-2.html#node_idx_92"><code class=scheme><span class=keyword>pointer</span></code></a></p>
+<p>
+</p>
+<p></p>
+<p>
+<br>
+<a href="mzc-Z-H-3.html#node_idx_118"><code class=scheme><span class=keyword>require</span></code></a><br>
+<a href="mzc-Z-H-1.html#node_idx_30">Running <tt><strong>mzc</strong></tt></a><br>
+<a href="mzc-Z-H-1.html#node_idx_32">running <tt><strong>mzc</strong></tt></a></p>
+<p>
+</p>
+<p></p>
+<p>
+<br>
+<a href="mzc-Z-H-2.html#node_idx_90"><code class=scheme><span class=keyword>scheme-object</span></code></a><br>
+<a href="mzc-Z-H-5.html#node_idx_174"><tt>scheme_initialize</tt></a><br>
+<a href="mzc-Z-H-2.html#node_idx_78"><code class=scheme><span class=keyword>short</span></code></a><br>
+<a href="mzc-Z-H-2.html#node_idx_68"><code class=scheme><span class=keyword>signed-char</span></code></a><br>
+<a href="mzc-Z-H-1.html#node_idx_28">stand-alone executables</a>, 
+<a href="mzc-Z-H-5.html#node_idx_160">[2]</a><br>
+<a href="mzc-Z-H-5.html#node_idx_170">Stand-Alone Executables from Native Code</a><br>
+<a href="mzc-Z-H-5.html#node_idx_162">Stand-Alone Executables from Scheme Code</a><br>
+<a href="mzc-Z-H-5.html#node_idx_172"><tt>STANDALONE_WITH_EMBEDDED_EXTENSION</tt></a><br>
+<a href="mzc-Z-H-3.html#node_idx_120">syntax</a></p>
+<p>
+</p>
+<p></p>
+<p>
+<br>
+<a href="mzc-Z-H-2.html#node_idx_66"><code class=scheme><span class=keyword>unsigned-char</span></code></a><br>
+<a href="mzc-Z-H-2.html#node_idx_72"><code class=scheme><span class=keyword>unsigned-int</span></code></a><br>
+<a href="mzc-Z-H-2.html#node_idx_76"><code class=scheme><span class=keyword>unsigned-long</span></code></a><br>
+<a href="mzc-Z-H-2.html#node_idx_80"><code class=scheme><span class=keyword>unsigned-short</span></code></a></p>
+<p>
+</p>
+
+<p>
+</p>
+<div align=right class=navigation><i>[Go to <span><a href="mzc.html">first</a>, <a href="mzc-Z-H-7.html">previous</a></span><span class=disable>, next</span> page<span>; &nbsp;&nbsp;</span><span><a href="mzc.html#node_toc_start">contents</a></span><span class=disable><span>; &nbsp;&nbsp;</span>index</span>]</i></div><p></p>
+</body>
+</html>

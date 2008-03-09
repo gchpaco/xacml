@@ -1,0 +1,196 @@
+<!doctype html public "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!--
+
+Generated from mzlib.tex by tex2page, v 2004-09-11
+(running on MzScheme 209, unix), 
+(c) Dorai Sitaram, 
+http://www.ccs.neu.edu/~dorai/tex2page/tex2page-doc.html
+
+-->
+<head>
+<title>
+PLT MzLib: Libraries Manual
+</title>
+<link rel="stylesheet" type="text/css" href="mzlib-Z-S.css" title=default>
+<meta name=robots content="noindex,follow">
+</head>
+<body>
+<div align=right class=navigation><i>[Go to <span><a href="mzlib.html">first</a>, <a href="mzlib-Z-H-6.html">previous</a></span><span>, <a href="mzlib-Z-H-8.html">next</a></span> page<span>; &nbsp;&nbsp;</span><span><a href="mzlib.html#node_toc_start">contents</a></span><span><span>; &nbsp;&nbsp;</span><a href="mzlib-Z-H-42.html#node_index_start">index</a></span>]</i></div><p></p>
+<a name="node_chap_7"></a>
+<h1 class=chapter>
+<div class=chapterheading><a href="mzlib.html#node_toc_node_chap_7">Chapter 7</a></div><br>
+<a href="mzlib.html#node_toc_node_chap_7"><tt><strong>cm.ss</strong></tt>: Compilation Manager</a></h1>
+<p><a name="node_idx_274"></a><a name="node_idx_276"></a></p>
+<p>
+
+
+</p>
+<p></p>
+<p>
+
+<a name="node_idx_278"></a><a name="node_kw_definitionmake-compilation-manager-load/use-compiled-handler"></a><code class=scheme>(make-compilation-manager-load/use-compiled-handler</code><code class=scheme>)</code> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<small>P</small><small>R</small><small>O</small><small>C</small><small>E</small><small>D</small><small>U</small><small>R</small><small>E</small>
+</p>
+<p>
+Returns a procedure suitable as a value for
+the <code class=scheme>current-load/use-compiled</code> parameter
+(see section&nbsp;<a href="../mzscheme/mzscheme-Z-H-7.html#node_sec_7.7.1.6">7.7.1.6</a> in <a href="../mzscheme/mzscheme.html"><i>PLT MzScheme: Language Manual</i></a>). The returned procedure
+passes it arguments on to the
+current <code class=scheme>current-load/use-compiled</code> procedure (i.e., the one
+installed when this function is called), but first it automatically
+compiles source files to a <tt><strong>.zo</strong></tt> file if
+</p>
+<ul><p>
+</p>
+<li><p>the file is expected to contain a module (i.e., the second
+argument to the handler is a symbol);</p>
+<p>
+</p>
+<li><p>the value of each
+of <code class=scheme>current-eval</code>, <code class=scheme>current-load</code>,
+and <code class=scheme>current-namespace</code> is the same as
+when <code class=scheme>make-compilation-manager-load/use-compiled-handler</code> was
+called;</p>
+<p>
+</p>
+<li><p>the value of <code class=scheme><span class=variable>use-compiled-file-paths</span></code> contains the
+first path that was present when
+<code class=scheme>make-compilation-manager-load/use-compiled-handler</code> was
+called;</p>
+<p>
+</p>
+<li><p>the value of <code class=scheme>current-load/use-compiled</code> is the result
+of this function; and</p>
+<p>
+</p>
+<li><p>one of the following holds:
+</p>
+<ul><p>
+</p>
+<li><p>the source file is newer than the <tt><strong>.zo</strong></tt> file in the first
+sub-directory listed in <code class=scheme><span class=variable>use-compiled-file-paths</span></code> (at
+the time that
+<code class=scheme>make-compilation-manager-load/use-compiled-handler</code>
+was called)</p>
+<p>
+</p>
+<li><p>no <tt><strong>.dep</strong></tt> file exists next to the <tt><strong>.zo</strong></tt> file;</p>
+<p>
+</p>
+<li><p>the version recorded in the <tt><strong>.dep</strong></tt> file does not
+match the result of <code class=scheme>(<code class=scheme>version</code>)</code>;</p>
+<p>
+</p>
+<li><p>one of the files listed in the <tt><strong>.dep</strong></tt> file has
+a <tt><strong>.zo</strong></tt> timestamp newer than the one recorded in
+the <tt><strong>.dep</strong></tt> file.</p>
+<p>
+</p>
+</ul><p></p>
+<p>
+</p>
+</ul><p></p>
+<p>
+After the handler procedure compiles a <tt><strong>.zo</strong></tt> file, it creates a
+corresponding <tt><strong>.dep</strong></tt> file that lists the current version, plus
+the <tt><strong>.zo</strong></tt> timestamp for every file that is <code class=scheme><span class=keyword>require</span></code>d by
+the module in the compiled file
+(including <code class=scheme><span class=keyword>require-for-syntax</span></code>es).</p>
+<p>
+The handler caches timestamps when it checks <tt><strong>.dep</strong></tt> files, and
+the cache is maintained across calls to the same handler. The cache is
+not consulted to compare the immediate source file to its
+<tt><strong>.zo</strong></tt> file, which means that the caching behavior is consistent
+with the caching of the default module name resolver (see section&nbsp;<a href="../mzscheme/mzscheme-Z-H-5.html#node_sec_5.4">5.4</a> in <a href="../mzscheme/mzscheme.html"><i>PLT MzScheme: Language Manual</i></a>).</p>
+<p>
+If <code class=scheme><span class=variable>use-compiled-file-paths</span></code> contains an empty list when
+<code class=scheme>make-compilation-manager-load/use-compiled-handler</code> is
+called, then <a name="node_idx_280"></a><code class=scheme>exn:fail:contract</code> exception is raised.</p>
+<p>
+
+
+</p>
+<p></p>
+<p>
+
+<a name="node_idx_282"></a><a name="node_kw_definitionmanaged-compile-zo"></a><code class=scheme>(managed-compile-zo</code><tt>&nbsp;</tt><code class=scheme><span class=variable>file</span></code><code class=scheme>)</code> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<small>P</small><small>R</small><small>O</small><small>C</small><small>E</small><small>D</small><small>U</small><small>R</small><small>E</small>
+</p>
+<p>
+Compiles the given module source file to a <tt><strong>.zo</strong></tt>, installing a
+compilation-manager handler while the file is compiled (so that
+required modules are also compiled), and creating a <tt><strong>.dep</strong></tt> file
+to record the timestamps of immediate files used to compile the
+source (i.e., files <code class=scheme><span class=keyword>require</span></code>d in the source, including
+<code class=scheme><span class=keyword>require-for-syntax</span></code>es).</p>
+<p>
+
+
+</p>
+<p></p>
+<p>
+
+<a name="node_idx_284"></a><a name="node_kw_definitionmanager-trace-handler"></a><code class=scheme>(manager-trace-handler</code><tt>&nbsp;</tt><code class=scheme><span class=variable>proc</span></code><tt>&nbsp;</tt>[<code class=scheme><span class=variable>procedure</span></code>]<code class=scheme>)</code> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</p>
+<p>
+A parameter whose value is a procedure to display a trace string for
+compilation-manager actions. The procedure receives a single string
+argument, and its result is ignored.</p>
+<p>
+
+
+</p>
+<p></p>
+<p>
+
+<a name="node_idx_286"></a><a name="node_kw_definitiontrust-existing-zos"></a><code class=scheme>(trust-existing-zos</code><tt>&nbsp;</tt><code class=scheme><span class=variable>on?</span></code><tt>&nbsp;</tt>[<code class=scheme><span class=variable>procedure</span></code>]<code class=scheme>)</code> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</p>
+<p>
+A parameter that is intended for use by <tt><strong>Setup PLT</strong></tt> when installing
+with pre-built <tt><strong>.zo</strong></tt> files. It causes a compilation-manager
+load/use-compiled handler to ``touch'' out-of-date <tt><strong>.zo</strong></tt> files
+instead of re-compiling from source.</p>
+<p>
+
+
+</p>
+<p></p>
+<p>
+
+<a name="node_idx_288"></a><a name="node_kw_definitionmake-caching-managed-compile-zo"></a><code class=scheme>(make-caching-managed-compile-zo</code><code class=scheme>)</code> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<small>P</small><small>R</small><small>O</small><small>C</small><small>E</small><small>D</small><small>U</small><small>R</small><small>E</small>
+</p>
+<p>
+Returns a procedure that behaves like <code class=scheme>managed-compile-zo</code>, but
+a cache of timestamp information is preserved across calls to the
+procedure.</p>
+<p>
+
+
+</p>
+<p></p>
+<p>
+
+<a name="node_idx_290"></a><a name="node_kw_definitionmanager-compile-notify-handler"></a><code class=scheme>(manager-compile-notify-handler</code><tt>&nbsp;</tt>[<code class=scheme><span class=variable>notify-proc</span></code>]<code class=scheme>)</code> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<small>P</small><small>R</small><small>O</small><small>C</small><small>E</small><small>D</small><small>U</small><small>R</small><small>E</small>
+</p>
+<p>
+A parameter for a procedure of one argument that is called whenever a
+compilation starts. The argument to the procedure is the file's path.</p>
+<p>
+
+
+</p>
+<p></p>
+<p>
+
+<a name="node_idx_292"></a><a name="node_kw_definitionmanager-trace-handler"></a><code class=scheme>(manager-trace-handler</code><tt>&nbsp;</tt>[<code class=scheme><span class=variable>notify-proc</span></code>]<code class=scheme>)</code> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<small>P</small><small>R</small><small>O</small><small>C</small><small>E</small><small>D</small><small>U</small><small>R</small><small>E</small>
+</p>
+<p>
+A parameter for a procedure of one argument that is called to report
+compilation-magager actions, such as checking a file. The argument to
+the procedure is a string.</p>
+<p>
+</p>
+<p>
+</p>
+<div align=right class=navigation><i>[Go to <span><a href="mzlib.html">first</a>, <a href="mzlib-Z-H-6.html">previous</a></span><span>, <a href="mzlib-Z-H-8.html">next</a></span> page<span>; &nbsp;&nbsp;</span><span><a href="mzlib.html#node_toc_start">contents</a></span><span><span>; &nbsp;&nbsp;</span><a href="mzlib-Z-H-42.html#node_index_start">index</a></span>]</i></div><p></p>
+</body>
+</html>

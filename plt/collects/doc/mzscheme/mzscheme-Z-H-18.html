@@ -1,0 +1,163 @@
+<!doctype html public "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!--
+
+Generated from mzscheme.tex by tex2page, v 2004-09-11
+(running on MzScheme 209, unix), 
+(c) Dorai Sitaram, 
+http://www.ccs.neu.edu/~dorai/tex2page/tex2page-doc.html
+
+-->
+<head>
+<title>
+PLT MzScheme: Language Manual
+</title>
+<link rel="stylesheet" type="text/css" href="mzscheme-Z-S.css" title=default>
+<meta name=robots content="noindex,follow">
+</head>
+<body>
+<div align=right class=navigation><i>[Go to <span><a href="mzscheme.html">first</a>, <a href="mzscheme-Z-H-17.html">previous</a></span><span>, <a href="mzscheme-Z-H-19.html">next</a></span> page<span>; &nbsp;&nbsp;</span><span><a href="mzscheme.html#node_toc_start">contents</a></span><span><span>; &nbsp;&nbsp;</span><a href="mzscheme-Z-H-19.html#node_index_start">index</a></span>]</i></div><p></p>
+<a name="node_chap_18"></a>
+<h1 class=chapter>
+<div class=chapterheading><a href="mzscheme.html#node_toc_node_chap_18">Chapter 18</a></div><br>
+<a href="mzscheme.html#node_toc_node_chap_18">Writing and Running Scripts</a></h1>
+<p><a name="node_idx_2928"></a></p>
+<p>
+<a name="node_idx_2930"></a><a name="node_idx_2932"></a>
+Under Unix, a Scheme file can be turned into an executable script
+using the shell's <a name="node_idx_2934"></a><code class=scheme><span class=selfeval>#!</span></code> convention. The first
+two characters of the file must be <code class=scheme><span class=selfeval>#!</span></code>, and the remainder of
+the first line must be a command to execute the script. For some
+platforms, the total length of the first line is restricted to 32
+characters.</p>
+<p>
+The simplest script format uses an absolute path to a <tt><strong>mzscheme</strong></tt>
+executable, followed by <tt>-qr</tt>. For example, if <tt><strong>mzscheme</strong></tt> is
+installed in <tt><strong>/usr/plt/bin</strong></tt>, then a file containing
+the following text acts as a ``hello world'' script:
+</p>
+<pre class=verbatim>  #! /usr/plt/bin/mzscheme -qr
+  (display &quot;Hello, world!&quot;)
+  (newline)
+</pre><p>
+In particular, if the above is put into a file <tt><strong>hello</strong></tt> and the
+file is made executable (e.g., with <tt><strong>chmod a+x hello</strong></tt>), then
+typing <tt><strong>./hello</strong></tt> at the shell prompt will produce the output
+``Hello, world!''.</p>
+<p>
+Instead of specifying a complete path to the <tt><strong>mzscheme</strong></tt>
+executable, an alternative is to require that <tt><strong>mzscheme</strong></tt> is in
+the user's command path, and then ``trampoline'' with <tt><strong>/bin/sh</strong></tt>:
+</p>
+<pre class=verbatim>  #! /bin/sh
+  #|
+  exec mzscheme -qr &quot;$0&quot; ${1+&quot;$@&quot;}
+  |#
+  (display &quot;Hello, world!&quot;)
+  (newline)
+</pre><p>
+The effect is the same, because <code class=verbatim>#</code> starts a one-line comment to
+<tt><strong>/bin/sh</strong></tt>, but <code class=scheme>#<tt>|</tt></code> starts a block comment to MzScheme.
+Finally, calling <tt><strong>mzscheme</strong></tt> with <tt><strong>exec</strong></tt> causes the MzScheme
+process to replace the <tt><strong>/bin/sh</strong></tt> process.</p>
+<p>
+To implement a script inside <code class=scheme><span class=keyword>module</span></code>, use <tt>-qu</tt> instead of
+<tt>-qr</tt>:
+</p>
+<pre class=verbatim>  #! /usr/plt/bin/mzscheme -qu
+  (module hello mzscheme
+    (display &quot;Hello, world!&quot;)
+    (newline))
+</pre><p></p>
+<p>
+The <tt>-qr</tt> command-line flag to MzScheme is an abbreviation for the
+<tt>-q</tt> flag followed by the <tt>-r</tt> flag. As detailed in
+Chapter&nbsp;<a href="mzscheme-Z-H-17.html#node_chap_17">17</a>, <tt>-q</tt> skips the loading of
+<tt><strong>~/.mzschemerc</strong></tt>, while <tt>-r</tt> suppresses MzScheme's
+startup banner, suppresses the read-eval-print loop, and loads the
+specified file. In the first example above, the file for <tt>-r</tt> is
+supplied by the shell's <code class=scheme><span class=selfeval>#!</span></code> handling: it automatically puts
+the name of the executed script at the end of the <code class=scheme><span class=selfeval>#!</span></code> line.
+In the second example, the script file name is supplied explicitly
+with <code class=verbatim>&quot;$0&quot;</code>. The <tt>-qu</tt> flag is similarly an abbreviation for
+<tt>-q</tt> followed by <tt>-u</tt>, which acts like <tt>-r</tt> except that
+it <code class=scheme><span class=keyword>require</span></code>s the script file instead of <code class=scheme><code class=scheme>load</code></code>ing it.</p>
+<p>
+If command-line arguments are supplied to a shell script, the shell
+attaches them as extra arguments to the script command. Among its
+other jobs, the <tt>-r</tt> or <tt>-u</tt> flag ensures that the extra
+arguments are not interpreted by MzScheme, but instead put into the
+<code class=scheme><code class=scheme>current-command-line-arguments</code></code> parameter as a vector of
+strings. For example, the following <tt><strong>mock</strong></tt> script prints each
+command-line argument back on its own line:
+</p>
+<pre class=verbatim>  #! /usr/plt/bin/mzscheme -qu
+  (module mock mzscheme
+    (for-each (lambda (arg)
+                (display arg)
+                (newline))
+              (vector-&gt;list (current-command-line-arguments))))
+</pre><p>
+Thus, <tt><strong>mock a b c</strong></tt> would print ``a'', ``b'', and ``c'', each on
+its own line. The <tt><strong>/bin/sh</strong></tt> version is similar:
+</p>
+<pre class=verbatim>  #! /bin/sh
+  #|
+  exec mzscheme -qu &quot;$0&quot; ${1+&quot;$@&quot;}
+  |#
+  (module mock mzscheme
+    (for-each (lambda (arg)
+                (display arg)
+                (newline))
+              (vector-&gt;list (current-command-line-arguments))))
+</pre><p>
+The <code class=verbatim>${1+&quot;$@&quot;}</code> part of the <tt><strong>mzscheme</strong></tt> command line copies
+all shell script arguments to MzScheme for
+<code class=scheme><code class=scheme>current-command-line-arguments</code></code>.</p>
+<p>
+For high-quality scripts, use the <tt><strong>cmdline</strong></tt> MzLib library to
+parse command-line arguments (see Chapter&nbsp;<a href="../mzlib/mzlib-Z-H-9.html#node_chap_9">9</a>
+in <a href="../mzlib/mzlib.html"><i>PLT MzLib: Libraries Manual</i></a>). The
+following <tt><strong>hello2</strong></tt> script accepts a <tt>--chinese</tt> flag to
+produce Chinese pinyin output. Due to the built-in functionality of
+the <code class=scheme><span class=keyword>command-line</span></code> form, the script also accepts a <tt>--help</tt>
+or <tt>-h</tt> flag that produces detailed help on the available
+command-line options:
+</p>
+<pre class=verbatim>  #! /bin/sh
+  #|
+  exec mzscheme -qu &quot;$0&quot; ${1+&quot;$@&quot;}
+  |#
+  (module hello2 mzscheme
+    (require (lib &quot;cmdline.ss&quot;))
+    
+    (define chinese? #f)
+    
+    (command-line
+     &quot;hello2&quot;
+     (current-command-line-arguments)
+     (once-each
+      [(&quot;--chinese&quot;) &quot;Chinese output&quot;
+       (set! chinese? #t)]))
+    
+    (display (if chinese?
+                 &quot;Nihao, shijie!&quot;
+                 &quot;Hello, world!&quot;))
+    (newline))
+</pre><p></p>
+<p>
+</p>
+<p>
+
+
+
+
+</p>
+<p>
+
+</p>
+<p>
+</p>
+<div align=right class=navigation><i>[Go to <span><a href="mzscheme.html">first</a>, <a href="mzscheme-Z-H-17.html">previous</a></span><span>, <a href="mzscheme-Z-H-19.html">next</a></span> page<span>; &nbsp;&nbsp;</span><span><a href="mzscheme.html#node_toc_start">contents</a></span><span><span>; &nbsp;&nbsp;</span><a href="mzscheme-Z-H-19.html#node_index_start">index</a></span>]</i></div><p></p>
+</body>
+</html>

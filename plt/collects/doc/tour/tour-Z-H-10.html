@@ -1,0 +1,114 @@
+<!doctype html public "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!--
+
+Generated from tour.tex by tex2page, v 2004-09-11
+(running on MzScheme 209, unix), 
+(c) Dorai Sitaram, 
+http://www.ccs.neu.edu/~dorai/tex2page/tex2page-doc.html
+
+-->
+<head>
+<title>
+A Brief Tour of DrScheme version 209
+</title>
+<link rel="stylesheet" type="text/css" href="tour-Z-S.css" title=default>
+<meta name=robots content="noindex,follow">
+</head>
+<body>
+<div align=right class=navigation><i>[Go to <span><a href="tour.html">first</a>, <a href="tour-Z-H-9.html">previous</a></span><span>, <a href="tour-Z-H-11.html">next</a></span> page<span>; &nbsp;&nbsp;</span><span><a href="tour-Z-H-1.html#node_toc_start">contents</a></span>]</i></div><p></p>
+<a name="node_chap_9"></a>
+<h1 class=chapter>
+<div class=chapterheading><a href="tour-Z-H-1.html#node_toc_node_chap_9">Chapter 9</a></div><br>
+<a href="tour-Z-H-1.html#node_toc_node_chap_9">Testing</a></h1>
+<p></p>
+<a name="node_sec_9.1"></a>
+<h2><a href="tour-Z-H-1.html#node_toc_node_sec_9.1">9.1&nbsp;&nbsp;Embedding Tests in the Program Source</a></h2>
+<p>DrScheme makes it easy to cleanly encapsulate program test cases.
+For instance, consider the same program as before:</p>
+<p>
+
+</p>
+<div align=center><table><tr><td>
+
+<img src="./images/editor-repl.gif" border="0"  alt="[./images/editor-repl.gif]">
+</td></tr></table></div>
+<p>
+Because the <small>R</small><small>E</small><small>P</small><small>L</small> clears on each <i>Run</i>, it becomes tedious
+to repeatedly type tests in the <small>R</small><small>E</small><small>P</small><small>L</small>.  The programmer can instead
+embed tests in the program source using 
+<i>Special | Insert Test Case</i>.  
+Each test can have a descriptive label followed by the test expression
+and the expected answer.  These last two boxes can contain arbitrary
+Scheme code:</p>
+<p>
+
+</p>
+<div align=center><table><tr><td>
+
+<img src="./images/test-suite-1.gif" border="0"  alt="[./images/test-suite-1.gif]">
+</td></tr></table></div>
+<p>
+Clicking Run flags the correctness of each test:</p>
+<p>
+
+</p>
+<div align=center><table><tr><td>
+
+<img src="./images/test-suite-2.gif" border="0"  alt="[./images/test-suite-2.gif]">
+</td></tr></table></div>
+<p>
+The full test can consume a good deal of screen space, but the
+programmer can always collapse a test by clicking on the triangle,
+leaving just the descriptive label and an indication of whether the
+test passed or failed:</p>
+<p>
+
+</p>
+<div align=center><table><tr><td>
+
+<img src="./images/test-suite-3.gif" border="0"  alt="[./images/test-suite-3.gif]">
+</td></tr></table></div>
+<p>
+</p>
+<a name="node_sec_9.2"></a>
+<h2><a href="tour-Z-H-1.html#node_toc_node_sec_9.2">9.2&nbsp;&nbsp;Code Coverage</a></h2>
+<p>In the student language levels, DrScheme will automatically indicate
+expression coverage of programs.  This is a useful baseline for
+students and instructors to determine whether a program has been
+tested adequately.  When an expression has not been exercised,
+DrScheme highlights it in red, leaving the rest of the code in black:</p>
+<p>
+
+</p>
+<div align=center><table><tr><td>
+
+<img src="./images/coverage.gif" border="0"  alt="[./images/coverage.gif]">
+</td></tr></table></div>
+<p>
+If, however, all the expressions have been tested, the editor reverts
+to full code coloring:</p>
+<p>
+
+</p>
+<div align=center><table><tr><td>
+
+<img src="./images/coverage-2.gif" border="0"  alt="[./images/coverage-2.gif]">
+</td></tr></table></div>
+<p>
+The coverage presentation does consider tests in embedded test cases.
+Thus, if a test only exercises <code class=scheme><span class=variable>square</span></code>, then DrScheme presents
+the program text in black, highlighting the unexercised body of
+<code class=scheme><span class=variable>double</span></code>:</p>
+<p>
+
+</p>
+<div align=center><table><tr><td>
+
+<img src="./images/coverage-3.gif" border="0"  alt="[./images/coverage-3.gif]">
+</td></tr></table></div>
+<p>
+</p>
+<div align=right class=navigation><i>[Go to <span><a href="tour.html">first</a>, <a href="tour-Z-H-9.html">previous</a></span><span>, <a href="tour-Z-H-11.html">next</a></span> page<span>; &nbsp;&nbsp;</span><span><a href="tour-Z-H-1.html#node_toc_start">contents</a></span>]</i></div><p></p>
+</body>
+</html>

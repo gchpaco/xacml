@@ -1,0 +1,79 @@
+<!doctype html public "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!--
+
+Generated from mzlib.tex by tex2page, v 2004-09-11
+(running on MzScheme 209, unix), 
+(c) Dorai Sitaram, 
+http://www.ccs.neu.edu/~dorai/tex2page/tex2page-doc.html
+
+-->
+<head>
+<title>
+PLT MzLib: Libraries Manual
+</title>
+<link rel="stylesheet" type="text/css" href="mzlib-Z-S.css" title=default>
+<meta name=robots content="noindex,follow">
+</head>
+<body>
+<div align=right class=navigation><i>[Go to <span><a href="mzlib.html">first</a>, <a href="mzlib-Z-H-14.html">previous</a></span><span>, <a href="mzlib-Z-H-16.html">next</a></span> page<span>; &nbsp;&nbsp;</span><span><a href="mzlib.html#node_toc_start">contents</a></span><span><span>; &nbsp;&nbsp;</span><a href="mzlib-Z-H-42.html#node_index_start">index</a></span>]</i></div><p></p>
+<a name="node_chap_15"></a>
+<h1 class=chapter>
+<div class=chapterheading><a href="mzlib.html#node_toc_node_chap_15">Chapter 15</a></div><br>
+<a href="mzlib.html#node_toc_node_chap_15"><tt><strong>deflate.ss</strong></tt>: Deflating (Compressing) Data</a></h1>
+<p><a name="node_idx_576"></a><a name="node_idx_578"></a></p>
+<p>
+
+
+</p>
+<p></p>
+<p>
+
+<a name="node_idx_580"></a><a name="node_kw_definitiongzip"></a><code class=scheme>(gzip</code><tt>&nbsp;</tt><code class=scheme><span class=variable>in-filename</span></code><tt>&nbsp;</tt>[<code class=scheme><span class=variable>out-filename</span></code>]<code class=scheme>)</code> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<small>P</small><small>R</small><small>O</small><small>C</small><small>E</small><small>D</small><small>U</small><small>R</small><small>E</small>
+</p>
+<p>
+Compresses data to the same format as the GNU <tt>gzip</tt> utility,
+writing the compressed data directly to a file. The <code class=scheme><span class=variable>in-filename</span></code>
+argument is the name of the file to compress. The default output file
+name is <code class=scheme><span class=variable>in-filename</span></code> with <tt><strong>.gz</strong></tt> appended. If the file named
+by <code class=scheme><span class=variable>out-filename</span></code> exists, it will be overwritten.  The return
+value is void.</p>
+<p>
+
+
+</p>
+<p></p>
+<p>
+
+<a name="node_idx_582"></a><a name="node_kw_definitiongzip-through-ports"></a><code class=scheme>(gzip-through-ports</code><tt>&nbsp;</tt><code class=scheme><span class=variable>in out orig-filename timestamp</span></code><code class=scheme>)</code> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<small>P</small><small>R</small><small>O</small><small>C</small><small>E</small><small>D</small><small>U</small><small>R</small><small>E</small>
+</p>
+<p>
+Reads the port <code class=scheme><span class=variable>in</span></code> for data and compresses it to <code class=scheme><span class=variable>out</span></code>,
+outputting the same format as the GNU <tt>gzip</tt> utility. The
+<code class=scheme><span class=variable>orig-filename</span></code> string is embedded in this output;
+<code class=scheme><span class=variable>orig-filename</span></code> can be <code class=scheme><span class=selfeval>#f</span></code> to omit the filename from the
+compressed stream. The <code class=scheme><span class=variable>timestamp</span></code> number is also embedded in the
+output stream, as the modification date of the original file (in Unix
+seconds, as <code class=scheme>file-or-directory-modify-seconds</code> would report under
+Unix). The return value is void.</p>
+<p>
+
+
+</p>
+<p></p>
+<p>
+
+<a name="node_idx_584"></a><a name="node_kw_definitiondeflate"></a><code class=scheme>(deflate</code><tt>&nbsp;</tt><code class=scheme><span class=variable>in out</span></code><code class=scheme>)</code> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<small>P</small><small>R</small><small>O</small><small>C</small><small>E</small><small>D</small><small>U</small><small>R</small><small>E</small>
+</p>
+<p>
+Writes <tt>pkzip</tt>-format ``deflated'' data to the port <code class=scheme><span class=variable>out</span></code>,
+compressing data from the port <code class=scheme><span class=variable>in</span></code>.  The data in a file created
+by <tt>gzip</tt> uses this format (preceded with some header
+information). The return value is void.</p>
+<p>
+</p>
+<p>
+</p>
+<div align=right class=navigation><i>[Go to <span><a href="mzlib.html">first</a>, <a href="mzlib-Z-H-14.html">previous</a></span><span>, <a href="mzlib-Z-H-16.html">next</a></span> page<span>; &nbsp;&nbsp;</span><span><a href="mzlib.html#node_toc_start">contents</a></span><span><span>; &nbsp;&nbsp;</span><a href="mzlib-Z-H-42.html#node_index_start">index</a></span>]</i></div><p></p>
+</body>
+</html>

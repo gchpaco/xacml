@@ -1,0 +1,903 @@
+<!doctype html public "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!--
+
+Generated from drscheme.tex by tex2page, v 2004-09-11
+(running on MzScheme 209, unix), 
+(c) Dorai Sitaram, 
+http://www.ccs.neu.edu/~dorai/tex2page/tex2page-doc.html
+
+-->
+<head>
+<title>
+PLT DrScheme: Programming Environment Manual
+</title>
+<link rel="stylesheet" type="text/css" href="drscheme-Z-S.css" title=default>
+<meta name=robots content="noindex,follow">
+</head>
+<body>
+<div align=right class=navigation><i>[Go to <span><a href="drscheme.html">first</a>, <a href="drscheme-Z-H-1.html">previous</a></span><span>, <a href="drscheme-Z-H-3.html">next</a></span> page<span>; &nbsp;&nbsp;</span><span><a href="drscheme.html#node_toc_start">contents</a></span><span><span>; &nbsp;&nbsp;</span><a href="drscheme-Z-H-6.html#node_index_start">index</a></span>]</i></div><p></p>
+<a name="node_chap_2"></a>
+<h1 class=chapter>
+<div class=chapterheading><a href="drscheme.html#node_toc_node_chap_2">Chapter 2</a></div><br>
+<a href="drscheme.html#node_toc_node_chap_2">Interface Essentials</a></h1>
+<p><a name="node_idx_4"></a></p>
+<p>
+<a name="node_idx_6"></a>
+The DrScheme window has three parts: a row of buttons at the top, two
+editing panels in the middle, and a status line at the bottom.</p>
+<p>
+</p>
+<div align=center><table><tr><td>
+
+<img src="drscheme-Z-G-1.gif" border="0" alt="[drscheme-Z-G-1.gif]">
+</td></tr></table></div>
+<p>
+</p>
+<p>
+<a name="node_idx_8"></a>
+The top editing panel, called the <strong>definitions window</strong>, is for
+defining Scheme programs. The above figure shows a program that defines
+the function <code class=scheme>square</code>.</p>
+<p>
+<a name="node_idx_10"></a>
+The bottom panel, called the <strong>interactions window</strong>, is for
+evaluating Scheme expressions interactively. The <tt>Language</tt> line
+in the interactions window indicates which primitives are available in
+the definitions and interactions windows.  In the above figure, the
+language is <tt>Beginning Student</tt>, which is the default language.</p>
+<p>
+Clicking the <tt>Run</tt> button evaluates the program in the
+definitions window, making the program's definitions available in the
+interactions window. Given the definition of <code class=scheme>square</code> as in the
+figure above, typing <code class=scheme>(square <code class=scheme><span class=selfeval>2</span></code>)</code> in the interactions window
+produces the result <code class=scheme><span class=selfeval>4</span></code>.</p>
+<p>
+<a name="node_idx_12"></a><a name="node_idx_14"></a>
+The status line at the bottom of DrScheme's window provides
+information about the current line and position of the editing caret,
+whether the current file can be modified, and whether DrScheme is
+currently evaluating any expression. The recycling icon flashes while
+DrScheme is ``recycling'' internal resources, such as memory.</p>
+<p>
+</p>
+<a name="node_sec_2.1"></a>
+<h2><a href="drscheme.html#node_toc_node_sec_2.1">2.1&nbsp;&nbsp;Buttons</a></h2>
+<p><a name="node_idx_16"></a></p>
+<p>
+<a name="node_idx_18"></a>
+The left end of the row of buttons in DrScheme contains a miniature
+button with the current file's name. Clicking the button
+opens a menu that shows the file's full pathname. Selecting
+one of the menu entries opens file starting in the
+corresponding directory.</p>
+<p>
+<a name="node_idx_20"></a>
+Below the filename button is a <tt>(define ...)</tt> button for a popup
+menu of names defined in the definitions window. Selecting an item
+from the menu moves the blinking caret to the corresponding
+definition.</p>
+<p>
+<a name="node_idx_22"></a>
+The <tt>Save</tt> button appears whenever the definitions window is
+modified. Clicking the button saves the contents of the definitions
+window to a file. The current name of the file appears to the left of
+the <tt>Save</tt> button, but a file-selection dialog appears if the
+file has never been saved before.</p>
+<p>
+<a name="node_idx_24"></a><a name="node_idx_26"></a><a name="node_idx_28"></a>
+The <tt>Step</tt> button starts The Stepper, which shows the evaluation of a
+program as a series of small steps. Each evaluation step replaces an
+expression in the program with an equivalent one using the evaluation
+rules of DrScheme. For example, a step might replace <code class=scheme>(+ <code class=scheme><span class=selfeval>1</span></code> <code class=scheme><span class=selfeval>2</span></code>)</code>
+with <code class=scheme><span class=selfeval>3</span></code>. These are the same rules used by DrScheme to evaluate a
+program.  Clicking <tt>Step</tt> opens a new window that contains the
+program from the definitions window, plus three new buttons:
+<tt>Next</tt>, <tt>Previous</tt>, and <tt>Home</tt>. Clicking <tt>Next</tt>
+performs a single evaluation step, clicking <tt>Previous</tt> retraces a
+single step, and clicking <tt>Home</tt> returns to the initial program.
+The Stepper works only for programs using the Beginning Student language level.</p>
+<p>
+<a name="node_idx_30"></a>
+Clicking the <tt>Check Syntax</tt> 
+button annotates the 
+program text in the definitions window.
+It add these annotations:
+</p>
+<ul><p>
+</p>
+<li><p><strong>Syntactic Highlighting</strong> Imported variables and
+locally defined variables are highlighted with
+color changes.</p>
+<p>
+</p>
+<li><p><strong>Lexical Structure</strong> The lexical structure 
+is shown with arrows overlaid on the program text.
+When the mouse cursor passes over a variable, DrScheme
+draws an arrow from the binding location to the variable,
+or from the binding location to every bound occurrance of
+the variable.</p>
+<p>
+<a name="node_idx_32"></a>
+Additionally, control or right-button mouse clicking on a
+variable activates a popup menu that lets you jump from
+binding location to bound location and vice versa,
+alpha-rename the variable, or tack the arrows so they do
+not disappear.</p>
+<p>
+<a name="node_idx_34"></a>
+</p>
+<li><p><strong>Tail Calls</strong> Any subexpression that is
+(syntactically) in tail-position with respsect to its
+enclosing context is annotated by drawing a light purple
+arrow from the tail expression to its surrounding
+expression.</p>
+<p>
+</p>
+<li><p><strong>Require Annotations</strong> Control-clicking or
+right-button clicking (depending on the platform DrScheme
+runs on) on the argument to <code class=scheme><span class=keyword>require</span></code> activates a
+popup menu that lets you open the file that contains the
+<code class=scheme><span class=keyword>require</span></code>d module.</p>
+<p>
+Passing the mouse cursor over a <code class=scheme><span class=keyword>require</span></code> expression
+inside a module shows all of the variables that are used
+from that <code class=scheme><span class=keyword>require</span></code> expression. Additionally,
+if no variables are used from that require expression,
+it is colored like an unbound variable.</p>
+<p>
+Also, passing the mouse cursor over a variable that is
+imported from a module shows the module that it is imported
+from in a status line at the bottom of the frame.</p>
+<p>
+</p>
+</ul><p></p>
+<p>
+The <tt>Run</tt> button evaluates the program in the
+definitions window and resets the interactions window.</p>
+<p>
+<a name="node_idx_36"></a>
+The <tt>Break</tt> button interrupts an evaluation, or beeps if DrScheme
+is not evaluating anything. For example, after clicking <tt>Run</tt>
+or entering an expression into the interactions window, click
+<tt>Break</tt> to cancel the evaluation. Click the <tt>Break</tt> button
+once to try to interrupt the evaluation gracefully; click the button
+twice to killing the evaluation immediately.</p>
+<p>
+</p>
+<p>
+</p>
+<a name="node_sec_2.2"></a>
+<h2><a href="drscheme.html#node_toc_node_sec_2.2">2.2&nbsp;&nbsp;The Editor</a></h2>
+<p><a name="node_idx_38"></a></p>
+<p>
+<a name="node_idx_40"></a><a name="node_idx_42"></a><a name="node_idx_44"></a>
+DrScheme's editor provides special support for managing parentheses in
+a program. When the blinking caret is next to a parenthesis,
+DrScheme shades the region between the parenthesis and its
+matching parenthesis. This feature is especially helpful when for
+balancing parentheses to complete an expression. Furthermore, if you
+type a closing parenthesis ``)'' that should match an opening square
+bracket ``['', the editor automatically converts the ``)'' into a
+``]''. DrScheme beeps whenever a closing parenthesis does not
+match an opening parenthesis.</p>
+<p>
+<a name="node_idx_46"></a><a name="node_idx_48"></a>
+Although whitespace is not significant in Scheme, DrScheme encourages
+a particular format for Scheme code. When you type Enter or Return,
+the editor inserts a new line and automatically indents it. To make
+DrScheme re-indent an existing line, move the flashing caret to the
+line and hit the Tab key. (The caret can be anywhere in the line.)
+You can re-indent an entire region by selecting the region and typing
+Tab.</p>
+<p>
+</p>
+<a name="node_sec_2.3"></a>
+<h2><a href="drscheme.html#node_toc_node_sec_2.3">2.3&nbsp;&nbsp;The Interactions Window</a></h2>
+<p><a name="node_idx_50"></a></p>
+<p>
+<a name="node_idx_52"></a><a name="node_idx_54"></a><a name="node_idx_56"></a>
+The interactions window lets you type an expression after the <tt>&gt;</tt>
+prompt for immediate evaluation. You cannot modify any text before
+the last <tt>&gt;</tt> prompt. To enter an expression, the flashing caret
+must appear after the last prompt, and also after the space following
+the prompt.</p>
+<p>
+When you type a complete expression and hit Enter or Return, DrScheme
+evaluates the expression and prints the result. After printing the
+result, DrScheme creates a new prompt for another expression. Some
+expressions return a special ``void'' value; DrScheme never prints
+void, but instead produces a new prompt immediately.</p>
+<p>
+If the expression following the current prompt is incomplete, then
+DrScheme will not try to evaluate it. In that case, hitting Enter or
+Return produces a new, auto-indented line. You can force
+DrScheme to evaluate the expression by typing alt-return
+or command-return (depending on your platform).</p>
+<p>
+To copy the previous expression to the current prompt, type ESC-p
+(i.e., type Escape and then type p). Type ESC-p multiple times to
+cycle back through old expressions. Type ESC-n to cycle forward
+through old expressions.</p>
+<p>
+<a name="node_idx_58"></a>
+Clicking the <tt>Run</tt> button evaluates the program in the
+definitions window and makes the program's definitions available in
+the interactions window. Clicking <tt>Run</tt> also resets the
+interactions window, erasing all old interactions and removing old
+definitions from the interaction environment. Although <tt>Run</tt>
+erases old <tt>&gt;</tt> prompts, ESC-p and ESC-n can still retrieve old
+expressions.</p>
+<p>
+</p>
+<a name="node_sec_2.4"></a>
+<h2><a href="drscheme.html#node_toc_node_sec_2.4">2.4&nbsp;&nbsp;Errors</a></h2>
+<p><a name="node_idx_60"></a></p>
+<p>
+<a name="node_idx_62"></a>
+Whenever DrScheme encounters an error while evaluating an expression,
+it prints an error message in the interactions window and highlights
+the expression that triggered the error. The highlighted expression
+might be in the definitions window, or it might be after an old
+prompt in the interactions window.</p>
+<p>
+For certain kinds of errors, DrScheme turns a portion of the error
+message into a hyperlink. Click the hyperlink to get help regarding a
+function or keyword related to the error.</p>
+<p>
+</p>
+<a name="node_sec_2.5"></a>
+<h2><a href="drscheme.html#node_toc_node_sec_2.5">2.5&nbsp;&nbsp;Languages</a></h2>
+<p><a name="node_idx_64"></a></p>
+<p>
+
+
+
+
+</p>
+<p>
+<a name="node_idx_66"></a>
+<a name="node_idx_68"></a>
+<a name="node_idx_70"></a>
+DrScheme supports multiple dialects of Scheme. The name of the current
+evaluation language always appears in in the top of the interactions
+window. To choose a different language, select the
+<tt>Language</tt><tt>|</tt><tt>Choose Language...</tt> menu item. After changing the
+language, click <tt>Run</tt> to reset the language in the
+interactions window.</p>
+<p>
+Five of DrScheme's languages are specifically designed for teaching:
+</p>
+<ul><p>
+</p>
+<li><p><a name="node_idx_72"></a><strong>Beginning Student</strong> is a small version
+of Scheme that is tailored for beginning computer science
+students.</p>
+<p>
+</p>
+<li><p><a name="node_idx_74"></a>
+<strong>Beginning Student with List Abbreviations</strong> is an
+extension to Beginning Student that prints lists with
+<code class=scheme>list</code> instead of <code class=scheme>cons</code>, and accepts quasiquoted
+input.</p>
+<p>
+</p>
+<li><p><a name="node_idx_76"></a><strong>Intermediate
+Student</strong> adds local bindings and higher-order functions.</p>
+<p>
+</p>
+<li><p><a name="node_idx_78"></a><strong>Intermediate Student with Lambda</strong> adds
+anonymous functions.</p>
+<p>
+</p>
+<li><p><a name="node_idx_80"></a><strong>Advanced Student</strong>
+adds mutable state.</p>
+<p>
+</p>
+</ul><p>
+The teaching languages different from conventional Scheme in a number
+of ways, described below.</p>
+<p>
+DrScheme also supports several languages for experienced programmers:
+</p>
+<ul><p>
+</p>
+<li><p><a name="node_idx_82"></a> <strong>Standard (R5RS)</strong> contains those primitives and syntax
+defined in the R5RS Scheme standard. See the
+<a href="../r5rs/index.htm"><i>Revised5 Report on the Algorithmic Language Scheme</i></a> for details.</p>
+<p>
+</p>
+<li><p><a name="node_idx_84"></a> <strong>PLT Textual
+(MzScheme)</strong> extends R5RS with exceptions, threads, objects,
+modules, components, regular expressions, TCP support, filesystem
+utilities, and process control operations.  See <a href="../mzscheme/mzscheme.html"><i>PLT MzScheme: Language Manual</i></a>
+for details.</p>
+<p>
+</p>
+<li><p><a name="node_idx_86"></a> <strong>PLT Graphical (MrEd)</strong>
+extends MzScheme with a graphical toolbox for creating GUI
+applications (with special support for editor applications, hence
+the Ed in MrEd). See also <a href="../mred/mred.html"><i>PLT MrEd: Graphical Toolbox Manual</i></a>.</p>
+<p>
+</p>
+<li><p><a name="node_idx_88"></a> <strong>PLT Pretty Big</strong>
+extends MrEd with the forms of the Advanced Student teaching
+language, and more.<a name="call_footnote_Temp_4"></a><a href="#footnote_Temp_4"><sup><small>1</small></sup></a> It is useful as a step past Advanced Student, or
+for implementing MrEd programs with a richer base syntax and set of
+primitives.</p>
+<p>
+Note that there some forms (for example,
+<code class=scheme><span class=keyword>define-struct</span></code>) that appear in both Advanced and
+MrEd, but with slightly different semantics. In all such
+cases, the PLT Pretty Big language uses the forms from
+the MrEd language (In the case of define-struct, Advanced
+implicitly uses a very permissive inspector (see
+<a href="../mzscheme/mzscheme-Z-H-4.html#node_sec_4.5">inspectors</a> for details) and MrEd uses the
+current inspector).</p>
+<p>
+</p>
+<li><p><a name="node_idx_90"></a> <tt>module</tt>
+requires that the definitions window contain only a single module
+declaration, as defined in <a href="../mzscheme/mzscheme.html"><i>PLT MzScheme: Language Manual</i></a>. The module explicitly
+declares the language for the module's body.</p>
+<p>
+</p>
+</ul><p>  </p>
+<p>
+The <tt>Language</tt><tt>|</tt><tt>Choose Language...</tt> dialog contains a
+<tt>Show Details</tt> button for configuring certain details of the
+language specification. (Each option corresponds to one of the lines
+in the language table, but only a few of the lines in the figure have
+an option in the dialog.) Whenever the selected options do not match
+the default language specification, a <tt>Custom</tt> indicator appears
+next to the language-selection control at the top of the dialog.</p>
+<p>
+The teaching languages differ from conventional Scheme in a number of
+ways:
+</p>
+<ul><p>
+</p>
+<li><p><strong>Case-sensitive identifiers and symbols</strong>  --  In a
+case-sensitive language, the variable names <code class=scheme>x</code> and
+<code class=scheme>X</code> are distinct, and the symbols <code class=scheme><span class=selfeval>'x</span></code> and
+<code class=scheme><span class=selfeval>'X</span></code> are also distinct. In a case-insensitive language,
+<code class=scheme>x</code> and <code class=scheme>X</code> are equivalent and <code class=scheme><span class=selfeval>'x</span></code> and
+<code class=scheme><span class=selfeval>'X</span></code> represent the same value. The teaching languages
+are case-sensitive by default, and other languages are usually
+case-insensitive. Case-sensitivity can be adjusted through the
+detail section of the language-selection dialog.</p>
+<p>
+</p>
+<li><p><strong>All numbers are exact unless <code class=scheme>#i</code> is
+specified</strong>  --  In the Beginning Student through Intermediate
+Student with Lambda languages, numbers containing a decimal point are
+interpreted as exact numbers. This interpretation allows
+students to use familar decimal notation without inadvertently
+triggering inexact arithmetic. Exact numbers with decimal
+representations are also printed in decimal. Inexact inputs and
+results are explicitly marked with <code class=scheme>#i</code>.</p>
+<p>
+</p>
+<li><p><strong>Procedures must take at least one argument</strong>  --  In the
+Beginning Student through Intermediate Student languages,
+defined procedures must consume at least one argument. Since
+the languages have no side-effects, zero-argument functions are
+not useful, and rejecting such function definitions helps
+detect confusing syntactic mistakes.</p>
+<p>
+</p>
+<li><p><strong>Identifier required at function call position</strong>  --  In
+the Beginning Student through Intermediate Student languages,
+procedure calls must be of the form <code class=scheme>(<code class=scheme><span class=variable>identifier</span></code>
+...)</code>. This restriction helps detect confusing misuses of
+parentheses, such as <code class=scheme>(<code class=scheme><span class=selfeval>1</span></code>)</code> or <code class=scheme>((+
+<code class=scheme><span class=selfeval>3</span></code> <code class=scheme><span class=selfeval>4</span></code>))</code>, which is a common mistake among beginners
+who are used to the optional parentheses of algebra.</p>
+<p>
+</p>
+<li><p><strong>Top-level required at function call position</strong>  --  In
+the Beginning Student languages, procedure calls must be of the
+form <code class=scheme>(<code class=scheme><span class=variable>top-level-identifier</span></code> ...)</code>, and the number
+of actual arguments must match the number of formal arguments
+if <code class=scheme><span class=variable>top-level-identifier</span></code> is <code class=scheme><span class=keyword>define</span></code>d. This
+restriction helps detect confusing misuses of parentheses, such
+as <code class=scheme>(<code class=scheme><span class=variable>x</span></code>)</code> where <code class=scheme><span class=variable>x</span></code> is a function
+argument. DrScheme can detect such mistakes syntactically
+because Beginning Student does not support higher-order
+procedures.</p>
+<p>
+</p>
+<li><p><strong>Primitive and defined functions allowed only in
+function call position</strong>  --  In Beginning Student languages, the
+name of a primitive operator or of a defined function can be
+used only after the open-parenthesis of a function call (except
+where teachpack extensions allow otherwise, as in the
+<code class=scheme>convert-gui</code> extension). Incorrect uses of primitives
+trigger a syntax error. Incorrect uses of defined names trigger
+a run-time error.  DrScheme can detect such mistakes because
+Beginning Student does not support higher-order procedures.</p>
+<p>
+</p>
+<li><p><strong><tt>lambda</tt> allowed only in definitions</strong>  --  In the
+Beginning Student through Intermediate Student languages, <tt>lambda</tt> (or <tt>case-lambda</tt>) may appear only in a definition,
+and only as the value of the defined variable.</p>
+<p>
+</p>
+<li><p><strong>Free variables are not allowed</strong>  --  In the Beginning
+Student through Advanced Student languages, every variable
+referenced in the definitions window must be defined,
+pre-defined, or the name of a local function argument.</p>
+<p>
+</p>
+<li><p><strong><code class=scheme><span class=keyword>quote</span></code> works only on symbols, <code class=scheme><span class=keyword>quasiquote</span></code>
+diallowed</strong>  --  In the Beginning Student language, <code class=scheme><span class=keyword>quote</span></code>
+and <code class=scheme><span class=keyword>'</span></code> can specify only symbols. This restriction avoids
+the need to explain to beginners why <code class=scheme><span class=selfeval>1</span></code> and
+<code class=scheme>'<code class=scheme><span class=selfeval>1</span></code></code> are equivalent in standard Scheme. In addition,
+<code class=scheme><span class=keyword>quasiquote</span></code>, <code class=scheme><span class=keyword>`</span></code>, <code class=scheme><span class=keyword>unquote</span></code>, <code class=scheme><span class=keyword>,</span></code>, 
+<code class=scheme><span class=keyword>unquote-splicing</span></code>, and <code class=scheme><span class=keyword>,@</span></code> are disallowed.</p>
+<p>
+</p>
+<li><p><strong>Unmatched <code class=scheme><span class=keyword>cond</span></code>/<code class=scheme><span class=keyword>case</span></code> is an error</strong>  --  In
+the Beginning Student through Advanced Student languages,
+falling through a <code class=scheme><span class=keyword>cond</span></code> or <code class=scheme><span class=keyword>case</span></code> expression
+without matching a clause signals a run-time error. This
+convention helps detect syntactic and logical errors in
+programs.</p>
+<p>
+</p>
+<li><p><strong>Conditional values must be <code class=scheme><span class=selfeval>true</span></code> or
+<code class=scheme><span class=selfeval>false</span></code></strong>  --  In the Beginning Student through Advanced
+Student languages, an expression whose value is treated as a
+boolean must return an actual boolean, <code class=scheme><span class=selfeval>true</span></code> or
+<code class=scheme><span class=selfeval>false</span></code>. This restriction, which applies to <code class=scheme><span class=keyword>if</span></code>,
+<code class=scheme><span class=keyword>cond</span></code>, <code class=scheme><span class=keyword>and</span></code>, <code class=scheme><span class=keyword>or</span></code>, <code class=scheme><span class=keyword>nand</span></code>, and
+<code class=scheme><span class=keyword>nor</span></code> expressions, helps detect errors where a boolean
+function application is omitted.</p>
+<p>
+</p>
+<li><p><strong><code class=scheme>+</code>, <code class=scheme>*</code>, and <code class=scheme>/</code> take at least
+two arguments</strong>  --  In the Beginning Student through Advanced
+Student languages, mathematical operators that are infix in
+algebra notation require at least two arguments in
+DrScheme. This restriction helps detect missing arguments to an
+operator.</p>
+<p>
+</p>
+<li><p><strong><code class=scheme><span class=keyword>and</span></code>, <code class=scheme><span class=keyword>or</span></code>, <code class=scheme><span class=keyword>nand</span></code>, and
+<code class=scheme><span class=keyword>nor</span></code> require at least 2 expressions</strong>  --  In the
+Beginning Student through Advanced Student languages, the
+boolean combination forms require at least two sub-expressions.
+This restriction helps detect missing or ill-formed
+sub-expressions in a Boolean expression.</p>
+<p>
+</p>
+<li><p><strong><code class=scheme><span class=keyword>set!</span></code> disallowed on arguments</strong>  --  In the
+Advanced Student language, <code class=scheme><span class=keyword>set!</span></code> cannot be used to
+mutate variables bound by <code class=scheme><span class=keyword>lambda</span></code>. This restriction
+ensures that the substitution model of function application is
+consistent with DrScheme's evaluation.</p>
+<p>
+</p>
+<li><p><strong>Improper lists disallowed</strong>  --  A <strong>proper list</strong>
+is either an empty list or a list created by <code class=scheme>cons</code>ing
+onto a proper list. In the Beginning Student through Advanced
+Student languages, <code class=scheme>cons</code> constructs only
+<strong>proper lists</strong>, signaling an error if the second
+argument is not a proper list. Since beginning students do not
+need improper lists, this restriction help detect logical
+errors in recursive functions.</p>
+<p>
+</p>
+<li><p><strong>Dot is diallowed</strong>  --  In the Beginning Student through
+Advanced Student languages, a delimitted period is disallowed,
+(e.g., as an improper-list constructor in a quoted form, or for
+defining multi-arity procedures).</p>
+<p>
+</p>
+<li><p><strong>Keywords disallowed as variable names</strong>  --  In the
+Beginning Student through Advanced Student languages, all
+syntactic form names are keywords that cannot be used as
+variable names.</p>
+<p>
+</p>
+<li><p><strong>Re-definitions are disallowed</strong>  --  In the Beginning
+Student through Advanced Student languages, top-level names can
+never be re-defined.</p>
+<p>
+</p>
+<li><p><strong>Function definitions are allowed only in the
+definitions window</strong>  --  In the Beginning Student languages,
+function definitions are not allowed in the interactions
+window.</p>
+<p>
+</p>
+</ul><p>
+</p>
+<p>
+The teaching languages also deviate from traditional Scheme in
+printing values. Different printing formats can be selected for any
+language through the detail section of language-selection dialog.
+</p>
+<ul><p>
+</p>
+<li><p><strong>Constructor-style output</strong>  --  See
+<a href="#node_sec_2.7.1">Constructor-style Output</a>.</p>
+<p>
+</p>
+<li><p><strong>Quasiquote-style output</strong>  --  See
+<a href="#node_sec_2.7.2">Quasiquote-style Output</a>.</p>
+<p>
+</p>
+<li><p><strong>Rational
+number printing</strong> - In the teaching languages, all
+numbers that have a finite decimal expansion are
+printed in decimal form. For those numbers that do not
+have a finite decimal expansion (such as 4/3) DrScheme
+gives you a choice. It either prints them as mixed
+fractions or as repeating decimals, where the repeating
+portion of the decimal expansion is shown with an
+overbar. In addition, DrScheme only shows the first 25
+digits of the number's decimal expansion. If there are
+more digits, the number appears with an ellipses at the
+end. Click the ellipses to see the next 25 digits of
+the expansion.</p>
+<p>
+<a name="node_idx_92"></a></p>
+<p>
+This setting only controls the initial display of a number.
+Right-clicking or control-clicking on the number lets you
+change from the fraction representation to the decimal
+representation. </p>
+<p>
+</p>
+<li><p><strong><code class=scheme>write</code> output</strong>  --  Prints
+values with <code class=scheme>write</code>.</p>
+<p>
+</p>
+<li><p><strong>Show sharing in values</strong>  --  Prints
+interaction results using the <code class=scheme><span class=keyword>shared</span></code> syntax, which
+exposes shared structure within a value. For example, the list
+created by <code class=scheme>(<code class=scheme><span class=keyword>let</span></code> ([<code class=scheme><span class=variable>lt</span></code> (list <code class=scheme><span class=selfeval>0</span></code>)]) (list <code class=scheme><span class=variable>lt</span></code> <code class=scheme><span class=variable>lt</span></code>))</code> prints as
+</p>
+<div align=center><table><tr><td>
+
+<code class=scheme>(<code class=scheme><span class=keyword>shared</span></code> ((<code class=scheme><span class=variable>-1-</span></code> (list <code class=scheme><span class=selfeval>0</span></code>))) (list <code class=scheme><span class=variable>-1-</span></code> <code class=scheme><span class=variable>-1-</span></code>))</code>
+</td></tr></table></div>
+
+instead of
+<div align=center><table><tr><td>
+
+<code class=scheme>(list (list <code class=scheme><span class=selfeval>0</span></code>) (list <code class=scheme><span class=selfeval>0</span></code>))</code>.
+</td></tr></table></div>
+
+<p>
+</p>
+</ul><p></p>
+<p>
+</p>
+<a name="node_sec_2.6"></a>
+<h2><a href="drscheme.html#node_toc_node_sec_2.6">2.6&nbsp;&nbsp;Executables</a></h2>
+<p><a name="node_idx_94"></a>
+</p>
+<p>
+DrScheme's <tt>Create Executable...</tt> menu lets you create
+an executable for your program that you can start without
+first starting DrScheme. To create an executable, first save
+your program to a file and set the language and teachpacks.
+Click <tt>Run</tt>, just to make sure that the program is
+working as you expect. Beware, the executable you create
+will not have a read-eval-print-loop, so be sure to have an
+expression that starts your program running in the
+definitions window before creating the executable.</p>
+<p>
+Once you are satisfied with your program, choose the
+<tt>Create Executable...</tt>  menu item from the <tt>Scheme</tt>
+menu. Choose a place to save the executable. You will be
+able to start the saved executable in the same way that you
+start any other program on your computer.</p>
+<p>
+An executable created by <tt>Create Executable...</tt> is either a
+<strong>launcher executable</strong> or a <strong>stand-alone executable</strong>,
+and it uses either a <strong>graphical (MrEd)</strong> or <strong>textual
+(MzScheme)</strong> engine.  For programs implemented with certain languages,
+<tt>Create Executable...</tt>  will prompt you to choose the executable
+type and engine, while other languages support only one type or
+engine.</p>
+<p>
+Each type has advantages and disadvantages:
+</p>
+<ul><p>
+</p>
+<li><p>A <strong>launcher executable</strong><a name="node_idx_96"></a> tends to be small, and it uses
+the latest version of your program source file when it starts. It
+also accesses library files from your DrScheme installation when it
+runs. Since a launcher executable contains specific paths to access
+those files, launchers usually cannot be moved from one machine to
+another.</p>
+<p>
+</p>
+<li><p>A <strong>stand-alone executable</strong><a name="node_idx_98"></a> tends to be large, because
+it embeds a copy of your program at the time that it is created, as
+well as any library that your code uses. When the executable is
+started, it uses the embedded copies and does not need your original
+source file or your DrScheme installation. It may, however, require
+DLLs or framework libraries installed on your machine, depending on
+your operating system:
+</p>
+<ul><p>
+</p>
+<li><p>Windows  --  The executable requires the following DLLs: <a name="node_idx_100"></a>
+<tt><strong>libmzsch[vers].dll</strong></tt><a name="node_idx_102"></a>, <tt><strong>libmzgc[vers].dll</strong></tt><a name="node_idx_104"></a>, and
+(for executables using the MrEd engine)
+<tt><strong>libmred[vers].dll</strong></tt><a name="node_idx_106"></a>, where <tt><strong>[vers]</strong></tt> is based on the
+current version number. These DLLs are normally installed in the
+system directory.</p>
+<p>
+</p>
+<li><p>Mac OS X  --  The executable requires the
+<tt><strong>PLT_MzScheme</strong></tt><a name="node_idx_108"></a> framework, which is normally installed in
+<tt><strong>/Library/Frameworks</strong></tt><a name="node_idx_110"></a>. When using the MrEd engine, the
+executable also requires the <tt><strong>PLT_MrEd</strong></tt><a name="node_idx_112"></a> framework from
+the same location.</p>
+<p>
+</p>
+</ul><p>
+To move the ``stand-alone'' executable to another machine, the DLLs
+or frameworks that it uses must also be copied to the other machine.</p>
+<p>
+You can download these DLLs or frameworks as a separate
+package from
+</p>
+<div align=center><table><tr><td>
+
+<tt>http://www.plt-scheme.org/software/dynamic-libraries/</tt>
+</td></tr></table></div>
+
+or you can just copy them into the places manually.<p>
+</p>
+</ul><p></p>
+<p>
+DrScheme may also ask you to choose a base executable. The
+choices are MrEd and MzScheme. MzScheme exectables are
+smaller, but have no graphical libraries. Also, under
+Mac OS X, executables created with MzScheme as the base can
+only be run from the commandline. Using the MrEd base
+executable means that your executable can also be launched
+from the finder.</p>
+<p>
+T<small>I</small><small>P</small>: Disable debugging in the language dialog before creating
+your launcher. With debugging enabled, you will see a stack trace
+with error messages, but your program will run more slowly.  To
+disable debugging, open the language dialog, click the <tt>Show
+Details</tt> button, and click the <tt>No debugging or profiling</tt> check
+box, if it is available.</p>
+<p>
+</p>
+<a name="node_sec_2.7"></a>
+<h2><a href="drscheme.html#node_toc_node_sec_2.7">2.7&nbsp;&nbsp;Printed Results</a></h2>
+<p><a name="node_idx_114"></a></p>
+<p>
+<a name="node_idx_116"></a><a name="node_idx_118"></a><a name="node_idx_120"></a></p>
+<p>
+This section describes the different formats that DrScheme
+uses for printing results in the interactions window. Each
+of the different settings here also apply to the
+<code class=scheme><code class=scheme>print</code></code> primitive. That is, printing in the
+interactions window is identical to output produced by the
+<code class=scheme><code class=scheme>print</code></code> primitive.</p>
+<p>
+</p>
+<a name="node_sec_2.7.1"></a>
+<h3><a href="drscheme.html#node_toc_node_sec_2.7.1">2.7.1&nbsp;&nbsp;Constructor-style Output</a></h3>
+<p></p>
+<p>
+<a name="node_idx_122"></a> 
+DrScheme's <strong>constructor-style output</strong> treats <code class=scheme>cons</code>,
+<code class=scheme>vector</code>, and similar primitives as value constructors, rather
+than functions. It also treats <code class=scheme>list</code> as shorthand for multiple
+<code class=scheme>cons</code>'s ending with the empty list.  Constructor-style printing
+is valuable for beginning computer science students, because output
+values look the same as input values.</p>
+<p>
+Results printed in DrScheme's interactions window using
+constructor-style printing look different than results printed in
+traditional Scheme implementations, which use <code class=scheme>write</code> to print
+results. The table in Figure&nbsp;<a href="#node_fig_Temp_5">1</a> shows the
+differences between values printed in constructor style and values
+printed with <code class=scheme>write</code>.</p>
+<p>
+</p>
+<a name="node_fig_Temp_5"></a>
+<div class=figure align=center><table width=100%><tr><td align=center><div align=center><table><tr><td>
+
+<img src="drscheme-Z-G-2.gif" border="0" alt="[drscheme-Z-G-2.gif]">
+</td></tr></table></div>
+
+</td></tr>
+<tr><td align=center><b>Figure 1:</b>&nbsp;&nbsp;Comparison of constructor-style output to <code class=scheme>write</code></td></tr>
+<tr><td>
+</td></tr></table></div><p></p>
+<p>
+</p>
+<a name="node_sec_2.7.2"></a>
+<h3><a href="drscheme.html#node_toc_node_sec_2.7.2">2.7.2&nbsp;&nbsp;Quasiquote-style Output</a></h3>
+<p></p>
+<p>
+<a name="node_idx_124"></a> 
+Constructor-style output is inconvenient for printing S-expression
+results that represent programs. For example, the value <code class=scheme><span class=keyword>'</span>(<span class=keyword>lambda</span>
+ (<span class=variable>x</span>) (<span class=keyword>lambda</span> (<span class=variable>y</span>) (<span class=variable>+</span> <span class=variable>x</span> <span class=variable>y</span>)))</code> prints as
+</p>
+<div align=center><table><tr><td>
+
+<code class=scheme>(<code class=scheme>list</code> <span class=keyword>'</span><span class=keyword>lambda</span> (<code class=scheme>list</code> <span class=keyword>'</span><span class=variable>x</span>) (<code class=scheme>list</code> <span class=keyword>'</span><span class=keyword>lambda</span> (<code class=scheme>list</code> <span class=keyword>'</span><span class=variable>y</span>) (<code class=scheme>list</code> <span class=keyword>'</span><span class=variable>+</span> <span class=keyword>'</span><span class=variable>x</span> <span class=keyword>'</span><span class=variable>y</span>)))</code> 
+</td></tr></table></div>
+
+with constructor-style printing. <p>
+DrScheme's <strong>quasiquote-style output</strong> combines the
+input-output invariance of constructor-style printing with the
+S-expression readability of <code class=scheme>write</code>. It uses <code class=scheme>quasiquote</code> to
+print lists, and uses <code class=scheme>unquote</code> to escape back to constructor
+style printing for non-lists and non-symbols.</p>
+<p>
+With quasiquote-style printing, the above example prints as:
+</p>
+<div align=center><table><tr><td>
+
+<code class=scheme><span class=keyword>`</span>(<span class=keyword>lambda</span> (<span class=variable>x</span>) (<span class=keyword>lambda</span> (<span class=variable>y</span>) (<span class=variable>+</span> <span class=variable>x</span> <span class=variable>y</span>)))</code> 
+</td></tr></table></div>
+<p>
+This example:
+</p>
+<div align=center><table><tr><td>
+
+<code class=scheme>(<code class=scheme>list</code> <span class=keyword>'</span><span class=keyword>lambda</span> (<code class=scheme>list</code> <span class=keyword>'</span><span class=variable>x</span>) (<code class=scheme>box</code> <span class=keyword>'</span>(<span class=keyword>lambda</span> (<span class=variable>y</span>) (<span class=variable>+</span> <span class=variable>x</span> <span class=variable>y</span>))))</code> 
+</td></tr></table></div>
+
+in quasiquote-style printing prints as:
+<div align=center><table><tr><td>
+
+<code class=scheme><span class=keyword>`</span>(<span class=keyword>lambda</span> (<span class=variable>x</span>) <span class=keyword>,</span>(<code class=scheme>box</code> <span class=keyword>`</span>(<span class=keyword>lambda</span> (<span class=variable>y</span>) (<span class=variable>+</span> <span class=variable>x</span> <span class=variable>y</span>))))</code>
+</td></tr></table></div>
+<p>
+</p>
+<a name="node_sec_2.8"></a>
+<h2><a href="drscheme.html#node_toc_node_sec_2.8">2.8&nbsp;&nbsp;Input and Output</a></h2>
+<p><a name="node_idx_126"></a></p>
+<p>
+<a name="node_idx_128"></a><a name="node_idx_130"></a><a name="node_idx_132"></a><a name="node_idx_134"></a><a name="node_idx_136"></a>
+Many Scheme programs avoid explicit input and output operations,
+obtaining input via direct function calls in the interactions window,
+and producing output by returning values. Other Scheme programs
+explicitly print output for the user during evaluation using
+<code class=scheme>write</code> or <code class=scheme>display</code>, or explicitly request input from the
+user using <code class=scheme>read</code> or <code class=scheme>read-char</code>.</p>
+<p>
+Explicit input and output appear in the interactions window, but
+within special boxes that separate explicit I/O from normal
+expressions and results. For example, evaluating</p>
+<p>
+<img src="drscheme-Z-G-3.gif" border="0" alt="[drscheme-Z-G-3.gif]"></p>
+<p>
+in the interactions window produces a special box for entering input:</p>
+<p>
+<img src="drscheme-Z-G-4.gif" border="0" alt="[drscheme-Z-G-4.gif]"></p>
+<p>
+(The underscore indicates the location of the flashing caret.) Type an
+number into the box and hit Enter, and that number becomes the result
+of the <code class=scheme>(read)</code> expression. If you type <code class=scheme>5</code>, the overall
+interaction appears as follows:</p>
+<p>
+<img src="drscheme-Z-G-5.gif" border="0" alt="[drscheme-Z-G-5.gif]"></p>
+<p>
+The mouse cursor becomes a watch whenever DrScheme is evaluating
+expression, but you can still use the mouse to move the selection in
+an input box.</p>
+<p>
+Output goes to the same box as input. If you run the program</p>
+<p>
+<img src="drscheme-Z-G-6.gif" border="0" alt="[drscheme-Z-G-6.gif]"></p>
+<p>
+and provide the input S-expression <code class=scheme>(1 2)</code>, the interactions window
+ultimately appears as follows:</p>
+<p>
+<img src="drscheme-Z-G-7.gif" border="0" alt="[drscheme-Z-G-7.gif]"></p>
+<p>
+In this example, <code class=scheme>display</code> produces output immediately beneath the
+input you typed, but the final result was printed outside the box
+because it is the result of the program, rather than explicit
+output. (The above example assumes constructor-style printing. With
+traditional value printing, the final line outside the box would be
+<code class=scheme>(1 2)</code>.)</p>
+<p>
+Entering the same program line-by-line in the interactions window
+produces a different-looking result:</p>
+<p>
+<img src="drscheme-Z-G-8.gif" border="0" alt="[drscheme-Z-G-8.gif]"></p>
+<p>
+Although it is the same program as before, entering the program
+expression-by-expression demonstrates how each prompt creates its
+own I/O box.</p>
+<p>
+</p>
+<a name="node_sec_2.9"></a>
+<h2><a href="drscheme.html#node_toc_node_sec_2.9">2.9&nbsp;&nbsp;XML</a></h2>
+<p><a name="node_idx_138"></a>
+</p>
+<p>
+<a name="node_idx_140"></a>
+DrScheme has special support for XML concrete syntax. The
+<tt>Special</tt> menu's <code class=scheme><span class=variable>Insert</span> <span class=variable>XML</span> <span class=variable>Box</span></code> menu inserts an
+embedded editor into your program. In that embedded editor,
+you type XML's concrete syntax. When a program containing an
+XML box is evaluated, the XML box is translated into an
+x-expression (or xexpr). Xexprs are s-expression
+representation for XML expressions. Each xexpr is a list
+whose first element is a symbol naming the tag, second
+element is an association list representing attributes and
+remaining elements are the nested XML expressions.</p>
+<p>
+XML boxes have two modes for handling whitespace. In one
+mode, all whitespace is left intact in the resulting xexpr.
+In the other mode, any tag that only contains nested XML
+expressions and whitespace has the whitespace removed. You
+can toggle between these modes by right-clicking or
+control-clicking on the top portion of the XML box.</p>
+<p>
+In addition to containing XML text, XML boxes can also
+contain Scheme boxes. Scheme boxes contain Scheme
+expressions. These expressions are evaluated and their
+contents are placed into the containing XML box's xexpr.
+There are two varieties of Scheme box: the standard Scheme
+box and the splicing Scheme box. The standard Scheme box
+inserts its value into the containing xexpr. The contents of
+the splice box must evaluate to a list and the elements of
+the list are ``flattened'' into the containing xexpr.
+Right-clicking or control-clicking on the top of a Scheme
+box opens a menu to toggle the box between a Scheme box and
+a Scheme splice box.</p>
+<p>
+</p>
+<a name="node_sec_2.10"></a>
+<h2><a href="drscheme.html#node_toc_node_sec_2.10">2.10&nbsp;&nbsp;Test Cases</a></h2>
+<p><a name="node_idx_142"></a>
+</p>
+<p>
+DrScheme also includes support for creating test cases as
+part of the program text. This support is designed as an
+aid for students building tests as part of the
+<a href="http://www.htdp.org/">How to Design Programs</a> design recipes.</p>
+<p>
+Test cases in DrScheme are written in special boxes. To
+create one, choose <tt>Insert Test Case</tt> from the
+<tt>Scheme</tt> menu in the DrScheme window. The test cases
+consists of three editable areas. From the top, the first is
+a comment that names the test case. The second is an
+expression to test. The third is the expected result. Below
+the expected result is a light-blue box that will contain
+the actual result of the expression to be tested. Clicking
+on the triangle in the top-right hides the expression to
+test and the expected and actual results.</p>
+<p>
+To run the test cases, simply click <tt>Run</tt>. The top-right
+corner of the test case will change to either be a check box
+or a red X, indicating success or failure of the test case.</p>
+<p>
+To disable all of the test cases in the definitions window,
+choose the <tt>Disable All Test Cases</tt> menu item in the
+<tt>Scheme</tt> menu.</p>
+<p>
+</p>
+<div class=footnoterule><hr></div><p></p>
+<div class=footnote><p><a name="footnote_Temp_4"></a><a href="#call_footnote_Temp_4"><sup><small>1</small></sup></a> More precisely, Pretty Big is MrEd
+extended with the following MzLib libraries (see <a href="../mzlib/mzlib.html"><i>PLT MzLib: Libraries Manual</i></a>):
+<tt><strong>etc.ss</strong></tt>, <tt><strong>file.ss</strong></tt>, <tt><strong>list.ss</strong></tt>, <tt><strong>class.ss</strong></tt>,
+<tt><strong>unit.ss</strong></tt>, <tt><strong>unitsig.ss</strong></tt>, <tt><strong>include.ss</strong></tt>,
+<tt><strong>defmacro.ss</strong></tt>, <tt><strong>pretty.ss</strong></tt>, <tt><strong>string.ss</strong></tt>,
+<tt><strong>thread.ss</strong></tt>, <tt><strong>math.ss</strong></tt>, <tt><strong>match.ss</strong></tt>, and
+<tt><strong>shared.ss</strong></tt>.</p>
+</div>
+<div align=right class=navigation><i>[Go to <span><a href="drscheme.html">first</a>, <a href="drscheme-Z-H-1.html">previous</a></span><span>, <a href="drscheme-Z-H-3.html">next</a></span> page<span>; &nbsp;&nbsp;</span><span><a href="drscheme.html#node_toc_start">contents</a></span><span><span>; &nbsp;&nbsp;</span><a href="drscheme-Z-H-6.html#node_index_start">index</a></span>]</i></div><p></p>
+</body>
+</html>

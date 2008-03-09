@@ -1,0 +1,1467 @@
+\indexentry{Introduction|expandhtmlindex}{2}
+\indexentry{MzScheme!stand-alone|expandhtmlindex}{4}
+\indexentry{MrEd, DrScheme, and {\mzc}|expandhtmlindex}{6}
+\indexentry{MzScheme3m|expandhtmlindex}{8}
+\indexentry{Notation|expandhtmlindex}{10}
+\indexentry{Basic Syntax Extensions|expandhtmlindex}{12}
+\indexentry{Evaluation Order|expandhtmlindex}{14}
+\indexentry{evaluation order|expandhtmlindex}{16}
+\indexentry{Multiple Return Values|expandhtmlindex}{18}
+\indexentry{multiple return values|expandhtmlindex}{20}
+\indexentry{exn:application:arity@\rawscm{exn:application:arity}|expandhtmlindex}{22}
+\indexentry{Cond and Case|expandhtmlindex}{24}
+\indexentry{else@\rawscm{else}|expandhtmlindex}{26}
+\indexentry{=>@\rawscm{=>}|expandhtmlindex}{28}
+\indexentry{When and Unless|expandhtmlindex}{30}
+\indexentry{when@\scmk{when}|expandhtmlindex}{32}
+\indexentry{unless@\scmk{unless}|expandhtmlindex}{34}
+\indexentry{And and Or|expandhtmlindex}{36}
+\indexentry{and@\scmk{and}|expandhtmlindex}{38}
+\indexentry{or@\scmk{or}|expandhtmlindex}{40}
+\indexentry{Sequences|expandhtmlindex}{42}
+\indexentry{begin0@\scmk{begin0}|expandhtmlindex}{44}
+\indexentry{begin@\scmk{begin}|expandhtmlindex}{46}
+\indexentry{Quote and Quasiquote|expandhtmlindex}{48}
+\indexentry{quasiquote@\scmk{quasiquote}|expandhtmlindex}{50}
+\indexentry{unquote@\scmk{unquote}|expandhtmlindex}{52}
+\indexentry{unquote-splicing@\scmk{unquote-splicing}|expandhtmlindex}{54}
+\indexentry{Binding Forms|expandhtmlindex}{56}
+\indexentry{define@\scmk{define}|expandhtmlindex}{58}
+\indexentry{header|expandhtmlindex}{60}
+\indexentry{formals|expandhtmlindex}{62}
+\indexentry{define-values@\scmk{define-values}|expandhtmlindex}{64}
+\indexentry{let@\scmk{let}|expandhtmlindex}{66}
+\indexentry{let*@\scmk{let*}|expandhtmlindex}{68}
+\indexentry{letrec@\scmk{letrec}|expandhtmlindex}{70}
+\indexentry{letrec@\scmk{letrec}|expandhtmlindex}{72}
+\indexentry{let-values@\scmk{let-values}|expandhtmlindex}{74}
+\indexentry{let*-values@\scmk{let*-values}|expandhtmlindex}{76}
+\indexentry{letrec-values@\scmk{letrec-values}|expandhtmlindex}{78}
+\indexentry{set"!@\scmk{set"!}|expandhtmlindex}{80}
+\indexentry{set"!-values@\scmk{set"!-values}|expandhtmlindex}{82}
+\indexentry{fluid-let@\scmk{fluid-let}|expandhtmlindex}{84}
+\indexentry{define@{\tt define}!internal|expandhtmlindex}{86}
+\indexentry{begin@\scmk{begin}|expandhtmlindex}{88}
+\indexentry{Case-Lambda|expandhtmlindex}{90}
+\indexentry{case-lambda@\scmk{case-lambda}|expandhtmlindex}{92}
+\indexentry{procedure?@\rawscm{procedure?}|expandhtmlindex}{94}
+\indexentry{Procedure Application|expandhtmlindex}{96}
+\indexentry{Basic Data Extensions|expandhtmlindex}{98}
+\indexentry{Void and Undefined|expandhtmlindex}{100}
+\indexentry{undefined values@\rawscm{undefined values}|expandhtmlindex}{102}
+\indexentry{void@\rawscm{void}|expandhtmlindex}{104}
+\indexentry{\#<void>@\rawscm{\#<void>}|expandhtmlindex}{106}
+\indexentry{void@\rawscm{void}|expandhtmlindex}{108}
+\indexentry{void?@\rawscm{void?}|expandhtmlindex}{110}
+\indexentry{letrec-values@\scmk{letrec-values}|expandhtmlindex}{112}
+\indexentry{\#<undefined>@\rawscm{\#<undefined>}|expandhtmlindex}{114}
+\indexentry{Booleans|expandhtmlindex}{116}
+\indexentry{equal?@\rawscm{equal?}|expandhtmlindex}{118}
+\indexentry{eqv?@\rawscm{eqv?}|expandhtmlindex}{120}
+\indexentry{andmap@\rawscm{andmap}|expandhtmlindex}{122}
+\indexentry{ormap@\rawscm{ormap}|expandhtmlindex}{124}
+\indexentry{Numbers|expandhtmlindex}{126}
+\indexentry{numbers|expandhtmlindex}{128}
+\indexentry{fixnum|expandhtmlindex}{130}
+\indexentry{bignum|expandhtmlindex}{132}
+\indexentry{fraction|expandhtmlindex}{134}
+\indexentry{flonum|expandhtmlindex}{136}
+\indexentry{complex|expandhtmlindex}{138}
+\indexentry{decimal input|expandhtmlindex}{140}
+\indexentry{exponential input|expandhtmlindex}{142}
+\indexentry{infinity|expandhtmlindex}{144}
+\indexentry{not-a-number|expandhtmlindex}{146}
+\indexentry{+inf.0@\rawscm{+inf.0}|expandhtmlindex}{148}
+\indexentry{-inf.0@\rawscm{-inf.0}|expandhtmlindex}{150}
+\indexentry{+nan.0@\rawscm{+nan.0}|expandhtmlindex}{152}
+\indexentry{-nan.0@\rawscm{-nan.0}|expandhtmlindex}{154}
+\indexentry{division by inexact zero|expandhtmlindex}{156}
+\indexentry{+inf.0@\rawscm{+inf.0}|expandhtmlindex}{158}
+\indexentry{even?@\rawscm{even?}|expandhtmlindex}{160}
+\indexentry{odd?@\rawscm{odd?}|expandhtmlindex}{162}
+\indexentry{eqv?@\rawscm{eqv?}|expandhtmlindex}{164}
+\indexentry{string->number@\rawscm{string->number}|expandhtmlindex}{166}
+\indexentry{number->string@\rawscm{number->string}|expandhtmlindex}{168}
+\indexentry{exn:application:mismatch@\rawscm{exn:application:mismatch}|expandhtmlindex}{170}
+\indexentry{add1@\rawscm{add1}|expandhtmlindex}{172}
+\indexentry{sub1@\rawscm{sub1}|expandhtmlindex}{174}
+\indexentry{quotient/remainder@\rawscm{quotient/remainder}|expandhtmlindex}{176}
+\indexentry{integer-sqrt@\rawscm{integer-sqrt}|expandhtmlindex}{178}
+\indexentry{integer-sqrt/remainder@\rawscm{integer-sqrt/remainder}|expandhtmlindex}{180}
+\indexentry{logical operators|see{ bitwise operators}}{182}
+\indexentry{bitwise operators|expandhtmlindex}{184}
+\indexentry{bitwise-ior@\rawscm{bitwise-ior}|expandhtmlindex}{186}
+\indexentry{bitwise-and@\rawscm{bitwise-and}|expandhtmlindex}{188}
+\indexentry{bitwise-xor@\rawscm{bitwise-xor}|expandhtmlindex}{190}
+\indexentry{bitwise-not@\rawscm{bitwise-not}|expandhtmlindex}{192}
+\indexentry{arithmetic-shift@\rawscm{arithmetic-shift}|expandhtmlindex}{194}
+\indexentry{random@\rawscm{random}|expandhtmlindex}{196}
+\indexentry{random-seed@\rawscm{random-seed}|expandhtmlindex}{198}
+\indexentry{current-pseudo-random-generator@\rawscm{current-pseudo-random-generator}|expandhtmlindex}{200}
+\indexentry{current-pseudo-random-generator@\rawscm{current-pseudo-random-generator}|expandhtmlindex}{202}
+\indexentry{make-pseudo-random-generator@\rawscm{make-pseudo-random-generator}|expandhtmlindex}{204}
+\indexentry{current-milliseconds@\rawscm{current-milliseconds}|expandhtmlindex}{206}
+\indexentry{pseudo-random-generator?@\rawscm{pseudo-random-generator?}|expandhtmlindex}{208}
+\indexentry{numbers!machine representations|expandhtmlindex}{210}
+\indexentry{numbers!floating-point|expandhtmlindex}{212}
+\indexentry{numbers!big-endian|expandhtmlindex}{214}
+\indexentry{numbers!little-endian|expandhtmlindex}{216}
+\indexentry{numbers!converting|expandhtmlindex}{218}
+\indexentry{integer-byte-string->integer@\rawscm{integer-byte-string->integer}|expandhtmlindex}{220}
+\indexentry{integer->integer-byte-string@\rawscm{integer->integer-byte-string}|expandhtmlindex}{222}
+\indexentry{exn:misc:application@\rawscm{exn:misc:application}|expandhtmlindex}{224}
+\indexentry{exn:misc:application@\rawscm{exn:misc:application}|expandhtmlindex}{226}
+\indexentry{floating-point-byte-string->real@\rawscm{floating-point-byte-string->real}|expandhtmlindex}{228}
+\indexentry{real->floating-point-byte-string@\rawscm{real->floating-point-byte-string}|expandhtmlindex}{230}
+\indexentry{exn:misc:application@\rawscm{exn:misc:application}|expandhtmlindex}{232}
+\indexentry{system-big-endian?@\rawscm{system-big-endian?}|expandhtmlindex}{234}
+\indexentry{Characters|expandhtmlindex}{236}
+\indexentry{characters|expandhtmlindex}{238}
+\indexentry{char->integer@\rawscm{char->integer}|expandhtmlindex}{240}
+\indexentry{integer->char@\rawscm{integer->char}|expandhtmlindex}{242}
+\indexentry{integer->char@\rawscm{integer->char}|expandhtmlindex}{244}
+\indexentry{exn:application:type@\rawscm{exn:application:type}|expandhtmlindex}{246}
+\indexentry{char->latin-1-integer@\rawscm{char->latin-1-integer}|expandhtmlindex}{248}
+\indexentry{latin-1-integer->char@\rawscm{latin-1-integer->char}|expandhtmlindex}{250}
+\indexentry{exn:application:type@\rawscm{exn:application:type}|expandhtmlindex}{252}
+\indexentry{char=?@\rawscm{char=?}|expandhtmlindex}{254}
+\indexentry{char<?@\rawscm{char<?}|expandhtmlindex}{256}
+\indexentry{char<=?@\rawscm{char<=?}|expandhtmlindex}{258}
+\indexentry{char>?@\rawscm{char>?}|expandhtmlindex}{260}
+\indexentry{char>=?@\rawscm{char>=?}|expandhtmlindex}{262}
+\indexentry{char-ci=?@\rawscm{char-ci=?}|expandhtmlindex}{264}
+\indexentry{char-ci<?@\rawscm{char-ci<?}|expandhtmlindex}{266}
+\indexentry{char-ci<=?@\rawscm{char-ci<=?}|expandhtmlindex}{268}
+\indexentry{char-ci>?@\rawscm{char-ci>?}|expandhtmlindex}{270}
+\indexentry{char-ci>=?@\rawscm{char-ci>=?}|expandhtmlindex}{272}
+\indexentry{eq?@\rawscm{eq?}|expandhtmlindex}{274}
+\indexentry{char-whitespace?@\rawscm{char-whitespace?}|expandhtmlindex}{276}
+\indexentry{char-alphabetic?@\rawscm{char-alphabetic?}|expandhtmlindex}{278}
+\indexentry{char-numeric?@\rawscm{char-numeric?}|expandhtmlindex}{280}
+\indexentry{char-upper-case?@\rawscm{char-upper-case?}|expandhtmlindex}{282}
+\indexentry{char-upcase@\rawscm{char-upcase}|expandhtmlindex}{284}
+\indexentry{char-downcase@\rawscm{char-downcase}|expandhtmlindex}{286}
+\indexentry{char-locale<?@\rawscm{char-locale<?}|expandhtmlindex}{288}
+\indexentry{char-locale>?@\rawscm{char-locale>?}|expandhtmlindex}{290}
+\indexentry{char-locale-ci=?@\rawscm{char-locale-ci=?}|expandhtmlindex}{292}
+\indexentry{char-locale-ci<?@\rawscm{char-locale-ci<?}|expandhtmlindex}{294}
+\indexentry{char-locale-ci>?@\rawscm{char-locale-ci>?}|expandhtmlindex}{296}
+\indexentry{char-locale-whitespace?@\rawscm{char-locale-whitespace?}|expandhtmlindex}{298}
+\indexentry{char-locale-alphabetic?@\rawscm{char-locale-alphabetic?}|expandhtmlindex}{300}
+\indexentry{char-locale-numeric?@\rawscm{char-locale-numeric?}|expandhtmlindex}{302}
+\indexentry{char-locale-upper-case?@\rawscm{char-locale-upper-case?}|expandhtmlindex}{304}
+\indexentry{char-locale-lower-case?@\rawscm{char-locale-lower-case?}|expandhtmlindex}{306}
+\indexentry{char-locale-upcase@\rawscm{char-locale-upcase}|expandhtmlindex}{308}
+\indexentry{char-locale-downcase@\rawscm{char-locale-downcase}|expandhtmlindex}{310}
+\indexentry{Strings|expandhtmlindex}{312}
+\indexentry{strings!immutable|expandhtmlindex}{314}
+\indexentry{exn:application:type@\rawscm{exn:application:type}|expandhtmlindex}{316}
+\indexentry{string->immutable-string@\rawscm{string->immutable-string}|expandhtmlindex}{318}
+\indexentry{substring@\rawscm{substring}|expandhtmlindex}{320}
+\indexentry{string-copy"!@\rawscm{string-copy"!}|expandhtmlindex}{322}
+\indexentry{exn:fail:contract@\rawscm{exn:fail:contract}|expandhtmlindex}{324}
+\indexentry{make-string@\rawscm{make-string}|expandhtmlindex}{326}
+\indexentry{string=?@\rawscm{string=?}|expandhtmlindex}{328}
+\indexentry{string<?@\rawscm{string<?}|expandhtmlindex}{330}
+\indexentry{string<=?@\rawscm{string<=?}|expandhtmlindex}{332}
+\indexentry{string>?@\rawscm{string>?}|expandhtmlindex}{334}
+\indexentry{string>=?@\rawscm{string>=?}|expandhtmlindex}{336}
+\indexentry{string-ci=?@\rawscm{string-ci=?}|expandhtmlindex}{338}
+\indexentry{string-ci<?@\rawscm{string-ci<?}|expandhtmlindex}{340}
+\indexentry{string-ci<=?@\rawscm{string-ci<=?}|expandhtmlindex}{342}
+\indexentry{string-ci>?@\rawscm{string-ci>?}|expandhtmlindex}{344}
+\indexentry{string-ci>=?@\rawscm{string-ci>=?}|expandhtmlindex}{346}
+\indexentry{string-locale<?@\rawscm{string-locale<?}|expandhtmlindex}{348}
+\indexentry{string-locale>?@\rawscm{string-locale>?}|expandhtmlindex}{350}
+\indexentry{string-locale-ci=?@\rawscm{string-locale-ci=?}|expandhtmlindex}{352}
+\indexentry{string-locale-ci<?@\rawscm{string-locale-ci<?}|expandhtmlindex}{354}
+\indexentry{string-locale-ci>?@\rawscm{string-locale-ci>?}|expandhtmlindex}{356}
+\indexentry{Symbols|expandhtmlindex}{358}
+\indexentry{symbols!generating|expandhtmlindex}{360}
+\indexentry{symbols!unique|expandhtmlindex}{362}
+\indexentry{uninterned  symbol|expandhtmlindex}{364}
+\indexentry{string->uninterned-symbol@\rawscm{string->uninterned-symbol}|expandhtmlindex}{366}
+\indexentry{string->symbol@\rawscm{string->symbol}|expandhtmlindex}{368}
+\indexentry{gensym@\rawscm{gensym}|expandhtmlindex}{370}
+\indexentry{Vectors|expandhtmlindex}{372}
+\indexentry{vector->immutable-vector@\rawscm{vector->immutable-vector}|expandhtmlindex}{374}
+\indexentry{vector-immutable@\rawscm{vector-immutable}|expandhtmlindex}{376}
+\indexentry{Lists|expandhtmlindex}{378}
+\indexentry{exn:application:type@\rawscm{exn:application:type}|expandhtmlindex}{380}
+\indexentry{null@\rawscm{null}|expandhtmlindex}{382}
+\indexentry{reverse"!@\rawscm{reverse"!}|expandhtmlindex}{384}
+\indexentry{append"!@\rawscm{append"!}|expandhtmlindex}{386}
+\indexentry{concatenate strings|expandhtmlindex}{388}
+\indexentry{list*@\rawscm{list*}|expandhtmlindex}{390}
+\indexentry{list@\rawscm{list}|expandhtmlindex}{392}
+\indexentry{cons-immutable@\rawscm{cons-immutable}|expandhtmlindex}{394}
+\indexentry{list-immutable@\rawscm{list-immutable}|expandhtmlindex}{396}
+\indexentry{list*-immutable@\rawscm{list*-immutable}|expandhtmlindex}{398}
+\indexentry{immutable?@\rawscm{immutable?}|expandhtmlindex}{400}
+\indexentry{list-ref@\rawscm{list-ref}|expandhtmlindex}{402}
+\indexentry{list-tail@\rawscm{list-tail}|expandhtmlindex}{404}
+\indexentry{exn:application:mismatch@\rawscm{exn:application:mismatch}|expandhtmlindex}{406}
+\indexentry{member@\rawscm{member}|expandhtmlindex}{408}
+\indexentry{memv@\rawscm{memv}|expandhtmlindex}{410}
+\indexentry{memq@\rawscm{memq}|expandhtmlindex}{412}
+\indexentry{exn:application:mismatch@\rawscm{exn:application:mismatch}|expandhtmlindex}{414}
+\indexentry{assoc@\rawscm{assoc}|expandhtmlindex}{416}
+\indexentry{assv@\rawscm{assv}|expandhtmlindex}{418}
+\indexentry{assq@\rawscm{assq}|expandhtmlindex}{420}
+\indexentry{exn:application:mismatch@\rawscm{exn:application:mismatch}|expandhtmlindex}{422}
+\indexentry{Boxes|expandhtmlindex}{424}
+\indexentry{boxes|expandhtmlindex}{426}
+\indexentry{box@\rawscm{box}|expandhtmlindex}{428}
+\indexentry{box-immutable@\rawscm{box-immutable}|expandhtmlindex}{430}
+\indexentry{unbox@\rawscm{unbox}|expandhtmlindex}{432}
+\indexentry{set-box"!@\rawscm{set-box"!}|expandhtmlindex}{434}
+\indexentry{box?@\rawscm{box?}|expandhtmlindex}{436}
+\indexentry{equal?@\rawscm{equal?}|expandhtmlindex}{438}
+\indexentry{exn:application:type@\rawscm{exn:application:type}|expandhtmlindex}{440}
+\indexentry{Procedures|expandhtmlindex}{442}
+\indexentry{procedure-arity@\rawscm{procedure-arity}|expandhtmlindex}{444}
+\indexentry{arity-at-least-value@\rawscm{arity-at-least-value}|expandhtmlindex}{446}
+\indexentry{arity-at-least?@\rawscm{arity-at-least?}|expandhtmlindex}{448}
+\indexentry{procedure-arity-includes?@\rawscm{procedure-arity-includes?}|expandhtmlindex}{450}
+\indexentry{'method-arity-error@\Symbol{method-arity-error}|expandhtmlindex}{452}
+\indexentry{exn:application:arity@\rawscm{exn:application:arity}|expandhtmlindex}{454}
+\indexentry{exn:application:arity@\rawscm{exn:application:arity}|expandhtmlindex}{456}
+\indexentry{primitive procedure|expandhtmlindex}{458}
+\indexentry{primitive?@\rawscm{primitive?}|expandhtmlindex}{460}
+\indexentry{primitive-result-arity@\rawscm{primitive-result-arity}|expandhtmlindex}{462}
+\indexentry{arity@\rawscm{arity}|expandhtmlindex}{464}
+\indexentry{primitive-closure?@\rawscm{primitive-closure?}|expandhtmlindex}{466}
+\indexentry{Promises|expandhtmlindex}{468}
+\indexentry{promises|expandhtmlindex}{470}
+\indexentry{force@\rawscm{force}|expandhtmlindex}{472}
+\indexentry{promise?@\rawscm{promise?}|expandhtmlindex}{474}
+\indexentry{Hash Tables|expandhtmlindex}{476}
+\indexentry{hash tables|expandhtmlindex}{478}
+\indexentry{make-hash-table@\rawscm{make-hash-table}|expandhtmlindex}{480}
+\indexentry{'weak@\Symbol{weak}|expandhtmlindex}{482}
+\indexentry{'equal@\Symbol{equal}|expandhtmlindex}{484}
+\indexentry{exn:application:mismatch@\rawscm{exn:application:mismatch}|expandhtmlindex}{486}
+\indexentry{make-immutable-hash-table@\rawscm{make-immutable-hash-table}|expandhtmlindex}{488}
+\indexentry{'equal@\Symbol{equal}|expandhtmlindex}{490}
+\indexentry{hash-table?@\rawscm{hash-table?}|expandhtmlindex}{492}
+\indexentry{exn:application:mismatch@\rawscm{exn:application:mismatch}|expandhtmlindex}{494}
+\indexentry{hash-table-put"!@\rawscm{hash-table-put"!}|expandhtmlindex}{496}
+\indexentry{exn:application:type@\rawscm{exn:application:type}|expandhtmlindex}{498}
+\indexentry{hash-table-get@\rawscm{hash-table-get}|expandhtmlindex}{500}
+\indexentry{exn:application:mismatch@\rawscm{exn:application:mismatch}|expandhtmlindex}{502}
+\indexentry{hash-table-remove"!@\rawscm{hash-table-remove"!}|expandhtmlindex}{504}
+\indexentry{en:application:type@\rawscm{en:application:type}|expandhtmlindex}{506}
+\indexentry{hash-table-map@\rawscm{hash-table-map}|expandhtmlindex}{508}
+\indexentry{hash-table-for-each@\rawscm{hash-table-for-each}|expandhtmlindex}{510}
+\indexentry{hash-table-count@\rawscm{hash-table-count}|expandhtmlindex}{512}
+\indexentry{eq-hash-code@\rawscm{eq-hash-code}|expandhtmlindex}{514}
+\indexentry{equal-hash-code@\rawscm{equal-hash-code}|expandhtmlindex}{516}
+\indexentry{Structures|expandhtmlindex}{518}
+\indexentry{structure types|expandhtmlindex}{520}
+\indexentry{fields|expandhtmlindex}{522}
+\indexentry{structures|expandhtmlindex}{524}
+\indexentry{Defining Structure Types|expandhtmlindex}{526}
+\indexentry{define-struct@\scmk{define-struct}|expandhtmlindex}{528}
+\indexentry{structure type descriptors|expandhtmlindex}{530}
+\indexentry{let-struct@\scmk{let-struct}|expandhtmlindex}{532}
+\indexentry{Creating Subtypes|expandhtmlindex}{534}
+\indexentry{structure subtypes|expandhtmlindex}{536}
+\indexentry{Structure Types with Automatic Fields, Immutable Fields, and Properties|expandhtmlindex}{538}
+\indexentry{make-struct-type@\rawscm{make-struct-type}|expandhtmlindex}{540}
+\indexentry{exn:application:mismatch@\rawscm{exn:application:mismatch}|expandhtmlindex}{542}
+\indexentry{exn:application:mismatch@\rawscm{exn:application:mismatch}|expandhtmlindex}{544}
+\indexentry{make-struct-field-accessor@\rawscm{make-struct-field-accessor}|expandhtmlindex}{546}
+\indexentry{make-struct-field-mutator@\rawscm{make-struct-field-mutator}|expandhtmlindex}{548}
+\indexentry{Structure Type Properties|expandhtmlindex}{550}
+\indexentry{structure type properties|expandhtmlindex}{552}
+\indexentry{make-struct-type-property@\rawscm{make-struct-type-property}|expandhtmlindex}{554}
+\indexentry{exn:application:type@\rawscm{exn:application:type}|expandhtmlindex}{556}
+\indexentry{struct-type-property?@\rawscm{struct-type-property?}|expandhtmlindex}{558}
+\indexentry{Structure Inspectors|expandhtmlindex}{560}
+\indexentry{inspectors|expandhtmlindex}{562}
+\indexentry{make-inspector@\rawscm{make-inspector}|expandhtmlindex}{564}
+\indexentry{inspector?@\rawscm{inspector?}|expandhtmlindex}{566}
+\indexentry{struct-info@\rawscm{struct-info}|expandhtmlindex}{568}
+\indexentry{struct-type-info@\rawscm{struct-type-info}|expandhtmlindex}{570}
+\indexentry{exn:application:mismatch@\rawscm{exn:application:mismatch}|expandhtmlindex}{572}
+\indexentry{Structures as Procedures|expandhtmlindex}{574}
+\indexentry{procedure?@\rawscm{procedure?}|expandhtmlindex}{576}
+\indexentry{exn;application:mismatch@\rawscm{exn;application:mismatch}|expandhtmlindex}{578}
+\indexentry{Structures as Waitable Objects|expandhtmlindex}{580}
+\indexentry{Structure Utilities|expandhtmlindex}{582}
+\indexentry{struct->vector@\rawscm{struct->vector}|expandhtmlindex}{584}
+\indexentry{structure types!predicates|expandhtmlindex}{586}
+\indexentry{struct?@\rawscm{struct?}|expandhtmlindex}{588}
+\indexentry{structures!equality|expandhtmlindex}{590}
+\indexentry{eqv?@\rawscm{eqv?}|expandhtmlindex}{592}
+\indexentry{eq?@\rawscm{eq?}|expandhtmlindex}{594}
+\indexentry{equal?@\rawscm{equal?}|expandhtmlindex}{596}
+\indexentry{struct-type?@\rawscm{struct-type?}|expandhtmlindex}{598}
+\indexentry{struct-constructor-procedure?@\rawscm{struct-constructor-procedure?}|expandhtmlindex}{600}
+\indexentry{struct-predicate-procedure?@\rawscm{struct-predicate-procedure?}|expandhtmlindex}{602}
+\indexentry{struct-accessor-procedure?@\rawscm{struct-accessor-procedure?}|expandhtmlindex}{604}
+\indexentry{struct-mutator-procedure?@\rawscm{struct-mutator-procedure?}|expandhtmlindex}{606}
+\indexentry{Modules|expandhtmlindex}{608}
+\indexentry{modules|expandhtmlindex}{610}
+\indexentry{packages|expandhtmlindex}{612}
+\indexentry{module@\scmk{module}|expandhtmlindex}{614}
+\indexentry{mzscheme@\rawscm{mzscheme}|expandhtmlindex}{616}
+\indexentry{Module Expansion and Execution|expandhtmlindex}{618}
+\indexentry{modules!expansion|expandhtmlindex}{620}
+\indexentry{modules!execution|expandhtmlindex}{622}
+\indexentry{Module Bodies|expandhtmlindex}{624}
+\indexentry{modules!body|expandhtmlindex}{626}
+\indexentry{modules!imports|expandhtmlindex}{628}
+\indexentry{modules!exports|expandhtmlindex}{630}
+\indexentry{require@\scmk{require}|expandhtmlindex}{632}
+\indexentry{prefix@\scmk{prefix}|expandhtmlindex}{634}
+\indexentry{all-except@\scmk{all-except}|expandhtmlindex}{636}
+\indexentry{all-except@\scmk{all-except}|expandhtmlindex}{638}
+\indexentry{rename@\scmk{rename}|expandhtmlindex}{640}
+\indexentry{provide@\scmk{provide}|expandhtmlindex}{642}
+\indexentry{rename@\scmk{rename}|expandhtmlindex}{644}
+\indexentry{struct@\scmk{struct}|expandhtmlindex}{646}
+\indexentry{all-from@\scmk{all-from}|expandhtmlindex}{648}
+\indexentry{all-from-except@\scmk{all-from-except}|expandhtmlindex}{650}
+\indexentry{all-defined@\scmk{all-defined}|expandhtmlindex}{652}
+\indexentry{all-defined-except@\scmk{all-defined-except}|expandhtmlindex}{654}
+\indexentry{Modules and Macros|expandhtmlindex}{656}
+\indexentry{modules!macros|expandhtmlindex}{658}
+\indexentry{modules!syntax|expandhtmlindex}{660}
+\indexentry{Module Paths|expandhtmlindex}{662}
+\indexentry{modules!paths|expandhtmlindex}{664}
+\indexentry{modules!in files|expandhtmlindex}{666}
+\indexentry{modules!libraries|expandhtmlindex}{668}
+\indexentry{file@\scmk{file}|expandhtmlindex}{670}
+\indexentry{lib@\scmk{lib}|expandhtmlindex}{672}
+\indexentry{planet@\scmk{planet}|expandhtmlindex}{674}
+\indexentry{module name resolver|expandhtmlindex}{676}
+\indexentry{namespace-attach-module@\rawscm{namespace-attach-module}|expandhtmlindex}{678}
+\indexentry{modules!compiling|expandhtmlindex}{680}
+\indexentry{Dynamic Module Access|expandhtmlindex}{682}
+\indexentry{modules!dynamic imports|expandhtmlindex}{684}
+\indexentry{dynamic-require@\rawscm{dynamic-require}|expandhtmlindex}{686}
+\indexentry{exn:application:mismatch@\rawscm{exn:application:mismatch}|expandhtmlindex}{688}
+\indexentry{dynamic-require-for-syntax@\rawscm{dynamic-require-for-syntax}|expandhtmlindex}{690}
+\indexentry{Re-declaring Modules|expandhtmlindex}{692}
+\indexentry{modules!re-declaring|expandhtmlindex}{694}
+\indexentry{modules!re-defining|expandhtmlindex}{696}
+\indexentry{modules!redeclaring|expandhtmlindex}{698}
+\indexentry{modules!redefining|expandhtmlindex}{700}
+\indexentry{exn:module@\rawscm{exn:module}|expandhtmlindex}{702}
+\indexentry{exn:module@\rawscm{exn:module}|expandhtmlindex}{704}
+\indexentry{Built-in Modules|expandhtmlindex}{706}
+\indexentry{modules!built-in|expandhtmlindex}{708}
+\indexentry{modules!predefined|expandhtmlindex}{710}
+\indexentry{modules!pre-defined|expandhtmlindex}{712}
+\indexentry{Modules and Load Handlers|expandhtmlindex}{714}
+\indexentry{exn:module@\rawscm{exn:module}|expandhtmlindex}{716}
+\indexentry{Exceptions and Control Flow|expandhtmlindex}{718}
+\indexentry{Exceptions|expandhtmlindex}{720}
+\indexentry{exceptions|expandhtmlindex}{722}
+\indexentry{Friedman, Dan|expandhtmlindex}{724}
+\indexentry{Haynes, Chris|expandhtmlindex}{726}
+\indexentry{Dybvig, Kent|expandhtmlindex}{728}
+\indexentry{raise@\rawscm{raise}|expandhtmlindex}{730}
+\indexentry{current-exception-handler@\rawscm{current-exception-handler}|expandhtmlindex}{732}
+\indexentry{with-handlers@\scmk{with-handlers}|expandhtmlindex}{734}
+\indexentry{not-break-exn?@\rawscm{not-break-exn?}|expandhtmlindex}{736}
+\indexentry{exn:break@\rawscm{exn:break}|expandhtmlindex}{738}
+\indexentry{exceptions!primitive hierarchy|expandhtmlindex}{740}
+\indexentry{errors|expandhtmlindex}{742}
+\indexentry{exn@\rawscm{exn}|expandhtmlindex}{744}
+\indexentry{exn?@\rawscm{exn?}|expandhtmlindex}{746}
+\indexentry{current-continuation-marks@\rawscm{current-continuation-marks}|expandhtmlindex}{748}
+\indexentry{error@\rawscm{error}|expandhtmlindex}{750}
+\indexentry{arity@\rawscm{arity}|expandhtmlindex}{752}
+\indexentry{read@\rawscm{read}|expandhtmlindex}{754}
+\indexentry{'ill-formed-path@\Symbol{ill-formed-path}|expandhtmlindex}{756}
+\indexentry{'already-exists@\Symbol{already-exists}|expandhtmlindex}{758}
+\indexentry{'wrong-version@\Symbol{wrong-version}|expandhtmlindex}{760}
+\indexentry{call-with-custodian@\rawscm{call-with-custodian}|expandhtmlindex}{762}
+\indexentry{module@\scmk{module}|expandhtmlindex}{764}
+\indexentry{require@\scmk{require}|expandhtmlindex}{766}
+\indexentry{exn:application:type@\rawscm{exn:application:type}|expandhtmlindex}{768}
+\indexentry{Errors|expandhtmlindex}{770}
+\indexentry{errors|expandhtmlindex}{772}
+\indexentry{error@\rawscm{error}|expandhtmlindex}{774}
+\indexentry{exn:user@\rawscm{exn:user}|expandhtmlindex}{776}
+\indexentry{error@\rawscm{error}|expandhtmlindex}{778}
+\indexentry{error@\rawscm{error}|expandhtmlindex}{780}
+\indexentry{error@\rawscm{error}|expandhtmlindex}{782}
+\indexentry{errors!type|expandhtmlindex}{784}
+\indexentry{raise-type-error@\rawscm{raise-type-error}|expandhtmlindex}{786}
+\indexentry{exn:application:type@\rawscm{exn:application:type}|expandhtmlindex}{788}
+\indexentry{raise-type-error@\rawscm{raise-type-error}|expandhtmlindex}{790}
+\indexentry{exn:application:mismatch@\rawscm{exn:application:mismatch}|expandhtmlindex}{792}
+\indexentry{errors!mismatch|expandhtmlindex}{794}
+\indexentry{raise-mismatch-error@\rawscm{raise-mismatch-error}|expandhtmlindex}{796}
+\indexentry{exn:application:mismatch@\rawscm{exn:application:mismatch}|expandhtmlindex}{798}
+\indexentry{errors!syntax|expandhtmlindex}{800}
+\indexentry{raise-syntax-error@\rawscm{raise-syntax-error}|expandhtmlindex}{802}
+\indexentry{exn:syntax@\rawscm{exn:syntax}|expandhtmlindex}{804}
+\indexentry{'inferred-name@\Symbol{inferred-name}|expandhtmlindex}{806}
+\indexentry{object-name@\rawscm{object-name}|expandhtmlindex}{808}
+\indexentry{Continuations|expandhtmlindex}{810}
+\indexentry{continuations|expandhtmlindex}{812}
+\indexentry{control flow|expandhtmlindex}{814}
+\indexentry{call/cc@\rawscm{call/cc}|expandhtmlindex}{816}
+\indexentry{let/cc@\scmk{let/cc}|expandhtmlindex}{818}
+\indexentry{call-with-current-continuation@\rawscm{call-with-current-continuation}|expandhtmlindex}{820}
+\indexentry{call-with-current-continuation@\rawscm{call-with-current-continuation}|expandhtmlindex}{822}
+\indexentry{call/cc@\rawscm{call/cc}|expandhtmlindex}{824}
+\indexentry{let/cc@\scmk{let/cc}|expandhtmlindex}{826}
+\indexentry{continuations!boundary crossings|expandhtmlindex}{828}
+\indexentry{continuations!boundaries|expandhtmlindex}{830}
+\indexentry{continuations!escape|expandhtmlindex}{832}
+\indexentry{call/ec@\rawscm{call/ec}|expandhtmlindex}{834}
+\indexentry{let/ec@\rawscm{let/ec}|expandhtmlindex}{836}
+\indexentry{call-with-escape-continuation@\rawscm{call-with-escape-continuation}|expandhtmlindex}{838}
+\indexentry{call-with-escape-continuation@\rawscm{call-with-escape-continuation}|expandhtmlindex}{840}
+\indexentry{call/ec@\rawscm{call/ec}|expandhtmlindex}{842}
+\indexentry{let/ec@\scmk{let/ec}|expandhtmlindex}{844}
+\indexentry{tail calls|expandhtmlindex}{846}
+\indexentry{exn:application:continuation@\rawscm{exn:application:continuation}|expandhtmlindex}{848}
+\indexentry{Dynamic Wind|expandhtmlindex}{850}
+\indexentry{dynamic-wind@\rawscm{dynamic-wind}|expandhtmlindex}{852}
+\indexentry{Continuation Marks|expandhtmlindex}{854}
+\indexentry{with-continuation-mark@\scmk{with-continuation-mark}|expandhtmlindex}{856}
+\indexentry{continuation-marks@\rawscm{continuation-marks}|expandhtmlindex}{858}
+\indexentry{current-continuation-marks@\rawscm{current-continuation-marks}|expandhtmlindex}{860}
+\indexentry{continuation-mark-set->list@\rawscm{continuation-mark-set->list}|expandhtmlindex}{862}
+\indexentry{continuation-mark-set?@\rawscm{continuation-mark-set?}|expandhtmlindex}{864}
+\indexentry{Breaks|expandhtmlindex}{866}
+\indexentry{threads!breaking|expandhtmlindex}{868}
+\indexentry{breaks|see{ threads, breaking}}{870}
+\indexentry{break-thread@\rawscm{break-thread}|expandhtmlindex}{872}
+\indexentry{exn:break@\rawscm{exn:break}|expandhtmlindex}{874}
+\indexentry{exn:break@\rawscm{exn:break}|expandhtmlindex}{876}
+\indexentry{exn:break@\rawscm{exn:break}|expandhtmlindex}{878}
+\indexentry{Error Escape Handler|expandhtmlindex}{880}
+\indexentry{error escape handlers|expandhtmlindex}{882}
+\indexentry{error-escape-handler@\rawscm{error-escape-handler}|expandhtmlindex}{884}
+\indexentry{Threads|expandhtmlindex}{886}
+\indexentry{threads|expandhtmlindex}{888}
+\indexentry{thread@\rawscm{thread}|expandhtmlindex}{890}
+\indexentry{thread descriptor|expandhtmlindex}{892}
+\indexentry{error escape handlers|expandhtmlindex}{894}
+\indexentry{exception handlers|expandhtmlindex}{896}
+\indexentry{ports|expandhtmlindex}{898}
+\indexentry{Suspending, Resuming, and Killing Threads|expandhtmlindex}{900}
+\indexentry{threads!suspending|expandhtmlindex}{902}
+\indexentry{thread-suspend@\rawscm{thread-suspend}|expandhtmlindex}{904}
+\indexentry{exn:application:mismatch@\rawscm{exn:application:mismatch}|expandhtmlindex}{906}
+\indexentry{threads!resuming|expandhtmlindex}{908}
+\indexentry{thread-resume@\rawscm{thread-resume}|expandhtmlindex}{910}
+\indexentry{threads!killing|expandhtmlindex}{912}
+\indexentry{kill-thread@\rawscm{kill-thread}|expandhtmlindex}{914}
+\indexentry{exn:application:mismatch@\rawscm{exn:application:mismatch}|expandhtmlindex}{916}
+\indexentry{thread/suspend-to-kill@\rawscm{thread/suspend-to-kill}|expandhtmlindex}{918}
+\indexentry{Synchronizing Thread State|expandhtmlindex}{920}
+\indexentry{thread-wait@\rawscm{thread-wait}|expandhtmlindex}{922}
+\indexentry{thread-dead-waitable@\rawscm{thread-dead-waitable}|expandhtmlindex}{924}
+\indexentry{thread-resume-waitable@\rawscm{thread-resume-waitable}|expandhtmlindex}{926}
+\indexentry{thread-suspend-waitable@\rawscm{thread-suspend-waitable}|expandhtmlindex}{928}
+\indexentry{Additional Thread Utilities|expandhtmlindex}{930}
+\indexentry{current-thread@\rawscm{current-thread}|expandhtmlindex}{932}
+\indexentry{thread?@\rawscm{thread?}|expandhtmlindex}{934}
+\indexentry{sleep@\rawscm{sleep}|expandhtmlindex}{936}
+\indexentry{threads!run state|expandhtmlindex}{938}
+\indexentry{thread-running?@\rawscm{thread-running?}|expandhtmlindex}{940}
+\indexentry{thread-dead?@\rawscm{thread-dead?}|expandhtmlindex}{942}
+\indexentry{threads!breaking|expandhtmlindex}{944}
+\indexentry{break-thread@\rawscm{break-thread}|expandhtmlindex}{946}
+\indexentry{threads!nesting|expandhtmlindex}{948}
+\indexentry{call-in-nested-thread@\rawscm{call-in-nested-thread}|expandhtmlindex}{950}
+\indexentry{exn:thread@\rawscm{exn:thread}|expandhtmlindex}{952}
+\indexentry{Semaphores|expandhtmlindex}{954}
+\indexentry{semaphores|expandhtmlindex}{956}
+\indexentry{communication|expandhtmlindex}{958}
+\indexentry{threads!communication|expandhtmlindex}{960}
+\indexentry{threads!synchronization|expandhtmlindex}{962}
+\indexentry{make-semaphore@\rawscm{make-semaphore}|expandhtmlindex}{964}
+\indexentry{exn:application:mismatch@\rawscm{exn:application:mismatch}|expandhtmlindex}{966}
+\indexentry{semaphore?@\rawscm{semaphore?}|expandhtmlindex}{968}
+\indexentry{semaphore-post@\rawscm{semaphore-post}|expandhtmlindex}{970}
+\indexentry{exn:misc@\rawscm{exn:misc}|expandhtmlindex}{972}
+\indexentry{semaphore-wait@\rawscm{semaphore-wait}|expandhtmlindex}{974}
+\indexentry{semaphore-try-wait?@\rawscm{semaphore-try-wait?}|expandhtmlindex}{976}
+\indexentry{semaphore-wait/enable-break@\rawscm{semaphore-wait/enable-break}|expandhtmlindex}{978}
+\indexentry{exn:break@\rawscm{exn:break}|expandhtmlindex}{980}
+\indexentry{make-semaphore-peek@\rawscm{make-semaphore-peek}|expandhtmlindex}{982}
+\indexentry{Channels|expandhtmlindex}{984}
+\indexentry{synchronous channels|expandhtmlindex}{986}
+\indexentry{communication|expandhtmlindex}{988}
+\indexentry{threads!communication|expandhtmlindex}{990}
+\indexentry{threads!synchronization|expandhtmlindex}{992}
+\indexentry{make-channel@\rawscm{make-channel}|expandhtmlindex}{994}
+\indexentry{channel?@\rawscm{channel?}|expandhtmlindex}{996}
+\indexentry{channel-get@\rawscm{channel-get}|expandhtmlindex}{998}
+\indexentry{channel-try-get@\rawscm{channel-try-get}|expandhtmlindex}{1000}
+\indexentry{channel-put@\rawscm{channel-put}|expandhtmlindex}{1002}
+\indexentry{make-channel-put-waitable@\rawscm{make-channel-put-waitable}|expandhtmlindex}{1004}
+\indexentry{Synchronizing Multiple Objects with Timeout|expandhtmlindex}{1006}
+\indexentry{select|see{ {\tt object-wait-multiple}}}{1008}
+\indexentry{poll|see{ {\tt object-wait-multiple}}}{1010}
+\indexentry{object-wait-multiple@\rawscm{object-wait-multiple}|expandhtmlindex}{1012}
+\indexentry{exn:application:type@\rawscm{exn:application:type}|expandhtmlindex}{1014}
+\indexentry{object-wait-multiple/enable-break@\rawscm{object-wait-multiple/enable-break}|expandhtmlindex}{1016}
+\indexentry{exn:break@\rawscm{exn:break}|expandhtmlindex}{1018}
+\indexentry{waitables->waitable-set@\rawscm{waitables->waitable-set}|expandhtmlindex}{1020}
+\indexentry{make-wrapped-waitable@\rawscm{make-wrapped-waitable}|expandhtmlindex}{1022}
+\indexentry{make-guard-waitable@\rawscm{make-guard-waitable}|expandhtmlindex}{1024}
+\indexentry{make-nack-guard-waitable@\rawscm{make-nack-guard-waitable}|expandhtmlindex}{1026}
+\indexentry{make-poll-guard-waitable@\rawscm{make-poll-guard-waitable}|expandhtmlindex}{1028}
+\indexentry{object-waitable?@\rawscm{object-waitable?}|expandhtmlindex}{1030}
+\indexentry{Parameters|expandhtmlindex}{1032}
+\indexentry{parameters|expandhtmlindex}{1034}
+\indexentry{parameter|expandhtmlindex}{1036}
+\indexentry{parameter procedure|expandhtmlindex}{1038}
+\indexentry{parameters!built-in|expandhtmlindex}{1040}
+\indexentry{directories!current|expandhtmlindex}{1042}
+\indexentry{current-directory@\rawscm{current-directory}|expandhtmlindex}{1044}
+\indexentry{exn:i/o:filesystem@\rawscm{exn:i/o:filesystem}|expandhtmlindex}{1046}
+\indexentry{ports|expandhtmlindex}{1048}
+\indexentry{current-input-port@\rawscm{current-input-port}|expandhtmlindex}{1050}
+\indexentry{current-output-port@\rawscm{current-output-port}|expandhtmlindex}{1052}
+\indexentry{current-error-port@\rawscm{current-error-port}|expandhtmlindex}{1054}
+\indexentry{global-port-print-handler@\rawscm{global-port-print-handler}|expandhtmlindex}{1056}
+\indexentry{global port print  handler|expandhtmlindex}{1058}
+\indexentry{port-count-lines-enabled@\rawscm{port-count-lines-enabled}|expandhtmlindex}{1060}
+\indexentry{parsing|expandhtmlindex}{1062}
+\indexentry{case sensitivity|expandhtmlindex}{1064}
+\indexentry{read-case-sensitive@\rawscm{read-case-sensitive}|expandhtmlindex}{1066}
+\indexentry{square brackets|expandhtmlindex}{1068}
+\indexentry{read-square-bracket-as-paren@\rawscm{read-square-bracket-as-paren}|expandhtmlindex}{1070}
+\indexentry{[~]@\rawscm{[~]}|expandhtmlindex}{1072}
+\indexentry{curly braces|expandhtmlindex}{1074}
+\indexentry{read-curly-brace-as-paren@\rawscm{read-curly-brace-as-paren}|expandhtmlindex}{1076}
+\indexentry{\{~\}@\rawscm{\{~\}}|expandhtmlindex}{1078}
+\indexentry{boxes|expandhtmlindex}{1080}
+\indexentry{read-accept-box@\rawscm{read-accept-box}|expandhtmlindex}{1082}
+\indexentry{compiled code|expandhtmlindex}{1084}
+\indexentry{read-accept-compiled@\rawscm{read-accept-compiled}|expandhtmlindex}{1086}
+\indexentry{vertical bar|expandhtmlindex}{1088}
+\indexentry{read-accept-bar-quote@\rawscm{read-accept-bar-quote}|expandhtmlindex}{1090}
+\indexentry{read-accept-graph@\rawscm{read-accept-graph}|expandhtmlindex}{1092}
+\indexentry{read-decimal-as-inexact@\rawscm{read-decimal-as-inexact}|expandhtmlindex}{1094}
+\indexentry{read-accept-dot@\rawscm{read-accept-dot}|expandhtmlindex}{1096}
+\indexentry{read-accept-quasiquote@\rawscm{read-accept-quasiquote}|expandhtmlindex}{1098}
+\indexentry{printing sharing|expandhtmlindex}{1100}
+\indexentry{print-graph@\rawscm{print-graph}|expandhtmlindex}{1102}
+\indexentry{structs!printing|expandhtmlindex}{1104}
+\indexentry{print-struct@\rawscm{print-struct}|expandhtmlindex}{1106}
+\indexentry{boxes!printing|expandhtmlindex}{1108}
+\indexentry{print-box@\rawscm{print-box}|expandhtmlindex}{1110}
+\indexentry{vectors!printing|expandhtmlindex}{1112}
+\indexentry{print-vector-length@\rawscm{print-vector-length}|expandhtmlindex}{1114}
+\indexentry{hash tables!printing|expandhtmlindex}{1116}
+\indexentry{print-hash-table@\rawscm{print-hash-table}|expandhtmlindex}{1118}
+\indexentry{read-eval-print loop|expandhtmlindex}{1120}
+\indexentry{current-prompt-read@\rawscm{current-prompt-read}|expandhtmlindex}{1122}
+\indexentry{prompt read handler|expandhtmlindex}{1124}
+\indexentry{eval@\rawscm{eval}|expandhtmlindex}{1126}
+\indexentry{current-eval@\rawscm{current-eval}|expandhtmlindex}{1128}
+\indexentry{evaluation handler|expandhtmlindex}{1130}
+\indexentry{current-namespace@\rawscm{current-namespace}|expandhtmlindex}{1132}
+\indexentry{current namespace|expandhtmlindex}{1134}
+\indexentry{current-print@\rawscm{current-print}|expandhtmlindex}{1136}
+\indexentry{print handler|expandhtmlindex}{1138}
+\indexentry{compile-allow-set"!-undefined@\rawscm{compile-allow-set"!-undefined}|expandhtmlindex}{1140}
+\indexentry{set!@\scmk{set!}|expandhtmlindex}{1142}
+\indexentry{load@\rawscm{load}|expandhtmlindex}{1144}
+\indexentry{current-load@\rawscm{current-load}|expandhtmlindex}{1146}
+\indexentry{load handler|expandhtmlindex}{1148}
+\indexentry{load@\rawscm{load}|expandhtmlindex}{1150}
+\indexentry{load-relative@\rawscm{load-relative}|expandhtmlindex}{1152}
+\indexentry{load/use-compiled@\rawscm{load/use-compiled}|expandhtmlindex}{1154}
+\indexentry{load/cd@\rawscm{load/cd}|expandhtmlindex}{1156}
+\indexentry{load-extension@\rawscm{load-extension}|expandhtmlindex}{1158}
+\indexentry{current-load-extension@\rawscm{current-load-extension}|expandhtmlindex}{1160}
+\indexentry{load extension handler|expandhtmlindex}{1162}
+\indexentry{load-extension@\rawscm{load-extension}|expandhtmlindex}{1164}
+\indexentry{load-relative@\rawscm{load-relative}|expandhtmlindex}{1166}
+\indexentry{load/use-compiled@\rawscm{load/use-compiled}|expandhtmlindex}{1168}
+\indexentry{load/use-compiled@\rawscm{load/use-compiled}|expandhtmlindex}{1170}
+\indexentry{current-load/use-compiled@\rawscm{current-load/use-compiled}|expandhtmlindex}{1172}
+\indexentry{load/use-compiled handler|expandhtmlindex}{1174}
+\indexentry{directories!of currently loading file|expandhtmlindex}{1176}
+\indexentry{current-load-relative-directory@\rawscm{current-load-relative-directory}|expandhtmlindex}{1178}
+\indexentry{load@\rawscm{load}|expandhtmlindex}{1180}
+\indexentry{load-relative@\rawscm{load-relative}|expandhtmlindex}{1182}
+\indexentry{load/use-compiled@\rawscm{load/use-compiled}|expandhtmlindex}{1184}
+\indexentry{load-extension@\rawscm{load-extension}|expandhtmlindex}{1186}
+\indexentry{load-relative-extension@\rawscm{load-relative-extension}|expandhtmlindex}{1188}
+\indexentry{load-relative@\rawscm{load-relative}|expandhtmlindex}{1190}
+\indexentry{load/use-compiled@\rawscm{load/use-compiled}|expandhtmlindex}{1192}
+\indexentry{load-relative-extension@\rawscm{load-relative-extension}|expandhtmlindex}{1194}
+\indexentry{use-compiled-file-kinds@\rawscm{use-compiled-file-kinds}|expandhtmlindex}{1196}
+\indexentry{'all@\Symbol{all}|expandhtmlindex}{1198}
+\indexentry{'none@\Symbol{none}|expandhtmlindex}{1200}
+\indexentry{load/used-compiled@\rawscm{load/used-compiled}|expandhtmlindex}{1202}
+\indexentry{require@\scmk{require}|expandhtmlindex}{1204}
+\indexentry{current-library-collection-paths@\rawscm{current-library-collection-paths}|expandhtmlindex}{1206}
+\indexentry{command-line arguments|expandhtmlindex}{1208}
+\indexentry{current-command-line-arguments@\rawscm{current-command-line-arguments}|expandhtmlindex}{1210}
+\indexentry{argv@\rawscm{argv}|expandhtmlindex}{1212}
+\indexentry{exceptions|expandhtmlindex}{1214}
+\indexentry{errors|expandhtmlindex}{1216}
+\indexentry{current-exception-handler@\rawscm{current-exception-handler}|expandhtmlindex}{1218}
+\indexentry{initial-exception-handler@\rawscm{initial-exception-handler}|expandhtmlindex}{1220}
+\indexentry{error-escape-handler@\rawscm{error-escape-handler}|expandhtmlindex}{1222}
+\indexentry{error-display-handler@\rawscm{error-display-handler}|expandhtmlindex}{1224}
+\indexentry{error display  handler|expandhtmlindex}{1226}
+\indexentry{error-print-width@\rawscm{error-print-width}|expandhtmlindex}{1228}
+\indexentry{error-value->string-handler@\rawscm{error-value->string-handler}|expandhtmlindex}{1230}
+\indexentry{error value conversion handler|expandhtmlindex}{1232}
+\indexentry{error-print-source-location@\rawscm{error-print-source-location}|expandhtmlindex}{1234}
+\indexentry{break-enabled@\rawscm{break-enabled}|expandhtmlindex}{1236}
+\indexentry{security guards|expandhtmlindex}{1238}
+\indexentry{current-security-guard@\rawscm{current-security-guard}|expandhtmlindex}{1240}
+\indexentry{custodians|expandhtmlindex}{1242}
+\indexentry{current-custodian@\rawscm{current-custodian}|expandhtmlindex}{1244}
+\indexentry{thread groups|expandhtmlindex}{1246}
+\indexentry{current-thread-group@\rawscm{current-thread-group}|expandhtmlindex}{1248}
+\indexentry{inspectors|expandhtmlindex}{1250}
+\indexentry{current-inspector@\rawscm{current-inspector}|expandhtmlindex}{1252}
+\indexentry{exiting|expandhtmlindex}{1254}
+\indexentry{exit-handler@\rawscm{exit-handler}|expandhtmlindex}{1256}
+\indexentry{exit handler|expandhtmlindex}{1258}
+\indexentry{exit@\rawscm{exit}|expandhtmlindex}{1260}
+\indexentry{random numbers|expandhtmlindex}{1262}
+\indexentry{current-pseudo-random-generator@\rawscm{current-pseudo-random-generator}|expandhtmlindex}{1264}
+\indexentry{random@\rawscm{random}|expandhtmlindex}{1266}
+\indexentry{random-seed@\rawscm{random-seed}|expandhtmlindex}{1268}
+\indexentry{current-wait-pseudo-random-generator@\rawscm{current-wait-pseudo-random-generator}|expandhtmlindex}{1270}
+\indexentry{object-wait-multiple@\rawscm{object-wait-multiple}|expandhtmlindex}{1272}
+\indexentry{object-wait-multiple/enable-break@\rawscm{object-wait-multiple/enable-break}|expandhtmlindex}{1274}
+\indexentry{locales|expandhtmlindex}{1276}
+\indexentry{current-locale@\rawscm{current-locale}|expandhtmlindex}{1278}
+\indexentry{current-module-name-resolver@\rawscm{current-module-name-resolver}|expandhtmlindex}{1280}
+\indexentry{current-module-name-prefix@\rawscm{current-module-name-prefix}|expandhtmlindex}{1282}
+\indexentry{make-parameter@\rawscm{make-parameter}|expandhtmlindex}{1284}
+\indexentry{parameter?@\rawscm{parameter?}|expandhtmlindex}{1286}
+\indexentry{parameter-procedure=?@\rawscm{parameter-procedure=?}|expandhtmlindex}{1288}
+\indexentry{parameterize@\scmk{parameterize}|expandhtmlindex}{1290}
+\indexentry{check-parameter-procedure@\rawscm{check-parameter-procedure}|expandhtmlindex}{1292}
+\indexentry{Namespaces|expandhtmlindex}{1294}
+\indexentry{top-level environment|see{ namespaces}}{1296}
+\indexentry{namespaces|expandhtmlindex}{1298}
+\indexentry{scheme-report-environment@\rawscm{scheme-report-environment}|expandhtmlindex}{1300}
+\indexentry{null-environment@\rawscm{null-environment}|expandhtmlindex}{1302}
+\indexentry{module registry|expandhtmlindex}{1304}
+\indexentry{Identifier Resolution in Namespaces|expandhtmlindex}{1306}
+\indexentry{Initial Namespace|expandhtmlindex}{1308}
+\indexentry{namespaces!initial|expandhtmlindex}{1310}
+\indexentry{namespaces!initial environment|expandhtmlindex}{1312}
+\indexentry{Namespace Utilities|expandhtmlindex}{1314}
+\indexentry{make-namespace@\rawscm{make-namespace}|expandhtmlindex}{1316}
+\indexentry{'initial@\Symbol{initial}|expandhtmlindex}{1318}
+\indexentry{'empty@\Symbol{empty}|expandhtmlindex}{1320}
+\indexentry{namespace?@\rawscm{namespace?}|expandhtmlindex}{1322}
+\indexentry{namespace-symbol->identifier@\rawscm{namespace-symbol->identifier}|expandhtmlindex}{1324}
+\indexentry{namespace-variable-value@\rawscm{namespace-variable-value}|expandhtmlindex}{1326}
+\indexentry{exn:syntax@\rawscm{exn:syntax}|expandhtmlindex}{1328}
+\indexentry{exn:variable@\rawscm{exn:variable}|expandhtmlindex}{1330}
+\indexentry{exn:variable@\rawscm{exn:variable}|expandhtmlindex}{1332}
+\indexentry{exn:variable@\rawscm{exn:variable}|expandhtmlindex}{1334}
+\indexentry{exn:syntax@\rawscm{exn:syntax}|expandhtmlindex}{1336}
+\indexentry{namespace-set-variable-value"!@\rawscm{namespace-set-variable-value"!}|expandhtmlindex}{1338}
+\indexentry{namespace-undefine-variable"!@\rawscm{namespace-undefine-variable"!}|expandhtmlindex}{1340}
+\indexentry{namespace-mapped-symbols@\rawscm{namespace-mapped-symbols}|expandhtmlindex}{1342}
+\indexentry{namespace-require@\rawscm{namespace-require}|expandhtmlindex}{1344}
+\indexentry{namespace-transformer-require@\rawscm{namespace-transformer-require}|expandhtmlindex}{1346}
+\indexentry{namespace-require/copy@\rawscm{namespace-require/copy}|expandhtmlindex}{1348}
+\indexentry{namespace-require/expansion-time@\rawscm{namespace-require/expansion-time}|expandhtmlindex}{1350}
+\indexentry{namespace-attach-module@\rawscm{namespace-attach-module}|expandhtmlindex}{1352}
+\indexentry{exn:application:mismatch@\rawscm{exn:application:mismatch}|expandhtmlindex}{1354}
+\indexentry{namespace-module-registry@\rawscm{namespace-module-registry}|expandhtmlindex}{1356}
+\indexentry{module->namespace@\rawscm{module->namespace}|expandhtmlindex}{1358}
+\indexentry{namespace-syntax-introduce@\rawscm{namespace-syntax-introduce}|expandhtmlindex}{1360}
+\indexentry{Security|expandhtmlindex}{1362}
+\indexentry{Security Guards|expandhtmlindex}{1364}
+\indexentry{security guards|expandhtmlindex}{1366}
+\indexentry{current-security-guard@\rawscm{current-security-guard}|expandhtmlindex}{1368}
+\indexentry{make-security-guard@\rawscm{make-security-guard}|expandhtmlindex}{1370}
+\indexentry{'read@\Symbol{read}|expandhtmlindex}{1372}
+\indexentry{'write@\Symbol{write}|expandhtmlindex}{1374}
+\indexentry{'execute@\Symbol{execute}|expandhtmlindex}{1376}
+\indexentry{'delete@\Symbol{delete}|expandhtmlindex}{1378}
+\indexentry{'exists@\Symbol{exists}|expandhtmlindex}{1380}
+\indexentry{'client@\Symbol{client}|expandhtmlindex}{1382}
+\indexentry{'server@\Symbol{server}|expandhtmlindex}{1384}
+\indexentry{security-guard?@\rawscm{security-guard?}|expandhtmlindex}{1386}
+\indexentry{Custodians|expandhtmlindex}{1388}
+\indexentry{custodians|expandhtmlindex}{1390}
+\indexentry{current-custodian@\rawscm{current-custodian}|expandhtmlindex}{1392}
+\indexentry{exn:application:mismatch@\rawscm{exn:application:mismatch}|expandhtmlindex}{1394}
+\indexentry{make-custodian@\rawscm{make-custodian}|expandhtmlindex}{1396}
+\indexentry{custodian-shutdown-all@\rawscm{custodian-shutdown-all}|expandhtmlindex}{1398}
+\indexentry{custodian?@\rawscm{custodian?}|expandhtmlindex}{1400}
+\indexentry{custodian-managed-list@\rawscm{custodian-managed-list}|expandhtmlindex}{1402}
+\indexentry{exn:application:mismatch@\rawscm{exn:application:mismatch}|expandhtmlindex}{1404}
+\indexentry{custodian-require-memory@\rawscm{custodian-require-memory}|expandhtmlindex}{1406}
+\indexentry{exn:misc:unsupported@\rawscm{exn:misc:unsupported}|expandhtmlindex}{1408}
+\indexentry{custodian-limit-memory@\rawscm{custodian-limit-memory}|expandhtmlindex}{1410}
+\indexentry{exn:misc:unsupported@\rawscm{exn:misc:unsupported}|expandhtmlindex}{1412}
+\indexentry{Thread Groups|expandhtmlindex}{1414}
+\indexentry{thread groups|expandhtmlindex}{1416}
+\indexentry{thread!groups|see{ thread groups}}{1418}
+\indexentry{make-thread-group@\rawscm{make-thread-group}|expandhtmlindex}{1420}
+\indexentry{thread-group?@\rawscm{thread-group?}|expandhtmlindex}{1422}
+\indexentry{Regular Expressions|expandhtmlindex}{1424}
+\indexentry{regular expressions|expandhtmlindex}{1426}
+\indexentry{regexps|see{ regular expressions}}{1428}
+\indexentry{pattern matching|expandhtmlindex}{1430}
+\indexentry{strings!pattern matching|expandhtmlindex}{1432}
+\indexentry{input ports!pattern matching|expandhtmlindex}{1434}
+\indexentry{regexp@\rawscm{regexp}|expandhtmlindex}{1436}
+\indexentry{regexp?@\rawscm{regexp?}|expandhtmlindex}{1438}
+\indexentry{regexp-match@\rawscm{regexp-match}|expandhtmlindex}{1440}
+\indexentry{regexp-match@\rawscm{regexp-match}|expandhtmlindex}{1442}
+\indexentry{regexp-match-positions@\rawscm{regexp-match-positions}|expandhtmlindex}{1444}
+\indexentry{regexp-match-peek@\rawscm{regexp-match-peek}|expandhtmlindex}{1446}
+\indexentry{regexp-match-peek-positions@\rawscm{regexp-match-peek-positions}|expandhtmlindex}{1448}
+\indexentry{regexp-replace@\rawscm{regexp-replace}|expandhtmlindex}{1450}
+\indexentry{regexp-replace*@\rawscm{regexp-replace*}|expandhtmlindex}{1452}
+\indexentry{Input and Output|expandhtmlindex}{1454}
+\indexentry{Ports|expandhtmlindex}{1456}
+\indexentry{ports|expandhtmlindex}{1458}
+\indexentry{eof@\rawscm{eof}|expandhtmlindex}{1460}
+\indexentry{eof-object?@\rawscm{eof-object?}|expandhtmlindex}{1462}
+\indexentry{port?@\rawscm{port?}|expandhtmlindex}{1464}
+\indexentry{current-input-port@\rawscm{current-input-port}|expandhtmlindex}{1466}
+\indexentry{current-output-port@\rawscm{current-output-port}|expandhtmlindex}{1468}
+\indexentry{open-input-file@\rawscm{open-input-file}|expandhtmlindex}{1470}
+\indexentry{open-output-file@\rawscm{open-output-file}|expandhtmlindex}{1472}
+\indexentry{'binary@\Symbol{binary}|expandhtmlindex}{1474}
+\indexentry{'text@\Symbol{text}|expandhtmlindex}{1476}
+\indexentry{exn:i/o:filesystem@\rawscm{exn:i/o:filesystem}|expandhtmlindex}{1478}
+\indexentry{open-output-file@\rawscm{open-output-file}|expandhtmlindex}{1480}
+\indexentry{'error@\Symbol{error}|expandhtmlindex}{1482}
+\indexentry{exn:i/o:filesystem@\rawscm{exn:i/o:filesystem}|expandhtmlindex}{1484}
+\indexentry{'replace@\Symbol{replace}|expandhtmlindex}{1486}
+\indexentry{'truncate@\Symbol{truncate}|expandhtmlindex}{1488}
+\indexentry{'truncate/replace@\Symbol{truncate/replace}|expandhtmlindex}{1490}
+\indexentry{'append@\Symbol{append}|expandhtmlindex}{1492}
+\indexentry{'update@\Symbol{update}|expandhtmlindex}{1494}
+\indexentry{exn:i/o:filesystem@\rawscm{exn:i/o:filesystem}|expandhtmlindex}{1496}
+\indexentry{open-input-output-file@\rawscm{open-input-output-file}|expandhtmlindex}{1498}
+\indexentry{call-with-input-file@\rawscm{call-with-input-file}|expandhtmlindex}{1500}
+\indexentry{with-input-from-file@\rawscm{with-input-from-file}|expandhtmlindex}{1502}
+\indexentry{call-with-output-file@\rawscm{call-with-output-file}|expandhtmlindex}{1504}
+\indexentry{with-output-to-file@\rawscm{with-output-to-file}|expandhtmlindex}{1506}
+\indexentry{with-output-to-file@\rawscm{with-output-to-file}|expandhtmlindex}{1508}
+\indexentry{call-with-output-file@\rawscm{call-with-output-file}|expandhtmlindex}{1510}
+\indexentry{exn:application:mismatch@\rawscm{exn:application:mismatch}|expandhtmlindex}{1512}
+\indexentry{with-input-from-file@\rawscm{with-input-from-file}|expandhtmlindex}{1514}
+\indexentry{with-output-to-file@\rawscm{with-output-to-file}|expandhtmlindex}{1516}
+\indexentry{make-pipe@\rawscm{make-pipe}|expandhtmlindex}{1518}
+\indexentry{ports!string|expandhtmlindex}{1520}
+\indexentry{strings!reading to and writing from|expandhtmlindex}{1522}
+\indexentry{strings!as ports|expandhtmlindex}{1524}
+\indexentry{open-input-string@\rawscm{open-input-string}|expandhtmlindex}{1526}
+\indexentry{open-output-string@\rawscm{open-output-string}|expandhtmlindex}{1528}
+\indexentry{get-output-string@\rawscm{get-output-string}|expandhtmlindex}{1530}
+\indexentry{ports!file|expandhtmlindex}{1532}
+\indexentry{files|expandhtmlindex}{1534}
+\indexentry{file-stream-port?@\rawscm{file-stream-port?}|expandhtmlindex}{1536}
+\indexentry{flush-output@\rawscm{flush-output}|expandhtmlindex}{1538}
+\indexentry{ports!flushing|expandhtmlindex}{1540}
+\indexentry{file-stream-buffer-mode@\rawscm{file-stream-buffer-mode}|expandhtmlindex}{1542}
+\indexentry{'none@\Symbol{none}|expandhtmlindex}{1544}
+\indexentry{'line@\Symbol{line}|expandhtmlindex}{1546}
+\indexentry{'block@\Symbol{block}|expandhtmlindex}{1548}
+\indexentry{exn:i/o:port@\rawscm{exn:i/o:port}|expandhtmlindex}{1550}
+\indexentry{file-position@\rawscm{file-position}|expandhtmlindex}{1552}
+\indexentry{file-position@\rawscm{file-position}|expandhtmlindex}{1554}
+\indexentry{exn:application:mismatch@\rawscm{exn:application:mismatch}|expandhtmlindex}{1556}
+\indexentry{exn:i/o:port@\rawscm{exn:i/o:port}|expandhtmlindex}{1558}
+\indexentry{exn:i/o:port@\rawscm{exn:i/o:port}|expandhtmlindex}{1560}
+\indexentry{port-file-identity@\rawscm{port-file-identity}|expandhtmlindex}{1562}
+\indexentry{inode|expandhtmlindex}{1564}
+\indexentry{exn:i/o:port:closed@\rawscm{exn:i/o:port:closed}|expandhtmlindex}{1566}
+\indexentry{exn:i/o:port@\rawscm{exn:i/o:port}|expandhtmlindex}{1568}
+\indexentry{ports!custom|expandhtmlindex}{1570}
+\indexentry{make-input-port|expandhtmlindex}{1572}
+\indexentry{make-output-port|expandhtmlindex}{1574}
+\indexentry{make-custom-input-port@\rawscm{make-custom-input-port}|expandhtmlindex}{1576}
+\indexentry{exn:application:type@\rawscm{exn:application:type}|expandhtmlindex}{1578}
+\indexentry{exn:application:mismatch@\rawscm{exn:application:mismatch}|expandhtmlindex}{1580}
+\indexentry{exn:application:mismatch@\rawscm{exn:application:mismatch}|expandhtmlindex}{1582}
+\indexentry{exn:application:mismatch@\rawscm{exn:application:mismatch}|expandhtmlindex}{1584}
+\indexentry{exn:special-comment@\rawscm{exn:special-comment}|expandhtmlindex}{1586}
+\indexentry{make-custom-output-port@\rawscm{make-custom-output-port}|expandhtmlindex}{1588}
+\indexentry{exn:application:mismatch@\rawscm{exn:application:mismatch}|expandhtmlindex}{1590}
+\indexentry{Reading and Writing|expandhtmlindex}{1592}
+\indexentry{read-line@\rawscm{read-line}|expandhtmlindex}{1594}
+\indexentry{'linefeed@\Symbol{linefeed}|expandhtmlindex}{1596}
+\indexentry{'return@\Symbol{return}|expandhtmlindex}{1598}
+\indexentry{'return-linefeed@\Symbol{return-linefeed}|expandhtmlindex}{1600}
+\indexentry{'any@\Symbol{any}|expandhtmlindex}{1602}
+\indexentry{'any-one@\Symbol{any-one}|expandhtmlindex}{1604}
+\indexentry{read-string@\rawscm{read-string}|expandhtmlindex}{1606}
+\indexentry{read-string-avail"!@\rawscm{read-string-avail"!}|expandhtmlindex}{1608}
+\indexentry{exn:application:mismatch@\rawscm{exn:application:mismatch}|expandhtmlindex}{1610}
+\indexentry{read-string-avail"!*@\rawscm{read-string-avail"!*}|expandhtmlindex}{1612}
+\indexentry{read-string-avail"!/enable-break@\rawscm{read-string-avail"!/enable-break}|expandhtmlindex}{1614}
+\indexentry{exn:break@\rawscm{exn:break}|expandhtmlindex}{1616}
+\indexentry{peek-string@\rawscm{peek-string}|expandhtmlindex}{1618}
+\indexentry{peek-string-avail"!@\rawscm{peek-string-avail"!}|expandhtmlindex}{1620}
+\indexentry{peek-string-avail"!*@\rawscm{peek-string-avail"!*}|expandhtmlindex}{1622}
+\indexentry{peek-string-avail"!/enable-break@\rawscm{peek-string-avail"!/enable-break}|expandhtmlindex}{1624}
+\indexentry{read-char-or-special@\rawscm{read-char-or-special}|expandhtmlindex}{1626}
+\indexentry{exn:special-comment@\rawscm{exn:special-comment}|expandhtmlindex}{1628}
+\indexentry{peek-char@\rawscm{peek-char}|expandhtmlindex}{1630}
+\indexentry{exn:application:mismatch@\rawscm{exn:application:mismatch}|expandhtmlindex}{1632}
+\indexentry{peek-char-or-special@\rawscm{peek-char-or-special}|expandhtmlindex}{1634}
+\indexentry{print@\rawscm{print}|expandhtmlindex}{1636}
+\indexentry{global-port-print-handler@\rawscm{global-port-print-handler}|expandhtmlindex}{1638}
+\indexentry{write-string-avail@\rawscm{write-string-avail}|expandhtmlindex}{1640}
+\indexentry{exn:application:mismatch@\rawscm{exn:application:mismatch}|expandhtmlindex}{1642}
+\indexentry{write-string-avail*@\rawscm{write-string-avail*}|expandhtmlindex}{1644}
+\indexentry{write-string-avail/enable-break@\rawscm{write-string-avail/enable-break}|expandhtmlindex}{1646}
+\indexentry{exn:break@\rawscm{exn:break}|expandhtmlindex}{1648}
+\indexentry{fprintf@\rawscm{fprintf}|expandhtmlindex}{1650}
+\indexentry{exn:application:mismatch@\rawscm{exn:application:mismatch}|expandhtmlindex}{1652}
+\indexentry{exn:application:mismatch@\rawscm{exn:application:mismatch}|expandhtmlindex}{1654}
+\indexentry{exn:application:mismatch@\rawscm{exn:application:mismatch}|expandhtmlindex}{1656}
+\indexentry{exn:application:mismatch@\rawscm{exn:application:mismatch}|expandhtmlindex}{1658}
+\indexentry{printf@\rawscm{printf}|expandhtmlindex}{1660}
+\indexentry{format@\rawscm{format}|expandhtmlindex}{1662}
+\indexentry{exn:application:type@\rawscm{exn:application:type}|expandhtmlindex}{1664}
+\indexentry{exn:application:fprintf:mismatch@\rawscm{exn:application:fprintf:mismatch}|expandhtmlindex}{1666}
+\indexentry{exn:application:mismatch@\rawscm{exn:application:mismatch}|expandhtmlindex}{1668}
+\indexentry{line numbers|expandhtmlindex}{1670}
+\indexentry{column numbers|expandhtmlindex}{1672}
+\indexentry{port positions|expandhtmlindex}{1674}
+\indexentry{port-count-lines"!@\rawscm{port-count-lines"!}|expandhtmlindex}{1676}
+\indexentry{port-next-location@\rawscm{port-next-location}|expandhtmlindex}{1678}
+\indexentry{port read handler|expandhtmlindex}{1680}
+\indexentry{port-read-handler@\rawscm{port-read-handler}|expandhtmlindex}{1682}
+\indexentry{port-read-handler@\rawscm{port-read-handler}|expandhtmlindex}{1684}
+\indexentry{port display handler|expandhtmlindex}{1686}
+\indexentry{port write handler|expandhtmlindex}{1688}
+\indexentry{port print  handler|expandhtmlindex}{1690}
+\indexentry{port-display-handler@\rawscm{port-display-handler}|expandhtmlindex}{1692}
+\indexentry{port-display-handler@\rawscm{port-display-handler}|expandhtmlindex}{1694}
+\indexentry{port-write-handler@\rawscm{port-write-handler}|expandhtmlindex}{1696}
+\indexentry{port-write-handler@\rawscm{port-write-handler}|expandhtmlindex}{1698}
+\indexentry{port-print-handler@\rawscm{port-print-handler}|expandhtmlindex}{1700}
+\indexentry{port-print-handler@\rawscm{port-print-handler}|expandhtmlindex}{1702}
+\indexentry{global-port-print-handler@\rawscm{global-port-print-handler}|expandhtmlindex}{1704}
+\indexentry{Filesystem Utilities|expandhtmlindex}{1706}
+\indexentry{pathnames|expandhtmlindex}{1708}
+\indexentry{pathnames!expansion|expandhtmlindex}{1710}
+\indexentry{exn:i/o:filesystem@\rawscm{exn:i/o:filesystem}|expandhtmlindex}{1712}
+\indexentry{build-path@\rawscm{build-path}|expandhtmlindex}{1714}
+\indexentry{'up@\Symbol{up}|expandhtmlindex}{1716}
+\indexentry{'same@\Symbol{same}|expandhtmlindex}{1718}
+\indexentry{exn:i/o:filesystem@\rawscm{exn:i/o:filesystem}|expandhtmlindex}{1720}
+\indexentry{exn:i/o:filesystem@\rawscm{exn:i/o:filesystem}|expandhtmlindex}{1722}
+\indexentry{absolute-path?@\rawscm{absolute-path?}|expandhtmlindex}{1724}
+\indexentry{relative-path?@\rawscm{relative-path?}|expandhtmlindex}{1726}
+\indexentry{complete-path?@\rawscm{complete-path?}|expandhtmlindex}{1728}
+\indexentry{path->complete-path@\rawscm{path->complete-path}|expandhtmlindex}{1730}
+\indexentry{exn:i/o:filesystem@\rawscm{exn:i/o:filesystem}|expandhtmlindex}{1732}
+\indexentry{resolve-path@\rawscm{resolve-path}|expandhtmlindex}{1734}
+\indexentry{expand-path@\rawscm{expand-path}|expandhtmlindex}{1736}
+\indexentry{simplify-path@\rawscm{simplify-path}|expandhtmlindex}{1738}
+\indexentry{exn:i/o:filesystem@\rawscm{exn:i/o:filesystem}|expandhtmlindex}{1740}
+\indexentry{normal-case-path@\rawscm{normal-case-path}|expandhtmlindex}{1742}
+\indexentry{split-path@\rawscm{split-path}|expandhtmlindex}{1744}
+\indexentry{'relative@\Symbol{relative}|expandhtmlindex}{1746}
+\indexentry{'up@\Symbol{up}|expandhtmlindex}{1748}
+\indexentry{'same@\Symbol{same}|expandhtmlindex}{1750}
+\indexentry{'up@\Symbol{up}|expandhtmlindex}{1752}
+\indexentry{'same@\Symbol{same}|expandhtmlindex}{1754}
+\indexentry{find-executable-path@\rawscm{find-executable-path}|expandhtmlindex}{1756}
+\indexentry{PATH@\File{PATH}|expandhtmlindex}{1758}
+\indexentry{find-system-path@\rawscm{find-system-path}|expandhtmlindex}{1760}
+\indexentry{platform|expandhtmlindex}{1762}
+\indexentry{'home-dir@\Symbol{home-dir}|expandhtmlindex}{1764}
+\indexentry{'pref-dir@\Symbol{pref-dir}|expandhtmlindex}{1766}
+\indexentry{'pref-file@\Symbol{pref-file}|expandhtmlindex}{1768}
+\indexentry{'temp-dir@\Symbol{temp-dir}|expandhtmlindex}{1770}
+\indexentry{TMPDIR@\File{TMPDIR}|expandhtmlindex}{1772}
+\indexentry{'init-dir@\Symbol{init-dir}|expandhtmlindex}{1774}
+\indexentry{'init-file@\Symbol{init-file}|expandhtmlindex}{1776}
+\indexentry{.mzschemerc@\File{.mzschemerc}|expandhtmlindex}{1778}
+\indexentry{mzschemerc.ss@\File{mzschemerc.ss}|expandhtmlindex}{1780}
+\indexentry{'addon-dir@\Symbol{addon-dir}|expandhtmlindex}{1782}
+\indexentry{'sys-dir@\Symbol{sys-dir}|expandhtmlindex}{1784}
+\indexentry{'exec-file@\Symbol{exec-file}|expandhtmlindex}{1786}
+\indexentry{program@\rawscm{program}|expandhtmlindex}{1788}
+\indexentry{HOMEDRIVE@\File{HOMEDRIVE}|expandhtmlindex}{1790}
+\indexentry{HOMEPATH@\File{HOMEPATH}|expandhtmlindex}{1792}
+\indexentry{path-list-string->path-list@\rawscm{path-list-string->path-list}|expandhtmlindex}{1794}
+\indexentry{files!pathnames|see{ pathnames}}{1796}
+\indexentry{files!testing|expandhtmlindex}{1798}
+\indexentry{file-exists?@\rawscm{file-exists?}|expandhtmlindex}{1800}
+\indexentry{exn:i/o:filesystem@\rawscm{exn:i/o:filesystem}|expandhtmlindex}{1802}
+\indexentry{links!testing|expandhtmlindex}{1804}
+\indexentry{link-exists?@\rawscm{link-exists?}|expandhtmlindex}{1806}
+\indexentry{exn:i/o:filesystem@\rawscm{exn:i/o:filesystem}|expandhtmlindex}{1808}
+\indexentry{files!deleting|expandhtmlindex}{1810}
+\indexentry{delete-file@\rawscm{delete-file}|expandhtmlindex}{1812}
+\indexentry{exn:i/o:filesystem@\rawscm{exn:i/o:filesystem}|expandhtmlindex}{1814}
+\indexentry{files!moving|expandhtmlindex}{1816}
+\indexentry{files!renaming|expandhtmlindex}{1818}
+\indexentry{rename-file-or-directory@\rawscm{rename-file-or-directory}|expandhtmlindex}{1820}
+\indexentry{exn:i/o:filesystem@\rawscm{exn:i/o:filesystem}|expandhtmlindex}{1822}
+\indexentry{files!modification dates|expandhtmlindex}{1824}
+\indexentry{file-or-directory-modify-seconds@\rawscm{file-or-directory-modify-seconds}|expandhtmlindex}{1826}
+\indexentry{exn:i/o:filesystem@\rawscm{exn:i/o:filesystem}|expandhtmlindex}{1828}
+\indexentry{files!permissions|expandhtmlindex}{1830}
+\indexentry{file-or-directory-permissions@\rawscm{file-or-directory-permissions}|expandhtmlindex}{1832}
+\indexentry{'read@\Symbol{read}|expandhtmlindex}{1834}
+\indexentry{'write@\Symbol{write}|expandhtmlindex}{1836}
+\indexentry{'execute@\Symbol{execute}|expandhtmlindex}{1838}
+\indexentry{exn:i/o:filesystem@\rawscm{exn:i/o:filesystem}|expandhtmlindex}{1840}
+\indexentry{files!sizes|expandhtmlindex}{1842}
+\indexentry{file-size@\rawscm{file-size}|expandhtmlindex}{1844}
+\indexentry{exn:i/o:filesystem@\rawscm{exn:i/o:filesystem}|expandhtmlindex}{1846}
+\indexentry{files!copying|expandhtmlindex}{1848}
+\indexentry{copy-file@\rawscm{copy-file}|expandhtmlindex}{1850}
+\indexentry{exn:i/o:filesystem@\rawscm{exn:i/o:filesystem}|expandhtmlindex}{1852}
+\indexentry{links!creating|expandhtmlindex}{1854}
+\indexentry{make-file-or-directory-link@\rawscm{make-file-or-directory-link}|expandhtmlindex}{1856}
+\indexentry{exn:i/o:filesystem@\rawscm{exn:i/o:filesystem}|expandhtmlindex}{1858}
+\indexentry{exn:misc:unsupported@\rawscm{exn:misc:unsupported}|expandhtmlindex}{1860}
+\indexentry{directories!pathnames|see{ pathnames}}{1862}
+\indexentry{directories!current|expandhtmlindex}{1864}
+\indexentry{current-directory@\rawscm{current-directory}|expandhtmlindex}{1866}
+\indexentry{current-drive@\rawscm{current-drive}|expandhtmlindex}{1868}
+\indexentry{exn:misc:unsupported@\rawscm{exn:misc:unsupported}|expandhtmlindex}{1870}
+\indexentry{directories!testing|expandhtmlindex}{1872}
+\indexentry{directory-exists?@\rawscm{directory-exists?}|expandhtmlindex}{1874}
+\indexentry{exn:i/o:filesystem@\rawscm{exn:i/o:filesystem}|expandhtmlindex}{1876}
+\indexentry{directories!creating|expandhtmlindex}{1878}
+\indexentry{make-directory@\rawscm{make-directory}|expandhtmlindex}{1880}
+\indexentry{exn:i/o:filesystem@\rawscm{exn:i/o:filesystem}|expandhtmlindex}{1882}
+\indexentry{directories!deleting|expandhtmlindex}{1884}
+\indexentry{delete-directory@\rawscm{delete-directory}|expandhtmlindex}{1886}
+\indexentry{exn:i/o:filesystem@\rawscm{exn:i/o:filesystem}|expandhtmlindex}{1888}
+\indexentry{directories!moving|expandhtmlindex}{1890}
+\indexentry{directories!renaming|expandhtmlindex}{1892}
+\indexentry{rename-file-or-directory@\rawscm{rename-file-or-directory}|expandhtmlindex}{1894}
+\indexentry{directories!dates|expandhtmlindex}{1896}
+\indexentry{file-or-directory-modify-seconds@\rawscm{file-or-directory-modify-seconds}|expandhtmlindex}{1898}
+\indexentry{directories!permissions|expandhtmlindex}{1900}
+\indexentry{file-or-directory-permissions@\rawscm{file-or-directory-permissions}|expandhtmlindex}{1902}
+\indexentry{directories!contents|expandhtmlindex}{1904}
+\indexentry{directory-list@\rawscm{directory-list}|expandhtmlindex}{1906}
+\indexentry{directories!root|expandhtmlindex}{1908}
+\indexentry{filesystem-root-list@\rawscm{filesystem-root-list}|expandhtmlindex}{1910}
+\indexentry{Networking|expandhtmlindex}{1912}
+\indexentry{networking|expandhtmlindex}{1914}
+\indexentry{communications|expandhtmlindex}{1916}
+\indexentry{sockets|expandhtmlindex}{1918}
+\indexentry{TCP/IP|expandhtmlindex}{1920}
+\indexentry{tcp-listen@\rawscm{tcp-listen}|expandhtmlindex}{1922}
+\indexentry{exn:i/o:tcp@\rawscm{exn:i/o:tcp}|expandhtmlindex}{1924}
+\indexentry{tcp-connect@\rawscm{tcp-connect}|expandhtmlindex}{1926}
+\indexentry{exn:i/o:tcp@\rawscm{exn:i/o:tcp}|expandhtmlindex}{1928}
+\indexentry{tcp-connect/enable-break@\rawscm{tcp-connect/enable-break}|expandhtmlindex}{1930}
+\indexentry{exn:break@\rawscm{exn:break}|expandhtmlindex}{1932}
+\indexentry{tcp-accept@\rawscm{tcp-accept}|expandhtmlindex}{1934}
+\indexentry{exn:i/o:tcp@\rawscm{exn:i/o:tcp}|expandhtmlindex}{1936}
+\indexentry{tcp-accept-ready?@\rawscm{tcp-accept-ready?}|expandhtmlindex}{1938}
+\indexentry{exn:i/o:tcp@\rawscm{exn:i/o:tcp}|expandhtmlindex}{1940}
+\indexentry{tcp-accept/enable-break@\rawscm{tcp-accept/enable-break}|expandhtmlindex}{1942}
+\indexentry{exn:break@\rawscm{exn:break}|expandhtmlindex}{1944}
+\indexentry{tcp-close@\rawscm{tcp-close}|expandhtmlindex}{1946}
+\indexentry{exn:i/o:tcp@\rawscm{exn:i/o:tcp}|expandhtmlindex}{1948}
+\indexentry{tcp-listener?@\rawscm{tcp-listener?}|expandhtmlindex}{1950}
+\indexentry{tcp-abandon-port@\rawscm{tcp-abandon-port}|expandhtmlindex}{1952}
+\indexentry{tcp-addresses@\rawscm{tcp-addresses}|expandhtmlindex}{1954}
+\indexentry{exn:i/o:tcp@\rawscm{exn:i/o:tcp}|expandhtmlindex}{1956}
+\indexentry{tcp-port?@\rawscm{tcp-port?}|expandhtmlindex}{1958}
+\indexentry{UDP|expandhtmlindex}{1960}
+\indexentry{udp-open-socket@\rawscm{udp-open-socket}|expandhtmlindex}{1962}
+\indexentry{udp-bind"!@\rawscm{udp-bind"!}|expandhtmlindex}{1964}
+\indexentry{exn:i/o:udp@\rawscm{exn:i/o:udp}|expandhtmlindex}{1966}
+\indexentry{udp-connect"!@\rawscm{udp-connect"!}|expandhtmlindex}{1968}
+\indexentry{exn:application:mismatch@\rawscm{exn:application:mismatch}|expandhtmlindex}{1970}
+\indexentry{exn:i/o:udp@\rawscm{exn:i/o:udp}|expandhtmlindex}{1972}
+\indexentry{udp-send-to@\rawscm{udp-send-to}|expandhtmlindex}{1974}
+\indexentry{exn:application:mismatch@\rawscm{exn:application:mismatch}|expandhtmlindex}{1976}
+\indexentry{exn:i/o:udp@\rawscm{exn:i/o:udp}|expandhtmlindex}{1978}
+\indexentry{udp-send@\rawscm{udp-send}|expandhtmlindex}{1980}
+\indexentry{exn:i/o:udp@\rawscm{exn:i/o:udp}|expandhtmlindex}{1982}
+\indexentry{udp-send-to*@\rawscm{udp-send-to*}|expandhtmlindex}{1984}
+\indexentry{udp-send*@\rawscm{udp-send*}|expandhtmlindex}{1986}
+\indexentry{udp-send-to/enable-break@\rawscm{udp-send-to/enable-break}|expandhtmlindex}{1988}
+\indexentry{exn:break@\rawscm{exn:break}|expandhtmlindex}{1990}
+\indexentry{udp-send/enable-break@\rawscm{udp-send/enable-break}|expandhtmlindex}{1992}
+\indexentry{udp-receive"!@\rawscm{udp-receive"!}|expandhtmlindex}{1994}
+\indexentry{exn:application:mismatch@\rawscm{exn:application:mismatch}|expandhtmlindex}{1996}
+\indexentry{udp-receive"!*@\rawscm{udp-receive"!*}|expandhtmlindex}{1998}
+\indexentry{udp-receive"!/enable-break@\rawscm{udp-receive"!/enable-break}|expandhtmlindex}{2000}
+\indexentry{exn:break@\rawscm{exn:break}|expandhtmlindex}{2002}
+\indexentry{udp-close@\rawscm{udp-close}|expandhtmlindex}{2004}
+\indexentry{exn:i/o:udp@\rawscm{exn:i/o:udp}|expandhtmlindex}{2006}
+\indexentry{udp?@\rawscm{udp?}|expandhtmlindex}{2008}
+\indexentry{udp-bound?@\rawscm{udp-bound?}|expandhtmlindex}{2010}
+\indexentry{udp-connected?@\rawscm{udp-connected?}|expandhtmlindex}{2012}
+\indexentry{udp->send-waitable@\rawscm{udp->send-waitable}|expandhtmlindex}{2014}
+\indexentry{udp->receive-waitable@\rawscm{udp->receive-waitable}|expandhtmlindex}{2016}
+\indexentry{Syntax and Macros|expandhtmlindex}{2018}
+\indexentry{syntax|expandhtmlindex}{2020}
+\indexentry{macros|see{ syntax}}{2022}
+\indexentry{transformers|expandhtmlindex}{2024}
+\indexentry{transformer environments|expandhtmlindex}{2026}
+\indexentry{Dybvig, Kent|expandhtmlindex}{2028}
+\indexentry{Hieb, Rob|expandhtmlindex}{2030}
+\indexentry{Bruggeman, Carl|expandhtmlindex}{2032}
+\indexentry{environments!top-level|expandhtmlindex}{2034}
+\indexentry{\keywordfont{syntax-rules} Extensions|expandhtmlindex}{2036}
+\indexentry{syntax-rules@\scmk{syntax-rules}|expandhtmlindex}{2038}
+\indexentry{...@\rawscm{...}|expandhtmlindex}{2040}
+\indexentry{syntax-id-rules@\scmk{syntax-id-rules}|expandhtmlindex}{2042}
+\indexentry{identifier macro|expandhtmlindex}{2044}
+\indexentry{syntax-id-rules@\scmk{syntax-id-rules}|expandhtmlindex}{2046}
+\indexentry{Syntax Objects|expandhtmlindex}{2048}
+\indexentry{syntax objects|expandhtmlindex}{2050}
+\indexentry{read-syntax@\rawscm{read-syntax}|expandhtmlindex}{2052}
+\indexentry{quote-syntax@\scmk{quote-syntax}|expandhtmlindex}{2054}
+\indexentry{syntax objects!pattern-matching|expandhtmlindex}{2056}
+\indexentry{syntax-case@\scmk{syntax-case}|expandhtmlindex}{2058}
+\indexentry{exn:syntax@\rawscm{exn:syntax}|expandhtmlindex}{2060}
+\indexentry{syntax@\scmk{syntax}|expandhtmlindex}{2062}
+\indexentry{define-syntax@\scmk{define-syntax}|expandhtmlindex}{2064}
+\indexentry{syntax-case*@\scmk{syntax-case*}|expandhtmlindex}{2066}
+\indexentry{with-syntax@\scmk{with-syntax}|expandhtmlindex}{2068}
+\indexentry{exn:syntax@\rawscm{exn:syntax}|expandhtmlindex}{2070}
+\indexentry{quasisyntax@\scmk{quasisyntax}|expandhtmlindex}{2072}
+\indexentry{unsyntax@\scmk{unsyntax}|expandhtmlindex}{2074}
+\indexentry{unsyntax-splicing@\scmk{unsyntax-splicing}|expandhtmlindex}{2076}
+\indexentry{syntax/loc@\scmk{syntax/loc}|expandhtmlindex}{2078}
+\indexentry{quasisyntax/loc@\scmk{quasisyntax/loc}|expandhtmlindex}{2080}
+\indexentry{syntax objects!operations|expandhtmlindex}{2082}
+\indexentry{syntax?@\rawscm{syntax?}|expandhtmlindex}{2084}
+\indexentry{syntax objects!source location|expandhtmlindex}{2086}
+\indexentry{syntax-source@\rawscm{syntax-source}|expandhtmlindex}{2088}
+\indexentry{syntax-line@\rawscm{syntax-line}|expandhtmlindex}{2090}
+\indexentry{syntax-column@\rawscm{syntax-column}|expandhtmlindex}{2092}
+\indexentry{syntax-position@\rawscm{syntax-position}|expandhtmlindex}{2094}
+\indexentry{syntax-span@\rawscm{syntax-span}|expandhtmlindex}{2096}
+\indexentry{syntax-original?@\rawscm{syntax-original?}|expandhtmlindex}{2098}
+\indexentry{syntax objects!source module|expandhtmlindex}{2100}
+\indexentry{syntax-source-module@\rawscm{syntax-source-module}|expandhtmlindex}{2102}
+\indexentry{syntax-e@\rawscm{syntax-e}|expandhtmlindex}{2104}
+\indexentry{syntax pair|expandhtmlindex}{2106}
+\indexentry{syntax->list@\rawscm{syntax->list}|expandhtmlindex}{2108}
+\indexentry{syntax-object->datum@\rawscm{syntax-object->datum}|expandhtmlindex}{2110}
+\indexentry{datum->syntax-object@\rawscm{datum->syntax-object}|expandhtmlindex}{2112}
+\indexentry{exn:application;mismatch@\rawscm{exn:application;mismatch}|expandhtmlindex}{2114}
+\indexentry{syntax-graph?@\rawscm{syntax-graph?}|expandhtmlindex}{2116}
+\indexentry{syntax objects!identifier|expandhtmlindex}{2118}
+\indexentry{identifier?@\rawscm{identifier?}|expandhtmlindex}{2120}
+\indexentry{generate-temporaries@\rawscm{generate-temporaries}|expandhtmlindex}{2122}
+\indexentry{Syntax and Lexical Scope|expandhtmlindex}{2124}
+\indexentry{syntax objects!comparisons|expandhtmlindex}{2126}
+\indexentry{bound-identifier=?@\rawscm{bound-identifier=?}|expandhtmlindex}{2128}
+\indexentry{free-identifier=?@\rawscm{free-identifier=?}|expandhtmlindex}{2130}
+\indexentry{module-identifier=?@\rawscm{module-identifier=?}|expandhtmlindex}{2132}
+\indexentry{module-transformer-identifier=?@\rawscm{module-transformer-identifier=?}|expandhtmlindex}{2134}
+\indexentry{check-duplicate-identifier@\rawscm{check-duplicate-identifier}|expandhtmlindex}{2136}
+\indexentry{identifier-binding@\rawscm{identifier-binding}|expandhtmlindex}{2138}
+\indexentry{'lexical@\Symbol{lexical}|expandhtmlindex}{2140}
+\indexentry{identifier-transformer-binding@\rawscm{identifier-transformer-binding}|expandhtmlindex}{2142}
+\indexentry{identifier-binding-export-position@\rawscm{identifier-binding-export-position}|expandhtmlindex}{2144}
+\indexentry{identifier-transformer-binding-export-position@\rawscm{identifier-transformer-binding-export-position}|expandhtmlindex}{2146}
+\indexentry{environments!top-level|expandhtmlindex}{2148}
+\indexentry{namespaces!initial transformer environment|expandhtmlindex}{2150}
+\indexentry{require-for-syntax@\scmk{require-for-syntax}|expandhtmlindex}{2152}
+\indexentry{syntax!modules|expandhtmlindex}{2154}
+\indexentry{modules!macros|expandhtmlindex}{2156}
+\indexentry{modules!for-syntax imports|expandhtmlindex}{2158}
+\indexentry{transformer environments!in modules|expandhtmlindex}{2160}
+\indexentry{require-for-syntax@\scmk{require-for-syntax}|expandhtmlindex}{2162}
+\indexentry{run-time hierarchy|expandhtmlindex}{2164}
+\indexentry{Binding Multiple and Fluid Syntax Identifiers|expandhtmlindex}{2166}
+\indexentry{define-syntaxes@\scmk{define-syntaxes}|expandhtmlindex}{2168}
+\indexentry{let-syntaxes@\scmk{let-syntaxes}|expandhtmlindex}{2170}
+\indexentry{letrec-syntaxes@\scmk{letrec-syntaxes}|expandhtmlindex}{2172}
+\indexentry{letrec-syntaxes+values@\scmk{letrec-syntaxes+values}|expandhtmlindex}{2174}
+\indexentry{fluid-let-syntax@\scmk{fluid-let-syntax}|expandhtmlindex}{2176}
+\indexentry{Special Syntax Identifiers|expandhtmlindex}{2178}
+\indexentry{\#\%app@\scmk{\#\%app}|expandhtmlindex}{2180}
+\indexentry{\#\%top@\scmk{\#\%top}|expandhtmlindex}{2182}
+\indexentry{\#\%datum@\scmk{\#\%datum}|expandhtmlindex}{2184}
+\indexentry{\#\%module-begin@\scmk{\#\%module-begin}|expandhtmlindex}{2186}
+\indexentry{Macro Expansion|expandhtmlindex}{2188}
+\indexentry{transformers!application|expandhtmlindex}{2190}
+\indexentry{syntax!macro calls|expandhtmlindex}{2192}
+\indexentry{exn:syntax@\rawscm{exn:syntax}|expandhtmlindex}{2194}
+\indexentry{make-set"!-transformer@\rawscm{make-set"!-transformer}|expandhtmlindex}{2196}
+\indexentry{identifier macro|expandhtmlindex}{2198}
+\indexentry{set"!-transformer?@\rawscm{set"!-transformer?}|expandhtmlindex}{2200}
+\indexentry{make-rename-transformer@\rawscm{make-rename-transformer}|expandhtmlindex}{2202}
+\indexentry{identifier macro|expandhtmlindex}{2204}
+\indexentry{rename-transformer?@\rawscm{rename-transformer?}|expandhtmlindex}{2206}
+\indexentry{syntax-local-value@\rawscm{syntax-local-value}|expandhtmlindex}{2208}
+\indexentry{exn:application:mismatch@\rawscm{exn:application:mismatch}|expandhtmlindex}{2210}
+\indexentry{syntax-local-name@\rawscm{syntax-local-name}|expandhtmlindex}{2212}
+\indexentry{syntax-local-context@\rawscm{syntax-local-context}|expandhtmlindex}{2214}
+\indexentry{syntax-local-get-shadower@\rawscm{syntax-local-get-shadower}|expandhtmlindex}{2216}
+\indexentry{syntax-local-module-introduce@\rawscm{syntax-local-module-introduce}|expandhtmlindex}{2218}
+\indexentry{syntax!partial expansion|expandhtmlindex}{2220}
+\indexentry{local-expand@\rawscm{local-expand}|expandhtmlindex}{2222}
+\indexentry{syntax-local-introduce@\rawscm{syntax-local-introduce}|expandhtmlindex}{2224}
+\indexentry{make-syntax-introducer@\rawscm{make-syntax-introducer}|expandhtmlindex}{2226}
+\indexentry{Check Syntax|expandhtmlindex}{2228}
+\indexentry{'disappeared-binding@\Symbol{disappeared-binding}|expandhtmlindex}{2230}
+\indexentry{'disappeared-use@\Symbol{disappeared-use}|expandhtmlindex}{2232}
+\indexentry{syntax!expanding|expandhtmlindex}{2234}
+\indexentry{expand@\rawscm{expand}|expandhtmlindex}{2236}
+\indexentry{expand-syntax@\rawscm{expand-syntax}|expandhtmlindex}{2238}
+\indexentry{expand-once@\rawscm{expand-once}|expandhtmlindex}{2240}
+\indexentry{expand-syntax-once@\rawscm{expand-syntax-once}|expandhtmlindex}{2242}
+\indexentry{expand-to-top-form@\rawscm{expand-to-top-form}|expandhtmlindex}{2244}
+\indexentry{expand-syntax-to-top-form@\rawscm{expand-syntax-to-top-form}|expandhtmlindex}{2246}
+\indexentry{syntax objects!properties|expandhtmlindex}{2248}
+\indexentry{syntax-property@\rawscm{syntax-property}|expandhtmlindex}{2250}
+\indexentry{syntax-property@\rawscm{syntax-property}|expandhtmlindex}{2252}
+\indexentry{'origin@\Symbol{origin}|expandhtmlindex}{2254}
+\indexentry{syntax-track-origin@\rawscm{syntax-track-origin}|expandhtmlindex}{2256}
+\indexentry{'disappeared-binding@\Symbol{disappeared-binding}|expandhtmlindex}{2258}
+\indexentry{'disappeared-use@\Symbol{disappeared-use}|expandhtmlindex}{2260}
+\indexentry{read-syntax@\rawscm{read-syntax}|expandhtmlindex}{2262}
+\indexentry{Check Syntax|expandhtmlindex}{2264}
+\indexentry{module path index|expandhtmlindex}{2266}
+\indexentry{module-path-index?@\rawscm{module-path-index?}|expandhtmlindex}{2268}
+\indexentry{module-path-index-split@\rawscm{module-path-index-split}|expandhtmlindex}{2270}
+\indexentry{module-path-index-join@\rawscm{module-path-index-join}|expandhtmlindex}{2272}
+\indexentry{'module-direct-requires@\Symbol{module-direct-requires}|expandhtmlindex}{2274}
+\indexentry{'module-direct-for-syntax-requires@\Symbol{module-direct-for-syntax-requires}|expandhtmlindex}{2276}
+\indexentry{'module-variable-provides@\Symbol{module-variable-provides}|expandhtmlindex}{2278}
+\indexentry{'module-syntax-provides@\Symbol{module-syntax-provides}|expandhtmlindex}{2280}
+\indexentry{'module-indirect-provides@\Symbol{module-indirect-provides}|expandhtmlindex}{2282}
+\indexentry{'module-kernel-reprovide-hint@\Symbol{module-kernel-reprovide-hint}|expandhtmlindex}{2284}
+\indexentry{'module-self-path-index@\Symbol{module-self-path-index}|expandhtmlindex}{2286}
+\indexentry{compiled-module-expression?@\rawscm{compiled-module-expression?}|expandhtmlindex}{2288}
+\indexentry{module-compiled-name@\rawscm{module-compiled-name}|expandhtmlindex}{2290}
+\indexentry{module-compiled-imports@\rawscm{module-compiled-imports}|expandhtmlindex}{2292}
+\indexentry{Memory Management|expandhtmlindex}{2294}
+\indexentry{Weak Boxes|expandhtmlindex}{2296}
+\indexentry{weak boxes|expandhtmlindex}{2298}
+\indexentry{make-weak-box@\rawscm{make-weak-box}|expandhtmlindex}{2300}
+\indexentry{weak-box-value@\rawscm{weak-box-value}|expandhtmlindex}{2302}
+\indexentry{weak-box?@\rawscm{weak-box?}|expandhtmlindex}{2304}
+\indexentry{Will Executors|expandhtmlindex}{2306}
+\indexentry{will executors|expandhtmlindex}{2308}
+\indexentry{finalization|see{ will executors}}{2310}
+\indexentry{guardians|see{ will executors}}{2312}
+\indexentry{make-will-executor@\rawscm{make-will-executor}|expandhtmlindex}{2314}
+\indexentry{will-executor?@\rawscm{will-executor?}|expandhtmlindex}{2316}
+\indexentry{will-register@\rawscm{will-register}|expandhtmlindex}{2318}
+\indexentry{will-execute@\rawscm{will-execute}|expandhtmlindex}{2320}
+\indexentry{will-try-execute@\rawscm{will-try-execute}|expandhtmlindex}{2322}
+\indexentry{Garbage Collection|expandhtmlindex}{2324}
+\indexentry{collect-garbage@\rawscm{collect-garbage}|expandhtmlindex}{2326}
+\indexentry{current-memory-use@\rawscm{current-memory-use}|expandhtmlindex}{2328}
+\indexentry{dump-memory-stats@\rawscm{dump-memory-stats}|expandhtmlindex}{2330}
+\indexentry{Support Facilities|expandhtmlindex}{2332}
+\indexentry{Eval and Load|expandhtmlindex}{2334}
+\indexentry{eval@\rawscm{eval}|expandhtmlindex}{2336}
+\indexentry{eval-syntax@\rawscm{eval-syntax}|expandhtmlindex}{2338}
+\indexentry{files!loading|expandhtmlindex}{2340}
+\indexentry{directories!of currently loading file|expandhtmlindex}{2342}
+\indexentry{load@\rawscm{load}|expandhtmlindex}{2344}
+\indexentry{current-load-relative-directory@\rawscm{current-load-relative-directory}|expandhtmlindex}{2346}
+\indexentry{load-relative@\rawscm{load-relative}|expandhtmlindex}{2348}
+\indexentry{load/use-compiled@\rawscm{load/use-compiled}|expandhtmlindex}{2350}
+\indexentry{\_loader.so@\File{\_loader.so}|expandhtmlindex}{2352}
+\indexentry{load/cd@\rawscm{load/cd}|expandhtmlindex}{2354}
+\indexentry{read-eval-print loop@{\repl}|expandhtmlindex}{2356}
+\indexentry{read-eval-print loop!customized@{\repl}!customized|expandhtmlindex}{2358}
+\indexentry{read-eval-print-loop@\rawscm{read-eval-print-loop}|expandhtmlindex}{2360}
+\indexentry{read-eval-print-loop@\rawscm{read-eval-print-loop}|expandhtmlindex}{2362}
+\indexentry{Exiting|expandhtmlindex}{2364}
+\indexentry{exit@\rawscm{exit}|expandhtmlindex}{2366}
+\indexentry{Input Parsing|expandhtmlindex}{2368}
+\indexentry{read-square-bracket-as-paren@\rawscm{read-square-bracket-as-paren}|expandhtmlindex}{2370}
+\indexentry{read-curly-brace-as-paren@\rawscm{read-curly-brace-as-paren}|expandhtmlindex}{2372}
+\indexentry{vectors|expandhtmlindex}{2374}
+\indexentry{exn:read@\rawscm{exn:read}|expandhtmlindex}{2376}
+\indexentry{boxes|expandhtmlindex}{2378}
+\indexentry{\#\&@\rawscm{\#\&amp;}|expandhtmlindex}{2380}
+\indexentry{read-accept-box@\rawscm{read-accept-box}|expandhtmlindex}{2382}
+\indexentry{exn:read@\rawscm{exn:read}|expandhtmlindex}{2384}
+\indexentry{\#'@\rawscm{\#'}|expandhtmlindex}{2386}
+\indexentry{\#`@\rawscm{\#`}|expandhtmlindex}{2388}
+\indexentry{\#,@\rawscm{\#,}|expandhtmlindex}{2390}
+\indexentry{\#,\atsign@\rawscm{\#,\atsign}|expandhtmlindex}{2392}
+\indexentry{characters|expandhtmlindex}{2394}
+\indexentry{\#/nul@\constantfont{\#{\tt {\TTBackslash}}nul}|expandhtmlindex}{2396}
+\indexentry{\#/null@\constantfont{\#{\tt {\TTBackslash}}null}|expandhtmlindex}{2398}
+\indexentry{\#/backspace@\constantfont{\#{\tt {\TTBackslash}}backspace}|expandhtmlindex}{2400}
+\indexentry{\#/tab@\constantfont{\#{\tt {\TTBackslash}}tab}|expandhtmlindex}{2402}
+\indexentry{\#/newline@\constantfont{\#{\tt {\TTBackslash}}newline}|expandhtmlindex}{2404}
+\indexentry{\#/linefeed@\constantfont{\#{\tt {\TTBackslash}}linefeed}|expandhtmlindex}{2406}
+\indexentry{\#/vtab@\constantfont{\#{\tt {\TTBackslash}}vtab}|expandhtmlindex}{2408}
+\indexentry{\#/page@\constantfont{\#{\tt {\TTBackslash}}page}|expandhtmlindex}{2410}
+\indexentry{\#/return@\constantfont{\#{\tt {\TTBackslash}}return}|expandhtmlindex}{2412}
+\indexentry{\#/space@\constantfont{\#{\tt {\TTBackslash}}space}|expandhtmlindex}{2414}
+\indexentry{\#/rubout@\constantfont{\#{\tt {\TTBackslash}}rubout}|expandhtmlindex}{2416}
+\indexentry{exn:read@\rawscm{exn:read}|expandhtmlindex}{2418}
+\indexentry{strings|expandhtmlindex}{2420}
+\indexentry{\\a@\stresc{a}|expandhtmlindex}{2422}
+\indexentry{\\b@\stresc{b}|expandhtmlindex}{2424}
+\indexentry{\\t@\stresc{t}|expandhtmlindex}{2426}
+\indexentry{\\n@\stresc{n}|expandhtmlindex}{2428}
+\indexentry{\\v@\stresc{v}|expandhtmlindex}{2430}
+\indexentry{\\f@\stresc{f}|expandhtmlindex}{2432}
+\indexentry{\\r@\stresc{r}|expandhtmlindex}{2434}
+\indexentry{\\e@\stresc{e}|expandhtmlindex}{2436}
+\indexentry{\\o@\stresc{\var{o}}|expandhtmlindex}{2438}
+\indexentry{\\oo@\stresc{\var{oo}}|expandhtmlindex}{2440}
+\indexentry{\\oo@\stresc{\var{ooo}}|expandhtmlindex}{2442}
+\indexentry{\\xh@\stresc{x\var{h}}|expandhtmlindex}{2444}
+\indexentry{\\xh@\stresc{x\var{hh}}|expandhtmlindex}{2446}
+\indexentry{numbers|expandhtmlindex}{2448}
+\indexentry{read-decimal-as-inexact@\rawscm{read-decimal-as-inexact}|expandhtmlindex}{2450}
+\indexentry{infix|expandhtmlindex}{2452}
+\indexentry{.|expandhtmlindex}{2454}
+\indexentry{`|expandhtmlindex}{2456}
+\indexentry{,|expandhtmlindex}{2458}
+\indexentry{,\@|expandhtmlindex}{2460}
+\indexentry{read-accept-dot@\rawscm{read-accept-dot}|expandhtmlindex}{2462}
+\indexentry{read-accept-quasiquote@\rawscm{read-accept-quasiquote}|expandhtmlindex}{2464}
+\indexentry{symbols|expandhtmlindex}{2466}
+\indexentry{|@\rawscm{|}|expandhtmlindex}{2468}
+\indexentry{{\Backslash}|expandhtmlindex}{2470}
+\indexentry{read-accept-bar-quote@\rawscm{read-accept-bar-quote}|expandhtmlindex}{2472}
+\indexentry{symbols!case sensitivity|expandhtmlindex}{2474}
+\indexentry{\#cs@\rawscm{\#cs}|expandhtmlindex}{2476}
+\indexentry{\#ci@\rawscm{\#ci}|expandhtmlindex}{2478}
+\indexentry{read-case-sensitive@\rawscm{read-case-sensitive}|expandhtmlindex}{2480}
+\indexentry{regular expressions!constants|expandhtmlindex}{2482}
+\indexentry{\#rx@\rawscm{\#rx}|expandhtmlindex}{2484}
+\indexentry{exn:read@\rawscm{exn:read}|expandhtmlindex}{2486}
+\indexentry{hash tables!constants|expandhtmlindex}{2488}
+\indexentry{\#hash@\rawscm{\#hash}|expandhtmlindex}{2490}
+\indexentry{\#hasheq@\rawscm{\#hasheq}|expandhtmlindex}{2492}
+\indexentry{read-square-bracket-as-paren@\rawscm{read-square-bracket-as-paren}|expandhtmlindex}{2494}
+\indexentry{read-curly-brace-as-paren@\rawscm{read-curly-brace-as-paren}|expandhtmlindex}{2496}
+\indexentry{graphs|expandhtmlindex}{2498}
+\indexentry{\#\var{n}=@\rawscm{\#\var{n}=}|expandhtmlindex}{2500}
+\indexentry{\#\var{n}\#@\rawscm{\#\var{n}\#}|expandhtmlindex}{2502}
+\indexentry{\#\%@\rawscm{\#\%}|expandhtmlindex}{2504}
+\indexentry{\#{\Tilde}@\rawscm{\#{\Tilde}}|expandhtmlindex}{2506}
+\indexentry{comments|expandhtmlindex}{2508}
+\indexentry{comments!S-expression@\rawscm{comments!S-expression}|expandhtmlindex}{2510}
+\indexentry{\#;@\rawscm{\#;}|expandhtmlindex}{2512}
+\indexentry{load@\rawscm{load}|expandhtmlindex}{2514}
+\indexentry{\#"!@\rawscm{\#"!}|expandhtmlindex}{2516}
+\indexentry{exn:read:non-char@\rawscm{exn:read:non-char}|expandhtmlindex}{2518}
+\indexentry{Output Printing|expandhtmlindex}{2520}
+\indexentry{vectors!printing|expandhtmlindex}{2522}
+\indexentry{print-vector-length@\rawscm{print-vector-length}|expandhtmlindex}{2524}
+\indexentry{boxes!printing|expandhtmlindex}{2526}
+\indexentry{print-box@\rawscm{print-box}|expandhtmlindex}{2528}
+\indexentry{structures!printing|expandhtmlindex}{2530}
+\indexentry{print-struct@\rawscm{print-struct}|expandhtmlindex}{2532}
+\indexentry{symbols!printing|expandhtmlindex}{2534}
+\indexentry{read-case-sensitive@\rawscm{read-case-sensitive}|expandhtmlindex}{2536}
+\indexentry{read-accept-bar-quote@\rawscm{read-accept-bar-quote}|expandhtmlindex}{2538}
+\indexentry{characters!printing|expandhtmlindex}{2540}
+\indexentry{strings!printing|expandhtmlindex}{2542}
+\indexentry{regular expressions!printing|expandhtmlindex}{2544}
+\indexentry{hash tables!printing|expandhtmlindex}{2546}
+\indexentry{graphs!printing|expandhtmlindex}{2548}
+\indexentry{Data Sharing in Input and Output|expandhtmlindex}{2550}
+\indexentry{graphs|expandhtmlindex}{2552}
+\indexentry{expressions!shared structure|expandhtmlindex}{2554}
+\indexentry{\#\var{n}=@\rawscm{\#\var{n}=}|expandhtmlindex}{2556}
+\indexentry{\#\var{n}\#@\rawscm{\#\var{n}\#}|expandhtmlindex}{2558}
+\indexentry{read-accept-graph@\rawscm{read-accept-graph}|expandhtmlindex}{2560}
+\indexentry{print-graph@\rawscm{print-graph}|expandhtmlindex}{2562}
+\indexentry{cycles|expandhtmlindex}{2564}
+\indexentry{display@\rawscm{display}|expandhtmlindex}{2566}
+\indexentry{write@\rawscm{write}|expandhtmlindex}{2568}
+\indexentry{print@\rawscm{print}|expandhtmlindex}{2570}
+\indexentry{exn:read@\rawscm{exn:read}|expandhtmlindex}{2572}
+\indexentry{exn:read@\rawscm{exn:read}|expandhtmlindex}{2574}
+\indexentry{exn:read@\rawscm{exn:read}|expandhtmlindex}{2576}
+\indexentry{exn:read@\rawscm{exn:read}|expandhtmlindex}{2578}
+\indexentry{Compilation|expandhtmlindex}{2580}
+\indexentry{compiling|expandhtmlindex}{2582}
+\indexentry{byte codes|expandhtmlindex}{2584}
+\indexentry{compile@\rawscm{compile}|expandhtmlindex}{2586}
+\indexentry{compile-syntax@\rawscm{compile-syntax}|expandhtmlindex}{2588}
+\indexentry{compiled-expression?@\rawscm{compiled-expression?}|expandhtmlindex}{2590}
+\indexentry{syntax objects!source location|expandhtmlindex}{2592}
+\indexentry{syntax objects!properties|expandhtmlindex}{2594}
+\indexentry{read-accept-compiled@\rawscm{read-accept-compiled}|expandhtmlindex}{2596}
+\indexentry{Dynamic Extensions|expandhtmlindex}{2598}
+\indexentry{directories!of currently loading file|expandhtmlindex}{2600}
+\indexentry{load-extension@\rawscm{load-extension}|expandhtmlindex}{2602}
+\indexentry{current-load-relative-directory@\rawscm{current-load-relative-directory}|expandhtmlindex}{2604}
+\indexentry{load-relative-extension@\rawscm{load-relative-extension}|expandhtmlindex}{2606}
+\indexentry{exn:i/o:filesystem@\rawscm{exn:i/o:filesystem}|expandhtmlindex}{2608}
+\indexentry{'wrong-version@\Symbol{wrong-version}|expandhtmlindex}{2610}
+\indexentry{Saving and Restoring Program Images|expandhtmlindex}{2612}
+\indexentry{write-image-to-file@\rawscm{write-image-to-file}|expandhtmlindex}{2614}
+\indexentry{exn:misc:unsupported@\rawscm{exn:misc:unsupported}|expandhtmlindex}{2616}
+\indexentry{read-image-from-file@\rawscm{read-image-from-file}|expandhtmlindex}{2618}
+\indexentry{exn:i/o:filesystem@\rawscm{exn:i/o:filesystem}|expandhtmlindex}{2620}
+\indexentry{exn:misc@\rawscm{exn:misc}|expandhtmlindex}{2622}
+\indexentry{--restore@\DFlag{restore}|expandhtmlindex}{2624}
+\indexentry{System Utilities|expandhtmlindex}{2626}
+\indexentry{Time|expandhtmlindex}{2628}
+\indexentry{time|expandhtmlindex}{2630}
+\indexentry{date|expandhtmlindex}{2632}
+\indexentry{current-seconds@\rawscm{current-seconds}|expandhtmlindex}{2634}
+\indexentry{seconds->date@\rawscm{seconds->date}|expandhtmlindex}{2636}
+\indexentry{current-seconds@\rawscm{current-seconds}|expandhtmlindex}{2638}
+\indexentry{file-or-directory-modify-seconds@\rawscm{file-or-directory-modify-seconds}|expandhtmlindex}{2640}
+\indexentry{date@\rawscm{date}|expandhtmlindex}{2642}
+\indexentry{date-second@\rawscm{date-second}|expandhtmlindex}{2644}
+\indexentry{date-minute@\rawscm{date-minute}|expandhtmlindex}{2646}
+\indexentry{date-hour@\rawscm{date-hour}|expandhtmlindex}{2648}
+\indexentry{date-day@\rawscm{date-day}|expandhtmlindex}{2650}
+\indexentry{date-month@\rawscm{date-month}|expandhtmlindex}{2652}
+\indexentry{date-year@\rawscm{date-year}|expandhtmlindex}{2654}
+\indexentry{date-week-day@\rawscm{date-week-day}|expandhtmlindex}{2656}
+\indexentry{date-year-day@\rawscm{date-year-day}|expandhtmlindex}{2658}
+\indexentry{date-dst?@\rawscm{date-dst?}|expandhtmlindex}{2660}
+\indexentry{date-time-zone-offset@\rawscm{date-time-zone-offset}|expandhtmlindex}{2662}
+\indexentry{current-seconds@\rawscm{current-seconds}|expandhtmlindex}{2664}
+\indexentry{file-or-directory-modify-seconds@\rawscm{file-or-directory-modify-seconds}|expandhtmlindex}{2666}
+\indexentry{time!machine|expandhtmlindex}{2668}
+\indexentry{current-milliseconds@\rawscm{current-milliseconds}|expandhtmlindex}{2670}
+\indexentry{current-inexact-milliseconds@\rawscm{current-inexact-milliseconds}|expandhtmlindex}{2672}
+\indexentry{current-process-milliseconds@\rawscm{current-process-milliseconds}|expandhtmlindex}{2674}
+\indexentry{current-gc-milliseconds@\rawscm{current-gc-milliseconds}|expandhtmlindex}{2676}
+\indexentry{time-apply@\rawscm{time-apply}|expandhtmlindex}{2678}
+\indexentry{time@\scmk{time}|expandhtmlindex}{2680}
+\indexentry{Operating System Processes|expandhtmlindex}{2682}
+\indexentry{processes|expandhtmlindex}{2684}
+\indexentry{subprocesses|expandhtmlindex}{2686}
+\indexentry{subprocess@\rawscm{subprocess}|expandhtmlindex}{2688}
+\indexentry{'exact@\Symbol{exact}|expandhtmlindex}{2690}
+\indexentry{exn:application:mismatch@\rawscm{exn:application:mismatch}|expandhtmlindex}{2692}
+\indexentry{exn:misc@\rawscm{exn:misc}|expandhtmlindex}{2694}
+\indexentry{subprocess-wait@\rawscm{subprocess-wait}|expandhtmlindex}{2696}
+\indexentry{subprocess-status@\rawscm{subprocess-status}|expandhtmlindex}{2698}
+\indexentry{'running@\Symbol{running}|expandhtmlindex}{2700}
+\indexentry{subprocess-kill@\rawscm{subprocess-kill}|expandhtmlindex}{2702}
+\indexentry{exn:misc@\rawscm{exn:misc}|expandhtmlindex}{2704}
+\indexentry{subprocess-pid@\rawscm{subprocess-pid}|expandhtmlindex}{2706}
+\indexentry{subprocess?@\rawscm{subprocess?}|expandhtmlindex}{2708}
+\indexentry{Windows Actions|expandhtmlindex}{2710}
+\indexentry{ShellExecute|expandhtmlindex}{2712}
+\indexentry{shell-execute@\rawscm{shell-execute}|expandhtmlindex}{2714}
+\indexentry{exn:misc:unsupported@\rawscm{exn:misc:unsupported}|expandhtmlindex}{2716}
+\indexentry{'sw\_hide@\Symbol{sw\_hide}|expandhtmlindex}{2718}
+\indexentry{'sw\_maximize@\Symbol{sw\_maximize}|expandhtmlindex}{2720}
+\indexentry{'sw\_minimize@\Symbol{sw\_minimize}|expandhtmlindex}{2722}
+\indexentry{'sw\_restore@\Symbol{sw\_restore}|expandhtmlindex}{2724}
+\indexentry{'sw\_show@\Symbol{sw\_show}|expandhtmlindex}{2726}
+\indexentry{'sw\_showdefault@\Symbol{sw\_showdefault}|expandhtmlindex}{2728}
+\indexentry{'sw\_showmaximized@\Symbol{sw\_showmaximized}|expandhtmlindex}{2730}
+\indexentry{'sw\_showminimized@\Symbol{sw\_showminimized}|expandhtmlindex}{2732}
+\indexentry{'sw\_showminnoactive@\Symbol{sw\_showminnoactive}|expandhtmlindex}{2734}
+\indexentry{'sw\_showna@\Symbol{sw\_showna}|expandhtmlindex}{2736}
+\indexentry{'sw\_shownoactivate@\Symbol{sw\_shownoactivate}|expandhtmlindex}{2738}
+\indexentry{'sw\_shownormal@\Symbol{sw\_shownormal}|expandhtmlindex}{2740}
+\indexentry{exn:misc@\rawscm{exn:misc}|expandhtmlindex}{2742}
+\indexentry{Operating System Environment Variables|expandhtmlindex}{2744}
+\indexentry{getenv@\rawscm{getenv}|expandhtmlindex}{2746}
+\indexentry{putenv@\rawscm{putenv}|expandhtmlindex}{2748}
+\indexentry{Runtime Information|expandhtmlindex}{2750}
+\indexentry{platform|expandhtmlindex}{2752}
+\indexentry{system-type@\rawscm{system-type}|expandhtmlindex}{2754}
+\indexentry{'unix@\Symbol{unix}|expandhtmlindex}{2756}
+\indexentry{'windows@\Symbol{windows}|expandhtmlindex}{2758}
+\indexentry{'macos@\Symbol{macos}|expandhtmlindex}{2760}
+\indexentry{'macosx@\Symbol{macosx}|expandhtmlindex}{2762}
+\indexentry{'oskit@\Symbol{oskit}|expandhtmlindex}{2764}
+\indexentry{system-library-subpath@\rawscm{system-library-subpath}|expandhtmlindex}{2766}
+\indexentry{version@\rawscm{version}|expandhtmlindex}{2768}
+\indexentry{banner@\rawscm{banner}|expandhtmlindex}{2770}
+\indexentry{vector-set-performance-stats"!@\rawscm{vector-set-performance-stats"!}|expandhtmlindex}{2772}
+\indexentry{Library Collections and MzLib|expandhtmlindex}{2774}
+\indexentry{libraries|expandhtmlindex}{2776}
+\indexentry{collections|expandhtmlindex}{2778}
+\indexentry{info.ss@\File{info.ss}|expandhtmlindex}{2780}
+\indexentry{current-library-collection-paths@\rawscm{current-library-collection-paths}|expandhtmlindex}{2782}
+\indexentry{find-library-collection-paths@\rawscm{find-library-collection-paths}|expandhtmlindex}{2784}
+\indexentry{PLTCOLLECTS|expandhtmlindex}{2786}
+\indexentry{collection-path@\rawscm{collection-path}|expandhtmlindex}{2788}
+\indexentry{exn:i/o:filesystem@\rawscm{exn:i/o:filesystem}|expandhtmlindex}{2790}
+\indexentry{MzLib library|expandhtmlindex}{2792}
+\indexentry{Running MzScheme|expandhtmlindex}{2794}
+\indexentry{MzScheme!stand-alone|expandhtmlindex}{2796}
+\indexentry{command-line arguments|expandhtmlindex}{2798}
+\indexentry{-e@\Flag{e}|expandhtmlindex}{2800}
+\indexentry{--eval@\DFlag{eval}|expandhtmlindex}{2802}
+\indexentry{-f@\Flag{f}|expandhtmlindex}{2804}
+\indexentry{--load@\DFlag{load}|expandhtmlindex}{2806}
+\indexentry{-d@\Flag{d}|expandhtmlindex}{2808}
+\indexentry{--load-cd@\DFlag{load-cd}|expandhtmlindex}{2810}
+\indexentry{-t@\Flag{t}|expandhtmlindex}{2812}
+\indexentry{--require@\DFlag{require}|expandhtmlindex}{2814}
+\indexentry{-F@\Flag{F}|expandhtmlindex}{2816}
+\indexentry{--Load@\DFlag{Load}|expandhtmlindex}{2818}
+\indexentry{-D@\Flag{D}|expandhtmlindex}{2820}
+\indexentry{--Load-cd@\DFlag{Load-cd}|expandhtmlindex}{2822}
+\indexentry{-T@\Flag{T}|expandhtmlindex}{2824}
+\indexentry{--Require@\DFlag{Require}|expandhtmlindex}{2826}
+\indexentry{-l@\Flag{l}|expandhtmlindex}{2828}
+\indexentry{--mzlib@\DFlag{mzlib}|expandhtmlindex}{2830}
+\indexentry{-L@\Flag{L}|expandhtmlindex}{2832}
+\indexentry{-M@\Flag{M}|expandhtmlindex}{2834}
+\indexentry{-r@\Flag{r}|expandhtmlindex}{2836}
+\indexentry{--script@\DFlag{script}|expandhtmlindex}{2838}
+\indexentry{-i@\Flag{i}|expandhtmlindex}{2840}
+\indexentry{--script-cd@\DFlag{script-cd}|expandhtmlindex}{2842}
+\indexentry{-u@\Flag{u}|expandhtmlindex}{2844}
+\indexentry{--require-script@\DFlag{require-script}|expandhtmlindex}{2846}
+\indexentry{-w@\Flag{w}|expandhtmlindex}{2848}
+\indexentry{--awk@\DFlag{awk}|expandhtmlindex}{2850}
+\indexentry{-k@\Flag{k}|expandhtmlindex}{2852}
+\indexentry{-C@\Flag{C}|expandhtmlindex}{2854}
+\indexentry{--main@\DFlag{main}|expandhtmlindex}{2856}
+\indexentry{-x@\Flag{x}|expandhtmlindex}{2858}
+\indexentry{--no-lib-path@\DFlag{no-lib-path}|expandhtmlindex}{2860}
+\indexentry{current-library-collection-paths@\rawscm{current-library-collection-paths}|expandhtmlindex}{2862}
+\indexentry{-q@\Flag{q}|expandhtmlindex}{2864}
+\indexentry{--no-init-file@\DFlag{no-init-file}|expandhtmlindex}{2866}
+\indexentry{-A@\Flag{A}|expandhtmlindex}{2868}
+\indexentry{--no-argv@\DFlag{no-argv}|expandhtmlindex}{2870}
+\indexentry{-g@\Flag{g}|expandhtmlindex}{2872}
+\indexentry{--case-sens@\DFlag{case-sens}|expandhtmlindex}{2874}
+\indexentry{-s@\Flag{s}|expandhtmlindex}{2876}
+\indexentry{--set-undef@\DFlag{set-undef}|expandhtmlindex}{2878}
+\indexentry{set"!@\rawscm{set"!}|expandhtmlindex}{2880}
+\indexentry{--@\Flag{-}|expandhtmlindex}{2882}
+\indexentry{-m@\Flag{m}|expandhtmlindex}{2884}
+\indexentry{--mute-banner@\DFlag{mute-banner}|expandhtmlindex}{2886}
+\indexentry{-v@\Flag{v}|expandhtmlindex}{2888}
+\indexentry{--version@\DFlag{version}|expandhtmlindex}{2890}
+\indexentry{-h@\Flag{h}|expandhtmlindex}{2892}
+\indexentry{--help@\DFlag{help}|expandhtmlindex}{2894}
+\indexentry{-p@\Flag{p}|expandhtmlindex}{2896}
+\indexentry{--persistent@\DFlag{persistent}|expandhtmlindex}{2898}
+\indexentry{-R@\Flag{R}|expandhtmlindex}{2900}
+\indexentry{--restore@\DFlag{restore}|expandhtmlindex}{2902}
+\indexentry{write-image-to-file@\rawscm{write-image-to-file}|expandhtmlindex}{2904}
+\indexentry{Flag Conventions|expandhtmlindex}{2906}
+\indexentry{current-command-line-arguments@\rawscm{current-command-line-arguments}|expandhtmlindex}{2908}
+\indexentry{find-system-path@\rawscm{find-system-path}|expandhtmlindex}{2910}
+\indexentry{argv@\rawscm{argv}|expandhtmlindex}{2912}
+\indexentry{program@\rawscm{program}|expandhtmlindex}{2914}
+\indexentry{Executable Name|expandhtmlindex}{2916}
+\indexentry{Initialization|expandhtmlindex}{2918}
+\indexentry{current-library-collection-paths@\rawscm{current-library-collection-paths}|expandhtmlindex}{2920}
+\indexentry{find-system-path@\rawscm{find-system-path}|expandhtmlindex}{2922}
+\indexentry{read-eval-print-loop@\rawscm{read-eval-print-loop}|expandhtmlindex}{2924}
+\indexentry{read-eval-print-loop@\rawscm{read-eval-print-loop}|expandhtmlindex}{2926}
+\indexentry{Writing and Running Scripts|expandhtmlindex}{2928}
+\indexentry{shell scripts|expandhtmlindex}{2930}
+\indexentry{scripts|expandhtmlindex}{2932}
+\indexentry{\#"!@\rawscm{\#"!}|expandhtmlindex}{2934}

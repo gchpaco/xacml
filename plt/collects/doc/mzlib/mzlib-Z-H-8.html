@@ -1,0 +1,49 @@
+<!doctype html public "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!--
+
+Generated from mzlib.tex by tex2page, v 2004-09-11
+(running on MzScheme 209, unix), 
+(c) Dorai Sitaram, 
+http://www.ccs.neu.edu/~dorai/tex2page/tex2page-doc.html
+
+-->
+<head>
+<title>
+PLT MzLib: Libraries Manual
+</title>
+<link rel="stylesheet" type="text/css" href="mzlib-Z-S.css" title=default>
+<meta name=robots content="noindex,follow">
+</head>
+<body>
+<div align=right class=navigation><i>[Go to <span><a href="mzlib.html">first</a>, <a href="mzlib-Z-H-7.html">previous</a></span><span>, <a href="mzlib-Z-H-9.html">next</a></span> page<span>; &nbsp;&nbsp;</span><span><a href="mzlib.html#node_toc_start">contents</a></span><span><span>; &nbsp;&nbsp;</span><a href="mzlib-Z-H-42.html#node_index_start">index</a></span>]</i></div><p></p>
+<a name="node_chap_8"></a>
+<h1 class=chapter>
+<div class=chapterheading><a href="mzlib.html#node_toc_node_chap_8">Chapter 8</a></div><br>
+<a href="mzlib.html#node_toc_node_chap_8"><tt><strong>cm-accomplice.ss</strong></tt>: Compilation Manager Hook for Syntax Transformers</a></h1>
+<p><a name="node_idx_294"></a><a name="node_idx_296"></a></p>
+<p>
+
+
+</p>
+<p></p>
+<p>
+
+<a name="node_idx_298"></a><a name="node_kw_definitionregister-external-file"></a><code class=scheme>(register-external-file</code><tt>&nbsp;</tt><code class=scheme><span class=variable>file</span></code><code class=scheme>)</code> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<small>P</small><small>R</small><small>O</small><small>C</small><small>E</small><small>D</small><small>U</small><small>R</small><small>E</small>
+</p>
+<p>
+Registers the complete path <code class=scheme><span class=variable>file</span></code> with a compilation manager, if
+one is active. The compilation manager then records the path as
+contributing to the implementation of the module currently being
+compiled. Afterward, if the registered file is modified, the
+compilation manager will know to recompile the module.</p>
+<p>
+The <code class=scheme><span class=keyword>include</span></code> macro, for example, calls this function with the
+path of an included file as it expands an <code class=scheme><span class=keyword>include</span></code> form.</p>
+<p>
+</p>
+<p>
+</p>
+<div align=right class=navigation><i>[Go to <span><a href="mzlib.html">first</a>, <a href="mzlib-Z-H-7.html">previous</a></span><span>, <a href="mzlib-Z-H-9.html">next</a></span> page<span>; &nbsp;&nbsp;</span><span><a href="mzlib.html#node_toc_start">contents</a></span><span><span>; &nbsp;&nbsp;</span><a href="mzlib-Z-H-42.html#node_index_start">index</a></span>]</i></div><p></p>
+</body>
+</html>

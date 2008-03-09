@@ -1,0 +1,295 @@
+<!doctype html public "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!--
+
+Generated from mzc.tex by tex2page, v 2004-09-11
+(running on MzScheme 209, unix), 
+(c) Dorai Sitaram, 
+http://www.ccs.neu.edu/~dorai/tex2page/tex2page-doc.html
+
+-->
+<head>
+<title>
+PLT mzc: MzScheme Compiler Manual
+</title>
+<link rel="stylesheet" type="text/css" href="mzc-Z-S.css" title=default>
+<meta name=robots content="noindex,follow">
+</head>
+<body>
+<div align=right class=navigation><i>[Go to <span><a href="mzc.html">first</a>, <a href="mzc-Z-H-1.html">previous</a></span><span>, <a href="mzc-Z-H-3.html">next</a></span> page<span>; &nbsp;&nbsp;</span><span><a href="mzc.html#node_toc_start">contents</a></span><span><span>; &nbsp;&nbsp;</span><a href="mzc-Z-H-8.html#node_index_start">index</a></span>]</i></div><p></p>
+<a name="node_chap_2"></a>
+<h1 class=chapter>
+<div class=chapterheading><a href="mzc.html#node_toc_node_chap_2">Chapter 2</a></div><br>
+<a href="mzc.html#node_toc_node_chap_2">Foreign-Function Interface to C</a></h1>
+<p><a name="node_idx_46"></a></p>
+<p>
+<a name="node_idx_48"></a>
+The <tt><strong>cffi.ss</strong></tt><a name="node_idx_50"></a> library of the <tt><strong>compiler</strong></tt> collection
+implements a subset of <a name="node_idx_52"></a> Gambit-C's foreign-function
+interface (see <a name="node_idx_54"></a> Marc Feeley's <em>Gambit-C,
+version 3.0</em>). The <tt><strong>cffi.ss</strong></tt> module defines two forms:
+<code class=scheme><span class=keyword>c-lambda</span></code> and <code class=scheme><span class=keyword>c-declare</span></code>. When interpreted directly or
+compiled to byte code, <code class=scheme><span class=keyword>c-lambda</span></code> produces a function that
+always raises <code class=scheme>exn:user</code>, and <code class=scheme><span class=keyword>c-declare</span></code> raises
+<code class=scheme>exn:user</code>. When compiled by <tt><strong>mzc</strong></tt>, the forms provide access to
+C. The <tt><strong>mzc</strong></tt> compiler implicitly imports <tt><strong>cffi.ss</strong></tt> into the
+top-level environment.</p>
+<p>
+The <a name="node_idx_56"></a><code class=scheme><span class=keyword>c-lambda</span></code> form creates a Scheme procedure whose body is
+implemented in C. Instead of declaring argument names, a
+<code class=scheme><span class=keyword>c-lambda</span></code> form declares argument types, as well as a return
+type. The implementation can be simply the name of a C function, as
+in the following definition of <code class=scheme>fmod</code>:
+</p>
+<div align=left><pre class=scheme>(<span class=keyword>define</span> <span class=variable>fmod</span> (<span class=keyword>c-lambda</span> (<code class=scheme><span class=keyword>double</span></code> <code class=scheme><span class=keyword>double</span></code>) <code class=scheme><span class=keyword>double</span></code> <span class=selfeval>&quot;fmod&quot;</span>))
+</pre></div><p>
+Alternatively, the implementation can be C code to serve as the body
+of a function, where the arguments are bound to <tt>___arg1</tt>
+(three underscores), etc., and the result is installed into
+<tt>___result</tt> (three underscores):
+</p>
+<div align=left><pre class=scheme>(<span class=keyword>define</span> <span class=variable>machine-string-&gt;float</span>
+  (<span class=keyword>c-lambda</span> (<code class=scheme><span class=keyword>char-string</span></code>) <code class=scheme><span class=keyword>float</span></code>
+     <span class=selfeval>&quot;___result = *(float *)___arg1;&quot;</span>))
+</pre></div><p>
+The <code class=scheme><span class=keyword>c-lambda</span></code> form provides only limited conversions between C and
+Scheme data. For example, the following function does not reliably
+produce a string of four characters:
+</p>
+<div align=left><pre class=scheme>(<span class=keyword>define</span> <span class=variable>broken-machine-float-&gt;string</span>
+  (<span class=keyword>c-lambda</span> (<code class=scheme><span class=keyword>float</span></code>) <code class=scheme><span class=keyword>char-string</span></code>
+     <span class=selfeval>&quot;char b[5]; *(float *)b = ___arg1; b[4] = 0; ___result = b;&quot;</span>))
+</pre></div><p>
+because the representation of a <tt>float</tt> can contain null bytes,
+which terminate the string. However, the full MzScheme API, which is
+described in <a href="../insidemz/insidemz.html"><i>Inside PLT MzScheme</i></a>, can be used in a function body:
+</p>
+<div align=left><pre class=scheme>(<span class=keyword>define</span> <span class=variable>machine-float-&gt;string</span>
+  (<span class=keyword>c-lambda</span> (<code class=scheme><span class=keyword>float</span></code>) <code class=scheme><span class=keyword>scheme-object</span></code>
+     <span class=selfeval>&quot;char b[4]; *(float *)b = ___arg1; ___result = scheme_make_sized_string(b, 4, 1);&quot;</span>))
+</pre></div><p>
+The <a name="node_idx_58"></a><code class=scheme><span class=keyword>c-declare</span></code> form declares arbitrary C code to appear after
+<tt><strong>escheme.h</strong></tt> or <tt><strong>scheme.h</strong></tt> is included, but before any other
+code in the compilation environment of the declaration. It is often
+used to declare C header file inclusions. For example, a proper
+definition of <code class=scheme>fmod</code> needs the <tt><strong>math.h</strong></tt> header file:
+</p>
+<div align=left><pre class=scheme>(<span class=keyword>c-declare</span> <span class=selfeval>&quot;#include &lt;math.h&gt;&quot;</span>)
+(<span class=keyword>define</span> <span class=variable>fmod</span> (<span class=keyword>c-lambda</span> (<code class=scheme><span class=keyword>double</span></code> <code class=scheme><span class=keyword>double</span></code>) <code class=scheme><span class=keyword>double</span></code> <span class=selfeval>&quot;fmod&quot;</span>))
+</pre></div><p>
+The <code class=scheme><span class=keyword>c-declare</span></code> form can also be used to define helper C
+functions to be called through <code class=scheme><span class=keyword>c-lambda</span></code>.</p>
+<p>
+The <a name="node_idx_60"></a><code class=scheme><span class=keyword>c-include</span></code> form expands to a <code class=scheme><span class=keyword>c-declare</span></code> form
+using the content of a specified file. Use <code class=scheme>(<span class=keyword>c-include</span> <span class=variable>file</span>)</code>
+instead of <code class=scheme>(<code class=scheme><span class=keyword>c-declare</span></code> <code class=scheme><span class=selfeval>&quot;#include <code class=scheme><span class=variable>file</span></code>&quot;</span></code>)</code>
+when it's easier to have MzScheme resolve the file path than to have
+the C compiler resolve it.</p>
+<p>
+The <tt><strong>plt/collects/mzscheme/examples</strong></tt> directory in the PLT
+distribution contains additional examples.</p>
+<p>
+The <code class=scheme><span class=keyword>c-lambda</span></code>, <code class=scheme><span class=keyword>c-declare</span></code>, and <code class=scheme><span class=keyword>c-include</span></code> forms are
+defined as follows:
+</p>
+<ul><p>
+</p>
+<li><p><a name="node_kw_definitionc-lambda"></a>
+<code class=scheme>(<span class=keyword>c-lambda</span> (<span class=variable>argument-type</span> <tt>&middot;&middot;&middot;</tt>) <span class=variable>result-type</span> <span class=variable>funcname-or-body-string</span>)</code>
+creates a Scheme procedure whose body is implemented in C. The
+procedure takes as many arguments as the supplied
+<code class=scheme><span class=variable>argument-type</span></code>s, and it returns one value. If <code class=scheme><span class=variable>return-type</span></code>
+is <code class=scheme><span class=keyword>void</span></code>, the procedure's result is always void.  The
+<code class=scheme><span class=variable>funcname-or-body-string</span></code> is either the name of a C function (or
+macro) or the body of a C function.</p>
+<p>
+If <code class=scheme><span class=variable>funcname-or-body-string</span></code> is a string containing only
+alphanumeric characters and <tt>_</tt>, then the created Scheme
+procedure passes all of its arguments to the named C function (or
+macro) and returns the function's result. Each argument to the Scheme
+procedure is converted according to the corresponding
+<code class=scheme><span class=variable>argument-type</span></code> (as described below) to produce an argument to
+the C function. Unless <code class=scheme><span class=variable>return-type</span></code> is <code class=scheme><span class=keyword>void</span></code>, the C
+function's result is converted according to <code class=scheme><span class=variable>return-type</span></code> for the
+Scheme procedure's result.</p>
+<p>
+If <code class=scheme><span class=variable>funcname-or-body-string</span></code> contains more than alphanumeric
+characters and <tt>_</tt>, then it must contain C code to implement the
+function body. The converted arguments for the function will be in
+variables <tt>___arg1</tt>, <tt>___arg2</tt>, <tt>...</tt> (with three
+underscores in each name) in the context where the
+<code class=scheme><span class=variable>funcname-or-body-string</span></code> is placed for compilation. Unless
+<code class=scheme><span class=variable>return-type</span></code> is <code class=scheme><span class=keyword>void</span></code>, the <code class=scheme><span class=variable>funcname-or-body-string</span></code>
+code should should assign a result to the variable <tt>___result</tt>
+(three underscores), which will be declared but not initialized. The
+<code class=scheme><span class=variable>funcname-or-body-string</span></code> code should not return explicitly;
+control should always reach the end of the body. If the
+<code class=scheme><span class=variable>funcname-or-body-string</span></code> code defines the pre-processor macro
+<tt>___AT_END</tt> (with three leading underscores), then the
+macro's value should be C code to execute after the value
+<tt>___result</tt> is converted to a Scheme result, but before the
+result is returned, all in the same block; defining
+<tt>___AT_END</tt> is primarily useful for deallocating a string in
+<tt>___result</tt> that has been copied by conversion.  The
+<code class=scheme><span class=variable>funcname-or-body-string</span></code> code will start on a new line at the
+beginning of a block in its compilation context, and
+<tt>___AT_END</tt> will be undefined after the code.</p>
+<p>
+In addition to <tt>___arg1</tt>, etc., the variable <tt>argc</tt> is
+bound in <code class=scheme><span class=variable>funcname-or-body-string</span></code> to the number of arguments
+supplied to the function, and <tt>argv</tt> is bound to a
+<tt>Scheme_Object*</tt> array of length <tt>argc</tt> containing the
+function arguments as Scheme values. The <tt>argv</tt> and <tt>argc</tt>
+variables are mainly useful for error reporting (e.g., with
+<tt>scheme_wrong_type</tt>).</p>
+<p>
+Each <code class=scheme><span class=variable>argument-type</span></code> must be one of the following:
+</p>
+<ul><p>
+</p>
+<li><p><a name="node_idx_62"></a><code class=scheme><code class=scheme><span class=keyword>bool</span></code></code> <br>
+Scheme range: any value <br>
+C type: <tt>int</tt>
+ <br>
+Scheme to C conversion: <code class=scheme><span class=selfeval>#f</span></code> <tt>=&gt;</tt> 0, anything else <tt>=&gt;</tt> 1
+ <br>
+C to Scheme conversion: 0 <tt>=&gt;</tt> <code class=scheme><span class=selfeval>#f</span></code>, anything else <tt>=&gt;</tt> <code class=scheme><span class=selfeval>#t</span></code>
+</p>
+<li><p><a name="node_idx_64"></a><code class=scheme><code class=scheme><span class=keyword>char</span></code></code> <br>
+Scheme range: character <br>
+C type: <tt>char</tt>
+ <br>
+Scheme to C conversion: character's ASCII value cast to signed byte
+ <br>
+C to Scheme conversion: ASCII value from unsigned cast mapped to character
+</p>
+<li><p><a name="node_idx_66"></a><code class=scheme><code class=scheme><span class=keyword>unsigned-char</span></code></code> <br>
+Scheme range: character <br>
+C type: <tt>unsigned char</tt>
+ <br>
+Scheme to C conversion: character's ASCII value
+ <br>
+C to Scheme conversion: ASCII value mapped to character    
+</p>
+<li><p><a name="node_idx_68"></a><code class=scheme><code class=scheme><span class=keyword>signed-char</span></code></code> <br>
+Scheme range: character <br>
+C type: <tt>signed char</tt>
+ <br>
+Scheme to C conversion: character's ASCII value cast to signed byte
+ <br>
+C to Scheme conversion: ASCII value from unsigned cast mapped to character
+</p>
+<li><p><a name="node_idx_70"></a><code class=scheme><code class=scheme><span class=keyword>int</span></code></code> <br>
+Scheme range: exact integer that fits into an <tt>int</tt> <br>
+C type: <tt>int</tt>
+ <br>
+conversions: (obvious and precise)</p>
+<li><p><a name="node_idx_72"></a><code class=scheme><code class=scheme><span class=keyword>unsigned-int</span></code></code> <br>
+Scheme range: exact integer that fits into an <tt>unsigned int</tt> <br>
+C type: <tt>unsigned int</tt>
+ <br>
+conversions: (obvious and precise)</p>
+<li><p><a name="node_idx_74"></a><code class=scheme><code class=scheme><span class=keyword>long</span></code></code> <br>
+Scheme range: exact integer that fits into a <tt>long</tt> <br>
+C type: <tt>long</tt>
+ <br>
+conversions: (obvious and precise)</p>
+<li><p><a name="node_idx_76"></a><code class=scheme><code class=scheme><span class=keyword>unsigned-long</span></code></code> <br>
+Scheme range: exact integer that fits into an <tt>unsigned long</tt> <br>
+C type: <tt>unsigned long</tt>
+ <br>
+conversions: (obvious and precise)</p>
+<li><p><a name="node_idx_78"></a><code class=scheme><code class=scheme><span class=keyword>short</span></code></code> <br>
+Scheme range: exact integer that fits into a <tt>short</tt> <br>
+C type: <tt>short</tt>
+ <br>
+conversions: (obvious and precise)</p>
+<li><p><a name="node_idx_80"></a><code class=scheme><code class=scheme><span class=keyword>unsigned-short</span></code></code> <br>
+Scheme range: exact integer that fits into an <tt>unsigned short</tt> <br>
+C type: <tt>unsigned short</tt>
+ <br>
+conversions: (obvious and precise)</p>
+<li><p><a name="node_idx_82"></a><code class=scheme><code class=scheme><span class=keyword>float</span></code></code> <br>
+Scheme range: real number <br>
+C type: <tt>float</tt>
+ <br>
+Scheme to C conversion: number converted to inexact and cast to <tt>float</tt>
+ <br>
+C to Scheme conversion: cast to <tt>double</tt> and encapsulated as an inexact number
+</p>
+<li><p><a name="node_idx_84"></a><code class=scheme><code class=scheme><span class=keyword>double</span></code></code> <br>
+Scheme range: real number <br>
+C type: <tt>double</tt>
+ <br>
+Scheme to C conversion: number converted to inexact
+ <br>
+C to Scheme conversion: encapsulated as an inexact number
+</p>
+<li><p><a name="node_idx_86"></a><code class=scheme><code class=scheme><span class=keyword>char-string</span></code></code> <br>
+Scheme range: string or <code class=scheme><span class=selfeval>#f</span></code> <br>
+C type: <tt>char*</tt>
+ <br>
+Scheme to C conversion: string <tt>=&gt;</tt> contained character array pointer, <code class=scheme><span class=selfeval>#f</span></code> <tt>=&gt;</tt> <tt>NULL</tt>
+ <br>
+C to Scheme conversion: <tt>NULL</tt> <tt>=&gt;</tt> <code class=scheme><span class=selfeval>#f</span></code>, anything else <tt>=&gt;</tt> new string created by copying the string
+</p>
+<li><p><a name="node_idx_88"></a><code class=scheme><code class=scheme><span class=keyword>nonnull-char-string</span></code></code> <br>
+Scheme range: string <br>
+C type: <tt>char*</tt>
+ <br>
+Scheme to C conversion: string's contained character array pointer
+ <br>
+C to Scheme conversion: new string created by copying the string
+</p>
+<li><p><a name="node_idx_90"></a><code class=scheme><code class=scheme><span class=keyword>scheme-object</span></code></code> <br>
+Scheme range: any value <br>
+C type: <tt>Scheme_Object*</tt>
+ <br>
+Scheme to C conversion: no conversion
+ <br>
+C to Scheme conversion: no conversion</p>
+<p>
+</p>
+<li><p><a name="node_idx_92"></a><code class=scheme>(<code class=scheme><span class=keyword>pointer</span></code> <code class=scheme><span class=variable>string</span></code>)</code> <br>
+Scheme range: an opaque c-pointer value identified as type <code class=scheme><span class=variable>string</span></code> or <code class=scheme><span class=selfeval>#f</span></code> <br>
+C type: <tt><code class=scheme><span class=variable>string</span></code>*</tt>
+ <br>
+Scheme to C conversion: <code class=scheme><span class=selfeval>#f</span></code> <tt>=&gt;</tt> <tt>NULL</tt>, c-pointer <tt>=&gt;</tt> contained pointer cast to <tt><code class=scheme><span class=variable>string</span></code>*</tt>
+ <br>
+C to Scheme conversion: <tt>NULL</tt> <tt>=&gt;</tt> <code class=scheme><span class=selfeval>#f</span></code>, anything else <tt>=&gt;</tt> new c-pointer containing the pointer and identified as type <code class=scheme><span class=variable>string</span></code></p>
+<p>
+</p>
+</ul><p></p>
+<p>
+The <code class=scheme><span class=variable>return-type</span></code> must be <code class=scheme><span class=keyword>void</span></code> or one of the
+<code class=scheme><span class=variable>arg-type</span></code> keywords.</p>
+<p>
+</p>
+<li><p><a name="node_kw_definitionc-declare"></a>
+<code class=scheme>(<span class=keyword>c-declare</span> <span class=variable>code-string</span>)</code>
+declares arbitrary C code to appear after <tt><strong>escheme.h</strong></tt> or
+<tt><strong>scheme.h</strong></tt> is included, but before any other code in the
+compilation environment of the declaration. A <code class=scheme><span class=keyword>c-declare</span></code> form
+can appear only at the top-level or within a module's top-level sequence.</p>
+<p>
+The <code class=scheme><span class=variable>code-string</span></code> code will appear on a new line in the file for
+C compilation. Multiple <code class=scheme><span class=keyword>c-include</span></code> declarations are
+concatenated (with newlines) in order to produces a sequence of
+declarations.
+</p>
+<p>
+</p>
+<li><p><a name="node_kw_definitionc-include"></a>
+<code class=scheme>(<span class=keyword>c-include</span> <span class=variable>path-spec</span>)</code>
+expands to a use of <code class=scheme><span class=keyword>c-declare</span></code> with the content of
+<code class=scheme><span class=variable>path-spec</span></code>. The <code class=scheme><span class=variable>path-spec</span></code> has the same form as for
+<code class=scheme><span class=keyword>include</span></code> in MzLib's <tt><strong>include.ss</strong></tt>.</p>
+<p>
+</p>
+</ul><p>
+</p>
+<p>
+</p>
+<div align=right class=navigation><i>[Go to <span><a href="mzc.html">first</a>, <a href="mzc-Z-H-1.html">previous</a></span><span>, <a href="mzc-Z-H-3.html">next</a></span> page<span>; &nbsp;&nbsp;</span><span><a href="mzc.html#node_toc_start">contents</a></span><span><span>; &nbsp;&nbsp;</span><a href="mzc-Z-H-8.html#node_index_start">index</a></span>]</i></div><p></p>
+</body>
+</html>

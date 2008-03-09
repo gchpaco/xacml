@@ -1,0 +1,508 @@
+_Web-server_ Collection
+=======================
+
+Launchers
+=========
+
+The _Web_ _server_ collection provides two launchers.  The
+"web-server" launcher starts the Web server.  The "web-server-monitor"
+launcher monitors a Web server by periodically sending it requests.
+Both launchers support the -h or --help flags which describe other
+available options.
+
+The command line 
+  web-server [-p <port>] [-f <configuration-table-file>] [-a <ip-address>]
+starts the server on port 80 or <port> and uses the configuration options
+from the "configuration-table" file of the web-server collection or from
+the specified configuration file.  If <ip-address> is provided, the server
+accepts connections only from <ip-address>.
+
+The launcher _web-server-text_ is the same as the _web-server_ launcher,
+except that it can not load servlets written using DrScheme's graphical XML
+boxes, but it uses less memory.  It also works with the mzscheme-only
+distribution of PLT-scheme.
+
+When launched via
+  web-server-monitor [-p <port>]
+                     [-f <frequency>]
+                     [-t <timeout>]
+		     <alert-email> <host-name>
+the _web-server-monitor_ polls any Web server running on host
+<host-name> at port <port> (or port 80) every <frequency> seconds (or
+1 hour).  If the server does not respond to a HEAD HTTP request for
+the homepage within <timeout> (or 75) seconds or sends an error
+response, the monitor will notify <alert-email> of the problem.
+
+Another Start
+=============
+
+Requiring the library _web-server.ss_, via 
+  (require (lib "web-server.ss" "web-server"))
+provides the serve function, which starts the server with more configuration
+options.
+
+> serve : configuration [nat] [str or #f] -> (-> void)
+  (define (serve configuration port ip-address) ...)
+  
+  The serve function starts the Web server, just like the launcher does,
+  but the configuration argument supplies the server's settings.  The
+  optional port argument overrides the port supplied by the configuration.
+  The optional ip-address restricts accepted web requests to come only from
+  that address.
+
+  The result of invoking serve is a function of no arguments that shuts down
+  the server.
+
+  A later section describes the remaining semi-internal functions in the
+  web-sever.ss library.
+
+The library _internal-server.ss_ also provides a single function named
+internal-serve that behaves almost the same as the above function with
+the same name.  Instead of accepting HTTP requests from network
+connections, internal-serve constructs a virtual network via pipes and
+channels (see tcp-redirect.ss in the net collection) and uses a
+browser from the browser collection to show the urls. No network
+connections from the underlying OS are used.
+
+It returns four functions. The first one shutsdown the web
+server, as above.
+
+The second, third, and fourth results are helper functions
+that manipulate urls. They are here as an artifact of the
+internal server organization. Since the internal server has
+its own instantiation of the net collection's url library,
+other code cannot manipulate the urls. These are various
+needed helper functions.
+
+The second result is a function that takes in a url value (any
+value, really -- whatever the browser collection uses as
+urls should be okay here) and determines if it represents a
+url that would be used internally or is a file: url. This
+function returns #f if the url would be handled internally
+and returns a string representing the url if it would be
+handled externally.
+
+The third result takes a url value (any value, really --
+whatever the browser collection uses as urls should be okay
+here) and returns that path portion of the url, or #f if
+none.
+
+The fourth result turns a url into a string.
+
+The fifth result from this serve is a function that returns
+an already opened browser window, if one is available or #f
+if none are available.
+
+The final result creates a new browser frame. The new frame
+is not visible.
+
+In addition, this serve accepts another optional
+argument. This argument is mixed into the frame class
+created by the internal browser. The frame is then
+instantiated with one argument: the url to visit.
+
+> serve : (opt->*
+           (configuration?)
+           ((and/f number? integer? exact? positive?)
+            (union string? false?)
+            (make-mixin-contract frame%))
+           ((-> void?)
+            (any? . -> . (union false? string?))
+            (any? . -> . (union false? string?))
+            (any? . -> . string?)
+            (-> (union false? (is-a?/c frame%)))
+            (-> (is-a?/c frame%))))
+
+Constructing configurations requires another library.
+  (require (lib "configuration.ss" "web-server"))
+
+> load-configuration : str -> configuration
+  
+  This function accepts a path to a configuration file and returns a
+  configuration that serve accepts.  The configuration servlet creates
+  configuration files.
+
+
+Serving Content
+===============
+
+The Web Server serves content statically or dynamically, depending
+on the request URL.
+
+On static requests (those that do not match the Web Server's servlet
+filter), the Web Server serves files out of the content directory
+(build-path (collection-path "web-server") "default-web-root"
+"htdocs"), unless the function serve was called with a virtual-hosts
+argument or the configuration tool modified the location.
+
+The Web server guarantees that for such static responses, it 
+will serve only those files accessible in subdirectories of the
+content directory.  In the absence of filesystem links, this means
+that only files which live in the content directory will be made
+available to the outside world.
+
+When a request URL begins with a specified directory (typically
+"/servlets/"), the Web Server generates its response dynamically,
+based on files in a special directory.  By default, the special
+directory is named "servlets" within the "default-web-root" of the
+"web-server" collection directory.  Instead of serving the files in
+this directory verbatim, the server evaluates the contained Scheme
+_servlet_ and serves the output.  Servlets are (by default) loaded in
+a case-sensitive manner. (Seach in help-desk for read-case-sensitive.)
+
+The server supports two forms of servlets.  More may appear.
+
+The first type of servlet is a module that provides three values:
+an interface-version, a timeout, and a start function.
+
+(module a-module-servlet mzscheme
+  (provide interface-version timeout start)
+  
+  (define interface-version 'v1)
+  
+  (define timeout +inf.0)
+  
+  ; start : request -> response
+  (define (start initial-request)
+    `(html (head (title "A Test Page"))
+           (body ([bgcolor "white"])
+                 (p "This is a simple module servlet.")))))
+
+The _interface-version_ is a symbol indicating how the server
+should interact with the servlet.  The only supported value
+is 'v1 at this time.
+
+The _timeout_ is the number of seconds the server will allow the
+servlet to run before shutting it down.  Large values consume
+more memory, while smaller values annoy users by forcing them to
+restart their session.  The value can be adjusted dynamically by
+calling the _adjust-timeout!_ function.
+
+The _start_ function consumes a request, and produces a response.
+Each time a consumer visits the URL associated with the (beginning of
+the) servlet, the server calls the start function with the request
+sent from the browser.  The server then sends the response produced by
+the start function back to the browser.
+
+A request is
+ (make-request method uri headers bindings host-ip client-ip), where
+ - method : (Union 'get 'post)
+ - uri : URL see the net collection in help-desk for details
+ - headers : environment
+             optional HTTP headers for this request
+ - bindings : environment
+              name value pairs from the form submitted or the query part
+              of the URL.
+ - bindings/raw : either a string or an environment
+                  For file uploads bindings/raw is identical to bindings.
+                  Otherwise, it contains the unparsed get or post data.
+
+Usually, the bindings are the most useful part of a request.
+
+The path part of the URL supplies the file path to the servlet
+relative to the "servlets" directory.  However, paths may also contain
+extra path components that servlets may use as additional input.  For
+example all of the following URLs refer to the same servlet:
+
+  http://www.plt-scheme.org/servlets/my-servlet
+  http://www.plt-scheme.org/servlets/my-servlet/extra
+  http://www.plt-scheme.org/servlets/my-servlet/extra/directories
+
+
+A response is one of the following:
+
+ - an X-expression representing HTML
+   (Search for XML in help-desk.)
+
+ - a (listof string) where
+   - The first string is the mime type
+     (often "text/html", but see RFC 2822 for other options).
+   - The rest of the strings provide the document's content.
+
+>  (make-response/full code message seconds mime extras body) where
+   - code is a natural number indicating the HTTP response code
+   - message is a string describing the code to a human
+   - seconds is a natural number indicating the time the resource was created.
+                Use (current-seconds) for dynamically created responses.
+   - mime is a string indicating the response type.
+   - extras is an environment containing extra headers for
+               redirects, authentication, or cookies.
+     an environment is a (listof (cons symbol string))
+   - body is a (listof string)
+
+>  (make-response/incremental code message seconds mime extras gen) where
+   - code, message, seconds, mime, and extras are all the same as for
+     make-response/full
+   - gen : (string -> void) -> void
+   The function gen consumes an output function.  The output function
+   consumes a string and sends it to the client.  For HTTP/1.1 clients,
+   the server uses the chunked encoding, which is reliable.  HTTP/1.0
+   clients, however, can not distinguish between the end of the document and
+   a lost connection.  These facts have two implications.  First,
+   it is more efficient to send fewer, larger strings.  Second, this
+   response should not be used for data that must arrive reliably.
+
+Also see make-html-response/incremental in the servlet-helpers section below.
+
+The second type of servlet is a unit/sig that imports the servlet^
+signature and exports nothing.  (Search in help-desk for more
+information on unit/sig and on signatures.)  To construct a unit/sig
+with the appropriate imports, the servlet must require the two modules
+providing unit/sigs and the servlet^ signature:
+
+(require (lib "unitsig.ss")
+         (lib "servlet-sig.ss" "web-server"))
+(unit/sig ()
+  (import servlet^)
+  ...insert servlet code here...)
+
+The last value in the unit/sig must be a response.
+
+Evaluating (require (lib "servlet-sig.ss" "web-server")) loads
+the servlet^ signature which contains the following import:
+  - initial-request : request
+
+This supports handling a single input from a Web form. To ease the
+development of interactive servlets, the web-server collection also 
+provides the following functions:
+
+> send/suspend : (str -> response) -> request
+
+  The argument, a function that consumes a string, is given a URL that can be
+  used in the document.  The argument function must produce a response
+  corresponding to the document's body.  Requests to the given URL resume the
+  computation at the point send/suspend was invoked.  Thus, the argument
+  function normally produces an HTML form with the "action" attribute set to
+  the provided URL.  The result of send/suspend represents the next request.
+
+> send/finish : response -> void
+
+  This provides a convenient way to report an error or otherwise produce
+  a final response.  Once called, all URLs generated by send/suspend
+  become invalid and the servlet terminates.  Calling send/finish allows the
+  system to reclaim resources consumed by the servlet.
+
+> adjust-timeout! : nat -> void
+
+  The server will shutdown each instance of a servlet after an unspecified
+  default amount of time since the last time the servlet handled a request.
+  Calling adjust-timeout! allows the programmer to choose this number of
+  seconds.  Larger numbers consume more resources while smaller numbers force
+  the user to restart computations more often.
+
+Module servlets obtain these interaction functions via
+  (require (lib "servlet.ss" "web-server"))
+The functions work only during the dynamic extent of the start
+function, not during module initialization.
+
+Unit servlets receive the interaction functions as imports through the
+servlet^ signature.
+
+The servlet-helpers module, required with
+  (require (lib "servlet-helpers.ss" "web-server"))
+provides a few additional functions helpful for constructing servlets:
+
+An environment is a (listof (cons symbol string)), as before.
+
+> extract-binding/single : sym environment -> str
+  This extracts a single value associated with sym in the form bindings.
+  If multiple or zero values are associated with the name, it raises an
+  exception.
+
+> extract-bindings : sym environment -> (listof str)
+  returns a list of values associated with the name sym.
+  
+> exists-binding? : sym environment -> bool
+  returns if the name sym is bound in the environment.
+  This is useful for checkboxes.
+
+> extract-user-pass : environment -> (U #f (cons str str))
+  (define (extract-user-pass headers) ...)
+  Servlets may easily implement password based authentication by extracting
+  password information from the HTTP headers.  The return value is either a
+  pair consisting of the username and password from the headers or #f if no
+  password was provided.  This only extracts the provided username and
+  password.  The servlet must perform any desired checking.
+
+> report-errors-to-browser : (response -> void) -> void
+  Calling this function at the beginning of a servlet causes otherwise
+  uncaught exceptions to send an error page displaying the exception
+  to the client.  The argument should be send/finish if errors are
+  fatal or send/back if the user may correct the failed form
+  submission via the back button.  For some applications, revealing
+  the contents of an exception to a client may cause security problems
+  by leaking sensitive information.  For such applications, consider
+  setting the current-exception-handler to email the error to the
+  servlet author or store the exception in a log file.
+
+> redirect-to : str [redirection-status] -> response
+  constructs a reponse that redirects to the given url(str).
+  The optional argument specifies which kind of redirection to perform:
+    - permanently (Browsers should send future requests directly to this url.) 
+    - temporarily (Browsers should send future requests to the original url.)
+    - see-other (The redirection is not replacing the current url.)
+  See the HTTP/1.1 specification for details on each kind of redirection.
+  Permanently is the default redirection type.
+
+> make-html-response/incremental
+  : ((string-> void) -> void) -> response/incremental
+
+  This fills in default values for make-response/incremental appropriate
+  for html.
+
+For small example servlets, look in the "examples" directory in
+the "servlets" directory in the "default-web-root" of the web-server
+collection.
+
+Special URLs
+============
+
+The Web server caches passwords and servlets for performance reasons.
+Requesting the URL
+  http://my-host/conf/refresh-passwords
+reloads the password file.  After updating a servlet, loading the URL
+  http://my-host/conf/refresh-servlets
+causes the server to reload each servlet on the next invocation.
+This loses any per-servlet state (not per servlet instance state) computed
+before the unit invocation.
+
+Developing Servlets
+===================
+
+To develop module based servlets, open the module in DrScheme's
+definitions window.  After clicking the Execute button, require the
+module servlet development library.
+  (require (lib "develop-servlet.ss"))
+Then use the develop-servlet function to interact with the servlet
+using a Web browser.
+  (develop-servlet start)
+
+Entering both the require expression and the call to develop-servlet
+on one line allows DrScheme's history mechanism to recall both
+expressions at once.  This facilitates re-testing the servlet after
+making changes and clicking Execute, but it is not necessary.
+
+Choose "Add TeachPack..." from DrScheme's "Language" menu and select the
+  plt/teachpack/servlet.ss
+teachpack.  This provides functions for writing servlets including
+send/suspend and send/finish.  All the extra servlet helper functions for
+extracting information from Web requests and building Web responses also
+become available through the teachpack.
+
+Choosing "Create Servlet..." from DrScheme's "Scheme" menu saves the
+program in the definitions window as a servlet.  This adds all the necessary
+code to produce a unit suitable for the Web server's "servlets" directory.
+The servlet can use any selected teachpacks and language specific
+constructs just as the program in the defintions window can.
+
+File locations
+==============
+
+By default, the configuration tool organizes files containing the Web server's
+configurations, documents, and servlets in one directory tree per virtual host.
+The organization of files follows:
+
+web-directory
+  configuration-table
+  default-web-root
+    conf
+      servlet-error.html
+      forbidden.html
+      servlet-refresh.html
+      passwords-refresh.html
+      not-found.html
+      protocol-error.html
+    htdocs
+      Defaults
+	index.html
+	documentation
+	  ...
+    log
+    passwords
+    servlets
+      configure.ss
+  my-other-host
+    conf ...
+    htdocs ...
+    log
+    passwords
+    servlets
+      configure.ss
+  still-another-host ...
+
+Files may be relocated or shared between hosts by editing the boring details
+for that host using the configuration tool.
+
+Semi-Internal Functions
+=======================
+
+The following functions expose more of the Web server for use by the
+development environment.  They are not intended for general use.
+They may change at anytime or disappear entirely.
+
+> server-loop : custodian tcp-listener config initial-timeout -> void
+  where custodian is the parent custodian for servlets.
+	tcp-listener is where requests arrive.
+	config encapsulates most of the state of the server.
+        initial-timeout is the number of seconds before timing out connections
+
+> make-config : host-table script-table instance-table access-table -> config
+  where
+    config = (make-config host-table script-table instance-table access-table)
+    host-table = str -> host
+		 maps host names to hosts
+    script-table = (hash-table-of sym script)
+		 maps servlet names to servlet units
+    script = (unit servlet^ -> response)
+	     represents a servlet that is invoked on each request
+    instance-table = (hash-table-of sym servlet-instance)
+		     maps the path part of a URL to the running servlet
+    access-table = (hash-table-of sym (str sym str -> (U #f str)))
+		   maps host names to functions that accept a protection
+		   domain, a user name, and a password and either 
+		   return #f if access is not denied (i.e. is accessible)
+		   or a string prompting for a particular password
+		   (i.e. "Course Grades").
+    servlet-instance =
+      (make-servlet-instance
+        nat channel (hash-table-of sym (continuation request)))
+      The natural number counts the continuations suspended by this servlet.  
+      The channel communicates HTTP requests from the connection thread to
+      the suspended servlet.  The hash-table maps parameter parts of URLs
+      to suspended continuations.
+
+> add-new-instance : sym instance-table -> void
+  This creates a new servlet-instance and installs it in the instance-table
+  under the name specified by sym.
+
+> gen-send/suspend : url sym instance-table (response -> void)
+                     (servlet-instance -> doesn't)
+                  -> (str -> response)
+                  -> request
+  (define (gen-send/suspend uri invoke-id instances output-page
+                            resume-next-request!)
+    ...)
+
+  This produces a function like send/suspend : ((str -> response) -> request),
+  customized for a particular instance of a servlet.  The uri must 
+  refer to the servlet, which instances must map invoke-id to.  The
+  output-page function is called to send responses to the Web browser
+  (remotely via HTTP in the normal server, locally via some other means
+   in the development environment).  resume-next-request blocks for the
+  the next web request and jumps to the appropriate continuation.
+
+> gen-resume-next-request : (-> void) (channel -> void)
+  (define (gen-resume-next-request update-time! update-channel!) ...)
+
+  update-time! resets timeouts upon each Web request.
+  update-channel! receives the channel used to send responses to the
+  connection thread.
+
+
+_Channels_
+
+The library
+  (require (lib "channel.ss" "web-server"))
+is now only a thin wrapper around mzscheme's built in channels.
+Use mzscheme's instead.
+

@@ -1,0 +1,162 @@
+<!doctype html public "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!--
+
+Generated from tour.tex by tex2page, v 2004-09-11
+(running on MzScheme 209, unix), 
+(c) Dorai Sitaram, 
+http://www.ccs.neu.edu/~dorai/tex2page/tex2page-doc.html
+
+-->
+<head>
+<title>
+A Brief Tour of DrScheme version 209
+</title>
+<link rel="stylesheet" type="text/css" href="tour-Z-S.css" title=default>
+<meta name=robots content="noindex,follow">
+</head>
+<body>
+<div align=right class=navigation><i>[Go to <span><a href="tour.html">first</a>, <a href="tour-Z-H-11.html">previous</a></span><span>, <a href="tour-Z-H-13.html">next</a></span> page<span>; &nbsp;&nbsp;</span><span><a href="tour-Z-H-1.html#node_toc_start">contents</a></span>]</i></div><p></p>
+<a name="node_chap_11"></a>
+<h1 class=chapter>
+<div class=chapterheading><a href="tour-Z-H-1.html#node_toc_node_chap_11">Chapter 11</a></div><br>
+<a href="tour-Z-H-1.html#node_toc_node_chap_11">Program Browsing</a></h1>
+<p>DrScheme offers several ways to browse programs.</p>
+<p>
+</p>
+<a name="node_sec_11.1"></a>
+<h2><a href="tour-Z-H-1.html#node_toc_node_sec_11.1">11.1&nbsp;&nbsp;Check Syntax</a></h2>
+<p>Each Definitions window has a Check Syntax button.  Clicking this
+button makes DrScheme analyze the program source and identify any
+syntax errors without having to run the program.  It also helps find
+binding and bound instances of identifiers.  Suppose we begin with
+this program.</p>
+<p>
+
+</p>
+<div align=center><table><tr><td>
+
+<img src="./images/check-syntax-1.gif" border="0"  alt="[./images/check-syntax-1.gif]">
+</td></tr></table></div>
+<p>
+Clicking Check Syntax causes the color of the identifiers to become
+slightly paler.</p>
+<p>
+
+</p>
+<div align=center><table><tr><td>
+
+<img src="./images/check-syntax-2.gif" border="0"  alt="[./images/check-syntax-2.gif]">
+</td></tr></table></div>
+<p>
+Mousing over a bound identifier shows its binding instance, while
+mousing over a binding instance shows all bound uses.  Right-clicking
+presents a menu that includes a <i>Tack/Untack Arrow(s)</i> entry,
+which leaves arrows persistent on screen while scrolling around.</p>
+<p>
+
+</p>
+<div align=center><table><tr><td>
+
+<img src="./images/check-syntax-3.gif" border="0"  alt="[./images/check-syntax-3.gif]">
+</td></tr></table></div>
+<p>
+The same menu also includes a facility for consistently renaming
+identifiers.  DrScheme uses a ``smart'' renaming mechanism so it can
+distinguish between different identifiers that share the same name.
+To see this at work, suppose we begin with this program after we have
+clicked on Check Syntax.</p>
+<p>
+
+</p>
+<div align=center><table><tr><td>
+
+<img src="./images/alpha-1.gif" border="0"  alt="[./images/alpha-1.gif]">
+</td></tr></table></div>
+<p>
+Right-clicking on the <code class=scheme><span class=variable>x</span></code> bound by <code class=scheme><span class=variable>f</span></code> presents a menu
+that includes ``Rename <code class=scheme><span class=variable>x</span></code>''.  Selecting this and typing
+<code class=scheme><span class=variable>w</span></code> in the box results in the following program.</p>
+<p>
+
+</p>
+<div align=center><table><tr><td>
+
+<img src="./images/alpha-2.gif" border="0"  alt="[./images/alpha-2.gif]">
+</td></tr></table></div>
+<p>
+Note that neither of the identifiers named <code class=scheme><span class=variable>x</span></code> bound by the
+functions <code class=scheme><span class=variable>add-first</span></code> and <code class=scheme><span class=variable>g</span></code> were affected by this
+renaming.  If we select the first <code class=scheme><span class=variable>w</span></code> in the addition and
+rename it to <code class=scheme><span class=variable>v</span></code>, this automatically and consistently renames
+the second <code class=scheme><span class=variable>w</span></code> in the sum, too.</p>
+<p>
+
+</p>
+<div align=center><table><tr><td>
+
+<img src="./images/alpha-3.gif" border="0"  alt="[./images/alpha-3.gif]">
+</td></tr></table></div>
+<p>
+Note that each renaming or edit potentially invalidates the
+information computed by Check Syntax, so we had to run Check Syntax
+after each renaming to perform the sequence of renamings above.</p>
+<p>
+</p>
+<a name="node_sec_11.2"></a>
+<h2><a href="tour-Z-H-1.html#node_toc_node_sec_11.2">11.2&nbsp;&nbsp;Contours</a></h2>
+<p>A contour is a extremely shrunken version of the program
+source -- think of it as ``the view from 20,000 feet''.  The
+<i>Special | Insert Large Letters ...</i>
+menu entry inserts a comment in ``large'' letters, which helps
+highlight portions of the source.</p>
+<p>
+
+</p>
+<div align=center><table><tr><td>
+
+<img src="./images/contour.gif" border="0"  alt="[./images/contour.gif]">
+</td></tr></table></div>
+<p>
+</p>
+<a name="node_sec_11.3"></a>
+<h2><a href="tour-Z-H-1.html#node_toc_node_sec_11.3">11.3&nbsp;&nbsp;Definitions</a></h2>
+<p>At the top-left of the DrScheme window is a button whose label reads
+</p>
+<div align=center><table><tr><td>
+
+</td><td><div align=left><pre class=scheme>(<span class=keyword>define</span> ...)
+</pre></div></td><td>
+</td></tr></table></div>
+
+Clicking on this Definitions button generates a pop-up window that
+lists all the definitions in the source file.<p>
+</p>
+<a name="node_sec_11.4"></a>
+<h2><a href="tour-Z-H-1.html#node_toc_node_sec_11.4">11.4&nbsp;&nbsp;Module Browsing</a></h2>
+<p>In the PLT languages, if you've built a program using several
+<code class=scheme><span class=keyword>module</span></code>s (a language construct in PLT Scheme), you can employ
+the Module Browser, available from the Show menu.</p>
+<p>
+
+</p>
+<div align=center><table><tr><td>
+
+<img src="./images/module-browser.gif" border="0"  alt="[./images/module-browser.gif]">
+</td></tr></table></div>
+<p>
+Each box represents a module and the arrows depict dependencies.
+Mousing over a box highlights its dependencies and lists its filename
+and size.  (The boxes are also shaded proportional to the sizes of the
+corresponding modules.)  Double-clicking on the boxes is an excellent
+way to navigate the program source.  The Browser is also invaluable in
+detecting and removing unnecessary references to modules.</p>
+<p>
+If you want the Module Browser in a separate window rather than as a
+pane in your editor, you can choose
+<i>Scheme | Module Browser...</i>.</p>
+<p>
+</p>
+<div align=right class=navigation><i>[Go to <span><a href="tour.html">first</a>, <a href="tour-Z-H-11.html">previous</a></span><span>, <a href="tour-Z-H-13.html">next</a></span> page<span>; &nbsp;&nbsp;</span><span><a href="tour-Z-H-1.html#node_toc_start">contents</a></span>]</i></div><p></p>
+</body>
+</html>

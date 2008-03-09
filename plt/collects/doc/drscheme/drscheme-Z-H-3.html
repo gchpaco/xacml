@@ -1,0 +1,1110 @@
+<!doctype html public "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!--
+
+Generated from drscheme.tex by tex2page, v 2004-09-11
+(running on MzScheme 209, unix), 
+(c) Dorai Sitaram, 
+http://www.ccs.neu.edu/~dorai/tex2page/tex2page-doc.html
+
+-->
+<head>
+<title>
+PLT DrScheme: Programming Environment Manual
+</title>
+<link rel="stylesheet" type="text/css" href="drscheme-Z-S.css" title=default>
+<meta name=robots content="noindex,follow">
+</head>
+<body>
+<div align=right class=navigation><i>[Go to <span><a href="drscheme.html">first</a>, <a href="drscheme-Z-H-2.html">previous</a></span><span>, <a href="drscheme-Z-H-4.html">next</a></span> page<span>; &nbsp;&nbsp;</span><span><a href="drscheme.html#node_toc_start">contents</a></span><span><span>; &nbsp;&nbsp;</span><a href="drscheme-Z-H-6.html#node_index_start">index</a></span>]</i></div><p></p>
+<a name="node_chap_3"></a>
+<h1 class=chapter>
+<div class=chapterheading><a href="drscheme.html#node_toc_node_chap_3">Chapter 3</a></div><br>
+<a href="drscheme.html#node_toc_node_chap_3">Interface Reference</a></h1>
+<p><a name="node_idx_144"></a></p>
+<p>
+<a name="node_idx_146"></a></p>
+<p>
+</p>
+<a name="node_sec_3.1"></a>
+<h2><a href="drscheme.html#node_toc_node_sec_3.1">3.1&nbsp;&nbsp;Menus</a></h2>
+<p><a name="node_idx_148"></a>
+</p>
+<p>
+<a name="node_idx_150"></a></p>
+<p>
+</p>
+<a name="node_sec_3.1.1"></a>
+<h3><a href="drscheme.html#node_toc_node_sec_3.1.1">3.1.1&nbsp;&nbsp;<tt>File</tt></a></h3>
+<p></p>
+<ul><p>
+</p>
+<li><p><a name="node_idx_152"></a><tt>New</tt> Creates a new DrScheme window.</p>
+<p>
+</p>
+<li><p><a name="node_idx_154"></a><tt>Open...</tt> Opens a find-file dialog for choosing a file to
+load into a definitions window.</p>
+<p>
+</p>
+<li><p><a name="node_idx_156"></a><tt>Open Recent</tt> Lists recently opened
+files. Choosing one of them opens that file for editing.</p>
+<p>
+</p>
+<li><p><a name="node_idx_158"></a><tt>Install PLT File...</tt> Opens a dialog asking
+for the location of the PLT file (either on the local disk
+or on the web) and installs the contents of the PLT file.</p>
+<p>
+</p>
+<li><p><a name="node_idx_160"></a><tt>Revert</tt> Re-loads the file that is currently in the
+definitions window. All changes since the file was last saved will
+be lost.</p>
+<p>
+</p>
+<li><p><a name="node_idx_162"></a><tt>Save Definitions</tt> Saves the program in the definitions
+window. If the program has never been saved before, a save-file
+dialog appears.</p>
+<p>
+</p>
+<li><p><a name="node_idx_164"></a><tt>Save Definitions As...</tt> Opens a save-file dialog for
+choosing a destination file to save the program in the definitions
+window. Subsequent saves write to the newly-selected file.</p>
+<p>
+</p>
+<li><p><a name="node_idx_166"></a><tt>Save Other</tt> Contains these sub-items
+</p>
+<ul><p>
+</p>
+<li><p><a name="node_idx_168"></a><tt>Save Definitions As Text...</tt> Like <tt>Save
+Definitions As...</tt>, but the file is saved in plain-text format (see
+<a href="#node_sec_3.4.1">DrScheme Files</a>). Subsequent saves also write in
+plain-text format.</p>
+<p>
+</p>
+<li><p><a name="node_idx_170"></a><tt>Save Interactions</tt> Saves the contents of the interactions
+window to a file. If the interaction constants have never been saved
+before, a save-file dialog appears.</p>
+<p>
+</p>
+<li><p><a name="node_idx_172"></a><tt>Save Interactions As...</tt>  Opens a save-file dialog for
+choosing a destination file to save the contents of the interactions
+window. Subsequent saves write to the newly-selected file.</p>
+<p>
+</p>
+<li><p><a name="node_idx_174"></a><tt>Save Interactions As Text...</tt>  Like <tt>Save
+Interactions As...</tt>, but the file is saved in plain-text format (see
+<a href="#node_sec_3.4.1">DrScheme Files</a>). Subsequent saves are write in plain-text
+format.</p>
+<p>
+</p>
+</ul><p></p>
+<p>
+</p>
+<li><p><a name="node_idx_176"></a><tt>Log Definitions and Interactions...</tt> Starts a
+running of log of the text in the interactions and
+definitions windows, organized by executions. In a
+directory of your choosing, DrScheme saves files with the
+names 01-definitions, 01-interactions, 02-definitions,
+02-interactions, etc as you interact with
+various programs. </p>
+<p>
+</p>
+<li><p><a name="node_idx_178"></a><tt>Print Definitions...</tt> Opens a dialog for printing the
+current program in the definitions window.</p>
+<p>
+</p>
+<li><p><a name="node_idx_180"></a><tt>Print Interactions...</tt> Opens a dialog for printing the
+contents of the interactions window.</p>
+<p>
+</p>
+<li><p><a name="node_idx_182"></a><tt>Search in Files...</tt> Opens a dialog where you
+can specify the parameters of a multi-file search. The
+results of the search are displayed in a separate window.</p>
+<p>
+</p>
+<li><p><a name="node_idx_184"></a><tt>Close</tt> Closes this DrScheme window. If this window is
+the only open DrScheme window, DrScheme quits.</p>
+<p>
+</p>
+<li><p><tt>Quit</tt> or <tt>Exit</tt> Exits DrScheme (under
+Mac OS X this menu item is in the apple menu).</p>
+<p>
+</p>
+</ul><p></p>
+<p>
+</p>
+<a name="node_sec_3.1.2"></a>
+<h3><a href="drscheme.html#node_toc_node_sec_3.1.2">3.1.2&nbsp;&nbsp;<tt>Edit</tt></a></h3>
+<p>All <tt>Edit</tt> menu items operate on either the definitions or interactions
+window, depending on the location of the selection or blinking
+caret. Each window maintains its own Undo and Redo history.</p>
+<p>
+</p>
+<ul><p>
+</p>
+<li><p><a name="node_idx_186"></a><tt>Undo</tt> Reverses an editing action. Each window maintains a
+history of actions, so multiple <tt>Undo</tt> operations can reverse
+multiple editing actions.</p>
+<p>
+</p>
+<li><p><a name="node_idx_188"></a><tt>Redo</tt> Reverses an <tt>Undo</tt> action. Each
+window (and boxed-subwindow) maintains its own history of
+<tt>Undo</tt> actions, so multiple <tt>Redo</tt> operations can
+reverse multiple <tt>Undo</tt> actions.</p>
+<p>
+</p>
+<li><p><a name="node_idx_190"></a><tt>Cut</tt> Copies the selected text to the clipboard and
+deletes it from the window.</p>
+<p>
+</p>
+<li><p><a name="node_idx_192"></a><tt>Copy</tt> Copies the selected text to the clipboard.</p>
+<p>
+</p>
+<li><p><a name="node_idx_194"></a><tt>Paste</tt> Pastes the current clipboard contents into the
+window.</p>
+<p>
+</p>
+<li><p><a name="node_idx_196"></a><tt>Delete</tt> or <a name="node_idx_198"></a><tt>Clear</tt> Deletes the selected text.</p>
+<p>
+</p>
+<li><p><a name="node_idx_200"></a><tt>Select All</tt> Highlights the entire text of the buffer.</p>
+<p>
+</p>
+<li><p><a name="node_idx_202"></a><tt>Wrap Text</tt> Toggles between wrapped text and
+unwrapped text in the window.</p>
+<p>
+</p>
+<li><p><a name="node_idx_204"></a><tt>Find</tt> Opens a search dialog or, depending on the 
+preferences, an interactive searching window attached to the frame.</p>
+<p>
+</p>
+<li><p><a name="node_idx_206"></a><tt>Find Again</tt> Finds the next occurrence of the text 
+that was last searched for.</p>
+<p>
+</p>
+<li><p><a name="node_idx_208"></a><tt>Replace &amp; Find Again</tt> Replaces the selection with the
+replace string (if it matches the find string) and finds the next
+occurrence of the text that was last searched for.</p>
+<p>
+</p>
+<li><p><a name="node_idx_210"></a><tt>Keybindings</tt> Shows all of the keybindings
+available in the current window.</p>
+<p>
+</p>
+<li><p><a name="node_idx_212"></a><tt>Preferences...</tt> opens the preferences dialog. See
+section&nbsp;<a href="#node_sec_3.2">3.2</a> (In Mac OS X, this menu item is under
+the apple menu)
+</p>
+</ul><p></p>
+<p>
+</p>
+<a name="node_sec_3.1.3"></a>
+<h3><a href="drscheme.html#node_toc_node_sec_3.1.3">3.1.3&nbsp;&nbsp;<tt>View</tt></a></h3>
+<p>One each of the following show/hide pairs of menu items
+appears at any time.</p>
+<p>
+</p>
+<ul><p>
+</p>
+<li><p><a name="node_idx_214"></a><tt>Show Definitions</tt> Shows the definitions window.</p>
+<p>
+</p>
+<li><p><a name="node_idx_216"></a><tt>Hide Definitions</tt> Hides the definitions window.</p>
+<p>
+</p>
+<li><p><a name="node_idx_218"></a><tt>Show Interactions</tt> Shows interactions window.</p>
+<p>
+</p>
+<li><p><a name="node_idx_220"></a><tt>Hide Interactions</tt> Hides interactions window.</p>
+<p>
+</p>
+<li><p><a name="node_idx_222"></a><tt>Show Program Contour</tt> Shows a ``20,000 foot''
+overview window along the edge of the DrScheme
+window. Each pixel in this window corresponds to a letter
+in the program text.</p>
+<p>
+</p>
+<li><p><a name="node_idx_224"></a><tt>Hide Program Contour</tt> Hides the contour window.</p>
+<p>
+</p>
+<li><p><a name="node_idx_226"></a><tt>Show Profile</tt> Shows the current profiling
+report. This menu is only useful if you have enabled
+profiling in the Language dialog. Profiling does not
+apply to all languages. When it does, the checkbox that
+enables it is in the details portion of the dialog.</p>
+<p>
+</p>
+<li><p><a name="node_idx_228"></a><tt>Hide Profile</tt> Hides any profiling
+information currently displayed in the DrScheme window.</p>
+<p>
+</p>
+<li><p><a name="node_idx_230"></a><tt>Split</tt> Splits the current window in half to
+allow for two different portions of the current window to
+be visible simultaneously.</p>
+<p>
+</p>
+<li><p><a name="node_idx_232"></a><tt>Collapse</tt></p>
+<p>
+If the window has been split before, this menu item becomes
+enabled, allowing you to collapse the split window.</p>
+<p>
+</p>
+</ul><p></p>
+<p>
+Note: whenever a program is run, the interactions window is made
+visible if it is hidden.</p>
+<p>
+</p>
+<a name="node_sec_3.1.4"></a>
+<h3><a href="drscheme.html#node_toc_node_sec_3.1.4">3.1.4&nbsp;&nbsp;<tt>Language</tt></a></h3>
+<p></p>
+<ul><p>
+</p>
+<li><p><a name="node_idx_234"></a><tt>Choose Language</tt> Opens a dialog for selecting the
+current evaluation language. Click <tt>Run</tt> to make the
+language active in the interactions window. See
+section&nbsp;<a href="drscheme-Z-H-2.html#node_sec_2.5">2.5</a> for more information about the
+languages.</p>
+<p>
+</p>
+<li><p><a name="node_idx_236"></a><tt>Add Teachpack...</tt> Opens a
+find-file dialog for choosing a teachpack to extend the current
+language. Click <tt>Run</tt> to make the teachpack available in the
+interactions windows. See <a href="drscheme-Z-H-4.html#node_chap_4">Extending DrScheme</a> for information on creating teachpacks.</p>
+<p>
+</p>
+<li><p><a name="node_idx_238"></a><tt>Clear All Teachpacks</tt> Clears all of the current teachpacks.
+Click <tt>Run</tt> to clear the teachpack from the interactions window.</p>
+<p>
+</p>
+</ul><p></p>
+<p>
+In addition to the above menus, there is a menu item for
+each teachpack that clears only that one teachpack.</p>
+<p>
+</p>
+<a name="node_sec_3.1.5"></a>
+<h3><a href="drscheme.html#node_toc_node_sec_3.1.5">3.1.5&nbsp;&nbsp;<tt>Scheme</tt></a></h3>
+<p></p>
+<ul><p>
+</p>
+<li><p><a name="node_idx_240"></a><tt>Run</tt> Resets the interactions window and runs the
+program in the definitions window.</p>
+<p>
+</p>
+<li><p><a name="node_idx_242"></a><tt>Break</tt> Breaks the current evaluation.</p>
+<p>
+</p>
+<li><p><a name="node_idx_244"></a><tt>Kill</tt> Terminates the current evaluation.</p>
+<p>
+</p>
+<li><p><a name="node_idx_246"></a><tt>Clear Error Highlight</tt> Removes the red
+background that signals the source location of an error.</p>
+<p>
+</p>
+<li><p><a name="node_idx_248"></a><tt>Create Executable...</tt> Creates a separate launcher for running
+your program. See <a href="drscheme-Z-H-2.html#node_sec_2.6">Executables</a> for more info.</p>
+<p>
+</p>
+<li><p><a name="node_idx_250"></a><tt>Create Servlet...</tt> Creates a servlet with the
+contents of the current definitions window, for use in the
+web server.</p>
+<p>
+</p>
+<li><p><a name="node_idx_252"></a><tt>Module Browser...</tt> Prompts for a file and
+then opens a window showing the module import structure
+for the module import DAG starting at the selected module.</p>
+<p>
+The module browser window contains a square for each
+module. The squares are colored based on the number of
+lines of code in the module. If a module has more lines of
+code, it gets a darker color.</p>
+<p>
+In addition, for each normal import, a blue line drawn is
+from the module to the importing module. Similarly, purple
+lines are drawn for each for-syntax import. In the initial
+module layout, modules to the left import modules to the
+right, but since modules can be moved around
+interactively, that property might not be preserved.</p>
+<p>
+To open the file corresponding to the module, right click on the box
+for that module (control-click under Mac OS).</p>
+<p>
+</p>
+<li><p><a name="node_idx_254"></a><tt>Reindent</tt> Indents the selected text according to the
+standard Scheme formatting conventions. (Pressing the Tab key has
+the same effect.)</p>
+<p>
+</p>
+<li><p><a name="node_idx_256"></a><tt>Reindent All</tt> Indents all of the text in either the
+definitions or interactions window, depending on the location of the
+selection or blinking caret.</p>
+<p>
+</p>
+<li><p><a name="node_idx_258"></a><tt>Comment Out with Semicolons</tt> Puts ``;''
+characters at each of the the beginning of each selected line of text.</p>
+<p>
+</p>
+<li><p><a name="node_idx_260"></a><tt>Comment Out with a Box</tt> Boxes the selected
+text with a comment box.</p>
+<p>
+</p>
+<li><p><a name="node_idx_262"></a><tt>Uncomment</tt> Removes all ``;'' characters at
+the start of each selected line of text or removes a comment box
+around the text. Uncommenting only removes a ``;'' if it
+appears at the start of a line and it only removes the first
+``;'' on each line.</p>
+<p>
+</p>
+<li><p><a name="node_idx_264"></a><tt>Disable All Test Cases</tt> Creates a new test case
+box (see section&nbsp;<a href="drscheme-Z-H-2.html#node_sec_2.10">2.10</a>)</p>
+<p>
+</p>
+</ul><p></p>
+<p>
+</p>
+<a name="node_sec_3.1.6"></a>
+<h3><a href="drscheme.html#node_toc_node_sec_3.1.6">3.1.6&nbsp;&nbsp;<tt>Special</tt></a></h3>
+<p></p>
+<ul>
+<li><p><a name="node_idx_266"></a><tt>Insert Comment Box</tt> Inserts a box that is
+ignored by DrScheme; use it to put comments to people
+reading your program.</p>
+<p>
+</p>
+<li><p><a name="node_idx_268"></a><tt>Insert Image...</tt> Opens a find-file dialog for selecting
+an image file in GIF, BMP, XBM, or XPM format. The image is treated
+as a value.</p>
+<p>
+</p>
+<li><p><a name="node_idx_270"></a><tt>Insert Fraction...</tt> OPENS a dialog prompting
+for a mixed-notation fraction and inserts that into the
+current editor.</p>
+<p>
+</p>
+<li><p><a name="node_idx_272"></a><tt>Insert Large Letters...</tt> Opens a dialog
+asking for a line of text and inserts a large version of
+that (made with semicolons and spaces) into the current
+editor.</p>
+<p>
+</p>
+<li><p><a name="node_idx_274"></a><tt>Insert Lambda</tt> Inserts the symbol lambda
+into the program. This has the same behavior as if
+<code class=scheme><span class=keyword>lambda</span></code> were typed at this point, except that the
+lambda symbol is implicitly delimited from neighboring
+characters.</p>
+<p>
+</p>
+<li><p><a name="node_idx_276"></a><tt>Insert Delta (define)</tt> Inserts the symbol
+delta into the program. This has the same behavior as
+if <code class=scheme><span class=keyword>define</span></code> were typed at this point, except that
+the delta symbol is implicitly delimited from
+neighboring characters.</p>
+<p>
+</p>
+<li><p><a name="node_idx_278"></a><tt>Insert Java Comment Box</tt>
+Inserts a box that is ignored by DrScheme, unlike the
+<tt>Insert Comment Box</tt> menu item, this is designed for the
+ProfessorJ language levels. See the <a href="../profj-beginner/index.htm"><i>ProfessorJ Beginner Language</i></a>,
+<a href="../profj-intermediate/index.htm"><i>ProfessorJ Intermediate Language</i></a>, and <a href="../profj-advanced/index.htm"><i>ProfessorJ Advanced Language</i></a> manuals for
+details.</p>
+<p>
+</p>
+<li><p><a name="node_idx_280"></a><tt>Insert Java Interactions Box</tt> Inserts a box
+that will act like an interactions window for Java. This
+box will accept one Java statement or expression per line,
+and should only appear at the top level. </p>
+<p>
+This is intended for use in the ProfessorJ language
+levels. See the <a href="../profj-beginner/index.htm"><i>ProfessorJ Beginner Language</i></a>, <a href="../profj-intermediate/index.htm"><i>ProfessorJ Intermediate Language</i></a>,
+and <a href="../profj-advanced/index.htm"><i>ProfessorJ Advanced Language</i></a> manuals for details.</p>
+<p>
+</p>
+<li><p><a name="node_idx_282"></a><tt>Insert XML Box</tt></p>
+<p>
+This menu item inserts an XML box. XML boxes must contain
+XML's concrete syntax and they evaluate to x-expressions,
+which are s-expressions representing the XML expression.
+See also <a href="drscheme-Z-H-2.html#node_sec_2.9">XML in DrScheme</a>.</p>
+<p>
+</p>
+<li><p><a name="node_idx_284"></a><tt>Insert Scheme Box</tt></p>
+<p>
+Inserts a Scheme box. These boxes contain Scheme code and
+are meant to be inside XML boxes.
+See also <a href="drscheme-Z-H-2.html#node_sec_2.9">XML in DrScheme</a>.</p>
+<p>
+</p>
+<li><p><a name="node_idx_286"></a><tt>Insert Scheme Splice Box</tt></p>
+<p>
+Inserts a Scheme splice box. These boxes are intended to
+be inside XML boxes. The Scheme expression inside must
+evaluate to a list and that list is spliced into the
+containing XML box.
+See also <a href="drscheme-Z-H-2.html#node_sec_2.9">XML in DrScheme</a>.</p>
+<p>
+</p>
+<li><p><a name="node_idx_288"></a><tt>Insert Test Case</tt> Creates a new test case
+box (see section&nbsp;<a href="drscheme-Z-H-2.html#node_sec_2.10">2.10</a>)</p>
+<p>
+</p>
+</ul><p></p>
+<p>
+</p>
+<a name="node_sec_3.1.7"></a>
+<h3><a href="drscheme.html#node_toc_node_sec_3.1.7">3.1.7&nbsp;&nbsp;<tt>Windows</tt></a></h3>
+<p></p>
+<ul><p>
+</p>
+<li><p><a name="node_idx_290"></a><tt>Bring Frame to Front...</tt></p>
+<p>
+Opens a window that lists all of the opened DrScheme
+frames. Selecting one of them brings the window to the
+front.</p>
+<p>
+</p>
+<li><p><a name="node_idx_292"></a><tt>Most Recent Window</tt> Toggles between the
+currently focused window and the one that most recently had
+the focus.</p>
+<p>
+</p>
+</ul><p></p>
+<p>
+Additionally, after the above menu items, this menu contains
+an entry for each window in DrScheme. Selecting a menu item
+brings the corresponding window to the front.</p>
+<p>
+</p>
+<a name="node_sec_3.1.8"></a>
+<h3><a href="drscheme.html#node_toc_node_sec_3.1.8">3.1.8&nbsp;&nbsp;<tt>Help</tt></a></h3>
+<p></p>
+<ul><p>
+</p>
+<li><p><a name="node_idx_294"></a><tt>Help Desk</tt> Opens the Help Desk. This is the clearing 
+house for all documentation about DrScheme and its language.</p>
+<p>
+</p>
+<li><p><a name="node_idx_296"></a><tt>About DrScheme...</tt> Shows the credits for DrScheme.</p>
+<p>
+</p>
+<li><p><a name="node_idx_298"></a><tt>Check for Updates...</tt></p>
+<p>
+Opens an internet connection to check if there have been any
+updates to various installed DrScheme packages.</p>
+<p>
+</p>
+<li><p><a name="node_idx_300"></a><tt>Related Web Sites</tt></p>
+<p>
+This submenu has a list of related web sites. Choosing one
+of them sends a message to an external browser to visit the
+web site.</p>
+<p>
+</p>
+<li><p><a name="node_idx_302"></a><tt>Tool Web Sites</tt></p>
+<p>
+This submenu has a list of web sites for the add-on tools in
+your DrScheme. Choosing one of them sends a message to an
+external browser to visit the web site.</p>
+<p>
+</p>
+<li><p><a name="node_idx_304"></a><tt>Interact with DrScheme in English</tt></p>
+<p>
+This and the related menu items at the end of the
+<a name="node_idx_306"></a><tt>Help</tt> menu switch DrScheme's interface (natural)
+language.</p>
+<p>
+</p>
+</ul><p></p>
+<p>
+</p>
+<a name="node_sec_3.2"></a>
+<h2><a href="drscheme.html#node_toc_node_sec_3.2">3.2&nbsp;&nbsp;Preferences</a></h2>
+<p><a name="node_idx_308"></a>
+</p>
+<p>
+<a name="node_idx_310"></a>
+</p>
+<p>
+The preferences dialog comprises several panels:</p>
+<p>
+</p>
+<ul><p>
+</p>
+<li><p><tt>Font</tt></p>
+<p>
+<a name="node_idx_312"></a>
+This panel controls the main font used by DrScheme.</p>
+<p>
+</p>
+<li><p><tt>Syntax Coloring</tt></p>
+<p>
+The <tt>Syntax Coloring</tt> panel has several subpanels that
+enable you to configure the colors that DrScheme uses for
+its online coloring and for Check Syntax.</p>
+<p>
+</p>
+<li><p><tt>Editing</tt></p>
+<p>
+The <tt>Editing</tt> panel consists of several sub-panels:</p>
+<p>
+</p>
+<ul><p>
+</p>
+<li><p><tt>Indenting</tt></p>
+<p>
+<a name="node_idx_314"></a>
+This panel controls which keywords DrScheme recognizes for indenting,
+and how each keyword is treated.</p>
+<p>
+</p>
+<li><p><tt>General</tt></p>
+<p>
+</p>
+<ul><p>
+</p>
+<li><p><a name="node_idx_316"></a><tt>Number of recent items</tt>  --  controls the
+length of the <tt>Open Recent</tt> menu (in the <tt>File</tt>
+menu). </p>
+<p>
+</p>
+<li><p><a name="node_idx_318"></a><tt>Auto-save files</tt>  --  If checked, the editor generates
+autosave files (see <a href="#node_sec_3.4.2">DrScheme Files</a>) for files that have not been saved after five
+minutes.</p>
+<p>
+</p>
+<li><p><a name="node_idx_320"></a><tt>Backup files</tt>  --  If checked, when saving
+a file for the first time in each editing session, the
+original copy of the file is copied to a backup file in
+the same directory. The backup files have the same name
+as the original, except that they end in either
+<tt><strong>.bak</strong></tt><a name="node_idx_322"></a> or <tt><strong>~</strong></tt><a name="node_idx_324"></a>.</p>
+<p>
+</p>
+<li><p><a name="node_idx_326"></a><tt>Map delete to backspace</tt>  --  If checked, the editor
+treats the Delete key like the Backspace key.</p>
+<p>
+</p>
+<li><p><a name="node_idx_328"></a><tt>Show status-line</tt>  --  If checked, DrScheme shows a status
+line at the bottom of each window.</p>
+<p>
+</p>
+<li><p><a name="node_idx_330"></a><tt>Count column numbers from one</tt>  --  If
+checked, the status line's column counter counts from
+one. Otherwise, it counts from zero.</p>
+<p>
+</p>
+<li><p><a name="node_idx_332"></a><tt>Display line numbers in buffer; not character
+offsets</tt>  --  If checked, the status line shows a line:column
+display for the current selection rather than the character offset
+into the text.</p>
+<p>
+</p>
+<li><p><a name="node_idx_334"></a><tt>Wrap words in editor buffers</tt>  --  If checked, DrScheme editors
+auto-wrap text lines by default. Changing this preference affects
+new windows only.</p>
+<p>
+</p>
+<li><p><a name="node_idx_336"></a><tt>Use separate dialog for searching</tt>  --  If checked,
+then selecting the <a name="node_idx_338"></a><tt>Find</tt> menu item opens a separate
+dialog for searching and replacing. Otherwise, selecting
+<a name="node_idx_340"></a><tt>Find</tt> opens an interactive search-and-replace panel at
+the bottom of a DrScheme window.</p>
+<p>
+</p>
+<li><p><a name="node_idx_342"></a><tt>Reuse existing frames when opening new files</tt>
+ --  If checked, new files are opened in the same DrScheme
+window, rather than creating a new DrScheme window for
+each new file.</p>
+<p>
+</p>
+<li><p><a name="node_idx_344"></a><tt>Enable keybindings in menus</tt>  --  If checked, some
+DrScheme menu items have keybindings. Otherwise, no menu items
+have key bindings. This preference is designed for
+people who are comfortable editing in Emacs and find the
+standard menu keybindings interfere with the Emacs keybindings.</p>
+<p>
+</p>
+<li><p><a name="node_idx_346"></a><tt>Color syntax interactively</tt>  --  If
+checked, DrScheme colors your syntax as you type.</p>
+<p>
+</p>
+<li><p><a name="node_idx_348"></a><tt>Automatically print to postscript file</tt>  --  If checked,
+printing will automatically save postscript files. If not, printing
+will use the standard printing mechanisms for your computer.</p>
+<p>
+</p>
+<li><p><a name="node_idx_350"></a><tt>Open files in separate tabs (not separate
+windows)</tt> - If checked, DrScheme will use tabs in the
+front-most window to open new files, rather than
+creating new windows for new files.</p>
+<p>
+</p>
+<li><p><a name="node_idx_352"></a><tt>Limit interactions size</tt> - If checked,
+DrScheme will delete portions of the interactions window
+when there is too much text in it. The number controls
+how much is too much. It is measured in thousands of
+characters.</p>
+<p>
+</p>
+</ul><p></p>
+<p>
+</p>
+<li><p><tt>Scheme</tt></p>
+<p>
+</p>
+<ul><p>
+</p>
+<li><p><a name="node_idx_354"></a><tt>Highlight between matching parens</tt>  --  If checked, the
+editor marks the region between matching parenthesis with a gray
+background (in color) or a stipple pattern (in monochrome) when
+the flashing caret is next to a parenthesis.</p>
+<p>
+</p>
+<li><p><a name="node_idx_356"></a><tt>Correct parens</tt>  --  If checked, the editor automatically
+converts a typed ``)'' to ``]'' to match ``['', or it converts a
+typed ``]'' to ``)'' to match ``(``.</p>
+<p>
+</p>
+<li><p><a name="node_idx_358"></a><tt>Flash paren match</tt>  --  If checked, typing a closing
+parenthesis, square bracket, or quotation mark flashes the
+matching open parenthesis/bracket/quote.</p>
+<p>
+</p>
+<li><p><a name="node_idx_360"></a><tt>Parenthesis highlight color</tt> - configures
+the color used to highlight matching parenthesis.</p>
+<p>
+</p>
+</ul><p></p>
+<p>
+</p>
+</ul><p></p>
+<p>
+</p>
+<li><p><tt>Warnings</tt></p>
+<p>
+</p>
+<ul><p>
+</p>
+<li><p><a name="node_idx_362"></a><tt>Ask before changing save format</tt>  --  If checked, DrScheme
+consults the user before saving a file in non-text format (see
+<a href="#node_sec_3.4.1">DrScheme Files</a>).</p>
+<p>
+</p>
+<li><p><a name="node_idx_364"></a><tt>Verify exit</tt>  --  If checked, DrScheme consults the user
+before exiting.</p>
+<p>
+</p>
+<li><p><a name="node_idx_366"></a><tt>Only warn once when executions and interactions are not
+synchronized</tt>  --  If checked, DrScheme warns the user on the first
+interaction after the definitions window, language, or teachpack is
+changed without a corresponding click on <tt>Run</tt>. Otherwise,
+the warning appears on every interaction.</p>
+<p>
+</p>
+<li><p><a name="node_idx_368"></a><tt>Ask about clearing test coverage</tt>  --  If
+checked, when test coverage annotations are displayed
+DrScheme prompts about removing them. This setting only
+applies to the PLT languages. DrScheme never asks in
+the teaching languages.</p>
+<p>
+</p>
+</ul><p></p>
+<p>
+</p>
+<li><p><tt>Profiling</tt></p>
+<p>
+This preference panel configures the profiling report. The
+band of color shows the range of colors that profiled
+functions take on. Colors near the right are used for code
+that is not invoked often and colors on the right are used
+for code that is invoked often. </p>
+<p>
+If you are interested in more detail at the low end,
+choose the ``Square root'' check box. If you are
+interested in more detail at the upper end, choose the
+``Square'' check box.</p>
+<p>
+</p>
+<li><p><tt>Browser</tt></p>
+<p>
+The <tt>Use Help Desk browser for external URLs</tt> check
+box determines if Help Desk visits urls that lead out of
+our documentation in the platform-specific browser, or
+with Help Desk itself.</p>
+<p>
+<a name="node_idx_370"></a>
+This preferences panel also allows you to configure your HTTP
+proxy. Contact your system administrator for details.</p>
+<p>
+</p>
+</ul><p></p>
+<p>
+</p>
+<a name="node_sec_3.3"></a>
+<h2><a href="drscheme.html#node_toc_node_sec_3.3">3.3&nbsp;&nbsp;Keyboard Shortcuts</a></h2>
+<p><a name="node_idx_372"></a></p>
+<p>
+<a name="node_idx_374"></a>
+<a name="node_idx_376"></a>
+Most key presses simply insert a character into the editor (``a'',
+``3'', ``('', etc.). Other keys and key combinations act as keyboard
+shortcuts that move the blinking caret, delete a line, copy the
+selection, etc. Keyboard shortcuts are usually trigger by key
+combinations using the Control, Meta, or Command key.</p>
+<p>
+C-<code class=scheme><span class=variable>key</span></code> = This means press the Control key, hold it
+down and then press <code class=scheme><span class=variable>key</span></code> and then release them
+both. For example: C-e (Control-E) moves the blinking caret to the end
+of the current line.</p>
+<p>
+M-<code class=scheme><span class=variable>key</span></code> = Same as C-<code class=scheme><span class=variable>key</span></code>, except with the
+Meta key.  Depending on your keyboard, Meta may be called ``Left'',
+``Right'' or have a diamond symbol, but it's usually on the bottom row next
+to the space bar. M-<code class=scheme><span class=variable>key</span></code> can also be performed as a
+two-character sequence: first, strike and release the Escape key, then
+strike <code class=scheme><span class=variable>key</span></code>. Under Windows and Mac OS, Meta is only
+available through the Escape key.</p>
+<p>
+DEL = The Delete key.</p>
+<p>
+SPACE = The Space bar.</p>
+<p>
+Note: On most keyboards, ``&lt;'' and ``&gt;'' are shifted characters. So, to
+get M-&gt;, you actually have to type Meta-Shift-&gt;. That is, press and
+hold down both the Meta and Shift keys, and then strike ``&gt;''.</p>
+<p>
+Note: Many of the key bindings can also be done with menu items.</p>
+<p>
+Under Windows, some of these keybindings are actually standard menu items.
+Those keybindings will behave according to the menus, unless the
+<tt>Enable keybindings in menus</tt> preference is unchecked. </p>
+<p>
+<a name="node_idx_378"></a> If you are most familiar with Emacs-style
+key bindings, you should uncheck the <tt>Enable keybindings in menus</tt>
+preference. Many of the keybindings below are inspired by Emacs.</p>
+<p>
+</p>
+<p>
+</p>
+<a name="node_sec_3.3.1"></a>
+<h3><a href="drscheme.html#node_toc_node_sec_3.3.1">3.3.1&nbsp;&nbsp;Moving Around</a></h3>
+<p></p>
+<ul>
+<a name="node_idx_380"></a><a name="node_idx_382"></a><li><p>C-f move forward one character
+<a name="node_idx_384"></a><a name="node_idx_386"></a></p>
+<li><p>C-b move backward one character
+<a name="node_idx_388"></a><a name="node_idx_390"></a></p>
+<li><p>M-f move forward one word
+<a name="node_idx_392"></a><a name="node_idx_394"></a></p>
+<li><p>M-b move backward one word
+<a name="node_idx_396"></a><a name="node_idx_398"></a></p>
+<li><p>C-v move forward one page
+<a name="node_idx_400"></a><a name="node_idx_402"></a></p>
+<li><p>M-v move backward one page
+<a name="node_idx_404"></a><a name="node_idx_406"></a></p>
+<li><p>M-&lt; move to beginning of file
+<a name="node_idx_408"></a><a name="node_idx_410"></a></p>
+<li><p>M-&gt; move to end of file</p>
+<p>
+<a name="node_idx_412"></a><a name="node_idx_414"></a></p>
+<li><p>C-a move to beginning of line (left)
+<a name="node_idx_416"></a><a name="node_idx_418"></a></p>
+<li><p>C-e move to end of line (right)
+<a name="node_idx_420"></a><a name="node_idx_422"></a></p>
+<li><p>C-n move to next line (down)
+<a name="node_idx_424"></a><a name="node_idx_426"></a></p>
+<li><p>C-p move to previous line (up)</p>
+<p>
+<a name="node_idx_428"></a><a name="node_idx_430"></a></p>
+<li><p>M-C-f move forward one S-expression
+<a name="node_idx_432"></a><a name="node_idx_434"></a></p>
+<li><p>M-C-b move backward one S-expression
+<a name="node_idx_436"></a><a name="node_idx_438"></a></p>
+<li><p>M-C-u move up out of an S-expression
+<a name="node_idx_440"></a><a name="node_idx_442"></a></p>
+<li><p>M-C-d move down into a nested S-expression
+<a name="node_idx_444"></a><a name="node_idx_446"></a></p>
+<li><p>M-C-SPACE select forward S-expression
+<a name="node_idx_448"></a><a name="node_idx_450"></a></p>
+<li><p>M-C-p match parentheses backward</p>
+<p>
+<a name="node_idx_452"></a><a name="node_idx_454"></a></p>
+<li><p>M-C-left move backwards to the nearest editor box
+<a name="node_idx_456"></a><a name="node_idx_458"></a></p>
+<li><p>A-C-left move backwards to the nearest editor box
+<a name="node_idx_460"></a><a name="node_idx_462"></a></p>
+<li><p>M-C-right move forward to the nearest editor box
+<a name="node_idx_464"></a><a name="node_idx_466"></a></p>
+<li><p>A-C-right move forward to the nearest editor box
+<a name="node_idx_468"></a><a name="node_idx_470"></a></p>
+<li><p>M-C-up move up out of an embedded editor
+<a name="node_idx_472"></a><a name="node_idx_474"></a></p>
+<li><p>A-C-up move up out of an embedded editor
+<a name="node_idx_476"></a><a name="node_idx_478"></a></p>
+<li><p>M-C-down move down into an embedded editor
+<a name="node_idx_480"></a><a name="node_idx_482"></a></p>
+<li><p>A-C-down move down into an embedded editor</p>
+<p>
+</p>
+</ul><p></p>
+<p>
+</p>
+<a name="node_sec_3.3.2"></a>
+<h3><a href="drscheme.html#node_toc_node_sec_3.3.2">3.3.2&nbsp;&nbsp;Editing Operations</a></h3>
+<p></p>
+<ul>
+<a name="node_idx_484"></a><a name="node_idx_486"></a><li><p>C-d delete forward one character
+<a name="node_idx_488"></a><a name="node_idx_490"></a></p>
+<li><p>C-h delete backward one character
+<a name="node_idx_492"></a><a name="node_idx_494"></a></p>
+<li><p>M-d delete forward one word
+<a name="node_idx_496"></a><a name="node_idx_498"></a></p>
+<li><p>M-DEL delete backward one word
+<a name="node_idx_500"></a><a name="node_idx_502"></a></p>
+<li><p>C-k delete forward to end of line
+<a name="node_idx_504"></a><a name="node_idx_506"></a></p>
+<li><p>M-C-k delete forward one S-expression</p>
+<p>
+<a name="node_idx_508"></a><a name="node_idx_510"></a></p>
+<li><p>M-w copy selection to clipboard
+<a name="node_idx_512"></a><a name="node_idx_514"></a></p>
+<li><p>C-w delete selection to clipboard (cut)
+<a name="node_idx_516"></a><a name="node_idx_518"></a></p>
+<li><p>C-y paste from clipboard (yank)</p>
+<p>
+<a name="node_idx_520"></a><a name="node_idx_522"></a></p>
+<li><p>C-t transpose characters
+<a name="node_idx_524"></a><a name="node_idx_526"></a></p>
+<li><p>M-t transpose words
+<a name="node_idx_528"></a><a name="node_idx_530"></a></p>
+<li><p>M-C-t transpose sexpressions</p>
+<p>
+<a name="node_idx_532"></a><a name="node_idx_534"></a></p>
+<li><p>M-C-m toggle dark green marking of matching parenthesis
+<a name="node_idx_536"></a><a name="node_idx_538"></a></p>
+<li><p>M-C-k cut complete sexpression</p>
+<p>
+<a name="node_idx_540"></a><a name="node_idx_542"></a></p>
+<li><p>M-( wrap selection in parentheses
+<a name="node_idx_544"></a><a name="node_idx_546"></a></p>
+<li><p>M-[ wrap selection in square brackets
+<a name="node_idx_548"></a><a name="node_idx_550"></a></p>
+<li><p>M-{ wrap selection in curly brackets
+<a name="node_idx_552"></a><a name="node_idx_554"></a></p>
+<li><p>M-S-L wrap selection in <tt>(lambda () ...)</tt> and put the insertion point in the arglist of the lambda</p>
+<p>
+<a name="node_idx_556"></a><a name="node_idx_558"></a></p>
+<li><p>C-_ undo
+<a name="node_idx_560"></a><a name="node_idx_562"></a></p>
+<li><p>C-+ redo
+<a name="node_idx_564"></a><a name="node_idx_566"></a></p>
+<li><p>C-x u undo</p>
+<p>
+<a name="node_idx_568"></a>
+<a name="node_idx_570"></a><a name="node_idx_572"></a></p>
+<li><p>M-o toggle overwrite mode
+</p>
+</ul><p></p>
+<p>
+</p>
+<a name="node_sec_3.3.3"></a>
+<h3><a href="drscheme.html#node_toc_node_sec_3.3.3">3.3.3&nbsp;&nbsp;File Operations</a></h3>
+<p></p>
+<ul>
+<a name="node_idx_574"></a><a name="node_idx_576"></a><li><p>C-x C-s save file
+<a name="node_idx_578"></a><a name="node_idx_580"></a></p>
+<li><p>C-x C-w save file under new name
+</p>
+</ul><p></p>
+<p>
+</p>
+<a name="node_sec_3.3.4"></a>
+<h3><a href="drscheme.html#node_toc_node_sec_3.3.4">3.3.4&nbsp;&nbsp;Searching</a></h3>
+<p></p>
+<ul>
+<a name="node_idx_582"></a><a name="node_idx_584"></a><li><p>C-s search for string forward
+<a name="node_idx_586"></a><a name="node_idx_588"></a></p>
+<li><p>C-r search for string backward
+</p>
+</ul><p></p>
+<p>
+</p>
+<a name="node_sec_3.3.5"></a>
+<h3><a href="drscheme.html#node_toc_node_sec_3.3.5">3.3.5&nbsp;&nbsp;Miscellaneous</a></h3>
+<p></p>
+<ul>
+<a name="node_idx_590"></a><a name="node_idx_592"></a><li><p>f5 Run
+</p>
+</ul><p></p>
+<p>
+</p>
+<a name="node_sec_3.3.6"></a>
+<h3><a href="drscheme.html#node_toc_node_sec_3.3.6">3.3.6&nbsp;&nbsp;Interactions</a></h3>
+<p>The interactions window has all of the same keyboard shortcuts as the
+definitions window plus a few more:</p>
+<p>
+</p>
+<ul>
+<a name="node_idx_594"></a><a name="node_idx_596"></a><li><p>M-p bring the previously entered expression down to the prompt.
+<a name="node_idx_598"></a><a name="node_idx_600"></a></p>
+<li><p>M-n bring the expression after the current expression in the
+expression history down to the prompt.
+</p>
+</ul><p></p>
+<p>
+</p>
+<a name="node_sec_3.4"></a>
+<h2><a href="drscheme.html#node_toc_node_sec_3.4">3.4&nbsp;&nbsp;DrScheme Files</a></h2>
+<p><a name="node_idx_602"></a></p>
+<p>
+</p>
+<a name="node_sec_3.4.1"></a>
+<h3><a href="drscheme.html#node_toc_node_sec_3.4.1">3.4.1&nbsp;&nbsp;Program Files</a></h3>
+<p></p>
+<p>
+<a name="node_idx_604"></a>
+The standard extension for a Scheme program file is
+<tt><strong>.scm</strong></tt><a name="node_idx_606"></a>. The extensions <tt><strong>.ss</strong></tt><a name="node_idx_608"></a> and <tt><strong>.sch</strong></tt><a name="node_idx_610"></a>
+are also acceptable.</p>
+<p>
+DrScheme's editor can saves a program file in two different formats:</p>
+<p>
+</p>
+<ul><p>
+</p>
+<li><p><a name="node_idx_612"></a><strong>Plain-text format</strong>  -- 
+All text editors can read this format. DrScheme saves a program
+in plain-text format by default, unless the program contains
+images or text boxes.  (Plain-text format does not preserve
+images or text boxes.)</p>
+<p>
+Plain-text format is platform-specific because different
+platforms have different newline conventions. However, most
+tools for moving files across platforms support a ``text''
+transfer mode that adjusts newlines correctly.</p>
+<p>
+</p>
+<li><p><a name="node_idx_614"></a><strong>Multimedia format</strong>  -- 
+This format is specific to DrScheme, and no other editor
+recognizes it. DrScheme saves a program in multimedia format by
+default when the program contains images, text boxes, or
+formatted text.</p>
+<p>
+Multimedia format is platform-independent. Use a ``binary''
+transfer mode when moving multimedia-format files across
+platforms. (Using ``text'' mode may corrupt the file.)</p>
+<p>
+</p>
+</ul><p></p>
+<p>
+</p>
+<a name="node_sec_3.4.2"></a>
+<h3><a href="drscheme.html#node_toc_node_sec_3.4.2">3.4.2&nbsp;&nbsp;Backup and Autosave Files</a></h3>
+<p></p>
+<p>
+<a name="node_idx_616"></a>
+When you modify an existing file in DrScheme and save it, DrScheme
+copies the old version of the file to a special backup file if no
+backup file exists. The backup file is saved in the same directory as
+the original file, and the backup file's name is generated from the
+original file's name:
+</p>
+<ul><p>
+</p>
+<li><p>Under Unix and Mac OS, a tilde (~) is added to the end of
+the file's name.</p>
+<p>
+</p>
+<li><p>Under Windows, the file's extension is replaced with
+<tt><strong>.bak</strong></tt><a name="node_idx_618"></a>.</p>
+<p>
+</p>
+</ul><p></p>
+<p>
+<a name="node_idx_620"></a>
+When a file in an active DrScheme editor is modified but not saved,
+DrScheme saves the file to a special autosave file after five minutes
+(in case of a power failure or catastrophic error). If the file is
+later saved, or if the user exists DrScheme without saving the file,
+the autosave file is removed. The autosave file is saved in the same
+directory as the original file, and the autosave file's name is
+generated from the original file's name:
+</p>
+<ul><p>
+</p>
+<li><p>Under Unix and Mac OS, a pound sign (#) is added to the start
+and end of the file's name, then a number is added after the
+ending pound sign, and then one more pound sign is appended to
+the name. The number is selected to make the autosave filename
+unique.</p>
+<p>
+</p>
+<li><p>Under Windows, the file's extension is replaced with a number
+to make the autosave filename unique.</p>
+<p>
+</p>
+</ul><p></p>
+<p>
+</p>
+<a name="node_sec_3.4.3"></a>
+<h3><a href="drscheme.html#node_toc_node_sec_3.4.3">3.4.3&nbsp;&nbsp;Preference Files</a></h3>
+<p><a name="node_idx_622"></a><a name="node_idx_624"></a>
+On start-up, DrScheme reads configuration information from
+a preferences file.
+The name and location of the preferences file depends on the platform
+and user:<a name="call_footnote_Temp_6"></a><a href="#footnote_Temp_6"><sup><small>2</small></sup></a>
+</p>
+<ul><p>
+</p>
+<li><p>Under Unix, preferences are stored in <tt><strong>.plt-prefs.ss</strong></tt><a name="node_idx_626"></a>
+in the user's home directory.</p>
+<p>
+</p>
+<li><p>Under Windows, if the HOMEDRIVE and HOMEPATH environment
+variables are defined, preferences are stored in
+<tt><strong>%HOMEDRIVE%<tt>\</tt>%HOMEPATH%<tt>\</tt>plt-prefs.ss</strong></tt>,
+otherwise preferences are stored in <tt><strong>plt-prefs.ss</strong></tt><a name="node_idx_628"></a> in the
+directory containing the MrEd executable.</p>
+<p>
+<em>Windows NT, XP, 2000:</em> When DrScheme is launched under Windows
+NT, XP, or 2000 and HOMEDRIVE and HOMEPATH are not set, Windows
+automatically sets the variables to indicate the root directory of
+the main disk. Therefore, when HOMEDRIVE and HOMEPATH are not set,
+the preferences file <tt><strong>plt-prefs.ss</strong></tt> is saved in the root
+directory of the main disk.</p>
+<p>
+</p>
+<li><p>Under Mac OS X, preferences are stored in
+<tt><strong>.plt-prefs.ss</strong></tt><a name="node_idx_630"></a> in the user's preferences folder.  Under
+Mac OS Classic, preferences are stored in <tt><strong>plt-prefs.ss</strong></tt><a name="node_idx_632"></a> in the
+system preferences folder.</p>
+<p>
+</p>
+</ul><p>
+A lock file is used while modifying the preferences file, in the same
+directory as the preferences file. Under Windows and Mac OS Classic, the
+lock file is named <tt><strong>.LOCKplt-prefs.ss</strong></tt><a name="node_idx_634"></a>, and on other
+platforms, it is <tt><strong>.LOCK.plt-prefs.ss</strong></tt><a name="node_idx_636"></a>.
+</p>
+<p>
+<a name="node_idx_638"></a> 
+<a name="node_idx_640"></a> 
+If the user-specific preferences file does not exist, and the file
+<tt><strong>plt-prefs.ss</strong></tt><a name="node_idx_642"></a> in the <tt><strong>defaults</strong></tt><a name="node_idx_644"></a> collection does
+exist, then it is used for the initial preference settings.  (See
+<a href="../mzscheme/mzscheme-Z-H-16.html#node_chap_16">Library Collections and MzLib</a> for more
+information about collections.) This file thus allows site-specific
+configuration for preference defaults. To set up such a
+configuration, start DrScheme and configure the preferences to your
+liking.  Then, exit DrScheme and copy your preferences file into the
+<tt><strong>defaults</strong></tt> collection as <tt><strong>plt-prefs.ss</strong></tt>. Afterward, users
+have no preferences will get the preference settings you chose.</p>
+<p>
+</p>
+<div class=footnoterule><hr></div><p></p>
+<div class=footnote><p><a name="footnote_Temp_6"></a><a href="#call_footnote_Temp_6"><sup><small>2</small></sup></a> The MzScheme procedure <code class=scheme>find-system-path</code>
+returns the platform-specific path when given the argument
+<code class=scheme><span class=selfeval>'pref-file</span></code>.</p>
+</div>
+<div align=right class=navigation><i>[Go to <span><a href="drscheme.html">first</a>, <a href="drscheme-Z-H-2.html">previous</a></span><span>, <a href="drscheme-Z-H-4.html">next</a></span> page<span>; &nbsp;&nbsp;</span><span><a href="drscheme.html#node_toc_start">contents</a></span><span><span>; &nbsp;&nbsp;</span><a href="drscheme-Z-H-6.html#node_index_start">index</a></span>]</i></div><p></p>
+</body>
+</html>

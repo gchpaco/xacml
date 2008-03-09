@@ -1,0 +1,5 @@
+(
+("c-declare" "c-declare syntax" "mzc-Z-H-2.html" "node_kw_definitionc-declare" "Foreign-Function Interface to C")
+("c-include" "c-include syntax" "mzc-Z-H-2.html" "node_kw_definitionc-include" "Foreign-Function Interface to C")
+("c-lambda" "c-lambda syntax" "mzc-Z-H-2.html" "node_kw_definitionc-lambda" "Foreign-Function Interface to C")
+)

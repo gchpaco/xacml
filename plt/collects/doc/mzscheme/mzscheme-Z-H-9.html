@@ -1,0 +1,305 @@
+<!doctype html public "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!--
+
+Generated from mzscheme.tex by tex2page, v 2004-09-11
+(running on MzScheme 209, unix), 
+(c) Dorai Sitaram, 
+http://www.ccs.neu.edu/~dorai/tex2page/tex2page-doc.html
+
+-->
+<head>
+<title>
+PLT MzScheme: Language Manual
+</title>
+<link rel="stylesheet" type="text/css" href="mzscheme-Z-S.css" title=default>
+<meta name=robots content="noindex,follow">
+</head>
+<body>
+<div align=right class=navigation><i>[Go to <span><a href="mzscheme.html">first</a>, <a href="mzscheme-Z-H-8.html">previous</a></span><span>, <a href="mzscheme-Z-H-10.html">next</a></span> page<span>; &nbsp;&nbsp;</span><span><a href="mzscheme.html#node_toc_start">contents</a></span><span><span>; &nbsp;&nbsp;</span><a href="mzscheme-Z-H-19.html#node_index_start">index</a></span>]</i></div><p></p>
+<a name="node_chap_9"></a>
+<h1 class=chapter>
+<div class=chapterheading><a href="mzscheme.html#node_toc_node_chap_9">Chapter 9</a></div><br>
+<a href="mzscheme.html#node_toc_node_chap_9">Security</a></h1>
+<p><a name="node_idx_1362"></a></p>
+<p>
+MzScheme offers several mechanisms for managing security:
+</p>
+<ul><p>
+</p>
+<li><p>Custodians (section&nbsp;<a href="#node_sec_9.2">9.2</a>) manage resource allocation.</p>
+<p>
+</p>
+<li><p>Security guards (section&nbsp;<a href="#node_sec_9.1">9.1</a>) control access to the
+filesystem and network.</p>
+<p>
+</p>
+<li><p>Inspectors (section&nbsp;<a href="mzscheme-Z-H-4.html#node_sec_4.5">4.5</a>) control access to the content
+of otherwise opaque structures.</p>
+<p>
+</p>
+<li><p>Namespaces (section&nbsp;<a href="mzscheme-Z-H-8.html#node_chap_8">8</a>) control access to Scheme
+bindings.</p>
+<p>
+</p>
+<li><p>Thread groups (section&nbsp;<a href="#node_sec_9.3">9.3</a>) control CPU allocation.</p>
+<p>
+</p>
+</ul><p>
+All security mechanisms rely on thread-specific parameters (see
+section&nbsp;<a href="mzscheme-Z-H-7.html#node_sec_7.7">7.7</a>).</p>
+<p>
+</p>
+<p>
+</p>
+<a name="node_sec_9.1"></a>
+<h2><a href="mzscheme.html#node_toc_node_sec_9.1">9.1&nbsp;&nbsp;Security Guards</a></h2>
+<p><a name="node_idx_1364"></a></p>
+<p>
+<a name="node_idx_1366"></a>
+A <strong>security guard</strong> provides a set of access-checking
+procedures to be called when a thread initiates access of a file,
+directory, or network connection through a primitive procedure. For
+example, when a thread calls <code class=scheme><code class=scheme>open-input-file</code></code>, the thread's
+current security guard is consulted to check whether the thread is
+allowed read access to the file. If access is granted, the thread
+receives a port that it may use indefinitely, regardless of changes
+to the security guard (although the port's custodian could shut down
+the port; see section&nbsp;<a href="#node_sec_9.2">9.2</a>).</p>
+<p>
+A thread's current security guard is determined by the
+<a name="node_idx_1368"></a><code class=scheme>current-security-guard</code> parameter (see
+section&nbsp;<a href="mzscheme-Z-H-7.html#node_sec_7.7.1.8">7.7.1.8</a>). Every security guard has a
+parent, and a parent's access procedures are called whenever a
+child's access procedures are called. Thus, a thread cannot increase
+its own access arbitrarily by installing a new guard. The initial
+security guard enforces no access restrictions other than those
+enforced by the host platform.</p>
+<p>
+<a name="node_idx_1370"></a><a name="node_kw_definitionmake-security-guard"></a><code class=scheme>(make-security-guard</code><tt>&nbsp;</tt><code class=scheme><span class=variable>parent-security-guard file-proc network-proc</span></code><code class=scheme>)</code>
+creates a new security guard whose parent is
+<code class=scheme><span class=variable>parent-security-guard</span></code>.</p>
+<p>
+The <code class=scheme><span class=variable>file-proc</span></code> procedure must accept three arguments:
+</p>
+<ul><p>
+</p>
+<li><p>a symbol for the primitive procedure that triggered the access
+check, which is useful for raising an exception to deny access.</p>
+<p>
+</p>
+<li><p>an immutable string representing a pathname, or <code class=scheme><span class=selfeval>#f</span></code> to
+check access for pathless queries, such as
+<code class=scheme>(<code class=scheme>current-directory</code>)</code>, <code class=scheme>(<code class=scheme>filesystem-root-list</code>)</code>, and
+<code class=scheme>(<code class=scheme>find-system-path</code> ...)</code>. A path string provided to
+<code class=scheme><span class=variable>file-proc</span></code> is not processed at all before checking access; it
+may be a relative path, and it may be ill-formed.</p>
+<p>
+</p>
+<li><p>an immutable list containing one or more of the following
+symbols:
+</p>
+<ul><p>
+</p>
+<li><p><code class=scheme><span class=selfeval>'read</span></code><a name="node_idx_1372"></a>  --  read a file or directory</p>
+<p>
+</p>
+<li><p><code class=scheme><span class=selfeval>'write</span></code><a name="node_idx_1374"></a>  --  modify or create a file or
+directory</p>
+<p>
+</p>
+<li><p><code class=scheme><span class=selfeval>'execute</span></code><a name="node_idx_1376"></a>  --  execute a file</p>
+<p>
+</p>
+<li><p><code class=scheme><span class=selfeval>'delete</span></code><a name="node_idx_1378"></a>  --  delete a file or directory</p>
+<p>
+</p>
+<li><p><code class=scheme><span class=selfeval>'exists</span></code><a name="node_idx_1380"></a>  --  determine whether a file or
+directory exists, or that a path string is well-formed</p>
+<p>
+</p>
+</ul><p>
+The <code class=scheme><span class=selfeval>'exists</span></code> symbol is never combined with other symbols in
+the last argument to <code class=scheme><span class=variable>file-proc</span></code>, but any other combination is
+possible. When the second argument to <code class=scheme><span class=variable>file-proc</span></code> is <code class=scheme><span class=selfeval>#f</span></code>,
+the last argument always contains only <code class=scheme><span class=selfeval>'exists</span></code>.</p>
+<p>
+</p>
+</ul><p></p>
+<p>
+The <code class=scheme><span class=variable>network-proc</span></code> procedure must accept four arguments:
+</p>
+<ul><p>
+</p>
+<li><p>a symbol for the primitive operation that triggered the access
+check, which is useful for raising an exception to deny access.</p>
+<p>
+</p>
+<li><p>an immutable string representing the target hostname for a
+client connection or the accepting hostname for a listening server;
+<code class=scheme><span class=selfeval>#f</span></code> for a listening server or UDP socket that accepts
+connections at all of the host's address; or <code class=scheme><span class=selfeval>#f</span></code> an unbound
+UDP socket.</p>
+<p>
+</p>
+<li><p>an exact integer between <code class=scheme><span class=selfeval>1</span></code> and <code class=scheme><span class=selfeval>65535</span></code>
+(inclusive) representing the port number, or <code class=scheme><span class=selfeval>#f</span></code> for an
+unbound UDP socket. In the case of a client connection, the port
+number is the target port on the server. For a listening server, the
+port number is the local port number.</p>
+<p>
+</p>
+<li><p>a symbol, either <code class=scheme><span class=selfeval>'client</span></code><a name="node_idx_1382"></a> or <code class=scheme><span class=selfeval>'server</span></code><a name="node_idx_1384"></a>,
+indicating whether the check is for the creation of a client
+connection or a listening server. The opening of an unbound UDP
+socket is identified as a <code class=scheme><span class=selfeval>'client</span></code> connection; explicitly
+binding the socket is identified as a <code class=scheme><span class=selfeval>'server</span></code> action.</p>
+<p>
+</p>
+</ul><p></p>
+<p>
+The return value of <code class=scheme><span class=variable>file-proc</span></code> or <code class=scheme><span class=variable>network-proc</span></code> is
+ignored. To deny access, the procedure must raise an exception or
+otherwise escape from the context of the primitive call. If the
+procedure returns, the parent's corresponding procedure is called on
+the same inputs, and so on up the chain of security guards.</p>
+<p>
+The <code class=scheme><span class=variable>file-proc</span></code> and <code class=scheme><span class=variable>network-proc</span></code> procedures are invoked in
+the thread that called the access-checked primitive. Breaks may or
+may not be enabled (see section&nbsp;<a href="mzscheme-Z-H-6.html#node_sec_6.6">6.6</a>). Full continuation
+jumps are blocked going into or out of the <code class=scheme><span class=variable>file-proc</span></code> or
+<code class=scheme><span class=variable>network-proc</span></code> call (see section&nbsp;<a href="mzscheme-Z-H-6.html#node_sec_6.3">6.3</a>).</p>
+<p>
+<a name="node_idx_1386"></a><a name="node_kw_definitionsecurity-guard_Q_"></a><code class=scheme>(security-guard?</code><tt>&nbsp;</tt><code class=scheme><span class=variable>v</span></code><code class=scheme>)</code> returns <code class=scheme><span class=selfeval>#t</span></code> if <code class=scheme><span class=variable>v</span></code> is a
+security guard value, <code class=scheme><span class=selfeval>#f</span></code> otherwise.</p>
+<p>
+</p>
+<p>
+</p>
+<a name="node_sec_9.2"></a>
+<h2><a href="mzscheme.html#node_toc_node_sec_9.2">9.2&nbsp;&nbsp;Custodians</a></h2>
+<p><a name="node_idx_1388"></a></p>
+<p>
+<a name="node_idx_1390"></a>
+A <strong>custodian</strong> manages a collection of threads, file-stream
+ports, TCP ports, TCP listeners, and UDP sockets.<a name="call_footnote_Temp_18"></a><a href="#footnote_Temp_18"><sup><small>15</small></sup></a>  Whenever a thread, file-stream
+port, TCP port, TCP listener, or UDP socket is created,
+it is placed under the management of the current custodian (as
+determined by the <a name="node_idx_1392"></a><code class=scheme>current-custodian</code> parameter; see
+section&nbsp;<a href="mzscheme-Z-H-7.html#node_sec_7.7.1.8">7.7.1.8</a>).</p>
+<p>
+The main operation on a custodian is to shut down its managed values
+via <code class=scheme><code class=scheme>custodian-shutdown-all</code></code>. In other words,
+<code class=scheme><code class=scheme>custodian-shutdown-all</code></code> generalizes <code class=scheme><code class=scheme>kill-thread</code></code> to
+forcibly and immediately close a set of ports, TCP connections, etc.,
+as well as terminate (or suspend) a set of threads. For example, a web
+server might use a custodian to manage all of the resources of a
+particular session so that the session can be cleanly terminated if
+it exceeds its allowed lifetime.</p>
+<p>
+A custodian that has been shut down cannot manage new objects. If the
+current custodian is shut down before a procedure is called to create
+a managed resource (e.g., <code class=scheme>open-input-port</code>, <code class=scheme>thread</code>),
+the <a name="node_idx_1394"></a><code class=scheme>exn:application:mismatch</code> exception is raised.</p>
+<p>
+A thread can have multiple managing custodians, and a suspended thread
+created with <code class=scheme>thread/suspend-to-kill</code> can have zero
+custodians. Extra custodians become associated with a thread through
+<code class=scheme>thread-resume</code> (see section&nbsp;<a href="mzscheme-Z-H-7.html#node_sec_7.1">7.1</a>). When a thread has
+multiple custodians, it is not necessarily killed by a
+<code class=scheme><code class=scheme>custodian-shutdown-all</code></code>, but shut-down custodians are removed
+from the thread's managing set, and the thread is killed when its
+managing set becomes empty.</p>
+<p>
+The values managed by a custodian are only weakly held by the
+custodian. As a result, a will (see section&nbsp;<a href="mzscheme-Z-H-13.html#node_sec_13.2">13.2</a>) can be
+executed for a value that is managed by a custodian. In addition, a
+custodian only weakly references its subordinate custodians; if a
+subordinate custodian is unreferenced but has its own subordinates,
+then the custodian may be collected, at which point its subordinates
+become immediately subordinate to the collected custodian's
+superordinate custodian.</p>
+<p>
+<a name="node_idx_1396"></a><a name="node_kw_definitionmake-custodian"></a><code class=scheme>(make-custodian</code><tt>&nbsp;</tt>[<code class=scheme><span class=variable>custodian</span></code>]<code class=scheme>)</code> creates a new custodian that is
+subordinate to <code class=scheme><span class=variable>custodian</span></code>. When <code class=scheme><span class=variable>custodian</span></code> is directed (via
+<code class=scheme><code class=scheme>custodian-shutdown-all</code></code>) to shut down all of its managed
+values, the new subordinate custodian is automatically directed to
+shut down its managed values as well.  The default value for
+<code class=scheme><span class=variable>custodian</span></code> is the current custodian.</p>
+<p>
+<a name="node_idx_1398"></a><a name="node_kw_definitioncustodian-shutdown-all"></a><code class=scheme>(custodian-shutdown-all</code><tt>&nbsp;</tt><code class=scheme><span class=variable>custodian</span></code><code class=scheme>)</code> closes all open ports and
+closes all active TCP listeners and UDP sockets that are managed by
+<code class=scheme><span class=variable>custodian</span></code>. It also removes <code class=scheme><span class=variable>custodian</span></code> (and its
+subordinates) as managers of all threads; when a thread has no
+managers, it is killed.<a name="call_footnote_Temp_19"></a><a href="#footnote_Temp_19"><sup><small>16</small></sup></a>  If the
+current thread is to be killed, all other shut-down actions take
+place before killing the thread.</p>
+<p>
+<a name="node_idx_1400"></a><a name="node_kw_definitioncustodian_Q_"></a><code class=scheme>(custodian?</code><tt>&nbsp;</tt><code class=scheme><span class=variable>v</span></code><code class=scheme>)</code> returns <code class=scheme><span class=selfeval>#t</span></code> if <code class=scheme><span class=variable>v</span></code> is a custodian value,
+<code class=scheme><span class=selfeval>#f</span></code> otherwise.</p>
+<p>
+<a name="node_idx_1402"></a><a name="node_kw_definitioncustodian-managed-list"></a><code class=scheme>(custodian-managed-list</code><tt>&nbsp;</tt><code class=scheme><span class=variable>custodian super-custodian</span></code><code class=scheme>)</code> returns a list
+of immediately managed objects and subordinate custodians for
+<code class=scheme><span class=variable>custodian</span></code>, where <code class=scheme><span class=variable>custodian</span></code> is itself subordinate to
+<code class=scheme><span class=variable>super-custodian</span></code> (directly or indirectly). If <code class=scheme><span class=variable>custodian</span></code> is
+not strictly subordinate to <code class=scheme><span class=variable>super-custodian</span></code>, the
+<a name="node_idx_1404"></a><code class=scheme>exn:application:mismatch</code> exception is raised.</p>
+<p>
+<a name="node_idx_1406"></a><a name="node_kw_definitioncustodian-require-memory"></a><code class=scheme>(custodian-require-memory</code><tt>&nbsp;</tt><code class=scheme><span class=variable>need-k custodian</span></code><code class=scheme>)</code> registers a require check
+if MzScheme is compiled with support for memory accounting, otherwise
+the <a name="node_idx_1408"></a><code class=scheme>exn:misc:unsupported</code> exception is raised. If a check is registered, and if
+MzScheme later reaches a state after garbage collection (see
+section&nbsp;<a href="mzscheme-Z-H-13.html#node_sec_13.3">13.3</a>) where <code class=scheme><span class=variable>need-k</span></code> bytes are not
+available to the current custodian, <code class=scheme><span class=variable>custodian</span></code> is shut down.</p>
+<p>
+<a name="node_idx_1410"></a><a name="node_kw_definitioncustodian-limit-memory"></a><code class=scheme>(custodian-limit-memory</code><tt>&nbsp;</tt><code class=scheme><span class=variable>custodian limit-k custodian</span></code><code class=scheme>)</code> registers a
+limit check if MzScheme is compiled with support for memory
+accounting, otherwise the <a name="node_idx_1412"></a><code class=scheme>exn:misc:unsupported</code> exception is raised. If a check
+is registered, and if MzScheme later reaches a state after garbage
+collection (see section&nbsp;<a href="mzscheme-Z-H-13.html#node_sec_13.3">13.3</a>) where <code class=scheme><span class=variable>custodian</span></code>
+owns more than <code class=scheme><span class=variable>limit-k</span></code> bytes, then <code class=scheme><span class=variable>custodian</span></code> is shut down.</p>
+<p>
+</p>
+<p>
+</p>
+<a name="node_sec_9.3"></a>
+<h2><a href="mzscheme.html#node_toc_node_sec_9.3">9.3&nbsp;&nbsp;Thread Groups</a></h2>
+<p><a name="node_idx_1414"></a></p>
+<p>
+<a name="node_idx_1416"></a>
+<a name="node_idx_1418"></a>
+A <strong>thread group</strong> is a collection of threads and other thread
+groups that have equal claim to the CPU. By nesting thread groups and
+by creating certain threads within certain groups, a programmer can
+control the amount of CPU allocated to a set of threads. Every thread
+belongs to a thread group, which is determined by the
+<code class=scheme>curent-thread-group</code> parameter (see
+section&nbsp;<a href="mzscheme-Z-H-7.html#node_sec_7.7.1.8">7.7.1.8</a>) when the thread is created. Thread
+groups and custodians (see section&nbsp;<a href="#node_sec_9.2">9.2</a>) are independent.</p>
+<p>
+The root thread group receives all of the CPU that the operating
+system gives MzScheme. Every thread or nested group in a particular
+thread group receives equal allocation of the CPU (a portion of the
+group's access), although a thread may relinquish part of its
+allocation by sleeping or synchronizing with other processes.</p>
+<p>
+<a name="node_idx_1420"></a><a name="node_kw_definitionmake-thread-group"></a><code class=scheme>(make-thread-group</code><tt>&nbsp;</tt>[<code class=scheme><span class=variable>thread-group</span></code>]<code class=scheme>)</code> creates a new thread group
+that belongs to <code class=scheme><span class=variable>thread-group</span></code>. The default value for
+<code class=scheme><span class=variable>thread-group</span></code> is the current thread group, as determined by the
+<code class=scheme>current-thread-group</code> parameter.</p>
+<p>
+<a name="node_idx_1422"></a><a name="node_kw_definitionthread-group_Q_"></a><code class=scheme>(thread-group?</code><tt>&nbsp;</tt><code class=scheme><span class=variable>v</span></code><code class=scheme>)</code> returns <code class=scheme><span class=selfeval>#t</span></code> if <code class=scheme><span class=variable>v</span></code> is a thread group
+value, <code class=scheme><span class=selfeval>#f</span></code> otherwise.</p>
+<p>
+</p>
+<p>
+</p>
+<div class=footnoterule><hr></div><p></p>
+<div class=footnote><p><a name="footnote_Temp_18"></a><a href="#call_footnote_Temp_18"><sup><small>15</small></sup></a> In MrEd,
+custodians also manage eventspaces.</p>
+<p><a name="footnote_Temp_19"></a><a href="#call_footnote_Temp_19"><sup><small>16</small></sup></a> ``Killing'' a thread created with
+<code class=scheme>thread/suspend-to-kill</code> merely suspends the thread.</p>
+</div>
+<div align=right class=navigation><i>[Go to <span><a href="mzscheme.html">first</a>, <a href="mzscheme-Z-H-8.html">previous</a></span><span>, <a href="mzscheme-Z-H-10.html">next</a></span> page<span>; &nbsp;&nbsp;</span><span><a href="mzscheme.html#node_toc_start">contents</a></span><span><span>; &nbsp;&nbsp;</span><a href="mzscheme-Z-H-19.html#node_index_start">index</a></span>]</i></div><p></p>
+</body>
+</html>

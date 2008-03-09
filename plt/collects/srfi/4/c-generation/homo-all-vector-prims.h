@@ -1,0 +1,8 @@
+#include "homo-f64-vector-prims.h"
+#include "homo-f32-vector-prims.h"
+#include "homo-s32-vector-prims.h"
+#include "homo-s16-vector-prims.h"
+#include "homo-s8-vector-prims.h"
+#include "homo-u32-vector-prims.h"
+#include "homo-u16-vector-prims.h"
+#include "homo-u8-vector-prims.h"

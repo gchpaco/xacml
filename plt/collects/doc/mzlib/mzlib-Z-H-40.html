@@ -1,0 +1,434 @@
+<!doctype html public "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!--
+
+Generated from mzlib.tex by tex2page, v 2004-09-11
+(running on MzScheme 209, unix), 
+(c) Dorai Sitaram, 
+http://www.ccs.neu.edu/~dorai/tex2page/tex2page-doc.html
+
+-->
+<head>
+<title>
+PLT MzLib: Libraries Manual
+</title>
+<link rel="stylesheet" type="text/css" href="mzlib-Z-S.css" title=default>
+<meta name=robots content="noindex,follow">
+</head>
+<body>
+<div align=right class=navigation><i>[Go to <span><a href="mzlib.html">first</a>, <a href="mzlib-Z-H-39.html">previous</a></span><span>, <a href="mzlib-Z-H-41.html">next</a></span> page<span>; &nbsp;&nbsp;</span><span><a href="mzlib.html#node_toc_start">contents</a></span><span><span>; &nbsp;&nbsp;</span><a href="mzlib-Z-H-42.html#node_index_start">index</a></span>]</i></div><p></p>
+<a name="node_chap_40"></a>
+<h1 class=chapter>
+<div class=chapterheading><a href="mzlib.html#node_toc_node_chap_40">Chapter 40</a></div><br>
+<a href="mzlib.html#node_toc_node_chap_40"><tt><strong>unit.ss</strong></tt>: Core Units</a></h1>
+<p><a name="node_idx_1176"></a><a name="node_idx_1178"></a></p>
+<p>
+<a name="node_idx_1180"></a>
+MzScheme's <strong>units</strong> are used to organize a program into
+separately compilable and reusable components. A unit resembles a
+procedure in that both are first-class values that are used for
+abstraction. While procedures abstract over values in expressions,
+units abstract over names in collections of definitions. Just as a
+procedure is invoked to evaluate its expressions given actual
+arguments for its formal parameters, a unit is invoked to evaluate
+its definitions given actual references for its imported
+variables. Unlike a procedure, however, a unit's imported variables
+can be partially linked with the exported variables of another unit
+<em>prior to invocation</em>. Linking merges multiple units together
+into a single compound unit. The compound unit itself imports
+variables that will be propagated to unresolved imported variables in
+the linked units, and re-exports some variables from the linked units
+for further linking.</p>
+<p>
+In some ways, a unit resembles a module (see Chapter&nbsp;<a href="../mzscheme/mzscheme-Z-H-5.html#node_chap_5">5</a> in <a href="../mzscheme/mzscheme.html"><i>PLT MzScheme: Language Manual</i></a>), but
+units and modules serve different purposes overall. A unit
+encapsulates a pluggable component -- code that relies, for example, on
+``some function <code class=scheme><span class=variable>f</span></code> from a source to be determined later.'' In
+contrast, if a module imports a function, the import is ``<em>the</em>
+function <code class=scheme><span class=variable>f</span></code> provided by the specific module <code class=scheme><span class=variable>m</span></code>.'' Moreover,
+a unit is a first-class value that can be multiply instantiated, each
+time with different imports, whereas a module's context is
+fixed. Finally, because a unit's interface is separate from its
+implementation, units naturally support mutually recursive references
+across unit boundaries, while module imports must be acyclic.</p>
+<p>
+MzScheme supports two layers of units. The <strong>core</strong> unit system
+comprises the <code class=scheme><span class=keyword>unit</span></code>, <code class=scheme><span class=keyword>compound-unit</span></code>, and
+<code class=scheme><span class=keyword>invoke-unit</span></code> syntactic forms. These forms implement the basic
+mechanics of units for separate compilation and linking. While the
+semantics of units is most easily understood via the core forms, they
+are too verbose for specifying the interconnections between units in
+a large program. Therefore, a system of <strong>units with
+signatures</strong> is provided on top of the core forms, comprising the
+<code class=scheme><span class=keyword>define-signature</span></code>, <code class=scheme><span class=keyword>unit/sig</span></code>,
+<code class=scheme><span class=keyword>compound-unit/sig</span></code>, and <code class=scheme><span class=keyword>invoke-unit/sig</span></code> syntactic
+forms.</p>
+<p>
+The core system is described in this chapter, and defined by the
+<tt><strong>unit.ss</strong></tt> library. The signature system is described in
+section&nbsp;<a href="mzlib-Z-H-41.html#node_chap_41">41</a>, and defined by <tt><strong>unitsig.ss</strong></tt>.  Details
+about mixing core and signed units are presented in
+section&nbsp;<a href="mzlib-Z-H-41.html#node_sec_41.9">41.9</a> (using procedures from <tt><strong>unitsig.ss</strong></tt>).</p>
+<p>
+</p>
+<a name="node_sec_40.1"></a>
+<h2><a href="mzlib.html#node_toc_node_sec_40.1">40.1&nbsp;&nbsp;Creating Units</a></h2>
+<p><a name="node_idx_1182"></a></p>
+<p>
+<a name="node_idx_1184"></a>
+The <a name="node_kw_definitionunit"></a><a name="node_idx_1186"></a><code class=scheme><span class=keyword>unit</span></code> form creates a unit:
+</p>
+<div align=left><pre class=scheme>(<span class=keyword>unit</span>
+  (<span class=keyword>import</span> <span class=variable>variable</span> <tt>&middot;&middot;&middot;</tt>)
+  (<span class=keyword>export</span> <span class=variable>exportage</span> <tt>&middot;&middot;&middot;</tt>)
+  <span class=variable>unit-body-expr</span>
+  <tt>&middot;&middot;&middot;</tt>)
+
+<span class=variable>exportage</span> is one of
+  <span class=variable>variable</span>
+  (<span class=variable>internal-variable</span> <span class=variable>external-variable</span>)
+</pre></div><p></p>
+<p>
+The <code class=scheme><span class=variable>variable</span></code>s in the <a name="node_kw_definitionimport"></a><a name="node_idx_1188"></a><code class=scheme><span class=keyword>import</span></code> clause are bound
+within the <code class=scheme><span class=variable>unit-body-expr</span></code> expressions. The variables for
+<code class=scheme><span class=variable>exportage</span></code>s in the <a name="node_kw_definitionexport"></a><a name="node_idx_1190"></a><code class=scheme><span class=keyword>export</span></code> clause must be defined
+in the <code class=scheme><span class=variable>unit-body-expr</span></code>s as described below; additional private
+variables can be defined as well. The imported and exported variables
+cannot occur on the left-hand side of an assignment (i.e., a
+<code class=scheme><span class=keyword>set!</span></code> expression).</p>
+<p>
+The first <code class=scheme><span class=variable>exportage</span></code> form exports the binding defined as
+<code class=scheme><span class=variable>variable</span></code> in the unit body using the external name
+<code class=scheme><span class=variable>variable</span></code>. The second form exports the binding defined as
+<code class=scheme><span class=variable>internal-variable</span></code> using the external name
+<code class=scheme><span class=variable>external-variable</span></code>. The external variables from an
+<code class=scheme><span class=keyword>export</span></code> clause must be distinct.</p>
+<p>
+Each exported <code class=scheme><span class=variable>variable</span></code> or <code class=scheme><span class=variable>internal-variable</span></code> must be
+defined in a <code class=scheme><span class=keyword>define-values</span></code> expression as a
+<code class=scheme><span class=variable>unit-body-expr</span></code>.<a name="call_footnote_Temp_16"></a><a href="#footnote_Temp_16"><sup><small>11</small></sup></a>  All
+identifiers defined by the <code class=scheme><span class=variable>unit-body-expr</span></code>s together with the
+<code class=scheme><span class=variable>variable</span></code>s from the <code class=scheme><span class=keyword>import</span></code> clause must be distinct.</p>
+<p>
+</p>
+<a name="node_sec_Temp_17"></a>
+<h3><a href="mzlib.html#node_toc_node_sec_Temp_17">Examples</a></h3>
+<p>The unit defined below imports and exports no variables. Each time it
+is invoked, it prints and returns the current time in
+seconds:<a name="call_footnote_Temp_18"></a><a href="#footnote_Temp_18"><sup><small>12</small></sup></a>
+</p>
+<div align=left><pre class=scheme>(<span class=keyword>define</span> <span class=variable>f1@</span>
+  (<span class=keyword>unit</span> (<span class=keyword>import</span>) (<span class=keyword>export</span>)
+   (<span class=keyword>define</span> <span class=variable>x</span> (<code class=scheme>current-seconds</code>))
+   (<code class=scheme>display</code> <span class=variable>x</span>)
+   (<code class=scheme>newline</code>)
+   <span class=variable>x</span>))
+</pre></div><p></p>
+<p>
+The unit defined below is similar, except that it exports the variable
+<code class=scheme><span class=variable>x</span></code> instead of returning the value:
+</p>
+<div align=left><pre class=scheme>(<span class=keyword>define</span> <span class=variable>f2@</span>
+  (<span class=keyword>unit</span> (<span class=keyword>import</span>) (<span class=keyword>export</span> <span class=variable>x</span>)
+   (<span class=keyword>define</span> <span class=variable>x</span> (<code class=scheme>current-seconds</code>))
+   (<code class=scheme>display</code> <span class=variable>x</span>)
+   (<code class=scheme>newline</code>)))
+</pre></div><p></p>
+<p>
+The following units define two parts of an interactive phone book:
+</p>
+<div align=left><pre class=scheme>(<span class=keyword>define</span> <span class=variable>database@</span>
+  (<span class=keyword>unit</span> 
+    (<span class=keyword>import</span> <span class=variable>show-message</span>)
+    (<span class=keyword>export</span> <span class=variable>insert</span> <span class=variable>lookup</span>)
+
+    (<span class=keyword>define</span> <span class=variable>table</span> (<code class=scheme>list</code>))
+    (<span class=keyword>define</span> <span class=variable>insert</span>
+      (<span class=keyword>lambda</span> (<span class=variable>name</span> <span class=variable>info</span>)
+        (<span class=keyword>set!</span> <span class=variable>table</span> (<code class=scheme>cons</code> (<code class=scheme>cons</code> <span class=variable>name</span> <span class=variable>info</span>) <span class=variable>table</span>))))
+    (<span class=keyword>define</span> <span class=variable>lookup</span>
+      (<span class=keyword>lambda</span> (<span class=variable>name</span>)
+        (<span class=keyword>let</span> ([<span class=variable>data</span> (<span class=variable>assoc</span> <span class=variable>name</span> <span class=variable>table</span>)])
+          (<span class=keyword>if</span> <span class=variable>data</span>
+              (<code class=scheme>cdr</code> <span class=variable>data</span>)
+              (<span class=variable>show-message</span> <span class=selfeval>&quot;info not found&quot;</span>)))))
+    <span class=variable>insert</span>))
+
+(<span class=keyword>define</span> <span class=variable>interface@</span>
+  (<span class=keyword>unit</span> 
+    (<span class=keyword>import</span> <span class=variable>insert</span> <span class=variable>lookup</span> <span class=variable>make-window</span> <span class=variable>make-button</span>)
+    (<span class=keyword>export</span> <span class=variable>show-message</span>)
+    (<span class=keyword>define</span> <span class=variable>show-message</span>
+      (<span class=keyword>lambda</span> (<span class=variable>msg</span>) ...))
+    (<span class=keyword>define</span> <span class=variable>main-window</span>
+      ...)))
+</pre></div><p>
+In this example, the <code class=scheme><span class=variable>database@</span></code> unit implements the
+database-searching part of the program, and the <code class=scheme><span class=variable>interface@</span></code>
+unit implements the graphical user interface. The <code class=scheme><span class=variable>database@</span></code>
+unit exports <code class=scheme><span class=variable>insert</span></code> and <code class=scheme><span class=variable>lookup</span></code> procedures to be
+used by the graphical interface, while the <code class=scheme><span class=variable>interface@</span></code> unit
+exports a <code class=scheme><span class=variable>show-message</span></code> procedure to be used by the database
+(to handle errors). The <code class=scheme><span class=variable>interface@</span></code> unit also imports
+variables that will be supplied by an platform-specific graphics
+toolbox.</p>
+<p>
+</p>
+<a name="node_sec_40.2"></a>
+<h2><a href="mzlib.html#node_toc_node_sec_40.2">40.2&nbsp;&nbsp;Invoking Units</a></h2>
+<p><a name="node_idx_1192"></a></p>
+<p>
+<a name="node_idx_1194"></a>
+A unit is invoked using the <a name="node_kw_definitioninvoke-unit"></a><a name="node_idx_1196"></a><code class=scheme><span class=keyword>invoke-unit</span></code> form:
+</p>
+<div align=left><pre class=scheme>(<span class=keyword>invoke-unit</span> <span class=variable>unit-expr</span> <span class=variable>import-expr</span> <tt>&middot;&middot;&middot;</tt>)
+</pre></div><p>
+The value of <code class=scheme><span class=variable>unit-expr</span></code> must be a unit. For each of the unit's
+imported variables, the <code class=scheme><span class=keyword>invoke-unit</span></code> expression must contain
+an <code class=scheme><span class=variable>import-expr</span></code>. The value of each <code class=scheme><span class=variable>import-expr</span></code> is imported
+into the unit. More detailed information about linking is provided in
+the following section on compound units.</p>
+<p>
+Invocation proceeds in two stages. First, invocation creates bindings
+for the unit's private, imported, and exported variables. All
+bindings are initialized to the undefined value. Second,
+invocation evaluates the unit's private definitions and
+expressions. The result of the last expression in the unit is the
+result of the <code class=scheme>invoke-unit</code> expression. The unit's exported
+variable bindings are <em>not</em> accessible after the invocation.</p>
+<p>
+</p>
+<a name="node_sec_Temp_19"></a>
+<h3><a href="mzlib.html#node_toc_node_sec_Temp_19">Examples</a></h3>
+<p>These examples use the definitions from the earlier unit examples in
+section&nbsp;<a href="#node_sec_40.1">40.1</a>.</p>
+<p>
+The <code class=scheme>f1@</code> unit is invoked with no imports:
+</p>
+<div align=left><pre class=scheme>(<span class=keyword>invoke-unit</span> <span class=variable>f1@</span>) <span class=comment>; =&gt; displays and returns the current time</span>
+</pre></div><p></p>
+<p>
+Here is one way to invoke the <code class=scheme>database@</code> unit:
+</p>
+<div align=left><pre class=scheme>(<span class=keyword>invoke-unit</span> <span class=variable>database@</span> <code class=scheme>display</code>)
+</pre></div><p>
+This invocation links the imported variable <code class=scheme><span class=variable>message</span></code> in
+<code class=scheme><span class=variable>database@</span></code> to the standard Scheme <code class=scheme><code class=scheme>display</code></code> procedure,
+sets up an empty database, and creates the procedures <code class=scheme><span class=variable>insert</span></code>
+and <code class=scheme><span class=variable>lookup</span></code> tied to this particular database. Since the last
+expression in the <code class=scheme><span class=variable>database@</span></code> unit is <code class=scheme><span class=variable>insert</span></code>, the
+<code class=scheme><span class=keyword>invoke-unit</span></code> expression returns the <code class=scheme><span class=variable>insert</span></code> procedure
+(without binding any top-level variables). The fact that
+<code class=scheme><span class=variable>insert</span></code> and <code class=scheme><span class=variable>lookup</span></code> are exported is irrelevant to the
+invocation; exports are only used for linking.</p>
+<p>
+Invoking the <code class=scheme><span class=variable>database@</span></code> unit directly in the above manner is
+actually useless.  Although a program can insert information into the
+database, it cannot extract information since the <code class=scheme><span class=variable>lookup</span></code>
+procedure is not accessible. The <code class=scheme><span class=variable>database@</span></code> unit becomes
+useful when it is linked with another unit in a
+<code class=scheme><span class=keyword>compound-unit</span></code> expression.</p>
+<p>
+
+<a name="node_kw_definitiondefine-values/invoke-unit"></a><a name="node_idx_1198"></a>
+</p>
+<p></p>
+<p>
+
+<code class=scheme>(<code class=scheme><span class=keyword>define-values/invoke-unit</span></code> <code class=scheme><span class=variable><code class=scheme>(</code>export-id <tt>&middot;&middot;&middot;</tt><code class=scheme>)</code> unit-expr [prefix import-id <tt>&middot;&middot;&middot;</tt>]</span></code>)</code> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<small>S</small><small>Y</small><small>N</small><small>T</small><small>A</small><small>X</small>
+</p>
+<p>
+This form is similar to <code class=scheme><span class=keyword>invoke-unit</span></code>. However, instead of
+returning the value of the unit's initialization expression,
+<code class=scheme><span class=keyword>define-values/invoke-unit</span></code> expands to a
+<code class=scheme><span class=keyword>define-values</span></code> expression that binds each identifier
+<code class=scheme><span class=variable>export-id</span></code> to the value of the corresponding variable exported
+by the unit.  At run time, if the unit does not export all of the
+<code class=scheme><span class=variable>export-id</span></code>s, the <a name="node_idx_1200"></a><code class=scheme>exn:fail:unit</code> exception is raised.</p>
+<p>
+If <code class=scheme><span class=variable>prefix</span></code> is specified, it must be either <code class=scheme><span class=selfeval>#f</span></code> or an
+identifier. If it is an identifier, the names defined by the
+expansion of <code class=scheme><span class=keyword>define-values/invoke-unit</span></code> are prefixed with
+<code class=scheme><code class=scheme><span class=variable>prefix</span></code>:</code>.</p>
+<p>
+Example:
+</p>
+<div align=left><pre class=scheme>(<span class=keyword>define</span> <span class=variable>x</span> <span class=selfeval>3</span>)
+(<span class=keyword>define</span> <span class=variable>y</span> <span class=selfeval>2</span>)
+(<span class=keyword>define-values/invoke-unit</span> (<span class=variable>c</span>)
+  (<span class=keyword>unit</span> (<span class=keyword>import</span> <span class=variable>a</span> <span class=variable>b</span>) (<span class=keyword>export</span> <span class=variable>c</span>)
+    (<span class=keyword>define</span> <span class=variable>c</span> (<span class=variable>-</span> <span class=variable>a</span> <span class=variable>b</span>)))
+  <span class=variable>ex</span>
+  <span class=variable>x</span> <span class=variable>y</span>)
+<span class=variable>ex:c</span> <span class=comment>; =&gt; 1</span>
+</pre></div><p></p>
+<p>
+
+<a name="node_kw_definitionnamespace-variable-bind/invoke-unit"></a><a name="node_idx_1202"></a>
+</p>
+<p></p>
+<p>
+
+<code class=scheme>(<code class=scheme><span class=keyword>namespace-variable-bind/invoke-unit</span></code> <code class=scheme><span class=variable><code class=scheme>(</code>export-id <tt>&middot;&middot;&middot;</tt><code class=scheme>)</code> unit-expr [prefix import-id <tt>&middot;&middot;&middot;</tt>]</span></code>)</code> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<small>S</small><small>Y</small><small>N</small><small>T</small><small>A</small><small>X</small>
+</p>
+<p>
+This form is like <code class=scheme><span class=keyword>define-values/invoke-unit</span></code>, but the expansion
+is a sequence of calls to <code class=scheme><span class=variable>namespace-set-variable-value!</span></code> instead of a
+<code class=scheme><span class=keyword>define-values</span></code> expression. Thus, when it is evaluated, a
+<code class=scheme><span class=variable>namespace-variable-bind/invoke-unit</span></code> expression binds top-level
+variables in the current namespace.</p>
+<p>
+</p>
+<a name="node_sec_40.3"></a>
+<h2><a href="mzlib.html#node_toc_node_sec_40.3">40.3&nbsp;&nbsp;Linking Units and Creating Compound Units</a></h2>
+<p><a name="node_idx_1204"></a></p>
+<p>
+<a name="node_idx_1206"></a></p>
+<p>
+The <a name="node_kw_definitioncompound-unit"></a><a name="node_idx_1208"></a><code class=scheme><span class=keyword>compound-unit</span></code> form links several units into one new
+compound unit. In the process, it matches imported variables in each
+sub-unit either with exported variables of other sub-units or with
+its own imported variables:
+</p>
+<div align=left><pre class=scheme>(<span class=keyword>compound-unit</span>
+  (<span class=keyword>import</span> <span class=variable>variable</span> <tt>&middot;&middot;&middot;</tt>)
+  (<span class=keyword>link</span> (<span class=variable>tag</span> (<span class=variable>sub-unit-expr</span> <span class=variable>linkage</span> <tt>&middot;&middot;&middot;</tt>)) <tt>&middot;&middot;&middot;</tt>)
+  (<span class=keyword>export</span> (<span class=variable>tag</span> <span class=variable>exportage</span> <tt>&middot;&middot;&middot;</tt>) <tt>&middot;&middot;&middot;</tt>))
+
+<span class=variable>linkage</span> is one of
+  <span class=variable>variable</span>
+  (<span class=variable>tag</span> <span class=variable>variable</span>)
+  (<span class=variable>tag</span> <span class=variable>variable</span> <tt>&middot;&middot;&middot;</tt>)
+
+<span class=variable>exportage</span> is one of
+  <span class=variable>variable</span>
+  (<span class=variable>internal-variable</span> <span class=variable>external-variable</span>)
+
+<span class=variable>tag</span> is
+  <span class=variable>identifier</span>
+</pre></div><p></p>
+<p>
+The three parts of a <code class=scheme><span class=keyword>compound-unit</span></code> expression have the
+following roles:
+</p>
+<ul><p>
+</p>
+<li><p>The <a name="node_kw_definitionimport"></a><a name="node_idx_1210"></a><code class=scheme><span class=keyword>import</span></code> clause imports variables into the
+compound unit.  These imported variables are used as imports to the
+compound unit's sub-units.</p>
+<p>
+</p>
+<li><p>The <a name="node_kw_definitionlink"></a><a name="node_idx_1212"></a><code class=scheme><span class=keyword>link</span></code> clause specifies how the compound unit
+is created from sub-units. A unique <code class=scheme><span class=variable>tag</span></code> is associated with each
+sub-unit, which is specified using an arbitrary expression.
+Following the unit expression, each <code class=scheme><span class=variable>linkage</span></code> specifies a
+variable using the <code class=scheme><span class=variable>variable</span></code> form or the <code class=scheme>(<code class=scheme><span class=variable>tag</span></code>
+<code class=scheme><span class=variable>variable</span></code>)</code> form.  In the former case, the <code class=scheme><span class=variable>variable</span></code> must
+occur in the <code class=scheme><span class=keyword>import</span></code> clause of the <code class=scheme><span class=keyword>compound-unit</span></code>
+expression; in the latter case, the <code class=scheme><span class=variable>tag</span></code> must be defined in the
+same <code class=scheme><span class=keyword>compound-unit</span></code> expression. The <code class=scheme>(<code class=scheme><span class=variable>tag</span></code>
+<code class=scheme><span class=variable>variable</span></code> <tt>&middot;&middot;&middot;</tt>)</code> form is a shorthand for multiple adjacent
+clauses of the second form with the same <code class=scheme><span class=variable>tag</span></code>.</p>
+<p>
+</p>
+<li><p>The <a name="node_kw_definitionexport"></a><a name="node_idx_1214"></a><code class=scheme><span class=keyword>export</span></code> clause re-exports variables from the
+compound unit that were originally exported from the sub-units. The
+<code class=scheme><span class=variable>tag</span></code> part of each <code class=scheme><span class=keyword>export</span></code> sub-clause specifies the sub-unit
+from which the re-exported variable is drawn. The <code class=scheme><span class=variable>exportage</span></code>s
+specify the names of variables exported by the sub-unit to be
+re-exported.</p>
+<p>
+As in the <code class=scheme><span class=keyword>export</span></code> clause of the <code class=scheme><span class=keyword>unit</span></code> form, a re-exported
+variable can be renamed for external references using the
+<code class=scheme>(<code class=scheme><span class=variable>internal-variable</span></code> <code class=scheme><span class=variable>external-variable</span></code>)</code> form.  The
+<code class=scheme><span class=variable>internal-variable</span></code> is used as the name exported by the sub-unit,
+and <code class=scheme><span class=variable>external-variable</span></code> is the name visible outside the compound
+unit.</p>
+<p>
+</p>
+</ul><p></p>
+<p>
+The evaluation of a <code class=scheme><span class=keyword>compound-unit</span></code> expression starts with the
+evaluation of the <code class=scheme><span class=keyword>link</span></code> clause's unit expressions (in
+sequence). For each sub-unit, the number of variables it imports must
+match the number of <code class=scheme><span class=variable>linkage</span></code> specifications that are provided,
+and each <code class=scheme><span class=variable>linkage</span></code> specification is matched to an imported
+variable by position. Each sub-unit must also export those variables
+that are specified by the <code class=scheme><span class=keyword>link</span></code> and <code class=scheme><span class=keyword>export</span></code> clauses.  If,
+for any sub-unit, the number of imported variables does not agree
+with the number of linkages provided, the <a name="node_idx_1216"></a><code class=scheme>exn:fail:unit</code> exception is raised.  If an
+expected exported variable is missing from a sub-unit for linking to
+another sub-unit, the <a name="node_idx_1218"></a><code class=scheme>exn:fail:unit</code> exception is raised. If an expected export
+variable is missing for re-export, the <a name="node_idx_1220"></a><code class=scheme>exn:fail:unit</code> exception is raised.</p>
+<p>
+The invocation of a compound unit proceeds in two phases to invoke the
+sub-units.  In the first phase, the compound unit resolves the
+imported variables of sub-units with the bindings provided for the
+compound unit's imports and new bindings created for sub-unit
+exports. In the second phase, the internal definitions and
+expressions of the sub-units are evaluated sequentially according to
+the order of the sub-units in the <code class=scheme><span class=keyword>link</span></code> clause. The result of
+invoking a compound unit is the result from the invocation of the
+last sub-unit.</p>
+<p>
+</p>
+<a name="node_sec_Temp_20"></a>
+<h3><a href="mzlib.html#node_toc_node_sec_Temp_20">Examples</a></h3>
+<p>These examples use the definitions from the earlier unit examples in
+section&nbsp;<a href="#node_sec_40.1">40.1</a>.</p>
+<p>
+The following <code class=scheme><span class=keyword>compound-unit</span></code> expression creates a (probably
+useless) renaming wrapping around the unit bound to <code class=scheme><span class=variable>f2@</span></code>:
+</p>
+<div align=left><pre class=scheme>(<span class=keyword>define</span> <span class=variable>f3@</span>
+  (<span class=keyword>compound-unit</span>
+    (<span class=keyword>import</span>)
+    (<span class=keyword>link</span> [<span class=variable>A</span> (<span class=variable>f2@</span>)])
+    (<span class=keyword>export</span> (<span class=variable>A</span> (<span class=variable>x</span> <span class=variable>A:x</span>)))))
+</pre></div><p></p>
+<p>
+The only difference between <code class=scheme><span class=variable>f2@</span></code> and <code class=scheme><span class=variable>f3@</span></code> is that
+<code class=scheme><span class=variable>f2@</span></code> exports a variable named <code class=scheme><span class=variable>x</span></code>, while <code class=scheme><span class=variable>f3@</span></code>
+exports a variable named <code class=scheme><span class=variable>A:x</span></code>.</p>
+<p>
+The following example shows how the <code class=scheme><span class=variable>database@</span></code> and
+<code class=scheme><span class=variable>interface@</span></code> units are linked together with a graphical
+toolbox unit <code class=scheme><span class=variable>Graphics</span></code> to produce a single, fully-linked
+compound unit for the interactive phone book program.
+</p>
+<div align=left><pre class=scheme>(<span class=keyword>define</span> <span class=variable>program@</span>
+  (<span class=keyword>compound-unit</span> 
+    (<span class=keyword>import</span>)
+    (<span class=keyword>link</span> (<span class=variable>GRAPHICS</span> (<span class=variable>graphics@</span>))
+          (<span class=variable>DATABASE</span> (<span class=variable>database@</span> (<span class=keyword>INTERFACE</span> <span class=variable>show-message</span>)))
+          (<span class=keyword>INTERFACE</span> (<span class=variable>interface@</span> (<span class=variable>DATABASE</span> <span class=variable>insert</span> <span class=variable>lookup</span>)
+                                 (<span class=variable>GRAPHICS</span> <span class=variable>make-window</span> <span class=variable>make-button</span>))))
+    (<span class=keyword>export</span>)))
+</pre></div><p></p>
+<p>
+This phone book program is executed with <code class=scheme>(<span class=keyword>invoke-unit</span>
+ <span class=variable>program@</span>)</code>.  If <code class=scheme>(<span class=keyword>invoke-unit</span> <span class=variable>program@</span>)</code> is evaluated a second
+time, then a new, independent database and window are created.</p>
+<p>
+</p>
+<a name="node_sec_40.4"></a>
+<h2><a href="mzlib.html#node_toc_node_sec_40.4">40.4&nbsp;&nbsp;Unit Utilities</a></h2>
+<p><a name="node_idx_1222"></a></p>
+<p>
+<a name="node_idx_1224"></a><a name="node_kw_definitionunit_Q_"></a><code class=scheme>(unit?</code><tt>&nbsp;</tt><code class=scheme><span class=variable>v</span></code><code class=scheme>)</code> returns <code class=scheme><span class=selfeval>#t</span></code> if <code class=scheme><span class=variable>v</span></code> is a unit or <code class=scheme><span class=selfeval>#f</span></code>
+otherwise.</p>
+<p>
+</p>
+<p>
+</p>
+<div class=footnoterule><hr></div><p></p>
+<div class=footnote><p><a name="footnote_Temp_16"></a><a href="#call_footnote_Temp_16"><sup><small>11</small></sup></a> The detection of unit definitions is
+the same as for internal definitions (see
+section&nbsp;<a href="../mzscheme/mzscheme-Z-H-2.html#node_sec_2.8.5">2.8.5</a> in <a href="../mzscheme/mzscheme.html"><i>PLT MzScheme: Language Manual</i></a>). Thus, the <code class=scheme><span class=keyword>define</span></code> and
+<code class=scheme><span class=keyword>define-struct</span></code> forms can be used for definitions.</p>
+<p><a name="footnote_Temp_18"></a><a href="#call_footnote_Temp_18"><sup><small>12</small></sup></a> The ``<code class=scheme>@</code>'' in the variable name ``<code class=scheme>f1@</code>''
+indicates (by convention) that its value is a unit.</p>
+</div>
+<div align=right class=navigation><i>[Go to <span><a href="mzlib.html">first</a>, <a href="mzlib-Z-H-39.html">previous</a></span><span>, <a href="mzlib-Z-H-41.html">next</a></span> page<span>; &nbsp;&nbsp;</span><span><a href="mzlib.html#node_toc_start">contents</a></span><span><span>; &nbsp;&nbsp;</span><a href="mzlib-Z-H-42.html#node_index_start">index</a></span>]</i></div><p></p>
+</body>
+</html>

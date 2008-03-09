@@ -1,0 +1,120 @@
+<!doctype html public "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!--
+
+Generated from tour.tex by tex2page, v 2004-09-11
+(running on MzScheme 209, unix), 
+(c) Dorai Sitaram, 
+http://www.ccs.neu.edu/~dorai/tex2page/tex2page-doc.html
+
+-->
+<head>
+<title>
+A Brief Tour of DrScheme version 209
+</title>
+<link rel="stylesheet" type="text/css" href="tour-Z-S.css" title=default>
+<meta name=robots content="noindex,follow">
+</head>
+<body>
+<div align=right class=navigation><i>[Go to <span><a href="tour.html">first</a>, <a href="tour-Z-H-3.html">previous</a></span><span>, <a href="tour-Z-H-5.html">next</a></span> page<span>; &nbsp;&nbsp;</span><span><a href="tour-Z-H-1.html#node_toc_start">contents</a></span>]</i></div><p></p>
+<a name="node_chap_3"></a>
+<h1 class=chapter>
+<div class=chapterheading><a href="tour-Z-H-1.html#node_toc_node_chap_3">Chapter 3</a></div><br>
+<a href="tour-Z-H-1.html#node_toc_node_chap_3">Language Levels</a></h1>
+<p></p>
+<a name="node_sec_3.1"></a>
+<h2><a href="tour-Z-H-1.html#node_toc_node_sec_3.1">3.1&nbsp;&nbsp;Introduction</a></h2>
+<p>Beginners make mistakes, and need feedback customized to their level
+of understanding. The syntax of Scheme is so permissive that most
+Scheme implementations are notoriously bad at reporting errors in
+useful terms.</p>
+<p>
+DrScheme overcomes this difficulty by providing a <strong>hierarchy of
+language levels</strong>. The hierarchy matches the natural introduction of
+Scheme in
+<A HREF="/servlets/manual-section.ss?manual=drscheme&section='languages'">
+                layers</A>:
+</p>
+<ul>
+<li><p>The Beginning Student language includes functions, structures and lists.
+</p>
+<li><p>The Intermediate Student language adds lexical scoping constructs.
+</p>
+<li><p>The Advanced Student language permits mutation and supports continuations.
+</p>
+<li><p>The Scheme language level provides standard Scheme with or without
+graphics and debugging support.
+</p>
+</ul><p>
+These levels impose other syntactic and semantic restrictions based on
+common mistakes we have observed students make over the years. Each
+level tries to report errors in terms appropriate to that level.</p>
+<p>
+
+</p>
+<div align=center><table><tr><td>
+
+<img src="./images/languages-menu.gif" border="0"  alt="[./images/languages-menu.gif]">
+</td></tr></table></div>
+<p>
+
+
+<font color="red"></p>
+<p>
+DrScheme will start in the Beginning Student level, which is a severe
+restriction of the full Scheme language. If you (or your class) aren't
+using language levels, you should immediately switch DrScheme to
+Standard Scheme (or your instructor's suggested alternative) using the
+<i>Choose Language</i> menu item.</p>
+<p>
+</font>
+</p>
+<p>
+</p>
+<a name="node_sec_3.2"></a>
+<h2><a href="tour-Z-H-1.html#node_toc_node_sec_3.2">3.2&nbsp;&nbsp;Examples</a></h2>
+<p>Consider a beginning student who is accustomed to infix syntax for
+function application: <code class=scheme><span class=variable>f</span> (<span class=variable>x</span>)</code>. This student may accidentally
+slip into this notation while programming in Scheme, for example, in a
+<code class=scheme><span class=keyword>cond</span></code> clause:
+</p>
+<div align=left><pre class=scheme>(<span class=keyword>define</span> (<span class=variable>length</span> <span class=variable>l</span>)
+  (<span class=keyword>cond</span>
+   [<span class=variable>empty?</span> (<span class=variable>l</span>) <span class=selfeval>0</span>]
+   [<span class=keyword>else</span> (<span class=variable>+</span> <span class=selfeval>1</span> (<span class=variable>length</span> (<span class=variable>rest</span> <span class=variable>l</span>)))]))
+</pre></div><p>
+This definition is syntactically legal in conventional Scheme, and a
+traditional implementation would signal an error only when the
+function is invoked. Because the beginner doesn't know about
+first-class functions, the error message is incomprehensible.</p>
+<p>
+DrScheme restricts the syntax of 
+<A HREF="/servlets/manual-section.ss?manual=drscheme&section='Beginning Student language'">
+                Beginning Student Scheme</A>
+to a simple first-order language. By restricting the language,
+DrScheme can detect and flag beginner mistakes such as the one
+above. In this example it also highlights the offending clause,
+suggesting a natural revision to the beginner.  In this example,
+DrScheme traps the use of a primitive operation without arguments:</p>
+<p>
+
+</p>
+<div align=center><table><tr><td>
+
+<img src="./images/languages-example.gif" border="0"  alt="[./images/languages-example.gif]">
+</td></tr></table></div>
+<p>
+In this example, DrScheme catches a lapse into infix notation by
+noticing that the conditional branch has too many sub-expressions:</p>
+<p>
+
+</p>
+<div align=center><table><tr><td>
+
+<img src="./images/languages-example-2.gif" border="0"  alt="[./images/languages-example-2.gif]">
+</td></tr></table></div>
+<p>
+</p>
+<div align=right class=navigation><i>[Go to <span><a href="tour.html">first</a>, <a href="tour-Z-H-3.html">previous</a></span><span>, <a href="tour-Z-H-5.html">next</a></span> page<span>; &nbsp;&nbsp;</span><span><a href="tour-Z-H-1.html#node_toc_start">contents</a></span>]</i></div><p></p>
+</body>
+</html>

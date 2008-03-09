@@ -1,0 +1,75 @@
+<!doctype html public "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!--
+
+Generated from mzlib.tex by tex2page, v 2004-09-11
+(running on MzScheme 209, unix), 
+(c) Dorai Sitaram, 
+http://www.ccs.neu.edu/~dorai/tex2page/tex2page-doc.html
+
+-->
+<head>
+<title>
+PLT MzLib: Libraries Manual
+</title>
+<link rel="stylesheet" type="text/css" href="mzlib-Z-S.css" title=default>
+<meta name=robots content="noindex,follow">
+</head>
+<body>
+<div align=right class=navigation><i>[Go to <span><a href="mzlib.html">first</a>, <a href="mzlib-Z-H-2.html">previous</a></span><span>, <a href="mzlib-Z-H-4.html">next</a></span> page<span>; &nbsp;&nbsp;</span><span><a href="mzlib.html#node_toc_start">contents</a></span><span><span>; &nbsp;&nbsp;</span><a href="mzlib-Z-H-42.html#node_index_start">index</a></span>]</i></div><p></p>
+<a name="node_chap_3"></a>
+<h1 class=chapter>
+<div class=chapterheading><a href="mzlib.html#node_toc_node_chap_3">Chapter 3</a></div><br>
+<a href="mzlib.html#node_toc_node_chap_3"><tt><strong>awk.ss</strong></tt>: Awk-like Syntax</a></h1>
+<p><a name="node_idx_18"></a><a name="node_idx_20"></a></p>
+<p>
+This library defines the <a name="node_idx_22"></a><code class=scheme><span class=keyword>awk</span></code> macro from Scsh:</p>
+<p>
+</p>
+<div align=left><pre class=scheme>(<span class=keyword>awk</span> <span class=variable>next-record-expr</span>
+     (<span class=variable>record</span> <span class=variable>field-variable</span> <tt>&middot;&middot;&middot;</tt>)
+     <span class=variable>counter-variable/optional</span>
+     ((<span class=variable>state-variable</span> <span class=variable>init-expr</span>) <tt>&middot;&middot;&middot;</tt>)
+     <span class=variable>continue-variable/optional</span>
+  <span class=variable>clause</span> <tt>&middot;&middot;&middot;</tt>)
+
+<span class=variable>counter-variable/optional</span> is either empty or
+  <span class=variable>variable</span>
+
+<span class=variable>continue-variable/optional</span> is either empty or
+  <span class=variable>variable</span>
+
+<span class=variable>clause</span> is one of
+  (<span class=variable>test</span> <span class=variable>body-expr</span> <tt>&middot;&middot;&middot;</tt><sup>1</sup>)
+  (<span class=variable>test</span> <span class=keyword>=&gt;</span> <span class=variable>procedure-expr</span>)
+  (<span class=variable>/</span> <span class=variable>regexp-str</span> <span class=variable>/</span> (<span class=variable>variable-or-false</span> <tt>&middot;&middot;&middot;</tt><sup>1</sup>) <span class=variable>body-expr</span> <tt>&middot;&middot;&middot;</tt><sup>1</sup>)
+  (<code class=scheme><span class=keyword>range</span></code> <span class=variable>exclusive-start-test</span> <span class=variable>exclusive-stop-test</span> <span class=variable>body-expr</span> <tt>&middot;&middot;&middot;</tt><sup>1</sup>)
+  (<span class=keyword>:range</span> <span class=variable>inclusive-start-test</span> <span class=variable>exclusive-stop-test</span> <span class=variable>body-expr</span> <tt>&middot;&middot;&middot;</tt><sup>1</sup>)
+  (<span class=keyword>range:</span> <span class=variable>exclusive-start-test</span> <span class=variable>inclusive-stop-test</span> <span class=variable>body-expr</span> <tt>&middot;&middot;&middot;</tt><sup>1</sup>)
+  (<span class=keyword>:range:</span> <span class=variable>inclusive-start-test</span> <span class=variable>inclusive-inclusive-stop-test</span> <span class=variable>body-expr</span> <tt>&middot;&middot;&middot;</tt><sup>1</sup>)
+  (<span class=keyword>else</span> <span class=variable>body-expr</span> <tt>&middot;&middot;&middot;</tt><sup>1</sup>)
+  (<code class=scheme><span class=keyword>after</span></code> <span class=variable>body-expr</span> <tt>&middot;&middot;&middot;</tt><sup>1</sup>)
+
+<span class=variable>test</span> is one of
+  <span class=variable>integer</span>
+  <span class=variable>regexp-str</span> 
+  <span class=variable>expr</span>
+
+<span class=variable>variable-or-false</span> is one of
+  <span class=variable>variable</span>
+  <span class=selfeval>#f</span>
+</pre></div><p></p>
+<p>
+For detailed information about <code class=scheme><span class=keyword>awk</span></code>, see Olin Shivers's <i>Scsh Reference Manual</i>. In addition to <code class=scheme><span class=keyword>awk</span></code>, the
+Scsh-compatible procedures <a name="node_idx_24"></a><code class=scheme>match:start</code>,
+<a name="node_idx_26"></a><code class=scheme>match:end</code>, <a name="node_idx_28"></a><code class=scheme>match:substring</code>, and
+<a name="node_idx_30"></a><code class=scheme>regexp-exec</code> are defined.  These <code class=scheme>match:</code> procedures
+must be used to extract match information in a regular expression
+clause when using the <code class=scheme><span class=keyword>=&gt;</span></code> form.</p>
+<p>
+</p>
+<p>
+</p>
+<div align=right class=navigation><i>[Go to <span><a href="mzlib.html">first</a>, <a href="mzlib-Z-H-2.html">previous</a></span><span>, <a href="mzlib-Z-H-4.html">next</a></span> page<span>; &nbsp;&nbsp;</span><span><a href="mzlib.html#node_toc_start">contents</a></span><span><span>; &nbsp;&nbsp;</span><a href="mzlib-Z-H-42.html#node_index_start">index</a></span>]</i></div><p></p>
+</body>
+</html>

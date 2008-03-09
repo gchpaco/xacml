@@ -1,0 +1,707 @@
+<!doctype html public "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!--
+
+Generated from mzscheme.tex by tex2page, v 2004-09-11
+(running on MzScheme 209, unix), 
+(c) Dorai Sitaram, 
+http://www.ccs.neu.edu/~dorai/tex2page/tex2page-doc.html
+
+-->
+<head>
+<title>
+PLT MzScheme: Language Manual
+</title>
+<link rel="stylesheet" type="text/css" href="mzscheme-Z-S.css" title=default>
+<meta name=robots content="noindex,follow">
+</head>
+<body>
+<div align=right class=navigation><i>[Go to <span><a href="mzscheme.html">first</a>, <a href="mzscheme-Z-H-3.html">previous</a></span><span>, <a href="mzscheme-Z-H-5.html">next</a></span> page<span>; &nbsp;&nbsp;</span><span><a href="mzscheme.html#node_toc_start">contents</a></span><span><span>; &nbsp;&nbsp;</span><a href="mzscheme-Z-H-19.html#node_index_start">index</a></span>]</i></div><p></p>
+<a name="node_chap_4"></a>
+<h1 class=chapter>
+<div class=chapterheading><a href="mzscheme.html#node_toc_node_chap_4">Chapter 4</a></div><br>
+<a href="mzscheme.html#node_toc_node_chap_4">Structures</a></h1>
+<p><a name="node_idx_518"></a></p>
+<p>
+A <strong>structure type</strong><a name="node_idx_520"></a> is a record datatype composing a number
+of <strong>fields</strong><a name="node_idx_522"></a>. A <strong>structure</strong><a name="node_idx_524"></a>, an instance of a
+structure type, is a first-class value that contains a value for each
+field of the structure type. A structure instance is created with a
+type-specific constructor procedure, and its field values are
+accessed and changed with type-specific selector and setter
+procedures. In addition, each structure type has a predicate
+procedure that answers <code class=scheme><span class=selfeval>#t</span></code> for instances of the structure type
+and <code class=scheme><span class=selfeval>#f</span></code> for any other value.</p>
+<p>
+</p>
+<a name="node_sec_4.1"></a>
+<h2><a href="mzscheme.html#node_toc_node_sec_4.1">4.1&nbsp;&nbsp;Defining Structure Types</a></h2>
+<p><a name="node_idx_526"></a></p>
+<p>
+A new structure type can be created with one of four
+<a name="node_kw_definitiondefine-struct"></a><a name="node_idx_528"></a><code class=scheme><span class=keyword>define-struct</span></code> forms:
+</p>
+<div align=left><pre class=scheme>(<span class=keyword>define-struct</span> <span class=variable>s</span> (<code class=scheme><span class=variable>field</span></code> <tt>&middot;&middot;&middot;</tt>) [<span class=variable>inspector-expr</span>])
+(<span class=keyword>define-struct</span> (<span class=variable>s</span> <span class=variable>t</span>) (<code class=scheme><span class=variable>field</span></code> <tt>&middot;&middot;&middot;</tt>) [<span class=variable>inspector-expr</span>])
+</pre></div><p>
+where <code class=scheme><span class=variable>s</span></code>, <code class=scheme><span class=variable>t</span></code>, and each <code class=scheme><span class=variable>field</span></code> are identifiers. The
+latter form is described in section&nbsp;<a href="#node_sec_4.2">4.2</a>. The optional
+<code class=scheme><span class=variable>inspector-expr</span></code> is explained in section&nbsp;<a href="#node_sec_4.5">4.5</a>.</p>
+<p>
+A <code class=scheme><span class=keyword>define-struct</span></code> expression with <code class=scheme><span class=variable>n</span></code> <code class=scheme><span class=variable>field</span></code>s defines
+4 + 2<em>n</em> names:
+</p>
+<ul><p>
+</p>
+<li><p><code class=scheme>struct:</code><code class=scheme><span class=variable>s</span></code>, a
+<strong>structure type descriptor</strong><a name="node_idx_530"></a>
+value that represents the new datatype. This value is
+rarely used directly.</p>
+<p>
+</p>
+<li><p><code class=scheme>make-</code><code class=scheme><span class=variable>s</span></code>, a constructor procedure that takes <code class=scheme><span class=variable>n</span></code>
+arguments and returns a new structure value.</p>
+<p>
+</p>
+<li><p><code class=scheme><span class=variable>s</span></code><code class=scheme>?</code>, a predicate procedure that returns <code class=scheme><span class=selfeval>#t</span></code>
+for a value constructed by <code class=scheme>make-</code><code class=scheme><span class=variable>s</span></code> (or the constructor for
+a subtype; see section&nbsp;<a href="#node_sec_4.2">4.2</a>) and <code class=scheme><span class=selfeval>#f</span></code> for any other
+value.</p>
+<p>
+</p>
+<li><p><code class=scheme><span class=variable>s</span></code><code class=scheme>-</code><code class=scheme><span class=variable>field</span></code>, for each <code class=scheme><span class=variable>field</span></code>, an accessor
+procedure that takes a structure value and extracts the value for
+<code class=scheme><span class=variable>field</span></code>.</p>
+<p>
+</p>
+<li><p><code class=scheme>set-</code><code class=scheme><span class=variable>s</span></code><code class=scheme>-</code><code class=scheme><span class=variable>field</span></code><code class=scheme>!</code>, for each
+<code class=scheme><span class=variable>field</span></code>, a mutator procedure that takes a structure and a new
+field value.  The field value in the structure is destructively
+updated with the new value, and void is returned.</p>
+<p>
+</p>
+<li><p><code class=scheme><span class=variable>s</span></code>, a syntax binding that encapsulates information about
+the structure type declaration. This binding is used to define
+subtypes (see section&nbsp;<a href="#node_sec_4.2">4.2</a>). It also works with the
+<code class=scheme><span class=keyword>shared</span></code> and <code class=scheme><span class=keyword>match</span></code> forms (see
+Chapter&nbsp;<a href="../mzlib/mzlib-Z-H-32.html#node_chap_32">32</a>
+and Chapter&nbsp;<a href="../mzlib/mzlib-Z-H-22.html#node_chap_22">22</a> 
+in <a href="../mzlib/mzlib.html"><i>PLT MzLib: Libraries Manual</i></a>). For detailed information
+about the expansion-time information stored in <code class=scheme><span class=variable>s</span></code>, see
+section&nbsp;<a href="mzscheme-Z-H-12.html#node_sec_12.6.3">12.6.3</a>.</p>
+<p>
+</p>
+</ul><p></p>
+<p>
+Each time a <code class=scheme><span class=keyword>define-struct</span></code> expression is evaluated, a new
+structure type is created with distinct constructor, predicate,
+accessor, and mutator procedures. If the same <code class=scheme><span class=keyword>define-struct</span></code>
+expression is evaluated twice, instances created by the constructor
+returned by the first evaluation will answer <code class=scheme><span class=selfeval>#f</span></code> to the
+predicate returned by the second evaluation.</p>
+<p>
+Examples: 
+</p>
+<div align=left><pre class=scheme>(<span class=keyword>define-struct</span> <span class=variable>cons-cell</span> (<code class=scheme>car</code> <code class=scheme>cdr</code>))
+(<span class=keyword>define</span> <span class=variable>x</span> (<span class=variable>make-cons-cell</span> <span class=selfeval>1</span> <span class=selfeval>2</span>))
+(<span class=variable>cons-cell?</span> <span class=variable>x</span>) <span class=comment>; =&gt; <code class=schemeresponse><span class=selfeval>#t</span></code></span>
+(<span class=variable>cons-cell-car</span> <span class=variable>x</span>) <span class=comment>; =&gt; <code class=schemeresponse><span class=selfeval>1</span></code></span>
+(<span class=variable>set-cons-cell-car!</span> <span class=variable>x</span> <span class=selfeval>5</span>) 
+(<span class=variable>cons-cell-car</span> <span class=variable>x</span>) <span class=comment>; =&gt; <code class=schemeresponse><span class=selfeval>5</span></code></span>
+
+(<span class=keyword>define</span> <span class=variable>orig-cons-cell?</span> <span class=variable>cons-cell?</span>)
+(<span class=keyword>define-struct</span> <span class=variable>cons-cell</span> (<code class=scheme>car</code> <code class=scheme>cdr</code>))
+(<span class=keyword>define</span> <span class=variable>y</span> (<span class=variable>make-cons-cell</span> <span class=selfeval>1</span> <span class=selfeval>2</span>))
+(<span class=variable>cons-cell?</span> <span class=variable>y</span>) <span class=comment>; =&gt; <code class=schemeresponse><span class=selfeval>#t</span></code></span>
+(<span class=variable>cons-cell?</span> <span class=variable>x</span>) <span class=comment>; =&gt; <code class=schemeresponse><span class=selfeval>#f</span></code>, <code class=scheme><span class=variable>cons-cell?</span></code> now checks for a different type</span>
+(<span class=variable>orig-cons-cell?</span> <span class=variable>x</span>) <span class=comment>; =&gt; <code class=schemeresponse><span class=selfeval>#t</span></code></span>
+(<span class=variable>orig-cons-cell?</span> <span class=variable>y</span>) <span class=comment>; =&gt; <code class=schemeresponse><span class=selfeval>#f</span></code></span>
+</pre></div><p>
+The <a name="node_kw_definitionlet-struct"></a><a name="node_idx_532"></a><code class=scheme><span class=keyword>let-struct</span></code> form binds structure identifiers in a
+lexical scope; it does not support an <code class=scheme><span class=variable>inspector-expr</span></code>.
+</p>
+<div align=left><pre class=scheme>(<span class=keyword>let-struct</span> <span class=variable>s</span> (<span class=keyword>field</span> <tt>&middot;&middot;&middot;</tt>)
+  <span class=variable>body-expr</span> <tt>&middot;&middot;&middot;</tt><sup>1</sup>) 
+(<span class=keyword>let-struct</span> (<span class=variable>s</span> <span class=variable>t</span>) (<span class=keyword>field</span> <tt>&middot;&middot;&middot;</tt>)
+  <span class=variable>body-expr</span> <tt>&middot;&middot;&middot;</tt><sup>1</sup>)
+</pre></div><p></p>
+<p>
+</p>
+<a name="node_sec_4.2"></a>
+<h2><a href="mzscheme.html#node_toc_node_sec_4.2">4.2&nbsp;&nbsp;Creating Subtypes</a></h2>
+<p><a name="node_idx_534"></a></p>
+<p>
+The latter <code class=scheme><span class=keyword>define-struct</span></code> form shown in
+section&nbsp;<a href="#node_sec_4.1">4.1</a> creates a new structure type that is a
+<strong>structure subtype</strong><a name="node_idx_536"></a> of an existing base structure type. An
+instance of a structure subtype can always be used as an instance of
+the base structure type, but the subtype gets its own predicate
+procedure and may have its own fields in addition to the fields of
+the base type.</p>
+<p>
+The <code class=scheme><span class=variable>t</span></code> identifier in a subtyping <code class=scheme><span class=keyword>define-struct</span></code> form must
+be bound to syntax describing a structure type declaration. Normally,
+it is the name of a structure type previously declared with
+<code class=scheme><span class=keyword>define-struct</span></code>. The information associated with <code class=scheme><span class=variable>t</span></code> is
+used to access the base structure type for the new subtype.</p>
+<p>
+A structure subtype ``inherits'' the fields of its base type. If the
+base type has <code class=scheme><span class=variable>m</span></code> fields, and if <code class=scheme><span class=variable>n</span></code> fields are specified in
+the subtyping <code class=scheme><span class=keyword>define-struct</span></code> expression, then the resulting
+structure type has <em>m</em> + <em>n</em> fields. Consequently, <em>m</em> + <em>n</em> field values
+must be provided to the subtype's constructor procedure. Values for
+the first <code class=scheme><span class=variable>m</span></code> fields of a subtype instance are accessed with
+selector procedures for the original base type, and the last <code class=scheme><span class=variable>n</span></code>
+are accessed with subtype-specific selectors. Subtype-specific
+accessors and mutators for the first <code class=scheme><span class=variable>m</span></code> fields are not created.</p>
+<p>
+Examples:
+</p>
+<div align=left><pre class=scheme>(<span class=keyword>define-struct</span> <span class=variable>cons-cell</span> (<code class=scheme>car</code> <code class=scheme>cdr</code>))
+(<span class=keyword>define</span> <span class=variable>x</span> (<span class=variable>make-cons-cell</span> <span class=selfeval>1</span> <span class=selfeval>2</span>))
+(<span class=keyword>define-struct</span> (<span class=variable>tagged-cons-cell</span> <span class=variable>cons-cell</span>) (<span class=variable>tag</span>))
+(<span class=keyword>define</span> <span class=variable>z</span> (<span class=variable>make-tagged-cons-cell</span> <span class=selfeval>3</span> <span class=selfeval>4</span> <span class=keyword>'</span><span class=variable>t</span>))
+(<span class=variable>cons-cell?</span> <span class=variable>z</span>) <span class=comment>; =&gt; <code class=schemeresponse><span class=selfeval>#t</span></code></span>
+(<span class=variable>tagged-cons-cell?</span> <span class=variable>z</span>) <span class=comment>; =&gt; <code class=schemeresponse><span class=selfeval>#t</span></code></span>
+(<span class=variable>tagged-cons-cell?</span> <span class=variable>x</span>) <span class=comment>; =&gt; <code class=schemeresponse><span class=selfeval>#f</span></code></span>
+(<span class=variable>cons-cell-car</span> <span class=variable>z</span>) <span class=comment>; =&gt; <code class=schemeresponse><span class=selfeval>3</span></code></span>
+(<span class=variable>tagged-cons-cell-tag</span> <span class=variable>z</span>) <span class=comment>; =&gt; <code class=schemeresponse><span class=keyword>'</span><span class=variable>t</span></code></span>
+</pre></div><p></p>
+<p>
+</p>
+<a name="node_sec_4.3"></a>
+<h2><a href="mzscheme.html#node_toc_node_sec_4.3">4.3&nbsp;&nbsp;Structure Types with Automatic Fields, Immutable Fields, and Properties</a></h2>
+<p><a name="node_idx_538"></a></p>
+<p>
+The <code class=scheme><code class=scheme>make-struct-type</code></code> procedure creates a new structure type in
+the same way as the <code class=scheme><span class=keyword>define-struct</span></code> form of
+section&nbsp;<a href="#node_sec_4.1">4.1</a>, but provides a more general interface.  In
+particular, the <code class=scheme><code class=scheme>make-struct-type</code></code> procedure supports structure
+type properties.</p>
+<p>
+</p>
+<ul><p>
+</p>
+<li><p><a name="node_idx_540"></a><a name="node_kw_definitionmake-struct-type"></a><code class=scheme>(make-struct-type</code><tt>&nbsp;</tt><code class=scheme><span class=variable>name-symbol super-struct-type
+init-field-k auto-field-k</span></code><tt>&nbsp;</tt>[<code class=scheme><span class=variable>auto-v prop-value-list inspector proc-spec
+immutable-k-list</span></code>]<code class=scheme>)</code> creates a new structure type.
+The <code class=scheme><span class=variable>name-symbol</span></code> argument is used as the type
+name. If <code class=scheme><span class=variable>super-struct-type</span></code> is not <code class=scheme><span class=selfeval>#f</span></code>, the new type is
+a subtype of the corresponding structure type, as described
+in section&nbsp;<a href="#node_sec_4.2">4.2</a>.</p>
+<p>
+The new structure type has
+<code class=scheme><span class=variable>init-field-k</span></code> + <code class=scheme><span class=variable>auto-field-k</span></code> fields (in
+addition to any fields from <code class=scheme><span class=variable>super-struct-type</span></code>), but only
+<code class=scheme><span class=variable>init-field-k</span></code> constructor arguments (in addition to any
+constructor arguments from <code class=scheme><span class=variable>super-struct-type</span></code>). The remaining
+fields are initialized with <code class=scheme><span class=variable>auto-v</span></code>, which defaults to <code class=scheme><span class=selfeval>#f</span></code>.</p>
+<p>
+The <code class=scheme><span class=variable>prop-value-list</span></code> argument is a list of pairs, where the
+<code class=scheme><code class=scheme>car</code></code> of each pair is a structure type property descriptor, and
+the <code class=scheme><code class=scheme>cdr</code></code> is an arbitrary value. The default is <code class=scheme><code class=scheme>null</code></code>. See
+section&nbsp;<a href="#node_sec_4.4">4.4</a> for more information about properties.</p>
+<p>
+The <code class=scheme><span class=variable>inspector</span></code> argument controls access to debugging information
+about the structure type and its instances; see section&nbsp;<a href="#node_sec_4.5">4.5</a>
+for more information.</p>
+<p>
+The <code class=scheme><span class=variable>proc-spec</span></code> argument can be <code class=scheme><span class=selfeval>#f</span></code>, an exact
+non-negative integer, or a procedure. The default is <code class=scheme><span class=selfeval>#f</span></code>. If
+an integer or procedure is provided, instances of the structure type
+act as procedures. See section&nbsp;<a href="#node_sec_4.6">4.6</a> for further information.</p>
+<p>
+The <code class=scheme><span class=variable>immutable-k-list</span></code> argument provides a list of exact,
+non-negative integers that identify immutable field positions. Each
+element in the list should be unique,
+otherwise <a name="node_idx_542"></a><code class=scheme>exn:application:mismatch</code> exception is raised. Each element should
+also fall in the range <code class=scheme><span class=selfeval>0</span></code> (inclusive) and <code class=scheme><span class=variable>init-field-k</span></code>
+(exclusive), otherwise <a name="node_idx_544"></a><code class=scheme>exn:application:mismatch</code> exception is raised.</p>
+<p>
+The result of <code class=scheme><span class=variable>make-struct-type</span></code> is five values, which are
+similar to the values produced by <code class=scheme><span class=keyword>define-struct</span></code> (see
+section&nbsp;<a href="#node_sec_4.1">4.1</a>):
+</p>
+<ul><p>
+</p>
+<li><p>a structure type descriptor, </p>
+<p>
+</p>
+<li><p>a constructor procedure,</p>
+<p>
+</p>
+<li><p>a predicate procedure,</p>
+<p>
+</p>
+<li><p>an accessor procedure, which consumes a structure and a field
+index between 0 (inclusive) and
+<code class=scheme><span class=variable>init-field-k</span></code> + <code class=scheme><span class=variable>auto-field-k</span></code> (exclusive),
+and</p>
+<p>
+</p>
+<li><p>a mutator procedure, which consumes a structure, a field index,
+and a field value.</p>
+<p>
+</p>
+</ul><p></p>
+<p>
+</p>
+</ul><p></p>
+<p>
+Unlike <code class=scheme><span class=keyword>define-struct</span></code>, <code class=scheme><code class=scheme>make-struct-type</code></code> returns a single
+accessor procedure and a single mutator procedure for all fields.
+The <code class=scheme><code class=scheme>make-struct-field-accessor</code></code> and
+<code class=scheme><code class=scheme>make-struct-field-mutator</code></code> procedures convert a type-specific
+accessor or mutator returned by <code class=scheme><code class=scheme>make-struct-type</code></code> into a
+field-specific accessor or mutator:
+</p>
+<ul><p>
+</p>
+<li><p><a name="node_idx_546"></a><a name="node_kw_definitionmake-struct-field-accessor"></a><code class=scheme>(make-struct-field-accessor</code><tt>&nbsp;</tt><code class=scheme><span class=variable>accessor-proc field-pos-k field-name-symbol</span></code><code class=scheme>)</code>
+returns a field accessor that is equivalent to
+</p>
+<div align=center><table><tr><td>
+
+</td><td><div align=left><pre class=scheme> (<span class=keyword>lambda</span> (<span class=variable>s</span>) (<span class=variable>accessor-proc</span> <span class=variable>s</span> <span class=variable>field-pos-k</span>))
+</pre></div></td><td>
+</td></tr></table></div>
+
+The <code class=scheme><span class=variable>accessor-proc</span></code> must be an accessor returned by
+<code class=scheme><code class=scheme>make-struct-type</code></code>. The name of the resulting procedure for
+debugging purposes is derived from <code class=scheme><span class=variable>field-name-symbol</span></code> and
+the name of <code class=scheme><span class=variable>accessor-proc</span></code>'s structure type.<p>
+</p>
+<li><p><a name="node_idx_548"></a><a name="node_kw_definitionmake-struct-field-mutator"></a><code class=scheme>(make-struct-field-mutator</code><tt>&nbsp;</tt><code class=scheme><span class=variable>mutator-proc field-pos-k field-name-symbol</span></code><code class=scheme>)</code>
+returns a field mutator that is equivalent to
+</p>
+<div align=center><table><tr><td>
+
+</td><td><div align=left><pre class=scheme> (<span class=keyword>lambda</span> (<span class=variable>s</span> <span class=variable>v</span>) (<span class=variable>mutator-proc</span> <span class=variable>s</span> <span class=variable>field-pos-k</span> <span class=variable>v</span>))
+</pre></div></td><td>
+</td></tr></table></div>
+
+The <code class=scheme><span class=variable>mutator-proc</span></code> must be a mutator returned by
+<code class=scheme><code class=scheme>make-struct-type</code></code>. The name of the resulting procedure for
+debugging purposes is derived from <code class=scheme><span class=variable>field-name-symbol</span></code> and
+the name of <code class=scheme><span class=variable>mutator-proc</span></code>'s structure type.<p>
+</p>
+</ul><p></p>
+<p>
+Examples:
+</p>
+<div align=left><pre class=scheme>(<span class=keyword>define-values</span> (<span class=variable>struct:a</span> <span class=variable>make-a</span> <span class=variable>a?</span> <span class=variable>a-ref</span> <span class=variable>a-set!</span>) 
+  (<code class=scheme>make-struct-type</code> <span class=keyword>'</span><span class=variable>a</span> <span class=selfeval>#f</span> <span class=selfeval>2</span> <span class=selfeval>1</span> <span class=keyword>'</span><span class=variable>uninitialized</span>)) 
+(<span class=keyword>define</span> <span class=variable>an-a</span> (<span class=variable>make-a</span> <span class=keyword>'</span><span class=variable>x</span> <span class=keyword>'</span><span class=variable>y</span>)) 
+(<span class=variable>a-ref</span> <span class=variable>an-a</span> <span class=selfeval>1</span>) <span class=comment>; =&gt; <code class=schemeresponse><span class=keyword>'</span><span class=variable>y</span> </code></span>
+(<span class=variable>a-ref</span> <span class=variable>an-a</span> <span class=selfeval>2</span>) <span class=comment>; =&gt; <code class=schemeresponse><span class=keyword>'</span><span class=variable>uninitialized</span> </code></span>
+(<span class=keyword>define</span> <span class=variable>a-first</span> (<code class=scheme>make-struct-field-accessor</code> <span class=variable>a-ref</span> <span class=selfeval>0</span>)) 
+(<span class=variable>a-first</span> <span class=variable>an-a</span>) <span class=comment>; =&gt; <code class=schemeresponse><span class=keyword>'</span><span class=variable>x</span></code></span>
+</pre></div><p></p>
+<p>
+</p>
+<a name="node_sec_4.4"></a>
+<h2><a href="mzscheme.html#node_toc_node_sec_4.4">4.4&nbsp;&nbsp;Structure Type Properties</a></h2>
+<p><a name="node_idx_550"></a></p>
+<p>
+A <strong>structure type property</strong><a name="node_idx_552"></a>
+allows per-type information to be associated with a structure type
+(as opposed to per-instance information associated with a structure
+value). A property value is associated with a structure type through
+the <code class=scheme><code class=scheme>make-struct-type</code></code> procedure (see
+section&nbsp;<a href="#node_sec_4.3">4.3</a>). Subtypes inherit the property values
+of their parent types, and only one value can be associated with a
+type for any property.</p>
+<p>
+<a name="node_idx_554"></a><a name="node_kw_definitionmake-struct-type-property"></a><code class=scheme>(make-struct-type-property</code><tt>&nbsp;</tt><code class=scheme><span class=variable>name-symbol</span></code><tt>&nbsp;</tt>[<code class=scheme><span class=variable>guard-proc</span></code>]<code class=scheme>)</code> creates a
+new structure type property and returns three values:
+</p>
+<ul><p>
+</p>
+<li><p>a structure property type descriptor, for use with
+<code class=scheme><code class=scheme>make-struct-type</code></code>;</p>
+<p>
+</p>
+<li><p>a predicate procedure, which takes an arbitrary value and
+returns <code class=scheme><span class=selfeval>#t</span></code> if the value is a descriptor or instance of a
+structure type that has a value for the property, <code class=scheme><span class=selfeval>#f</span></code> otherwise;</p>
+<p>
+</p>
+<li><p>an accessor procedure, which returns the value associated with
+structure type given its descriptor or one of its instances; the
+structure type does not have a value for the property, or if any
+other kind of value is provided, the <a name="node_idx_556"></a><code class=scheme>exn:application:type</code> exception is raised.</p>
+<p>
+</p>
+</ul><p></p>
+<p>
+If the optional <code class=scheme><span class=variable>guard-proc</span></code> is supplied, it is called
+by <code class=scheme><code class=scheme>make-struct-type</code></code> before attaching the property to a
+new structure type. The <code class=scheme><span class=variable>guard-proc</span></code> must accept two arguments: a
+value for the property supplied to <code class=scheme><code class=scheme>make-struct-type</code></code>, and a
+list containing information about the new structure type. The list
+contains the values that <code class=scheme>struct-type-info</code> would return for
+the new structure type if it skipped the current-inspector control
+check (see section&nbsp;<a href="#node_sec_4.5">4.5</a>).</p>
+<p>
+The result of calling <code class=scheme><span class=variable>guard-proc</span></code> is associated with the
+property in the target structure type, instead of the vale supplied
+to <code class=scheme><code class=scheme>make-struct-type</code></code>. To reject a property association (e.g.,
+because the value supplied to <code class=scheme><code class=scheme>make-struct-type</code></code> is
+inappropriate for the property), the guard can raise an
+exception. Such an exception prevents <code class=scheme><code class=scheme>make-struct-type</code></code> from
+returning a structure type descriptor.</p>
+<p>
+<a name="node_idx_558"></a><a name="node_kw_definitionstruct-type-property_Q_"></a><code class=scheme>(struct-type-property?</code><tt>&nbsp;</tt><code class=scheme><span class=variable>v</span></code><code class=scheme>)</code> returns <code class=scheme><span class=selfeval>#t</span></code> if <code class=scheme><span class=variable>v</span></code> is a
+structure type property descriptor value, <code class=scheme><span class=selfeval>#f</span></code> otherwise.</p>
+<p>
+Examples:
+</p>
+<div align=left><pre class=scheme>(<span class=keyword>define-values</span> (<span class=variable>prop:p</span> <span class=variable>p?</span> <span class=variable>p-ref</span>) (<code class=scheme>make-struct-type-property</code> <span class=keyword>'</span><span class=variable>p</span>))
+
+(<span class=keyword>define-values</span> (<span class=variable>struct:a</span> <span class=variable>make-a</span> <span class=variable>a?</span> <span class=variable>a-ref</span> <span class=variable>a-set!</span>) 
+  (<code class=scheme>make-struct-type</code> <span class=keyword>'</span><span class=variable>a</span> <span class=selfeval>#f</span> <span class=selfeval>2</span> <span class=selfeval>1</span> <span class=keyword>'</span><span class=variable>uninitialized</span> (<code class=scheme>list</code> (<code class=scheme>cons</code> <span class=variable>prop:p</span> <span class=selfeval>8</span>))))
+(<span class=variable>p?</span> <span class=variable>struct:a</span>) <span class=comment>; =&gt; <code class=schemeresponse><span class=selfeval>#t</span> </code></span>
+(<span class=variable>p?</span> <span class=selfeval>13</span>) <span class=comment>; =&gt; <code class=schemeresponse><span class=selfeval>#f</span> </code></span>
+(<span class=keyword>define</span> <span class=variable>an-a</span> (<span class=variable>make-a</span> <span class=keyword>'</span><span class=variable>x</span> <span class=keyword>'</span><span class=variable>y</span>)) 
+(<span class=variable>p?</span> <span class=variable>an-a</span>) <span class=comment>; =&gt; <code class=schemeresponse><span class=selfeval>#t</span></code></span>
+(<span class=variable>p-ref</span> <span class=variable>an-a</span>) <span class=comment>; =&gt; <code class=schemeresponse><span class=selfeval>8</span></code></span>
+
+(<span class=keyword>define-values</span> (<span class=variable>struct:b</span> <span class=variable>make-b</span> <span class=variable>b?</span> <span class=variable>b-ref</span> <span class=variable>b-set!</span>) 
+  (<code class=scheme>make-struct-type</code> <span class=keyword>'</span><span class=variable>b</span> <span class=selfeval>#f</span> <span class=selfeval>0</span> <span class=selfeval>0</span> <span class=selfeval>#f</span>)) 
+(<span class=variable>p?</span> <span class=variable>struct:b</span>) <span class=comment>; =&gt; <code class=schemeresponse><span class=selfeval>#f</span></code></span>
+</pre></div><p></p>
+<p>
+</p>
+<a name="node_sec_4.5"></a>
+<h2><a href="mzscheme.html#node_toc_node_sec_4.5">4.5&nbsp;&nbsp;Structure Inspectors</a></h2>
+<p><a name="node_idx_560"></a></p>
+<p>
+An <strong>inspector</strong><a name="node_idx_562"></a> provides access to structure fields and
+structure type information without the normal field accessors and
+mutators. Inspectors are primarily intended for use by debuggers.</p>
+<p>
+When a structure type is created, an inspector can be supplied. The
+given inspector is not the one that will control the new structure
+type; instead, the given inspector's parent will control the type. By
+using the parent of the given inspector, the structure type remains
+opaque to ``peer'' code that cannot access the parent
+inspector. Thus, an expression of the form
+</p>
+<div align=left><pre class=scheme>(<span class=keyword>define-struct</span> <span class=variable>s</span> (<span class=keyword>field</span> <tt>&middot;&middot;&middot;</tt>))
+</pre></div><p>
+creates a structure type whose instances are opaque to peer code. In
+contrast, the following idiom creates a structure type that is
+transparent to peer code, because the supplied inspector is a newly
+created child of the current inspector:
+</p>
+<div align=left><pre class=scheme>(<span class=keyword>define-struct</span> <span class=variable>s</span> (<span class=keyword>field</span> <tt>&middot;&middot;&middot;</tt>) (<code class=scheme>make-inspector</code>))
+</pre></div><p></p>
+<p>
+The <code class=scheme><code class=scheme>current-inspector</code></code> parameter determines a default inspector
+argument for new structure types. An alternate inspector can be
+provided though the optional <code class=scheme><span class=variable>inspector-expr</span></code> expression of the
+<code class=scheme><span class=keyword>define-struct</span></code> form (see section&nbsp;<a href="#node_sec_4.1">4.1</a>), as shown
+above, or through an optional <code class=scheme><span class=variable>inspector</span></code> argument to
+<code class=scheme><code class=scheme>make-struct-type</code></code> (see section&nbsp;<a href="#node_sec_4.3">4.3</a>).</p>
+<p>
+<a name="node_idx_564"></a><a name="node_kw_definitionmake-inspector"></a><code class=scheme>(make-inspector</code><tt>&nbsp;</tt>[<code class=scheme><span class=variable>inspector</span></code>]<code class=scheme>)</code> returns a new inspector that is a
+subinspector of <code class=scheme><span class=variable>inspector</span></code>. If <code class=scheme><span class=variable>inspector</span></code> is not provided,
+the new inspector is a subinspector of the current inspector. Any
+structure type controlled by the new inspector is also controlled by
+its ancestor inspectors, but no other inspectors.</p>
+<p>
+<a name="node_idx_566"></a><a name="node_kw_definitioninspector_Q_"></a><code class=scheme>(inspector?</code><tt>&nbsp;</tt><code class=scheme><span class=variable>v</span></code><code class=scheme>)</code> returns <code class=scheme><span class=selfeval>#t</span></code> if <code class=scheme><span class=variable>v</span></code> is an inspector,
+<code class=scheme><span class=selfeval>#f</span></code> otherwise.</p>
+<p>
+The <code class=scheme><code class=scheme>struct-info</code></code> and <code class=scheme><code class=scheme>struct-type-info</code></code> procedures provide
+inspector-based access to structure and structure type information:</p>
+<p>
+</p>
+<ul><p>
+</p>
+<li><p><a name="node_idx_568"></a><a name="node_kw_definitionstruct-info"></a><code class=scheme>(struct-info</code><tt>&nbsp;</tt><code class=scheme><span class=variable>v</span></code><code class=scheme>)</code> returns two values: </p>
+<p>
+</p>
+<ul><p>
+</p>
+<li><p><code class=scheme><span class=variable>struct-type</span></code>: a structure type descriptor or <code class=scheme><span class=selfeval>#f</span></code>;
+the result is a structure type descriptor of the most specific type
+for which <code class=scheme><span class=variable>v</span></code> is an instance, and for which the current
+inspector has control, or the result is <code class=scheme><span class=selfeval>#f</span></code> if the current
+inspector does not control any structure type for which the
+<code class=scheme><span class=variable>struct</span></code> is an instance.</p>
+<p>
+</p>
+<li><p><code class=scheme><span class=variable>skipped?</span></code>: <code class=scheme><span class=selfeval>#f</span></code> if the first result corresponds to
+the most specific structure type of <code class=scheme><span class=variable>v</span></code>, <code class=scheme><span class=selfeval>#t</span></code> otherwise.</p>
+<p>
+</p>
+</ul><p></p>
+<p>
+</p>
+<li><p><a name="node_idx_570"></a><a name="node_kw_definitionstruct-type-info"></a><code class=scheme>(struct-type-info</code><tt>&nbsp;</tt><code class=scheme><span class=variable>struct-type</span></code><code class=scheme>)</code> returns eight values that
+provide information about the structure type descriptor
+<code class=scheme><span class=variable>struct-type</span></code>, assuming that the type is controlled by the
+current inspector:
+</p>
+<ul><p>
+</p>
+<li><p><code class=scheme><span class=variable>name-symbol</span></code>: the structure type's name as a symbol;</p>
+<p>
+</p>
+<li><p><code class=scheme><span class=variable>init-field-k</span></code>: the number of fields defined by the
+structure type provided to the constructor procedure (not counting
+fields created by its ancestor types);</p>
+<p>
+</p>
+<li><p><code class=scheme><span class=variable>auto-field-k</span></code>: the number of fields defined by the
+structure type without a counterpart in the constructor procedure
+(not counting fields created by its ancestor types);</p>
+<p>
+</p>
+<li><p><code class=scheme><span class=variable>accessor-proc</span></code>: an accessor procedure for the structure
+type, like the one returned by <code class=scheme><code class=scheme>make-struct-type</code></code>;</p>
+<p>
+</p>
+<li><p><code class=scheme><span class=variable>mutator-proc</span></code>: a mutator procedure for the structure
+type, like the one returned by <code class=scheme><code class=scheme>make-struct-type</code></code>;</p>
+<p>
+</p>
+<li><p><code class=scheme><span class=variable>immutable-k-list</span></code>: an immutable list of exact
+non-negative integers that correspond to immutable fields for the
+structure type;</p>
+<p>
+</p>
+<li><p><code class=scheme><span class=variable>super-struct-type</span></code>: a structure type descriptor for the
+most specific ancestor of the type that is controlled by the
+current inspector, or <code class=scheme><span class=selfeval>#f</span></code> if no ancestor is controlled by
+the current inspector;</p>
+<p>
+</p>
+<li><p><code class=scheme><span class=variable>skipped?</span></code>: <code class=scheme><span class=selfeval>#f</span></code> if the sixth result is the most
+specific ancestor type or if the type has no supertype, <code class=scheme><span class=selfeval>#t</span></code>
+otherwise.</p>
+<p>
+</p>
+</ul><p>
+If the type for <code class=scheme><span class=variable>struct-type</span></code> is not controlled by the current inspector,
+the <a name="node_idx_572"></a><code class=scheme>exn:application:mismatch</code> exception is raised.</p>
+<p>
+</p>
+</ul><p></p>
+<p>
+</p>
+<a name="node_sec_4.6"></a>
+<h2><a href="mzscheme.html#node_toc_node_sec_4.6">4.6&nbsp;&nbsp;Structures as Procedures</a></h2>
+<p><a name="node_idx_574"></a></p>
+<p>
+If an integer or procedure is provided as the <code class=scheme><span class=variable>proc-spec</span></code> argument
+to <code class=scheme>make-struct-type</code> (see section&nbsp;<a href="#node_sec_4.3">4.3</a>),
+instances of the new structure type are procedures. In particular,
+when <a name="node_idx_576"></a><code class=scheme>procedure?</code> is applied to the instance, the result
+will be <code class=scheme><span class=selfeval>#t</span></code>. When an instance is used in the function
+position of an application expression, a procedure is extracted from
+the instance and used to complete the procedure call.</p>
+<p>
+If <code class=scheme><span class=variable>proc-spec</span></code> is an integer, it designates a field within the
+structure that should contain a procedure. The <code class=scheme><span class=variable>proc-spec</span></code>
+integer must be between 0 (inclusive) and
+<code class=scheme><span class=variable>init-field-k</span></code> (exclusive).  The designated field
+becomes immutable, so that after an instance of the structure is
+created, its procedure cannot be changed. (Otherwise, the arity and
+name of the instance could change, and such mutations are generally
+not allowed for procedures.) When the instance is used as the
+procedure in an application expression, the value of the designated
+field in the instance is used to complete the procedure
+call.<a name="call_footnote_Temp_9"></a><a href="#footnote_Temp_9"><sup><small>6</small></sup></a> That procedure receives all
+of the arguments from the application expression. The procedure's
+name (see section&nbsp;<a href="mzscheme-Z-H-6.html#node_sec_6.2.4">6.2.4</a>) and arity (see section&nbsp;<a href="mzscheme-Z-H-3.html#node_sec_3.10.1">3.10.1</a>) are
+also used for the name and arity of the structure. If the value in
+the designated field is not a procedure, then the instance behaves
+like <code class=scheme>(<span class=keyword>case-lambda</span>)</code> (i.e., a procedure which does not accept
+any number of arguments).</p>
+<p>
+Example:
+</p>
+<div align=left><pre class=scheme>(<span class=keyword>define-values</span> (<span class=variable>struct:ap</span> <span class=variable>make-annotated-proc</span> <span class=variable>annotated-proc?</span> <span class=variable>ap-ref</span> <span class=variable>ap-set!</span>) 
+  (<code class=scheme>make-struct-type</code> <span class=keyword>'</span><span class=variable>anotated-proc</span> <span class=selfeval>#f</span> <span class=selfeval>2</span> <span class=selfeval>0</span> <span class=selfeval>#f</span> <code class=scheme>null</code> <span class=selfeval>#f</span> <span class=selfeval>0</span>)) 
+(<span class=keyword>define</span> (<span class=variable>proc-annotation</span> <span class=variable>p</span>) (<span class=variable>ap-ref</span> <span class=variable>p</span> <span class=selfeval>1</span>))
+(<span class=keyword>define</span> <span class=variable>plus1</span> (<span class=variable>make-annotated-proc</span>
+                (<span class=keyword>lambda</span> (<span class=variable>x</span>) (<span class=variable>+</span> <span class=variable>x</span> <span class=selfeval>1</span>))
+                <span class=selfeval>&quot;adds 1 to its argument&quot;</span>))
+(<code class=scheme>procedure?</code> <span class=variable>plus1</span>) <span class=comment>; =&gt; <code class=schemeresponse><span class=selfeval>#t</span></code></span>
+(<span class=variable>annotated-proc?</span> <span class=variable>plus1</span>) <span class=comment>; =&gt; <code class=schemeresponse><span class=selfeval>#t</span></code></span>
+(<span class=variable>plus1</span> <span class=selfeval>10</span>) <span class=comment>; =&gt; <code class=schemeresponse><span class=selfeval>11</span></code></span>
+(<span class=variable>proc-annotation</span> <span class=variable>plus1</span>) <span class=comment>; =&gt; <code class=schemeresponse><span class=selfeval>&quot;adds 1 to its argument&quot;</span></code></span>
+</pre></div><p></p>
+<p>
+If <code class=scheme><span class=variable>proc-spec</span></code> is a procedure, it should accept at least one
+argument. When an instance of the structure is used in an application
+expression, the <code class=scheme><span class=variable>proc-spec</span></code> procedure is called with the instance
+as the first argument. The remaining arguments to the <code class=scheme><span class=variable>proc-spec</span></code>
+procedure are the arguments from the application expression. Thus, if
+the application expression contained five arguments, <code class=scheme><span class=variable>proc-spec</span></code>
+is called with six arguments. The name of the instance (see
+section&nbsp;<a href="mzscheme-Z-H-6.html#node_sec_6.2.4">6.2.4</a>) is unaffected by <code class=scheme><span class=variable>proc-spec</span></code>, but the
+instance's arity is determined by subtracting one from every possible
+argument count of <code class=scheme><span class=variable>proc-spec</span></code>. If <code class=scheme><span class=variable>proc-spec</span></code> cannot accept
+at least one argument, then the instance behaves like
+<code class=scheme>(<span class=keyword>case-lambda</span>)</code>.
+</p>
+<div align=left><pre class=scheme>(<span class=keyword>define-values</span> (<span class=variable>struct:fish</span> <span class=variable>make-fish</span> <span class=variable>fish?</span> <span class=variable>fish-ref</span> <span class=variable>fish-set!</span>) 
+  (<code class=scheme>make-struct-type</code> <span class=keyword>'</span><span class=variable>fish</span> <span class=selfeval>#f</span> <span class=selfeval>2</span> <span class=selfeval>0</span> <span class=selfeval>#f</span> <code class=scheme>null</code> <span class=selfeval>#f</span> 
+                    (<span class=keyword>lambda</span> (<span class=variable>f</span> <span class=variable>n</span>) (<span class=variable>fish-set!</span> <span class=variable>f</span> <span class=selfeval>0</span> (<span class=variable>+</span> <span class=variable>n</span> (<span class=variable>fish-ref</span> <span class=variable>f</span> <span class=selfeval>0</span>))))))
+(<span class=keyword>define</span> (<span class=variable>fish-weight</span> <span class=variable>f</span>) (<span class=variable>fish-ref</span> <span class=variable>f</span> <span class=selfeval>0</span>))
+(<span class=keyword>define</span> (<span class=variable>fish-color</span> <span class=variable>f</span>) (<span class=variable>fish-ref</span> <span class=variable>f</span> <span class=selfeval>1</span>))
+(<span class=keyword>define</span> <span class=variable>wanda</span> (<span class=variable>make-fish</span> <span class=selfeval>12</span> <span class=keyword>'</span><span class=variable>red</span>))
+(<span class=variable>fish?</span> <span class=variable>wanda</span>) <span class=comment>; =&gt; <code class=schemeresponse><span class=selfeval>#t</span></code></span>
+(<code class=scheme>procedure?</code> <span class=variable>wanda</span>) <span class=comment>; =&gt; <code class=schemeresponse><span class=selfeval>#t</span></code></span>
+(<span class=variable>fish-weight</span> <span class=variable>wanda</span>) <span class=comment>; =&gt; <code class=schemeresponse><span class=selfeval>12</span></code></span>
+(<code class=scheme>for-each</code> <span class=variable>wanda</span> <span class=keyword>'</span>(<span class=selfeval>1</span> <span class=selfeval>2</span> <span class=selfeval>3</span>))
+(<span class=variable>fish-weight</span> <span class=variable>wanda</span>) <span class=comment>; =&gt; <code class=schemeresponse><span class=selfeval>18</span></code></span>
+</pre></div><p></p>
+<p>
+If a structure type generates procedure instances, then subtypes of
+the type also generate procedure instances. The instances behave the
+same as instances of the original type. When a <code class=scheme><span class=variable>proc-spec</span></code> is
+supplied with a supertype that already behaves as a procedure,
+the <a name="node_idx_578"></a><code class=scheme>exn;application:mismatch</code> exception is raised.</p>
+<p>
+</p>
+<a name="node_sec_4.7"></a>
+<h2><a href="mzscheme.html#node_toc_node_sec_4.7">4.7&nbsp;&nbsp;Structures as Waitable Objects</a></h2>
+<p><a name="node_idx_580"></a></p>
+<p>
+The built-in
+<a name="node_kw_definitionprop_C_waitable"></a><code class=scheme>prop:waitable</code>
+structure type property identifies structure types whose instances can
+serve as waitable objects; see section&nbsp;<a href="mzscheme-Z-H-7.html#node_sec_7.6">7.6</a> for information on
+waitable objects.</p>
+<p>
+The property value can be any of the following:
+</p>
+<ul><p>
+</p>
+<li><p>A waitable object <code class=scheme><span class=variable>waitable</span></code>: In this case, using the
+structure as a waitable is equivalent to using <code class=scheme><span class=variable>waitable</span></code>.</p>
+<p>
+</p>
+<li><p>A procedure <code class=scheme><span class=variable>proc</span></code> of one argument: In this case, the
+structure is similar to a waitable generated
+by <code class=scheme>make-guard-waitable</code>, except that the would-be guard
+procedure <code class=scheme><span class=variable>proc</span></code> receives the structure as an argument, instead
+of no arguments.</p>
+<p>
+</p>
+<li><p>An exact, non-negative integer between <code class=scheme><span class=selfeval>0</span></code> (inclusive)
+and <code class=scheme><span class=variable>init-field-k</span></code> (exclusive): The integer identifies a field in
+the structure. If the field contains a waitable object or a
+waitable-generating procedure of one argument, the waitable or
+procedure is used as above. Otherwise, then the structure acts as a
+permanently blocked waitable.</p>
+<p>
+</p>
+</ul><p>
+Examples:
+</p>
+<div align=left><pre class=scheme>(<span class=keyword>define-values</span> (<span class=variable>struct:wt</span> <span class=variable>make-wt</span> <span class=variable>wt?</span> <span class=variable>wt-ref</span> <span class=variable>wt-set!</span>)
+  (<code class=scheme>make-struct-type</code> <span class=keyword>'</span><span class=variable>wt</span> <span class=selfeval>#f</span> <span class=selfeval>2</span> <span class=selfeval>0</span> <span class=selfeval>#f</span> (<code class=scheme>list</code> (<code class=scheme>cons</code> <code class=scheme>prop:waitable</code> <span class=selfeval>0</span>)) <span class=selfeval>#f</span> <span class=selfeval>#f</span> <span class=keyword>'</span>(<span class=selfeval>0</span>)))
+
+(<span class=keyword>define</span> <span class=variable>sema</span> (<code class=scheme>make-semaphore</code>))
+(<code class=scheme>object-wait-multiple</code> <span class=selfeval>0</span> (<span class=variable>make-wt</span> <span class=variable>sema</span> <span class=selfeval>#f</span>)) <span class=comment>; =&gt; <code class=schemeresponse><span class=selfeval>#f</span></code></span>
+(<code class=scheme>semaphore-post</code> <span class=variable>sema</span>)
+(<code class=scheme>object-wait-multiple</code> <span class=selfeval>0</span> (<span class=variable>make-wt</span> <span class=variable>sema</span> <span class=selfeval>#f</span>)) <span class=comment>; =&gt; <code class=scheme><span class=variable>sema</span></code></span>
+(<code class=scheme>semaphore-post</code> <span class=variable>sema</span>)
+(<code class=scheme>object-wait-multiple</code> <span class=selfeval>0</span> (<span class=variable>make-wt</span> (<span class=keyword>lambda</span> (<span class=variable>self</span>) (<span class=variable>wt-ref</span> <span class=variable>self</span> <span class=selfeval>1</span>)) <span class=variable>sema</span>)) <span class=comment>; =&gt; <code class=scheme><span class=variable>sema</span></code></span>
+(<code class=scheme>semaphore-post</code> <span class=variable>sema</span>)
+(<span class=keyword>define</span> <span class=variable>my-wt</span> (<span class=variable>make-wt</span> (<span class=keyword>lambda</span> (<span class=variable>self</span>) (<span class=variable>make-wrapped-waitable</span>
+                                       (<span class=variable>wt-ref</span> <span class=variable>self</span> <span class=selfeval>1</span>)
+                                       (<span class=keyword>lambda</span> (<span class=variable>x</span>) <span class=variable>self</span>)))
+                       <span class=variable>sema</span>))
+(<code class=scheme>object-wait-multiple</code> <span class=selfeval>0</span> <span class=variable>my-wt</span>) <span class=comment>; =&gt; <code class=scheme><span class=variable>my-wt</span></code></span>
+(<code class=scheme>object-wait-multiple</code> <span class=selfeval>0</span> <span class=variable>my-wt</span>) <span class=comment>; =&gt; <code class=schemeresponse><span class=selfeval>#f</span></code></span>
+</pre></div><p></p>
+<p>
+</p>
+<a name="node_sec_4.8"></a>
+<h2><a href="mzscheme.html#node_toc_node_sec_4.8">4.8&nbsp;&nbsp;Structure Utilities</a></h2>
+<p><a name="node_idx_582"></a></p>
+<p>
+The following utility procedures work on all structure instances:</p>
+<p>
+</p>
+<ul><p>
+</p>
+<li><p><a name="node_idx_584"></a><a name="node_kw_definitionstruct->vector"></a><code class=scheme>(struct-&gt;vector</code><tt>&nbsp;</tt><code class=scheme><span class=variable>v</span></code><tt>&nbsp;</tt>[<code class=scheme><span class=variable>opaque-v</span></code>]<code class=scheme>)</code> creates a vector representing
+<code class=scheme><span class=variable>v</span></code>.  The first slot of the result vector contains a symbol of
+the form <code class=scheme>struct:<code class=scheme><span class=variable>s</span></code></code>. The each remaining slot contains
+either the value of a field in <code class=scheme><span class=variable>v</span></code> if it is accessible via the
+current inspector, or <code class=scheme><span class=variable>opaque-v</span></code> for a field that is not
+accessible. A single <code class=scheme><span class=variable>opaque-v</span></code> value is used in the vector for
+contiguous inaccessible fields. (Consequently, the size of the vector
+does not match the size of the <code class=scheme><span class=variable>struct</span></code> if more than one field is
+inaccessible.) The symbol <code class=scheme><span class=selfeval>'...</span></code> is the default value for
+<code class=scheme><span class=variable>opaque-v</span></code>.</p>
+<p>
+<a name="node_idx_586"></a>
+</p>
+<li><p><a name="node_idx_588"></a><a name="node_kw_definitionstruct_Q_"></a><code class=scheme>(struct?</code><tt>&nbsp;</tt><code class=scheme><span class=variable>v</span></code><code class=scheme>)</code> returns <code class=scheme><span class=selfeval>#t</span></code> if <code class=scheme>struct-&gt;vector</code>
+exposes any fields of <code class=scheme><span class=variable>v</span></code> with the current inspector, <code class=scheme><span class=selfeval>#f</span></code>
+otherwise.</p>
+<p>
+</p>
+</ul><p></p>
+<p>
+<a name="node_idx_590"></a>
+Two structure values are <a name="node_idx_592"></a><code class=scheme>eqv?</code> if and only if they are
+<a name="node_idx_594"></a><code class=scheme>eq?</code>. Two structure values are <a name="node_idx_596"></a><code class=scheme>equal?</code> if and
+only if they are instances of the same structure type, no fields are
+opaque, and the results of applying <code class=scheme><code class=scheme>struct-&gt;vector</code></code> to the
+structs are <code class=scheme><code class=scheme>equal?</code></code>. (Consequently, <code class=scheme><code class=scheme>equal?</code></code> testing
+for structures depends on the current inspector.)</p>
+<p>
+Each kind of value returned by <code class=scheme><span class=keyword>define-struct</span></code> and
+<code class=scheme><code class=scheme>make-struct-type</code></code> has a recognizing predicate:
+</p>
+<ul><p>
+</p>
+<li><p><a name="node_idx_598"></a><a name="node_kw_definitionstruct-type_Q_"></a><code class=scheme>(struct-type?</code><tt>&nbsp;</tt><code class=scheme><span class=variable>v</span></code><code class=scheme>)</code> returns <code class=scheme><span class=selfeval>#t</span></code> if <code class=scheme><span class=variable>v</span></code> is a
+structure type descriptor value, <code class=scheme><span class=selfeval>#f</span></code> otherwise.</p>
+<p>
+</p>
+<li><p><a name="node_idx_600"></a><a name="node_kw_definitionstruct-constructor-procedure_Q_"></a><code class=scheme>(struct-constructor-procedure?</code><tt>&nbsp;</tt><code class=scheme><span class=variable>v</span></code><code class=scheme>)</code> returns <code class=scheme><span class=selfeval>#t</span></code> if
+<code class=scheme><span class=variable>v</span></code> is a constructor procedure generated by <code class=scheme><span class=keyword>define-struct</span></code>
+or <code class=scheme><code class=scheme>make-struct-type</code></code>, <code class=scheme><span class=selfeval>#f</span></code> otherwise.</p>
+<p>
+</p>
+<li><p><a name="node_idx_602"></a><a name="node_kw_definitionstruct-predicate-procedure_Q_"></a><code class=scheme>(struct-predicate-procedure?</code><tt>&nbsp;</tt><code class=scheme><span class=variable>v</span></code><code class=scheme>)</code> returns <code class=scheme><span class=selfeval>#t</span></code> if
+<code class=scheme><span class=variable>v</span></code> is a predicate procedure generated by <code class=scheme><span class=keyword>define-struct</span></code> or
+<code class=scheme><code class=scheme>make-struct-type</code></code>, <code class=scheme><span class=selfeval>#f</span></code> otherwise.</p>
+<p>
+</p>
+<li><p><a name="node_idx_604"></a><a name="node_kw_definitionstruct-accessor-procedure_Q_"></a><code class=scheme>(struct-accessor-procedure?</code><tt>&nbsp;</tt><code class=scheme><span class=variable>v</span></code><code class=scheme>)</code> returns <code class=scheme><span class=selfeval>#t</span></code> if <code class=scheme><span class=variable>v</span></code>
+is an accessor procedure generated by <code class=scheme><span class=keyword>define-struct</span></code>,
+<code class=scheme><code class=scheme>make-struct-type</code></code>, or <code class=scheme><code class=scheme>make-struct-field-accessor</code></code>,
+<code class=scheme><span class=selfeval>#f</span></code> otherwise.</p>
+<p>
+</p>
+<li><p><a name="node_idx_606"></a><a name="node_kw_definitionstruct-mutator-procedure_Q_"></a><code class=scheme>(struct-mutator-procedure?</code><tt>&nbsp;</tt><code class=scheme><span class=variable>v</span></code><code class=scheme>)</code> returns <code class=scheme><span class=selfeval>#t</span></code> if <code class=scheme><span class=variable>v</span></code>
+is a mutator procedure generated by <code class=scheme><span class=keyword>define-struct</span></code>,
+<code class=scheme><code class=scheme>make-struct-type</code></code>, or <code class=scheme><code class=scheme>make-struct-field-mutator</code></code>, <code class=scheme><span class=selfeval>#f</span></code>
+otherwise.</p>
+<p>
+</p>
+</ul><p></p>
+<p>
+</p>
+<p>
+</p>
+<div class=footnoterule><hr></div><p></p>
+<div class=footnote><p><a name="footnote_Temp_9"></a><a href="#call_footnote_Temp_9"><sup><small>6</small></sup></a> This procedure can be another structure that acts as a
+procedure. The immutability of procedure fields disallows cycles in
+the procedure graph, so that the procedure call will eventually
+continue with a non-structure procedure.</p>
+</div>
+<div align=right class=navigation><i>[Go to <span><a href="mzscheme.html">first</a>, <a href="mzscheme-Z-H-3.html">previous</a></span><span>, <a href="mzscheme-Z-H-5.html">next</a></span> page<span>; &nbsp;&nbsp;</span><span><a href="mzscheme.html#node_toc_start">contents</a></span><span><span>; &nbsp;&nbsp;</span><a href="mzscheme-Z-H-19.html#node_index_start">index</a></span>]</i></div><p></p>
+</body>
+</html>

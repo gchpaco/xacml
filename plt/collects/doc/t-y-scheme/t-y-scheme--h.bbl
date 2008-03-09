@@ -1,0 +1,182 @@
+\begin{thebibliography}{10}
+
+\bibitem{sicp}
+Harold Abelson and Gerald~Jay {Sussman with Julie Sussman}.
+\newblock {\em \urlp{Structure and Interpretation of Computer Programs
+  (``SICP'')}{http://mitpress.mit.edu/sicp/full-text/book/book.html}}.
+\newblock MIT Press, 2nd edition, 1996.
+
+\bibitem{hmf}
+Milton Abramowitz and Irene~A Stegun, editors.
+\newblock {\em
+  \urlh{http://store.yahoo.com/doverpublications/0486612724.html}{Handbook of
+  Mathematical Functions: with Formulas, Graphs, and Mathematical Tables}}.
+\newblock Dover Publications, 1965.
+
+\bibitem{kawa}
+Per Bothner.
+\newblock \urlp{The Kawa Scheme system}{http://www.gnu.org/software/kawa}.
+
+\bibitem{wc:amb}
+William Clinger.
+\newblock {Nondeterministic call by need is neither lazy nor by name}.
+\newblock In {\em {Proc ACM Symp Lisp and Functional Programming}}, pages
+  226--234, 1982.
+
+\bibitem{tspl}
+R~Kent Dybvig.
+\newblock {\em \urlp{The Scheme Programming
+  Language}{http://www.scheme.com/tspl2d}}.
+\newblock Prentice Hall PTR, 2nd edition, 1996.
+
+\bibitem{gambit}
+Marc Feeley.
+\newblock \urlp{Gambit Scheme System}{http://www.iro.umontreal.ca/~gambit}.
+
+\bibitem{mf:prolog}
+Matthias Felleisen.
+\newblock {Transliterating Prolog into Scheme}.
+\newblock Technical Report 182, {Indiana U Comp Sci Dept}, 1985.
+
+\bibitem{htdp}
+Matthias Felleisen, Robert~Bruce Findler, Matthew Flatt, and Shriram
+  Krishnamurthi.
+\newblock {\em \urlp{How to Design Programs: An Introduction to Programming and
+  Computing}{http://www.htdp.org}}.
+\newblock MIT Press, 2001.
+
+\bibitem{mzscheme}
+Matthew Flatt.
+\newblock \urlp{MzScheme}{http://www.plt-scheme.org/software/mzscheme}.
+
+\bibitem{tls}
+Daniel~P Friedman and Matthias Felleisen.
+\newblock {\em \urlh{http://www.ccs.neu.edu/~matthias/BTLS}{The Little
+  Schemer}}.
+\newblock MIT Press, 4th edition, 1996.
+
+\bibitem{tss}
+Daniel~P Friedman and Matthias Felleisen.
+\newblock {\em \urlh{http://www.ccs.neu.edu/~matthias/BTSS}{The Seasoned
+  Schemer}}.
+\newblock MIT Press, 1996.
+
+\bibitem{eopl}
+Daniel~P Friedman, Mitchell Wand, and Christopher~T Haynes.
+\newblock {\em
+  \urlh{http://mitpress.mit.edu/book-home.tcl?isbn=0262061457}{Essentials of
+  Programming Languages}}.
+\newblock MIT Press, McGraw-Hill, 1992.
+
+\bibitem{guile}
+FSF.
+\newblock \urlp{Guile: Project GNU's Extension
+  Language}{http://www.gnu.org/software/guile/guile.html}.
+
+\bibitem{stk}
+Erick Gallesio.
+\newblock \urlp{STk}{http://kaolin.unice.fr/STk/STk.html}.
+
+\bibitem{pocketscheme}
+Ben Goetter.
+\newblock \urlp{Pocket Scheme for the H/PC and
+  P/PC}{http://www.angrygraycat.com/scheme/pscheme.htm}.
+
+\bibitem{logick}
+Christopher~T Haynes.
+\newblock {Logic continuations}.
+\newblock In {\em {J Logic Program}}, pages 157--176, 1987.
+\newblock vol 4.
+
+\bibitem{engine}
+Christopher~T Haynes and Daniel~P Friedman.
+\newblock {Engines Build Process Abstractions}.
+\newblock In {\em {Conf ACM Symp Lisp and Functional Programming}}, pages
+  18--24, 1984.
+
+\bibitem{coroutine}
+Christopher~T Haynes, Daniel~P Friedman, and Mitchell Wand.
+\newblock {Continuations and Coroutines}.
+\newblock In {\em {Conf ACM Symp Lisp and Functional Programming}}, pages
+  293--298, 1984.
+
+\bibitem{hunter}
+J~A~H Hunter.
+\newblock {\em
+  \urlh{http://store.yahoo.com/doverpublications/0486233472.html}{Mathematical
+  Brain-Teasers}}.
+\newblock Dover Publications, 1976.
+
+\bibitem{scm}
+Aubrey Jaffer.
+\newblock \urlp{SCM}{http://swissnet.ai.mit.edu/~jaffer/SCM.html}.
+
+\bibitem{gauche}
+Shiro Kawai.
+\newblock \urlp{Gauche: A Scheme
+  Implementation}{http://www.shiro.dreamhost.com/scheme/gauche/}.
+
+\bibitem{keene}
+Sonya~E Keene.
+\newblock {\em Object-oriented Programming in Common Lisp: A Programmer's Guide
+  to CLOS}.
+\newblock Addison-Wesley, 1989.
+
+\bibitem{r5rs}
+Richard Kelsey, William Clinger, and Jonathan {Rees (eds)}.
+\newblock \urlp{Revised\^{}5 Report on the Algorithmic Language Scheme
+  (``R5RS'')}{http://www.schemers.org/Documents/Standards/R5RS/HTML/r5rs.html},
+  1998.
+
+\bibitem{amop}
+Gregor Kiczales, Jim des Rivi\`eres, and Daniel~G Bobrow.
+\newblock {\em The Art of the Metaobject Protocol}.
+\newblock MIT Press, 1991.
+
+\bibitem{jmc:amb}
+John McCarthy.
+\newblock \urlh{http://www-formal.stanford.edu/jmc/basis1/basis1.html}{A Basis
+  for a Mathematical Theory of Computation}.
+\newblock In P~Braffort and D~Hirschberg, editors, {\em {Computer Programming
+  and Formal Systems}}. North-Holland, 1967.
+
+\bibitem{mitscheme}
+{MIT Scheme Team}.
+\newblock \urlp{MIT Scheme}{http://www.swiss.ai.mit.edu/projects/scheme}.
+
+\bibitem{cgi}
+NCSA.
+\newblock \urlp{The Common Gateway Interface}{http://hoohoo.ncsa.uiuc.edu/cgi}.
+
+\bibitem{q:lisp}
+Christian Queinnec.
+\newblock {\em \urlh{http://youpou.lip6.fr/queinnec/WWW/LiSP.html}{Lisp in
+  Small Pieces}}.
+\newblock Cambridge University Press, 1996.
+
+\bibitem{4cp}
+Thomas~L Saaty and Paul~C Kainen.
+\newblock {\em The Four-Color Problem: Assaults and Conquest}.
+\newblock Dover Publications, 1986.
+
+\bibitem{bigloo}
+Manuel Serrano.
+\newblock \urlp{Bigloo}{http://www-sop.inria.fr/mimosa/fp/Bigloo}.
+
+\bibitem{aop}
+Leon Sterling and Ehud Shapiro.
+\newblock {\em \urlh{http://mitpress.mit.edu/book-home.tcl?isbn=0262193388}{The
+  Art of Prolog}}.
+\newblock MIT Press, 2nd edition, 1994.
+
+\bibitem{chicken}
+Felix~L Winkelmann.
+\newblock \urlp{Chicken: A practical and portable Scheme
+  system}{http://www.call-with-current-continuation.org/chicken.html}.
+
+\bibitem{zmc:amb}
+Ramin Zabih, David McAllester, and David Chapman.
+\newblock {Non-deterministic Lisp with dependency-directed backtracking}.
+\newblock In {\em {AAAI-87}}, pages 59--64, 1987.
+
+\end{thebibliography}

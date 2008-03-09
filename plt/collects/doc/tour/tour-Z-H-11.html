@@ -1,0 +1,72 @@
+<!doctype html public "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!--
+
+Generated from tour.tex by tex2page, v 2004-09-11
+(running on MzScheme 209, unix), 
+(c) Dorai Sitaram, 
+http://www.ccs.neu.edu/~dorai/tex2page/tex2page-doc.html
+
+-->
+<head>
+<title>
+A Brief Tour of DrScheme version 209
+</title>
+<link rel="stylesheet" type="text/css" href="tour-Z-S.css" title=default>
+<meta name=robots content="noindex,follow">
+</head>
+<body>
+<div align=right class=navigation><i>[Go to <span><a href="tour.html">first</a>, <a href="tour-Z-H-10.html">previous</a></span><span>, <a href="tour-Z-H-12.html">next</a></span> page<span>; &nbsp;&nbsp;</span><span><a href="tour-Z-H-1.html#node_toc_start">contents</a></span>]</i></div><p></p>
+<a name="node_chap_10"></a>
+<h1 class=chapter>
+<div class=chapterheading><a href="tour-Z-H-1.html#node_toc_node_chap_10">Chapter 10</a></div><br>
+<a href="tour-Z-H-1.html#node_toc_node_chap_10">The Profiler</a></h1>
+<p>DrScheme includes a procedure-level execution profiler.  The profiler
+gathers information during a program run, which it displays
+graphically.  The profiler can order output according to the number of
+calls or the time spent in execution.  To invoke the profiler:
+</p>
+<ol>
+<li><p>Tell DrScheme to generate profiling information.  To do this, choose
+to <i>Show Details</i> in the <i>Language | Choose Language ...</i>
+menu, and select profiling in the Dynamic Properties panel.  (You do
+not need to follow this step unless you change the language
+configuration.)</p>
+<p>
+</p>
+<li><p>Run the program.</p>
+<p>
+</p>
+<li><p>Select the <i>Show | Show Profile</i> menu entry.</p>
+<p>
+</p>
+</ol><p>
+A profile includes both a table and a color coding of the program
+text: hotter colors indicate greater use, colder colors indicate less
+use.  To change the colors, use the <i>Profiling</i> tab in
+<i>Edit | Preferences ...</i>.</p>
+<p>
+The two images below are from the same run of the same program, which
+generates a list of primes.  The first image shows the result of
+choosing time profiling (the default):</p>
+<p>
+
+</p>
+<div align=center><table><tr><td>
+
+<img src="./images/profile-cumu-time.gif" border="0"  alt="[./images/profile-cumu-time.gif]">
+</td></tr></table></div>
+<p>
+The second image shows the result of profiling by call counts instead:</p>
+<p>
+
+</p>
+<div align=center><table><tr><td>
+
+<img src="./images/profile-num-calls.gif" border="0"  alt="[./images/profile-num-calls.gif]">
+</td></tr></table></div>
+<p>
+</p>
+<div align=right class=navigation><i>[Go to <span><a href="tour.html">first</a>, <a href="tour-Z-H-10.html">previous</a></span><span>, <a href="tour-Z-H-12.html">next</a></span> page<span>; &nbsp;&nbsp;</span><span><a href="tour-Z-H-1.html#node_toc_start">contents</a></span>]</i></div><p></p>
+</body>
+</html>

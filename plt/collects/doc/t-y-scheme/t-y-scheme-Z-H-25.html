@@ -1,0 +1,418 @@
+<!doctype html public "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!--
+
+Generated from t-y-scheme.tex by tex2page, v 2004-09-11
+(running on MzScheme 209, unix), 
+(c) Dorai Sitaram, 
+http://www.ccs.neu.edu/~dorai/tex2page/tex2page-doc.html
+
+-->
+<head>
+<title>
+Teach Yourself Scheme in Fixnum Days
+</title>
+<link rel="stylesheet" type="text/css" href="t-y-scheme-Z-S.css" title=default>
+<meta name=robots content="noindex,follow">
+<meta name=description content="A practical
+introduction to the programming language Scheme">
+
+<meta name=author content="Dorai Sitaram">
+
+<link rev=made href="mailto:dorai @ ccs.neu.edu">
+</head>
+<body>
+<div align=right class=navigation><i>[Go to <span><a href="t-y-scheme.html">first</a>, <a href="t-y-scheme-Z-H-24.html">previous</a></span><span class=disable>, next</span> page<span>; &nbsp;&nbsp;</span><span><a href="t-y-scheme-Z-H-1.html#node_toc_start">contents</a></span><span class=disable><span>; &nbsp;&nbsp;</span>index</span>]</i></div><p></p>
+<a name="node_chap_F"></a>
+<h1 class=chapter>
+<div class=chapterheading><a href="t-y-scheme-Z-H-1.html#node_toc_node_chap_F">Appendix F</a></div><br>
+<a href="t-y-scheme-Z-H-1.html#node_toc_node_chap_F">Index</a></h1>
+<p><a name="node_index_start"></a></p>
+<p>
+<br>
+<a href="t-y-scheme-Z-H-4.html#node_idx_150"><code class=scheme><span class=keyword>'</span></code> (<code class=scheme><span class=keyword>quote</span></code>)</a><br>
+<a href="t-y-scheme-Z-H-4.html#node_idx_92"><code class=scheme><span class=variable>*</span></code></a><br>
+<a href="t-y-scheme-Z-H-4.html#node_idx_88"><code class=scheme><span class=variable>+</span></code></a><br>
+<a href="t-y-scheme-Z-H-10.html#node_idx_388"><code class=scheme><span class=keyword>,</span></code> (comma)</a><br>
+<a href="t-y-scheme-Z-H-10.html#node_idx_390"><code class=scheme><span class=keyword>,@</span></code> (comma-splice)</a><br>
+<a href="t-y-scheme-Z-H-4.html#node_idx_90"><code class=scheme><span class=variable>-</span></code></a><br>
+<a href="t-y-scheme-Z-H-4.html#node_idx_94"><code class=scheme><span class=variable>/</span></code></a><br>
+<a href="t-y-scheme-Z-H-4.html#node_idx_80"><code class=scheme><span class=variable>&lt;</span></code></a><br>
+<a href="t-y-scheme-Z-H-4.html#node_idx_82"><code class=scheme><span class=variable>&lt;=</span></code></a><br>
+<a href="t-y-scheme-Z-H-4.html#node_idx_78"><code class=scheme><span class=variable>=</span></code></a><br>
+<a href="t-y-scheme-Z-H-4.html#node_idx_84"><code class=scheme><span class=variable>&gt;</span></code></a><br>
+<a href="t-y-scheme-Z-H-4.html#node_idx_86"><code class=scheme><span class=variable>&gt;=</span></code></a><br>
+<a href="t-y-scheme-Z-H-10.html#node_idx_386"><code class=scheme><span class=keyword>`</span></code> (backquote)</a></p>
+<p>
+</p>
+<p></p>
+<p>
+<br>
+<a href="t-y-scheme-Z-H-4.html#node_idx_102"><code class=scheme><span class=variable>abs</span></code></a><br>
+<a href="t-y-scheme-Z-H-12.html#node_idx_408">alist</a><br>
+<a href="t-y-scheme-Z-H-16.html#node_idx_470"><code class=scheme><span class=keyword>amb</span></code></a><br>
+<a href="t-y-scheme-Z-H-6.html#node_idx_264"><code class=scheme><span class=keyword>and</span></code></a><br>
+<a href="t-y-scheme-Z-H-5.html#node_idx_244"><code class=scheme><span class=variable>apply</span></code></a><br>
+association list, <em>see</em> alist
+<br>
+<a href="t-y-scheme-Z-H-12.html#node_idx_410"><code class=scheme><span class=variable>assv</span></code></a><br>
+<a href="t-y-scheme-Z-H-4.html#node_idx_104"><code class=scheme><span class=variable>atan</span></code></a></p>
+<p>
+</p>
+<p></p>
+<p>
+<br>
+<a href="t-y-scheme-Z-H-4.html#node_idx_68"><code class=scheme><span class=selfeval>#b</span></code> (binary number)</a><br>
+<a href="t-y-scheme-Z-H-3.html#node_idx_8"><code class=scheme><span class=keyword>begin</span></code></a>, <a href="t-y-scheme-Z-H-5.html#node_idx_246">[2]</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="t-y-scheme-Z-H-5.html#node_idx_248">implicit</a>, <a href="t-y-scheme-Z-H-6.html#node_idx_258">[2]</a><br>
+<a href="t-y-scheme-Z-H-20.html#node_idx_504">Bigloo</a><br>
+<a href="t-y-scheme-Z-H-4.html#node_idx_42">boolean</a><br>
+<a href="t-y-scheme-Z-H-4.html#node_idx_44"><code class=scheme><span class=variable>boolean?</span></code></a></p>
+<p>
+</p>
+<p></p>
+<p>
+<br>
+<a href="t-y-scheme-Z-H-4.html#node_idx_198"><code class=scheme><span class=variable>c...r</span></code></a><br>
+<code class=scheme><span class=variable>call-with-current-continuation</span></code>, <em>see</em> <code class=scheme><span class=variable>call/cc</span></code>
+<br>
+<a href="t-y-scheme-Z-H-9.html#node_idx_358"><code class=scheme><span class=variable>call-with-input-file</span></code></a><br>
+<a href="t-y-scheme-Z-H-9.html#node_idx_360"><code class=scheme><span class=variable>call-with-output-file</span></code></a><br>
+<a href="t-y-scheme-Z-H-15.html#node_idx_458"><code class=scheme><span class=variable>call/cc</span></code></a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="t-y-scheme-Z-H-15.html#node_idx_464">and coroutine</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="t-y-scheme-Z-H-17.html#node_idx_476">and engine</a><br>
+<a href="t-y-scheme-Z-H-4.html#node_idx_188"><code class=scheme><span class=variable>car</span></code></a><br>
+<a href="t-y-scheme-Z-H-6.html#node_idx_262"><code class=scheme><span class=keyword>case</span></code></a><br>
+<a href="t-y-scheme-Z-H-4.html#node_idx_190"><code class=scheme><span class=variable>cdr</span></code></a><br>
+<a href="t-y-scheme-Z-H-4.html#node_idx_216"><code class=scheme><span class=variable>char-&gt;integer</span></code></a><br>
+<a href="t-y-scheme-Z-H-4.html#node_idx_130"><code class=scheme><span class=variable>char-ci&lt;=?</span></code></a><br>
+<a href="t-y-scheme-Z-H-4.html#node_idx_128"><code class=scheme><span class=variable>char-ci&lt;?</span></code></a><br>
+<a href="t-y-scheme-Z-H-4.html#node_idx_126"><code class=scheme><span class=variable>char-ci=?</span></code></a><br>
+<a href="t-y-scheme-Z-H-4.html#node_idx_134"><code class=scheme><span class=variable>char-ci&gt;=?</span></code></a><br>
+<a href="t-y-scheme-Z-H-4.html#node_idx_132"><code class=scheme><span class=variable>char-ci&gt;?</span></code></a><br>
+<a href="t-y-scheme-Z-H-4.html#node_idx_136"><code class=scheme><span class=variable>char-downcase</span></code></a><br>
+<a href="t-y-scheme-Z-H-4.html#node_idx_138"><code class=scheme><span class=variable>char-upcase</span></code></a><br>
+<a href="t-y-scheme-Z-H-4.html#node_idx_120"><code class=scheme><span class=variable>char&lt;=?</span></code></a><br>
+<a href="t-y-scheme-Z-H-4.html#node_idx_118"><code class=scheme><span class=variable>char&lt;?</span></code></a><br>
+<a href="t-y-scheme-Z-H-4.html#node_idx_116"><code class=scheme><span class=variable>char=?</span></code></a><br>
+<a href="t-y-scheme-Z-H-4.html#node_idx_124"><code class=scheme><span class=variable>char&gt;=?</span></code></a><br>
+<a href="t-y-scheme-Z-H-4.html#node_idx_122"><code class=scheme><span class=variable>char&gt;?</span></code></a><br>
+<a href="t-y-scheme-Z-H-4.html#node_idx_114"><code class=scheme><span class=variable>char?</span></code></a><br>
+<a href="t-y-scheme-Z-H-4.html#node_idx_110">character</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="t-y-scheme-Z-H-4.html#node_idx_112"><code class=verbatim>#\</code> notation for</a><br>
+<a href="t-y-scheme-Z-H-20.html#node_idx_506">Chicken</a><br>
+<a href="t-y-scheme-Z-H-14.html#node_idx_434">class</a><br>
+<a href="t-y-scheme-Z-H-17.html#node_idx_478">clock</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="t-y-scheme-Z-H-23.html#node_idx_530">Guile</a><br>
+<a href="t-y-scheme-Z-H-9.html#node_idx_354"><code class=scheme><span class=variable>close-input-port</span></code></a><br>
+<a href="t-y-scheme-Z-H-9.html#node_idx_356"><code class=scheme><span class=variable>close-output-port</span></code></a><br>
+<a href="t-y-scheme-Z-H-3.html#node_idx_24">command line</a><br>
+<a href="t-y-scheme-Z-H-3.html#node_idx_14">comment</a><br>
+<a href="t-y-scheme-Z-H-4.html#node_idx_66"><code class=scheme><span class=variable>complex?</span></code></a><br>
+<a href="t-y-scheme-Z-H-6.html#node_idx_260"><code class=scheme><span class=keyword>cond</span></code></a><br>
+<a href="t-y-scheme-Z-H-6.html#node_idx_252">conditional</a><br>
+<a href="t-y-scheme-Z-H-4.html#node_idx_192"><code class=scheme><span class=variable>cons</span></code></a><br>
+<a href="t-y-scheme-Z-H-3.html#node_idx_20">console</a><br>
+<a href="t-y-scheme-Z-H-15.html#node_idx_460">continuation</a><br>
+<a href="t-y-scheme-Z-H-15.html#node_idx_462">coroutine</a><br>
+<a href="t-y-scheme-Z-H-9.html#node_idx_342"><code class=scheme><span class=variable>current-input-port</span></code></a><br>
+<a href="t-y-scheme-Z-H-9.html#node_idx_344"><code class=scheme><span class=variable>current-output-port</span></code></a></p>
+<p>
+</p>
+<p></p>
+<p>
+<br>
+<a href="t-y-scheme-Z-H-4.html#node_idx_74"><code class=scheme><span class=selfeval>#d</span></code> (decimal number)</a><br>
+<a href="t-y-scheme-Z-H-4.html#node_idx_38">data type</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="t-y-scheme-Z-H-4.html#node_idx_162">compound</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="t-y-scheme-Z-H-4.html#node_idx_214">conversion to and fro</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="t-y-scheme-Z-H-4.html#node_idx_40">simple</a><br>
+<a href="t-y-scheme-Z-H-4.html#node_idx_156"><code class=scheme><span class=keyword>define</span></code></a><br>
+<a href="t-y-scheme-Z-H-10.html#node_idx_380"><code class=scheme><span class=keyword>define-macro</span></code></a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="t-y-scheme-Z-H-20.html#node_idx_502">in various dialects</a><br>
+<a href="t-y-scheme-Z-H-11.html#node_idx_402"><code class=scheme><span class=keyword>defstruct</span></code></a><br>
+<a href="t-y-scheme-Z-H-14.html#node_idx_448"><code class=scheme><span class=variable>delete-duplicates</span></code></a><br>
+<a href="t-y-scheme-Z-H-13.html#node_idx_420"><code class=scheme><span class=variable>delete-file</span></code></a><br>
+<a href="t-y-scheme-Z-H-20.html#node_idx_488">dialects of Scheme</a><br>
+<a href="t-y-scheme-Z-H-3.html#node_idx_10"><code class=scheme><span class=variable>display</span></code></a>, <a href="t-y-scheme-Z-H-9.html#node_idx_334">[2]</a><br>
+<a href="t-y-scheme-Z-H-4.html#node_idx_184">dotted pair</a></p>
+<p>
+</p>
+<p></p>
+<p>
+<br>
+<a href="t-y-scheme-Z-H-4.html#node_idx_200">empty list</a><br>
+<a href="t-y-scheme-Z-H-17.html#node_idx_474">engine</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="t-y-scheme-Z-H-17.html#node_idx_480">flat</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="t-y-scheme-Z-H-17.html#node_idx_482">nestable</a><br>
+<a href="t-y-scheme-Z-H-9.html#node_idx_322"><code class=scheme><span class=variable>eof-object?</span></code></a><br>
+<a href="t-y-scheme-Z-H-4.html#node_idx_76"><code class=scheme><span class=variable>eqv?</span></code></a><br>
+<a href="t-y-scheme-Z-H-3.html#node_idx_32">evaluation</a><br>
+<a href="t-y-scheme-Z-H-8.html#node_idx_284"><code class=scheme><span class=variable>even?</span></code></a><br>
+<a href="t-y-scheme-Z-H-3.html#node_idx_36"><code class=scheme><span class=variable>exit</span></code></a><br>
+<a href="t-y-scheme-Z-H-4.html#node_idx_106"><code class=scheme><span class=variable>exp</span></code></a><br>
+<a href="t-y-scheme-Z-H-4.html#node_idx_96"><code class=scheme><span class=variable>expt</span></code></a></p>
+<p>
+</p>
+<p></p>
+<p>
+<br>
+<a href="t-y-scheme-Z-H-4.html#node_idx_48"><code class=scheme><span class=selfeval>#f</span></code></a><br>
+<a href="t-y-scheme-Z-H-4.html#node_idx_52">falsity</a><br>
+file
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="t-y-scheme-Z-H-13.html#node_idx_414">checking existence of</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="t-y-scheme-Z-H-13.html#node_idx_416">deleting</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="t-y-scheme-Z-H-9.html#node_idx_372">loading</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="t-y-scheme-Z-H-9.html#node_idx_340">port for</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="t-y-scheme-Z-H-13.html#node_idx_422">time of last modification of</a><br>
+<a href="t-y-scheme-Z-H-13.html#node_idx_418"><code class=scheme><span class=variable>file-exists?</span></code></a><br>
+<a href="t-y-scheme-Z-H-13.html#node_idx_424"><code class=scheme><span class=variable>file-or-directory-modify-seconds</span></code></a>, 
+<a href="t-y-scheme-Z-H-20.html#node_idx_496">[2]</a><br>
+<a href="t-y-scheme-Z-H-2.html#node_idx_4">fixnum</a><br>
+<a href="t-y-scheme-Z-H-7.html#node_idx_278"><code class=scheme><span class=keyword>fluid-let</span></code></a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="t-y-scheme-Z-H-10.html#node_idx_398">macro for</a><br>
+<a href="t-y-scheme-Z-H-8.html#node_idx_318"><code class=scheme><span class=variable>for-each</span></code></a><br>
+<a href="t-y-scheme-Z-H-3.html#node_idx_16">form</a></p>
+<p>
+</p>
+<p></p>
+<p>
+<br>
+<a href="t-y-scheme-Z-H-20.html#node_idx_508">Gambit</a><br>
+<a href="t-y-scheme-Z-H-20.html#node_idx_510">Gauche</a><br>
+<a href="t-y-scheme-Z-H-10.html#node_idx_394"><code class=scheme><span class=variable>gensym</span></code></a><br>
+<a href="t-y-scheme-Z-H-9.html#node_idx_370"><code class=scheme><span class=variable>get-output-string</span></code></a><br>
+<a href="t-y-scheme-Z-H-13.html#node_idx_428"><code class=scheme><span class=variable>getenv</span></code></a><br>
+<a href="t-y-scheme-Z-H-20.html#node_idx_498">Guile</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="t-y-scheme-Z-H-23.html#node_idx_532">clock</a></p>
+<p>
+</p>
+<p></p>
+<p>
+<br>
+<a href="t-y-scheme-Z-H-4.html#node_idx_144">identifier</a><br>
+<a href="t-y-scheme-Z-H-6.html#node_idx_250"><code class=scheme><span class=keyword>if</span></code></a><br>
+inheritance
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="t-y-scheme-Z-H-14.html#node_idx_452">multiple</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="t-y-scheme-Z-H-14.html#node_idx_446">single</a><br>
+<a href="t-y-scheme-Z-H-20.html#node_idx_494">init file</a><br>
+instance, <em>see</em> object
+<br>
+<a href="t-y-scheme-Z-H-4.html#node_idx_218"><code class=scheme><span class=variable>integer-&gt;char</span></code></a><br>
+<a href="t-y-scheme-Z-H-4.html#node_idx_60"><code class=scheme><span class=variable>integer?</span></code></a><br>
+<a href="t-y-scheme-Z-H-8.html#node_idx_296">iteration</a></p>
+<p>
+</p>
+<p></p>
+<p>
+<br>
+<a href="t-y-scheme-Z-H-20.html#node_idx_516">Kawa</a></p>
+<p>
+</p>
+<p></p>
+<p>
+<br>
+<a href="t-y-scheme-Z-H-5.html#node_idx_240"><code class=scheme><span class=keyword>lambda</span></code></a><br>
+<a href="t-y-scheme-Z-H-7.html#node_idx_274"><code class=scheme><span class=keyword>let</span></code></a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="t-y-scheme-Z-H-8.html#node_idx_294">named</a><br>
+<a href="t-y-scheme-Z-H-7.html#node_idx_276"><code class=scheme><span class=keyword>let*</span></code></a><br>
+<a href="t-y-scheme-Z-H-8.html#node_idx_288"><code class=scheme><span class=keyword>letrec</span></code></a><br>
+<a href="t-y-scheme-Z-H-4.html#node_idx_186">list</a><br>
+<a href="t-y-scheme-Z-H-4.html#node_idx_202"><code class=scheme><span class=variable>list</span></code> (procedure)</a><br>
+<a href="t-y-scheme-Z-H-4.html#node_idx_222"><code class=scheme><span class=variable>list-&gt;string</span></code></a><br>
+<a href="t-y-scheme-Z-H-4.html#node_idx_226"><code class=scheme><span class=variable>list-&gt;vector</span></code></a><br>
+<a href="t-y-scheme-Z-H-8.html#node_idx_312"><code class=scheme><span class=variable>list-position</span></code></a><br>
+<a href="t-y-scheme-Z-H-4.html#node_idx_204"><code class=scheme><span class=variable>list-ref</span></code></a><br>
+<a href="t-y-scheme-Z-H-4.html#node_idx_206"><code class=scheme><span class=variable>list-tail</span></code></a><br>
+<a href="t-y-scheme-Z-H-4.html#node_idx_212"><code class=scheme><span class=variable>list?</span></code></a><br>
+<a href="t-y-scheme-Z-H-3.html#node_idx_28">listener</a><br>
+<a href="t-y-scheme-Z-H-3.html#node_idx_34"><code class=scheme><span class=variable>load</span></code></a>, <a href="t-y-scheme-Z-H-9.html#node_idx_374">[2]</a><br>
+<a href="t-y-scheme-Z-H-9.html#node_idx_376"><code class=scheme><span class=variable>load-relative</span></code></a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="t-y-scheme-Z-H-20.html#node_idx_522">in various dialects</a><br>
+<a href="t-y-scheme-Z-H-16.html#node_idx_468">logic programming</a><br>
+<a href="t-y-scheme-Z-H-8.html#node_idx_298">loop</a></p>
+<p>
+</p>
+<p></p>
+<p>
+<br>
+<a href="t-y-scheme-Z-H-10.html#node_idx_378">macro</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="t-y-scheme-Z-H-10.html#node_idx_392">avoiding variable capture inside</a><br>
+<a href="t-y-scheme-Z-H-4.html#node_idx_172"><code class=scheme><span class=variable>make-string</span></code></a><br>
+<a href="t-y-scheme-Z-H-4.html#node_idx_182"><code class=scheme><span class=variable>make-vector</span></code></a><br>
+<a href="t-y-scheme-Z-H-8.html#node_idx_316"><code class=scheme><span class=variable>map</span></code></a><br>
+<a href="t-y-scheme-Z-H-4.html#node_idx_98"><code class=scheme><span class=variable>max</span></code></a><br>
+<a href="t-y-scheme-Z-H-14.html#node_idx_450">metaclass</a><br>
+method, <em>see</em> object
+<br>
+<a href="t-y-scheme-Z-H-4.html#node_idx_100"><code class=scheme><span class=variable>min</span></code></a><br>
+<a href="t-y-scheme-Z-H-20.html#node_idx_514">MIT Scheme</a><br>
+<a href="t-y-scheme-Z-H-14.html#node_idx_454">multiple inheritance</a><br>
+<a href="t-y-scheme-Z-H-3.html#node_idx_26">MzScheme</a>, <a href="t-y-scheme-Z-H-20.html#node_idx_492">[2]</a></p>
+<p>
+</p>
+<p></p>
+<p>
+<br>
+<a href="t-y-scheme-Z-H-8.html#node_idx_292">named <code class=scheme><span class=keyword>let</span></code></a><br>
+<a href="t-y-scheme-Z-H-3.html#node_idx_12"><code class=scheme><span class=variable>newline</span></code></a>, <a href="t-y-scheme-Z-H-9.html#node_idx_336">[2]</a><br>
+<a href="t-y-scheme-Z-H-16.html#node_idx_466">nondeterminism</a><br>
+<a href="t-y-scheme-Z-H-4.html#node_idx_54"><code class=scheme><span class=variable>not</span></code></a><br>
+<a href="t-y-scheme-Z-H-4.html#node_idx_210"><code class=scheme><span class=variable>null?</span></code></a><br>
+<a href="t-y-scheme-Z-H-4.html#node_idx_56">number</a><br>
+<a href="t-y-scheme-Z-H-4.html#node_idx_228"><code class=scheme><span class=variable>number-&gt;string</span></code></a><br>
+<a href="t-y-scheme-Z-H-4.html#node_idx_58"><code class=scheme><span class=variable>number?</span></code></a><br>
+<a href="t-y-scheme-Z-H-22.html#node_idx_526">numerical integration</a></p>
+<p>
+</p>
+<p></p>
+<p>
+<br>
+<a href="t-y-scheme-Z-H-4.html#node_idx_70"><code class=scheme><span class=selfeval>#o</span></code> (octal number)</a><br>
+<a href="t-y-scheme-Z-H-14.html#node_idx_432">object</a><br>
+<a href="t-y-scheme-Z-H-14.html#node_idx_430">object-oriented programming</a><br>
+<a href="t-y-scheme-Z-H-8.html#node_idx_286"><code class=scheme><span class=variable>odd?</span></code></a><br>
+<a href="t-y-scheme-Z-H-9.html#node_idx_350"><code class=scheme><span class=variable>open-input-file</span></code></a><br>
+<a href="t-y-scheme-Z-H-9.html#node_idx_366"><code class=scheme><span class=variable>open-input-string</span></code></a><br>
+<a href="t-y-scheme-Z-H-9.html#node_idx_352"><code class=scheme><span class=variable>open-output-file</span></code></a><br>
+<a href="t-y-scheme-Z-H-9.html#node_idx_368"><code class=scheme><span class=variable>open-output-string</span></code></a><br>
+<a href="t-y-scheme-Z-H-6.html#node_idx_266"><code class=scheme><span class=keyword>or</span></code></a></p>
+<p>
+</p>
+<p></p>
+<p>
+<br>
+<a href="t-y-scheme-Z-H-4.html#node_idx_208"><code class=scheme><span class=variable>pair?</span></code></a><br>
+<a href="t-y-scheme-Z-H-20.html#node_idx_512">Pocket Scheme</a><br>
+<a href="t-y-scheme-Z-H-4.html#node_idx_234">port</a>, <a href="t-y-scheme-Z-H-9.html#node_idx_320">[2]</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="t-y-scheme-Z-H-9.html#node_idx_338">for file</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="t-y-scheme-Z-H-9.html#node_idx_364">for string</a><br>
+<a href="t-y-scheme-Z-H-4.html#node_idx_232">procedure</a>, <a href="t-y-scheme-Z-H-5.html#node_idx_238">[2]</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="t-y-scheme-Z-H-5.html#node_idx_242">parameters</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="t-y-scheme-Z-H-8.html#node_idx_282">recursive</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="t-y-scheme-Z-H-8.html#node_idx_310">tail-recursive</a><br>
+<a href="t-y-scheme-Z-H-16.html#node_idx_472">puzzles</a></p>
+<p>
+</p>
+<p></p>
+<p>
+<br>
+<a href="t-y-scheme-Z-H-4.html#node_idx_148"><code class=scheme><span class=keyword>quote</span></code></a></p>
+<p>
+</p>
+<p></p>
+<p>
+<br>
+<a href="t-y-scheme-Z-H-2.html#node_idx_2">R5RS</a>, <a href="t-y-scheme-Z-H-20.html#node_idx_490">[2]</a><br>
+<a href="t-y-scheme-Z-H-4.html#node_idx_62"><code class=scheme><span class=variable>rational?</span></code></a><br>
+<a href="t-y-scheme-Z-H-9.html#node_idx_328"><code class=scheme><span class=variable>read</span></code></a><br>
+<a href="t-y-scheme-Z-H-9.html#node_idx_324"><code class=scheme><span class=variable>read-char</span></code></a><br>
+<a href="t-y-scheme-Z-H-3.html#node_idx_30">read-eval-print loop</a><br>
+<a href="t-y-scheme-Z-H-9.html#node_idx_326"><code class=scheme><span class=variable>read-line</span></code></a><br>
+<a href="t-y-scheme-Z-H-4.html#node_idx_64"><code class=scheme><span class=variable>real?</span></code></a><br>
+<a href="t-y-scheme-Z-H-8.html#node_idx_280">recursion</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="t-y-scheme-Z-H-8.html#node_idx_300">iteration as</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="t-y-scheme-Z-H-8.html#node_idx_290"><code class=scheme><span class=keyword>letrec</span></code></a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="t-y-scheme-Z-H-8.html#node_idx_304">tail</a><br>
+<a href="t-y-scheme-Z-H-8.html#node_idx_314"><code class=scheme><span class=variable>reverse!</span></code></a></p>
+<p>
+</p>
+<p></p>
+<p>
+<br>
+<a href="t-y-scheme-Z-H-4.html#node_idx_236">S-expression</a><br>
+<a href="t-y-scheme-Z-H-20.html#node_idx_518">SCM</a><br>
+<a href="t-y-scheme-Z-H-18.html#node_idx_484">script</a>, <a href="t-y-scheme-Z-H-20.html#node_idx_500">[2]</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="t-y-scheme-Z-H-19.html#node_idx_486">CGI</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="t-y-scheme-Z-H-21.html#node_idx_524">DOS</a><br>
+<a href="t-y-scheme-Z-H-4.html#node_idx_142">self-evaluation</a><br>
+<a href="t-y-scheme-Z-H-4.html#node_idx_160"><code class=scheme><span class=keyword>set!</span></code></a><br>
+<a href="t-y-scheme-Z-H-4.html#node_idx_194"><code class=scheme><span class=variable>set-car!</span></code></a><br>
+<a href="t-y-scheme-Z-H-4.html#node_idx_196"><code class=scheme><span class=variable>set-cdr!</span></code></a><br>
+<a href="t-y-scheme-Z-H-22.html#node_idx_528">Simpson's rule</a><br>
+slot, <em>see</em> object
+<br>
+<a href="t-y-scheme-Z-H-4.html#node_idx_108"><code class=scheme><span class=variable>sqrt</span></code></a><br>
+<a href="t-y-scheme-Z-H-9.html#node_idx_346">standard input</a><br>
+<a href="t-y-scheme-Z-H-3.html#node_idx_22">standard output</a>, <a href="t-y-scheme-Z-H-9.html#node_idx_348">[2]</a><br>
+<a href="t-y-scheme-Z-H-20.html#node_idx_520">STk</a><br>
+<a href="t-y-scheme-Z-H-4.html#node_idx_164">string</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="t-y-scheme-Z-H-9.html#node_idx_362">port for</a><br>
+<a href="t-y-scheme-Z-H-4.html#node_idx_166"><code class=scheme><span class=variable>string</span></code> (procedure)</a><br>
+<a href="t-y-scheme-Z-H-4.html#node_idx_220"><code class=scheme><span class=variable>string-&gt;list</span></code></a><br>
+<a href="t-y-scheme-Z-H-4.html#node_idx_230"><code class=scheme><span class=variable>string-&gt;number</span></code></a><br>
+<a href="t-y-scheme-Z-H-4.html#node_idx_170"><code class=scheme><span class=variable>string-append</span></code></a><br>
+<a href="t-y-scheme-Z-H-4.html#node_idx_168"><code class=scheme><span class=variable>string-ref</span></code></a><br>
+<a href="t-y-scheme-Z-H-4.html#node_idx_176"><code class=scheme><span class=variable>string-set!</span></code></a><br>
+<a href="t-y-scheme-Z-H-4.html#node_idx_174"><code class=scheme><span class=variable>string?</span></code></a><br>
+<a href="t-y-scheme-Z-H-11.html#node_idx_400">structure</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="t-y-scheme-Z-H-11.html#node_idx_404"><code class=scheme><span class=keyword>defstruct</span></code></a><br>
+<a href="t-y-scheme-Z-H-14.html#node_idx_442">subclass</a><br>
+<a href="t-y-scheme-Z-H-3.html#node_idx_18">subform</a><br>
+<a href="t-y-scheme-Z-H-14.html#node_idx_444">superclass</a><br>
+<a href="t-y-scheme-Z-H-4.html#node_idx_140">symbol</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="t-y-scheme-Z-H-4.html#node_idx_154">case-insensitivity</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="t-y-scheme-Z-H-10.html#node_idx_396">generated</a><br>
+<a href="t-y-scheme-Z-H-4.html#node_idx_152"><code class=scheme><span class=variable>symbol?</span></code></a><br>
+<a href="t-y-scheme-Z-H-13.html#node_idx_426"><code class=scheme><span class=variable>system</span></code></a></p>
+<p>
+</p>
+<p></p>
+<p>
+<br>
+<a href="t-y-scheme-Z-H-4.html#node_idx_46"><code class=scheme><span class=selfeval>#t</span></code></a><br>
+<a href="t-y-scheme-Z-H-12.html#node_idx_412">table</a><br>
+<a href="t-y-scheme-Z-H-8.html#node_idx_306">tail call</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="t-y-scheme-Z-H-8.html#node_idx_308">elimination of</a><br>
+<a href="t-y-scheme-Z-H-8.html#node_idx_302">tail recursion</a><br>
+<a href="t-y-scheme-Z-H-4.html#node_idx_50">truth</a></p>
+<p>
+</p>
+<p></p>
+<p>
+<br>
+<a href="t-y-scheme-Z-H-6.html#node_idx_256"><code class=scheme><span class=keyword>unless</span></code></a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="t-y-scheme-Z-H-10.html#node_idx_384">macro for</a></p>
+<p>
+</p>
+<p></p>
+<p>
+<br>
+<a href="t-y-scheme-Z-H-4.html#node_idx_146">variable</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="t-y-scheme-Z-H-4.html#node_idx_158">global</a>, <a href="t-y-scheme-Z-H-7.html#node_idx_272">[2]</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="t-y-scheme-Z-H-7.html#node_idx_268">lexical</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="t-y-scheme-Z-H-7.html#node_idx_270">local</a><br>
+<a href="t-y-scheme-Z-H-4.html#node_idx_178">vector</a><br>
+<a href="t-y-scheme-Z-H-4.html#node_idx_180"><code class=scheme><span class=variable>vector</span></code> (procedure)</a><br>
+<a href="t-y-scheme-Z-H-4.html#node_idx_224"><code class=scheme><span class=variable>vector-&gt;list</span></code></a></p>
+<p>
+</p>
+<p></p>
+<p>
+<br>
+<a href="t-y-scheme-Z-H-6.html#node_idx_254"><code class=scheme><span class=keyword>when</span></code></a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="t-y-scheme-Z-H-10.html#node_idx_382">macro for</a><br>
+<a href="t-y-scheme-Z-H-9.html#node_idx_332"><code class=scheme><span class=variable>write</span></code></a><br>
+<a href="t-y-scheme-Z-H-9.html#node_idx_330"><code class=scheme><span class=variable>write-char</span></code></a></p>
+<p>
+</p>
+<p></p>
+<p>
+<br>
+<a href="t-y-scheme-Z-H-4.html#node_idx_72"><code class=scheme><span class=selfeval>#x</span></code> (hexadecimal number)</a></p>
+<p>
+</p>
+<p></p>
+<p>
+<br>
+<a href="t-y-scheme-Z-H-2.html#node_idx_6">zen</a></p>
+<p>
+</p>
+
+<p>
+</p>
+<div align=right class=navigation><i>[Go to <span><a href="t-y-scheme.html">first</a>, <a href="t-y-scheme-Z-H-24.html">previous</a></span><span class=disable>, next</span> page<span>; &nbsp;&nbsp;</span><span><a href="t-y-scheme-Z-H-1.html#node_toc_start">contents</a></span><span class=disable><span>; &nbsp;&nbsp;</span>index</span>]</i></div><p></p>
+</body>
+</html>

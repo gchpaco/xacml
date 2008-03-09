@@ -1,0 +1,133 @@
+<!doctype html public "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!--
+
+Generated from mzlib.tex by tex2page, v 2004-09-11
+(running on MzScheme 209, unix), 
+(c) Dorai Sitaram, 
+http://www.ccs.neu.edu/~dorai/tex2page/tex2page-doc.html
+
+-->
+<head>
+<title>
+PLT MzLib: Libraries Manual
+</title>
+<link rel="stylesheet" type="text/css" href="mzlib-Z-S.css" title=default>
+<meta name=robots content="noindex,follow">
+</head>
+<body>
+<div align=right class=navigation><i>[Go to <span><a href="mzlib.html">first</a>, <a href="mzlib-Z-H-18.html">previous</a></span><span>, <a href="mzlib-Z-H-20.html">next</a></span> page<span>; &nbsp;&nbsp;</span><span><a href="mzlib.html#node_toc_start">contents</a></span><span><span>; &nbsp;&nbsp;</span><a href="mzlib-Z-H-42.html#node_index_start">index</a></span>]</i></div><p></p>
+<a name="node_chap_19"></a>
+<h1 class=chapter>
+<div class=chapterheading><a href="mzlib.html#node_toc_node_chap_19">Chapter 19</a></div><br>
+<a href="mzlib.html#node_toc_node_chap_19"><tt><strong>include.ss</strong></tt>: Textually Including Source</a></h1>
+<p><a name="node_idx_708"></a><a name="node_idx_710"></a></p>
+<p>
+
+<a name="node_kw_definitioninclude"></a><a name="node_idx_712"></a>
+</p>
+<p></p>
+<p>
+
+<code class=scheme>(<code class=scheme><span class=keyword>include</span></code> <code class=scheme><span class=variable>path-spec</span></code>)</code> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<small>S</small><small>Y</small><small>N</small><small>T</small><small>A</small><small>X</small>
+</p>
+<p>
+Inlines the syntax in the designated file in place of the
+<code class=scheme><span class=keyword>include</span></code> expression.</p>
+<p>
+The <code class=scheme><span class=variable>path-spec</span></code> can be any of the following:
+</p>
+<ul><p>
+</p>
+<li><p>a literal string that specifies a path to include (parsed
+according to the platform's conventions).</p>
+<p>
+</p>
+<li><p>a path construction of the
+form <code class=scheme>(<code class=scheme><span class=keyword>build-path</span></code> <code class=scheme><span class=variable>elem</span></code> <tt>&middot;&middot;&middot;</tt><sup>1</sup>)</code>,
+where <code class=scheme><span class=keyword>build-path</span></code> is <code class=scheme>module-identifier=?</code> either to
+the <code class=scheme>build-path</code> export from <code class=scheme>mzscheme</code> or to the
+top-level <code class=scheme>build-path</code>, and where each <code class=scheme><span class=variable>elem</span></code> is a path
+string, <code class=scheme><span class=keyword>up</span></code> (unquoted), or <code class=scheme><span class=keyword>same</span></code> (unquoted).
+The <code class=scheme><span class=variable>elem</span></code>s are combined in the same way as for
+the <code class=scheme>build-path</code> function (see section&nbsp;<a href="../mzscheme/mzscheme-Z-H-11.html#node_sec_11.3.1">11.3.1</a> in <a href="../mzscheme/mzscheme.html"><i>PLT MzScheme: Language Manual</i></a>) to obtain
+the path to include.</p>
+<p>
+</p>
+<li><p>a path construction of the
+form <code class=scheme>(<code class=scheme><span class=keyword>lib</span></code> <code class=scheme><span class=variable>file-string</span></code> <code class=scheme><span class=variable>collection-string</span></code> <tt>&middot;&middot;&middot;</tt>)</code>,
+where <code class=scheme><span class=keyword>lib</span></code> is free or refers to a top-level <code class=scheme>lib</code>
+variable.  The <code class=scheme><span class=variable>collection-string</span></code>s are passed
+to <code class=scheme>collection-path</code> to obtain a directory; if
+no <code class=scheme><span class=variable>collection-string</span></code>s are supplied, <code class=scheme><span class=selfeval>&quot;mzlib&quot;</span></code> is
+used. The <code class=scheme><span class=variable>file-string</span></code> is then appended to the directory
+using <code class=scheme>build-path</code> to obtain the path to include.</p>
+<p>
+</p>
+</ul><p></p>
+<p>
+If <code class=scheme><span class=variable>path-spec</span></code> specifies a relative path to include, the path is
+resolved relative to the source for the <code class=scheme><span class=keyword>include</span></code> expression, if
+that source is a complete path string. If the source is not a
+complete path string, then <code class=scheme><span class=variable>path-spec</span></code> is resolved relative to
+the current load relative directory if one is available, or to the
+current directory otherwise.</p>
+<p>
+The included syntax is given the lexical context of the <code class=scheme><span class=keyword>include</span></code>
+expression.</p>
+<p>
+
+<a name="node_kw_definitioninclude-at/relative-to"></a><a name="node_idx_714"></a>
+</p>
+<p></p>
+<p>
+
+<code class=scheme>(<code class=scheme><span class=keyword>include-at/relative-to</span></code> <code class=scheme><span class=variable>context source path-spec</span></code>)</code> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<small>S</small><small>Y</small><small>N</small><small>T</small><small>A</small><small>X</small>
+</p>
+<p>
+Like <code class=scheme><span class=keyword>include</span></code>, except that the lexical context of <code class=scheme><span class=variable>context</span></code>
+is used for the included syntax, and a relative <code class=scheme><span class=variable>path-spec</span></code> is
+resolved with respect to the source of <code class=scheme><span class=variable>source</span></code>. The <code class=scheme><span class=variable>context</span></code>
+and <code class=scheme><span class=variable>source</span></code> elements are otherwise discarded by expansion.</p>
+<p>
+
+<a name="node_kw_definitioninclude-at/relative-to/reader"></a><a name="node_idx_716"></a>
+</p>
+<p></p>
+<p>
+
+<code class=scheme>(<code class=scheme><span class=keyword>include-at/relative-to/reader</span></code> <code class=scheme><span class=variable>context source path-spec reader-expr</span></code>)</code> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<small>S</small><small>Y</small><small>N</small><small>T</small><small>A</small><small>X</small>
+</p>
+<p>
+Combines <code class=scheme><span class=keyword>include-at/relative-to</span></code> and <code class=scheme><span class=keyword>include/reader</span></code>.</p>
+<p>
+
+<a name="node_kw_definitioninclude/reader"></a><a name="node_idx_718"></a>
+</p>
+<p></p>
+<p>
+
+<code class=scheme>(<code class=scheme><span class=keyword>include/reader</span></code> <code class=scheme><span class=variable>path-spec reader-expr</span></code>)</code> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<small>S</small><small>Y</small><small>N</small><small>T</small><small>A</small><small>X</small>
+</p>
+<p>
+Like <code class=scheme><span class=keyword>include</span></code>, except that the procedure produced by the
+expression <code class=scheme><span class=variable>reader-expr</span></code> is used to read the included file,
+instead of <code class=scheme><code class=scheme>read-syntax</code></code>.</p>
+<p>
+The <code class=scheme><span class=variable>reader-expr</span></code> is evaluated at expansion time in the
+transformer environment. Since it serves as a replacement for
+<code class=scheme><code class=scheme>read-syntax</code></code>, the expression's value should be a procedure
+that consumes two inputs -- a string representing the source and an
+input port -- and produces a syntax object or <code class=scheme><code class=scheme>eof</code></code>. The
+procedure will be called repeatedly until it produces <code class=scheme><code class=scheme>eof</code></code>.</p>
+<p>
+The syntax objects returned by the procedure should have source
+location information, but usually no lexical context; any lexical
+context in the syntax objects will be ignored.</p>
+<p>
+</p>
+<p>
+</p>
+<div align=right class=navigation><i>[Go to <span><a href="mzlib.html">first</a>, <a href="mzlib-Z-H-18.html">previous</a></span><span>, <a href="mzlib-Z-H-20.html">next</a></span> page<span>; &nbsp;&nbsp;</span><span><a href="mzlib.html#node_toc_start">contents</a></span><span><span>; &nbsp;&nbsp;</span><a href="mzlib-Z-H-42.html#node_index_start">index</a></span>]</i></div><p></p>
+</body>
+</html>

@@ -1,0 +1,1505 @@
+<!doctype html public "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!--
+
+Generated from mzscheme.tex by tex2page, v 2004-09-11
+(running on MzScheme 209, unix), 
+(c) Dorai Sitaram, 
+http://www.ccs.neu.edu/~dorai/tex2page/tex2page-doc.html
+
+-->
+<head>
+<title>
+PLT MzScheme: Language Manual
+</title>
+<link rel="stylesheet" type="text/css" href="mzscheme-Z-S.css" title=default>
+<meta name=robots content="noindex,follow">
+</head>
+<body>
+<div align=right class=navigation><i>[Go to <span><a href="mzscheme.html">first</a>, <a href="mzscheme-Z-H-18.html">previous</a></span><span class=disable>, next</span> page<span>; &nbsp;&nbsp;</span><span><a href="mzscheme.html#node_toc_start">contents</a></span><span class=disable><span>; &nbsp;&nbsp;</span>index</span>]</i></div><p></p>
+<a name="node_chap_Temp_47"></a>
+<h1 class=chapter>
+<div class=chapterheading>&nbsp;</div><br>
+<a href="mzscheme.html#node_toc_node_chap_Temp_47">Index</a></h1>
+<p>
+<a name="node_index_start"></a></p>
+<p>
+<br>
+<a href="mzscheme-Z-H-11.html#node_idx_1782"><code class=scheme><span class=selfeval>'addon-dir</span></code></a><br>
+<a href="mzscheme-Z-H-7.html#node_idx_1198"><code class=scheme><span class=selfeval>'all</span></code></a><br>
+<a href="mzscheme-Z-H-6.html#node_idx_758"><code class=scheme><span class=selfeval>'already-exists</span></code></a><br>
+<a href="mzscheme-Z-H-11.html#node_idx_1602"><code class=scheme><span class=selfeval>'any</span></code></a><br>
+<a href="mzscheme-Z-H-11.html#node_idx_1604"><code class=scheme><span class=selfeval>'any-one</span></code></a><br>
+<a href="mzscheme-Z-H-11.html#node_idx_1492"><code class=scheme><span class=selfeval>'append</span></code></a><br>
+<a href="mzscheme-Z-H-11.html#node_idx_1474"><code class=scheme><span class=selfeval>'binary</span></code></a><br>
+<a href="mzscheme-Z-H-11.html#node_idx_1548"><code class=scheme><span class=selfeval>'block</span></code></a><br>
+<a href="mzscheme-Z-H-9.html#node_idx_1382"><code class=scheme><span class=selfeval>'client</span></code></a><br>
+<a href="mzscheme-Z-H-9.html#node_idx_1378"><code class=scheme><span class=selfeval>'delete</span></code></a><br>
+<a href="mzscheme-Z-H-12.html#node_idx_2230"><code class=scheme><span class=selfeval>'disappeared-binding</span></code></a>, 
+<a href="mzscheme-Z-H-12.html#node_idx_2258">[2]</a><br>
+<a href="mzscheme-Z-H-12.html#node_idx_2232"><code class=scheme><span class=selfeval>'disappeared-use</span></code></a>, 
+<a href="mzscheme-Z-H-12.html#node_idx_2260">[2]</a><br>
+<a href="mzscheme-Z-H-8.html#node_idx_1320"><code class=scheme><span class=selfeval>'empty</span></code></a><br>
+<a href="mzscheme-Z-H-3.html#node_idx_484"><code class=scheme><span class=selfeval>'equal</span></code></a>, <a href="mzscheme-Z-H-3.html#node_idx_490">[2]</a><br>
+<a href="mzscheme-Z-H-11.html#node_idx_1482"><code class=scheme><span class=selfeval>'error</span></code></a><br>
+<a href="mzscheme-Z-H-15.html#node_idx_2690"><code class=scheme><span class=selfeval>'exact</span></code></a><br>
+<a href="mzscheme-Z-H-11.html#node_idx_1786"><code class=scheme><span class=selfeval>'exec-file</span></code></a><br>
+<a href="mzscheme-Z-H-9.html#node_idx_1376"><code class=scheme><span class=selfeval>'execute</span></code></a>, 
+<a href="mzscheme-Z-H-11.html#node_idx_1838">[2]</a><br>
+<a href="mzscheme-Z-H-9.html#node_idx_1380"><code class=scheme><span class=selfeval>'exists</span></code></a><br>
+<a href="mzscheme-Z-H-11.html#node_idx_1764"><code class=scheme><span class=selfeval>'home-dir</span></code></a><br>
+<a href="mzscheme-Z-H-6.html#node_idx_756"><code class=scheme><span class=selfeval>'ill-formed-path</span></code></a><br>
+<a href="mzscheme-Z-H-6.html#node_idx_806"><code class=scheme><span class=selfeval>'inferred-name</span></code></a><br>
+<a href="mzscheme-Z-H-11.html#node_idx_1774"><code class=scheme><span class=selfeval>'init-dir</span></code></a><br>
+<a href="mzscheme-Z-H-11.html#node_idx_1776"><code class=scheme><span class=selfeval>'init-file</span></code></a><br>
+<a href="mzscheme-Z-H-8.html#node_idx_1318"><code class=scheme><span class=selfeval>'initial</span></code></a><br>
+<a href="mzscheme-Z-H-12.html#node_idx_2140"><code class=scheme><span class=selfeval>'lexical</span></code></a><br>
+<a href="mzscheme-Z-H-11.html#node_idx_1546"><code class=scheme><span class=selfeval>'line</span></code></a><br>
+<a href="mzscheme-Z-H-11.html#node_idx_1596"><code class=scheme><span class=selfeval>'linefeed</span></code></a><br>
+<a href="mzscheme-Z-H-15.html#node_idx_2760"><code class=scheme><span class=selfeval>'macos</span></code></a><br>
+<a href="mzscheme-Z-H-15.html#node_idx_2762"><code class=scheme><span class=selfeval>'macosx</span></code></a><br>
+<a href="mzscheme-Z-H-3.html#node_idx_452"><code class=scheme><span class=selfeval>'method-arity-error</span></code></a><br>
+<a href="mzscheme-Z-H-12.html#node_idx_2276"><code class=scheme><span class=selfeval>'module-direct-for-syntax-requires</span></code></a><br>
+<a href="mzscheme-Z-H-12.html#node_idx_2274"><code class=scheme><span class=selfeval>'module-direct-requires</span></code></a><br>
+<a href="mzscheme-Z-H-12.html#node_idx_2282"><code class=scheme><span class=selfeval>'module-indirect-provides</span></code></a><br>
+<a href="mzscheme-Z-H-12.html#node_idx_2284"><code class=scheme><span class=selfeval>'module-kernel-reprovide-hint</span></code></a><br>
+<a href="mzscheme-Z-H-12.html#node_idx_2286"><code class=scheme><span class=selfeval>'module-self-path-index</span></code></a><br>
+<a href="mzscheme-Z-H-12.html#node_idx_2280"><code class=scheme><span class=selfeval>'module-syntax-provides</span></code></a><br>
+<a href="mzscheme-Z-H-12.html#node_idx_2278"><code class=scheme><span class=selfeval>'module-variable-provides</span></code></a><br>
+<a href="mzscheme-Z-H-7.html#node_idx_1200"><code class=scheme><span class=selfeval>'none</span></code></a>, <a href="mzscheme-Z-H-11.html#node_idx_1544">[2]</a><br>
+<a href="mzscheme-Z-H-12.html#node_idx_2254"><code class=scheme><span class=selfeval>'origin</span></code></a><br>
+<a href="mzscheme-Z-H-15.html#node_idx_2764"><code class=scheme><span class=selfeval>'oskit</span></code></a><br>
+<a href="mzscheme-Z-H-11.html#node_idx_1766"><code class=scheme><span class=selfeval>'pref-dir</span></code></a><br>
+<a href="mzscheme-Z-H-11.html#node_idx_1768"><code class=scheme><span class=selfeval>'pref-file</span></code></a><br>
+<a href="mzscheme-Z-H-9.html#node_idx_1372"><code class=scheme><span class=selfeval>'read</span></code></a>, <a href="mzscheme-Z-H-11.html#node_idx_1834">[2]</a><br>
+<a href="mzscheme-Z-H-11.html#node_idx_1746"><code class=scheme><span class=selfeval>'relative</span></code></a><br>
+<a href="mzscheme-Z-H-11.html#node_idx_1486"><code class=scheme><span class=selfeval>'replace</span></code></a><br>
+<a href="mzscheme-Z-H-11.html#node_idx_1598"><code class=scheme><span class=selfeval>'return</span></code></a><br>
+<a href="mzscheme-Z-H-11.html#node_idx_1600"><code class=scheme><span class=selfeval>'return-linefeed</span></code></a><br>
+<a href="mzscheme-Z-H-15.html#node_idx_2700"><code class=scheme><span class=selfeval>'running</span></code></a><br>
+<a href="mzscheme-Z-H-11.html#node_idx_1718"><code class=scheme><span class=selfeval>'same</span></code></a>, <a href="mzscheme-Z-H-11.html#node_idx_1750">[2]</a>, 
+<a href="mzscheme-Z-H-11.html#node_idx_1754">[3]</a><br>
+<a href="mzscheme-Z-H-9.html#node_idx_1384"><code class=scheme><span class=selfeval>'server</span></code></a><br>
+<a href="mzscheme-Z-H-15.html#node_idx_2718"><code class=scheme><span class=selfeval>'sw_hide</span></code></a><br>
+<a href="mzscheme-Z-H-15.html#node_idx_2720"><code class=scheme><span class=selfeval>'sw_maximize</span></code></a><br>
+<a href="mzscheme-Z-H-15.html#node_idx_2722"><code class=scheme><span class=selfeval>'sw_minimize</span></code></a><br>
+<a href="mzscheme-Z-H-15.html#node_idx_2724"><code class=scheme><span class=selfeval>'sw_restore</span></code></a><br>
+<a href="mzscheme-Z-H-15.html#node_idx_2726"><code class=scheme><span class=selfeval>'sw_show</span></code></a><br>
+<a href="mzscheme-Z-H-15.html#node_idx_2728"><code class=scheme><span class=selfeval>'sw_showdefault</span></code></a><br>
+<a href="mzscheme-Z-H-15.html#node_idx_2730"><code class=scheme><span class=selfeval>'sw_showmaximized</span></code></a><br>
+<a href="mzscheme-Z-H-15.html#node_idx_2732"><code class=scheme><span class=selfeval>'sw_showminimized</span></code></a><br>
+<a href="mzscheme-Z-H-15.html#node_idx_2734"><code class=scheme><span class=selfeval>'sw_showminnoactive</span></code></a><br>
+<a href="mzscheme-Z-H-15.html#node_idx_2736"><code class=scheme><span class=selfeval>'sw_showna</span></code></a><br>
+<a href="mzscheme-Z-H-15.html#node_idx_2738"><code class=scheme><span class=selfeval>'sw_shownoactivate</span></code></a><br>
+<a href="mzscheme-Z-H-15.html#node_idx_2740"><code class=scheme><span class=selfeval>'sw_shownormal</span></code></a><br>
+<a href="mzscheme-Z-H-11.html#node_idx_1784"><code class=scheme><span class=selfeval>'sys-dir</span></code></a><br>
+<a href="mzscheme-Z-H-11.html#node_idx_1770"><code class=scheme><span class=selfeval>'temp-dir</span></code></a><br>
+<a href="mzscheme-Z-H-11.html#node_idx_1476"><code class=scheme><span class=selfeval>'text</span></code></a><br>
+<a href="mzscheme-Z-H-11.html#node_idx_1488"><code class=scheme><span class=selfeval>'truncate</span></code></a><br>
+<a href="mzscheme-Z-H-11.html#node_idx_1490"><code class=scheme><span class=selfeval>'truncate/replace</span></code></a><br>
+<a href="mzscheme-Z-H-15.html#node_idx_2756"><code class=scheme><span class=selfeval>'unix</span></code></a><br>
+<a href="mzscheme-Z-H-11.html#node_idx_1716"><code class=scheme><span class=selfeval>'up</span></code></a>, <a href="mzscheme-Z-H-11.html#node_idx_1748">[2]</a>, 
+<a href="mzscheme-Z-H-11.html#node_idx_1752">[3]</a><br>
+<a href="mzscheme-Z-H-11.html#node_idx_1494"><code class=scheme><span class=selfeval>'update</span></code></a><br>
+<a href="mzscheme-Z-H-3.html#node_idx_482"><code class=scheme><span class=selfeval>'weak</span></code></a><br>
+<a href="mzscheme-Z-H-15.html#node_idx_2758"><code class=scheme><span class=selfeval>'windows</span></code></a><br>
+<a href="mzscheme-Z-H-9.html#node_idx_1374"><code class=scheme><span class=selfeval>'write</span></code></a>, <a href="mzscheme-Z-H-11.html#node_idx_1836">[2]</a><br>
+<a href="mzscheme-Z-H-6.html#node_idx_760"><code class=scheme><span class=selfeval>'wrong-version</span></code></a>, 
+<a href="mzscheme-Z-H-14.html#node_idx_2610">[2]</a><br>
+<a href="mzscheme-Z-H-3.html#node_idx_148"><code class=scheme>+inf.0</code></a>, <a href="mzscheme-Z-H-3.html#node_idx_158">[2]</a><br>
+<a href="mzscheme-Z-H-3.html#node_idx_152"><code class=scheme>+nan.0</code></a><br>
+<a href="mzscheme-Z-H-14.html#node_idx_2458">,</a><br>
+<a href="mzscheme-Z-H-17.html#node_idx_2882">, <a href="mzscheme-Z-H-14.html#node_idx_2460">[2]</a><br>
+<tt>--</tt></a><br>
+<a href="mzscheme-Z-H-17.html#node_idx_2818"><tt>--Load</tt></a><br>
+<a href="mzscheme-Z-H-17.html#node_idx_2822"><tt>--Load-cd</tt></a><br>
+<a href="mzscheme-Z-H-17.html#node_idx_2826"><tt>--Require</tt></a><br>
+<a href="mzscheme-Z-H-17.html#node_idx_2850"><tt>--awk</tt></a><br>
+<a href="mzscheme-Z-H-17.html#node_idx_2874"><tt>--case-sens</tt></a><br>
+<a href="mzscheme-Z-H-17.html#node_idx_2802"><tt>--eval</tt></a><br>
+<a href="mzscheme-Z-H-17.html#node_idx_2894"><tt>--help</tt></a><br>
+<a href="mzscheme-Z-H-17.html#node_idx_2806"><tt>--load</tt></a><br>
+<a href="mzscheme-Z-H-17.html#node_idx_2810"><tt>--load-cd</tt></a><br>
+<a href="mzscheme-Z-H-17.html#node_idx_2856"><tt>--main</tt></a><br>
+<a href="mzscheme-Z-H-17.html#node_idx_2886"><tt>--mute-banner</tt></a><br>
+<a href="mzscheme-Z-H-17.html#node_idx_2830"><tt>--mzlib</tt></a><br>
+<a href="mzscheme-Z-H-17.html#node_idx_2870"><tt>--no-argv</tt></a><br>
+<a href="mzscheme-Z-H-17.html#node_idx_2866"><tt>--no-init-file</tt></a><br>
+<a href="mzscheme-Z-H-17.html#node_idx_2860"><tt>--no-lib-path</tt></a><br>
+<a href="mzscheme-Z-H-17.html#node_idx_2898"><tt>--persistent</tt></a><br>
+<a href="mzscheme-Z-H-17.html#node_idx_2814"><tt>--require</tt></a><br>
+<a href="mzscheme-Z-H-17.html#node_idx_2846"><tt>--require-script</tt></a><br>
+<a href="mzscheme-Z-H-14.html#node_idx_2624"><tt>--restore</tt></a>, <a href="mzscheme-Z-H-17.html#node_idx_2902">[2]</a><br>
+<a href="mzscheme-Z-H-17.html#node_idx_2838"><tt>--script</tt></a><br>
+<a href="mzscheme-Z-H-17.html#node_idx_2842"><tt>--script-cd</tt></a><br>
+<a href="mzscheme-Z-H-17.html#node_idx_2878"><tt>--set-undef</tt></a><br>
+<a href="mzscheme-Z-H-17.html#node_idx_2890"><tt>--version</tt></a><br>
+<a href="mzscheme-Z-H-17.html#node_idx_2868"><tt>-A</tt></a><br>
+<a href="mzscheme-Z-H-17.html#node_idx_2854"><tt>-C</tt></a><br>
+<a href="mzscheme-Z-H-17.html#node_idx_2820"><tt>-D</tt></a><br>
+<a href="mzscheme-Z-H-17.html#node_idx_2816"><tt>-F</tt></a><br>
+<a href="mzscheme-Z-H-17.html#node_idx_2832"><tt>-L</tt></a><br>
+<a href="mzscheme-Z-H-17.html#node_idx_2834"><tt>-M</tt></a><br>
+<a href="mzscheme-Z-H-17.html#node_idx_2900"><tt>-R</tt></a><br>
+<a href="mzscheme-Z-H-17.html#node_idx_2824"><tt>-T</tt></a><br>
+<a href="mzscheme-Z-H-17.html#node_idx_2808"><tt>-d</tt></a><br>
+<a href="mzscheme-Z-H-17.html#node_idx_2800"><tt>-e</tt></a><br>
+<a href="mzscheme-Z-H-17.html#node_idx_2804"><tt>-f</tt></a><br>
+<a href="mzscheme-Z-H-17.html#node_idx_2872"><tt>-g</tt></a><br>
+<a href="mzscheme-Z-H-17.html#node_idx_2892"><tt>-h</tt></a><br>
+<a href="mzscheme-Z-H-17.html#node_idx_2840"><tt>-i</tt></a><br>
+<a href="mzscheme-Z-H-3.html#node_idx_150"><code class=scheme>-inf.0</code></a><br>
+<a href="mzscheme-Z-H-17.html#node_idx_2852"><tt>-k</tt></a><br>
+<a href="mzscheme-Z-H-17.html#node_idx_2828"><tt>-l</tt></a><br>
+<a href="mzscheme-Z-H-17.html#node_idx_2884"><tt>-m</tt></a><br>
+<a href="mzscheme-Z-H-3.html#node_idx_154"><code class=scheme>-nan.0</code></a><br>
+<a href="mzscheme-Z-H-17.html#node_idx_2896"><tt>-p</tt></a><br>
+<a href="mzscheme-Z-H-17.html#node_idx_2864"><tt>-q</tt></a><br>
+<a href="mzscheme-Z-H-17.html#node_idx_2836"><tt>-r</tt></a><br>
+<a href="mzscheme-Z-H-17.html#node_idx_2876"><tt>-s</tt></a><br>
+<a href="mzscheme-Z-H-17.html#node_idx_2812"><tt>-t</tt></a><br>
+<a href="mzscheme-Z-H-17.html#node_idx_2844"><tt>-u</tt></a><br>
+<a href="mzscheme-Z-H-17.html#node_idx_2888"><tt>-v</tt></a><br>
+<a href="mzscheme-Z-H-17.html#node_idx_2848"><tt>-w</tt></a><br>
+<a href="mzscheme-Z-H-17.html#node_idx_2858"><tt>-x</tt></a><br>
+<a href="mzscheme-Z-H-14.html#node_idx_2454">.</a><br>
+<a href="mzscheme-Z-H-12.html#node_idx_2040"><code class=scheme>...</code></a><br>
+<a href="mzscheme-Z-H-11.html#node_idx_1778"><tt><strong>.mzschemerc</strong></tt></a><br>
+<a href="mzscheme-Z-H-2.html#node_idx_28"><code class=scheme>=&gt;</code></a><br>
+<a href="mzscheme-Z-H-7.html#node_idx_1072"><code class=scheme>[&nbsp;]</code></a><br>
+<a href="mzscheme-Z-H-14.html#node_idx_2516"><code class=scheme>#!</code></a>, <a href="mzscheme-Z-H-18.html#node_idx_2934">[2]</a><br>
+<a href="mzscheme-Z-H-14.html#node_idx_2386"><code class=scheme>#'</code></a><br>
+<a href="mzscheme-Z-H-14.html#node_idx_2390"><code class=scheme>#,</code></a><br>
+<a href="mzscheme-Z-H-14.html#node_idx_2392"><code class=scheme>#,</code></a><br>
+<a href="mzscheme-Z-H-14.html#node_idx_2400">#<tt><tt>\</tt></tt>backspace</a><br>
+<a href="mzscheme-Z-H-14.html#node_idx_2406">#<tt><tt>\</tt></tt>linefeed</a><br>
+<a href="mzscheme-Z-H-14.html#node_idx_2404">#<tt><tt>\</tt></tt>newline</a><br>
+<a href="mzscheme-Z-H-14.html#node_idx_2396">#<tt><tt>\</tt></tt>nul</a><br>
+<a href="mzscheme-Z-H-14.html#node_idx_2398">#<tt><tt>\</tt></tt>null</a><br>
+<a href="mzscheme-Z-H-14.html#node_idx_2410">#<tt><tt>\</tt></tt>page</a><br>
+<a href="mzscheme-Z-H-14.html#node_idx_2412">#<tt><tt>\</tt></tt>return</a><br>
+<a href="mzscheme-Z-H-14.html#node_idx_2416">#<tt><tt>\</tt></tt>rubout</a><br>
+<a href="mzscheme-Z-H-14.html#node_idx_2414">#<tt><tt>\</tt></tt>space</a><br>
+<a href="mzscheme-Z-H-14.html#node_idx_2402">#<tt><tt>\</tt></tt>tab</a><br>
+<a href="mzscheme-Z-H-14.html#node_idx_2408">#<tt><tt>\</tt></tt>vtab</a><br>
+<a href="mzscheme-Z-H-14.html#node_idx_2512"><code class=scheme>#;</code></a><br>
+<a href="mzscheme-Z-H-3.html#node_idx_114"><code class=scheme>#&lt;undefined&gt;</code></a><br>
+<a href="mzscheme-Z-H-3.html#node_idx_106"><code class=scheme>#&lt;void&gt;</code></a><br>
+<a href="mzscheme-Z-H-14.html#node_idx_2504"><code class=scheme>#%</code></a><br>
+<a href="mzscheme-Z-H-12.html#node_idx_2180"><code class=scheme><span class=keyword>#%app</span></code></a><br>
+<a href="mzscheme-Z-H-12.html#node_idx_2184"><code class=scheme><span class=keyword>#%datum</span></code></a><br>
+<a href="mzscheme-Z-H-12.html#node_idx_2186"><code class=scheme><span class=keyword>#%module-begin</span></code></a><br>
+<a href="mzscheme-Z-H-12.html#node_idx_2182"><code class=scheme><span class=keyword>#%top</span></code></a><br>
+<a href="mzscheme-Z-H-14.html#node_idx_2380"><code class=scheme>#&amp;amp;</code></a><br>
+<a href="mzscheme-Z-H-14.html#node_idx_2500"><code class=scheme>#<code class=scheme><span class=variable>n</span></code>=</code></a>, 
+<a href="mzscheme-Z-H-14.html#node_idx_2556">[2]</a><br>
+<a href="mzscheme-Z-H-14.html#node_idx_2502"><code class=scheme>#<code class=scheme><span class=variable>n</span></code>#</code></a>, 
+<a href="mzscheme-Z-H-14.html#node_idx_2558">[2]</a><br>
+<a href="mzscheme-Z-H-14.html#node_idx_2388"><code class=scheme>#`</code></a><br>
+<a href="mzscheme-Z-H-14.html#node_idx_2478"><code class=scheme>#ci</code></a><br>
+<a href="mzscheme-Z-H-14.html#node_idx_2476"><code class=scheme>#cs</code></a><br>
+<a href="mzscheme-Z-H-14.html#node_idx_2490"><code class=scheme>#hash</code></a><br>
+<a href="mzscheme-Z-H-14.html#node_idx_2492"><code class=scheme>#hasheq</code></a><br>
+<a href="mzscheme-Z-H-14.html#node_idx_2484"><code class=scheme>#rx</code></a><br>
+<a href="mzscheme-Z-H-14.html#node_idx_2506"><code class=scheme>#~</code></a><br>
+<a href="mzscheme-Z-H-14.html#node_idx_2422"><tt><tt>\</tt>a</tt></a><br>
+<a href="mzscheme-Z-H-14.html#node_idx_2424"><tt><tt>\</tt>b</tt></a><br>
+<a href="mzscheme-Z-H-14.html#node_idx_2436"><tt><tt>\</tt>e</tt></a><br>
+<a href="mzscheme-Z-H-14.html#node_idx_2432"><tt><tt>\</tt>f</tt></a><br>
+<a href="mzscheme-Z-H-14.html#node_idx_2428"><tt><tt>\</tt>n</tt></a><br>
+<a href="mzscheme-Z-H-14.html#node_idx_2438"><tt><tt>\</tt><code class=scheme><span class=variable>o</span></code></tt></a><br>
+<a href="mzscheme-Z-H-14.html#node_idx_2442"><tt><tt>\</tt><code class=scheme><span class=variable>ooo</span></code></tt></a><br>
+<a href="mzscheme-Z-H-14.html#node_idx_2440"><tt><tt>\</tt><code class=scheme><span class=variable>oo</span></code></tt></a><br>
+<a href="mzscheme-Z-H-14.html#node_idx_2434"><tt><tt>\</tt>r</tt></a><br>
+<a href="mzscheme-Z-H-14.html#node_idx_2426"><tt><tt>\</tt>t</tt></a><br>
+<a href="mzscheme-Z-H-14.html#node_idx_2430"><tt><tt>\</tt>v</tt></a><br>
+<a href="mzscheme-Z-H-14.html#node_idx_2446"><tt><tt>\</tt>x<code class=scheme><span class=variable>hh</span></code></tt></a><br>
+<a href="mzscheme-Z-H-14.html#node_idx_2444"><tt><tt>\</tt>x<code class=scheme><span class=variable>h</span></code></tt></a><br>
+<a href="mzscheme-Z-H-14.html#node_idx_2352"><tt><strong>_loader.so</strong></tt></a><br>
+<a href="mzscheme-Z-H-12.html#node_idx_2036"><code class=scheme><span class=keyword>syntax-rules</span></code> Extensions</a><br>
+<a href="mzscheme-Z-H-7.html#node_idx_1078"><code class=scheme>{&nbsp;}</code></a><br>
+<a href="mzscheme-Z-H-14.html#node_idx_2456">`</a><br>
+<a href="mzscheme-Z-H-14.html#node_idx_2470"><tt>\</tt></a></p>
+<p>
+</p>
+<p></p>
+<p>
+<br>
+<a href="mzscheme-Z-H-11.html#node_idx_1724"><code class=scheme>absolute-path?</code></a><br>
+<a href="mzscheme-Z-H-3.html#node_idx_172"><code class=scheme>add1</code></a><br>
+<a href="mzscheme-Z-H-7.html#node_idx_930">Additional Thread Utilities</a><br>
+<a href="mzscheme-Z-H-5.html#node_idx_652"><code class=scheme><span class=keyword>all-defined</span></code></a><br>
+<a href="mzscheme-Z-H-5.html#node_idx_654"><code class=scheme><span class=keyword>all-defined-except</span></code></a><br>
+<a href="mzscheme-Z-H-5.html#node_idx_636"><code class=scheme><span class=keyword>all-except</span></code></a>, <a href="mzscheme-Z-H-5.html#node_idx_638">[2]</a><br>
+<a href="mzscheme-Z-H-5.html#node_idx_648"><code class=scheme><span class=keyword>all-from</span></code></a><br>
+<a href="mzscheme-Z-H-5.html#node_idx_650"><code class=scheme><span class=keyword>all-from-except</span></code></a><br>
+<a href="mzscheme-Z-H-2.html#node_idx_38"><code class=scheme><span class=keyword>and</span></code></a><br>
+<a href="mzscheme-Z-H-2.html#node_idx_36">And and Or</a><br>
+<a href="mzscheme-Z-H-3.html#node_idx_122"><code class=scheme>andmap</code></a><br>
+<a href="mzscheme-Z-H-3.html#node_idx_386"><code class=scheme>append!</code></a><br>
+<a href="mzscheme-Z-H-7.html#node_idx_1212"><code class=scheme>argv</code></a>, <a href="mzscheme-Z-H-17.html#node_idx_2912">[2]</a><br>
+<a href="mzscheme-Z-H-3.html#node_idx_194"><code class=scheme>arithmetic-shift</code></a><br>
+<a href="mzscheme-Z-H-3.html#node_idx_464"><code class=scheme>arity</code></a>, <a href="mzscheme-Z-H-6.html#node_idx_752">[2]</a><br>
+<a href="mzscheme-Z-H-3.html#node_idx_446"><code class=scheme>arity-at-least-value</code></a><br>
+<a href="mzscheme-Z-H-3.html#node_idx_448"><code class=scheme>arity-at-least?</code></a><br>
+<a href="mzscheme-Z-H-3.html#node_idx_416"><code class=scheme>assoc</code></a><br>
+<a href="mzscheme-Z-H-3.html#node_idx_420"><code class=scheme>assq</code></a><br>
+<a href="mzscheme-Z-H-3.html#node_idx_418"><code class=scheme>assv</code></a></p>
+<p>
+</p>
+<p></p>
+<p>
+<br>
+<a href="mzscheme-Z-H-15.html#node_idx_2770"><code class=scheme>banner</code></a><br>
+<a href="mzscheme-Z-H-3.html#node_idx_98">Basic Data Extensions</a><br>
+<a href="mzscheme-Z-H-2.html#node_idx_12">Basic Syntax Extensions</a><br>
+<a href="mzscheme-Z-H-2.html#node_idx_46"><code class=scheme><span class=keyword>begin</span></code></a>, <a href="mzscheme-Z-H-2.html#node_idx_88">[2]</a><br>
+<a href="mzscheme-Z-H-2.html#node_idx_44"><code class=scheme><span class=keyword>begin0</span></code></a><br>
+<a href="mzscheme-Z-H-3.html#node_idx_132">bignum</a><br>
+<a href="mzscheme-Z-H-2.html#node_idx_56">Binding Forms</a><br>
+<a href="mzscheme-Z-H-12.html#node_idx_2166">Binding Multiple and Fluid Syntax Identifiers</a><br>
+<a href="mzscheme-Z-H-3.html#node_idx_184">bitwise operators</a><br>
+<a href="mzscheme-Z-H-3.html#node_idx_188"><code class=scheme>bitwise-and</code></a><br>
+<a href="mzscheme-Z-H-3.html#node_idx_186"><code class=scheme>bitwise-ior</code></a><br>
+<a href="mzscheme-Z-H-3.html#node_idx_192"><code class=scheme>bitwise-not</code></a><br>
+<a href="mzscheme-Z-H-3.html#node_idx_190"><code class=scheme>bitwise-xor</code></a><br>
+<a href="mzscheme-Z-H-3.html#node_idx_116">Booleans</a><br>
+<a href="mzscheme-Z-H-12.html#node_idx_2128"><code class=scheme>bound-identifier=?</code></a><br>
+<a href="mzscheme-Z-H-3.html#node_idx_428"><code class=scheme>box</code></a><br>
+<a href="mzscheme-Z-H-3.html#node_idx_430"><code class=scheme>box-immutable</code></a><br>
+<a href="mzscheme-Z-H-3.html#node_idx_436"><code class=scheme>box?</code></a><br>
+<a href="mzscheme-Z-H-3.html#node_idx_424">Boxes</a><br>
+<a href="mzscheme-Z-H-3.html#node_idx_426">boxes</a>, <a href="mzscheme-Z-H-7.html#node_idx_1080">[2]</a>, 
+<a href="mzscheme-Z-H-14.html#node_idx_2378">[3]</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="mzscheme-Z-H-7.html#node_idx_1108">printing</a>, <a href="mzscheme-Z-H-14.html#node_idx_2526">[2]</a><br>
+<a href="mzscheme-Z-H-7.html#node_idx_1236"><code class=scheme>break-enabled</code></a><br>
+<a href="mzscheme-Z-H-6.html#node_idx_872"><code class=scheme>break-thread</code></a>, 
+<a href="mzscheme-Z-H-7.html#node_idx_946">[2]</a><br>
+<a href="mzscheme-Z-H-6.html#node_idx_866">Breaks</a><br>
+breaks, <em>see</em>  threads, breaking
+<br>
+<a href="mzscheme-Z-H-12.html#node_idx_2032">Bruggeman, Carl</a><br>
+<a href="mzscheme-Z-H-11.html#node_idx_1714"><code class=scheme>build-path</code></a><br>
+<a href="mzscheme-Z-H-5.html#node_idx_706">Built-in Modules</a><br>
+<a href="mzscheme-Z-H-14.html#node_idx_2584">byte codes</a></p>
+<p>
+</p>
+<p></p>
+<p>
+<br>
+<a href="mzscheme-Z-H-7.html#node_idx_950"><code class=scheme>call-in-nested-thread</code></a><br>
+<a href="mzscheme-Z-H-6.html#node_idx_820"><code class=scheme>call-with-current-continuation</code></a>, 
+<a href="mzscheme-Z-H-6.html#node_idx_822">[2]</a><br>
+<a href="mzscheme-Z-H-6.html#node_idx_762"><code class=scheme>call-with-custodian</code></a><br>
+<a href="mzscheme-Z-H-6.html#node_idx_838"><code class=scheme>call-with-escape-continuation</code></a>, 
+<a href="mzscheme-Z-H-6.html#node_idx_840">[2]</a><br>
+<a href="mzscheme-Z-H-11.html#node_idx_1500"><code class=scheme>call-with-input-file</code></a><br>
+<a href="mzscheme-Z-H-11.html#node_idx_1504"><code class=scheme>call-with-output-file</code></a>, 
+<a href="mzscheme-Z-H-11.html#node_idx_1510">[2]</a><br>
+<a href="mzscheme-Z-H-6.html#node_idx_816"><code class=scheme>call/cc</code></a>, <a href="mzscheme-Z-H-6.html#node_idx_824">[2]</a><br>
+<a href="mzscheme-Z-H-6.html#node_idx_834"><code class=scheme>call/ec</code></a>, <a href="mzscheme-Z-H-6.html#node_idx_842">[2]</a><br>
+<a href="mzscheme-Z-H-7.html#node_idx_1064">case sensitivity</a><br>
+<a href="mzscheme-Z-H-2.html#node_idx_90">Case-Lambda</a><br>
+<a href="mzscheme-Z-H-2.html#node_idx_92"><code class=scheme><span class=keyword>case-lambda</span></code></a><br>
+<a href="mzscheme-Z-H-7.html#node_idx_998"><code class=scheme>channel-get</code></a><br>
+<a href="mzscheme-Z-H-7.html#node_idx_1002"><code class=scheme>channel-put</code></a><br>
+<a href="mzscheme-Z-H-7.html#node_idx_1000"><code class=scheme>channel-try-get</code></a><br>
+<a href="mzscheme-Z-H-7.html#node_idx_996"><code class=scheme>channel?</code></a><br>
+<a href="mzscheme-Z-H-7.html#node_idx_984">Channels</a><br>
+<a href="mzscheme-Z-H-3.html#node_idx_240"><code class=scheme>char-&gt;integer</code></a><br>
+<a href="mzscheme-Z-H-3.html#node_idx_248"><code class=scheme>char-&gt;latin-1-integer</code></a><br>
+<a href="mzscheme-Z-H-3.html#node_idx_278"><code class=scheme>char-alphabetic?</code></a><br>
+<a href="mzscheme-Z-H-3.html#node_idx_268"><code class=scheme>char-ci&lt;=?</code></a><br>
+<a href="mzscheme-Z-H-3.html#node_idx_266"><code class=scheme>char-ci&lt;?</code></a><br>
+<a href="mzscheme-Z-H-3.html#node_idx_264"><code class=scheme>char-ci=?</code></a><br>
+<a href="mzscheme-Z-H-3.html#node_idx_272"><code class=scheme>char-ci&gt;=?</code></a><br>
+<a href="mzscheme-Z-H-3.html#node_idx_270"><code class=scheme>char-ci&gt;?</code></a><br>
+<a href="mzscheme-Z-H-3.html#node_idx_286"><code class=scheme>char-downcase</code></a><br>
+<a href="mzscheme-Z-H-3.html#node_idx_300"><code class=scheme>char-locale-alphabetic?</code></a><br>
+<a href="mzscheme-Z-H-3.html#node_idx_294"><code class=scheme>char-locale-ci&lt;?</code></a><br>
+<a href="mzscheme-Z-H-3.html#node_idx_292"><code class=scheme>char-locale-ci=?</code></a><br>
+<a href="mzscheme-Z-H-3.html#node_idx_296"><code class=scheme>char-locale-ci&gt;?</code></a><br>
+<a href="mzscheme-Z-H-3.html#node_idx_310"><code class=scheme>char-locale-downcase</code></a><br>
+<a href="mzscheme-Z-H-3.html#node_idx_306"><code class=scheme>char-locale-lower-case?</code></a><br>
+<a href="mzscheme-Z-H-3.html#node_idx_302"><code class=scheme>char-locale-numeric?</code></a><br>
+<a href="mzscheme-Z-H-3.html#node_idx_308"><code class=scheme>char-locale-upcase</code></a><br>
+<a href="mzscheme-Z-H-3.html#node_idx_304"><code class=scheme>char-locale-upper-case?</code></a><br>
+<a href="mzscheme-Z-H-3.html#node_idx_298"><code class=scheme>char-locale-whitespace?</code></a><br>
+<a href="mzscheme-Z-H-3.html#node_idx_288"><code class=scheme>char-locale&lt;?</code></a><br>
+<a href="mzscheme-Z-H-3.html#node_idx_290"><code class=scheme>char-locale&gt;?</code></a><br>
+<a href="mzscheme-Z-H-3.html#node_idx_280"><code class=scheme>char-numeric?</code></a><br>
+<a href="mzscheme-Z-H-3.html#node_idx_284"><code class=scheme>char-upcase</code></a><br>
+<a href="mzscheme-Z-H-3.html#node_idx_282"><code class=scheme>char-upper-case?</code></a><br>
+<a href="mzscheme-Z-H-3.html#node_idx_276"><code class=scheme>char-whitespace?</code></a><br>
+<a href="mzscheme-Z-H-3.html#node_idx_258"><code class=scheme>char&lt;=?</code></a><br>
+<a href="mzscheme-Z-H-3.html#node_idx_256"><code class=scheme>char&lt;?</code></a><br>
+<a href="mzscheme-Z-H-3.html#node_idx_254"><code class=scheme>char=?</code></a><br>
+<a href="mzscheme-Z-H-3.html#node_idx_262"><code class=scheme>char&gt;=?</code></a><br>
+<a href="mzscheme-Z-H-3.html#node_idx_260"><code class=scheme>char&gt;?</code></a><br>
+<a href="mzscheme-Z-H-3.html#node_idx_236">Characters</a><br>
+<a href="mzscheme-Z-H-3.html#node_idx_238">characters</a>, <a href="mzscheme-Z-H-14.html#node_idx_2394">[2]</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="mzscheme-Z-H-14.html#node_idx_2540">printing</a><br>
+<a href="mzscheme-Z-H-12.html#node_idx_2228">Check Syntax</a>, <a href="mzscheme-Z-H-12.html#node_idx_2264">[2]</a><br>
+<a href="mzscheme-Z-H-12.html#node_idx_2136"><code class=scheme>check-duplicate-identifier</code></a><br>
+<a href="mzscheme-Z-H-7.html#node_idx_1292"><code class=scheme>check-parameter-procedure</code></a><br>
+<a href="mzscheme-Z-H-13.html#node_idx_2326"><code class=scheme>collect-garbage</code></a><br>
+<a href="mzscheme-Z-H-16.html#node_idx_2788"><code class=scheme>collection-path</code></a><br>
+<a href="mzscheme-Z-H-16.html#node_idx_2778">collections</a><br>
+<a href="mzscheme-Z-H-11.html#node_idx_1672">column numbers</a><br>
+<a href="mzscheme-Z-H-7.html#node_idx_1208">command-line arguments</a>, 
+<a href="mzscheme-Z-H-17.html#node_idx_2798">[2]</a><br>
+<a href="mzscheme-Z-H-14.html#node_idx_2508">comments</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="mzscheme-Z-H-14.html#node_idx_2510"><code class=scheme>comments
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;S-expression</code></a><br>
+<a href="mzscheme-Z-H-7.html#node_idx_958">communication</a>, <a href="mzscheme-Z-H-7.html#node_idx_988">[2]</a><br>
+<a href="mzscheme-Z-H-11.html#node_idx_1916">communications</a><br>
+<a href="mzscheme-Z-H-14.html#node_idx_2580">Compilation</a><br>
+<a href="mzscheme-Z-H-14.html#node_idx_2586"><code class=scheme>compile</code></a><br>
+<a href="mzscheme-Z-H-7.html#node_idx_1140"><code class=scheme>compile-allow-set!-undefined</code></a><br>
+<a href="mzscheme-Z-H-14.html#node_idx_2588"><code class=scheme>compile-syntax</code></a><br>
+<a href="mzscheme-Z-H-7.html#node_idx_1084">compiled code</a><br>
+<a href="mzscheme-Z-H-14.html#node_idx_2590"><code class=scheme>compiled-expression?</code></a><br>
+<a href="mzscheme-Z-H-12.html#node_idx_2288"><code class=scheme>compiled-module-expression?</code></a><br>
+<a href="mzscheme-Z-H-14.html#node_idx_2582">compiling</a><br>
+<a href="mzscheme-Z-H-11.html#node_idx_1728"><code class=scheme>complete-path?</code></a><br>
+<a href="mzscheme-Z-H-3.html#node_idx_138">complex</a><br>
+<a href="mzscheme-Z-H-3.html#node_idx_388">concatenate strings</a><br>
+<a href="mzscheme-Z-H-2.html#node_idx_24">Cond and Case</a><br>
+<a href="mzscheme-Z-H-3.html#node_idx_394"><code class=scheme>cons-immutable</code></a><br>
+<a href="mzscheme-Z-H-6.html#node_idx_854">Continuation Marks</a><br>
+<a href="mzscheme-Z-H-6.html#node_idx_862"><code class=scheme>continuation-mark-set-&gt;list</code></a><br>
+<a href="mzscheme-Z-H-6.html#node_idx_864"><code class=scheme>continuation-mark-set?</code></a><br>
+<a href="mzscheme-Z-H-6.html#node_idx_858"><code class=scheme>continuation-marks</code></a><br>
+<a href="mzscheme-Z-H-6.html#node_idx_810">Continuations</a><br>
+<a href="mzscheme-Z-H-6.html#node_idx_812">continuations</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="mzscheme-Z-H-6.html#node_idx_830">boundaries</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="mzscheme-Z-H-6.html#node_idx_828">boundary crossings</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="mzscheme-Z-H-6.html#node_idx_832">escape</a><br>
+<a href="mzscheme-Z-H-6.html#node_idx_814">control flow</a><br>
+<a href="mzscheme-Z-H-11.html#node_idx_1850"><code class=scheme>copy-file</code></a><br>
+<a href="mzscheme-Z-H-4.html#node_idx_534">Creating Subtypes</a><br>
+<a href="mzscheme-Z-H-7.html#node_idx_1074">curly braces</a><br>
+<a href="mzscheme-Z-H-7.html#node_idx_1134">current namespace</a><br>
+<a href="mzscheme-Z-H-7.html#node_idx_1210"><code class=scheme>current-command-line-arguments</code></a>, 
+<a href="mzscheme-Z-H-17.html#node_idx_2908">[2]</a><br>
+<a href="mzscheme-Z-H-6.html#node_idx_748"><code class=scheme>current-continuation-marks</code></a>, 
+<a href="mzscheme-Z-H-6.html#node_idx_860">[2]</a><br>
+<a href="mzscheme-Z-H-7.html#node_idx_1244"><code class=scheme>current-custodian</code></a>, 
+<a href="mzscheme-Z-H-9.html#node_idx_1392">[2]</a><br>
+<a href="mzscheme-Z-H-7.html#node_idx_1044"><code class=scheme>current-directory</code></a>, 
+<a href="mzscheme-Z-H-11.html#node_idx_1866">[2]</a><br>
+<a href="mzscheme-Z-H-11.html#node_idx_1868"><code class=scheme>current-drive</code></a><br>
+<a href="mzscheme-Z-H-7.html#node_idx_1054"><code class=scheme>current-error-port</code></a><br>
+<a href="mzscheme-Z-H-7.html#node_idx_1128"><code class=scheme>current-eval</code></a><br>
+<a href="mzscheme-Z-H-6.html#node_idx_732"><code class=scheme>current-exception-handler</code></a>, 
+<a href="mzscheme-Z-H-7.html#node_idx_1218">[2]</a><br>
+<a href="mzscheme-Z-H-15.html#node_idx_2676"><code class=scheme>current-gc-milliseconds</code></a><br>
+<a href="mzscheme-Z-H-15.html#node_idx_2672"><code class=scheme>current-inexact-milliseconds</code></a><br>
+<a href="mzscheme-Z-H-7.html#node_idx_1050"><code class=scheme>current-input-port</code></a>, 
+<a href="mzscheme-Z-H-11.html#node_idx_1466">[2]</a><br>
+<a href="mzscheme-Z-H-7.html#node_idx_1252"><code class=scheme>current-inspector</code></a><br>
+<a href="mzscheme-Z-H-7.html#node_idx_1206"><code class=scheme>current-library-collection-paths</code></a>, <a href="mzscheme-Z-H-16.html#node_idx_2782">[2]</a>, 
+<a href="mzscheme-Z-H-17.html#node_idx_2862">[3]</a>, <a href="mzscheme-Z-H-17.html#node_idx_2920">[4]</a><br>
+<a href="mzscheme-Z-H-7.html#node_idx_1146"><code class=scheme>current-load</code></a><br>
+<a href="mzscheme-Z-H-7.html#node_idx_1160"><code class=scheme>current-load-extension</code></a><br>
+<a href="mzscheme-Z-H-7.html#node_idx_1178"><code class=scheme>current-load-relative-directory</code></a>, <a href="mzscheme-Z-H-14.html#node_idx_2346">[2]</a>, 
+<a href="mzscheme-Z-H-14.html#node_idx_2604">[3]</a><br>
+<a href="mzscheme-Z-H-7.html#node_idx_1172"><code class=scheme>current-load/use-compiled</code></a><br>
+<a href="mzscheme-Z-H-7.html#node_idx_1278"><code class=scheme>current-locale</code></a><br>
+<a href="mzscheme-Z-H-13.html#node_idx_2328"><code class=scheme>current-memory-use</code></a><br>
+<a href="mzscheme-Z-H-3.html#node_idx_206"><code class=scheme>current-milliseconds</code></a>, 
+<a href="mzscheme-Z-H-15.html#node_idx_2670">[2]</a><br>
+<a href="mzscheme-Z-H-7.html#node_idx_1282"><code class=scheme>current-module-name-prefix</code></a><br>
+<a href="mzscheme-Z-H-7.html#node_idx_1280"><code class=scheme>current-module-name-resolver</code></a><br>
+<a href="mzscheme-Z-H-7.html#node_idx_1132"><code class=scheme>current-namespace</code></a><br>
+<a href="mzscheme-Z-H-7.html#node_idx_1052"><code class=scheme>current-output-port</code></a>, 
+<a href="mzscheme-Z-H-11.html#node_idx_1468">[2]</a><br>
+<a href="mzscheme-Z-H-7.html#node_idx_1136"><code class=scheme>current-print</code></a><br>
+<a href="mzscheme-Z-H-15.html#node_idx_2674"><code class=scheme>current-process-milliseconds</code></a><br>
+<a href="mzscheme-Z-H-7.html#node_idx_1122"><code class=scheme>current-prompt-read</code></a><br>
+<a href="mzscheme-Z-H-3.html#node_idx_200"><code class=scheme>current-pseudo-random-generator</code></a>, 
+<a href="mzscheme-Z-H-3.html#node_idx_202">[2]</a>, <a href="mzscheme-Z-H-7.html#node_idx_1264">[3]</a><br>
+<a href="mzscheme-Z-H-15.html#node_idx_2634"><code class=scheme>current-seconds</code></a>, 
+<a href="mzscheme-Z-H-15.html#node_idx_2638">[2]</a>, <a href="mzscheme-Z-H-15.html#node_idx_2664">[3]</a><br>
+<a href="mzscheme-Z-H-7.html#node_idx_1240"><code class=scheme>current-security-guard</code></a>, 
+<a href="mzscheme-Z-H-9.html#node_idx_1368">[2]</a><br>
+<a href="mzscheme-Z-H-7.html#node_idx_932"><code class=scheme>current-thread</code></a><br>
+<a href="mzscheme-Z-H-7.html#node_idx_1248"><code class=scheme>current-thread-group</code></a><br>
+<a href="mzscheme-Z-H-7.html#node_idx_1270"><code class=scheme>current-wait-pseudo-random-generator</code></a><br>
+<a href="mzscheme-Z-H-9.html#node_idx_1410"><code class=scheme>custodian-limit-memory</code></a><br>
+<a href="mzscheme-Z-H-9.html#node_idx_1402"><code class=scheme>custodian-managed-list</code></a><br>
+<a href="mzscheme-Z-H-9.html#node_idx_1406"><code class=scheme>custodian-require-memory</code></a><br>
+<a href="mzscheme-Z-H-9.html#node_idx_1398"><code class=scheme>custodian-shutdown-all</code></a><br>
+<a href="mzscheme-Z-H-9.html#node_idx_1400"><code class=scheme>custodian?</code></a><br>
+<a href="mzscheme-Z-H-9.html#node_idx_1388">Custodians</a><br>
+<a href="mzscheme-Z-H-7.html#node_idx_1242">custodians</a>, <a href="mzscheme-Z-H-9.html#node_idx_1390">[2]</a><br>
+<a href="mzscheme-Z-H-14.html#node_idx_2564">cycles</a></p>
+<p>
+</p>
+<p></p>
+<p>
+<br>
+<a href="mzscheme-Z-H-14.html#node_idx_2550">Data Sharing in Input and Output</a><br>
+<a href="mzscheme-Z-H-15.html#node_idx_2632">date</a><br>
+<a href="mzscheme-Z-H-15.html#node_idx_2642"><code class=scheme>date</code></a><br>
+<a href="mzscheme-Z-H-15.html#node_idx_2650"><code class=scheme>date-day</code></a><br>
+<a href="mzscheme-Z-H-15.html#node_idx_2660"><code class=scheme>date-dst?</code></a><br>
+<a href="mzscheme-Z-H-15.html#node_idx_2648"><code class=scheme>date-hour</code></a><br>
+<a href="mzscheme-Z-H-15.html#node_idx_2646"><code class=scheme>date-minute</code></a><br>
+<a href="mzscheme-Z-H-15.html#node_idx_2652"><code class=scheme>date-month</code></a><br>
+<a href="mzscheme-Z-H-15.html#node_idx_2644"><code class=scheme>date-second</code></a><br>
+<a href="mzscheme-Z-H-15.html#node_idx_2662"><code class=scheme>date-time-zone-offset</code></a><br>
+<a href="mzscheme-Z-H-15.html#node_idx_2656"><code class=scheme>date-week-day</code></a><br>
+<a href="mzscheme-Z-H-15.html#node_idx_2654"><code class=scheme>date-year</code></a><br>
+<a href="mzscheme-Z-H-15.html#node_idx_2658"><code class=scheme>date-year-day</code></a><br>
+<a href="mzscheme-Z-H-12.html#node_idx_2112"><code class=scheme>datum-&gt;syntax-object</code></a><br>
+<a href="mzscheme-Z-H-3.html#node_idx_140">decimal input</a><br>
+<a href="mzscheme-Z-H-2.html#node_idx_58"><code class=scheme><span class=keyword>define</span></code></a><br>
+<tt>define</tt>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="mzscheme-Z-H-2.html#node_idx_86">internal</a><br>
+<a href="mzscheme-Z-H-4.html#node_idx_528"><code class=scheme><span class=keyword>define-struct</span></code></a><br>
+<a href="mzscheme-Z-H-12.html#node_idx_2064"><code class=scheme><span class=keyword>define-syntax</span></code></a><br>
+<a href="mzscheme-Z-H-12.html#node_idx_2168"><code class=scheme><span class=keyword>define-syntaxes</span></code></a><br>
+<a href="mzscheme-Z-H-2.html#node_idx_64"><code class=scheme><span class=keyword>define-values</span></code></a><br>
+<a href="mzscheme-Z-H-4.html#node_idx_526">Defining Structure Types</a><br>
+<a href="mzscheme-Z-H-11.html#node_idx_1886"><code class=scheme>delete-directory</code></a><br>
+<a href="mzscheme-Z-H-11.html#node_idx_1812"><code class=scheme>delete-file</code></a><br>
+directories
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="mzscheme-Z-H-11.html#node_idx_1904">contents</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="mzscheme-Z-H-11.html#node_idx_1878">creating</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="mzscheme-Z-H-7.html#node_idx_1042">current</a>, <a href="mzscheme-Z-H-11.html#node_idx_1864">[2]</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="mzscheme-Z-H-11.html#node_idx_1896">dates</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="mzscheme-Z-H-11.html#node_idx_1884">deleting</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="mzscheme-Z-H-11.html#node_idx_1890">moving</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="mzscheme-Z-H-7.html#node_idx_1176">of currently loading file</a>, 
+<a href="mzscheme-Z-H-14.html#node_idx_2342">[2]</a>, <a href="mzscheme-Z-H-14.html#node_idx_2600">[3]</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;pathnames, <em>see</em>  pathnames
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="mzscheme-Z-H-11.html#node_idx_1900">permissions</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="mzscheme-Z-H-11.html#node_idx_1892">renaming</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="mzscheme-Z-H-11.html#node_idx_1908">root</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="mzscheme-Z-H-11.html#node_idx_1872">testing</a><br>
+<a href="mzscheme-Z-H-11.html#node_idx_1874"><code class=scheme>directory-exists?</code></a><br>
+<a href="mzscheme-Z-H-11.html#node_idx_1906"><code class=scheme>directory-list</code></a><br>
+<a href="mzscheme-Z-H-14.html#node_idx_2566"><code class=scheme>display</code></a><br>
+<a href="mzscheme-Z-H-3.html#node_idx_156">division by inexact zero</a><br>
+<a href="mzscheme-Z-H-13.html#node_idx_2330"><code class=scheme>dump-memory-stats</code></a><br>
+<a href="mzscheme-Z-H-6.html#node_idx_728">Dybvig, Kent</a>, <a href="mzscheme-Z-H-12.html#node_idx_2028">[2]</a><br>
+<a href="mzscheme-Z-H-14.html#node_idx_2598">Dynamic Extensions</a><br>
+<a href="mzscheme-Z-H-5.html#node_idx_682">Dynamic Module Access</a><br>
+<a href="mzscheme-Z-H-6.html#node_idx_850">Dynamic Wind</a><br>
+<a href="mzscheme-Z-H-5.html#node_idx_686"><code class=scheme>dynamic-require</code></a><br>
+<a href="mzscheme-Z-H-5.html#node_idx_690"><code class=scheme>dynamic-require-for-syntax</code></a><br>
+<a href="mzscheme-Z-H-6.html#node_idx_852"><code class=scheme>dynamic-wind</code></a></p>
+<p>
+</p>
+<p></p>
+<p>
+<br>
+<a href="mzscheme-Z-H-2.html#node_idx_26"><code class=scheme>else</code></a><br>
+<a href="mzscheme-Z-H-3.html#node_idx_506"><code class=scheme>en:application:type</code></a><br>
+environments
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="mzscheme-Z-H-12.html#node_idx_2034">top-level</a>, <a href="mzscheme-Z-H-12.html#node_idx_2148">[2]</a><br>
+<a href="mzscheme-Z-H-11.html#node_idx_1460"><code class=scheme>eof</code></a><br>
+<a href="mzscheme-Z-H-11.html#node_idx_1462"><code class=scheme>eof-object?</code></a><br>
+<a href="mzscheme-Z-H-3.html#node_idx_514"><code class=scheme>eq-hash-code</code></a><br>
+<a href="mzscheme-Z-H-3.html#node_idx_274"><code class=scheme>eq?</code></a>, <a href="mzscheme-Z-H-4.html#node_idx_594">[2]</a><br>
+<a href="mzscheme-Z-H-3.html#node_idx_516"><code class=scheme>equal-hash-code</code></a><br>
+<a href="mzscheme-Z-H-3.html#node_idx_118"><code class=scheme>equal?</code></a>, <a href="mzscheme-Z-H-3.html#node_idx_438">[2]</a>, 
+<a href="mzscheme-Z-H-4.html#node_idx_596">[3]</a><br>
+<a href="mzscheme-Z-H-3.html#node_idx_120"><code class=scheme>eqv?</code></a>, <a href="mzscheme-Z-H-3.html#node_idx_164">[2]</a>, 
+<a href="mzscheme-Z-H-4.html#node_idx_592">[3]</a><br>
+<a href="mzscheme-Z-H-6.html#node_idx_750"><code class=scheme>error</code></a>, <a href="mzscheme-Z-H-6.html#node_idx_774">[2]</a>, 
+<a href="mzscheme-Z-H-6.html#node_idx_778">[3]</a>, <a href="mzscheme-Z-H-6.html#node_idx_780">[4]</a>, 
+<a href="mzscheme-Z-H-6.html#node_idx_782">[5]</a><br>
+<a href="mzscheme-Z-H-7.html#node_idx_1226">error display  handler</a><br>
+<a href="mzscheme-Z-H-6.html#node_idx_880">Error Escape Handler</a><br>
+<a href="mzscheme-Z-H-6.html#node_idx_882">error escape handlers</a>, 
+<a href="mzscheme-Z-H-7.html#node_idx_894">[2]</a><br>
+<a href="mzscheme-Z-H-7.html#node_idx_1232">error value conversion handler</a><br>
+<a href="mzscheme-Z-H-7.html#node_idx_1224"><code class=scheme>error-display-handler</code></a><br>
+<a href="mzscheme-Z-H-6.html#node_idx_884"><code class=scheme>error-escape-handler</code></a>, 
+<a href="mzscheme-Z-H-7.html#node_idx_1222">[2]</a><br>
+<a href="mzscheme-Z-H-7.html#node_idx_1234"><code class=scheme>error-print-source-location</code></a><br>
+<a href="mzscheme-Z-H-7.html#node_idx_1228"><code class=scheme>error-print-width</code></a><br>
+<a href="mzscheme-Z-H-7.html#node_idx_1230"><code class=scheme>error-value-&gt;string-handler</code></a><br>
+<a href="mzscheme-Z-H-6.html#node_idx_770">Errors</a><br>
+<a href="mzscheme-Z-H-6.html#node_idx_742">errors</a>, <a href="mzscheme-Z-H-6.html#node_idx_772">[2]</a>, 
+<a href="mzscheme-Z-H-7.html#node_idx_1216">[3]</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="mzscheme-Z-H-6.html#node_idx_794">mismatch</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="mzscheme-Z-H-6.html#node_idx_800">syntax</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="mzscheme-Z-H-6.html#node_idx_784">type</a><br>
+<a href="mzscheme-Z-H-7.html#node_idx_1126"><code class=scheme>eval</code></a>, <a href="mzscheme-Z-H-14.html#node_idx_2336">[2]</a><br>
+<a href="mzscheme-Z-H-14.html#node_idx_2334">Eval and Load</a><br>
+<a href="mzscheme-Z-H-14.html#node_idx_2338"><code class=scheme>eval-syntax</code></a><br>
+<a href="mzscheme-Z-H-7.html#node_idx_1130">evaluation handler</a><br>
+<a href="mzscheme-Z-H-2.html#node_idx_14">Evaluation Order</a><br>
+<a href="mzscheme-Z-H-2.html#node_idx_16">evaluation order</a><br>
+<a href="mzscheme-Z-H-3.html#node_idx_160"><code class=scheme>even?</code></a><br>
+<a href="mzscheme-Z-H-7.html#node_idx_896">exception handlers</a><br>
+<a href="mzscheme-Z-H-6.html#node_idx_720">Exceptions</a><br>
+<a href="mzscheme-Z-H-6.html#node_idx_722">exceptions</a>, <a href="mzscheme-Z-H-7.html#node_idx_1214">[2]</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="mzscheme-Z-H-6.html#node_idx_740">primitive hierarchy</a><br>
+<a href="mzscheme-Z-H-6.html#node_idx_718">Exceptions and Control Flow</a><br>
+<a href="mzscheme-Z-H-17.html#node_idx_2916">Executable Name</a><br>
+<a href="mzscheme-Z-H-7.html#node_idx_1260"><code class=scheme>exit</code></a>, <a href="mzscheme-Z-H-14.html#node_idx_2366">[2]</a><br>
+<a href="mzscheme-Z-H-7.html#node_idx_1258">exit handler</a><br>
+<a href="mzscheme-Z-H-7.html#node_idx_1256"><code class=scheme>exit-handler</code></a><br>
+<a href="mzscheme-Z-H-14.html#node_idx_2364">Exiting</a><br>
+<a href="mzscheme-Z-H-7.html#node_idx_1254">exiting</a><br>
+<a href="mzscheme-Z-H-6.html#node_idx_744"><code class=scheme>exn</code></a><br>
+<a href="mzscheme-Z-H-2.html#node_idx_22"><code class=scheme>exn:application:arity</code></a>, 
+<a href="mzscheme-Z-H-3.html#node_idx_454">[2]</a>, <a href="mzscheme-Z-H-3.html#node_idx_456">[3]</a><br>
+<a href="mzscheme-Z-H-6.html#node_idx_848"><code class=scheme>exn:application:continuation</code></a><br>
+<a href="mzscheme-Z-H-11.html#node_idx_1666"><code class=scheme>exn:application:fprintf:mismatch</code></a><br>
+<a href="mzscheme-Z-H-3.html#node_idx_170"><code class=scheme>exn:application:mismatch</code></a>, 
+<a href="mzscheme-Z-H-3.html#node_idx_406">[2]</a>, <a href="mzscheme-Z-H-3.html#node_idx_414">[3]</a>, 
+<a href="mzscheme-Z-H-3.html#node_idx_422">[4]</a>, <a href="mzscheme-Z-H-3.html#node_idx_486">[5]</a>, 
+<a href="mzscheme-Z-H-3.html#node_idx_494">[6]</a>, <a href="mzscheme-Z-H-3.html#node_idx_502">[7]</a>, 
+<a href="mzscheme-Z-H-4.html#node_idx_542">[8]</a>, <a href="mzscheme-Z-H-4.html#node_idx_544">[9]</a>, 
+<a href="mzscheme-Z-H-4.html#node_idx_572">[10]</a>, <a href="mzscheme-Z-H-5.html#node_idx_688">[11]</a>, 
+<a href="mzscheme-Z-H-6.html#node_idx_792">[12]</a>, <a href="mzscheme-Z-H-6.html#node_idx_798">[13]</a>, 
+<a href="mzscheme-Z-H-7.html#node_idx_906">[14]</a>, <a href="mzscheme-Z-H-7.html#node_idx_916">[15]</a>, 
+<a href="mzscheme-Z-H-7.html#node_idx_966">[16]</a>, <a href="mzscheme-Z-H-8.html#node_idx_1354">[17]</a>, 
+<a href="mzscheme-Z-H-9.html#node_idx_1394">[18]</a>, <a href="mzscheme-Z-H-9.html#node_idx_1404">[19]</a>, 
+<a href="mzscheme-Z-H-11.html#node_idx_1512">[20]</a>, <a href="mzscheme-Z-H-11.html#node_idx_1556">[21]</a>, 
+<a href="mzscheme-Z-H-11.html#node_idx_1580">[22]</a>, <a href="mzscheme-Z-H-11.html#node_idx_1582">[23]</a>, 
+<a href="mzscheme-Z-H-11.html#node_idx_1584">[24]</a>, <a href="mzscheme-Z-H-11.html#node_idx_1590">[25]</a>, 
+<a href="mzscheme-Z-H-11.html#node_idx_1610">[26]</a>, <a href="mzscheme-Z-H-11.html#node_idx_1632">[27]</a>, 
+<a href="mzscheme-Z-H-11.html#node_idx_1642">[28]</a>, <a href="mzscheme-Z-H-11.html#node_idx_1652">[29]</a>, 
+<a href="mzscheme-Z-H-11.html#node_idx_1654">[30]</a>, <a href="mzscheme-Z-H-11.html#node_idx_1656">[31]</a>, 
+<a href="mzscheme-Z-H-11.html#node_idx_1658">[32]</a>, <a href="mzscheme-Z-H-11.html#node_idx_1668">[33]</a>, 
+<a href="mzscheme-Z-H-11.html#node_idx_1970">[34]</a>, <a href="mzscheme-Z-H-11.html#node_idx_1976">[35]</a>, 
+<a href="mzscheme-Z-H-11.html#node_idx_1996">[36]</a>, <a href="mzscheme-Z-H-12.html#node_idx_2210">[37]</a>, 
+<a href="mzscheme-Z-H-15.html#node_idx_2692">[38]</a><br>
+<a href="mzscheme-Z-H-3.html#node_idx_246"><code class=scheme>exn:application:type</code></a>, 
+<a href="mzscheme-Z-H-3.html#node_idx_252">[2]</a>, <a href="mzscheme-Z-H-3.html#node_idx_316">[3]</a>, 
+<a href="mzscheme-Z-H-3.html#node_idx_380">[4]</a>, <a href="mzscheme-Z-H-3.html#node_idx_440">[5]</a>, 
+<a href="mzscheme-Z-H-3.html#node_idx_498">[6]</a>, <a href="mzscheme-Z-H-4.html#node_idx_556">[7]</a>, 
+<a href="mzscheme-Z-H-6.html#node_idx_768">[8]</a>, <a href="mzscheme-Z-H-6.html#node_idx_788">[9]</a>, 
+<a href="mzscheme-Z-H-7.html#node_idx_1014">[10]</a>, <a href="mzscheme-Z-H-11.html#node_idx_1578">[11]</a>, 
+<a href="mzscheme-Z-H-11.html#node_idx_1664">[12]</a><br>
+<a href="mzscheme-Z-H-12.html#node_idx_2114"><code class=scheme>exn:application;mismatch</code></a><br>
+<a href="mzscheme-Z-H-6.html#node_idx_738"><code class=scheme>exn:break</code></a>, 
+<a href="mzscheme-Z-H-6.html#node_idx_874">[2]</a>, <a href="mzscheme-Z-H-6.html#node_idx_876">[3]</a>, 
+<a href="mzscheme-Z-H-6.html#node_idx_878">[4]</a>, <a href="mzscheme-Z-H-7.html#node_idx_980">[5]</a>, 
+<a href="mzscheme-Z-H-7.html#node_idx_1018">[6]</a>, <a href="mzscheme-Z-H-11.html#node_idx_1616">[7]</a>, 
+<a href="mzscheme-Z-H-11.html#node_idx_1648">[8]</a>, <a href="mzscheme-Z-H-11.html#node_idx_1932">[9]</a>, 
+<a href="mzscheme-Z-H-11.html#node_idx_1944">[10]</a>, <a href="mzscheme-Z-H-11.html#node_idx_1990">[11]</a>, 
+<a href="mzscheme-Z-H-11.html#node_idx_2002">[12]</a><br>
+<a href="mzscheme-Z-H-3.html#node_idx_324"><code class=scheme>exn:fail:contract</code></a><br>
+<a href="mzscheme-Z-H-7.html#node_idx_1046"><code class=scheme>exn:i/o:filesystem</code></a>, 
+<a href="mzscheme-Z-H-11.html#node_idx_1478">[2]</a>, <a href="mzscheme-Z-H-11.html#node_idx_1484">[3]</a>, 
+<a href="mzscheme-Z-H-11.html#node_idx_1496">[4]</a>, <a href="mzscheme-Z-H-11.html#node_idx_1712">[5]</a>, 
+<a href="mzscheme-Z-H-11.html#node_idx_1720">[6]</a>, <a href="mzscheme-Z-H-11.html#node_idx_1722">[7]</a>, 
+<a href="mzscheme-Z-H-11.html#node_idx_1732">[8]</a>, <a href="mzscheme-Z-H-11.html#node_idx_1740">[9]</a>, 
+<a href="mzscheme-Z-H-11.html#node_idx_1802">[10]</a>, <a href="mzscheme-Z-H-11.html#node_idx_1808">[11]</a>, 
+<a href="mzscheme-Z-H-11.html#node_idx_1814">[12]</a>, <a href="mzscheme-Z-H-11.html#node_idx_1822">[13]</a>, 
+<a href="mzscheme-Z-H-11.html#node_idx_1828">[14]</a>, <a href="mzscheme-Z-H-11.html#node_idx_1840">[15]</a>, 
+<a href="mzscheme-Z-H-11.html#node_idx_1846">[16]</a>, <a href="mzscheme-Z-H-11.html#node_idx_1852">[17]</a>, 
+<a href="mzscheme-Z-H-11.html#node_idx_1858">[18]</a>, <a href="mzscheme-Z-H-11.html#node_idx_1876">[19]</a>, 
+<a href="mzscheme-Z-H-11.html#node_idx_1882">[20]</a>, <a href="mzscheme-Z-H-11.html#node_idx_1888">[21]</a>, 
+<a href="mzscheme-Z-H-14.html#node_idx_2608">[22]</a>, <a href="mzscheme-Z-H-14.html#node_idx_2620">[23]</a>, 
+<a href="mzscheme-Z-H-16.html#node_idx_2790">[24]</a><br>
+<a href="mzscheme-Z-H-11.html#node_idx_1550"><code class=scheme>exn:i/o:port</code></a>, 
+<a href="mzscheme-Z-H-11.html#node_idx_1558">[2]</a>, <a href="mzscheme-Z-H-11.html#node_idx_1560">[3]</a>, 
+<a href="mzscheme-Z-H-11.html#node_idx_1568">[4]</a><br>
+<a href="mzscheme-Z-H-11.html#node_idx_1566"><code class=scheme>exn:i/o:port:closed</code></a><br>
+<a href="mzscheme-Z-H-11.html#node_idx_1924"><code class=scheme>exn:i/o:tcp</code></a>, 
+<a href="mzscheme-Z-H-11.html#node_idx_1928">[2]</a>, <a href="mzscheme-Z-H-11.html#node_idx_1936">[3]</a>, 
+<a href="mzscheme-Z-H-11.html#node_idx_1940">[4]</a>, <a href="mzscheme-Z-H-11.html#node_idx_1948">[5]</a>, 
+<a href="mzscheme-Z-H-11.html#node_idx_1956">[6]</a><br>
+<a href="mzscheme-Z-H-11.html#node_idx_1966"><code class=scheme>exn:i/o:udp</code></a>, 
+<a href="mzscheme-Z-H-11.html#node_idx_1972">[2]</a>, <a href="mzscheme-Z-H-11.html#node_idx_1978">[3]</a>, 
+<a href="mzscheme-Z-H-11.html#node_idx_1982">[4]</a>, <a href="mzscheme-Z-H-11.html#node_idx_2006">[5]</a><br>
+<a href="mzscheme-Z-H-7.html#node_idx_972"><code class=scheme>exn:misc</code></a>, 
+<a href="mzscheme-Z-H-14.html#node_idx_2622">[2]</a>, <a href="mzscheme-Z-H-15.html#node_idx_2694">[3]</a>, 
+<a href="mzscheme-Z-H-15.html#node_idx_2704">[4]</a>, <a href="mzscheme-Z-H-15.html#node_idx_2742">[5]</a><br>
+<a href="mzscheme-Z-H-3.html#node_idx_224"><code class=scheme>exn:misc:application</code></a>, 
+<a href="mzscheme-Z-H-3.html#node_idx_226">[2]</a>, <a href="mzscheme-Z-H-3.html#node_idx_232">[3]</a><br>
+<a href="mzscheme-Z-H-9.html#node_idx_1408"><code class=scheme>exn:misc:unsupported</code></a>, 
+<a href="mzscheme-Z-H-9.html#node_idx_1412">[2]</a>, <a href="mzscheme-Z-H-11.html#node_idx_1860">[3]</a>, 
+<a href="mzscheme-Z-H-11.html#node_idx_1870">[4]</a>, <a href="mzscheme-Z-H-14.html#node_idx_2616">[5]</a>, 
+<a href="mzscheme-Z-H-15.html#node_idx_2716">[6]</a><br>
+<a href="mzscheme-Z-H-5.html#node_idx_702"><code class=scheme>exn:module</code></a>, 
+<a href="mzscheme-Z-H-5.html#node_idx_704">[2]</a>, <a href="mzscheme-Z-H-5.html#node_idx_716">[3]</a><br>
+<a href="mzscheme-Z-H-14.html#node_idx_2376"><code class=scheme>exn:read</code></a>, 
+<a href="mzscheme-Z-H-14.html#node_idx_2384">[2]</a>, <a href="mzscheme-Z-H-14.html#node_idx_2418">[3]</a>, 
+<a href="mzscheme-Z-H-14.html#node_idx_2486">[4]</a>, <a href="mzscheme-Z-H-14.html#node_idx_2572">[5]</a>, 
+<a href="mzscheme-Z-H-14.html#node_idx_2574">[6]</a>, <a href="mzscheme-Z-H-14.html#node_idx_2576">[7]</a>, 
+<a href="mzscheme-Z-H-14.html#node_idx_2578">[8]</a><br>
+<a href="mzscheme-Z-H-14.html#node_idx_2518"><code class=scheme>exn:read:non-char</code></a><br>
+<a href="mzscheme-Z-H-11.html#node_idx_1586"><code class=scheme>exn:special-comment</code></a>, 
+<a href="mzscheme-Z-H-11.html#node_idx_1628">[2]</a><br>
+<a href="mzscheme-Z-H-6.html#node_idx_804"><code class=scheme>exn:syntax</code></a>, 
+<a href="mzscheme-Z-H-8.html#node_idx_1328">[2]</a>, <a href="mzscheme-Z-H-8.html#node_idx_1336">[3]</a>, 
+<a href="mzscheme-Z-H-12.html#node_idx_2060">[4]</a>, <a href="mzscheme-Z-H-12.html#node_idx_2070">[5]</a>, 
+<a href="mzscheme-Z-H-12.html#node_idx_2194">[6]</a><br>
+<a href="mzscheme-Z-H-7.html#node_idx_952"><code class=scheme>exn:thread</code></a><br>
+<a href="mzscheme-Z-H-6.html#node_idx_776"><code class=scheme>exn:user</code></a><br>
+<a href="mzscheme-Z-H-8.html#node_idx_1330"><code class=scheme>exn:variable</code></a>, 
+<a href="mzscheme-Z-H-8.html#node_idx_1332">[2]</a>, <a href="mzscheme-Z-H-8.html#node_idx_1334">[3]</a><br>
+<a href="mzscheme-Z-H-4.html#node_idx_578"><code class=scheme>exn;application:mismatch</code></a><br>
+<a href="mzscheme-Z-H-6.html#node_idx_746"><code class=scheme>exn?</code></a><br>
+<a href="mzscheme-Z-H-12.html#node_idx_2236"><code class=scheme>expand</code></a><br>
+<a href="mzscheme-Z-H-12.html#node_idx_2240"><code class=scheme>expand-once</code></a><br>
+<a href="mzscheme-Z-H-11.html#node_idx_1736"><code class=scheme>expand-path</code></a><br>
+<a href="mzscheme-Z-H-12.html#node_idx_2238"><code class=scheme>expand-syntax</code></a><br>
+<a href="mzscheme-Z-H-12.html#node_idx_2242"><code class=scheme>expand-syntax-once</code></a><br>
+<a href="mzscheme-Z-H-12.html#node_idx_2246"><code class=scheme>expand-syntax-to-top-form</code></a><br>
+<a href="mzscheme-Z-H-12.html#node_idx_2244"><code class=scheme>expand-to-top-form</code></a><br>
+<a href="mzscheme-Z-H-3.html#node_idx_142">exponential input</a><br>
+expressions
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="mzscheme-Z-H-14.html#node_idx_2554">shared structure</a></p>
+<p>
+</p>
+<p></p>
+<p>
+<br>
+<a href="mzscheme-Z-H-4.html#node_idx_522">fields</a><br>
+<a href="mzscheme-Z-H-5.html#node_idx_670"><code class=scheme><span class=keyword>file</span></code></a><br>
+<a href="mzscheme-Z-H-11.html#node_idx_1800"><code class=scheme>file-exists?</code></a><br>
+<a href="mzscheme-Z-H-11.html#node_idx_1826"><code class=scheme>file-or-directory-modify-seconds</code></a>, <a href="mzscheme-Z-H-11.html#node_idx_1898">[2]</a>, 
+<a href="mzscheme-Z-H-15.html#node_idx_2640">[3]</a>, <a href="mzscheme-Z-H-15.html#node_idx_2666">[4]</a><br>
+<a href="mzscheme-Z-H-11.html#node_idx_1832"><code class=scheme>file-or-directory-permissions</code></a>, 
+<a href="mzscheme-Z-H-11.html#node_idx_1902">[2]</a><br>
+<a href="mzscheme-Z-H-11.html#node_idx_1552"><code class=scheme>file-position</code></a>, 
+<a href="mzscheme-Z-H-11.html#node_idx_1554">[2]</a><br>
+<a href="mzscheme-Z-H-11.html#node_idx_1844"><code class=scheme>file-size</code></a><br>
+<a href="mzscheme-Z-H-11.html#node_idx_1542"><code class=scheme>file-stream-buffer-mode</code></a><br>
+<a href="mzscheme-Z-H-11.html#node_idx_1536"><code class=scheme>file-stream-port?</code></a><br>
+<a href="mzscheme-Z-H-11.html#node_idx_1534">files</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="mzscheme-Z-H-11.html#node_idx_1848">copying</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="mzscheme-Z-H-11.html#node_idx_1810">deleting</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="mzscheme-Z-H-14.html#node_idx_2340">loading</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="mzscheme-Z-H-11.html#node_idx_1824">modification dates</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="mzscheme-Z-H-11.html#node_idx_1816">moving</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;pathnames, <em>see</em>  pathnames
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="mzscheme-Z-H-11.html#node_idx_1830">permissions</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="mzscheme-Z-H-11.html#node_idx_1818">renaming</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="mzscheme-Z-H-11.html#node_idx_1842">sizes</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="mzscheme-Z-H-11.html#node_idx_1798">testing</a><br>
+<a href="mzscheme-Z-H-11.html#node_idx_1706">Filesystem Utilities</a><br>
+<a href="mzscheme-Z-H-11.html#node_idx_1910"><code class=scheme>filesystem-root-list</code></a><br>
+finalization, <em>see</em>  will executors
+<br>
+<a href="mzscheme-Z-H-11.html#node_idx_1756"><code class=scheme>find-executable-path</code></a><br>
+<a href="mzscheme-Z-H-16.html#node_idx_2784"><code class=scheme>find-library-collection-paths</code></a><br>
+<a href="mzscheme-Z-H-11.html#node_idx_1760"><code class=scheme>find-system-path</code></a>, 
+<a href="mzscheme-Z-H-17.html#node_idx_2910">[2]</a>, <a href="mzscheme-Z-H-17.html#node_idx_2922">[3]</a><br>
+<a href="mzscheme-Z-H-3.html#node_idx_130">fixnum</a><br>
+<a href="mzscheme-Z-H-17.html#node_idx_2906">Flag Conventions</a><br>
+<a href="mzscheme-Z-H-3.html#node_idx_228"><code class=scheme>floating-point-byte-string-&gt;real</code></a><br>
+<a href="mzscheme-Z-H-3.html#node_idx_136">flonum</a><br>
+<a href="mzscheme-Z-H-2.html#node_idx_84"><code class=scheme><span class=keyword>fluid-let</span></code></a><br>
+<a href="mzscheme-Z-H-12.html#node_idx_2176"><code class=scheme><span class=keyword>fluid-let-syntax</span></code></a><br>
+<a href="mzscheme-Z-H-11.html#node_idx_1538"><code class=scheme>flush-output</code></a><br>
+<a href="mzscheme-Z-H-3.html#node_idx_472"><code class=scheme>force</code></a><br>
+<a href="mzscheme-Z-H-2.html#node_idx_62">formals</a><br>
+<a href="mzscheme-Z-H-11.html#node_idx_1662"><code class=scheme>format</code></a><br>
+<a href="mzscheme-Z-H-11.html#node_idx_1650"><code class=scheme>fprintf</code></a><br>
+<a href="mzscheme-Z-H-3.html#node_idx_134">fraction</a><br>
+<a href="mzscheme-Z-H-12.html#node_idx_2130"><code class=scheme>free-identifier=?</code></a><br>
+<a href="mzscheme-Z-H-6.html#node_idx_724">Friedman, Dan</a></p>
+<p>
+</p>
+<p></p>
+<p>
+<br>
+<a href="mzscheme-Z-H-13.html#node_idx_2324">Garbage Collection</a><br>
+<a href="mzscheme-Z-H-12.html#node_idx_2122"><code class=scheme>generate-temporaries</code></a><br>
+<a href="mzscheme-Z-H-3.html#node_idx_370"><code class=scheme>gensym</code></a><br>
+<a href="mzscheme-Z-H-11.html#node_idx_1530"><code class=scheme>get-output-string</code></a><br>
+<a href="mzscheme-Z-H-15.html#node_idx_2746"><code class=scheme>getenv</code></a><br>
+<a href="mzscheme-Z-H-7.html#node_idx_1058">global port print  handler</a><br>
+<a href="mzscheme-Z-H-7.html#node_idx_1056"><code class=scheme>global-port-print-handler</code></a>, 
+<a href="mzscheme-Z-H-11.html#node_idx_1638">[2]</a>, <a href="mzscheme-Z-H-11.html#node_idx_1704">[3]</a><br>
+<a href="mzscheme-Z-H-14.html#node_idx_2498">graphs</a>, <a href="mzscheme-Z-H-14.html#node_idx_2552">[2]</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="mzscheme-Z-H-14.html#node_idx_2548">printing</a><br>
+guardians, <em>see</em>  will executors</p>
+<p>
+</p>
+<p></p>
+<p>
+<br>
+<a href="mzscheme-Z-H-3.html#node_idx_476">Hash Tables</a><br>
+<a href="mzscheme-Z-H-3.html#node_idx_478">hash tables</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="mzscheme-Z-H-14.html#node_idx_2488">constants</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="mzscheme-Z-H-7.html#node_idx_1116">printing</a>, <a href="mzscheme-Z-H-14.html#node_idx_2546">[2]</a><br>
+<a href="mzscheme-Z-H-3.html#node_idx_512"><code class=scheme>hash-table-count</code></a><br>
+<a href="mzscheme-Z-H-3.html#node_idx_510"><code class=scheme>hash-table-for-each</code></a><br>
+<a href="mzscheme-Z-H-3.html#node_idx_500"><code class=scheme>hash-table-get</code></a><br>
+<a href="mzscheme-Z-H-3.html#node_idx_508"><code class=scheme>hash-table-map</code></a><br>
+<a href="mzscheme-Z-H-3.html#node_idx_496"><code class=scheme>hash-table-put!</code></a><br>
+<a href="mzscheme-Z-H-3.html#node_idx_504"><code class=scheme>hash-table-remove!</code></a><br>
+<a href="mzscheme-Z-H-3.html#node_idx_492"><code class=scheme>hash-table?</code></a><br>
+<a href="mzscheme-Z-H-6.html#node_idx_726">Haynes, Chris</a><br>
+<a href="mzscheme-Z-H-2.html#node_idx_60">header</a><br>
+<a href="mzscheme-Z-H-12.html#node_idx_2030">Hieb, Rob</a><br>
+<a href="mzscheme-Z-H-11.html#node_idx_1790"><tt><strong>HOMEDRIVE</strong></tt></a><br>
+<a href="mzscheme-Z-H-11.html#node_idx_1792"><tt><strong>HOMEPATH</strong></tt></a></p>
+<p>
+</p>
+<p></p>
+<p>
+<br>
+<a href="mzscheme-Z-H-12.html#node_idx_2044">identifier macro</a>, 
+<a href="mzscheme-Z-H-12.html#node_idx_2198">[2]</a>, <a href="mzscheme-Z-H-12.html#node_idx_2204">[3]</a><br>
+<a href="mzscheme-Z-H-8.html#node_idx_1306">Identifier Resolution in Namespaces</a><br>
+<a href="mzscheme-Z-H-12.html#node_idx_2138"><code class=scheme>identifier-binding</code></a><br>
+<a href="mzscheme-Z-H-12.html#node_idx_2144"><code class=scheme>identifier-binding-export-position</code></a><br>
+<a href="mzscheme-Z-H-12.html#node_idx_2142"><code class=scheme>identifier-transformer-binding</code></a><br>
+<a href="mzscheme-Z-H-12.html#node_idx_2146"><code class=scheme>identifier-transformer-binding-export-position</code></a><br>
+<a href="mzscheme-Z-H-12.html#node_idx_2120"><code class=scheme>identifier?</code></a><br>
+<a href="mzscheme-Z-H-3.html#node_idx_400"><code class=scheme>immutable?</code></a><br>
+<a href="mzscheme-Z-H-3.html#node_idx_144">infinity</a><br>
+<a href="mzscheme-Z-H-14.html#node_idx_2452">infix</a><br>
+<a href="mzscheme-Z-H-16.html#node_idx_2780"><tt><strong>info.ss</strong></tt></a><br>
+<a href="mzscheme-Z-H-8.html#node_idx_1308">Initial Namespace</a><br>
+<a href="mzscheme-Z-H-7.html#node_idx_1220"><code class=scheme>initial-exception-handler</code></a><br>
+<a href="mzscheme-Z-H-17.html#node_idx_2918">Initialization</a><br>
+<a href="mzscheme-Z-H-11.html#node_idx_1564">inode</a><br>
+<a href="mzscheme-Z-H-11.html#node_idx_1454">Input and Output</a><br>
+<a href="mzscheme-Z-H-14.html#node_idx_2368">Input Parsing</a><br>
+input ports
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="mzscheme-Z-H-10.html#node_idx_1434">pattern matching</a><br>
+<a href="mzscheme-Z-H-4.html#node_idx_566"><code class=scheme>inspector?</code></a><br>
+<a href="mzscheme-Z-H-4.html#node_idx_562">inspectors</a>, <a href="mzscheme-Z-H-7.html#node_idx_1250">[2]</a><br>
+<a href="mzscheme-Z-H-3.html#node_idx_242"><code class=scheme>integer-&gt;char</code></a>, 
+<a href="mzscheme-Z-H-3.html#node_idx_244">[2]</a><br>
+<a href="mzscheme-Z-H-3.html#node_idx_222"><code class=scheme>integer-&gt;integer-byte-string</code></a><br>
+<a href="mzscheme-Z-H-3.html#node_idx_220"><code class=scheme>integer-byte-string-&gt;integer</code></a><br>
+<a href="mzscheme-Z-H-3.html#node_idx_178"><code class=scheme>integer-sqrt</code></a><br>
+<a href="mzscheme-Z-H-3.html#node_idx_180"><code class=scheme>integer-sqrt/remainder</code></a><br>
+<a href="mzscheme-Z-H-1.html#node_idx_2">Introduction</a></p>
+<p>
+</p>
+<p></p>
+<p>
+<br>
+<a href="mzscheme-Z-H-7.html#node_idx_914"><code class=scheme>kill-thread</code></a></p>
+<p>
+</p>
+<p></p>
+<p>
+<br>
+<a href="mzscheme-Z-H-3.html#node_idx_250"><code class=scheme>latin-1-integer-&gt;char</code></a><br>
+<a href="mzscheme-Z-H-2.html#node_idx_66"><code class=scheme><span class=keyword>let</span></code></a><br>
+<a href="mzscheme-Z-H-2.html#node_idx_68"><code class=scheme><span class=keyword>let*</span></code></a><br>
+<a href="mzscheme-Z-H-2.html#node_idx_76"><code class=scheme><span class=keyword>let*-values</span></code></a><br>
+<a href="mzscheme-Z-H-4.html#node_idx_532"><code class=scheme><span class=keyword>let-struct</span></code></a><br>
+<a href="mzscheme-Z-H-12.html#node_idx_2170"><code class=scheme><span class=keyword>let-syntaxes</span></code></a><br>
+<a href="mzscheme-Z-H-2.html#node_idx_74"><code class=scheme><span class=keyword>let-values</span></code></a><br>
+<a href="mzscheme-Z-H-6.html#node_idx_818"><code class=scheme><span class=keyword>let/cc</span></code></a>, <a href="mzscheme-Z-H-6.html#node_idx_826">[2]</a><br>
+<a href="mzscheme-Z-H-6.html#node_idx_836"><code class=scheme>let/ec</code></a><br>
+<a href="mzscheme-Z-H-6.html#node_idx_844"><code class=scheme><span class=keyword>let/ec</span></code></a><br>
+<a href="mzscheme-Z-H-2.html#node_idx_70"><code class=scheme><span class=keyword>letrec</span></code></a>, <a href="mzscheme-Z-H-2.html#node_idx_72">[2]</a><br>
+<a href="mzscheme-Z-H-12.html#node_idx_2172"><code class=scheme><span class=keyword>letrec-syntaxes</span></code></a><br>
+<a href="mzscheme-Z-H-12.html#node_idx_2174"><code class=scheme><span class=keyword>letrec-syntaxes+values</span></code></a><br>
+<a href="mzscheme-Z-H-2.html#node_idx_78"><code class=scheme><span class=keyword>letrec-values</span></code></a>, 
+<a href="mzscheme-Z-H-3.html#node_idx_112">[2]</a><br>
+<a href="mzscheme-Z-H-5.html#node_idx_672"><code class=scheme><span class=keyword>lib</span></code></a><br>
+<a href="mzscheme-Z-H-16.html#node_idx_2776">libraries</a><br>
+<a href="mzscheme-Z-H-16.html#node_idx_2774">Library Collections and MzLib</a><br>
+<a href="mzscheme-Z-H-11.html#node_idx_1670">line numbers</a><br>
+<a href="mzscheme-Z-H-11.html#node_idx_1806"><code class=scheme>link-exists?</code></a><br>
+links
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="mzscheme-Z-H-11.html#node_idx_1854">creating</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="mzscheme-Z-H-11.html#node_idx_1804">testing</a><br>
+<a href="mzscheme-Z-H-3.html#node_idx_392"><code class=scheme>list</code></a><br>
+<a href="mzscheme-Z-H-3.html#node_idx_390"><code class=scheme>list*</code></a><br>
+<a href="mzscheme-Z-H-3.html#node_idx_398"><code class=scheme>list*-immutable</code></a><br>
+<a href="mzscheme-Z-H-3.html#node_idx_396"><code class=scheme>list-immutable</code></a><br>
+<a href="mzscheme-Z-H-3.html#node_idx_402"><code class=scheme>list-ref</code></a><br>
+<a href="mzscheme-Z-H-3.html#node_idx_404"><code class=scheme>list-tail</code></a><br>
+<a href="mzscheme-Z-H-3.html#node_idx_378">Lists</a><br>
+<a href="mzscheme-Z-H-7.html#node_idx_1144"><code class=scheme>load</code></a>, <a href="mzscheme-Z-H-7.html#node_idx_1150">[2]</a>, 
+<a href="mzscheme-Z-H-7.html#node_idx_1180">[3]</a>, <a href="mzscheme-Z-H-14.html#node_idx_2344">[4]</a>, 
+<a href="mzscheme-Z-H-14.html#node_idx_2514">[5]</a><br>
+<a href="mzscheme-Z-H-7.html#node_idx_1162">load extension handler</a><br>
+<a href="mzscheme-Z-H-7.html#node_idx_1148">load handler</a><br>
+<a href="mzscheme-Z-H-7.html#node_idx_1158"><code class=scheme>load-extension</code></a>, 
+<a href="mzscheme-Z-H-7.html#node_idx_1164">[2]</a>, <a href="mzscheme-Z-H-7.html#node_idx_1186">[3]</a>, 
+<a href="mzscheme-Z-H-14.html#node_idx_2602">[4]</a><br>
+<a href="mzscheme-Z-H-7.html#node_idx_1152"><code class=scheme>load-relative</code></a>, 
+<a href="mzscheme-Z-H-7.html#node_idx_1166">[2]</a>, <a href="mzscheme-Z-H-7.html#node_idx_1182">[3]</a>, 
+<a href="mzscheme-Z-H-7.html#node_idx_1190">[4]</a>, <a href="mzscheme-Z-H-14.html#node_idx_2348">[5]</a><br>
+<a href="mzscheme-Z-H-7.html#node_idx_1188"><code class=scheme>load-relative-extension</code></a>, 
+<a href="mzscheme-Z-H-7.html#node_idx_1194">[2]</a>, <a href="mzscheme-Z-H-14.html#node_idx_2606">[3]</a><br>
+<a href="mzscheme-Z-H-7.html#node_idx_1156"><code class=scheme>load/cd</code></a>, 
+<a href="mzscheme-Z-H-14.html#node_idx_2354">[2]</a><br>
+<a href="mzscheme-Z-H-7.html#node_idx_1154"><code class=scheme>load/use-compiled</code></a>, 
+<a href="mzscheme-Z-H-7.html#node_idx_1168">[2]</a>, <a href="mzscheme-Z-H-7.html#node_idx_1170">[3]</a>, 
+<a href="mzscheme-Z-H-7.html#node_idx_1184">[4]</a>, <a href="mzscheme-Z-H-7.html#node_idx_1192">[5]</a>, 
+<a href="mzscheme-Z-H-14.html#node_idx_2350">[6]</a><br>
+<a href="mzscheme-Z-H-7.html#node_idx_1174">load/use-compiled handler</a><br>
+<a href="mzscheme-Z-H-7.html#node_idx_1202"><code class=scheme>load/used-compiled</code></a><br>
+<a href="mzscheme-Z-H-12.html#node_idx_2222"><code class=scheme>local-expand</code></a><br>
+<a href="mzscheme-Z-H-7.html#node_idx_1276">locales</a><br>
+logical operators, <em>see</em>  bitwise operators</p>
+<p>
+</p>
+<p></p>
+<p>
+<br>
+<a href="mzscheme-Z-H-12.html#node_idx_2188">Macro Expansion</a><br>
+macros, <em>see</em>  syntax
+<br>
+<a href="mzscheme-Z-H-7.html#node_idx_994"><code class=scheme>make-channel</code></a><br>
+<a href="mzscheme-Z-H-7.html#node_idx_1004"><code class=scheme>make-channel-put-waitable</code></a><br>
+<a href="mzscheme-Z-H-9.html#node_idx_1396"><code class=scheme>make-custodian</code></a><br>
+<a href="mzscheme-Z-H-11.html#node_idx_1576"><code class=scheme>make-custom-input-port</code></a><br>
+<a href="mzscheme-Z-H-11.html#node_idx_1588"><code class=scheme>make-custom-output-port</code></a><br>
+<a href="mzscheme-Z-H-11.html#node_idx_1880"><code class=scheme>make-directory</code></a><br>
+<a href="mzscheme-Z-H-11.html#node_idx_1856"><code class=scheme>make-file-or-directory-link</code></a><br>
+<a href="mzscheme-Z-H-7.html#node_idx_1024"><code class=scheme>make-guard-waitable</code></a><br>
+<a href="mzscheme-Z-H-3.html#node_idx_480"><code class=scheme>make-hash-table</code></a><br>
+<a href="mzscheme-Z-H-3.html#node_idx_488"><code class=scheme>make-immutable-hash-table</code></a><br>
+<a href="mzscheme-Z-H-11.html#node_idx_1572">make-input-port</a><br>
+<a href="mzscheme-Z-H-4.html#node_idx_564"><code class=scheme>make-inspector</code></a><br>
+<a href="mzscheme-Z-H-7.html#node_idx_1026"><code class=scheme>make-nack-guard-waitable</code></a><br>
+<a href="mzscheme-Z-H-8.html#node_idx_1316"><code class=scheme>make-namespace</code></a><br>
+<a href="mzscheme-Z-H-11.html#node_idx_1574">make-output-port</a><br>
+<a href="mzscheme-Z-H-7.html#node_idx_1284"><code class=scheme>make-parameter</code></a><br>
+<a href="mzscheme-Z-H-11.html#node_idx_1518"><code class=scheme>make-pipe</code></a><br>
+<a href="mzscheme-Z-H-7.html#node_idx_1028"><code class=scheme>make-poll-guard-waitable</code></a><br>
+<a href="mzscheme-Z-H-3.html#node_idx_204"><code class=scheme>make-pseudo-random-generator</code></a><br>
+<a href="mzscheme-Z-H-12.html#node_idx_2202"><code class=scheme>make-rename-transformer</code></a><br>
+<a href="mzscheme-Z-H-9.html#node_idx_1370"><code class=scheme>make-security-guard</code></a><br>
+<a href="mzscheme-Z-H-7.html#node_idx_964"><code class=scheme>make-semaphore</code></a><br>
+<a href="mzscheme-Z-H-7.html#node_idx_982"><code class=scheme>make-semaphore-peek</code></a><br>
+<a href="mzscheme-Z-H-12.html#node_idx_2196"><code class=scheme>make-set!-transformer</code></a><br>
+<a href="mzscheme-Z-H-3.html#node_idx_326"><code class=scheme>make-string</code></a><br>
+<a href="mzscheme-Z-H-4.html#node_idx_546"><code class=scheme>make-struct-field-accessor</code></a><br>
+<a href="mzscheme-Z-H-4.html#node_idx_548"><code class=scheme>make-struct-field-mutator</code></a><br>
+<a href="mzscheme-Z-H-4.html#node_idx_540"><code class=scheme>make-struct-type</code></a><br>
+<a href="mzscheme-Z-H-4.html#node_idx_554"><code class=scheme>make-struct-type-property</code></a><br>
+<a href="mzscheme-Z-H-12.html#node_idx_2226"><code class=scheme>make-syntax-introducer</code></a><br>
+<a href="mzscheme-Z-H-9.html#node_idx_1420"><code class=scheme>make-thread-group</code></a><br>
+<a href="mzscheme-Z-H-13.html#node_idx_2300"><code class=scheme>make-weak-box</code></a><br>
+<a href="mzscheme-Z-H-13.html#node_idx_2314"><code class=scheme>make-will-executor</code></a><br>
+<a href="mzscheme-Z-H-7.html#node_idx_1022"><code class=scheme>make-wrapped-waitable</code></a><br>
+<a href="mzscheme-Z-H-3.html#node_idx_408"><code class=scheme>member</code></a><br>
+<a href="mzscheme-Z-H-13.html#node_idx_2294">Memory Management</a><br>
+<a href="mzscheme-Z-H-3.html#node_idx_412"><code class=scheme>memq</code></a><br>
+<a href="mzscheme-Z-H-3.html#node_idx_410"><code class=scheme>memv</code></a><br>
+<a href="mzscheme-Z-H-5.html#node_idx_614"><code class=scheme><span class=keyword>module</span></code></a>, <a href="mzscheme-Z-H-6.html#node_idx_764">[2]</a><br>
+<a href="mzscheme-Z-H-5.html#node_idx_624">Module Bodies</a><br>
+<a href="mzscheme-Z-H-5.html#node_idx_618">Module Expansion and Execution</a><br>
+<a href="mzscheme-Z-H-5.html#node_idx_676">module name resolver</a><br>
+<a href="mzscheme-Z-H-12.html#node_idx_2266">module path index</a><br>
+<a href="mzscheme-Z-H-5.html#node_idx_662">Module Paths</a><br>
+<a href="mzscheme-Z-H-8.html#node_idx_1304">module registry</a><br>
+<a href="mzscheme-Z-H-8.html#node_idx_1358"><code class=scheme>module-&gt;namespace</code></a><br>
+<a href="mzscheme-Z-H-12.html#node_idx_2292"><code class=scheme>module-compiled-imports</code></a><br>
+<a href="mzscheme-Z-H-12.html#node_idx_2290"><code class=scheme>module-compiled-name</code></a><br>
+<a href="mzscheme-Z-H-12.html#node_idx_2132"><code class=scheme>module-identifier=?</code></a><br>
+<a href="mzscheme-Z-H-12.html#node_idx_2272"><code class=scheme>module-path-index-join</code></a><br>
+<a href="mzscheme-Z-H-12.html#node_idx_2270"><code class=scheme>module-path-index-split</code></a><br>
+<a href="mzscheme-Z-H-12.html#node_idx_2268"><code class=scheme>module-path-index?</code></a><br>
+<a href="mzscheme-Z-H-12.html#node_idx_2134"><code class=scheme>module-transformer-identifier=?</code></a><br>
+<a href="mzscheme-Z-H-5.html#node_idx_608">Modules</a><br>
+<a href="mzscheme-Z-H-5.html#node_idx_610">modules</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="mzscheme-Z-H-5.html#node_idx_626">body</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="mzscheme-Z-H-5.html#node_idx_708">built-in</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="mzscheme-Z-H-5.html#node_idx_680">compiling</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="mzscheme-Z-H-5.html#node_idx_684">dynamic imports</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="mzscheme-Z-H-5.html#node_idx_622">execution</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="mzscheme-Z-H-5.html#node_idx_620">expansion</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="mzscheme-Z-H-5.html#node_idx_630">exports</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="mzscheme-Z-H-12.html#node_idx_2158">for-syntax imports</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="mzscheme-Z-H-5.html#node_idx_628">imports</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="mzscheme-Z-H-5.html#node_idx_666">in files</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="mzscheme-Z-H-5.html#node_idx_668">libraries</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="mzscheme-Z-H-5.html#node_idx_658">macros</a>, <a href="mzscheme-Z-H-12.html#node_idx_2156">[2]</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="mzscheme-Z-H-5.html#node_idx_664">paths</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="mzscheme-Z-H-5.html#node_idx_712">pre-defined</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="mzscheme-Z-H-5.html#node_idx_710">predefined</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="mzscheme-Z-H-5.html#node_idx_694">re-declaring</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="mzscheme-Z-H-5.html#node_idx_696">re-defining</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="mzscheme-Z-H-5.html#node_idx_698">redeclaring</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="mzscheme-Z-H-5.html#node_idx_700">redefining</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="mzscheme-Z-H-5.html#node_idx_660">syntax</a><br>
+<a href="mzscheme-Z-H-5.html#node_idx_714">Modules and Load Handlers</a><br>
+<a href="mzscheme-Z-H-5.html#node_idx_656">Modules and Macros</a><br>
+<a href="mzscheme-Z-H-1.html#node_idx_6">MrEd, DrScheme, and <tt><strong>mzc</strong></tt></a><br>
+<a href="mzscheme-Z-H-2.html#node_idx_18">Multiple Return Values</a><br>
+<a href="mzscheme-Z-H-2.html#node_idx_20">multiple return values</a><br>
+<a href="mzscheme-Z-H-16.html#node_idx_2792">MzLib library</a><br>
+MzScheme
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="mzscheme-Z-H-1.html#node_idx_4">stand-alone</a>, <a href="mzscheme-Z-H-17.html#node_idx_2796">[2]</a><br>
+<a href="mzscheme-Z-H-5.html#node_idx_616"><code class=scheme>mzscheme</code></a><br>
+<a href="mzscheme-Z-H-1.html#node_idx_8">MzScheme3m</a><br>
+<a href="mzscheme-Z-H-11.html#node_idx_1780"><tt><strong>mzschemerc.ss</strong></tt></a></p>
+<p>
+</p>
+<p></p>
+<p>
+<br>
+<a href="mzscheme-Z-H-8.html#node_idx_1314">Namespace Utilities</a><br>
+<a href="mzscheme-Z-H-5.html#node_idx_678"><code class=scheme>namespace-attach-module</code></a>, 
+<a href="mzscheme-Z-H-8.html#node_idx_1352">[2]</a><br>
+<a href="mzscheme-Z-H-8.html#node_idx_1342"><code class=scheme>namespace-mapped-symbols</code></a><br>
+<a href="mzscheme-Z-H-8.html#node_idx_1356"><code class=scheme>namespace-module-registry</code></a><br>
+<a href="mzscheme-Z-H-8.html#node_idx_1344"><code class=scheme>namespace-require</code></a><br>
+<a href="mzscheme-Z-H-8.html#node_idx_1348"><code class=scheme>namespace-require/copy</code></a><br>
+<a href="mzscheme-Z-H-8.html#node_idx_1350"><code class=scheme>namespace-require/expansion-time</code></a><br>
+<a href="mzscheme-Z-H-8.html#node_idx_1338"><code class=scheme>namespace-set-variable-value!</code></a><br>
+<a href="mzscheme-Z-H-8.html#node_idx_1324"><code class=scheme>namespace-symbol-&gt;identifier</code></a><br>
+<a href="mzscheme-Z-H-8.html#node_idx_1360"><code class=scheme>namespace-syntax-introduce</code></a><br>
+<a href="mzscheme-Z-H-8.html#node_idx_1346"><code class=scheme>namespace-transformer-require</code></a><br>
+<a href="mzscheme-Z-H-8.html#node_idx_1340"><code class=scheme>namespace-undefine-variable!</code></a><br>
+<a href="mzscheme-Z-H-8.html#node_idx_1326"><code class=scheme>namespace-variable-value</code></a><br>
+<a href="mzscheme-Z-H-8.html#node_idx_1322"><code class=scheme>namespace?</code></a><br>
+<a href="mzscheme-Z-H-8.html#node_idx_1294">Namespaces</a><br>
+<a href="mzscheme-Z-H-8.html#node_idx_1298">namespaces</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="mzscheme-Z-H-8.html#node_idx_1310">initial</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="mzscheme-Z-H-8.html#node_idx_1312">initial environment</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="mzscheme-Z-H-12.html#node_idx_2150">initial transformer environment</a><br>
+<a href="mzscheme-Z-H-11.html#node_idx_1912">Networking</a><br>
+<a href="mzscheme-Z-H-11.html#node_idx_1914">networking</a><br>
+<a href="mzscheme-Z-H-11.html#node_idx_1742"><code class=scheme>normal-case-path</code></a><br>
+<a href="mzscheme-Z-H-3.html#node_idx_146">not-a-number</a><br>
+<a href="mzscheme-Z-H-6.html#node_idx_736"><code class=scheme>not-break-exn?</code></a><br>
+<a href="mzscheme-Z-H-1.html#node_idx_10">Notation</a><br>
+<a href="mzscheme-Z-H-3.html#node_idx_382"><code class=scheme>null</code></a><br>
+<a href="mzscheme-Z-H-8.html#node_idx_1302"><code class=scheme>null-environment</code></a><br>
+<a href="mzscheme-Z-H-3.html#node_idx_168"><code class=scheme>number-&gt;string</code></a><br>
+<a href="mzscheme-Z-H-3.html#node_idx_126">Numbers</a><br>
+<a href="mzscheme-Z-H-3.html#node_idx_128">numbers</a>, <a href="mzscheme-Z-H-14.html#node_idx_2448">[2]</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="mzscheme-Z-H-3.html#node_idx_214">big-endian</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="mzscheme-Z-H-3.html#node_idx_218">converting</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="mzscheme-Z-H-3.html#node_idx_212">floating-point</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="mzscheme-Z-H-3.html#node_idx_216">little-endian</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="mzscheme-Z-H-3.html#node_idx_210">machine representations</a></p>
+<p>
+</p>
+<p></p>
+<p>
+<br>
+<a href="mzscheme-Z-H-6.html#node_idx_808"><code class=scheme>object-name</code></a><br>
+<a href="mzscheme-Z-H-7.html#node_idx_1012"><code class=scheme>object-wait-multiple</code></a>, 
+<a href="mzscheme-Z-H-7.html#node_idx_1272">[2]</a><br>
+<a href="mzscheme-Z-H-7.html#node_idx_1016"><code class=scheme>object-wait-multiple/enable-break</code></a>, <a href="mzscheme-Z-H-7.html#node_idx_1274">[2]</a><br>
+<a href="mzscheme-Z-H-7.html#node_idx_1030"><code class=scheme>object-waitable?</code></a><br>
+<a href="mzscheme-Z-H-3.html#node_idx_162"><code class=scheme>odd?</code></a><br>
+<a href="mzscheme-Z-H-11.html#node_idx_1470"><code class=scheme>open-input-file</code></a><br>
+<a href="mzscheme-Z-H-11.html#node_idx_1498"><code class=scheme>open-input-output-file</code></a><br>
+<a href="mzscheme-Z-H-11.html#node_idx_1526"><code class=scheme>open-input-string</code></a><br>
+<a href="mzscheme-Z-H-11.html#node_idx_1472"><code class=scheme>open-output-file</code></a>, 
+<a href="mzscheme-Z-H-11.html#node_idx_1480">[2]</a><br>
+<a href="mzscheme-Z-H-11.html#node_idx_1528"><code class=scheme>open-output-string</code></a><br>
+<a href="mzscheme-Z-H-15.html#node_idx_2744">Operating System Environment Variables</a><br>
+<a href="mzscheme-Z-H-15.html#node_idx_2682">Operating System Processes</a><br>
+<a href="mzscheme-Z-H-2.html#node_idx_40"><code class=scheme><span class=keyword>or</span></code></a><br>
+<a href="mzscheme-Z-H-3.html#node_idx_124"><code class=scheme>ormap</code></a><br>
+<a href="mzscheme-Z-H-14.html#node_idx_2520">Output Printing</a></p>
+<p>
+</p>
+<p></p>
+<p>
+<br>
+<a href="mzscheme-Z-H-5.html#node_idx_612">packages</a><br>
+<a href="mzscheme-Z-H-7.html#node_idx_1036">parameter</a><br>
+<a href="mzscheme-Z-H-7.html#node_idx_1038">parameter procedure</a><br>
+<a href="mzscheme-Z-H-7.html#node_idx_1288"><code class=scheme>parameter-procedure=?</code></a><br>
+<a href="mzscheme-Z-H-7.html#node_idx_1286"><code class=scheme>parameter?</code></a><br>
+<a href="mzscheme-Z-H-7.html#node_idx_1290"><code class=scheme><span class=keyword>parameterize</span></code></a><br>
+<a href="mzscheme-Z-H-7.html#node_idx_1032">Parameters</a><br>
+<a href="mzscheme-Z-H-7.html#node_idx_1034">parameters</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="mzscheme-Z-H-7.html#node_idx_1040">built-in</a><br>
+<a href="mzscheme-Z-H-7.html#node_idx_1062">parsing</a><br>
+<a href="mzscheme-Z-H-11.html#node_idx_1758"><tt><strong>PATH</strong></tt></a><br>
+<a href="mzscheme-Z-H-11.html#node_idx_1730"><code class=scheme>path-&gt;complete-path</code></a><br>
+<a href="mzscheme-Z-H-11.html#node_idx_1794"><code class=scheme>path-list-string-&gt;path-list</code></a><br>
+<a href="mzscheme-Z-H-11.html#node_idx_1708">pathnames</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="mzscheme-Z-H-11.html#node_idx_1710">expansion</a><br>
+<a href="mzscheme-Z-H-10.html#node_idx_1430">pattern matching</a><br>
+<a href="mzscheme-Z-H-11.html#node_idx_1630"><code class=scheme>peek-char</code></a><br>
+<a href="mzscheme-Z-H-11.html#node_idx_1634"><code class=scheme>peek-char-or-special</code></a><br>
+<a href="mzscheme-Z-H-11.html#node_idx_1618"><code class=scheme>peek-string</code></a><br>
+<a href="mzscheme-Z-H-11.html#node_idx_1620"><code class=scheme>peek-string-avail!</code></a><br>
+<a href="mzscheme-Z-H-11.html#node_idx_1622"><code class=scheme>peek-string-avail!*</code></a><br>
+<a href="mzscheme-Z-H-11.html#node_idx_1624"><code class=scheme>peek-string-avail!/enable-break</code></a><br>
+<a href="mzscheme-Z-H-5.html#node_idx_674"><code class=scheme><span class=keyword>planet</span></code></a><br>
+<a href="mzscheme-Z-H-11.html#node_idx_1762">platform</a>, <a href="mzscheme-Z-H-15.html#node_idx_2752">[2]</a><br>
+<a href="mzscheme-Z-H-16.html#node_idx_2786">PLTCOLLECTS</a><br>
+poll, <em>see</em>  <tt>object-wait-multiple</tt>
+<br>
+<a href="mzscheme-Z-H-11.html#node_idx_1686">port display handler</a><br>
+<a href="mzscheme-Z-H-11.html#node_idx_1674">port positions</a><br>
+<a href="mzscheme-Z-H-11.html#node_idx_1690">port print  handler</a><br>
+<a href="mzscheme-Z-H-11.html#node_idx_1680">port read handler</a><br>
+<a href="mzscheme-Z-H-11.html#node_idx_1688">port write handler</a><br>
+<a href="mzscheme-Z-H-11.html#node_idx_1676"><code class=scheme>port-count-lines!</code></a><br>
+<a href="mzscheme-Z-H-7.html#node_idx_1060"><code class=scheme>port-count-lines-enabled</code></a><br>
+<a href="mzscheme-Z-H-11.html#node_idx_1692"><code class=scheme>port-display-handler</code></a>, 
+<a href="mzscheme-Z-H-11.html#node_idx_1694">[2]</a><br>
+<a href="mzscheme-Z-H-11.html#node_idx_1562"><code class=scheme>port-file-identity</code></a><br>
+<a href="mzscheme-Z-H-11.html#node_idx_1678"><code class=scheme>port-next-location</code></a><br>
+<a href="mzscheme-Z-H-11.html#node_idx_1700"><code class=scheme>port-print-handler</code></a>, 
+<a href="mzscheme-Z-H-11.html#node_idx_1702">[2]</a><br>
+<a href="mzscheme-Z-H-11.html#node_idx_1682"><code class=scheme>port-read-handler</code></a>, 
+<a href="mzscheme-Z-H-11.html#node_idx_1684">[2]</a><br>
+<a href="mzscheme-Z-H-11.html#node_idx_1696"><code class=scheme>port-write-handler</code></a>, 
+<a href="mzscheme-Z-H-11.html#node_idx_1698">[2]</a><br>
+<a href="mzscheme-Z-H-11.html#node_idx_1464"><code class=scheme>port?</code></a><br>
+<a href="mzscheme-Z-H-11.html#node_idx_1456">Ports</a><br>
+<a href="mzscheme-Z-H-7.html#node_idx_898">ports</a>, <a href="mzscheme-Z-H-7.html#node_idx_1048">[2]</a>, 
+<a href="mzscheme-Z-H-11.html#node_idx_1458">[3]</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="mzscheme-Z-H-11.html#node_idx_1570">custom</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="mzscheme-Z-H-11.html#node_idx_1532">file</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="mzscheme-Z-H-11.html#node_idx_1540">flushing</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="mzscheme-Z-H-11.html#node_idx_1520">string</a><br>
+<a href="mzscheme-Z-H-5.html#node_idx_634"><code class=scheme><span class=keyword>prefix</span></code></a><br>
+<a href="mzscheme-Z-H-3.html#node_idx_458">primitive procedure</a><br>
+<a href="mzscheme-Z-H-3.html#node_idx_466"><code class=scheme>primitive-closure?</code></a><br>
+<a href="mzscheme-Z-H-3.html#node_idx_462"><code class=scheme>primitive-result-arity</code></a><br>
+<a href="mzscheme-Z-H-3.html#node_idx_460"><code class=scheme>primitive?</code></a><br>
+<a href="mzscheme-Z-H-11.html#node_idx_1636"><code class=scheme>print</code></a>, <a href="mzscheme-Z-H-14.html#node_idx_2570">[2]</a><br>
+<a href="mzscheme-Z-H-7.html#node_idx_1138">print handler</a><br>
+<a href="mzscheme-Z-H-7.html#node_idx_1110"><code class=scheme>print-box</code></a>, 
+<a href="mzscheme-Z-H-14.html#node_idx_2528">[2]</a><br>
+<a href="mzscheme-Z-H-7.html#node_idx_1102"><code class=scheme>print-graph</code></a>, 
+<a href="mzscheme-Z-H-14.html#node_idx_2562">[2]</a><br>
+<a href="mzscheme-Z-H-7.html#node_idx_1118"><code class=scheme>print-hash-table</code></a><br>
+<a href="mzscheme-Z-H-7.html#node_idx_1106"><code class=scheme>print-struct</code></a>, 
+<a href="mzscheme-Z-H-14.html#node_idx_2532">[2]</a><br>
+<a href="mzscheme-Z-H-7.html#node_idx_1114"><code class=scheme>print-vector-length</code></a>, 
+<a href="mzscheme-Z-H-14.html#node_idx_2524">[2]</a><br>
+<a href="mzscheme-Z-H-11.html#node_idx_1660"><code class=scheme>printf</code></a><br>
+<a href="mzscheme-Z-H-7.html#node_idx_1100">printing sharing</a><br>
+<a href="mzscheme-Z-H-2.html#node_idx_96">Procedure Application</a><br>
+<a href="mzscheme-Z-H-3.html#node_idx_444"><code class=scheme>procedure-arity</code></a><br>
+<a href="mzscheme-Z-H-3.html#node_idx_450"><code class=scheme>procedure-arity-includes?</code></a><br>
+<a href="mzscheme-Z-H-2.html#node_idx_94"><code class=scheme>procedure?</code></a>, 
+<a href="mzscheme-Z-H-4.html#node_idx_576">[2]</a><br>
+<a href="mzscheme-Z-H-3.html#node_idx_442">Procedures</a><br>
+<a href="mzscheme-Z-H-15.html#node_idx_2684">processes</a><br>
+<a href="mzscheme-Z-H-11.html#node_idx_1788"><code class=scheme>program</code></a>, 
+<a href="mzscheme-Z-H-17.html#node_idx_2914">[2]</a><br>
+<a href="mzscheme-Z-H-3.html#node_idx_474"><code class=scheme>promise?</code></a><br>
+<a href="mzscheme-Z-H-3.html#node_idx_468">Promises</a><br>
+<a href="mzscheme-Z-H-3.html#node_idx_470">promises</a><br>
+<a href="mzscheme-Z-H-7.html#node_idx_1124">prompt read handler</a><br>
+<a href="mzscheme-Z-H-5.html#node_idx_642"><code class=scheme><span class=keyword>provide</span></code></a><br>
+<a href="mzscheme-Z-H-3.html#node_idx_208"><code class=scheme>pseudo-random-generator?</code></a><br>
+<a href="mzscheme-Z-H-15.html#node_idx_2748"><code class=scheme>putenv</code></a></p>
+<p>
+</p>
+<p></p>
+<p>
+<br>
+<a href="mzscheme-Z-H-2.html#node_idx_50"><code class=scheme><span class=keyword>quasiquote</span></code></a><br>
+<a href="mzscheme-Z-H-12.html#node_idx_2072"><code class=scheme><span class=keyword>quasisyntax</span></code></a><br>
+<a href="mzscheme-Z-H-12.html#node_idx_2080"><code class=scheme><span class=keyword>quasisyntax/loc</span></code></a><br>
+<a href="mzscheme-Z-H-2.html#node_idx_48">Quote and Quasiquote</a><br>
+<a href="mzscheme-Z-H-12.html#node_idx_2054"><code class=scheme><span class=keyword>quote-syntax</span></code></a><br>
+<a href="mzscheme-Z-H-3.html#node_idx_176"><code class=scheme>quotient/remainder</code></a></p>
+<p>
+</p>
+<p></p>
+<p>
+<br>
+<a href="mzscheme-Z-H-6.html#node_idx_730"><code class=scheme>raise</code></a><br>
+<a href="mzscheme-Z-H-6.html#node_idx_796"><code class=scheme>raise-mismatch-error</code></a><br>
+<a href="mzscheme-Z-H-6.html#node_idx_802"><code class=scheme>raise-syntax-error</code></a><br>
+<a href="mzscheme-Z-H-6.html#node_idx_786"><code class=scheme>raise-type-error</code></a>, 
+<a href="mzscheme-Z-H-6.html#node_idx_790">[2]</a><br>
+<a href="mzscheme-Z-H-3.html#node_idx_196"><code class=scheme>random</code></a>, <a href="mzscheme-Z-H-7.html#node_idx_1266">[2]</a><br>
+<a href="mzscheme-Z-H-7.html#node_idx_1262">random numbers</a><br>
+<a href="mzscheme-Z-H-3.html#node_idx_198"><code class=scheme>random-seed</code></a>, 
+<a href="mzscheme-Z-H-7.html#node_idx_1268">[2]</a><br>
+<a href="mzscheme-Z-H-5.html#node_idx_692">Re-declaring Modules</a><br>
+<a href="mzscheme-Z-H-6.html#node_idx_754"><code class=scheme>read</code></a><br>
+<a href="mzscheme-Z-H-7.html#node_idx_1090"><code class=scheme>read-accept-bar-quote</code></a>, 
+<a href="mzscheme-Z-H-14.html#node_idx_2472">[2]</a>, <a href="mzscheme-Z-H-14.html#node_idx_2538">[3]</a><br>
+<a href="mzscheme-Z-H-7.html#node_idx_1082"><code class=scheme>read-accept-box</code></a>, 
+<a href="mzscheme-Z-H-14.html#node_idx_2382">[2]</a><br>
+<a href="mzscheme-Z-H-7.html#node_idx_1086"><code class=scheme>read-accept-compiled</code></a>, 
+<a href="mzscheme-Z-H-14.html#node_idx_2596">[2]</a><br>
+<a href="mzscheme-Z-H-7.html#node_idx_1096"><code class=scheme>read-accept-dot</code></a>, 
+<a href="mzscheme-Z-H-14.html#node_idx_2462">[2]</a><br>
+<a href="mzscheme-Z-H-7.html#node_idx_1092"><code class=scheme>read-accept-graph</code></a>, 
+<a href="mzscheme-Z-H-14.html#node_idx_2560">[2]</a><br>
+<a href="mzscheme-Z-H-7.html#node_idx_1098"><code class=scheme>read-accept-quasiquote</code></a>, 
+<a href="mzscheme-Z-H-14.html#node_idx_2464">[2]</a><br>
+<a href="mzscheme-Z-H-7.html#node_idx_1066"><code class=scheme>read-case-sensitive</code></a>, 
+<a href="mzscheme-Z-H-14.html#node_idx_2480">[2]</a>, <a href="mzscheme-Z-H-14.html#node_idx_2536">[3]</a><br>
+<a href="mzscheme-Z-H-11.html#node_idx_1626"><code class=scheme>read-char-or-special</code></a><br>
+<a href="mzscheme-Z-H-7.html#node_idx_1076"><code class=scheme>read-curly-brace-as-paren</code></a>, 
+<a href="mzscheme-Z-H-14.html#node_idx_2372">[2]</a>, <a href="mzscheme-Z-H-14.html#node_idx_2496">[3]</a><br>
+<a href="mzscheme-Z-H-7.html#node_idx_1094"><code class=scheme>read-decimal-as-inexact</code></a>, 
+<a href="mzscheme-Z-H-14.html#node_idx_2450">[2]</a><br>
+<a href="mzscheme-Z-H-7.html#node_idx_1120">read-eval-print loop</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<code class=scheme>read</code>-<code class=scheme>eval</code>-<code class=scheme>print</code> loop
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="mzscheme-Z-H-14.html#node_idx_2358">customized</a><br>
+<a href="mzscheme-Z-H-14.html#node_idx_2356"><code class=scheme>read</code>-<code class=scheme>eval</code>-<code class=scheme>print</code> loop</a><br>
+<a href="mzscheme-Z-H-14.html#node_idx_2360"><code class=scheme>read-eval-print-loop</code></a>, 
+<a href="mzscheme-Z-H-14.html#node_idx_2362">[2]</a>, <a href="mzscheme-Z-H-17.html#node_idx_2924">[3]</a>, 
+<a href="mzscheme-Z-H-17.html#node_idx_2926">[4]</a><br>
+<a href="mzscheme-Z-H-14.html#node_idx_2618"><code class=scheme>read-image-from-file</code></a><br>
+<a href="mzscheme-Z-H-11.html#node_idx_1594"><code class=scheme>read-line</code></a><br>
+<a href="mzscheme-Z-H-7.html#node_idx_1070"><code class=scheme>read-square-bracket-as-paren</code></a>, 
+<a href="mzscheme-Z-H-14.html#node_idx_2370">[2]</a>, <a href="mzscheme-Z-H-14.html#node_idx_2494">[3]</a><br>
+<a href="mzscheme-Z-H-11.html#node_idx_1606"><code class=scheme>read-string</code></a><br>
+<a href="mzscheme-Z-H-11.html#node_idx_1608"><code class=scheme>read-string-avail!</code></a><br>
+<a href="mzscheme-Z-H-11.html#node_idx_1612"><code class=scheme>read-string-avail!*</code></a><br>
+<a href="mzscheme-Z-H-11.html#node_idx_1614"><code class=scheme>read-string-avail!/enable-break</code></a><br>
+<a href="mzscheme-Z-H-12.html#node_idx_2052"><code class=scheme>read-syntax</code></a>, 
+<a href="mzscheme-Z-H-12.html#node_idx_2262">[2]</a><br>
+<a href="mzscheme-Z-H-11.html#node_idx_1592">Reading and Writing</a><br>
+<a href="mzscheme-Z-H-3.html#node_idx_230"><code class=scheme>real-&gt;floating-point-byte-string</code></a><br>
+<a href="mzscheme-Z-H-10.html#node_idx_1436"><code class=scheme>regexp</code></a><br>
+<a href="mzscheme-Z-H-10.html#node_idx_1440"><code class=scheme>regexp-match</code></a>, 
+<a href="mzscheme-Z-H-10.html#node_idx_1442">[2]</a><br>
+<a href="mzscheme-Z-H-10.html#node_idx_1446"><code class=scheme>regexp-match-peek</code></a><br>
+<a href="mzscheme-Z-H-10.html#node_idx_1448"><code class=scheme>regexp-match-peek-positions</code></a><br>
+<a href="mzscheme-Z-H-10.html#node_idx_1444"><code class=scheme>regexp-match-positions</code></a><br>
+<a href="mzscheme-Z-H-10.html#node_idx_1450"><code class=scheme>regexp-replace</code></a><br>
+<a href="mzscheme-Z-H-10.html#node_idx_1452"><code class=scheme>regexp-replace*</code></a><br>
+<a href="mzscheme-Z-H-10.html#node_idx_1438"><code class=scheme>regexp?</code></a><br>
+regexps, <em>see</em>  regular expressions
+<br>
+<a href="mzscheme-Z-H-10.html#node_idx_1424">Regular Expressions</a><br>
+<a href="mzscheme-Z-H-10.html#node_idx_1426">regular expressions</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="mzscheme-Z-H-14.html#node_idx_2482">constants</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="mzscheme-Z-H-14.html#node_idx_2544">printing</a><br>
+<a href="mzscheme-Z-H-11.html#node_idx_1726"><code class=scheme>relative-path?</code></a><br>
+<a href="mzscheme-Z-H-5.html#node_idx_640"><code class=scheme><span class=keyword>rename</span></code></a>, <a href="mzscheme-Z-H-5.html#node_idx_644">[2]</a><br>
+<a href="mzscheme-Z-H-11.html#node_idx_1820"><code class=scheme>rename-file-or-directory</code></a>, 
+<a href="mzscheme-Z-H-11.html#node_idx_1894">[2]</a><br>
+<a href="mzscheme-Z-H-12.html#node_idx_2206"><code class=scheme>rename-transformer?</code></a><br>
+<a href="mzscheme-Z-H-5.html#node_idx_632"><code class=scheme><span class=keyword>require</span></code></a>, <a href="mzscheme-Z-H-6.html#node_idx_766">[2]</a>, 
+<a href="mzscheme-Z-H-7.html#node_idx_1204">[3]</a><br>
+<a href="mzscheme-Z-H-12.html#node_idx_2152"><code class=scheme><span class=keyword>require-for-syntax</span></code></a>, 
+<a href="mzscheme-Z-H-12.html#node_idx_2162">[2]</a><br>
+<a href="mzscheme-Z-H-11.html#node_idx_1734"><code class=scheme>resolve-path</code></a><br>
+<a href="mzscheme-Z-H-3.html#node_idx_384"><code class=scheme>reverse!</code></a><br>
+<a href="mzscheme-Z-H-12.html#node_idx_2164">run-time hierarchy</a><br>
+<a href="mzscheme-Z-H-17.html#node_idx_2794">Running MzScheme</a><br>
+<a href="mzscheme-Z-H-15.html#node_idx_2750">Runtime Information</a></p>
+<p>
+</p>
+<p></p>
+<p>
+<br>
+<a href="mzscheme-Z-H-14.html#node_idx_2612">Saving and Restoring Program Images</a><br>
+<a href="mzscheme-Z-H-8.html#node_idx_1300"><code class=scheme>scheme-report-environment</code></a><br>
+<a href="mzscheme-Z-H-18.html#node_idx_2932">scripts</a><br>
+<a href="mzscheme-Z-H-15.html#node_idx_2636"><code class=scheme>seconds-&gt;date</code></a><br>
+<a href="mzscheme-Z-H-9.html#node_idx_1362">Security</a><br>
+<a href="mzscheme-Z-H-9.html#node_idx_1364">Security Guards</a><br>
+<a href="mzscheme-Z-H-7.html#node_idx_1238">security guards</a>, <a href="mzscheme-Z-H-9.html#node_idx_1366">[2]</a><br>
+<a href="mzscheme-Z-H-9.html#node_idx_1386"><code class=scheme>security-guard?</code></a><br>
+select, <em>see</em>  <tt>object-wait-multiple</tt>
+<br>
+<a href="mzscheme-Z-H-7.html#node_idx_970"><code class=scheme>semaphore-post</code></a><br>
+<a href="mzscheme-Z-H-7.html#node_idx_976"><code class=scheme>semaphore-try-wait?</code></a><br>
+<a href="mzscheme-Z-H-7.html#node_idx_974"><code class=scheme>semaphore-wait</code></a><br>
+<a href="mzscheme-Z-H-7.html#node_idx_978"><code class=scheme>semaphore-wait/enable-break</code></a><br>
+<a href="mzscheme-Z-H-7.html#node_idx_968"><code class=scheme>semaphore?</code></a><br>
+<a href="mzscheme-Z-H-7.html#node_idx_954">Semaphores</a><br>
+<a href="mzscheme-Z-H-7.html#node_idx_956">semaphores</a><br>
+<a href="mzscheme-Z-H-2.html#node_idx_42">Sequences</a><br>
+<a href="mzscheme-Z-H-17.html#node_idx_2880"><code class=scheme>set!</code></a><br>
+<a href="mzscheme-Z-H-2.html#node_idx_80"><code class=scheme><span class=keyword>set!</span></code></a><br>
+<a href="mzscheme-Z-H-12.html#node_idx_2200"><code class=scheme>set!-transformer?</code></a><br>
+<a href="mzscheme-Z-H-2.html#node_idx_82"><code class=scheme><span class=keyword>set!-values</span></code></a><br>
+<a href="mzscheme-Z-H-3.html#node_idx_434"><code class=scheme>set-box!</code></a><br>
+<a href="mzscheme-Z-H-18.html#node_idx_2930">shell scripts</a><br>
+<a href="mzscheme-Z-H-15.html#node_idx_2714"><code class=scheme>shell-execute</code></a><br>
+<a href="mzscheme-Z-H-15.html#node_idx_2712">ShellExecute</a><br>
+<a href="mzscheme-Z-H-11.html#node_idx_1738"><code class=scheme>simplify-path</code></a><br>
+<a href="mzscheme-Z-H-7.html#node_idx_936"><code class=scheme>sleep</code></a><br>
+<a href="mzscheme-Z-H-11.html#node_idx_1918">sockets</a><br>
+<a href="mzscheme-Z-H-12.html#node_idx_2178">Special Syntax Identifiers</a><br>
+<a href="mzscheme-Z-H-11.html#node_idx_1744"><code class=scheme>split-path</code></a><br>
+<a href="mzscheme-Z-H-7.html#node_idx_1068">square brackets</a><br>
+<a href="mzscheme-Z-H-3.html#node_idx_318"><code class=scheme>string-&gt;immutable-string</code></a><br>
+<a href="mzscheme-Z-H-3.html#node_idx_166"><code class=scheme>string-&gt;number</code></a><br>
+<a href="mzscheme-Z-H-3.html#node_idx_368"><code class=scheme>string-&gt;symbol</code></a><br>
+<a href="mzscheme-Z-H-3.html#node_idx_366"><code class=scheme>string-&gt;uninterned-symbol</code></a><br>
+<a href="mzscheme-Z-H-3.html#node_idx_342"><code class=scheme>string-ci&lt;=?</code></a><br>
+<a href="mzscheme-Z-H-3.html#node_idx_340"><code class=scheme>string-ci&lt;?</code></a><br>
+<a href="mzscheme-Z-H-3.html#node_idx_338"><code class=scheme>string-ci=?</code></a><br>
+<a href="mzscheme-Z-H-3.html#node_idx_346"><code class=scheme>string-ci&gt;=?</code></a><br>
+<a href="mzscheme-Z-H-3.html#node_idx_344"><code class=scheme>string-ci&gt;?</code></a><br>
+<a href="mzscheme-Z-H-3.html#node_idx_322"><code class=scheme>string-copy!</code></a><br>
+<a href="mzscheme-Z-H-3.html#node_idx_354"><code class=scheme>string-locale-ci&lt;?</code></a><br>
+<a href="mzscheme-Z-H-3.html#node_idx_352"><code class=scheme>string-locale-ci=?</code></a><br>
+<a href="mzscheme-Z-H-3.html#node_idx_356"><code class=scheme>string-locale-ci&gt;?</code></a><br>
+<a href="mzscheme-Z-H-3.html#node_idx_348"><code class=scheme>string-locale&lt;?</code></a><br>
+<a href="mzscheme-Z-H-3.html#node_idx_350"><code class=scheme>string-locale&gt;?</code></a><br>
+<a href="mzscheme-Z-H-3.html#node_idx_332"><code class=scheme>string&lt;=?</code></a><br>
+<a href="mzscheme-Z-H-3.html#node_idx_330"><code class=scheme>string&lt;?</code></a><br>
+<a href="mzscheme-Z-H-3.html#node_idx_328"><code class=scheme>string=?</code></a><br>
+<a href="mzscheme-Z-H-3.html#node_idx_336"><code class=scheme>string&gt;=?</code></a><br>
+<a href="mzscheme-Z-H-3.html#node_idx_334"><code class=scheme>string&gt;?</code></a><br>
+<a href="mzscheme-Z-H-3.html#node_idx_312">Strings</a><br>
+<a href="mzscheme-Z-H-14.html#node_idx_2420">strings</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="mzscheme-Z-H-11.html#node_idx_1524">as ports</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="mzscheme-Z-H-3.html#node_idx_314">immutable</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="mzscheme-Z-H-10.html#node_idx_1432">pattern matching</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="mzscheme-Z-H-14.html#node_idx_2542">printing</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="mzscheme-Z-H-11.html#node_idx_1522">reading to and writing from</a><br>
+<a href="mzscheme-Z-H-5.html#node_idx_646"><code class=scheme><span class=keyword>struct</span></code></a><br>
+<a href="mzscheme-Z-H-4.html#node_idx_584"><code class=scheme>struct-&gt;vector</code></a><br>
+<a href="mzscheme-Z-H-4.html#node_idx_604"><code class=scheme>struct-accessor-procedure?</code></a><br>
+<a href="mzscheme-Z-H-4.html#node_idx_600"><code class=scheme>struct-constructor-procedure?</code></a><br>
+<a href="mzscheme-Z-H-4.html#node_idx_568"><code class=scheme>struct-info</code></a><br>
+<a href="mzscheme-Z-H-4.html#node_idx_606"><code class=scheme>struct-mutator-procedure?</code></a><br>
+<a href="mzscheme-Z-H-4.html#node_idx_602"><code class=scheme>struct-predicate-procedure?</code></a><br>
+<a href="mzscheme-Z-H-4.html#node_idx_570"><code class=scheme>struct-type-info</code></a><br>
+<a href="mzscheme-Z-H-4.html#node_idx_558"><code class=scheme>struct-type-property?</code></a><br>
+<a href="mzscheme-Z-H-4.html#node_idx_598"><code class=scheme>struct-type?</code></a><br>
+<a href="mzscheme-Z-H-4.html#node_idx_588"><code class=scheme>struct?</code></a><br>
+structs
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="mzscheme-Z-H-7.html#node_idx_1104">printing</a><br>
+<a href="mzscheme-Z-H-4.html#node_idx_560">Structure Inspectors</a><br>
+<a href="mzscheme-Z-H-4.html#node_idx_536">structure subtypes</a><br>
+<a href="mzscheme-Z-H-4.html#node_idx_530">structure type descriptors</a><br>
+<a href="mzscheme-Z-H-4.html#node_idx_550">Structure Type Properties</a><br>
+<a href="mzscheme-Z-H-4.html#node_idx_552">structure type properties</a><br>
+<a href="mzscheme-Z-H-4.html#node_idx_520">structure types</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="mzscheme-Z-H-4.html#node_idx_586">predicates</a><br>
+<a href="mzscheme-Z-H-4.html#node_idx_538">Structure Types with Automatic Fields, Immutable Fields, and Properties</a><br>
+<a href="mzscheme-Z-H-4.html#node_idx_582">Structure Utilities</a><br>
+<a href="mzscheme-Z-H-4.html#node_idx_518">Structures</a><br>
+<a href="mzscheme-Z-H-4.html#node_idx_524">structures</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="mzscheme-Z-H-4.html#node_idx_590">equality</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="mzscheme-Z-H-14.html#node_idx_2530">printing</a><br>
+<a href="mzscheme-Z-H-4.html#node_idx_574">Structures as Procedures</a><br>
+<a href="mzscheme-Z-H-4.html#node_idx_580">Structures as Waitable Objects</a><br>
+<a href="mzscheme-Z-H-3.html#node_idx_174"><code class=scheme>sub1</code></a><br>
+<a href="mzscheme-Z-H-15.html#node_idx_2688"><code class=scheme>subprocess</code></a><br>
+<a href="mzscheme-Z-H-15.html#node_idx_2702"><code class=scheme>subprocess-kill</code></a><br>
+<a href="mzscheme-Z-H-15.html#node_idx_2706"><code class=scheme>subprocess-pid</code></a><br>
+<a href="mzscheme-Z-H-15.html#node_idx_2698"><code class=scheme>subprocess-status</code></a><br>
+<a href="mzscheme-Z-H-15.html#node_idx_2696"><code class=scheme>subprocess-wait</code></a><br>
+<a href="mzscheme-Z-H-15.html#node_idx_2708"><code class=scheme>subprocess?</code></a><br>
+<a href="mzscheme-Z-H-15.html#node_idx_2686">subprocesses</a><br>
+<a href="mzscheme-Z-H-3.html#node_idx_320"><code class=scheme>substring</code></a><br>
+<a href="mzscheme-Z-H-14.html#node_idx_2332">Support Facilities</a><br>
+<a href="mzscheme-Z-H-7.html#node_idx_900">Suspending, Resuming, and Killing Threads</a><br>
+<a href="mzscheme-Z-H-3.html#node_idx_358">Symbols</a><br>
+<a href="mzscheme-Z-H-14.html#node_idx_2466">symbols</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="mzscheme-Z-H-14.html#node_idx_2474">case sensitivity</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="mzscheme-Z-H-3.html#node_idx_360">generating</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="mzscheme-Z-H-14.html#node_idx_2534">printing</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="mzscheme-Z-H-3.html#node_idx_362">unique</a><br>
+<a href="mzscheme-Z-H-7.html#node_idx_1006">Synchronizing Multiple Objects with Timeout</a><br>
+<a href="mzscheme-Z-H-7.html#node_idx_920">Synchronizing Thread State</a><br>
+<a href="mzscheme-Z-H-7.html#node_idx_986">synchronous channels</a><br>
+<a href="mzscheme-Z-H-12.html#node_idx_2020">syntax</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="mzscheme-Z-H-12.html#node_idx_2234">expanding</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="mzscheme-Z-H-12.html#node_idx_2192">macro calls</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="mzscheme-Z-H-12.html#node_idx_2154">modules</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="mzscheme-Z-H-12.html#node_idx_2220">partial expansion</a><br>
+<a href="mzscheme-Z-H-12.html#node_idx_2062"><code class=scheme><span class=keyword>syntax</span></code></a><br>
+<a href="mzscheme-Z-H-12.html#node_idx_2124">Syntax and Lexical Scope</a><br>
+<a href="mzscheme-Z-H-12.html#node_idx_2018">Syntax and Macros</a><br>
+<a href="mzscheme-Z-H-12.html#node_idx_2048">Syntax Objects</a><br>
+<a href="mzscheme-Z-H-12.html#node_idx_2050">syntax objects</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="mzscheme-Z-H-12.html#node_idx_2126">comparisons</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="mzscheme-Z-H-12.html#node_idx_2118">identifier</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="mzscheme-Z-H-12.html#node_idx_2082">operations</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="mzscheme-Z-H-12.html#node_idx_2056">pattern-matching</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="mzscheme-Z-H-12.html#node_idx_2248">properties</a>, <a href="mzscheme-Z-H-14.html#node_idx_2594">[2]</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="mzscheme-Z-H-12.html#node_idx_2086">source location</a>, 
+<a href="mzscheme-Z-H-14.html#node_idx_2592">[2]</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="mzscheme-Z-H-12.html#node_idx_2100">source module</a><br>
+<a href="mzscheme-Z-H-12.html#node_idx_2106">syntax pair</a><br>
+<a href="mzscheme-Z-H-12.html#node_idx_2108"><code class=scheme>syntax-&gt;list</code></a><br>
+<a href="mzscheme-Z-H-12.html#node_idx_2058"><code class=scheme><span class=keyword>syntax-case</span></code></a><br>
+<a href="mzscheme-Z-H-12.html#node_idx_2066"><code class=scheme><span class=keyword>syntax-case*</span></code></a><br>
+<a href="mzscheme-Z-H-12.html#node_idx_2092"><code class=scheme>syntax-column</code></a><br>
+<a href="mzscheme-Z-H-12.html#node_idx_2104"><code class=scheme>syntax-e</code></a><br>
+<a href="mzscheme-Z-H-12.html#node_idx_2116"><code class=scheme>syntax-graph?</code></a><br>
+<a href="mzscheme-Z-H-12.html#node_idx_2042"><code class=scheme><span class=keyword>syntax-id-rules</span></code></a>, 
+<a href="mzscheme-Z-H-12.html#node_idx_2046">[2]</a><br>
+<a href="mzscheme-Z-H-12.html#node_idx_2090"><code class=scheme>syntax-line</code></a><br>
+<a href="mzscheme-Z-H-12.html#node_idx_2214"><code class=scheme>syntax-local-context</code></a><br>
+<a href="mzscheme-Z-H-12.html#node_idx_2216"><code class=scheme>syntax-local-get-shadower</code></a><br>
+<a href="mzscheme-Z-H-12.html#node_idx_2224"><code class=scheme>syntax-local-introduce</code></a><br>
+<a href="mzscheme-Z-H-12.html#node_idx_2218"><code class=scheme>syntax-local-module-introduce</code></a><br>
+<a href="mzscheme-Z-H-12.html#node_idx_2212"><code class=scheme>syntax-local-name</code></a><br>
+<a href="mzscheme-Z-H-12.html#node_idx_2208"><code class=scheme>syntax-local-value</code></a><br>
+<a href="mzscheme-Z-H-12.html#node_idx_2110"><code class=scheme>syntax-object-&gt;datum</code></a><br>
+<a href="mzscheme-Z-H-12.html#node_idx_2098"><code class=scheme>syntax-original?</code></a><br>
+<a href="mzscheme-Z-H-12.html#node_idx_2094"><code class=scheme>syntax-position</code></a><br>
+<a href="mzscheme-Z-H-12.html#node_idx_2250"><code class=scheme>syntax-property</code></a>, 
+<a href="mzscheme-Z-H-12.html#node_idx_2252">[2]</a><br>
+<a href="mzscheme-Z-H-12.html#node_idx_2038"><code class=scheme><span class=keyword>syntax-rules</span></code></a><br>
+<a href="mzscheme-Z-H-12.html#node_idx_2088"><code class=scheme>syntax-source</code></a><br>
+<a href="mzscheme-Z-H-12.html#node_idx_2102"><code class=scheme>syntax-source-module</code></a><br>
+<a href="mzscheme-Z-H-12.html#node_idx_2096"><code class=scheme>syntax-span</code></a><br>
+<a href="mzscheme-Z-H-12.html#node_idx_2256"><code class=scheme>syntax-track-origin</code></a><br>
+<a href="mzscheme-Z-H-12.html#node_idx_2078"><code class=scheme><span class=keyword>syntax/loc</span></code></a><br>
+<a href="mzscheme-Z-H-12.html#node_idx_2084"><code class=scheme>syntax?</code></a><br>
+<a href="mzscheme-Z-H-15.html#node_idx_2626">System Utilities</a><br>
+<a href="mzscheme-Z-H-3.html#node_idx_234"><code class=scheme>system-big-endian?</code></a><br>
+<a href="mzscheme-Z-H-15.html#node_idx_2766"><code class=scheme>system-library-subpath</code></a><br>
+<a href="mzscheme-Z-H-15.html#node_idx_2754"><code class=scheme>system-type</code></a></p>
+<p>
+</p>
+<p></p>
+<p>
+<br>
+<a href="mzscheme-Z-H-6.html#node_idx_846">tail calls</a><br>
+<a href="mzscheme-Z-H-11.html#node_idx_1952"><code class=scheme>tcp-abandon-port</code></a><br>
+<a href="mzscheme-Z-H-11.html#node_idx_1934"><code class=scheme>tcp-accept</code></a><br>
+<a href="mzscheme-Z-H-11.html#node_idx_1938"><code class=scheme>tcp-accept-ready?</code></a><br>
+<a href="mzscheme-Z-H-11.html#node_idx_1942"><code class=scheme>tcp-accept/enable-break</code></a><br>
+<a href="mzscheme-Z-H-11.html#node_idx_1954"><code class=scheme>tcp-addresses</code></a><br>
+<a href="mzscheme-Z-H-11.html#node_idx_1946"><code class=scheme>tcp-close</code></a><br>
+<a href="mzscheme-Z-H-11.html#node_idx_1926"><code class=scheme>tcp-connect</code></a><br>
+<a href="mzscheme-Z-H-11.html#node_idx_1930"><code class=scheme>tcp-connect/enable-break</code></a><br>
+<a href="mzscheme-Z-H-11.html#node_idx_1922"><code class=scheme>tcp-listen</code></a><br>
+<a href="mzscheme-Z-H-11.html#node_idx_1950"><code class=scheme>tcp-listener?</code></a><br>
+<a href="mzscheme-Z-H-11.html#node_idx_1958"><code class=scheme>tcp-port?</code></a><br>
+<a href="mzscheme-Z-H-11.html#node_idx_1920">TCP/IP</a><br>
+thread
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;groups, <em>see</em>  thread groups
+<br>
+<a href="mzscheme-Z-H-7.html#node_idx_890"><code class=scheme>thread</code></a><br>
+<a href="mzscheme-Z-H-7.html#node_idx_892">thread descriptor</a><br>
+<a href="mzscheme-Z-H-9.html#node_idx_1414">Thread Groups</a><br>
+<a href="mzscheme-Z-H-7.html#node_idx_1246">thread groups</a>, <a href="mzscheme-Z-H-9.html#node_idx_1416">[2]</a><br>
+<a href="mzscheme-Z-H-7.html#node_idx_924"><code class=scheme>thread-dead-waitable</code></a><br>
+<a href="mzscheme-Z-H-7.html#node_idx_942"><code class=scheme>thread-dead?</code></a><br>
+<a href="mzscheme-Z-H-9.html#node_idx_1422"><code class=scheme>thread-group?</code></a><br>
+<a href="mzscheme-Z-H-7.html#node_idx_910"><code class=scheme>thread-resume</code></a><br>
+<a href="mzscheme-Z-H-7.html#node_idx_926"><code class=scheme>thread-resume-waitable</code></a><br>
+<a href="mzscheme-Z-H-7.html#node_idx_940"><code class=scheme>thread-running?</code></a><br>
+<a href="mzscheme-Z-H-7.html#node_idx_904"><code class=scheme>thread-suspend</code></a><br>
+<a href="mzscheme-Z-H-7.html#node_idx_928"><code class=scheme>thread-suspend-waitable</code></a><br>
+<a href="mzscheme-Z-H-7.html#node_idx_922"><code class=scheme>thread-wait</code></a><br>
+<a href="mzscheme-Z-H-7.html#node_idx_918"><code class=scheme>thread/suspend-to-kill</code></a><br>
+<a href="mzscheme-Z-H-7.html#node_idx_934"><code class=scheme>thread?</code></a><br>
+<a href="mzscheme-Z-H-7.html#node_idx_886">Threads</a><br>
+<a href="mzscheme-Z-H-7.html#node_idx_888">threads</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="mzscheme-Z-H-6.html#node_idx_868">breaking</a>, <a href="mzscheme-Z-H-7.html#node_idx_944">[2]</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="mzscheme-Z-H-7.html#node_idx_960">communication</a>, 
+<a href="mzscheme-Z-H-7.html#node_idx_990">[2]</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="mzscheme-Z-H-7.html#node_idx_912">killing</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="mzscheme-Z-H-7.html#node_idx_948">nesting</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="mzscheme-Z-H-7.html#node_idx_908">resuming</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="mzscheme-Z-H-7.html#node_idx_938">run state</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="mzscheme-Z-H-7.html#node_idx_902">suspending</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="mzscheme-Z-H-7.html#node_idx_962">synchronization</a>, 
+<a href="mzscheme-Z-H-7.html#node_idx_992">[2]</a><br>
+<a href="mzscheme-Z-H-15.html#node_idx_2628">Time</a><br>
+<a href="mzscheme-Z-H-15.html#node_idx_2630">time</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="mzscheme-Z-H-15.html#node_idx_2668">machine</a><br>
+<a href="mzscheme-Z-H-15.html#node_idx_2680"><code class=scheme><span class=keyword>time</span></code></a><br>
+<a href="mzscheme-Z-H-15.html#node_idx_2678"><code class=scheme>time-apply</code></a><br>
+<a href="mzscheme-Z-H-11.html#node_idx_1772"><tt><strong>TMPDIR</strong></tt></a><br>
+top-level environment, <em>see</em>  namespaces
+<br>
+<a href="mzscheme-Z-H-12.html#node_idx_2026">transformer environments</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="mzscheme-Z-H-12.html#node_idx_2160">in modules</a><br>
+<a href="mzscheme-Z-H-12.html#node_idx_2024">transformers</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="mzscheme-Z-H-12.html#node_idx_2190">application</a></p>
+<p>
+</p>
+<p></p>
+<p>
+<br>
+<a href="mzscheme-Z-H-11.html#node_idx_1960">UDP</a><br>
+<a href="mzscheme-Z-H-11.html#node_idx_2016"><code class=scheme>udp-&gt;receive-waitable</code></a><br>
+<a href="mzscheme-Z-H-11.html#node_idx_2014"><code class=scheme>udp-&gt;send-waitable</code></a><br>
+<a href="mzscheme-Z-H-11.html#node_idx_1964"><code class=scheme>udp-bind!</code></a><br>
+<a href="mzscheme-Z-H-11.html#node_idx_2010"><code class=scheme>udp-bound?</code></a><br>
+<a href="mzscheme-Z-H-11.html#node_idx_2004"><code class=scheme>udp-close</code></a><br>
+<a href="mzscheme-Z-H-11.html#node_idx_1968"><code class=scheme>udp-connect!</code></a><br>
+<a href="mzscheme-Z-H-11.html#node_idx_2012"><code class=scheme>udp-connected?</code></a><br>
+<a href="mzscheme-Z-H-11.html#node_idx_1962"><code class=scheme>udp-open-socket</code></a><br>
+<a href="mzscheme-Z-H-11.html#node_idx_1994"><code class=scheme>udp-receive!</code></a><br>
+<a href="mzscheme-Z-H-11.html#node_idx_1998"><code class=scheme>udp-receive!*</code></a><br>
+<a href="mzscheme-Z-H-11.html#node_idx_2000"><code class=scheme>udp-receive!/enable-break</code></a><br>
+<a href="mzscheme-Z-H-11.html#node_idx_1980"><code class=scheme>udp-send</code></a><br>
+<a href="mzscheme-Z-H-11.html#node_idx_1986"><code class=scheme>udp-send*</code></a><br>
+<a href="mzscheme-Z-H-11.html#node_idx_1974"><code class=scheme>udp-send-to</code></a><br>
+<a href="mzscheme-Z-H-11.html#node_idx_1984"><code class=scheme>udp-send-to*</code></a><br>
+<a href="mzscheme-Z-H-11.html#node_idx_1988"><code class=scheme>udp-send-to/enable-break</code></a><br>
+<a href="mzscheme-Z-H-11.html#node_idx_1992"><code class=scheme>udp-send/enable-break</code></a><br>
+<a href="mzscheme-Z-H-11.html#node_idx_2008"><code class=scheme>udp?</code></a><br>
+<a href="mzscheme-Z-H-3.html#node_idx_432"><code class=scheme>unbox</code></a><br>
+<a href="mzscheme-Z-H-3.html#node_idx_102"><code class=scheme>undefined values</code></a><br>
+<a href="mzscheme-Z-H-3.html#node_idx_364">uninterned  symbol</a><br>
+<a href="mzscheme-Z-H-2.html#node_idx_34"><code class=scheme><span class=keyword>unless</span></code></a><br>
+<a href="mzscheme-Z-H-2.html#node_idx_52"><code class=scheme><span class=keyword>unquote</span></code></a><br>
+<a href="mzscheme-Z-H-2.html#node_idx_54"><code class=scheme><span class=keyword>unquote-splicing</span></code></a><br>
+<a href="mzscheme-Z-H-12.html#node_idx_2074"><code class=scheme><span class=keyword>unsyntax</span></code></a><br>
+<a href="mzscheme-Z-H-12.html#node_idx_2076"><code class=scheme><span class=keyword>unsyntax-splicing</span></code></a><br>
+<a href="mzscheme-Z-H-7.html#node_idx_1196"><code class=scheme>use-compiled-file-kinds</code></a></p>
+<p>
+</p>
+<p></p>
+<p>
+<br>
+<a href="mzscheme-Z-H-3.html#node_idx_374"><code class=scheme>vector-&gt;immutable-vector</code></a><br>
+<a href="mzscheme-Z-H-3.html#node_idx_376"><code class=scheme>vector-immutable</code></a><br>
+<a href="mzscheme-Z-H-15.html#node_idx_2772"><code class=scheme>vector-set-performance-stats!</code></a><br>
+<a href="mzscheme-Z-H-3.html#node_idx_372">Vectors</a><br>
+<a href="mzscheme-Z-H-14.html#node_idx_2374">vectors</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="mzscheme-Z-H-7.html#node_idx_1112">printing</a>, <a href="mzscheme-Z-H-14.html#node_idx_2522">[2]</a><br>
+<a href="mzscheme-Z-H-15.html#node_idx_2768"><code class=scheme>version</code></a><br>
+<a href="mzscheme-Z-H-7.html#node_idx_1088">vertical bar</a><br>
+<a href="mzscheme-Z-H-3.html#node_idx_104"><code class=scheme>void</code></a>, <a href="mzscheme-Z-H-3.html#node_idx_108">[2]</a><br>
+<a href="mzscheme-Z-H-3.html#node_idx_100">Void and Undefined</a><br>
+<a href="mzscheme-Z-H-3.html#node_idx_110"><code class=scheme>void?</code></a></p>
+<p>
+</p>
+<p></p>
+<p>
+<br>
+<a href="mzscheme-Z-H-7.html#node_idx_1020"><code class=scheme>waitables-&gt;waitable-set</code></a><br>
+<a href="mzscheme-Z-H-13.html#node_idx_2296">Weak Boxes</a><br>
+<a href="mzscheme-Z-H-13.html#node_idx_2298">weak boxes</a><br>
+<a href="mzscheme-Z-H-13.html#node_idx_2302"><code class=scheme>weak-box-value</code></a><br>
+<a href="mzscheme-Z-H-13.html#node_idx_2304"><code class=scheme>weak-box?</code></a><br>
+<a href="mzscheme-Z-H-2.html#node_idx_32"><code class=scheme><span class=keyword>when</span></code></a><br>
+<a href="mzscheme-Z-H-2.html#node_idx_30">When and Unless</a><br>
+<a href="mzscheme-Z-H-13.html#node_idx_2306">Will Executors</a><br>
+<a href="mzscheme-Z-H-13.html#node_idx_2308">will executors</a><br>
+<a href="mzscheme-Z-H-13.html#node_idx_2320"><code class=scheme>will-execute</code></a><br>
+<a href="mzscheme-Z-H-13.html#node_idx_2316"><code class=scheme>will-executor?</code></a><br>
+<a href="mzscheme-Z-H-13.html#node_idx_2318"><code class=scheme>will-register</code></a><br>
+<a href="mzscheme-Z-H-13.html#node_idx_2322"><code class=scheme>will-try-execute</code></a><br>
+<a href="mzscheme-Z-H-15.html#node_idx_2710">Windows Actions</a><br>
+<a href="mzscheme-Z-H-6.html#node_idx_856"><code class=scheme><span class=keyword>with-continuation-mark</span></code></a><br>
+<a href="mzscheme-Z-H-6.html#node_idx_734"><code class=scheme><span class=keyword>with-handlers</span></code></a><br>
+<a href="mzscheme-Z-H-11.html#node_idx_1502"><code class=scheme>with-input-from-file</code></a>, 
+<a href="mzscheme-Z-H-11.html#node_idx_1514">[2]</a><br>
+<a href="mzscheme-Z-H-11.html#node_idx_1506"><code class=scheme>with-output-to-file</code></a>, 
+<a href="mzscheme-Z-H-11.html#node_idx_1508">[2]</a>, <a href="mzscheme-Z-H-11.html#node_idx_1516">[3]</a><br>
+<a href="mzscheme-Z-H-12.html#node_idx_2068"><code class=scheme><span class=keyword>with-syntax</span></code></a><br>
+<a href="mzscheme-Z-H-14.html#node_idx_2568"><code class=scheme>write</code></a><br>
+<a href="mzscheme-Z-H-14.html#node_idx_2614"><code class=scheme>write-image-to-file</code></a>, 
+<a href="mzscheme-Z-H-17.html#node_idx_2904">[2]</a><br>
+<a href="mzscheme-Z-H-11.html#node_idx_1640"><code class=scheme>write-string-avail</code></a><br>
+<a href="mzscheme-Z-H-11.html#node_idx_1644"><code class=scheme>write-string-avail*</code></a><br>
+<a href="mzscheme-Z-H-11.html#node_idx_1646"><code class=scheme>write-string-avail/enable-break</code></a><br>
+<a href="mzscheme-Z-H-18.html#node_idx_2928">Writing and Running Scripts</a></p>
+<p>
+</p>
+
+<p>
+</p>
+<div align=right class=navigation><i>[Go to <span><a href="mzscheme.html">first</a>, <a href="mzscheme-Z-H-18.html">previous</a></span><span class=disable>, next</span> page<span>; &nbsp;&nbsp;</span><span><a href="mzscheme.html#node_toc_start">contents</a></span><span class=disable><span>; &nbsp;&nbsp;</span>index</span>]</i></div><p></p>
+</body>
+</html>

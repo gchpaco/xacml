@@ -1,0 +1,2148 @@
+<!doctype html public "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!--
+
+Generated from mzscheme.tex by tex2page, v 2004-09-11
+(running on MzScheme 209, unix), 
+(c) Dorai Sitaram, 
+http://www.ccs.neu.edu/~dorai/tex2page/tex2page-doc.html
+
+-->
+<head>
+<title>
+PLT MzScheme: Language Manual
+</title>
+<link rel="stylesheet" type="text/css" href="mzscheme-Z-S.css" title=default>
+<meta name=robots content="noindex,follow">
+</head>
+<body>
+<div align=right class=navigation><i>[Go to <span><a href="mzscheme.html">first</a>, <a href="mzscheme-Z-H-10.html">previous</a></span><span>, <a href="mzscheme-Z-H-12.html">next</a></span> page<span>; &nbsp;&nbsp;</span><span><a href="mzscheme.html#node_toc_start">contents</a></span><span><span>; &nbsp;&nbsp;</span><a href="mzscheme-Z-H-19.html#node_index_start">index</a></span>]</i></div><p></p>
+<a name="node_chap_11"></a>
+<h1 class=chapter>
+<div class=chapterheading><a href="mzscheme.html#node_toc_node_chap_11">Chapter 11</a></div><br>
+<a href="mzscheme.html#node_toc_node_chap_11">Input and Output</a></h1>
+<p><a name="node_idx_1454"></a></p>
+<p>
+</p>
+<a name="node_sec_11.1"></a>
+<h2><a href="mzscheme.html#node_toc_node_sec_11.1">11.1&nbsp;&nbsp;Ports</a></h2>
+<p><a name="node_idx_1456"></a></p>
+<p>
+<a name="node_idx_1458"></a>
+The global variable <a name="node_idx_1460"></a><code class=scheme>eof</code> is bound to the end-of-file
+value. The standard Scheme predicate <a name="node_idx_1462"></a><code class=scheme>eof-object?</code> returns
+<code class=scheme><span class=selfeval>#t</span></code> only when applied to this value. The predicate
+<a name="node_idx_1464"></a><code class=scheme>port?</code>  returns <code class=scheme><span class=selfeval>#t</span></code> only for values for which either
+<code class=scheme><span class=variable>input-port?</span></code>  or <code class=scheme><span class=variable>output-port?</span></code> returns <code class=scheme><span class=selfeval>#t</span></code>.</p>
+<p>
+</p>
+<a name="node_sec_11.1.1"></a>
+<h3><a href="mzscheme.html#node_toc_node_sec_11.1.1">11.1.1&nbsp;&nbsp;Current Ports</a></h3>
+<p>The standard Scheme procedures <a name="node_idx_1466"></a><code class=scheme>current-input-port</code> and
+<a name="node_idx_1468"></a><code class=scheme>current-output-port</code> are implemented as parameters in
+MzScheme. See section&nbsp;<a href="mzscheme-Z-H-7.html#node_sec_7.7.1.2">7.7.1.2</a> for more information.</p>
+<p>
+</p>
+<a name="node_sec_11.1.2"></a>
+<h3><a href="mzscheme.html#node_toc_node_sec_11.1.2">11.1.2&nbsp;&nbsp;Opening File Ports</a></h3>
+<p></p>
+<p>
+The <a name="node_idx_1470"></a><code class=scheme>open-input-file</code> and <a name="node_idx_1472"></a><code class=scheme>open-output-file</code>
+procedures accept an optional flag argument after the filename that
+specifies a mode for the file:
+</p>
+<ul><p>
+</p>
+<li><p><code class=scheme><span class=selfeval>'binary</span></code><a name="node_idx_1474"></a>  --  characters are returned from the port
+exactly as they are read from the file. Binary mode is the default
+mode.</p>
+<p>
+</p>
+<li><p><code class=scheme><span class=selfeval>'text</span></code><a name="node_idx_1476"></a>  --  return and linefeed characters written
+to and read from the file are filtered by the port in a platform
+specific manner:
+</p>
+<ul><p>
+</p>
+<li><p><strong>Unix and Mac OS X</strong>: no filtering occurs.</p>
+<p>
+</p>
+<li><p><strong>Windows reading</strong>: a return-linefeed combination from a
+file is returned by the port as a single linefeed; no filtering
+occurs for return characters that are not followed by a linefeed, or
+for a linefeed that is not preceded by a return.</p>
+<p>
+</p>
+<li><p><strong>Windows writing</strong>: a linefeed written to the port is
+translated into a return-linefeed combination in the file; no
+filtering occurs for returns.</p>
+<p>
+</p>
+<li><p><strong>Mac OS Classic reading</strong>: a return character read from the file
+is returned as a linefeed by the port; no filtering occurs for
+linefeeds.</p>
+<p>
+</p>
+<li><p><strong>Mac OS Classic writing</strong>: a return character written to the
+port is translated into a linefeed in the file; no filtering occurs
+for linefeeds.</p>
+<p>
+</p>
+</ul><p>
+In Windows, <code class=scheme><span class=selfeval>'text</span></code> mode works only with regular files;
+attempting to use <code class=scheme><span class=selfeval>'text</span></code> with other kinds of files triggers an
+<a name="node_idx_1478"></a><code class=scheme>exn:i/o:filesystem</code> exception.</p>
+<p>
+</p>
+</ul><p></p>
+<p>
+The <a name="node_idx_1480"></a><code class=scheme>open-output-file</code> procedure can also take a flag
+argument that specifies how to proceed when a file with the specified
+name already exists:
+</p>
+<ul> <li><p><code class=scheme><span class=selfeval>'error</span></code><a name="node_idx_1482"></a>  --  raise <a name="node_idx_1484"></a><code class=scheme>exn:i/o:filesystem</code> (this is the default)
+</p>
+<li><p><code class=scheme><span class=selfeval>'replace</span></code><a name="node_idx_1486"></a>  --  remove the old file and write a new one
+</p>
+<li><p><code class=scheme><span class=selfeval>'truncate</span></code><a name="node_idx_1488"></a>  --  overwrite the old data
+</p>
+<li><p><code class=scheme><span class=selfeval>'truncate/replace</span></code><a name="node_idx_1490"></a>  --  try <code class=scheme><span class=selfeval>'truncate</span></code>; if it fails, 
+try <code class=scheme><span class=selfeval>'replace</span></code>
+</p>
+<li><p><code class=scheme><span class=selfeval>'append</span></code><a name="node_idx_1492"></a>  --  append to the end of the file under Unix and Mac OS;
+under Windows, <code class=scheme><span class=selfeval>'append</span></code> is equivalent to <code class=scheme><span class=selfeval>'update</span></code>, except that
+the file position is immediately set to the end of the file after opening it
+</p>
+<li><p><code class=scheme><span class=selfeval>'update</span></code><a name="node_idx_1494"></a>  --  open an existing file without truncating it;
+if the file does not exist, the <a name="node_idx_1496"></a><code class=scheme>exn:i/o:filesystem</code> exception is raised
+</p>
+</ul><p>
+The <a name="node_idx_1498"></a><code class=scheme>open-input-output-file</code> procedure takes the same
+arguments as <code class=scheme><code class=scheme>open-output-file</code></code>, but it produces two values:
+an input port and an output port. The two ports are connected in that
+they share the underlying file device. This procedure is intended for
+use with special devices that can be opened by only one process, such
+as <tt><strong>COM1</strong></tt> in Windows. For regualr files, sharing the device can
+be confusing. For example, using one port does not automatically
+flush the other port's buffer (see section&nbsp;<a href="#node_sec_11.1.5">11.1.5</a> for more
+information about buffers), and reading or writing in one port moves
+the file position (if any) for the other port. For regular files, use
+separate <code class=scheme>open-input-file</code> and <code class=scheme>open-output-file</code> calls
+to avoid confusion.</p>
+<p>
+Extra flag arguments are passed to <code class=scheme><code class=scheme>open-output-file</code></code> in any
+order.  Appropriate flag arguments can also be passed as the last
+argument(s) to <a name="node_idx_1500"></a><code class=scheme>call-with-input-file</code>,
+<a name="node_idx_1502"></a><code class=scheme>with-input-from-file</code>, <a name="node_idx_1504"></a><code class=scheme>call-with-output-file</code>,
+and <a name="node_idx_1506"></a><code class=scheme>with-output-to-file</code>. When conflicting flag arguments
+(e.g., both <code class=scheme><span class=selfeval>'error</span></code> and <code class=scheme><span class=selfeval>'replace</span></code>) are provided to
+<code class=scheme><code class=scheme>open-output-file</code></code>, <a name="node_idx_1508"></a><code class=scheme>with-output-to-file</code>, or
+<a name="node_idx_1510"></a><code class=scheme>call-with-output-file</code>, the
+<a name="node_idx_1512"></a><code class=scheme>exn:application:mismatch</code> exception is raised.</p>
+<p>
+Both <a name="node_idx_1514"></a><code class=scheme>with-input-from-file</code> and
+<a name="node_idx_1516"></a><code class=scheme>with-output-to-file</code> close the port they create if control
+jumps out of the supplied thunk (either through a continuation or an
+exception), and the port remains closed if control jumps back into
+the thunk. The current input or output port is installed and restored
+with <code class=scheme><span class=keyword>parameterize</span></code> (see section&nbsp;<a href="mzscheme-Z-H-7.html#node_sec_7.7.2">7.7.2</a>).</p>
+<p>
+See section&nbsp;<a href="#node_sec_11.1.5">11.1.5</a> for more information on file ports. When an
+input or output file-stream port is created, it is placed into the
+management of the current custodian (see section&nbsp;<a href="mzscheme-Z-H-9.html#node_sec_9.2">9.2</a>).</p>
+<p>
+</p>
+<a name="node_sec_11.1.3"></a>
+<h3><a href="mzscheme.html#node_toc_node_sec_11.1.3">11.1.3&nbsp;&nbsp;Pipes</a></h3>
+<p></p>
+<p>
+<a name="node_idx_1518"></a><a name="node_kw_definitionmake-pipe"></a><code class=scheme>(make-pipe</code><tt>&nbsp;</tt>[<code class=scheme><span class=variable>limit-k</span></code>]<code class=scheme>)</code> returns two port values (see section&nbsp;<a href="mzscheme-Z-H-2.html#node_sec_2.2">2.2</a>):
+the first port is an input port and the second is an output
+port. Data written to the output port is read from the input
+port. The ports do not need to be explicitly closed.</p>
+<p>
+The optional <code class=scheme><span class=variable>limit-k</span></code> argument can be <code class=scheme><span class=selfeval>#f</span></code> or a positive
+exact integer. If <code class=scheme><span class=variable>limit-k</span></code> is omitted or <code class=scheme><span class=selfeval>#f</span></code>, the new pipe
+holds an unlimited number of unread characters (i.e., limited only by
+the available memory). If <code class=scheme><span class=variable>limit-k</span></code> is a positive number, then
+the pipe will hold at most <code class=scheme><span class=variable>limit-k</span></code> unread characters; writing
+to the pipe's output port thereafter will block until a read from the
+input port makes more space available.</p>
+<p>
+</p>
+<a name="node_sec_11.1.4"></a>
+<h3><a href="mzscheme.html#node_toc_node_sec_11.1.4">11.1.4&nbsp;&nbsp;String Ports</a></h3>
+<p></p>
+<p>
+<a name="node_idx_1520"></a>
+<a name="node_idx_1522"></a>
+<a name="node_idx_1524"></a>
+Scheme input and output can be read from or collected into a string:
+</p>
+<ul><p>
+</p>
+<li><p><a name="node_idx_1526"></a><a name="node_kw_definitionopen-input-string"></a><code class=scheme>(open-input-string</code><tt>&nbsp;</tt><code class=scheme><span class=variable>string</span></code><code class=scheme>)</code> creates an input port that reads
+characters from <code class=scheme><span class=variable>string</span></code>.</p>
+<p>
+</p>
+<li><p><a name="node_idx_1528"></a><a name="node_kw_definitionopen-output-string"></a><code class=scheme>(open-output-string</code><code class=scheme>)</code> creates an output port that accumulates
+the output into a string.</p>
+<p>
+</p>
+<li><p><a name="node_idx_1530"></a><a name="node_kw_definitionget-output-string"></a><code class=scheme>(get-output-string</code><tt>&nbsp;</tt><code class=scheme><span class=variable>string-output-port</span></code><code class=scheme>)</code> returns the
+characters accumulated in <code class=scheme><span class=variable>string-output-port</span></code> so far in a
+freshly-allocated string. The characters also remain in the port for
+further accumulation or for later calls
+to <code class=scheme>get-output-string</code>.</p>
+<p>
+</p>
+</ul><p></p>
+<p>
+String input and output ports do not need to be explicitly closed. The
+<code class=scheme><code class=scheme>file-position</code></code> procedure, described in section&nbsp;<a href="#node_sec_11.1.5">11.1.5</a>,
+works for string ports in position-setting mode.</p>
+<p>
+Example:
+</p>
+<div align=left><pre class=scheme>(<span class=keyword>define</span> <span class=variable>i</span> (<code class=scheme>open-input-string</code> <span class=selfeval>&quot;hello world&quot;</span>))
+(<span class=keyword>define</span> <span class=variable>o</span> (<code class=scheme>open-output-string</code>))
+(<code class=scheme>write</code> (<code class=scheme>read</code> <span class=variable>i</span>) <span class=variable>o</span>)
+(<code class=scheme>get-output-string</code> <span class=variable>o</span>) <span class=comment>; =&gt; <code class=schemeresponse><span class=selfeval>&quot;hello&quot;</span></code></span>
+</pre></div><p></p>
+<p>
+</p>
+<a name="node_sec_11.1.5"></a>
+<h3><a href="mzscheme.html#node_toc_node_sec_11.1.5">11.1.5&nbsp;&nbsp;File-Stream Ports</a></h3>
+<p></p>
+<p>
+<a name="node_idx_1532"></a>
+<a name="node_idx_1534"></a>
+A port created by <code class=scheme><code class=scheme>open-input-file</code></code>, <code class=scheme><code class=scheme>open-output-file</code></code>,
+<code class=scheme><code class=scheme>subprocess</code></code>, and related functions is a <strong>file-stream port</strong>.
+The initial input, output, and error ports in stand-alone MzScheme
+are also file-stream ports.</p>
+<p>
+<a name="node_idx_1536"></a><a name="node_kw_definitionfile-stream-port_Q_"></a><code class=scheme>(file-stream-port?</code><tt>&nbsp;</tt><code class=scheme><span class=variable>port</span></code><code class=scheme>)</code> returns <code class=scheme><span class=selfeval>#t</span></code> if the given port is a
+file-stream port, <code class=scheme><span class=selfeval>#f</span></code> otherwise.</p>
+<p>
+Both input and output file-stream ports use a buffer. For an input
+port, a buffer is filled with immediately-available characters to
+speed up future reads. Thus, if a file is modified between a pair of
+reads to the file, the second read can produce stale data. Calling
+<code class=scheme><code class=scheme>file-position</code></code> to set an input port's file position flushes
+its buffer. For an output port, a buffer is filled to with a sequence
+of written to be committed as a group, typically when a newline is
+written. An output port's buffer use can be controlled via
+<code class=scheme><code class=scheme>file-stream-buffer-mode</code></code> (described below). The two ports
+produced by <code class=scheme><span class=variable>open-input-output-file</span></code> have independent buffers.</p>
+<p>
+Three procedures work primarily on file-stream ports:
+</p>
+<ul><p>
+</p>
+<li><p><a name="node_idx_1538"></a><a name="node_kw_definitionflush-output"></a><code class=scheme>(flush-output</code><tt>&nbsp;</tt>[<code class=scheme><span class=variable>output-port</span></code>]<code class=scheme>)</code> <a name="node_idx_1540"></a> forces
+all buffered data in the given output port to be physically
+written. If <code class=scheme><span class=variable>output-port</span></code> is omitted, then the current output
+port is flushed. Only file-stream ports and custom ports (see
+section&nbsp;<a href="#node_sec_11.1.6">11.1.6</a>) use buffers; when called on a port without a
+buffer, <code class=scheme><code class=scheme>flush-output</code></code> has no effect.</p>
+<p>
+By default, a file-stream port flushes its buffer automatically after
+each newline, but this behavior can be modified with
+<code class=scheme>file-stream-buffer-mode</code>. In addition, the initial current
+output and error ports are automatically flushed when
+<code class=scheme><code class=scheme>read</code></code><a name="call_footnote_Temp_22"></a><a href="#footnote_Temp_22"><sup><small>18</small></sup></a>, <code class=scheme><code class=scheme>read-line</code></code>, <code class=scheme><code class=scheme>read-string</code></code>, or
+<code class=scheme><code class=scheme>read-string-avail!</code></code> are performed on the initial standard
+input port.</p>
+<p>
+</p>
+<li><p><a name="node_idx_1542"></a><a name="node_kw_definitionfile-stream-buffer-mode"></a><code class=scheme>(file-stream-buffer-mode</code><tt>&nbsp;</tt><code class=scheme><span class=variable>file-stream-output-port</span></code><tt>&nbsp;</tt>[<code class=scheme><span class=variable>mode-symbol</span></code>]<code class=scheme>)</code>
+gets or sets the buffer mode for <code class=scheme><span class=variable>file-stream-output-port</span></code>. If
+<code class=scheme><span class=variable>mode-symbol</span></code> is provided, it must be one of <code class=scheme><span class=selfeval>'none</span></code><a name="node_idx_1544"></a>,
+<code class=scheme><span class=selfeval>'line</span></code><a name="node_idx_1546"></a>, or <code class=scheme><span class=selfeval>'block</span></code><a name="node_idx_1548"></a>, and the port's buffering
+is set accordingly. If <code class=scheme><span class=variable>mode-symbol</span></code> is not provided, the current
+mode is returned. If the mode cannot be set or returned, the
+<a name="node_idx_1550"></a><code class=scheme>exn:i/o:port</code> exception is raised.</p>
+<p>
+</p>
+<li><p><a name="node_idx_1552"></a><a name="node_kw_definitionfile-position"></a><code class=scheme>(file-position</code><tt>&nbsp;</tt><code class=scheme><span class=variable>port</span></code><code class=scheme>)</code> returns the current read/write
+position of <code class=scheme><span class=variable>port</span></code>, and <a name="node_idx_1554"></a><a name="node_kw_definitionfile-position"></a><code class=scheme>(file-position</code><tt>&nbsp;</tt><code class=scheme><span class=variable>port k</span></code><code class=scheme>)</code> sets the
+read/write position to <code class=scheme><span class=variable>k</span></code>. The latter works only for file-stream
+and string ports, and raises the <a name="node_idx_1556"></a><code class=scheme>exn:application:mismatch</code>
+exception for other port kinds. Calling <code class=scheme><code class=scheme>file-position</code></code>
+without a position on a non-file/non-string input port returns the
+number of characters that have been read from that port if the
+position is known (see section&nbsp;<a href="#node_sec_11.2.3">11.2.3</a>), otherwise the
+<a name="node_idx_1558"></a><code class=scheme>exn:i/o:port</code> exception is raised.</p>
+<p>
+When <code class=scheme>(file-position <code class=scheme><span class=variable>port</span></code> <code class=scheme><span class=variable>k</span></code>)</code> sets the position
+<code class=scheme><span class=variable>k</span></code> beyond the current size of an output file or string, the
+file/string is enlarged to size <code class=scheme><span class=variable>k</span></code> and the new region is filled
+with <code class=scheme><span class=selfeval>#\nul</span></code>.  If <code class=scheme><span class=variable>k</span></code> is beyond the end of an input file or
+string, then reading thereafter returns <code class=scheme><code class=scheme>eof</code></code> without changing
+the port's position.</p>
+<p>
+Not all file-stream ports support setting the position. If
+<code class=scheme><code class=scheme>file-position</code></code> is called with a position argument on such a
+file-stream port, the <a name="node_idx_1560"></a><code class=scheme>exn:i/o:port</code> exception is raised.</p>
+<p>
+When changing the file position for an output port, the port is first
+flushed if its buffer is not empty. Similarly, setting the position
+for an input port clears the port's buffer (even if the new position
+is the same as the old position). However, although input and output
+ports produced by <code class=scheme><span class=variable>open-input-output-file</span></code> share the file
+position, setting the position via one port does not flush the other
+port's buffer.</p>
+<p>
+</p>
+<li><p><a name="node_idx_1562"></a><a name="node_kw_definitionport-file-identity"></a><code class=scheme>(port-file-identity</code><tt>&nbsp;</tt><code class=scheme><span class=variable>file-stream-port</span></code><code class=scheme>)</code> <a name="node_idx_1564"></a> returns
+an exact positive integer that represents the identity of the device
+and file read or written by <code class=scheme><span class=variable>file-stream-port</span></code>. For two ports
+whose open times overlap, the result of <code class=scheme>port-file-identity</code>
+is the same for both ports if and only if the ports access the same
+device and file. For ports whose open times do not overlap, no
+guarantee is provided for the port identities (even if the ports
+actually access the same file)  --  except as can be inferred through
+relationships with other ports. If <code class=scheme><span class=variable>file-stream-port</span></code> is closed,
+the <a name="node_idx_1566"></a><code class=scheme>exn:i/o:port:closed</code> exception is raised.  Under Windows 95, 98, and Me, if
+<code class=scheme><span class=variable>file-stream-port</span></code> is connected to a pipe instead of a file, the
+<a name="node_idx_1568"></a><code class=scheme>exn:i/o:port</code> exception is raised.</p>
+<p>
+</p>
+</ul><p></p>
+<p>
+</p>
+<a name="node_sec_11.1.6"></a>
+<h3><a href="mzscheme.html#node_toc_node_sec_11.1.6">11.1.6&nbsp;&nbsp;Custom Ports</a></h3>
+<p></p>
+<p>
+<a name="node_idx_1570"></a><a name="node_idx_1572"></a><a name="node_idx_1574"></a>
+The <code class=scheme><code class=scheme>make-custom-input-port</code></code> and <code class=scheme><code class=scheme>make-custom-output-port</code></code> procedures
+create ports with arbitrary control procedures.</p>
+<p>
+</p>
+<a name="node_sec_11.1.6.1"></a>
+<h4><a href="mzscheme.html#node_toc_node_sec_11.1.6.1">11.1.6.1&nbsp;&nbsp;Custom Input</a></h4>
+<p><a name="node_idx_1576"></a><a name="node_kw_definitionmake-custom-input-port"></a><code class=scheme>(make-custom-input-port</code><tt>&nbsp;</tt><code class=scheme><span class=variable>read-string-proc
+peek-string-proc-or-false close-proc</span></code><code class=scheme>)</code> creates an input port.  The
+port is immediately open for reading. If <code class=scheme><span class=variable>close-proc</span></code> procedure
+has no side effects, then the port need not be explicitly closed.</p>
+<p>
+</p>
+<ul><p>
+</p>
+<li><p><code class=scheme><span class=variable>read-string-proc</span></code>  --  a procedure that takes one
+argument, which is a non-empty string to fill with read
+characters, and returns either the number of characters read, a
+procedure for special inputs, a waitable for blocking
+(see section&nbsp;<a href="mzscheme-Z-H-7.html#node_sec_7.6">7.6</a>), or <code class=scheme><code class=scheme>eof</code></code>. The reading procedure should
+never itself block; if no input is immediately available, it
+should return <code class=scheme><span class=selfeval>0</span></code> or a waitable (preferably the latter).
+If a value other than a non-negative exact integer, <code class=scheme><code class=scheme>eof</code></code>,
+waitable, or procedure-of-arity-four value is returned,
+the <a name="node_idx_1578"></a><code class=scheme>exn:application:type</code> exception is raised. If the returned integer is
+larger than the supplied string,
+the <a name="node_idx_1580"></a><code class=scheme>exn:application:mismatch</code> exception is raised.</p>
+<p>
+The reading procedure can report an error by raising an exception,
+but only if no characters are read. Similarly, no characters
+should be read if <code class=scheme><code class=scheme>eof</code></code>, a waitable, or a procedure is
+returned. In other words, no characters should be lost due to
+spurious exceptions or non-character data.</p>
+<p>
+A port's reading procedure may be called in multiple threads
+simultaneously (if the port is accessible in multiple
+threads). The port is responsible for its own internal
+synchronization. Note that improper implementation of such
+synchronization mechanisms might cause the reading procedure to
+block.</p>
+<p>
+If the reading procedure returns a waitable object
+(see section&nbsp;<a href="mzscheme-Z-H-7.html#node_sec_7.6">7.6</a>), the waitable is treated like a <code class=scheme><span class=selfeval>0</span></code>
+result, except that the system may use the waitable to block until
+input is available. If the waitable becomes unblocked, a later or
+concurrent call to the port's reading or peeking procedure must
+not return <code class=scheme><span class=selfeval>0</span></code> or a waitable
+(otherwise, <code class=scheme><span class=variable>char-ready?</span></code> might return <code class=scheme><span class=selfeval>#t</span></code> for the
+port when do data is in fact available). Although the waitable
+allows the system to block on the port without spinning, it may
+also choose to treat a waitable result exactly as <code class=scheme><span class=selfeval>0</span></code>; in
+other words, the system may call the reading procedure again (even
+in the same thread) without completing a wait. The waitable will
+not be made externally available by the system.</p>
+<p>
+See below for information about returning a procedure for special
+inputs.</p>
+<p>
+</p>
+<li><p><code class=scheme><span class=variable>peek-string-proc-or-false</span></code>  --  usually <code class=scheme><span class=selfeval>#f</span></code>, which
+means that string peeking should be implemented by the system in
+terms of the reading procedure.</p>
+<p>
+Otherwise, <code class=scheme><span class=variable>peek-string-proc-or-false</span></code> must be a procedure
+that takes two arguments: a string to fill with peeked characters
+and a non-negative exact integer indicating a number of characters
+to skip in the input stream (but not in the string to fill) before
+writing peeked characters into the string.</p>
+<p>
+The results and conventions for the procedure are the same as for
+<code class=scheme><span class=variable>read-string-proc</span></code>. When the peeking procedure is called with
+a positive number for characters to skip, a waitable result
+applies specifically to the skip value, not to peeking in general.
+Peeking past a non-character result should be disallowed by by
+raising <a name="node_idx_1582"></a><code class=scheme>exn:application:mismatch</code>.</p>
+<p>
+The system does not check that multiple peeks return consistent
+results, or that peeking and reading produce consistent results.
+If peeking produces a procedure, then a future call to the reading
+procedure is expected to produce the same procedure, and the one
+returned by peeking is never invoked.</p>
+<p>
+</p>
+<li><p><code class=scheme><span class=variable>close-proc</span></code>  --  a procedure of zero arguments that is
+called to close the port. The port is not considered closed until
+the closing procedure returns. The port's waitable, reading
+procedure, peeking procedure, and closing procedure will never be
+used again via the port if it is closed. However, the closing
+procedure can be called simultaneously in multiple threads (if the
+port is accessible in multiple threads).</p>
+<p>
+</p>
+</ul><p></p>
+<p>
+When <code class=scheme><span class=variable>read-string-proc</span></code> returns a procedure, the procedure is
+called by <code class=scheme><code class=scheme>read</code></code>,<a name="call_footnote_Temp_23"></a><a href="#footnote_Temp_23"><sup><small>19</small></sup></a>  <code class=scheme><code class=scheme>read-syntax</code></code>, or
+<code class=scheme><code class=scheme>read-char-or-special</code></code> to ``read'' non-character input from
+the port. The procedure is called exactly once before additional
+characters are read from the port, and the procedure must return two
+values: an arbitrary value and an exact, non-negative integer.  The
+first return value is used as the read result, and the second is used
+as the width in characters of the result (for port position
+tracking). If <code class=scheme><span class=variable>read-string-proc</span></code> or <code class=scheme><span class=variable>peek-string-proc</span></code>
+returns a procedure when called by any reading procedure other than
+<code class=scheme><code class=scheme>read</code></code>, <code class=scheme><code class=scheme>read-syntax</code></code>, <code class=scheme><code class=scheme>read-char-or-special</code></code>,
+or <code class=scheme><code class=scheme>peek-char-or-special</code></code>, then the
+<a name="node_idx_1584"></a><code class=scheme>exn:application:mismatch</code> exception is raised.</p>
+<p>
+The four arguments to the procedure represent the source location of
+the non-character value, as much as it is known (see
+section&nbsp;<a href="#node_sec_11.2.3">11.2.3</a>). The first argument is an arbitrary value
+representing the source for read values  --  the one passed to
+<code class=scheme>read-syntax</code>  --  or <code class=scheme><span class=selfeval>#f</span></code> if <code class=scheme>read</code> or
+<code class=scheme>read-char-or-special</code> was called. The second argument is a line
+number (exact, positive integer) if known, or <code class=scheme><span class=selfeval>#f</span></code>
+otherwise. The third is a column number (exact, non-negative integer) or
+<code class=scheme><span class=selfeval>#f</span></code>, and the fourth is a position number (exact, positive
+integer) or <code class=scheme><span class=selfeval>#f</span></code>.</p>
+<p>
+When the procedure returns a syntax object, then the syntax object is
+used directly in the result of <code class=scheme><code class=scheme>read-syntax</code></code>, and converted
+with <code class=scheme><code class=scheme>syntax-object-&gt;datum</code></code> for the result of
+<code class=scheme><code class=scheme>read</code></code>. If the result is not a syntax object, then the result
+is used directly in the result for <code class=scheme><code class=scheme>read</code></code>, and converted with
+<code class=scheme><code class=scheme>datum-&gt;syntax-object</code></code> for the result of <code class=scheme><code class=scheme>read-syntax</code></code>.
+In either case, structure sharing that occurs only as a the result of
+multiple non-character results is not preserved as syntax sharing.</p>
+<p>
+Instead of returning two values, the procedure can raise the
+<a name="node_idx_1586"></a><code class=scheme>exn:special-comment</code> exception to indicate that the special
+result is a comment, and therefore produces no <code class=scheme>read</code> result.
+When called by <code class=scheme>read</code> and <code class=scheme>read-syntax</code>, the exception
+is caught. The exception's <code class=scheme>width</code> field indicates the width
+of the special object in port positions, like the second return value
+for a non-comment result.</p>
+<p>
+Examples:
+</p>
+<div align=left><pre class=scheme>(<span class=keyword>define</span> <span class=variable>/dev/null</span> (<code class=scheme>make-custom-input-port</code> (<span class=keyword>lambda</span> (<span class=variable>s</span>) <code class=scheme>eof</code>) <span class=selfeval>#f</span> <code class=scheme>void</code>))
+(<code class=scheme>read-char</code> <span class=variable>/dev/null</span>) <span class=comment>; =&gt; <code class=scheme><code class=scheme>eof</code></code></span>
+
+<span class=comment>;; This port produces a stream of 1s:</span>
+(<span class=keyword>define</span> <span class=variable>infinite-ones</span> 
+  (<code class=scheme>make-custom-input-port</code>
+   (<span class=keyword>lambda</span> (<span class=variable>s</span>) (<code class=scheme>string-set!</code> <span class=variable>s</span> <span class=selfeval>0</span> <span class=selfeval>#\1</span>) <span class=selfeval>1</span>)
+   <span class=selfeval>#f</span>
+   <code class=scheme>void</code>))
+(<code class=scheme>read-string</code> <span class=selfeval>5</span> <span class=variable>infinite-ones</span>) <span class=comment>; =&gt; <code class=schemeresponse><span class=selfeval>&quot;11111&quot;</span></code></span>
+
+<span class=comment>;; To peek ahead 2<sup>5</sup>000 characters, we have to</span>
+<span class=comment>;;  buffer all 2<sup>5</sup>000 preceding characters:</span>
+(<code class=scheme>peek-string</code> <span class=selfeval>5</span> (<code class=scheme>expt</code> <span class=selfeval>2</span> <span class=selfeval>5000</span>) <span class=variable>infinite-ones</span>)  <span class=comment>; Out of memory!</span>
+
+<span class=comment>;; With a peek procedure, we can support arbitrary lookahead:</span>
+(<span class=keyword>define</span> <span class=variable>better-infinite-ones</span> 
+  (<code class=scheme>make-custom-input-port</code>
+   (<span class=keyword>lambda</span> (<span class=variable>s</span>) (<code class=scheme>string-set!</code> <span class=variable>s</span> <span class=selfeval>0</span> <span class=selfeval>#\1</span>) <span class=selfeval>1</span>)
+   (<span class=keyword>lambda</span> (<span class=variable>s</span> <span class=variable>offset</span>) (<code class=scheme>string-set!</code> <span class=variable>s</span> <span class=selfeval>0</span> <span class=selfeval>#\1</span>) <span class=selfeval>1</span>)
+   <code class=scheme>void</code>))
+(<code class=scheme>peek-string</code> <span class=selfeval>5</span> (<code class=scheme>expt</code> <span class=selfeval>2</span> <span class=selfeval>5000</span>) <span class=variable>better-infinite-ones</span>) <span class=comment>; =&gt; <code class=schemeresponse><span class=selfeval>&quot;11111&quot;</span></code></span>
+
+<span class=comment>;; This port produces 0, 1, 2, 0, 1, 2, etc:</span>
+(<span class=keyword>define</span> <span class=variable>mod3-cycle/not-thread-safe</span>
+  (<span class=keyword>let</span> ([<span class=variable>n</span> <span class=selfeval>0</span>])
+    (<code class=scheme>make-custom-input-port</code>
+     (<span class=keyword>lambda</span> (<span class=variable>s</span>) (<code class=scheme>string-set!</code> <span class=variable>s</span> <span class=selfeval>0</span> (<code class=scheme>integer-&gt;char</code> (<span class=variable>+</span> <span class=selfeval>48</span> <span class=variable>n</span>)))
+                 (<span class=keyword>set!</span> <span class=variable>n</span> (<code class=scheme>modulo</code> (<code class=scheme>add1</code> <span class=variable>n</span>) <span class=selfeval>3</span>))
+                 <span class=selfeval>1</span>)
+     <span class=selfeval>#f</span>
+     <code class=scheme>void</code>)))
+(<code class=scheme>read-string</code> <span class=selfeval>5</span> <span class=variable>mod3-cycle/not-thread-safe</span>) <span class=comment>; =&gt; <code class=schemeresponse><span class=selfeval>&quot;01201&quot;</span></code></span>
+
+<span class=comment>;; Same thing, but safe for concurrent access:</span>
+(<span class=keyword>define</span> <span class=variable>mod3-cycle</span>
+  (<span class=keyword>let</span> ([<span class=variable>n</span> <span class=selfeval>0</span>]
+        <span class=comment>;; for guarding use of n:</span>
+        [<span class=variable>lock</span> (<code class=scheme>make-semaphore</code> <span class=selfeval>1</span>)])
+    (<code class=scheme>make-custom-input-port</code>
+     (<span class=keyword>lambda</span> (<span class=variable>s</span>)
+       (<span class=keyword>if</span> (<code class=scheme>semaphore-try-wait?</code> <span class=variable>lock</span>)
+           (<span class=keyword>begin</span>
+             (<code class=scheme>string-set!</code> <span class=variable>s</span> <span class=selfeval>0</span> (<code class=scheme>integer-&gt;char</code> (<span class=variable>+</span> <span class=selfeval>48</span> <span class=variable>n</span>)))
+             (<span class=keyword>set!</span> <span class=variable>n</span> (<code class=scheme>modulo</code> (<code class=scheme>add1</code> <span class=variable>n</span>) <span class=selfeval>3</span>))
+             (<code class=scheme>semaphore-post</code> <span class=variable>lock</span>)
+             <span class=selfeval>1</span>)
+           <span class=comment>;; another thread must have the lock;</span>
+           <span class=comment>;; instead of spinning, wait until the</span>
+           <span class=comment>;; lock looks available:</span>
+           (<code class=scheme>make-semaphore-peek</code> <span class=variable>lock</span>)))
+     <span class=selfeval>#f</span>
+     <code class=scheme>void</code>)))
+(<span class=keyword>let</span> ([<span class=variable>result1</span> <span class=selfeval>#f</span>]
+      [<span class=variable>result2</span> <span class=selfeval>#f</span>])
+  (<span class=keyword>let</span> ([<span class=variable>t1</span> (<code class=scheme>thread</code> (<span class=keyword>lambda</span> ()
+                      (<span class=keyword>set!</span> <span class=variable>result1</span> (<code class=scheme>read-string</code> <span class=selfeval>5</span> <span class=variable>mod3-cycle</span>))))]
+        [<span class=variable>t2</span> (<code class=scheme>thread</code> (<span class=keyword>lambda</span> ()
+                      (<span class=keyword>set!</span> <span class=variable>result2</span> (<code class=scheme>read-string</code> <span class=selfeval>5</span> <span class=variable>mod3-cycle</span>))))])
+    (<code class=scheme>thread-wait</code> <span class=variable>t1</span>)
+    (<code class=scheme>thread-wait</code> <span class=variable>t2</span>)
+    (<code class=scheme>string-append</code> <span class=variable>result1</span> <span class=selfeval>&quot;,&quot;</span> <span class=variable>result2</span>))) <span class=comment>; =&gt; <code class=schemeresponse><span class=selfeval>&quot;0212,10201&quot;</span></code>, maybe</span>
+
+<span class=comment>;; Non-character port results:</span>
+(<span class=keyword>define</span> <span class=variable>infinite-voids</span>
+  (<code class=scheme>make-custom-input-port</code>
+   (<span class=keyword>lambda</span> (<span class=variable>s</span>)
+     <span class=comment>;; Return a procedure that produces void:</span>
+     (<span class=keyword>lambda</span> (<span class=variable>where</span> <span class=variable>line</span> <span class=variable>col</span> <span class=variable>pos</span>) (<code class=scheme>values</code> (<code class=scheme>void</code>) <span class=selfeval>1</span>)))
+   <span class=selfeval>#f</span>
+   <code class=scheme>void</code>))
+(<code class=scheme>read-char</code> <span class=variable>infinite-voids</span>) <span class=comment>; =&gt; error: non-char in an unsupported context</span>
+(<code class=scheme>read-char-or-special</code> <span class=variable>infinite-voids</span>) <span class=comment>; =&gt; void</span>
+</pre></div><p></p>
+<p>
+</p>
+<a name="node_sec_11.1.6.2"></a>
+<h4><a href="mzscheme.html#node_toc_node_sec_11.1.6.2">11.1.6.2&nbsp;&nbsp;Custom Output</a></h4>
+<p><a name="node_idx_1588"></a><a name="node_kw_definitionmake-custom-output-port"></a><code class=scheme>(make-custom-output-port</code><tt>&nbsp;</tt><code class=scheme><span class=variable>waitable-or-false write-string-proc flush-proc close-proc</span></code><code class=scheme>)</code>
+creates an output port. The port is immediately open for writing. If
+<code class=scheme><span class=variable>close-proc</span></code> procedure has no side effects, then the port need
+not be explicitly closed. The port can buffer data within its
+<code class=scheme><span class=variable>write-string-proc</span></code>.</p>
+<p>
+</p>
+<ul><p>
+</p>
+<li><p><code class=scheme><span class=variable>waitable-thunk-or-false</span></code>  --  <code class=scheme><span class=selfeval>#f</span></code> or a procedure
+of no arguments that returns a waitable and object to be used
+with <code class=scheme>object-wait-multiple</code> (e.g., a semaphore or another
+port); see section&nbsp;<a href="mzscheme-Z-H-7.html#node_sec_7.6">7.6</a> for more information on waitables.</p>
+<p>
+If a waitable-generating procedure is supplied, it is called by
+the system under certain circumstances to determine when the port
+is ready for writing at least one character without blocking, or
+ready to make progress in flushing an internal buffer without
+blocking. For example, the procedure is called to
+implement <code class=scheme>object-wait-multiple</code> for the output port.  A
+returned waitable must not unblock unless the port is ready for
+writing. Otherwise, the guarantees
+of <code class=scheme><code class=scheme>object-wait-multiple</code></code> will be broken for the output
+port.</p>
+<p>
+The waitable-generating procedure will not always be used before a
+call to the writing procedure (e.g., for a non-blocking
+write). Even after the waitable-generating procedure is called,
+its result might be ignored, or the wait may be terminated
+arbitrarily.</p>
+<p>
+If <code class=scheme><span class=variable>waitable-thunk-or-false</span></code> is <code class=scheme><span class=selfeval>#f</span></code>, the system
+assumes that writes to the port will always succeed. In other
+words, supplying <code class=scheme><span class=selfeval>#f</span></code> is the same as
+supplying <code class=scheme>(<span class=keyword>lambda</span> () (<code class=scheme>make-semaphore</code> <span class=selfeval>1</span>))</code>.  If the
+waitable-generating procedure returns a non-waitable value, it is
+also treated like a <code class=scheme>(<code class=scheme>make-semaphore</code> <span class=selfeval>1</span>)</code> result.</p>
+<p>
+</p>
+<li><p><code class=scheme><span class=variable>write-string-proc</span></code>  --  a procedure of four arguments:
+</p>
+<ul><p>
+</p>
+<li><p>an immutable string containing characters to write;</p>
+<p>
+</p>
+<li><p>a non-negative exact integer for a starting offset
+(inclusive) into the string,</p>
+<p>
+</p>
+<li><p>a non-negative exact integer for an ending offset
+(exclusive) into the string,</p>
+<p>
+</p>
+<li><p>a boolean; <code class=scheme><span class=selfeval>#t</span></code> indicates that the port is allowed
+to keep the written characters in a buffer, and that it is
+allowed to block indefinitely; <code class=scheme><span class=selfeval>#f</span></code> indicates that the
+write should not block, and that the port should attempt to flush
+its buffer and completely write new characters instead of
+buffering them.</p>
+<p>
+</p>
+</ul><p>
+The procedure returns a non-negative exact integer representing
+the number of characters written and buffered, or <code class=scheme><span class=selfeval>#f</span></code> if
+no characters could be written because the internal buffer could
+not be completely flushed.  If the returned integer is larger than
+the supplied string, the <a name="node_idx_1590"></a><code class=scheme>exn:application:mismatch</code> exception is raised. If
+the start and end indices are the same (i.e., no characters are to
+be written), then the final boolean argument will be <code class=scheme><span class=selfeval>#f</span></code>,
+and the procedure should return <code class=scheme><span class=selfeval>0</span></code> only if the buffer is
+completely flushed.</p>
+<p>
+From a user's perspective, the difference between buffered and
+completely written data is (1) buffered data can be lost in the
+future due to a failed write, and (2) <code class=scheme>flush-output</code> forces
+all buffered data to be completely written. Under no circumstances
+is buffering required.</p>
+<p>
+If the writing procedure raises an exception, due either to write
+or commit operations, it must not have committed any characters
+(though it may have committed previously buffered characters).</p>
+<p>
+A port's writing procedure may be called in multiple threads
+simultaneously (if the port is accessible in multiple
+threads). The port is responsible for its own internal
+synchronization. Note that improper implementation of such
+synchronization mechanisms might cause the writing procedure to
+block for a non-blocking write.</p>
+<p>
+</p>
+<li><p><code class=scheme><span class=variable>flush-proc</span></code>  --  a procedure of zero arguments that is
+called to flush the port's buffer, if any, in response to
+<code class=scheme>flush-output</code>. The flushing operation can block. The flush
+and writing procedures can be called simultaneously in multiple
+threads (if the port is accessible in multiple threads). If the
+flushing procedure is called while another thread is flushing the
+buffer, the call should not return until the flush has completed.</p>
+<p>
+</p>
+<li><p><code class=scheme><span class=variable>close-proc</span></code>  --  a procedure of zero arguments that is
+called to close the port. The port is not considered closed until
+the closing procedure returns. The port's waitable, writing
+procedure, flushing procedure, and closing procedure will never be
+used again via the port is closed. However, the closing procedure
+can be called simultaneously in multiple threads (if the port is
+accessible in multiple threads), and it may be called during a
+call to the writing for flushing procedures by another thread; in
+the latter case, the write or flush must be terminated immediately
+with an error.</p>
+<p>
+</p>
+</ul><p></p>
+<p>
+Examples:
+</p>
+<div align=left><pre class=scheme>(<span class=keyword>define</span> <span class=variable>/dev/null</span> (<code class=scheme>make-custom-output-port</code> 
+                   <span class=selfeval>#f</span> 
+                   (<span class=keyword>lambda</span> (<span class=variable>s</span> <span class=variable>start</span> <span class=variable>end</span> <span class=variable>buffer-ok?</span>) (<span class=variable>-</span> <span class=variable>end</span> <span class=variable>start</span>))
+                   <code class=scheme>void</code> <code class=scheme>void</code>))
+(<code class=scheme>display</code> <span class=selfeval>&quot;hello&quot;</span> <span class=variable>/dev/null</span>)
+
+
+(<span class=keyword>define</span> <span class=variable>accum-list</span> <code class=scheme>null</code>)
+(<span class=keyword>define</span> <span class=variable>accumulator/not-thread-safe</span>
+  (<code class=scheme>make-custom-output-port</code> 
+   <span class=selfeval>#f</span>
+   (<span class=keyword>lambda</span> (<span class=variable>s</span> <span class=variable>start</span> <span class=variable>end</span> <span class=variable>buffer-ok?</span>)
+     (<span class=keyword>set!</span> <span class=variable>accum-list</span>
+           (<code class=scheme>append</code> <span class=variable>accum-list</span>
+                   (<span class=variable>string-&gt;list</span> (<code class=scheme>substring</code> <span class=variable>s</span> <span class=variable>start</span> <span class=variable>end</span>))))
+     (<span class=variable>-</span> <span class=variable>end</span> <span class=variable>start</span>))
+   <code class=scheme>void</code> <code class=scheme>void</code>))
+(<code class=scheme>display</code> <span class=selfeval>&quot;hello&quot;</span> <span class=variable>accumulator/not-thread-safe</span>)
+<span class=variable>accum-list</span> <span class=comment>; =&gt; <code class=scheme><span class=keyword>'</span>(<span class=selfeval>#\h</span> <span class=selfeval>#\e</span> <span class=selfeval>#\l</span> <span class=selfeval>#\l</span> <span class=selfeval>#\o</span>)</code></span>
+
+(<span class=keyword>define</span> <span class=variable>accum-list</span> <code class=scheme>null</code>)
+(<span class=keyword>define</span> <span class=variable>accumulator</span> 
+  (<span class=keyword>let</span> ([<span class=variable>lock</span> (<code class=scheme>make-semaphore</code> <span class=selfeval>1</span>)])
+    (<code class=scheme>make-custom-output-port</code>
+     (<span class=keyword>lambda</span> () (<code class=scheme>make-semaphore-peek</code> <span class=variable>lock</span>))
+     (<span class=keyword>lambda</span> (<span class=variable>s</span> <span class=variable>start</span> <span class=variable>end</span> <span class=variable>buffer-ok?</span>)
+       (<span class=keyword>if</span> (<code class=scheme>semaphore-try-wait?</code> <span class=variable>lock</span>)
+           (<span class=keyword>begin</span>
+             (<span class=keyword>set!</span> <span class=variable>accum-list</span>
+                   (<code class=scheme>append</code> <span class=variable>accum-list</span>
+                           (<span class=variable>string-&gt;list</span> (<code class=scheme>substring</code> <span class=variable>s</span> <span class=variable>start</span> <span class=variable>end</span>))))
+             (<code class=scheme>semaphore-post</code> <span class=variable>lock</span>)
+             (<span class=variable>-</span> <span class=variable>end</span> <span class=variable>start</span>))
+           <span class=selfeval>0</span>))
+     <code class=scheme>void</code>
+     <code class=scheme>void</code>)))
+(<code class=scheme>display</code> <span class=selfeval>&quot;hello&quot;</span> <span class=variable>accumulator</span>)
+<span class=variable>accum-list</span> <span class=comment>; =&gt; <code class=scheme><span class=keyword>'</span>(<span class=selfeval>#\h</span> <span class=selfeval>#\e</span> <span class=selfeval>#\l</span> <span class=selfeval>#\l</span> <span class=selfeval>#\o</span>)</code></span>
+
+(<span class=keyword>define</span> (<span class=variable>make-capitalize</span> <span class=variable>port</span>)
+  (<code class=scheme>make-custom-output-port</code>
+   <span class=comment>;; This port is ready when the original is ready:</span>
+   (<span class=keyword>lambda</span> () <span class=variable>port</span>)
+   <span class=comment>;; Writing procedure:</span>
+   (<span class=keyword>lambda</span> (<span class=variable>s</span> <span class=variable>start</span> <span class=variable>end</span> <span class=variable>buffer-ok?</span>)
+     (<span class=keyword>let</span> ([<span class=variable>s</span> (<span class=variable>list-&gt;string</span>
+               (<code class=scheme>map</code> <code class=scheme>char-upcase</code>
+                    (<span class=variable>string-&gt;list</span> (<code class=scheme>substring</code> <span class=variable>s</span> <span class=variable>start</span> <span class=variable>end</span>))))])
+       (<span class=keyword>if</span> <span class=variable>buffer-ok?</span>
+           (<span class=keyword>begin</span>
+             (<code class=scheme>display</code> <span class=variable>s</span> <span class=variable>port</span>)
+             (<code class=scheme>string-length</code> <span class=variable>s</span>))
+           (<code class=scheme>write-string-avail*</code> <span class=variable>s</span> <span class=variable>port</span>))))
+   <span class=comment>;; Flush procedure --- flush original port:</span>
+   (<span class=keyword>lambda</span> () (<code class=scheme>flush-output</code> <span class=variable>port</span>))
+   <span class=comment>;; Close procedure --- close original port:</span>
+   (<span class=keyword>lambda</span> () (<code class=scheme>close-output-port</code> <span class=variable>port</span>))))
+(<span class=keyword>define</span> <span class=variable>orig-port</span> (<code class=scheme>open-output-string</code>))
+(<span class=keyword>define</span> <span class=variable>cap-port</span> (<span class=variable>make-capitalize</span> <span class=variable>orig-port</span>))
+(<code class=scheme>display</code> <span class=selfeval>&quot;Hello&quot;</span> <span class=variable>cap-port</span>)
+(<code class=scheme>get-output-string</code> <span class=variable>orig-port</span>) <span class=comment>; =&gt; <code class=schemeresponse><span class=selfeval>&quot;HELLO&quot;</span></code></span>
+</pre></div><p></p>
+<p>
+</p>
+<a name="node_sec_11.2"></a>
+<h2><a href="mzscheme.html#node_toc_node_sec_11.2">11.2&nbsp;&nbsp;Reading and Writing</a></h2>
+<p><a name="node_idx_1592"></a></p>
+<p>
+</p>
+<a name="node_sec_11.2.1"></a>
+<h3><a href="mzscheme.html#node_toc_node_sec_11.2.1">11.2.1&nbsp;&nbsp;Reading</a></h3>
+<p></p>
+<p>
+In addition to the standard reading procedures, MzScheme provides
+block reading procedures such as <code class=scheme><code class=scheme>read-line</code></code>,
+<code class=scheme><code class=scheme>read-string</code></code>, and <code class=scheme><code class=scheme>peek-string</code></code>:
+</p>
+<ul><p>
+</p>
+<li><p><a name="node_idx_1594"></a><a name="node_kw_definitionread-line"></a><code class=scheme>(read-line</code><tt>&nbsp;</tt>[<code class=scheme><span class=variable>input-port mode-symbol</span></code>]<code class=scheme>)</code> returns a string
+containing the next line of characters from <code class=scheme><span class=variable>input-port</span></code>.  If
+<code class=scheme><span class=variable>input-port</span></code> is omitted, the current input port is used.</p>
+<p>
+Characters are read from <code class=scheme><span class=variable>input-port</span></code> until a line separator or
+an end-of-file is read. The line separator is not included in the
+result string (but it is removed from the port's stream). If no
+characters are read before an end-of-file is encountered, <code class=scheme><code class=scheme>eof</code></code>
+is returned.</p>
+<p>
+The <code class=scheme><span class=variable>mode-symbol</span></code> argument determines the line separator(s). It
+must be one of the following symbols:
+</p>
+<ul><p>
+</p>
+<li><p><code class=scheme><span class=selfeval>'linefeed</span></code><a name="node_idx_1596"></a> breaks lines on linefeed characters;
+this is the default.</p>
+<p>
+</p>
+<li><p><code class=scheme><span class=selfeval>'return</span></code><a name="node_idx_1598"></a> breaks lines on return characters.</p>
+<p>
+</p>
+<li><p><code class=scheme><span class=selfeval>'return-linefeed</span></code><a name="node_idx_1600"></a> breaks lines on
+return-linefeed combinations. If a return character is not followed
+by a linefeed character, it is included in the result string;
+similarly, a linefeed that is not preceded by a return is included
+in the result string.</p>
+<p>
+</p>
+<li><p><code class=scheme><span class=selfeval>'any</span></code><a name="node_idx_1602"></a> breaks lines on any of a return
+character, linefeed character, or return-linefeed combination. If a
+return character is followed by a linefeed character, the two are
+treated as a combination.</p>
+<p>
+</p>
+<li><p><code class=scheme><span class=selfeval>'any-one</span></code><a name="node_idx_1604"></a> breaks lines on either a return or
+linefeed character, without recognizing return-linefeed
+combinations.</p>
+<p>
+</p>
+</ul><p>
+Return and linefeed characters are detected after the conversions that
+are automatically performed when reading a file in text mode. For
+example, reading a file in text mode under Windows automatically
+changes return-linefeed combinations to a linefeed. Thus, when a file
+is opened in text mode, <code class=scheme><span class=selfeval>'linefeed</span></code> is usually the appropriate
+<code class=scheme><code class=scheme>read-line</code></code> mode.</p>
+<p>
+</p>
+<li><p><a name="node_idx_1606"></a><a name="node_kw_definitionread-string"></a><code class=scheme>(read-string</code><tt>&nbsp;</tt><code class=scheme><span class=variable>k</span></code><tt>&nbsp;</tt>[<code class=scheme><span class=variable>input-port</span></code>]<code class=scheme>)</code> returns a string containing
+the next <code class=scheme><span class=variable>k</span></code> characters from <code class=scheme><span class=variable>input-port</span></code>. The default value
+of <code class=scheme><span class=variable>input-port</span></code> is the current input port.</p>
+<p>
+If <code class=scheme><span class=variable>k</span></code> is <code class=scheme><span class=selfeval>0</span></code>, then the empty string is
+returned. Otherwise, if fewer than <code class=scheme><span class=variable>k</span></code> characters are available
+before an end-of-file is encountered, then the returned string will
+contain only those characters before the end-of-file (i.e., the
+returned string's length will be less than <code class=scheme><span class=variable>k</span></code>). <a name="call_footnote_Temp_24"></a><a href="#footnote_Temp_24"><sup><small>20</small></sup></a> If no characters are available before an end-of-file,
+then <code class=scheme><code class=scheme>eof</code></code> is returned.</p>
+<p>
+If an error occurs during reading, some characters may be lost (i.e.,
+if <code class=scheme><code class=scheme>read-string</code></code> successfully reads some characters before
+encountering an error, the characters are dropped.)</p>
+<p>
+</p>
+<li><p><a name="node_idx_1608"></a><a name="node_kw_definitionread-string-avail!"></a><code class=scheme>(read-string-avail!</code><tt>&nbsp;</tt><code class=scheme><span class=variable>string</span></code><tt>&nbsp;</tt>[<code class=scheme><span class=variable>input-port start-k end-k</span></code>]<code class=scheme>)</code>
+reads characters from <code class=scheme><span class=variable>input-port</span></code> and puts them into
+<code class=scheme><span class=variable>string</span></code> starting from index <code class=scheme><span class=variable>start-k</span></code> (inclusive) up to
+<code class=scheme><span class=variable>end-k</span></code> (exclusive).  The default value of <code class=scheme><span class=variable>input-port</span></code> is
+the current input port. The default value of <code class=scheme><span class=variable>start-k</span></code> is
+<code class=scheme><span class=selfeval>0</span></code>.  The default value of <code class=scheme><span class=variable>end-k</span></code> is the length of the
+<code class=scheme><span class=variable>string</span></code>. Like <code class=scheme><code class=scheme>substring</code></code>, the
+<a name="node_idx_1610"></a><code class=scheme>exn:application:mismatch</code> exception is raised if <code class=scheme><span class=variable>start-k</span></code> or <code class=scheme><span class=variable>end-k</span></code>
+is out-of-range for <code class=scheme><span class=variable>string</span></code>.</p>
+<p>
+If the difference between <code class=scheme><span class=variable>start-k</span></code> and <code class=scheme><span class=variable>end-k</span></code> is <code class=scheme><span class=selfeval>0</span></code>,
+then <code class=scheme><span class=selfeval>0</span></code> is returned and the string is not modified. If no
+characters are available before an end-of-file, then <code class=scheme><code class=scheme>eof</code></code> is
+returned. Otherwise, the return value is the number of characters
+read. If <code class=scheme><span class=variable>m</span></code> characters are read and <code class=scheme><span class=variable>m</span></code> &lt; <code class=scheme><span class=variable>end-k</span></code>  <tt>-</tt> 
+<code class=scheme><span class=variable>start-k</span></code>, then <code class=scheme><span class=variable>string</span></code> is not modified at indices
+<code class=scheme><span class=variable>start-k</span></code>  +  <code class=scheme><span class=variable>m</span></code> though <code class=scheme><span class=variable>end-k</span></code>.</p>
+<p>
+Unlike <code class=scheme><code class=scheme>read-string</code></code>, <code class=scheme><code class=scheme>read-string-avail!</code></code> returns without
+blocking after reading immediately-available characters. It blocks
+only if no characters are yet available. Also unlike
+<code class=scheme><code class=scheme>read-string</code></code>, <code class=scheme><code class=scheme>read-string-avail!</code></code> never drops characters;
+if <code class=scheme><code class=scheme>read-string-avail!</code></code> successfully reads some characters and
+then encounters an error, it suppresses the error (treating it
+roughly like an end-of-file) and returns the read characters.  (The
+error will be triggered by future reads.) If an error is encountered
+before any characters have been read, an exception is raised.</p>
+<p>
+</p>
+<li><p><a name="node_idx_1612"></a><a name="node_kw_definitionread-string-avail!*"></a><code class=scheme>(read-string-avail!*</code><tt>&nbsp;</tt><code class=scheme><span class=variable>string</span></code><tt>&nbsp;</tt>[<code class=scheme><span class=variable>input-port start-k end-k</span></code>]<code class=scheme>)</code>
+is like <code class=scheme><code class=scheme>read-string-avail!</code></code>, except that it returns <code class=scheme><span class=selfeval>0</span></code>
+immediately if no characters are available for reading and the
+end-of-file is not reached.</p>
+<p>
+</p>
+<li><p><a name="node_idx_1614"></a><a name="node_kw_definitionread-string-avail!/enable-break"></a><code class=scheme>(read-string-avail!/enable-break</code><tt>&nbsp;</tt><code class=scheme><span class=variable>string</span></code><tt>&nbsp;</tt>[<code class=scheme><span class=variable>input-port
+start-k end-k</span></code>]<code class=scheme>)</code> is like <code class=scheme><code class=scheme>read-string-avail!</code></code>, except that
+breaks are enabled during the read. The procedure provides a
+guarantee about the interaction of reading and breaks: if breaking is
+disabled when <code class=scheme><code class=scheme>read-string-avail!/enable-break</code></code> is called, and
+if the <a name="node_idx_1616"></a><code class=scheme>exn:break</code> exception is raised as a result of the call,
+then no characters will have been read from <code class=scheme><span class=variable>input-port</span></code>. See
+also section&nbsp;<a href="mzscheme-Z-H-6.html#node_sec_6.6">6.6</a>.</p>
+<p>
+</p>
+<li><p><a name="node_idx_1618"></a><a name="node_kw_definitionpeek-string"></a><code class=scheme>(peek-string</code><tt>&nbsp;</tt><code class=scheme><span class=variable>k skip-k</span></code><tt>&nbsp;</tt>[<code class=scheme><span class=variable>input-port</span></code>]<code class=scheme>)</code> is similar to
+<code class=scheme>read-string</code>, except that the returned characters are
+preserved in the port for future reads. The <code class=scheme><span class=variable>skip-k</span></code> argument
+indicates a number of characters in the input stream to skip before
+collecting characters to return; thus, in total, the next
+<code class=scheme><span class=variable>k</span></code> + <code class=scheme><span class=variable>skip-k</span></code> characters are inspected.</p>
+<p>
+For most kinds of ports, inspecting <code class=scheme><span class=variable>k</span></code> + <code class=scheme><span class=variable>skip-k</span></code> characters
+requires <code class=scheme><span class=variable>k</span></code> + <code class=scheme><span class=variable>skip-k</span></code> bytes of memory overhead associated
+with the port, at least until the characters are read. No such
+overhead is required when peeking into a string port (see
+section&nbsp;<a href="#node_sec_11.1.4">11.1.4</a>), a pipe port (see section&nbsp;<a href="#node_sec_11.1.3">11.1.3</a>), or a
+custom port with a specific peek procedure (depending on how the peek
+procedure is implemented; see section&nbsp;<a href="#node_sec_11.1.6">11.1.6</a>).</p>
+<p>
+</p>
+<li><p><a name="node_idx_1620"></a><a name="node_kw_definitionpeek-string-avail!"></a><code class=scheme>(peek-string-avail!</code><tt>&nbsp;</tt><code class=scheme><span class=variable>string skip-k</span></code><tt>&nbsp;</tt>[<code class=scheme><span class=variable>input-port start-k
+end-k</span></code>]<code class=scheme>)</code> is like <code class=scheme><code class=scheme>read-string-avail!</code></code>, but for peeking, and with
+a <code class=scheme><span class=variable>skip-k</span></code> argument like <code class=scheme><code class=scheme>peek-string</code></code>. When skipping
+characters, <code class=scheme><code class=scheme>peek-string-avail!</code></code> blocks until finding the
+end-of-file or at least one character past the skipped characters.</p>
+<p>
+</p>
+<li><p><a name="node_idx_1622"></a><a name="node_kw_definitionpeek-string-avail!*"></a><code class=scheme>(peek-string-avail!*</code><tt>&nbsp;</tt><code class=scheme><span class=variable>string skip-k</span></code><tt>&nbsp;</tt>[<code class=scheme><span class=variable>input-port start-k
+end-k</span></code>]<code class=scheme>)</code> is like <code class=scheme><code class=scheme>read-string-avail!*</code></code>, but for peeking, and
+with a <code class=scheme><span class=variable>skip-k</span></code> argument like <code class=scheme><code class=scheme>peek-string</code></code>. Since this
+procedure never blocks, it may return before even <code class=scheme><span class=variable>skip-k</span></code>
+characters are available from the port.</p>
+<p>
+</p>
+<li><p><a name="node_idx_1624"></a><a name="node_kw_definitionpeek-string-avail!/enable-break"></a><code class=scheme>(peek-string-avail!/enable-break</code><tt>&nbsp;</tt><code class=scheme><span class=variable>string skip-k</span></code><tt>&nbsp;</tt>[<code class=scheme><span class=variable>input-port start-k end-k</span></code>]<code class=scheme>)</code>
+is the peeking version of <code class=scheme><code class=scheme>read-string-avail!/enable-break</code></code>,
+with a <code class=scheme><span class=variable>skip-k</span></code> argument like <code class=scheme><code class=scheme>peek-string</code></code>.</p>
+<p>
+</p>
+<li><p><a name="node_idx_1626"></a><a name="node_kw_definitionread-char-or-special"></a><code class=scheme>(read-char-or-special</code><tt>&nbsp;</tt><code class=scheme><span class=variable>input-port</span></code><code class=scheme>)</code> is the same as
+<code class=scheme><code class=scheme>read-char</code></code>, except that if the input port returns a
+non-character value (through a value-generating procedure in a custom
+port; see section&nbsp;<a href="#node_sec_11.1.6">11.1.6</a> for details), the non-character value
+is returned. If the input port generates <a name="node_idx_1628"></a><code class=scheme>exn:special-comment</code>,
+the exception is propagated after adjusting the port's position
+information based on the exception's <code class=scheme>width</code> field.</p>
+<p>
+</p>
+<li><p><a name="node_idx_1630"></a><a name="node_kw_definitionpeek-char"></a><code class=scheme>(peek-char</code><tt>&nbsp;</tt><code class=scheme><span class=variable>input-port</span></code><tt>&nbsp;</tt>[<code class=scheme><span class=variable>skip-k</span></code>]<code class=scheme>)</code> extends the standard
+<code class=scheme><code class=scheme>peek-char</code></code> with an optional argument (defaulting to <code class=scheme><span class=selfeval>0</span></code>)
+that represents the number of characters to skip. If the input port
+generates a non-character value (through a value-generating procedure
+in a custom port; see section&nbsp;<a href="#node_sec_11.1.6">11.1.6</a> for details) before
+<code class=scheme><span class=variable>skip-k</span></code> characters, the <a name="node_idx_1632"></a><code class=scheme>exn:application:mismatch</code> exception is raised.</p>
+<p>
+</p>
+<li><p><a name="node_idx_1634"></a><a name="node_kw_definitionpeek-char-or-special"></a><code class=scheme>(peek-char-or-special</code><tt>&nbsp;</tt><code class=scheme><span class=variable>input-port</span></code><tt>&nbsp;</tt>[<code class=scheme><span class=variable>skip-k</span></code>]<code class=scheme>)</code> is the same as
+<code class=scheme><code class=scheme>peek-char</code></code>, except that if the input port returns a
+non-character value after <code class=scheme><span class=variable>skip-k</span></code> characters, the symbol
+<code class=scheme><span class=selfeval>'special</span></code> is returned.</p>
+<p>
+</p>
+</ul><p></p>
+<p>
+</p>
+<a name="node_sec_11.2.2"></a>
+<h3><a href="mzscheme.html#node_toc_node_sec_11.2.2">11.2.2&nbsp;&nbsp;Writing</a></h3>
+<p></p>
+<p>
+In addition to the standard printing procedures, MzScheme provides
+<code class=scheme><code class=scheme>print</code></code>, which outputs values to a port by calling the port's
+print handler (see section&nbsp;<a href="#node_sec_11.2.5">11.2.5</a>), plus the block-writing
+procedures such as <code class=scheme><code class=scheme>write-string-avail</code></code>:
+</p>
+<ul><p>
+</p>
+<li><p><a name="node_idx_1636"></a><a name="node_kw_definitionprint"></a><code class=scheme>(print</code><tt>&nbsp;</tt><code class=scheme><span class=variable>v</span></code><tt>&nbsp;</tt>[<code class=scheme><span class=variable>output-port</span></code>]<code class=scheme>)</code>  outputs
+<code class=scheme><span class=variable>v</span></code> to <code class=scheme><span class=variable>output-port</span></code>.  The default value of <code class=scheme><span class=variable>output-port</span></code>
+is the current output port.</p>
+<p>
+The <code class=scheme><code class=scheme>print</code></code> procedure is used to print Scheme values in a context
+where a programmer expects to see a Scheme value. The rationale for
+providing <code class=scheme><code class=scheme>print</code></code> is that <code class=scheme><code class=scheme>display</code></code> and <code class=scheme><code class=scheme>write</code></code> both have
+standard output conventions, and this standardization restricts the
+ways that an environment can change the behavior of these
+procedures. No output conventions should be assumed for <code class=scheme><code class=scheme>print</code></code>
+so that environments are free to modify the actual output generated
+by <code class=scheme><code class=scheme>print</code></code> in any way.  Unlike the port display and write
+handlers, a global port print handler can be installed through the
+<a name="node_idx_1638"></a><code class=scheme>global-port-print-handler</code> parameter (see
+section&nbsp;<a href="mzscheme-Z-H-7.html#node_sec_7.7.1.2">7.7.1.2</a>).</p>
+<p>
+</p>
+<li><p><a name="node_idx_1640"></a><a name="node_kw_definitionwrite-string-avail"></a><code class=scheme>(write-string-avail</code><tt>&nbsp;</tt><code class=scheme><span class=variable>string</span></code><tt>&nbsp;</tt>[<code class=scheme><span class=variable>output-port start-k end-k</span></code>]<code class=scheme>)</code>
+write characters to <code class=scheme><span class=variable>output-port</span></code> from <code class=scheme><span class=variable>string</span></code> starting from
+index <code class=scheme><span class=variable>start-k</span></code> (inclusive) up to <code class=scheme><span class=variable>end-k</span></code> (exclusive).  The
+default value of <code class=scheme><span class=variable>output-port</span></code> is the current output port. The
+default value of <code class=scheme><span class=variable>start-k</span></code> is <code class=scheme><span class=selfeval>0</span></code>.  The default value of
+<code class=scheme><span class=variable>end-k</span></code> is the length of the <code class=scheme><span class=variable>string</span></code>. Like <code class=scheme><code class=scheme>substring</code></code>,
+the <a name="node_idx_1642"></a><code class=scheme>exn:application:mismatch</code> exception is raised if <code class=scheme><span class=variable>start-k</span></code> or
+<code class=scheme><span class=variable>end-k</span></code> is out-of-range for <code class=scheme><span class=variable>string</span></code>.</p>
+<p>
+The result is the number of characters written and flushed to
+<code class=scheme><span class=variable>output-port</span></code>. The <code class=scheme><code class=scheme>write-string-avail</code></code> procedure returns
+without blocking after writing as many characters as it can
+immediately flush. It blocks only if no characters can be flushed
+immediately.</p>
+<p>
+The <code class=scheme><code class=scheme>write-string-avail</code></code> procedure never drops characters; if
+<code class=scheme><code class=scheme>write-string-avail</code></code> successfully writes some characters and then
+encounters an error, it suppresses the error and returns the number
+of written characters.  (The error will be triggered by future
+writes.) If an error is encountered before any characters have been
+written, an exception is raised.</p>
+<p>
+</p>
+<li><p><a name="node_idx_1644"></a><a name="node_kw_definitionwrite-string-avail*"></a><code class=scheme>(write-string-avail*</code><tt>&nbsp;</tt><code class=scheme><span class=variable>string</span></code><tt>&nbsp;</tt>[<code class=scheme><span class=variable>output-port start-k end-k</span></code>]<code class=scheme>)</code> is
+like <code class=scheme><code class=scheme>write-string-avail</code></code>, except that it never blocks, it
+returns <code class=scheme><span class=selfeval>#f</span></code> if the port contains buffered data that cannot be
+written immediately, and it returns <code class=scheme><span class=selfeval>0</span></code> if the port's internal
+buffer (if any) is flushed but no additional characters can be
+written immediately.</p>
+<p>
+</p>
+<li><p><a name="node_idx_1646"></a><a name="node_kw_definitionwrite-string-avail/enable-break"></a><code class=scheme>(write-string-avail/enable-break</code><tt>&nbsp;</tt><code class=scheme><span class=variable>string</span></code><tt>&nbsp;</tt>[<code class=scheme><span class=variable>input-port
+start-k end-k</span></code>]<code class=scheme>)</code> is like <code class=scheme><code class=scheme>write-string-avail</code></code>, except that
+breaks are enabled during the write. The procedure provides a
+guarantee about the interaction of writing and breaks: if breaking is
+disabled when <code class=scheme><code class=scheme>write-string-avail/enable-break</code></code> is called, and
+if the <a name="node_idx_1648"></a><code class=scheme>exn:break</code> exception is raised as a result of the
+call, then no characters will have been written to <code class=scheme><span class=variable>output-port</span></code>.
+See also section&nbsp;<a href="mzscheme-Z-H-6.html#node_sec_6.6">6.6</a>.</p>
+<p>
+</p>
+</ul><p></p>
+<p>
+The <code class=scheme><code class=scheme>fprintf</code></code>, <code class=scheme><code class=scheme>printf</code></code>, and <code class=scheme><code class=scheme>format</code></code> procedures
+create formatted output:
+</p>
+<ul><p>
+</p>
+<li><p><a name="node_idx_1650"></a><a name="node_kw_definitionfprintf"></a><code class=scheme>(fprintf</code><tt>&nbsp;</tt><code class=scheme><span class=variable>output-port format-string v</span></code><tt>&nbsp;</tt><tt>&middot;&middot;&middot;</tt><code class=scheme>)</code> prints formatted
+output to <code class=scheme><span class=variable>output-port</span></code>, where <code class=scheme><span class=variable>format-string</span></code> is a string
+that is printed; <code class=scheme><span class=variable>format-string</span></code> can contain special formatting
+tags:
+</p>
+<ul><p>
+</p>
+<li><p><code class=scheme>~</code>n or <code class=scheme>~</code>% prints a newline</p>
+<p>
+</p>
+<li><p><code class=scheme>~</code>a or <code class=scheme>~</code>A <code class=scheme><code class=scheme>display</code></code>s the next argument
+among the <code class=scheme><span class=variable>v</span></code>s</p>
+<p>
+</p>
+<li><p><code class=scheme>~</code>s or <code class=scheme>~</code>S <code class=scheme><code class=scheme>write</code></code>s the next argument
+among the <code class=scheme><span class=variable>v</span></code>s</p>
+<p>
+</p>
+<li><p><code class=scheme>~</code>v or <code class=scheme>~</code>V <code class=scheme><code class=scheme>print</code></code>s the next argument
+among the <code class=scheme><span class=variable>v</span></code>s</p>
+<p>
+</p>
+<li><p><code class=scheme>~</code>e or <code class=scheme>~</code>E outputs the next argument among the
+<code class=scheme><span class=variable>v</span></code>s using the current error value conversion handler (see
+section&nbsp;<a href="mzscheme-Z-H-7.html#node_sec_7.7.1.7">7.7.1.7</a>) and current error printing
+width </p>
+<li><p><code class=scheme>~</code>c or <code class=scheme>~</code>C <code class=scheme><code class=scheme>write-char</code></code>s the next
+argument in <code class=scheme><span class=variable>v</span></code>s; if the next argument is not a character, the
+<a name="node_idx_1652"></a><code class=scheme>exn:application:mismatch</code> exception is raised</p>
+<p>
+</p>
+<li><p><code class=scheme>~</code>b or <code class=scheme>~</code>B prints the next argument among the
+<code class=scheme><span class=variable>v</span></code>s in binary; if the next argument is not an exact number, the
+<a name="node_idx_1654"></a><code class=scheme>exn:application:mismatch</code> exception is raised</p>
+<p>
+</p>
+<li><p><code class=scheme>~</code>o or <code class=scheme>~</code>O prints the next argument among the
+<code class=scheme><span class=variable>v</span></code>s in octal; if the next argument is not an exact number, the
+<a name="node_idx_1656"></a><code class=scheme>exn:application:mismatch</code> exception is raised</p>
+<p>
+</p>
+<li><p><code class=scheme>~</code>x or <code class=scheme>~</code>X prints the next argument among the
+<code class=scheme><span class=variable>v</span></code>s in hexadecimal; if the next argument is not an exact number,
+the <a name="node_idx_1658"></a><code class=scheme>exn:application:mismatch</code> exception is raised</p>
+<p>
+</p>
+<li><p><code class=scheme>~</code>~  prints a tilde (~)</p>
+<p>
+</p>
+<li><p><code class=scheme>~</code><code class=scheme><span class=variable>w</span></code>, where <code class=scheme><span class=variable>w</span></code> is a whitespace character,
+skips characters in <code class=scheme><span class=variable>format-string</span></code> until a non-whitespace
+character is encountered or until a second end-of-line is encountered
+(whichever happens first). An end-of-line is either <code class=scheme><span class=selfeval>#\return</span></code>,
+<code class=scheme><span class=selfeval>#\newline</span></code>, or <code class=scheme><span class=selfeval>#\return</span></code> followed immediately by
+<code class=scheme><span class=selfeval>#\newline</span></code> (on all platforms).</p>
+<p>
+</p>
+</ul><p></p>
+<p>
+The return value is void.</p>
+<p>
+</p>
+<li><p><a name="node_idx_1660"></a><a name="node_kw_definitionprintf"></a><code class=scheme>(printf</code><tt>&nbsp;</tt><code class=scheme><span class=variable>format-string v</span></code><tt>&nbsp;</tt><tt>&middot;&middot;&middot;</tt><code class=scheme>)</code> same as <code class=scheme><code class=scheme>fprintf</code></code> with the
+current output port.</p>
+<p>
+</p>
+<li><p><a name="node_idx_1662"></a><a name="node_kw_definitionformat"></a><code class=scheme>(format</code><tt>&nbsp;</tt><code class=scheme><span class=variable>format-string v</span></code><tt>&nbsp;</tt><tt>&middot;&middot;&middot;</tt><code class=scheme>)</code> same as <code class=scheme><code class=scheme>fprintf</code></code> with a
+string output port where the final string is returned as the result.</p>
+<p>
+</p>
+</ul><p></p>
+<p>
+When an illegal format string is supplied to one of these procedures,
+the <a name="node_idx_1664"></a><code class=scheme>exn:application:type</code> exception is raised. When the format string requires
+more additional arguments than are supplied, the
+<a name="node_idx_1666"></a><code class=scheme>exn:application:fprintf:mismatch</code> exception is raised. When more additional
+arguments are supplied than are used by the format string, the
+<a name="node_idx_1668"></a><code class=scheme>exn:application:mismatch</code> exception is raised.</p>
+<p>
+For example,
+</p>
+<div align=left><pre class=scheme>(<code class=scheme>fprintf</code> <span class=variable>port</span> <span class=selfeval>&quot;~a as a string is ~s.~n&quot;</span> <span class=keyword>'</span>(<span class=selfeval>3</span> <span class=selfeval>4</span>) <span class=selfeval>&quot;(3 4)&quot;</span>)
+</pre></div><p>
+prints this message to <code class=scheme><span class=variable>port</span></code>:<a name="call_footnote_Temp_25"></a><a href="#footnote_Temp_25"><sup><small>21</small></sup></a>
+</p>
+<div align=left><pre class=schemeresponse>(<span class=selfeval>3</span> <span class=selfeval>4</span>) <span class=variable>as</span> <span class=variable>a</span> <span class=variable>string</span> <span class=variable>is</span> <span class=selfeval>&quot;(3 4)&quot;</span>.
+</pre></div><p>
+followed by a newline.</p>
+<p>
+</p>
+<a name="node_sec_11.2.3"></a>
+<h3><a href="mzscheme.html#node_toc_node_sec_11.2.3">11.2.3&nbsp;&nbsp;Counting Positions, Lines, and Columns</a></h3>
+<p></p>
+<p>
+<a name="node_idx_1670"></a> <a name="node_idx_1672"></a> <a name="node_idx_1674"></a>
+MzScheme keeps track of the <strong>position</strong> in a port as the number
+of characters that have been read from any input port (independent of
+the read/write position, which is accessed or changed with
+<code class=scheme><code class=scheme>file-position</code></code>). In addition, MzScheme can track
+<strong>line locations</strong> and <strong>column locations</strong> when
+specifically enabled for a port via <code class=scheme><code class=scheme>port-count-lines!</code></code> or the
+<code class=scheme><code class=scheme>port-count-lines-enabled</code></code> parameter (see
+section&nbsp;<a href="mzscheme-Z-H-7.html#node_sec_7.7.1.2">7.7.1.2</a>). Position, line, and column
+locations for a port are used by <code class=scheme><code class=scheme>read-syntax</code></code> (see
+section&nbsp;<a href="mzscheme-Z-H-12.html#node_sec_12.2">12.2</a> for more information). Position and line locations
+are numbered from 1; column locations are numbered from 0.
+</p>
+<ul><p>
+</p>
+<li><p><a name="node_idx_1676"></a><a name="node_kw_definitionport-count-lines!"></a><code class=scheme>(port-count-lines!</code><tt>&nbsp;</tt><code class=scheme><span class=variable>input-port</span></code><code class=scheme>)</code> turns on line and column
+counting for a port. Counting can be turned on at any time, though
+generally it is turned on before any data is read from a port. When
+an input port is created, if the value of the
+<code class=scheme>port-count-lines-enabled</code> parameter is true (see
+section&nbsp;<a href="mzscheme-Z-H-7.html#node_sec_7.7.1.2">7.7.1.2</a>), then line counting is
+automatically enabled for the port. Line counting cannot be disabled
+for a port after it is enabled.</p>
+<p>
+</p>
+</ul><p>
+When counting lines, MzScheme treats linefeed, return, and
+return-linefeed combinations as a line terminator and as a single
+position (on all platforms). Each tab advances the column count to
+one before the next multiple of 8.</p>
+<p>
+A position is known for any port as long as its value can be expressed
+as a fixnum (which is more than enough tracking for realistic
+applications in, say, syntax-error reporting).  If the position for a
+port exceeds the value of the largest fixnum, then the position for
+the port becomes unknown, and line and column tacking is disabled.
+Return-linefeed combinations are treated as a single character
+position only when line and column counting is enabled.
+</p>
+<ul><p>
+</p>
+<li><p><a name="node_idx_1678"></a><a name="node_kw_definitionport-next-location"></a><code class=scheme>(port-next-location</code><tt>&nbsp;</tt><code class=scheme><span class=variable>input-port</span></code><code class=scheme>)</code> returns three values: a
+positive exact integer or <code class=scheme><span class=selfeval>#f</span></code> for the line number of the next
+read character, a non-negative exact integer or <code class=scheme><span class=selfeval>#f</span></code> for the
+character's column, and a positive exact integer or <code class=scheme><span class=selfeval>#f</span></code> for
+the character's position.</p>
+<p>
+</p>
+</ul><p></p>
+<p>
+</p>
+<a name="node_sec_11.2.4"></a>
+<h3><a href="mzscheme.html#node_toc_node_sec_11.2.4">11.2.4&nbsp;&nbsp;Customizing Read</a></h3>
+<p></p>
+<p>
+Each input port has its own <strong>port read handler</strong><a name="node_idx_1680"></a>. This handler
+is invoked to read S-expressions or syntax objects from the port when
+the built-in <code class=scheme><code class=scheme>read</code></code> or <code class=scheme><code class=scheme>read-syntax</code></code> procedure is
+applied to the port. A port read handler must accept both a single
+argument or three arguments:
+</p>
+<ul><p>
+</p>
+<li><p>A single argument is supplied when the port is used
+with <code class=scheme><code class=scheme>read</code></code>; the argument is the port being read. The return
+value is the value that was read from the port. </p>
+<p>
+</p>
+<li><p>Three arguments are supplied when the port is used with
+<code class=scheme><code class=scheme>read-syntax</code></code>; the first argument is the port being read, the
+second argument is a value indicating the source, and the third
+argument is a list of three non-negative, exact integers (see
+section&nbsp;<a href="mzscheme-Z-H-12.html#node_sec_12.2">12.2</a> for more information). The return value is a syntax
+object that was read from the port.</p>
+<p>
+</p>
+</ul><p></p>
+<p>
+A port's read handler is configured with <code class=scheme><code class=scheme>port-read-handler</code></code>:</p>
+<p>
+</p>
+<ul><p>
+</p>
+<li><p><a name="node_idx_1682"></a><a name="node_kw_definitionport-read-handler"></a><code class=scheme>(port-read-handler</code><tt>&nbsp;</tt><code class=scheme><span class=variable>input-port</span></code><code class=scheme>)</code> returns the current port
+read handler for <code class=scheme><span class=variable>input-port</span></code>.</p>
+<p>
+</p>
+<li><p><a name="node_idx_1684"></a><a name="node_kw_definitionport-read-handler"></a><code class=scheme>(port-read-handler</code><tt>&nbsp;</tt><code class=scheme><span class=variable>input-port proc</span></code><code class=scheme>)</code> sets the handler for
+<code class=scheme><span class=variable>input-port</span></code> to <code class=scheme><span class=variable>proc</span></code>.</p>
+<p>
+</p>
+</ul><p></p>
+<p>
+The default port read handler reads standard Scheme expressions with
+MzScheme's built-in parser (see section&nbsp;<a href="mzscheme-Z-H-14.html#node_sec_14.3">14.3</a>).</p>
+<p>
+</p>
+<a name="node_sec_11.2.5"></a>
+<h3><a href="mzscheme.html#node_toc_node_sec_11.2.5">11.2.5&nbsp;&nbsp;Customizing Display, Write, and Print</a></h3>
+<p></p>
+<p>
+Each output port has its own <strong>port display handler</strong><a name="node_idx_1686"></a>,
+<strong>port write handler</strong><a name="node_idx_1688"></a>, and <strong>port print
+handler</strong><a name="node_idx_1690"></a>. These handlers are invoked to output S-expressions to the
+port when the standard <code class=scheme><code class=scheme>display</code></code>, <code class=scheme><code class=scheme>write</code></code> or <code class=scheme><code class=scheme>print</code></code>
+procedure is applied to the port.  A port display/write/print handler
+takes a two arguments: the value to be printed and the destination
+port. The handler's return value is ignored.</p>
+<p>
+</p>
+<ul><p>
+</p>
+<li><p><a name="node_idx_1692"></a><a name="node_kw_definitionport-display-handler"></a><code class=scheme>(port-display-handler</code><tt>&nbsp;</tt><code class=scheme><span class=variable>output-port</span></code><code class=scheme>)</code> returns the current port
+display handler for <code class=scheme><span class=variable>output-port</span></code>.</p>
+<p>
+</p>
+<li><p><a name="node_idx_1694"></a><a name="node_kw_definitionport-display-handler"></a><code class=scheme>(port-display-handler</code><tt>&nbsp;</tt><code class=scheme><span class=variable>output-port proc</span></code><code class=scheme>)</code> sets the display
+handler for <code class=scheme><span class=variable>output-port</span></code> to <code class=scheme><span class=variable>proc</span></code>.</p>
+<p>
+</p>
+<li><p><a name="node_idx_1696"></a><a name="node_kw_definitionport-write-handler"></a><code class=scheme>(port-write-handler</code><tt>&nbsp;</tt><code class=scheme><span class=variable>output-port</span></code><code class=scheme>)</code> returns the current
+port write handler for <code class=scheme><span class=variable>output-port</span></code>.</p>
+<p>
+</p>
+<li><p><a name="node_idx_1698"></a><a name="node_kw_definitionport-write-handler"></a><code class=scheme>(port-write-handler</code><tt>&nbsp;</tt><code class=scheme><span class=variable>output-port proc</span></code><code class=scheme>)</code> sets the write
+handler for <code class=scheme><span class=variable>output-port</span></code> to <code class=scheme><span class=variable>proc</span></code>.</p>
+<p>
+</p>
+<li><p><a name="node_idx_1700"></a><a name="node_kw_definitionport-print-handler"></a><code class=scheme>(port-print-handler</code><tt>&nbsp;</tt><code class=scheme><span class=variable>output-port</span></code><code class=scheme>)</code> returns the current port
+print handler for <code class=scheme><span class=variable>output-port</span></code>.</p>
+<p>
+</p>
+<li><p><a name="node_idx_1702"></a><a name="node_kw_definitionport-print-handler"></a><code class=scheme>(port-print-handler</code><tt>&nbsp;</tt><code class=scheme><span class=variable>output-port proc</span></code><code class=scheme>)</code> sets the print
+handler for <code class=scheme><span class=variable>output-port</span></code> to <code class=scheme><span class=variable>proc</span></code>.</p>
+<p>
+</p>
+</ul><p></p>
+<p>
+The default port display and write handlers print Scheme expressions
+with MzScheme's built-in printer (see section&nbsp;<a href="mzscheme-Z-H-14.html#node_sec_14.4">14.4</a>). The default
+print handler calls the global port print handler (the value of the
+<a name="node_idx_1704"></a><code class=scheme>global-port-print-handler</code> parameter; see
+section&nbsp;<a href="mzscheme-Z-H-7.html#node_sec_7.7.1.2">7.7.1.2</a>); the default global port print
+handler is the same as the default write handler.</p>
+<p>
+</p>
+<a name="node_sec_11.3"></a>
+<h2><a href="mzscheme.html#node_toc_node_sec_11.3">11.3&nbsp;&nbsp;Filesystem Utilities</a></h2>
+<p><a name="node_idx_1706"></a></p>
+<p>
+Additional filesystem utilities are in MzLib; see Chapter&nbsp;<a href="../mzlib/mzlib-Z-H-18.html#node_chap_18">18</a>
+in <a href="../mzlib/mzlib.html"><i>PLT MzLib: Libraries Manual</i></a>.</p>
+<p>
+</p>
+<a name="node_sec_11.3.1"></a>
+<h3><a href="mzscheme.html#node_toc_node_sec_11.3.1">11.3.1&nbsp;&nbsp;Pathnames</a></h3>
+<p></p>
+<p>
+<a name="node_idx_1708"></a>
+File and directory paths are specified as strings. Since the syntax
+for pathnames can vary across platforms (e.g., under Unix,
+directories are separated by ``/'' while Mac OS Classic uses ``:''),
+MzScheme provides tools for portably constructing and deconstructing
+pathnames.</p>
+<p>
+<a name="node_idx_1710"></a>
+Most MzScheme primitives that take pathnames perform an expansion on
+the pathname before using it. (Procedures that build pathnames or
+merely check the form of a pathname do not perform this expansion.)
+Under Unix and Mac OS X, a user directory specification using ``~''
+is expanded.<a name="call_footnote_Temp_26"></a><a href="#footnote_Temp_26"><sup><small>22</small></sup></a>  Under Mac OS Classic, file and
+folder aliases are resolved to real pathnames.<a name="call_footnote_Temp_27"></a><a href="#footnote_Temp_27"><sup><small>23</small></sup></a> Under Windows, multiple
+slashes are converted to single slashes (except at the beginning of a
+shared folder name), and a slash is inserted after the colon in a
+drive specification (if it is missing). In a Windows pathname, slash
+and backslash are always equivalent (and can be mixed together in the
+same pathname).</p>
+<p>
+A pathname string cannot be empty or contain a null character
+(<code class=scheme><span class=selfeval>#\nul</span></code>). When an empty string or a string containing a null
+character is provided as a pathname to any procedure except
+<code class=scheme><code class=scheme>absolute-path?</code></code>, <code class=scheme><code class=scheme>relative-path?</code></code>,
+<code class=scheme><code class=scheme>complete-path?</code></code>, or <code class=scheme><code class=scheme>normal-case-path</code></code>, the
+<a name="node_idx_1712"></a><code class=scheme>exn:i/o:filesystem</code> exception is raised.</p>
+<p>
+The pathname utilities are:</p>
+<p>
+</p>
+<ul><p>
+</p>
+<li><p><a name="node_idx_1714"></a><a name="node_kw_definitionbuild-path"></a><code class=scheme>(build-path</code><tt>&nbsp;</tt><code class=scheme><span class=variable>base-path sub-path</span></code><tt>&nbsp;</tt><tt>&middot;&middot;&middot;</tt><code class=scheme>)</code>
+creates an pathname given a base pathname and any
+number of sub-pathname extensions. If <code class=scheme><span class=variable>base-path</span></code> is an
+absolute pathname, the result is an absolute pathname;
+if <code class=scheme><span class=variable>base</span></code> is a relative pathname, the result is a relative
+pathname. Each <code class=scheme><span class=variable>sub-path</span></code> must be either a
+relative pathname, a directory name, the symbol <code class=scheme><span class=selfeval>'up</span></code><a name="node_idx_1716"></a>
+(indicating the relative parent directory), or the symbol 
+<code class=scheme><span class=selfeval>'same</span></code><a name="node_idx_1718"></a> (indicating the relative current directory). 
+Under Windows, if <code class=scheme><span class=variable>base-path</span></code> is a drive specification (with or
+without a trailing slash) the first <code class=scheme><span class=variable>sub-path</span></code> can be an absolute
+(driveless) path. The last <code class=scheme><span class=variable>sub-path</span></code> can be a filename.</p>
+<p>
+Each <code class=scheme><span class=variable>sub-path</span></code> and <code class=scheme><span class=variable>base-path</span></code> can optionally end in a
+directory separator. If the last <code class=scheme><span class=variable>sub-path</span></code> ends in a separator,
+it is included in the resulting pathname.</p>
+<p>
+Under Mac OS Classic, if a <code class=scheme><span class=variable>sub-path</span></code> argument does not begin with a
+colon, one is added automatically. This means that <code class=scheme><span class=variable>sub-path</span></code>
+arguments are never interpreted as absolute paths under Mac OS Classic.
+For other platforms, if an absolute path is provided for any
+<code class=scheme><span class=variable>sub-path</span></code>, then the <a name="node_idx_1720"></a><code class=scheme>exn:i/o:filesystem</code> exception is raised. On all
+platforms, if <code class=scheme><span class=variable>base-path</span></code> or <code class=scheme><span class=variable>sub-path</span></code> is an illegal path
+string (e.g., it contains a null character), the
+<a name="node_idx_1722"></a><code class=scheme>exn:i/o:filesystem</code> exception is raised.</p>
+<p>
+The <code class=scheme><code class=scheme>build-path</code></code> procedure builds a pathname <em>without</em>
+checking the validity of the path or accessing the filesystem.</p>
+<p>
+The following examples assume that the current directory is
+<tt><strong>/home/joeuser</strong></tt> for Unix examples and <tt><strong>My Disk:Joe's Files</strong></tt> for
+Mac OS Classic examples.</p>
+<p>
+</p>
+<div align=center><table><tr><td>
+
+</td><td><div align=left><pre class=scheme>(<span class=keyword>define</span> <span class=variable>p1</span> (<code class=scheme>build-path</code> (<code class=scheme>current-directory</code>) <span class=selfeval>&quot;src&quot;</span> <span class=selfeval>&quot;scheme&quot;</span>)) 
+  <span class=comment>; Unix: p1 =&gt; <code class=schemeresponse><span class=selfeval>&quot;/home/joeuser/src/scheme&quot;</span></code></span>
+  <span class=comment>; Mac OS Classic: p1 =&gt; <code class=schemeresponse><span class=selfeval>&quot;My Disk:Joe's Files:src:scheme&quot;</span></code></span>
+(<span class=keyword>define</span> <span class=variable>p2</span> (<code class=scheme>build-path</code> <span class=keyword>'</span><span class=variable>up</span> <span class=keyword>'</span><span class=variable>up</span> <span class=selfeval>&quot;docs&quot;</span> <span class=selfeval>&quot;MzScheme&quot;</span>)) 
+  <span class=comment>; Unix: p2 =&gt; <code class=schemeresponse><span class=selfeval>&quot;../../docs/MzScheme&quot;</span></code></span>
+  <span class=comment>; Mac OS Classic: p2 =&gt; <code class=schemeresponse><span class=selfeval>&quot;:::docs:MzScheme&quot;</span></code></span>
+(<code class=scheme>build-path</code> <span class=variable>p2</span> <span class=variable>p1</span>) 
+  <span class=comment>; Unix: raises <code class=scheme>exn:i/o:filesystem:path</code> because <code class=scheme><span class=variable>p1</span></code> is absolute </span>
+  <span class=comment>; Mac OS Classic: =&gt; <code class=schemeresponse><span class=selfeval>&quot;:::docs:MzScheme:My Disk:Joe's Files:src:scheme&quot;</span></code></span>
+(<code class=scheme>build-path</code> <span class=variable>p1</span> <span class=variable>p2</span>) 
+  <span class=comment>; Unix: =&gt; <code class=schemeresponse><span class=selfeval>&quot;/home/joeuser/src/scheme/../../docs/MzScheme&quot;</span></code></span>
+  <span class=comment>; Mac OS Classic: =&gt; <code class=schemeresponse><span class=selfeval>&quot;My Disk:Joe's Files:src:scheme:::docs:MzScheme&quot;</span></code></span>
+</pre></div></td><td>
+</td></tr></table></div>
+<p>
+</p>
+<li><p><a name="node_idx_1724"></a><a name="node_kw_definitionabsolute-path_Q_"></a><code class=scheme>(absolute-path?</code><tt>&nbsp;</tt><code class=scheme><span class=variable>path</span></code><code class=scheme>)</code> returns <code class=scheme><span class=selfeval>#t</span></code> if <code class=scheme><span class=variable>path</span></code> is an
+absolute pathname, <code class=scheme><span class=selfeval>#f</span></code> otherwise. If <code class=scheme><span class=variable>path</span></code> is not a legal
+pathname string (e.g., it contains a null character), <code class=scheme><span class=selfeval>#f</span></code> is
+returned. This procedure does not access the filesystem.</p>
+<p>
+</p>
+<li><p><a name="node_idx_1726"></a><a name="node_kw_definitionrelative-path_Q_"></a><code class=scheme>(relative-path?</code><tt>&nbsp;</tt><code class=scheme><span class=variable>path</span></code><code class=scheme>)</code> returns <code class=scheme><span class=selfeval>#t</span></code> if <code class=scheme><span class=variable>path</span></code> is a
+relative pathname, <code class=scheme><span class=selfeval>#f</span></code> otherwise. If <code class=scheme><span class=variable>path</span></code> is not a legal
+pathname string (e.g., it contains a null character), <code class=scheme><span class=selfeval>#f</span></code> is
+returned. This procedure does not access the filesystem.</p>
+<p>
+</p>
+<li><p><a name="node_idx_1728"></a><a name="node_kw_definitioncomplete-path_Q_"></a><code class=scheme>(complete-path?</code><tt>&nbsp;</tt><code class=scheme><span class=variable>path</span></code><code class=scheme>)</code> returns <code class=scheme><span class=selfeval>#t</span></code> if <code class=scheme><span class=variable>path</span></code> is a
+completely determined pathname (<em>not</em> relative to a directory or
+drive), <code class=scheme><span class=selfeval>#f</span></code> otherwise. Note that under Windows, an absolute
+path can omit the drive specification, in which case the path is
+neither relative nor complete. If <code class=scheme><span class=variable>path</span></code> is not a legal pathname
+string (e.g., it contains a null character), <code class=scheme><span class=selfeval>#f</span></code> is
+returned. This procedure does not access the filesystem.</p>
+<p>
+</p>
+<li><p><a name="node_idx_1730"></a><a name="node_kw_definitionpath->complete-path"></a><code class=scheme>(path-&gt;complete-path</code><tt>&nbsp;</tt><code class=scheme><span class=variable>path</span></code><tt>&nbsp;</tt>[<code class=scheme><span class=variable>base-path</span></code>]<code class=scheme>)</code> returns <code class=scheme><span class=variable>path</span></code>
+as a complete path. If <code class=scheme><span class=variable>path</span></code> is already a complete path, it is
+returned as the result. Otherwise, <code class=scheme><span class=variable>path</span></code> is resolved with
+respect to the complete path <code class=scheme><span class=variable>base-path</span></code>. If <code class=scheme><span class=variable>base-path</span></code> is
+omitted, <code class=scheme><span class=variable>path</span></code> is resolved with respect to the current
+directory. If <code class=scheme><span class=variable>base-path</span></code> is provided and it is not a complete
+path, the <a name="node_idx_1732"></a><code class=scheme>exn:i/o:filesystem</code> exception is raised. This procedure does not
+access the filesystem.</p>
+<p>
+</p>
+<li><p><a name="node_idx_1734"></a><a name="node_kw_definitionresolve-path"></a><code class=scheme>(resolve-path</code><tt>&nbsp;</tt><code class=scheme><span class=variable>path</span></code><code class=scheme>)</code> expands <code class=scheme><span class=variable>path</span></code> and returns a
+pathname that references the same file or directory as
+<code class=scheme><span class=variable>path</span></code>. Under Unix and Mac OS X, if <code class=scheme><span class=variable>path</span></code> is a soft link to
+another pathname, then the referenced pathname is returned (this may
+be a relative pathname with respect to the directory
+owning <code class=scheme><span class=variable>path</span></code>) otherwise <code class=scheme><span class=variable>path</span></code> is returned (after expansion).</p>
+<p>
+</p>
+<li><p><a name="node_idx_1736"></a><a name="node_kw_definitionexpand-path"></a><code class=scheme>(expand-path</code><tt>&nbsp;</tt><code class=scheme><span class=variable>path</span></code><code class=scheme>)</code> returns the expanded version of
+<code class=scheme><span class=variable>path</span></code> (as described at the beginning of this section). The
+filesystem might be accessed, but the source or expanded pathname
+might be a non-existent path.</p>
+<p>
+</p>
+<li><p><a name="node_idx_1738"></a><a name="node_kw_definitionsimplify-path"></a><code class=scheme>(simplify-path</code><tt>&nbsp;</tt><code class=scheme><span class=variable>path</span></code><code class=scheme>)</code> eliminates up-directory (``..'' in
+Unix, Mac OS X, and Windows) and same-directory (``.'') indicators in
+<code class=scheme><span class=variable>path</span></code>. If no indicators are in <code class=scheme><span class=variable>path</span></code>, then <code class=scheme><span class=variable>path</span></code> is
+returned.  Otherwise, a complete path is returned; if <code class=scheme><span class=variable>path</span></code> is
+relative, it is resolved with respect to the current
+directory. Up-directory indicators are dropped when they refer to the
+parent of a root directory.  The filesystem might be accessed, but
+the source or expanded pathname might be a non-existent path. If
+<code class=scheme><span class=variable>path</span></code> cannot be simplified due to a cycle of links, the
+<a name="node_idx_1740"></a><code class=scheme>exn:i/o:filesystem</code> exception is raised (but a successfully simplified path may
+still involve a cycle of links if the cycle did not inhibit the
+simplification).</p>
+<p>
+</p>
+<li><p><a name="node_idx_1742"></a><a name="node_kw_definitionnormal-case-path"></a><code class=scheme>(normal-case-path</code><tt>&nbsp;</tt><code class=scheme><span class=variable>string</span></code><code class=scheme>)</code> is deprecated, and should not be
+used.<a name="call_footnote_Temp_28"></a><a href="#footnote_Temp_28"><sup><small>24</small></sup></a> It returns <code class=scheme><span class=variable>string</span></code> with ``normalized'' case
+letters. Under Unix and Mac OS X, this procedure always returns the input
+path. Under Windows and Mac OS Classic, the resulting string uses only
+lowercase letters. Under Windows, all forward slashes (``/'') are
+converted to backward slashes (``<tt>\</tt>''), and trailing spaces
+are removed. This procedure does not access the filesystem or
+guarantee that the output string is a legal pathname (i.e.,
+<code class=scheme><span class=variable>string</span></code> and the result may contain a null character).</p>
+<p>
+</p>
+<li><p><a name="node_idx_1744"></a><a name="node_kw_definitionsplit-path"></a><code class=scheme>(split-path</code><tt>&nbsp;</tt><code class=scheme><span class=variable>path</span></code><code class=scheme>)</code> deconstructs <code class=scheme><span class=variable>path</span></code> into a smaller
+pathname and an immediate directory or file name.  Three values are
+returned (see section&nbsp;<a href="mzscheme-Z-H-2.html#node_sec_2.2">2.2</a>):
+</p>
+<ul>
+<li><p><code class=scheme><span class=variable>base</span></code> is either
+</p>
+<ul>
+<li><p>a string pathname, 
+</p>
+<li><p><code class=scheme><span class=selfeval>'relative</span></code><a name="node_idx_1746"></a> if <code class=scheme><span class=variable>path</span></code> is an immediate relative directory 
+or filename, or
+</p>
+<li><p><code class=scheme><span class=selfeval>#f</span></code> if <code class=scheme><span class=variable>path</span></code> is a root directory.
+</p>
+</ul><p>
+</p>
+<li><p><code class=scheme><span class=variable>name</span></code> is either 
+</p>
+<ul>
+<li><p>a string directory name, 
+</p>
+<li><p>a string file name,
+</p>
+<li><p><code class=scheme><span class=selfeval>'up</span></code><a name="node_idx_1748"></a> if the last part of <code class=scheme><span class=variable>path</span></code> specifies the parent
+directory of the preceding path (e.g., ``..'' under Unix), or
+</p>
+<li><p><code class=scheme><span class=selfeval>'same</span></code><a name="node_idx_1750"></a> if the last part of <code class=scheme><span class=variable>path</span></code> specifies the 
+same directory as the  preceding path (e.g., ``.'' under Unix).
+</p>
+</ul><p>
+</p>
+<li><p><code class=scheme><span class=variable>must-be-dir?</span></code> is <code class=scheme><span class=selfeval>#t</span></code> if <code class=scheme><span class=variable>path</span></code> explicitly
+specifies a directory (e.g., with a trailing separator), <code class=scheme><span class=selfeval>#f</span></code>
+otherwise. Note that <code class=scheme><span class=variable>must-be-dir?</span></code> does not specify whether
+<code class=scheme><span class=variable>name</span></code> is actually a directory or not, but whether <code class=scheme><span class=variable>path</span></code>
+syntactically specified a directory.
+</p>
+</ul><p>
+If <code class=scheme><span class=variable>base</span></code> is <code class=scheme><span class=selfeval>#f</span></code>, then <code class=scheme><span class=variable>name</span></code> cannot be <code class=scheme><span class=selfeval>'up</span></code><a name="node_idx_1752"></a> or
+<code class=scheme><span class=selfeval>'same</span></code><a name="node_idx_1754"></a>.  All strings returned for <code class=scheme><span class=variable>base</span></code> and <code class=scheme><span class=variable>name</span></code>
+are newly allocated. This procedure does not access the filesystem.</p>
+<p>
+</p>
+<li><p><a name="node_idx_1756"></a><a name="node_kw_definitionfind-executable-path"></a><code class=scheme>(find-executable-path</code><tt>&nbsp;</tt><code class=scheme><span class=variable>program-sub-path related-sub-path</span></code><code class=scheme>)</code>
+finds a pathname for the executable <code class=scheme><span class=variable>program-sub-path</span></code>, returning
+<code class=scheme><span class=selfeval>#f</span></code> if the pathname cannot be found.</p>
+<p>
+If <code class=scheme><span class=variable>related-sub-path</span></code> is not <code class=scheme><span class=selfeval>#f</span></code>, then it must be a
+relative path string, and the pathname found for
+<code class=scheme><span class=variable>program-sub-path</span></code> must be such that the file or directory
+<code class=scheme><span class=variable>related-sub-path</span></code> exists in the same directory as the
+executable. The result is then the full path for the found
+<code class=scheme><span class=variable>related-sub-path</span></code>, instead of the path for the executable.</p>
+<p>
+This procedure is used by MzScheme (as a stand-alone executable) to
+find the standard library collection directory (see Chapter&nbsp;<a href="mzscheme-Z-H-16.html#node_chap_16">16</a>).
+In this case, <code class=scheme><span class=variable>program</span></code> is the name used to start MzScheme and
+<code class=scheme><span class=variable>related</span></code> is <code class=scheme><span class=selfeval>&quot;collects&quot;</span></code>.  The <code class=scheme><span class=variable>related-sub-path</span></code>
+argument is used because, under Unix and Mac OS X, <code class=scheme><span class=variable>program-sub-path</span></code>
+may involve to a sequence of soft links; in this case,
+<code class=scheme><span class=variable>related-sub-path</span></code> determines which link in the chain is
+relevant.</p>
+<p>
+If <code class=scheme><span class=variable>program-sub-path</span></code> has a directory path, exists as a file or
+link to a file, and <code class=scheme><span class=variable>related-sub-path</span></code> is not <code class=scheme><span class=selfeval>#f</span></code>,
+<code class=scheme><code class=scheme>find-executable-path</code></code> determines whether <code class=scheme><span class=variable>related-sub-path</span></code>
+exists relative to the directory of <code class=scheme><span class=variable>program-sub-path</span></code>. If so,
+the complete path for <code class=scheme><span class=variable>program-sub-path</span></code> is returned. Otherwise,
+if <code class=scheme><span class=variable>program-sub-path</span></code> is a link to another file path, the
+destination directory of the link is checked for
+<code class=scheme><span class=variable>related-sub-path</span></code>. Further links are inspected until
+<code class=scheme><span class=variable>related-sub-path</span></code> is found or the end of the chain of links is
+reached.</p>
+<p>
+If <code class=scheme><span class=variable>program-sub-path</span></code> is a pathless name,
+<code class=scheme><code class=scheme>find-executable-path</code></code> gets the value of the <tt><strong>PATH</strong></tt><a name="node_idx_1758"></a>
+environment variable; if this environment variable is defined,
+<code class=scheme><code class=scheme>find-executable-path</code></code> tries each path in <tt><strong>PATH</strong></tt> as a prefix
+for <code class=scheme><span class=variable>program-sub-path</span></code> using the search algorithm described above
+for path-containing <code class=scheme><span class=variable>program-sub-path</span></code>s. If the <tt><strong>PATH</strong></tt>
+environment variable is not defined, <code class=scheme><span class=variable>program-sub-path</span></code> is
+prefixed with the current directory and used in the search algorithm
+above. (Under Windows, the current directory is always implicitly the
+first item in <tt><strong>PATH</strong></tt>, so <code class=scheme><code class=scheme>find-executable-path</code></code> checks the
+current directory first under Windows.)</p>
+<p>
+</p>
+<li><p><a name="node_idx_1760"></a><a name="node_kw_definitionfind-system-path"></a><code class=scheme>(find-system-path</code><tt>&nbsp;</tt><code class=scheme><span class=variable>kind-symbol</span></code><code class=scheme>)</code> <a name="node_idx_1762"></a> returns a
+machine-specific path for a standard type of path specified by
+<code class=scheme><span class=variable>kind-symbol</span></code>, which must be one of the following:
+</p>
+<ul><p>
+</p>
+<li><p><code class=scheme><span class=selfeval>'home-dir</span></code><a name="node_idx_1764"></a>  --  the current user's home directory.
+(See below for information on the user's home directory in Windows
+and Mac OS Classic.)</p>
+<p>
+</p>
+<li><p><code class=scheme><span class=selfeval>'pref-dir</span></code><a name="node_idx_1766"></a>  --  the standard directory for storing
+the current user's preferences. Under Unix and Windows, this
+is the user's home directory. Under Mac OS Classic, it is the Preferences
+subdirectory of the System Folder. Under Mac OS X, it is the subdirectory
+<tt><strong>Library/Preferences</strong></tt> of the user's home directory.
+(See below for information on the user's home directory in Windows.)</p>
+<p>
+</p>
+<li><p><code class=scheme><span class=selfeval>'pref-file</span></code><a name="node_idx_1768"></a>  --  a file that contains a symbol-keyed
+association list of preference values; the file's directory path
+always matches the result returned for <code class=scheme><span class=selfeval>'pref-dir</span></code>. Under
+Unix and Mac OS X, the file is <tt><strong>.plt-prefs.ss</strong></tt>, and under Windows and
+Mac OS Classic, the file is <tt><strong>plt-prefs.ss</strong></tt>. See also
+<code class=scheme>get-preference</code> in Chapter&nbsp;<a href="../mzlib/mzlib-Z-H-18.html#node_chap_18">18</a>
+in <a href="../mzlib/mzlib.html"><i>PLT MzLib: Libraries Manual</i></a>.</p>
+<p>
+</p>
+<li><p><code class=scheme><span class=selfeval>'temp-dir</span></code><a name="node_idx_1770"></a>  --  the standard directory for storing
+temporary files. Under Unix and Mac OS X, this is the directory specified by
+the <tt><strong>TMPDIR</strong></tt><a name="node_idx_1772"></a> environment variable, if it is defined.</p>
+<p>
+</p>
+<li><p><code class=scheme><span class=selfeval>'init-dir</span></code><a name="node_idx_1774"></a>  --  the directory containing the
+initialization file used by stand-alone MzScheme application.  It is
+the same as the current user's home directory.  (See below for
+information on the user's home directory in Windows and Mac OS Classic.)</p>
+<p>
+</p>
+<li><p><code class=scheme><span class=selfeval>'init-file</span></code><a name="node_idx_1776"></a>  --  the file loaded at start-up
+by the stand-alone MzScheme application. The directory part
+of the path is the same path as returned for <code class=scheme><span class=selfeval>'init-dir</span></code>.
+The file name is platform-specific:
+</p>
+<ul><p>
+</p>
+<li><p>Unix and Mac OS X: <tt><strong>.mzschemerc</strong></tt><a name="node_idx_1778"></a>
+</p>
+<li><p>Windows and Mac OS Classic: <tt><strong>mzschemerc.ss</strong></tt><a name="node_idx_1780"></a></p>
+<p>
+</p>
+</ul><p></p>
+<p>
+</p>
+<li><p><code class=scheme><span class=selfeval>'addon-dir</span></code><a name="node_idx_1782"></a>  --  a directory for installing PLT
+Scheme extensions. The directory is typically user-specific. Under
+Unix, the directory is <tt><strong>.plt-scheme</strong></tt> in the user's home
+directory.  Under Windows, it is <tt><strong>PLT Scheme</strong></tt> in the user's
+<tt><strong>Application Data</strong></tt> folder. Under Mac OS X, it is
+<tt><strong>Library/PLT Scheme</strong></tt> in the user's home directory. Under
+Mac OS Classic, it is <tt><strong>PLT Scheme</strong></tt> in the preferences folder.</p>
+<p>
+</p>
+<li><p><code class=scheme><span class=selfeval>'sys-dir</span></code><a name="node_idx_1784"></a>  --  the directory containing the
+operating system for Windows or Mac OS Classic. Under Unix and Mac OS X, the
+result is <code class=scheme><span class=selfeval>&quot;/&quot;</span></code>.</p>
+<p>
+</p>
+<li><p><code class=scheme><span class=selfeval>'exec-file</span></code><a name="node_idx_1786"></a>  --  the pathname of the MzScheme
+executable as provided by the operating system for the current
+invocation.<a name="call_footnote_Temp_29"></a><a href="#footnote_Temp_29"><sup><small>25</small></sup></a> Under Mac OS Classic, in the stand-alone MzScheme (or
+MrEd) application, it is always a complete path. In the stand-alone
+MzScheme application, this path is also bound initially to
+<a name="node_idx_1788"></a><code class=scheme>program</code>.</p>
+<p>
+</p>
+</ul><p></p>
+<p>
+Under Windows, the user's home directory is the one specified by the
+<tt><strong>HOMEDRIVE</strong></tt><a name="node_idx_1790"></a> and <tt><strong>HOMEPATH</strong></tt><a name="node_idx_1792"></a> environment variables.
+If those environment variables are not defined, or if the indicated
+directory does not exist, the directory containing the MzScheme
+executable is used as the home directory. Under Mac OS Classic, the user's
+``home directory'' is the preferences directory.</p>
+<p>
+</p>
+<li><p><a name="node_idx_1794"></a><a name="node_kw_definitionpath-list-string->path-list"></a><code class=scheme>(path-list-string-&gt;path-list</code><tt>&nbsp;</tt><code class=scheme><span class=variable>string default-path-list</span></code><code class=scheme>)</code>
+parses a string containing a list of paths, and returns a list of
+path strings. Under Unix and Mac OS X, paths in a path list are separated by
+a colon (``:''); under Windows and Mac OS Classic, paths are separated by
+a semi-colon (``;''). Whenever the path list contains an empty path,
+the list <code class=scheme><span class=variable>default-path-list</span></code> is spliced into the returned list of
+paths. Parts of <code class=scheme><span class=variable>string</span></code> that do not form a valid path are not
+included in the returned list. (The content of the list
+<code class=scheme><span class=variable>default-path-list</span></code> is not inspected.)</p>
+<p>
+</p>
+</ul><p></p>
+<p>
+</p>
+<a name="node_sec_11.3.2"></a>
+<h3><a href="mzscheme.html#node_toc_node_sec_11.3.2">11.3.2&nbsp;&nbsp;Files</a></h3>
+<p></p>
+<p>
+<a name="node_idx_1796"></a>
+The file management utilities are:
+</p>
+<ul><p>
+</p>
+<li><p><a name="node_idx_1798"></a> <a name="node_idx_1800"></a><a name="node_kw_definitionfile-exists_Q_"></a><code class=scheme>(file-exists?</code><tt>&nbsp;</tt><code class=scheme><span class=variable>path</span></code><code class=scheme>)</code> returns <code class=scheme><span class=selfeval>#t</span></code>
+if a file (not a directory) <code class=scheme><span class=variable>path</span></code> exists, <code class=scheme><span class=selfeval>#f</span></code>
+otherwise. Unlike some other procedures that take a path argument,
+this procedure never raises the <a name="node_idx_1802"></a><code class=scheme>exn:i/o:filesystem</code>
+exception.<a name="call_footnote_Temp_30"></a><a href="#footnote_Temp_30"><sup><small>26</small></sup></a></p>
+<p>
+</p>
+<li><p><a name="node_idx_1804"></a> <a name="node_idx_1806"></a><a name="node_kw_definitionlink-exists_Q_"></a><code class=scheme>(link-exists?</code><tt>&nbsp;</tt><code class=scheme><span class=variable>path</span></code><code class=scheme>)</code> returns <code class=scheme><span class=selfeval>#t</span></code>
+if a link <code class=scheme><span class=variable>path</span></code> exists (Unix, Mac OS X, and Mac OS Classic), <code class=scheme><span class=selfeval>#f</span></code>
+otherwise. Note that the predicates <code class=scheme><code class=scheme>file-exists?</code></code>  or
+<code class=scheme><code class=scheme>directory-exists?</code></code> work on the final destination of a link or
+series of links, while <code class=scheme><code class=scheme>link-exists?</code></code>  only follows links to
+resolve the base part of <code class=scheme><span class=variable>path</span></code> (i.e., everything except the last
+name in the path). This procedure never raises the
+<a name="node_idx_1808"></a><code class=scheme>exn:i/o:filesystem</code> exception.</p>
+<p>
+</p>
+<li><p><a name="node_idx_1810"></a> <a name="node_idx_1812"></a><a name="node_kw_definitiondelete-file"></a><code class=scheme>(delete-file</code><tt>&nbsp;</tt><code class=scheme><span class=variable>path</span></code><code class=scheme>)</code> deletes the file
+with pathname <code class=scheme><span class=variable>path</span></code> if it exists, returning void if a file
+was deleted successfully, otherwise the
+<a name="node_idx_1814"></a><code class=scheme>exn:i/o:filesystem</code> exception is raised. If <code class=scheme><span class=variable>path</span></code> is a link, the link is
+deleted rather than the destination of the link.</p>
+<p>
+</p>
+<li><p><a name="node_idx_1816"></a> <a name="node_idx_1818"></a>
+<a name="node_idx_1820"></a><a name="node_kw_definitionrename-file-or-directory"></a><code class=scheme>(rename-file-or-directory</code><tt>&nbsp;</tt><code class=scheme><span class=variable>old-path new-path</span></code><tt>&nbsp;</tt>[<code class=scheme><span class=variable>exists-ok?</span></code>]<code class=scheme>)</code> renames
+the file or directory with pathname <code class=scheme><span class=variable>old-path</span></code>  --  if it exists
+ --  to the pathname <code class=scheme><span class=variable>new-path</span></code>. If the file or directory is
+renamed successfully, void is returned, otherwise the
+<a name="node_idx_1822"></a><code class=scheme>exn:i/o:filesystem</code> exception is raised.</p>
+<p>
+This procedure can be used to move a file/directory to a different
+directory (on the same disk) as well as rename a file/directory
+within a directory. Unless <code class=scheme><span class=variable>exists-ok?</span></code>  is provided as a true
+value, <code class=scheme><span class=variable>new-path</span></code> cannot refer to an existing file or
+directory. Even if <code class=scheme><span class=variable>exists-ok?</span></code> is true, <code class=scheme><span class=variable>new-path</span></code> cannot
+refer to an existing file when <code class=scheme><span class=variable>old-path</span></code> is a directory, and
+vice versa. (If <code class=scheme><span class=variable>new-path</span></code> exists and is replaced, the
+replacement is atomic in the filesystem, except under Windows 95, 98,
+or Me. However, the check for existence is not included in the atomic
+action, which means that race conditions are possible when
+<code class=scheme><span class=variable>exists-ok?</span></code> is false or not supplied.)</p>
+<p>
+If <code class=scheme><span class=variable>old-path</span></code> is a link, the link is renamed rather than the
+destination of the link, and it counts as a file for replacing any
+existing <code class=scheme><span class=variable>new-path</span></code>.</p>
+<p>
+</p>
+<li><p><a name="node_idx_1824"></a>
+<a name="node_idx_1826"></a><a name="node_kw_definitionfile-or-directory-modify-seconds"></a><code class=scheme>(file-or-directory-modify-seconds</code><tt>&nbsp;</tt><code class=scheme><span class=variable>path</span></code><tt>&nbsp;</tt>[<code class=scheme><span class=variable>secs-n</span></code>]<code class=scheme>)</code> returns the file
+or directory's last modification date as platform-specific seconds
+(see also section&nbsp;<a href="mzscheme-Z-H-15.html#node_sec_15.1">15.1</a>) when <code class=scheme><span class=variable>secs-n</span></code> is not
+provided.<a name="call_footnote_Temp_31"></a><a href="#footnote_Temp_31"><sup><small>27</small></sup></a>
+If <code class=scheme><span class=variable>secs-n</span></code> is provided, the access and modification times of
+<code class=scheme><span class=variable>path</span></code> are set to the given time. On error (e.g., if no such file
+exists), the <a name="node_idx_1828"></a><code class=scheme>exn:i/o:filesystem</code> exception is raised.</p>
+<p>
+</p>
+<li><p><a name="node_idx_1830"></a>
+<a name="node_idx_1832"></a><a name="node_kw_definitionfile-or-directory-permissions"></a><code class=scheme>(file-or-directory-permissions</code><tt>&nbsp;</tt><code class=scheme><span class=variable>path</span></code><code class=scheme>)</code> returns a list containing
+<code class=scheme><span class=selfeval>'read</span></code><a name="node_idx_1834"></a>, <code class=scheme><span class=selfeval>'write</span></code><a name="node_idx_1836"></a>, and/or <code class=scheme><span class=selfeval>'execute</span></code><a name="node_idx_1838"></a>
+for the given file or directory path. On error (e.g., if no such file
+exists), the <a name="node_idx_1840"></a><code class=scheme>exn:i/o:filesystem</code> exception is raised.</p>
+<p>
+</p>
+<li><p><a name="node_idx_1842"></a> <a name="node_idx_1844"></a><a name="node_kw_definitionfile-size"></a><code class=scheme>(file-size</code><tt>&nbsp;</tt><code class=scheme><span class=variable>path</span></code><code class=scheme>)</code> returns the (logical)
+size of the specified file. (Under Mac OS Classic, this size excludes the
+resource-fork size.) On error (e.g., if no such file exists), the
+<a name="node_idx_1846"></a><code class=scheme>exn:i/o:filesystem</code> exception is raised.</p>
+<p>
+</p>
+<li><p><a name="node_idx_1848"></a> <a name="node_idx_1850"></a><a name="node_kw_definitioncopy-file"></a><code class=scheme>(copy-file</code><tt>&nbsp;</tt><code class=scheme><span class=variable>src-path dest-path</span></code><code class=scheme>)</code>
+creates the file <code class=scheme><span class=variable>dest-path</span></code> as a copy of <code class=scheme><span class=variable>src-path</span></code>. If the
+file is successfully copied, void is returned, otherwise the
+<a name="node_idx_1852"></a><code class=scheme>exn:i/o:filesystem</code> exception is raised. If <code class=scheme><span class=variable>dest-path</span></code> already exists, the
+copy will fail. File permissions are preserved in the copy. Under
+Mac OS Classic, the resource fork is also preserved in the copy. If
+<code class=scheme><span class=variable>src-path</span></code> refers to a link, the target of the link is copied,
+rather than the link itself.</p>
+<p>
+</p>
+<li><p><a name="node_idx_1854"></a> <a name="node_idx_1856"></a><a name="node_kw_definitionmake-file-or-directory-link"></a><code class=scheme>(make-file-or-directory-link</code><tt>&nbsp;</tt><code class=scheme><span class=variable>to-path path</span></code><code class=scheme>)</code>
+creates a link <code class=scheme><span class=variable>path</span></code> to <code class=scheme><span class=variable>to-path</span></code> under Unix and Mac OS X. The
+creation will fail if <code class=scheme><span class=variable>path</span></code> already exists. The <code class=scheme><span class=variable>to-path</span></code>
+need not refer to an existing file or directory. If the link is created
+successfully, void is returned, otherwise the
+<a name="node_idx_1858"></a><code class=scheme>exn:i/o:filesystem</code> exception is raised. Under Windows and Mac OS Classic, the
+<a name="node_idx_1860"></a><code class=scheme>exn:misc:unsupported</code> exception is raised always.</p>
+<p>
+</p>
+</ul><p></p>
+<p>
+</p>
+<a name="node_sec_11.3.3"></a>
+<h3><a href="mzscheme.html#node_toc_node_sec_11.3.3">11.3.3&nbsp;&nbsp;Directories</a></h3>
+<p></p>
+<p>
+<a name="node_idx_1862"></a>
+The directory management utilities are:
+</p>
+<ul><p>
+</p>
+<li><p><a name="node_idx_1864"></a>
+<code class=scheme>(<a name="node_idx_1866"></a><code class=scheme>current-directory</code>)</code> returns the current directory
+and <code class=scheme>(current-directory <code class=scheme><span class=variable>path</span></code>)</code> sets the current directory
+to <code class=scheme><span class=variable>path</span></code>.  This procedure is actually a parameter, as described
+in section&nbsp;<a href="mzscheme-Z-H-7.html#node_sec_7.7.1.1">7.7.1.1</a>.</p>
+<p>
+</p>
+<li><p><a name="node_idx_1868"></a><a name="node_kw_definitioncurrent-drive"></a><code class=scheme>(current-drive</code><code class=scheme>)</code> returns the current drive name under
+Windows. For other platforms, the
+<a name="node_idx_1870"></a><code class=scheme>exn:misc:unsupported</code> exception is raised. The current drive is always the
+drive of the current directory.</p>
+<p>
+</p>
+<li><p><a name="node_idx_1872"></a> <a name="node_idx_1874"></a><a name="node_kw_definitiondirectory-exists_Q_"></a><code class=scheme>(directory-exists?</code><tt>&nbsp;</tt><code class=scheme><span class=variable>path</span></code><code class=scheme>)</code>
+returns <code class=scheme><span class=selfeval>#t</span></code> if <code class=scheme><span class=variable>path</span></code> refers to a directory, <code class=scheme><span class=selfeval>#f</span></code>
+otherwise.  Unlike other procedures that take a path argument, this
+procedure never raises the <a name="node_idx_1876"></a><code class=scheme>exn:i/o:filesystem</code> exception.</p>
+<p>
+</p>
+<li><p><a name="node_idx_1878"></a> <a name="node_idx_1880"></a><a name="node_kw_definitionmake-directory"></a><code class=scheme>(make-directory</code><tt>&nbsp;</tt><code class=scheme><span class=variable>path</span></code><code class=scheme>)</code> creates
+a new directory with the pathname <code class=scheme><span class=variable>path</span></code>.  If the directory is
+created successfully, void is returned, otherwise the
+<a name="node_idx_1882"></a><code class=scheme>exn:i/o:filesystem</code> exception is raised.</p>
+<p>
+</p>
+<li><p><a name="node_idx_1884"></a> <a name="node_idx_1886"></a><a name="node_kw_definitiondelete-directory"></a><code class=scheme>(delete-directory</code><tt>&nbsp;</tt><code class=scheme><span class=variable>path</span></code><code class=scheme>)</code>
+deletes an existing directory with the pathname <code class=scheme><span class=variable>path</span></code>.  If the
+directory is deleted successfully, void is returned, otherwise
+the <a name="node_idx_1888"></a><code class=scheme>exn:i/o:filesystem</code> exception is raised.</p>
+<p>
+</p>
+<li><p><a name="node_idx_1890"></a> <a name="node_idx_1892"></a>
+<code class=scheme>(<a name="node_idx_1894"></a><code class=scheme>rename-file-or-directory</code> <code class=scheme><span class=variable>old-path</span></code> <code class=scheme><span class=variable>new-path</span></code> <code class=scheme><span class=variable>exists-ok?</span></code>)</code>, as
+described in the previous section, renames directories.</p>
+<p>
+</p>
+<li><p><a name="node_idx_1896"></a>
+<code class=scheme>(<a name="node_idx_1898"></a><code class=scheme>file-or-directory-modify-seconds</code> <code class=scheme><span class=variable>path</span></code>)</code>, as
+described in the previous section, gets directory dates.</p>
+<p>
+</p>
+<li><p><a name="node_idx_1900"></a>
+<code class=scheme>(<a name="node_idx_1902"></a><code class=scheme>file-or-directory-permissions</code> <code class=scheme><span class=variable>path</span></code>)</code>, as
+described in the previous section, gets directory permissions.</p>
+<p>
+</p>
+<li><p><a name="node_idx_1904"></a> <a name="node_idx_1906"></a><a name="node_kw_definitiondirectory-list"></a><code class=scheme>(directory-list</code><tt>&nbsp;</tt>[<code class=scheme><span class=variable>path</span></code>]<code class=scheme>)</code>
+returns a list of all files and directories in the directory
+specified by <code class=scheme><span class=variable>path</span></code>. If <code class=scheme><span class=variable>path</span></code> is omitted, a list of files
+and directories in the current directory is returned.</p>
+<p>
+</p>
+<li><p><a name="node_idx_1908"></a> <a name="node_idx_1910"></a><a name="node_kw_definitionfilesystem-root-list"></a><code class=scheme>(filesystem-root-list</code><code class=scheme>)</code> returns a
+list of all current root directories.</p>
+<p>
+</p>
+</ul><p></p>
+<p>
+</p>
+<a name="node_sec_11.4"></a>
+<h2><a href="mzscheme.html#node_toc_node_sec_11.4">11.4&nbsp;&nbsp;Networking</a></h2>
+<p><a name="node_idx_1912"></a></p>
+<p>
+<a name="node_idx_1914"></a> <a name="node_idx_1916"></a> <a name="node_idx_1918"></a>
+Mzscheme supports networking with the TCP and UDP protocols.</p>
+<p>
+</p>
+<a name="node_sec_11.4.1"></a>
+<h3><a href="mzscheme.html#node_toc_node_sec_11.4.1">11.4.1&nbsp;&nbsp;TCP</a></h3>
+<p></p>
+<p>
+<a name="node_idx_1920"></a>
+For information about TCP in general, see <i>TCP/IP Illustrated,
+Volume 1</i> by W. Richard Stevens.</p>
+<p>
+</p>
+<ul><p>
+</p>
+<li><p><a name="node_idx_1922"></a><a name="node_kw_definitiontcp-listen"></a><code class=scheme>(tcp-listen</code><tt>&nbsp;</tt><code class=scheme><span class=variable>port-k</span></code><tt>&nbsp;</tt>[<code class=scheme><span class=variable>max-allow-wait-k reuse? hostname-string-or-false</span></code>]<code class=scheme>)</code>
+creates a ``listening'' server on the local machine at the specified
+port number (where <code class=scheme><span class=variable>port-k</span></code> is an exact integer between
+<code class=scheme><span class=selfeval>1</span></code> and <code class=scheme><span class=selfeval>65535</span></code> inclusive). The <code class=scheme><span class=variable>max-allow-wait-k</span></code>
+argument determines the maximum number of client connections that can
+be waiting for acceptance. (When <code class=scheme><span class=variable>max-allow-wait-k</span></code> clients are
+waiting acceptance, no new client connections can be made.)  The
+default value for <code class=scheme><span class=variable>max-allow-wait-k</span></code> argument is <code class=scheme><span class=selfeval>4</span></code>.</p>
+<p>
+If the <code class=scheme><span class=variable>reuse?</span></code>&nbsp;argument is true, then <code class=scheme><code class=scheme>tcp-listen</code></code> will
+create a listener even if the port is involved in a <tt>TIME_WAIT</tt>
+state. Such a use of <code class=scheme><span class=variable>reuse?</span></code>&nbsp;defeats certain guarantees of the
+TCP protocol; see Stevens's book for details. The default for
+<code class=scheme><span class=variable>reuse?</span></code>&nbsp;is <code class=scheme><span class=selfeval>#f</span></code>.</p>
+<p>
+If <code class=scheme><span class=variable>hostname-string-or-false</span></code> is <code class=scheme><span class=selfeval>#f</span></code> (the default), then the
+listener accepts connections to all of the listening machine's IP
+addresses. Otherwise, the listener accepts connections only at the
+IP address associated with the given name. For example, providing
+<code class=scheme><span class=selfeval>&quot;127.0.0.1&quot;</span></code> as <code class=scheme><span class=variable>hostname-string-or-false</span></code> typically creates a
+listener that accepts only connections to <code class=scheme><span class=selfeval>&quot;127.0.0.1&quot;</span></code> from the
+local machine.</p>
+<p>
+The return value of <code class=scheme><code class=scheme>tcp-listen</code></code> is a TCP listener value. This
+value can be used in future calls to <code class=scheme><code class=scheme>tcp-accept</code></code>,
+<code class=scheme><code class=scheme>tcp-accept-ready?</code></code>, and <code class=scheme><code class=scheme>tcp-close</code></code>.  Each new TCP listener
+value is placed into the management of the current custodian (see
+section&nbsp;<a href="mzscheme-Z-H-9.html#node_sec_9.2">9.2</a>).</p>
+<p>
+If the server cannot be started by <code class=scheme><code class=scheme>tcp-listen</code></code>, the
+<a name="node_idx_1924"></a><code class=scheme>exn:i/o:tcp</code> exception is raised.</p>
+<p>
+</p>
+<li><p><a name="node_idx_1926"></a><a name="node_kw_definitiontcp-connect"></a><code class=scheme>(tcp-connect</code><tt>&nbsp;</tt><code class=scheme><span class=variable>hostname-string port-k</span></code><code class=scheme>)</code> attempts to connect
+as a client to a listening server.  The <code class=scheme><span class=variable>hostname-string</span></code>
+argument is the server host's internet address name<a name="call_footnote_Temp_32"></a><a href="#footnote_Temp_32"><sup><small>28</small></sup></a> (e.g.,
+<code class=scheme><span class=selfeval>&quot;www.plt-scheme.org&quot;</span></code>), and <code class=scheme><span class=variable>port-k</span></code> (an exact integer between
+<code class=scheme><span class=selfeval>1</span></code> and <code class=scheme><span class=selfeval>65535</span></code>) is the port where the server is listening.</p>
+<p>
+Two values (see section&nbsp;<a href="mzscheme-Z-H-2.html#node_sec_2.2">2.2</a>) are returned by <code class=scheme><code class=scheme>tcp-connect</code></code>: an
+input port and an output port. Data can be received from the server
+through the input port and sent to the server through the output
+port.  If the server is a MzScheme process, it can obtain ports to
+communicate to the client with <code class=scheme><code class=scheme>tcp-accept</code></code>.  These ports are
+placed into the management of the current custodian (see
+section&nbsp;<a href="mzscheme-Z-H-9.html#node_sec_9.2">9.2</a>).</p>
+<p>
+Both of the returned ports must be closed to terminate the
+TCP connection. When both ports are still open, closing the output port
+with <code class=scheme>close-output-port</code> sends a TCP close to the server
+(which is seen as an end-of-file if the server reads the connection
+through a port). In contrast, <code class=scheme>tcp-abandon-port</code> (see below)
+closes the output port, but does not send a TCP close until the input
+port is also closed.</p>
+<p>
+If a connection cannot be established by <code class=scheme><code class=scheme>tcp-connect</code></code>, the
+<a name="node_idx_1928"></a><code class=scheme>exn:i/o:tcp</code> exception is raised.</p>
+<p>
+</p>
+<li><p><a name="node_idx_1930"></a><a name="node_kw_definitiontcp-connect/enable-break"></a><code class=scheme>(tcp-connect/enable-break</code><tt>&nbsp;</tt><code class=scheme><span class=variable>hostname-string port-k</span></code><code class=scheme>)</code> is like
+<code class=scheme><code class=scheme>tcp-connect</code></code>, but breaking is enabled (see
+section&nbsp;<a href="mzscheme-Z-H-6.html#node_sec_6.6">6.6</a>) while trying to connect. If breaking is
+disabled when <code class=scheme><code class=scheme>tcp-connect/enable-break</code></code> is called, then
+either ports are returned or the <a name="node_idx_1932"></a><code class=scheme>exn:break</code> exception is raised,
+but not both.</p>
+<p>
+</p>
+<li><p><a name="node_idx_1934"></a><a name="node_kw_definitiontcp-accept"></a><code class=scheme>(tcp-accept</code><tt>&nbsp;</tt><code class=scheme><span class=variable>tcp-listener</span></code><code class=scheme>)</code> accepts a client connection for
+the server associated with <code class=scheme><span class=variable>tcp-listener</span></code>. The <code class=scheme><span class=variable>tcp-listener</span></code>
+argument is a TCP listener value returned by <code class=scheme><code class=scheme>tcp-listen</code></code>. If no
+client connection is waiting on the listening port, the call to
+<code class=scheme><code class=scheme>tcp-accept</code></code> will block. (See also <code class=scheme><code class=scheme>tcp-accept-ready?</code></code>,
+below.)</p>
+<p>
+Two values (see section&nbsp;<a href="mzscheme-Z-H-2.html#node_sec_2.2">2.2</a>) are returned by <code class=scheme><code class=scheme>tcp-accept</code></code>: an
+input port and an output port. Data can be received from the client
+through the input port and sent to the client through the output
+port.  These ports are placed into the management of the current
+custodian (see section&nbsp;<a href="mzscheme-Z-H-9.html#node_sec_9.2">9.2</a>).</p>
+<p>
+Both of the returned ports must be closed to terminate the
+connection. When both ports are still open, closing the output port
+with <code class=scheme>close-output-port</code> sends a TCP close to the client
+(which is seen as an end-of-file if the client reads the connection
+through a port). In contrast, <code class=scheme>tcp-abandon-port</code> (see below)
+closes the output port, but does not send a TCP close until the input
+port is also closed.</p>
+<p>
+If a connection cannot be accepted by <code class=scheme><code class=scheme>tcp-accept</code></code>, or if the
+listener has been closed, the <a name="node_idx_1936"></a><code class=scheme>exn:i/o:tcp</code> exception is raised.</p>
+<p>
+</p>
+<li><p><a name="node_idx_1938"></a><a name="node_kw_definitiontcp-accept-ready_Q_"></a><code class=scheme>(tcp-accept-ready?</code><tt>&nbsp;</tt><code class=scheme><span class=variable>tcp-listener</span></code><code class=scheme>)</code> tests whether an
+unaccepted client has connected to the server associated with
+<code class=scheme><span class=variable>tcp-listener</span></code>. The <code class=scheme><span class=variable>tcp-listener</span></code> argument is a TCP listener
+value returned by <code class=scheme><code class=scheme>tcp-listen</code></code>. If a client is waiting, the
+return value is <code class=scheme><span class=selfeval>#t</span></code>, otherwise it is <code class=scheme><span class=selfeval>#f</span></code>. A client is
+accepted with the <code class=scheme><code class=scheme>tcp-accept</code></code> procedure, which returns ports for
+communicating with the client and removes the client from the list of
+unaccepted clients.</p>
+<p>
+If the listener has been closed, the <a name="node_idx_1940"></a><code class=scheme>exn:i/o:tcp</code> exception is raised.</p>
+<p>
+</p>
+<li><p><a name="node_idx_1942"></a><a name="node_kw_definitiontcp-accept/enable-break"></a><code class=scheme>(tcp-accept/enable-break</code><tt>&nbsp;</tt><code class=scheme><span class=variable>tcp-listener</span></code><code class=scheme>)</code> is like
+<code class=scheme><code class=scheme>tcp-accept</code></code>, but breaking is enabled (see
+section&nbsp;<a href="mzscheme-Z-H-6.html#node_sec_6.6">6.6</a>) while trying to accept a connection. If
+breaking is disabled when <code class=scheme><code class=scheme>tcp-accept/enable-break</code></code> is called,
+then either ports are returned or the <a name="node_idx_1944"></a><code class=scheme>exn:break</code> exception is
+raised, but not both.</p>
+<p>
+</p>
+<li><p><a name="node_idx_1946"></a><a name="node_kw_definitiontcp-close"></a><code class=scheme>(tcp-close</code><tt>&nbsp;</tt><code class=scheme><span class=variable>tcp-listener</span></code><code class=scheme>)</code> shuts down the server associated
+with <code class=scheme><span class=variable>tcp-listener</span></code>. The <code class=scheme><span class=variable>tcp-listener</span></code> argument is a TCP
+listener value returned by <code class=scheme><code class=scheme>tcp-listen</code></code>. All unaccepted clients
+receive an end-of-file from the server; connections to accepted
+clients are unaffected.</p>
+<p>
+If the listener has already been closed, the <a name="node_idx_1948"></a><code class=scheme>exn:i/o:tcp</code> exception is raised.</p>
+<p>
+The listener's port number may not become immediately available for
+new listeners (with the default <code class=scheme><span class=variable>reuse?</span></code>&nbsp;argument of
+<code class=scheme><code class=scheme>tcp-listen</code></code>). For further information, see Stevens's
+explanation of the <tt>TIME_WAIT</tt> TCP state.</p>
+<p>
+</p>
+<li><p><a name="node_idx_1950"></a><a name="node_kw_definitiontcp-listener_Q_"></a><code class=scheme>(tcp-listener?</code><tt>&nbsp;</tt><code class=scheme><span class=variable>v</span></code><code class=scheme>)</code> returns <code class=scheme><span class=selfeval>#t</span></code> if <code class=scheme><span class=variable>v</span></code> is a TCP
+listener value created by <code class=scheme><code class=scheme>tcp-listen</code></code>, <code class=scheme><span class=selfeval>#f</span></code> otherwise.</p>
+<p>
+</p>
+<li><p><a name="node_idx_1952"></a><a name="node_kw_definitiontcp-abandon-port"></a><code class=scheme>(tcp-abandon-port</code><tt>&nbsp;</tt><code class=scheme><span class=variable>tcp-port</span></code><code class=scheme>)</code> is like
+<code class=scheme>close-output-port</code> or <code class=scheme>close-input-port</code> (depending on
+whether <code class=scheme><span class=variable>tcp-port</span></code> is an input or output port), but if
+<code class=scheme><span class=variable>tcp-port</span></code> is an output port and its associated input port is not
+yet closed, then then other end of the TCP connection does not
+receive a TCP close message until the input port is also
+closed.<a name="call_footnote_Temp_33"></a><a href="#footnote_Temp_33"><sup><small>29</small></sup></a></p>
+<p>
+</p>
+<li><p><a name="node_idx_1954"></a><a name="node_kw_definitiontcp-addresses"></a><code class=scheme>(tcp-addresses</code><tt>&nbsp;</tt><code class=scheme><span class=variable>tcp-port</span></code><code class=scheme>)</code> returns two strings. The first
+string is the internet address for the local machine a viewed by the
+given TCP port's connection.<a name="call_footnote_Temp_34"></a><a href="#footnote_Temp_34"><sup><small>30</small></sup></a> The second string is the internet address for
+the other end of the connection.</p>
+<p>
+If the given port has been closed, the <a name="node_idx_1956"></a><code class=scheme>exn:i/o:tcp</code> exception is raised.</p>
+<p>
+</p>
+<li><p><a name="node_idx_1958"></a><a name="node_kw_definitiontcp-port_Q_"></a><code class=scheme>(tcp-port?</code><tt>&nbsp;</tt><code class=scheme><span class=variable>v</span></code><code class=scheme>)</code> returns <code class=scheme><span class=selfeval>#t</span></code> if <code class=scheme><span class=variable>v</span></code> is a port
+returned by <code class=scheme>tcp-accept</code>, <code class=scheme>tcp-connect</code>,
+<code class=scheme>tcp-accept/enable-break</code>, or
+<code class=scheme>tcp-connect/enable-break</code>, <code class=scheme><span class=selfeval>#f</span></code> otherwise.</p>
+<p>
+</p>
+</ul><p></p>
+<p>
+</p>
+<a name="node_sec_11.4.2"></a>
+<h3><a href="mzscheme.html#node_toc_node_sec_11.4.2">11.4.2&nbsp;&nbsp;UDP</a></h3>
+<p></p>
+<p>
+<a name="node_idx_1960"></a>
+For information about UDP in general, see <i>TCP/IP Illustrated,
+Volume 1</i> by W. Richard Stevens (which discusses UDP in addition to
+TCP).</p>
+<p>
+</p>
+<ul><p>
+</p>
+<li><p><a name="node_idx_1962"></a><a name="node_kw_definitionudp-open-socket"></a><code class=scheme>(udp-open-socket</code><code class=scheme>)</code> creates and returns a UDP socket to send
+and receive datagrams (broadcasting is allowed). Initially, the
+socket is not bound or connected to any address or port.</p>
+<p>
+</p>
+<li><p><a name="node_idx_1964"></a><a name="node_kw_definitionudp-bind!"></a><code class=scheme>(udp-bind!</code><tt>&nbsp;</tt><code class=scheme><span class=variable>udp-socket hostname-string-or-false port-k</span></code><code class=scheme>)</code>
+binds an unbound <code class=scheme><span class=variable>udp-socket</span></code> to the local port number
+<code class=scheme><span class=variable>port-k</span></code> (an exact integer between <code class=scheme><span class=selfeval>1</span></code> and
+<code class=scheme><span class=selfeval>65535</span></code>). The result is always void.</p>
+<p>
+If <code class=scheme><span class=variable>hostname-string-or-false</span></code> is <code class=scheme><span class=selfeval>#f</span></code>, then the socket
+accepts connections to all of the listening machine's IP addresses at
+<code class=scheme><span class=variable>port-k</span></code>. Otherwise, the socket accepts connections only at the
+IP address associated with the given name. For example, providing
+<code class=scheme><span class=selfeval>&quot;127.0.0.1&quot;</span></code> as <code class=scheme><span class=variable>hostname-string-or-false</span></code> typically
+creates a listener that accepts only connections to
+<code class=scheme><span class=selfeval>&quot;127.0.0.1&quot;</span></code> from the local machine.</p>
+<p>
+A socket cannot receive datagrams until it is bound to a local
+address and port. If a socket is not bound before it is used with a
+sending procedure <code class=scheme>udp-send</code>, <code class=scheme>udp-send-to</code>, etc., the
+sending procedure binds the socket to a random local port. The
+binding of a bound socket cannot be changed.</p>
+<p>
+If <code class=scheme><span class=variable>udp-socket</span></code> is already bound or closed, the
+<a name="node_idx_1966"></a><code class=scheme>exn:i/o:udp</code> exception is raised.</p>
+<p>
+</p>
+<li><p><a name="node_idx_1968"></a><a name="node_kw_definitionudp-connect!"></a><code class=scheme>(udp-connect!</code><tt>&nbsp;</tt><code class=scheme><span class=variable>udp-socket hostname-string-or-false
+port-k-or-false</span></code><code class=scheme>)</code> connects the socket to the indicated remote address
+and port if <code class=scheme><span class=variable>hostname-string-or-false</span></code> is a string and
+<code class=scheme><span class=variable>port-k-or-false</span></code> is an exact integer between <code class=scheme><span class=selfeval>1</span></code> and
+<code class=scheme><span class=selfeval>65535</span></code>. The result is always void.</p>
+<p>
+If <code class=scheme><span class=variable>hostname-string-or-false</span></code> is <code class=scheme><span class=selfeval>#f</span></code>, then
+<code class=scheme><span class=variable>port-k-or-false</span></code> also must be <code class=scheme><span class=selfeval>#f</span></code>, and the port is
+disconnected (if connected). If one of <code class=scheme><span class=variable>hostname-string-or-false</span></code>
+or <code class=scheme><span class=variable>port-k-or-false</span></code> is <code class=scheme><span class=selfeval>#f</span></code> and the other is not, the
+<a name="node_idx_1970"></a><code class=scheme>exn:application:mismatch</code> exception is raised.</p>
+<p>
+A connected socket can be used with <code class=scheme>udp-send</code> (not
+<code class=scheme>udp-send-to</code>), and it accepts datagrams only from the
+connected address and port. A socket need not be connected to receive
+datagrams.  A socket can be connected, re-connected, and disconnected
+any number of times.</p>
+<p>
+If <code class=scheme><span class=variable>udp-socket</span></code> is closed, the <a name="node_idx_1972"></a><code class=scheme>exn:i/o:udp</code> exception is raised.</p>
+<p>
+</p>
+<li><p><a name="node_idx_1974"></a><a name="node_kw_definitionudp-send-to"></a><code class=scheme>(udp-send-to</code><tt>&nbsp;</tt><code class=scheme><span class=variable>udp-socket hostname-address port-k
+string</span></code><tt>&nbsp;</tt>[<code class=scheme><span class=variable>start-k end-k</span></code>]<code class=scheme>)</code> sends <code class=scheme>(substring <code class=scheme><span class=variable>starting</span></code>
+<code class=scheme><span class=variable>start-k</span></code> <code class=scheme><span class=variable>end-k</span></code>)</code> as a datagram from the unconnected
+<code class=scheme><span class=variable>udp-socket</span></code> to the socket at the remote machine
+<code class=scheme><span class=variable>hostname-address</span></code> on the port <code class=scheme><span class=variable>port-k</span></code>. The <code class=scheme><span class=variable>udp-socket</span></code>
+need not be bound or connected; if it is not bound,
+<code class=scheme>udp-send-to</code> binds it to a random local port. If the socket's
+outgoing datagram queue is too full to support the send,
+<code class=scheme>udp-send-to</code> blocks until the datagram can be queued.  The
+result is always void.</p>
+<p>
+The optional <code class=scheme><span class=variable>start-k</span></code> argument defaults to <code class=scheme><span class=selfeval>0</span></code>, and the
+optional <code class=scheme><span class=variable>end-k</span></code> argument defaults to the length of <code class=scheme><span class=variable>string</span></code>.
+If <code class=scheme><span class=variable>start-k</span></code> is greater than the length of <code class=scheme><span class=variable>string</span></code>, or if
+<code class=scheme><span class=variable>end-k</span></code> is less than <code class=scheme><span class=variable>start-k</span></code> or greater than the length of
+<code class=scheme><span class=variable>string</span></code>, the <a name="node_idx_1976"></a><code class=scheme>exn:application:mismatch</code> exception is raised.</p>
+<p>
+If <code class=scheme><span class=variable>udp-socket</span></code> is closed or connected, the
+<a name="node_idx_1978"></a><code class=scheme>exn:i/o:udp</code> exception is raised.</p>
+<p>
+</p>
+<li><p><a name="node_idx_1980"></a><a name="node_kw_definitionudp-send"></a><code class=scheme>(udp-send</code><tt>&nbsp;</tt><code class=scheme><span class=variable>udp-socket string</span></code><tt>&nbsp;</tt>[<code class=scheme><span class=variable>start-k end-k</span></code>]<code class=scheme>)</code> is like
+<code class=scheme>udp-send-to</code>, except that <code class=scheme><span class=variable>udp-socket</span></code> must be connected,
+and the datagram goes to the connection target.  If <code class=scheme><span class=variable>udp-socket</span></code>
+is closed or unconnected, the <a name="node_idx_1982"></a><code class=scheme>exn:i/o:udp</code> exception is raised.</p>
+<p>
+</p>
+<li><p><a name="node_idx_1984"></a><a name="node_kw_definitionudp-send-to*"></a><code class=scheme>(udp-send-to*</code><tt>&nbsp;</tt><code class=scheme><span class=variable>udp-socket hostname-address port-k
+string</span></code><tt>&nbsp;</tt>[<code class=scheme><span class=variable>start-k end-k</span></code>]<code class=scheme>)</code> is like <code class=scheme>udp-send-to</code>, except that it
+never blocks; if the socket's outgoing queue is too full to support
+the send, <code class=scheme><span class=selfeval>#f</span></code> is returned, otherwise the datagram is queued
+and the result is <code class=scheme><span class=selfeval>#t</span></code>.</p>
+<p>
+</p>
+<li><p><a name="node_idx_1986"></a><a name="node_kw_definitionudp-send*"></a><code class=scheme>(udp-send*</code><tt>&nbsp;</tt><code class=scheme><span class=variable>udp-socket string</span></code><tt>&nbsp;</tt>[<code class=scheme><span class=variable>start-k end-k</span></code>]<code class=scheme>)</code> is like
+<code class=scheme>udp-send</code>, except that (like <code class=scheme>udp-send-to</code>) it
+never blocks and returns <code class=scheme><span class=selfeval>#f</span></code> or <code class=scheme><span class=selfeval>#t</span></code>.</p>
+<p>
+</p>
+<li><p><a name="node_idx_1988"></a><a name="node_kw_definitionudp-send-to/enable-break"></a><code class=scheme>(udp-send-to/enable-break</code><tt>&nbsp;</tt><code class=scheme><span class=variable>udp-socket hostname-address
+port-k string</span></code><tt>&nbsp;</tt>[<code class=scheme><span class=variable>start-k end-k</span></code>]<code class=scheme>)</code> is like <code class=scheme>udp-send-to</code>, but
+breaking is enabled (see section&nbsp;<a href="mzscheme-Z-H-6.html#node_sec_6.6">6.6</a>) while trying to send
+the datagram. If breaking is disabled when
+<code class=scheme>udp-send-to/enable-break</code> is called, then either the datagram
+is sent or the <a name="node_idx_1990"></a><code class=scheme>exn:break</code> exception is raised, but not both.</p>
+<p>
+</p>
+<li><p><a name="node_idx_1992"></a><a name="node_kw_definitionudp-send/enable-break"></a><code class=scheme>(udp-send/enable-break</code><tt>&nbsp;</tt><code class=scheme><span class=variable>udp-socket string</span></code><tt>&nbsp;</tt>[<code class=scheme><span class=variable>start-k end-k</span></code>]<code class=scheme>)</code>
+is like <code class=scheme>udp-send</code>, except that breaks are enabled like
+<code class=scheme>udp-send-to/enable-break</code>.</p>
+<p>
+</p>
+<li><p><a name="node_idx_1994"></a><a name="node_kw_definitionudp-receive!"></a><code class=scheme>(udp-receive!</code><tt>&nbsp;</tt><code class=scheme><span class=variable>udp-socket mutable-string</span></code><tt>&nbsp;</tt>[<code class=scheme><span class=variable>start-k end-k</span></code>]<code class=scheme>)</code>
+accepts up to <code class=scheme><span class=variable>end-k</span></code> <tt>-</tt> <code class=scheme><span class=variable>start-k</span></code> characters of
+<code class=scheme><span class=variable>udp-socket</span></code>'s next incoming datagram into <code class=scheme><span class=variable>mutable-string</span></code>,
+writing the datagram characters starting at position <code class=scheme><span class=variable>start-k</span></code>
+within <code class=scheme><span class=variable>mutable-string</span></code>. The <code class=scheme><span class=variable>udp-socket</span></code> must be bound to a
+local address and port (but need not be connected). If no incoming
+datagram is immediately available, <code class=scheme>udp-receive!</code> blocks
+until one is available.</p>
+<p>
+Three values are returned: an exact integer that indicates the number
+of received characters (between <code class=scheme><span class=selfeval>0</span></code> and
+<code class=scheme><span class=variable>end-k</span></code> <tt>-</tt> <code class=scheme><span class=variable>start-k</span></code>), a hostname string
+indicating the source address of the datagram, and an exact integer
+between <code class=scheme><span class=selfeval>1</span></code> and <code class=scheme><span class=selfeval>65535</span></code> indicating the source port of
+the datagram. If the received datagram is longer than
+<code class=scheme><span class=variable>end-k</span></code> <tt>-</tt> <code class=scheme><span class=variable>start-k</span></code> bytes, the remainder is
+discarded.</p>
+<p>
+The optional <code class=scheme><span class=variable>start-k</span></code> argument defaults to <code class=scheme><span class=selfeval>0</span></code>, and the
+optional <code class=scheme><span class=variable>end-k</span></code> argument defaults to the length of
+<code class=scheme><span class=variable>mutable-string</span></code>.  If <code class=scheme><span class=variable>start-k</span></code> is greater than the length of
+<code class=scheme><span class=variable>mutable-string</span></code>, or if <code class=scheme><span class=variable>end-k</span></code> is less than <code class=scheme><span class=variable>start-k</span></code> or
+greater than the length of <code class=scheme><span class=variable>mutable-string</span></code>, the
+<a name="node_idx_1996"></a><code class=scheme>exn:application:mismatch</code> exception is raised. </p>
+<p>
+</p>
+<li><p><a name="node_idx_1998"></a><a name="node_kw_definitionudp-receive!*"></a><code class=scheme>(udp-receive!*</code><tt>&nbsp;</tt><code class=scheme><span class=variable>udp-socket mutable-string</span></code><tt>&nbsp;</tt>[<code class=scheme><span class=variable>start-k
+end-k</span></code>]<code class=scheme>)</code> is like <code class=scheme>udp-receive!</code>, except that it never blocks. If
+no datagram is available, the three result values are all
+<code class=scheme><span class=selfeval>#f</span></code>.</p>
+<p>
+</p>
+<li><p><a name="node_idx_2000"></a><a name="node_kw_definitionudp-receive!/enable-break"></a><code class=scheme>(udp-receive!/enable-break</code><tt>&nbsp;</tt><code class=scheme><span class=variable>udp-socket
+mutable-string</span></code><tt>&nbsp;</tt>[<code class=scheme><span class=variable>start-k end-k</span></code>]<code class=scheme>)</code> is like <code class=scheme>udp-receive!</code>, but
+breaking is enabled (see section&nbsp;<a href="mzscheme-Z-H-6.html#node_sec_6.6">6.6</a>) while trying to
+receive the datagram. If breaking is disabled when
+<code class=scheme>udp-receive!/enable-break</code> is called, then either a datagram
+is received or the <a name="node_idx_2002"></a><code class=scheme>exn:break</code> exception is raised, but not
+both.</p>
+<p>
+</p>
+<li><p><a name="node_idx_2004"></a><a name="node_kw_definitionudp-close"></a><code class=scheme>(udp-close</code><tt>&nbsp;</tt><code class=scheme><span class=variable>udp-socket</span></code><code class=scheme>)</code> closes <code class=scheme><span class=variable>udp-socket</span></code>, discarding
+unreceived datagrams.  If the socket is already closed, the
+<a name="node_idx_2006"></a><code class=scheme>exn:i/o:udp</code> exception is raised.</p>
+<p>
+</p>
+<li><p><a name="node_idx_2008"></a><a name="node_kw_definitionudp_Q_"></a><code class=scheme>(udp?</code><tt>&nbsp;</tt><code class=scheme><span class=variable>v</span></code><code class=scheme>)</code> returns <code class=scheme><span class=selfeval>#t</span></code> if <code class=scheme><span class=variable>v</span></code> is a socket created
+by <code class=scheme>udp-open-socket</code>, <code class=scheme><span class=selfeval>#f</span></code> otherwise.</p>
+<p>
+</p>
+<li><p><a name="node_idx_2010"></a><a name="node_kw_definitionudp-bound_Q_"></a><code class=scheme>(udp-bound?</code><tt>&nbsp;</tt><code class=scheme><span class=variable>udp-socket</span></code><code class=scheme>)</code> returns <code class=scheme><span class=selfeval>#t</span></code> if
+<code class=scheme><span class=variable>udp-socket</span></code> is bound to a local address and port, <code class=scheme><span class=selfeval>#f</span></code>
+otherwise.</p>
+<p>
+</p>
+<li><p><a name="node_idx_2012"></a><a name="node_kw_definitionudp-connected_Q_"></a><code class=scheme>(udp-connected?</code><tt>&nbsp;</tt><code class=scheme><span class=variable>udp-socket</span></code><code class=scheme>)</code> returns <code class=scheme><span class=selfeval>#t</span></code> if
+<code class=scheme><span class=variable>udp-socket</span></code> is connected to a remote address and port,
+<code class=scheme><span class=selfeval>#f</span></code> otherwise.</p>
+<p>
+</p>
+<li><p><a name="node_idx_2014"></a><a name="node_kw_definitionudp->send-waitable"></a><code class=scheme>(udp-&gt;send-waitable</code><tt>&nbsp;</tt><code class=scheme><span class=variable>udp-socket</span></code><code class=scheme>)</code> returns a waitable object
+that is in a blocking state when <code class=scheme>udp-send-to</code> on
+<code class=scheme><span class=variable>udp-socket</span></code> would block.</p>
+<p>
+</p>
+<li><p><a name="node_idx_2016"></a><a name="node_kw_definitionudp->receive-waitable"></a><code class=scheme>(udp-&gt;receive-waitable</code><tt>&nbsp;</tt><code class=scheme><span class=variable>udp-socket</span></code><code class=scheme>)</code> returns a waitable object
+that is in a blocking state when <code class=scheme>udp-receive!</code> on
+<code class=scheme><span class=variable>udp-socket</span></code> would block.</p>
+<p>
+</p>
+</ul><p></p>
+<p>
+</p>
+<p>
+</p>
+<div class=footnoterule><hr></div><p></p>
+<div class=footnote><p><a name="footnote_Temp_22"></a><a href="#call_footnote_Temp_22"><sup><small>18</small></sup></a> Flushing is performed by the default port read
+handler (see section&nbsp;<a href="#node_sec_11.2.4">11.2.4</a>) rather than by <code class=scheme><code class=scheme>read</code></code>
+itself.</p>
+<p><a name="footnote_Temp_23"></a><a href="#call_footnote_Temp_23"><sup><small>19</small></sup></a> More precisely, the procedure is
+used by the default port read handler; see also
+section&nbsp;<a href="#node_sec_11.2.4">11.2.4</a>.</p>
+<p><a name="footnote_Temp_24"></a><a href="#call_footnote_Temp_24"><sup><small>20</small></sup></a> A
+temporary string of size <code class=scheme><span class=variable>k</span></code> is allocated while reading the
+input, even if the size of the result is less than <code class=scheme><span class=variable>k</span></code>
+characters.</p>
+<p><a name="footnote_Temp_25"></a><a href="#call_footnote_Temp_25"><sup><small>21</small></sup></a> Assuming that the current
+port display and write handlers are the default ones; see
+section&nbsp;<a href="#node_sec_11.2.5">11.2.5</a> for more information.</p>
+<p><a name="footnote_Temp_26"></a><a href="#call_footnote_Temp_26"><sup><small>22</small></sup></a> Under Unix and Mac OS X, expansion does <em>not</em>
+convert multiple adjacent slashes to a single slash. However, extra
+slashes in a pathname are always ignored.</p>
+<p><a name="footnote_Temp_27"></a><a href="#call_footnote_Temp_27"><sup><small>23</small></sup></a> Mac OS X
+follows the Unix behavior in its treatment of links, and Mac OS Classic
+aliases are simply zero-length files.</p>
+<p><a name="footnote_Temp_28"></a><a href="#call_footnote_Temp_28"><sup><small>24</small></sup></a> The problem is that the procedure ``normalizes'' based
+on the platform, but case sensitivity is instead a property of an
+individual filesystem mount, not the platform that performs the
+mount.</p>
+<p><a name="footnote_Temp_29"></a><a href="#call_footnote_Temp_29"><sup><small>25</small></sup></a> For MrEd, the executable path is the name of a
+MrEd executable.</p>
+<p><a name="footnote_Temp_30"></a><a href="#call_footnote_Temp_30"><sup><small>26</small></sup></a> Under Windows, <code class=scheme><code class=scheme>file-exists?</code></code> reports
+<code class=scheme><span class=selfeval>#t</span></code> for all variations of the special filenames (e.g.,
+<code class=scheme><span class=selfeval>&quot;LPT1&quot;</span></code>, <code class=scheme><span class=selfeval>&quot;x:/baddir/LPT1&quot;</span></code>).</p>
+<p><a name="footnote_Temp_31"></a><a href="#call_footnote_Temp_31"><sup><small>27</small></sup></a> For FAT filesystems under Windows, directories do
+not have modification dates. Therefore, the creation date is returned
+for a directory (but the modification date is returned for a file).</p>
+<p><a name="footnote_Temp_32"></a><a href="#call_footnote_Temp_32"><sup><small>28</small></sup></a> The name
+<code class=scheme><span class=selfeval>&quot;localhost&quot;</span></code> generally specifies the local machine.</p>
+<p><a name="footnote_Temp_33"></a><a href="#call_footnote_Temp_33"><sup><small>29</small></sup></a> The TCP protocol does not include a ``no longer
+reading'' state on connections, so <code class=scheme>tcp-abandon-port</code> is
+equivalent to <code class=scheme>close-input-port</code> on input TCP ports.</p>
+<p><a name="footnote_Temp_34"></a><a href="#call_footnote_Temp_34"><sup><small>30</small></sup></a> For most machines, the answer
+corresponds to the current machine's only internet address. But when
+a machine serves multiple addresses, the result is
+connection-specific.</p>
+</div>
+<div align=right class=navigation><i>[Go to <span><a href="mzscheme.html">first</a>, <a href="mzscheme-Z-H-10.html">previous</a></span><span>, <a href="mzscheme-Z-H-12.html">next</a></span> page<span>; &nbsp;&nbsp;</span><span><a href="mzscheme.html#node_toc_start">contents</a></span><span><span>; &nbsp;&nbsp;</span><a href="mzscheme-Z-H-19.html#node_index_start">index</a></span>]</i></div><p></p>
+</body>
+</html>

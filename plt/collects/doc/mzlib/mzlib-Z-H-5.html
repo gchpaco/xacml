@@ -1,0 +1,134 @@
+<!doctype html public "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!--
+
+Generated from mzlib.tex by tex2page, v 2004-09-11
+(running on MzScheme 209, unix), 
+(c) Dorai Sitaram, 
+http://www.ccs.neu.edu/~dorai/tex2page/tex2page-doc.html
+
+-->
+<head>
+<title>
+PLT MzLib: Libraries Manual
+</title>
+<link rel="stylesheet" type="text/css" href="mzlib-Z-S.css" title=default>
+<meta name=robots content="noindex,follow">
+</head>
+<body>
+<div align=right class=navigation><i>[Go to <span><a href="mzlib.html">first</a>, <a href="mzlib-Z-H-4.html">previous</a></span><span>, <a href="mzlib-Z-H-6.html">next</a></span> page<span>; &nbsp;&nbsp;</span><span><a href="mzlib.html#node_toc_start">contents</a></span><span><span>; &nbsp;&nbsp;</span><a href="mzlib-Z-H-42.html#node_index_start">index</a></span>]</i></div><p></p>
+<a name="node_chap_5"></a>
+<h1 class=chapter>
+<div class=chapterheading><a href="mzlib.html#node_toc_node_chap_5">Chapter 5</a></div><br>
+<a href="mzlib.html#node_toc_node_chap_5"><tt><strong>class100.ss</strong></tt>: Version-100-Style Classes</a></h1>
+<p><a name="node_idx_250"></a><a name="node_idx_252"></a></p>
+<p>
+The <a name="node_kw_definitionclass100"></a><a name="node_idx_254"></a><code class=scheme><span class=keyword>class100</span></code>, <a name="node_kw_definitionclass100*"></a><a name="node_idx_256"></a><code class=scheme><span class=keyword>class100*</span></code>, and
+<a name="node_kw_definitionclass100*/names"></a><a name="node_idx_258"></a><code class=scheme><span class=keyword>class100*/names</span></code> forms provide a syntax close to that of
+<code class=scheme><span class=keyword>class</span></code>, <code class=scheme><span class=keyword>class*</span></code>, and <code class=scheme><span class=keyword>class*/names</span></code> in
+MzScheme versions 100 through 103, but with the semantics of the
+current <tt><strong>class.ss</strong></tt> system (see Chapter&nbsp;<a href="mzlib-Z-H-4.html#node_chap_4">4</a>). For a
+class defined with <code class=scheme><span class=keyword>class100</span></code>, keyword-based initialization
+arguments can be propagated to the superclass, but by-position
+arguments are not (i.e., the expansion of <code class=scheme><span class=keyword>class100</span></code> to
+<code class=scheme><span class=keyword>class</span></code> always includes an <code class=scheme><span class=keyword>init-rest</span></code> clause).</p>
+<p>
+The <a name="node_kw_definitionclass100*/names"></a><a name="node_idx_260"></a><code class=scheme><span class=keyword>class100*/names</span></code> form creates a new class:
+</p>
+<div align=left><pre class=scheme>(<span class=keyword>class100*/names</span> <span class=variable>local-names</span> <span class=variable>superclass-expr</span> (<span class=variable>interface-expr</span> <tt>&middot;&middot;&middot;</tt>) <span class=variable>initialization-variables</span>
+  <span class=variable>class100-clause</span>
+  <tt>&middot;&middot;&middot;</tt>)
+
+<span class=variable>local-names</span> is one of
+  (<span class=variable>this-variable</span> <span class=variable>super-make-object-variable</span>) 
+  (<span class=variable>this-variable</span> <span class=variable>super-make-object-variable</span> <span class=variable>super-instantiate-variable</span>)
+
+<span class=variable>initialization-variables</span> is one of
+  <span class=variable>variable</span>
+  (<span class=variable>variable</span> <tt>&middot;&middot;&middot;</tt> <span class=variable>variable-with-default</span> <tt>&middot;&middot;&middot;</tt>) 
+  (<span class=variable>variable</span> <tt>&middot;&middot;&middot;</tt> <span class=variable>variable-with-default</span> <tt>&middot;&middot;&middot;</tt> . <span class=variable>variable</span>) 
+
+<span class=variable>variable-with-default</span> is
+  (<span class=variable>variable</span> <span class=variable>default-value-expr</span>) 
+
+<span class=variable>class100-clause</span> is one of
+  (<span class=keyword>sequence</span> <span class=variable>expr</span> <tt>&middot;&middot;&middot;</tt>) 
+  (<span class=keyword>public</span> <span class=variable>public-method-declaration</span> <tt>&middot;&middot;&middot;</tt>) 
+  (<span class=keyword>override</span> <span class=variable>public-method-declaration</span> <tt>&middot;&middot;&middot;</tt>) 
+  (<span class=keyword>private</span> <span class=variable>private-method-declaration</span> <tt>&middot;&middot;&middot;</tt>) 
+  (<span class=keyword>private-field</span> <span class=variable>private-var-declaration</span> <tt>&middot;&middot;&middot;</tt>) 
+  (<span class=keyword>inherit</span> <span class=variable>inherit-method-declaration</span> <tt>&middot;&middot;&middot;</tt>) 
+  (<span class=keyword>rename</span> <span class=variable>rename-method-declaration</span> <tt>&middot;&middot;&middot;</tt>) 
+
+<span class=variable>public-method-declaration</span> is one of 
+  ((<span class=variable>internal-variable</span> <span class=variable>external-variable</span>) <span class=variable>method-procedure</span>)
+  (<span class=variable>variable</span> <span class=variable>method-procedure</span>)
+
+<span class=variable>private-method-declaration</span> is one of 
+  (<span class=variable>variable</span> <span class=variable>method-procedure</span>)
+
+<span class=variable>private-var-declaration</span> is one of 
+  (<span class=variable>variable</span> <span class=variable>initial-value-expr</span>)
+  (<span class=variable>variable</span>)
+  <span class=variable>variable</span> 
+
+<span class=variable>inherit-method-declaration</span> is one of
+  <span class=variable>variable</span>
+  (<span class=variable>internal-instance-variable</span> <span class=variable>external-inherited-variable</span>)
+
+<span class=variable>rename-method-declaration</span> is
+  (<span class=variable>internal-variable</span> <span class=variable>external-variable</span>)
+</pre></div><p>
+In <code class=scheme><span class=variable>local-names</span></code>, if <code class=scheme><span class=variable>super-instantiate-variable</span></code> is not
+provided, the <code class=scheme><span class=keyword>instantiate</span></code>-like superclass initialization form
+will not be available in the <code class=scheme><span class=keyword>class100*/names</span></code> body.</p>
+<p>
+The <a name="node_kw_definitionclass100*"></a><a name="node_idx_262"></a><code class=scheme><span class=keyword>class100*</span></code> macro avoids specifying <code class=scheme><span class=variable>local-names</span></code>,
+instead implicitly binding <code class=scheme>this</code> and <code class=scheme>super-init</code> (and
+nothing for <code class=scheme><span class=variable>super-instantiate-variable</span></code>).
+</p>
+<div align=left><pre class=scheme>(<span class=keyword>class100*</span> <span class=variable>superclass-expr</span> (<span class=variable>interface-expr</span> <tt>&middot;&middot;&middot;</tt>) <span class=variable>initialization-variables</span>
+    <span class=variable>class100-clause</span>
+    <tt>&middot;&middot;&middot;</tt>)
+</pre></div><p></p>
+<p>
+The <a name="node_kw_definitionclass100"></a><a name="node_idx_264"></a><code class=scheme><span class=keyword>class100</span></code> macro omits both <code class=scheme><span class=variable>local-names</span></code> and the
+<code class=scheme><span class=variable>interface-expr</span></code>s:
+</p>
+<div align=left><pre class=scheme>(<span class=keyword>class100</span> <span class=variable>superclass-expr</span> <span class=variable>initialization-variables</span>
+    <span class=variable>class100-clause</span>
+    <tt>&middot;&middot;&middot;</tt>)
+</pre></div><p></p>
+<p>
+
+<a name="node_kw_definitionclass100-asi"></a><a name="node_idx_266"></a>
+</p>
+<p></p>
+<p>
+
+<code class=scheme>(<code class=scheme><span class=keyword>class100-asi</span></code> <code class=scheme><span class=variable>superclass instance-variable-clause <tt>&middot;&middot;&middot;</tt></span></code>)</code> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<small>S</small><small>Y</small><small>N</small><small>T</small><small>A</small><small>X</small>
+</p>
+<p>
+Like <code class=scheme><span class=keyword>class100</span></code>, but all initialization arguments are
+automatically passed on to the superclass initialization procedure by
+position.</p>
+<p>
+
+<a name="node_kw_definitionclass100*-asi"></a><a name="node_idx_268"></a>
+</p>
+<p></p>
+<p>
+
+<code class=scheme>(<code class=scheme><span class=keyword>class100*-asi</span></code> <code class=scheme><span class=variable>superclass interfaces instance-variable-clause <tt>&middot;&middot;&middot;</tt></span></code>)</code> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<small>S</small><small>Y</small><small>N</small><small>T</small><small>A</small><small>X</small>
+</p>
+<p>
+Like <code class=scheme><span class=keyword>class100*</span></code>, but all initialization arguments are
+automatically passed on to the superclass initialization procedure by
+position.</p>
+<p>
+</p>
+<p>
+</p>
+<div align=right class=navigation><i>[Go to <span><a href="mzlib.html">first</a>, <a href="mzlib-Z-H-4.html">previous</a></span><span>, <a href="mzlib-Z-H-6.html">next</a></span> page<span>; &nbsp;&nbsp;</span><span><a href="mzlib.html#node_toc_start">contents</a></span><span><span>; &nbsp;&nbsp;</span><a href="mzlib-Z-H-42.html#node_index_start">index</a></span>]</i></div><p></p>
+</body>
+</html>

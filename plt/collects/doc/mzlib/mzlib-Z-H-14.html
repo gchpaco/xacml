@@ -1,0 +1,103 @@
+<!doctype html public "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!--
+
+Generated from mzlib.tex by tex2page, v 2004-09-11
+(running on MzScheme 209, unix), 
+(c) Dorai Sitaram, 
+http://www.ccs.neu.edu/~dorai/tex2page/tex2page-doc.html
+
+-->
+<head>
+<title>
+PLT MzLib: Libraries Manual
+</title>
+<link rel="stylesheet" type="text/css" href="mzlib-Z-S.css" title=default>
+<meta name=robots content="noindex,follow">
+</head>
+<body>
+<div align=right class=navigation><i>[Go to <span><a href="mzlib.html">first</a>, <a href="mzlib-Z-H-13.html">previous</a></span><span>, <a href="mzlib-Z-H-15.html">next</a></span> page<span>; &nbsp;&nbsp;</span><span><a href="mzlib.html#node_toc_start">contents</a></span><span><span>; &nbsp;&nbsp;</span><a href="mzlib-Z-H-42.html#node_index_start">index</a></span>]</i></div><p></p>
+<a name="node_chap_14"></a>
+<h1 class=chapter>
+<div class=chapterheading><a href="mzlib.html#node_toc_node_chap_14">Chapter 14</a></div><br>
+<a href="mzlib.html#node_toc_node_chap_14"><tt><strong>date.ss</strong></tt>: Dates</a></h1>
+<p><a name="node_idx_542"></a><a name="node_idx_544"></a></p>
+<p>
+See also section&nbsp;<a href="../mzscheme/mzscheme-Z-H-15.html#node_sec_15.1">15.1</a> in <a href="../mzscheme/mzscheme.html"><i>PLT MzScheme: Language Manual</i></a>.</p>
+<p>
+
+
+</p>
+<p></p>
+<p>
+
+<a name="node_idx_546"></a><a name="node_kw_definitiondate->string"></a><code class=scheme>(date-&gt;string</code><tt>&nbsp;</tt><code class=scheme><span class=variable>date</span></code><tt>&nbsp;</tt>[<code class=scheme><span class=variable>time?</span></code>]<code class=scheme>)</code> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<small>P</small><small>R</small><small>O</small><small>C</small><small>E</small><small>D</small><small>U</small><small>R</small><small>E</small>
+</p>
+<p>
+<a name="node_idx_548"></a>
+Converts a date structure value (such as returned by MzScheme's
+<a name="node_idx_550"></a><code class=scheme>seconds-&gt;date</code>) to a string. The returned string contains
+the time of day only if <code class=scheme><span class=variable>time?</span></code> is a true value; the default is
+<code class=scheme><span class=selfeval>#f</span></code>. See also <code class=scheme>date-display-format</code>.</p>
+<p>
+
+
+</p>
+<p></p>
+<p>
+
+<a name="node_idx_552"></a><a name="node_kw_definitiondate-display-format"></a><code class=scheme>(date-display-format</code><tt>&nbsp;</tt>[<code class=scheme><span class=variable>format-symbol</span></code>]<code class=scheme>)</code> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<small>P</small><small>R</small><small>O</small><small>C</small><small>E</small><small>D</small><small>U</small><small>R</small><small>E</small>
+</p>
+<p>
+Parameter that determines the date display format, one of
+<code class=scheme><span class=selfeval>'american</span></code><a name="node_idx_554"></a>, <code class=scheme><span class=selfeval>'chinese</span></code><a name="node_idx_556"></a>, <code class=scheme><span class=selfeval>'german</span></code><a name="node_idx_558"></a>,
+<code class=scheme><span class=selfeval>'indian</span></code><a name="node_idx_560"></a>, <code class=scheme><span class=selfeval>'irish</span></code><a name="node_idx_562"></a>, <code class=scheme><span class=selfeval>'iso-8601</span></code><a name="node_idx_564"></a>,
+<code class=scheme><span class=selfeval>'rfc2822</span></code><a name="node_idx_566"></a>, or <code class=scheme><span class=selfeval>'julian</span></code><a name="node_idx_568"></a>.  The initial format is
+<code class=scheme><span class=selfeval>'american</span></code>.</p>
+<p>
+
+
+</p>
+<p></p>
+<p>
+
+<a name="node_idx_570"></a><a name="node_kw_definitionfind-seconds"></a><code class=scheme>(find-seconds</code><tt>&nbsp;</tt><code class=scheme><span class=variable>second minute hour day month year</span></code><code class=scheme>)</code> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<small>P</small><small>R</small><small>O</small><small>C</small><small>E</small><small>D</small><small>U</small><small>R</small><small>E</small>
+</p>
+<p>
+Finds the representation of a date in platform-specific seconds.  The
+arguments correspond to the fields of the <code class=scheme>date</code> structure.  If
+the platform cannot represent the specified date, an error is
+signaled, otherwise an integer is returned.</p>
+<p>
+
+
+</p>
+<p></p>
+<p>
+
+<a name="node_idx_572"></a><a name="node_kw_definitiondate->julian/scalinger"></a><code class=scheme>(date-&gt;julian/scalinger</code><tt>&nbsp;</tt><code class=scheme><span class=variable>date</span></code><code class=scheme>)</code> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<small>P</small><small>R</small><small>O</small><small>C</small><small>E</small><small>D</small><small>U</small><small>R</small><small>E</small>
+</p>
+<p>
+Converts a date structure (up to 2099 BCE Gregorian) into a Julian
+date number. The returned value is not a strict Julian number, but
+rather Scalinger's version, which is off by one for easier
+calculations.</p>
+<p>
+
+
+</p>
+<p></p>
+<p>
+
+<a name="node_idx_574"></a><a name="node_kw_definitionjulian/scalinger->string"></a><code class=scheme>(julian/scalinger-&gt;string</code><tt>&nbsp;</tt><code class=scheme><span class=variable>date</span></code><code class=scheme>)</code> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<small>P</small><small>R</small><small>O</small><small>C</small><small>E</small><small>D</small><small>U</small><small>R</small><small>E</small>
+</p>
+<p>
+Converts a Julian number (Scalinger's off-by-one version) into a
+string.</p>
+<p>
+</p>
+<p>
+</p>
+<div align=right class=navigation><i>[Go to <span><a href="mzlib.html">first</a>, <a href="mzlib-Z-H-13.html">previous</a></span><span>, <a href="mzlib-Z-H-15.html">next</a></span> page<span>; &nbsp;&nbsp;</span><span><a href="mzlib.html#node_toc_start">contents</a></span><span><span>; &nbsp;&nbsp;</span><a href="mzlib-Z-H-42.html#node_index_start">index</a></span>]</i></div><p></p>
+</body>
+</html>

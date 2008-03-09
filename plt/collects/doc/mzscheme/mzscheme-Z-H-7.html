@@ -1,0 +1,1206 @@
+<!doctype html public "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!--
+
+Generated from mzscheme.tex by tex2page, v 2004-09-11
+(running on MzScheme 209, unix), 
+(c) Dorai Sitaram, 
+http://www.ccs.neu.edu/~dorai/tex2page/tex2page-doc.html
+
+-->
+<head>
+<title>
+PLT MzScheme: Language Manual
+</title>
+<link rel="stylesheet" type="text/css" href="mzscheme-Z-S.css" title=default>
+<meta name=robots content="noindex,follow">
+</head>
+<body>
+<div align=right class=navigation><i>[Go to <span><a href="mzscheme.html">first</a>, <a href="mzscheme-Z-H-6.html">previous</a></span><span>, <a href="mzscheme-Z-H-8.html">next</a></span> page<span>; &nbsp;&nbsp;</span><span><a href="mzscheme.html#node_toc_start">contents</a></span><span><span>; &nbsp;&nbsp;</span><a href="mzscheme-Z-H-19.html#node_index_start">index</a></span>]</i></div><p></p>
+<a name="node_chap_7"></a>
+<h1 class=chapter>
+<div class=chapterheading><a href="mzscheme.html#node_toc_node_chap_7">Chapter 7</a></div><br>
+<a href="mzscheme.html#node_toc_node_chap_7">Threads</a></h1>
+<p><a name="node_idx_886"></a></p>
+<p>
+<a name="node_idx_888"></a>
+MzScheme supports multiple threads of control within a program.
+Threads are implemented for all operating systems, even when the
+operating system does not provide primitive thread support.</p>
+<p>
+<a name="node_idx_890"></a><a name="node_kw_definitionthread"></a><code class=scheme>(thread</code><tt>&nbsp;</tt><code class=scheme><span class=variable>thunk</span></code><code class=scheme>)</code> invokes the procedure <code class=scheme><span class=variable>thunk</span></code> with no
+arguments in a new thread of control. The <code class=scheme><code class=scheme>thread</code></code> procedure
+returns immediately with a <strong>thread descriptor</strong><a name="node_idx_892"></a> value. When
+the invocation of <code class=scheme><span class=variable>thunk</span></code> returns, the thread created to invoke
+<code class=scheme><span class=variable>thunk</span></code> terminates.</p>
+<p>
+Example:
+</p>
+<div align=left><pre class=scheme>(<code class=scheme>thread</code> (<span class=keyword>lambda</span> () (<code class=scheme>sleep</code> <span class=selfeval>2</span>) (<code class=scheme>display</code> <span class=selfeval>7</span>) (<code class=scheme>newline</code>))) <span class=comment>; =&gt; a thread descriptor </span>
+<span class=comment> <code class=scheme><code class=scheme>display</code></code>s <code class=schemeresponse><span class=selfeval>7</span></code> after two seconds pass</span>
+</pre></div><p></p>
+<p>
+<a name="node_idx_894"></a><a name="node_idx_896"></a><a name="node_idx_898"></a>
+Each thread has its own parameter settings (see section&nbsp;<a href="#node_sec_7.7">7.7</a>),
+such as the current directory or current exception handler.  A
+newly-created thread inherits the parameter settings of the creating
+thread, except
+</p>
+<ul><p>
+</p>
+<li><p>the <code class=scheme><code class=scheme>error-escape-handler</code></code> parameter, which is initialized
+to the default error escape handler; and</p>
+<p>
+</p>
+<li><p>the <code class=scheme><code class=scheme>current-exception-handler</code></code> parameter, which is
+initialized to the value of <code class=scheme><code class=scheme>initial-exception-handler</code></code>.</p>
+<p>
+</p>
+</ul><p></p>
+<p>
+When a thread is created, it is placed into the management of the
+current custodian (see section&nbsp;<a href="mzscheme-Z-H-9.html#node_sec_9.2">9.2</a>) and added to the current
+thread group (see section&nbsp;<a href="mzscheme-Z-H-9.html#node_sec_9.3">9.3</a>). A thread can have any
+number of custodian managers added through <code class=scheme>thread-resume</code>.</p>
+<p>
+A thread that has not terminated can be ``garbage collected'' if it is
+unreachable and suspended, or if it is unreachable and blocked on a
+set of unreachable waitable objects through <code class=scheme>semaphore-wait</code>
+or <code class=scheme>semaphore-wait/enable-break</code>
+(see section&nbsp;<a href="#node_sec_7.4">7.4</a>), <code class=scheme>channel-put</code>
+or <code class=scheme>channel-get</code>
+(see section&nbsp;<a href="#node_sec_7.5">7.5</a>), <code class=scheme>object-wait-multiple</code>
+or <code class=scheme>object-wait-multiple/enable-break</code> (see section&nbsp;<a href="#node_sec_7.6">7.6</a>),
+or <code class=scheme>thread-wait</code>.<a name="call_footnote_Temp_11"></a><a href="#footnote_Temp_11"><sup><small>8</small></sup></a></p>
+<p>
+</p>
+<a name="node_sec_7.1"></a>
+<h2><a href="mzscheme.html#node_toc_node_sec_7.1">7.1&nbsp;&nbsp;Suspending, Resuming, and Killing Threads</a></h2>
+<p><a name="node_idx_900"></a></p>
+<p>
+<a name="node_idx_902"></a>
+<a name="node_idx_904"></a><a name="node_kw_definitionthread-suspend"></a><code class=scheme>(thread-suspend</code><tt>&nbsp;</tt><code class=scheme><span class=variable>thread</span></code><code class=scheme>)</code> immediately suspends the execution of
+<code class=scheme><span class=variable>thread</span></code> if it is running. If the thread has terminated or is
+already suspended, <code class=scheme>thread-suspend</code> has no effect. The thread
+remains suspended (i.e., it does not execute) until it is resumed
+with <code class=scheme>thread-resume</code>. If the current custodian (see
+section&nbsp;<a href="mzscheme-Z-H-9.html#node_sec_9.2">9.2</a>) does not manage <code class=scheme><span class=variable>thread</span></code> (and none of its
+subordinates manages <code class=scheme><span class=variable>thread</span></code>), the
+<a name="node_idx_906"></a><code class=scheme>exn:application:mismatch</code> exception is raised, and the thread is not suspended.</p>
+<p>
+<a name="node_idx_908"></a>
+<a name="node_idx_910"></a><a name="node_kw_definitionthread-resume"></a><code class=scheme>(thread-resume</code><tt>&nbsp;</tt><code class=scheme><span class=variable>thread</span></code><tt>&nbsp;</tt>[<code class=scheme><span class=variable>thread-or-custodian</span></code>]<code class=scheme>)</code> resumes the
+execution of <code class=scheme><span class=variable>thread</span></code> if it is suspended and has at least one
+custodian (possibly added through <code class=scheme><span class=variable>thread-or-custodian</span></code>, as
+described below). If the thread has terminated, or if the thread is
+already running and <code class=scheme><span class=variable>thread-or-custodian</span></code> is not supplied, or if
+the thread has no custodian and <code class=scheme><span class=variable>thread-or-custodian</span></code> is not
+supplied, then <code class=scheme>thread-resume</code> has no effect. Otherwise, if
+<code class=scheme><span class=variable>thread-or-custodian</span></code> is supplied, it triggers up to three
+additional actions:
+</p>
+<ul><p>
+</p>
+<li><p>If <code class=scheme><span class=variable>thread-or-custodian</span></code> is a thread, whenever it is
+resumed from a suspended state in the future, then <code class=scheme><span class=variable>thread</span></code> is
+also resumed. (Resuming <code class=scheme><span class=variable>thread</span></code> may trigger the resumption of
+other threads that were previously attached to <code class=scheme><span class=variable>thread</span></code> through
+<code class=scheme>thread-resume</code>.)</p>
+<p>
+</p>
+<li><p>New custodians may be added to <code class=scheme><span class=variable>thread</span></code>'s set of
+managers.  If <code class=scheme><span class=variable>thread-or-custodian</span></code> is a thread, then all of
+the thread's custodians are added to <code class=scheme><span class=variable>thread</span></code>. Otherwise,
+<code class=scheme><span class=variable>thread-or-custodian</span></code> is a custodian, and it is added to
+<code class=scheme><span class=variable>thread</span></code> (unless the custodian is already shut down). If
+<code class=scheme><span class=variable>thread</span></code> becomes managed by both a custodian and one or more of
+its subordinates, the redundant subordinates are removed from
+<code class=scheme><span class=variable>thread</span></code>.  If <code class=scheme><span class=variable>thread</span></code> is suspended and a custodian is
+added, then <code class=scheme><span class=variable>thread</span></code> is resumed only after the addition.</p>
+<p>
+</p>
+<li><p>If <code class=scheme><span class=variable>thread-or-custodian</span></code> is a thread, whenever it
+receives a new managing custodian in the future, then <code class=scheme><span class=variable>thread</span></code>
+also receives the custodian. (Adding custodians to <code class=scheme><span class=variable>thread</span></code> may
+trigger adding the custodians to other threads that were previously
+attached to <code class=scheme><span class=variable>thread</span></code> through <code class=scheme>thread-resume</code>.)</p>
+<p>
+</p>
+</ul><p>
+</p>
+<p>
+<a name="node_idx_912"></a>
+<a name="node_idx_914"></a><a name="node_kw_definitionkill-thread"></a><code class=scheme>(kill-thread</code><tt>&nbsp;</tt><code class=scheme><span class=variable>thread</span></code><code class=scheme>)</code> terminates the specified thread immediately,
+or suspends the thread if <code class=scheme><span class=variable>thread</span></code> was created with
+<code class=scheme>thread/suspend-to-kill</code>. Terminating the main thread exits
+the application.  If <code class=scheme><span class=variable>thread</span></code> has already terminated,
+<code class=scheme><code class=scheme>kill-thread</code></code> does nothing.  If the current custodian (see
+section&nbsp;<a href="mzscheme-Z-H-9.html#node_sec_9.2">9.2</a>) does not manage <code class=scheme><span class=variable>thread</span></code> (and none of its
+subordinates manages <code class=scheme><span class=variable>thread</span></code>), the
+<a name="node_idx_916"></a><code class=scheme>exn:application:mismatch</code> exception is raised, and the thread is not killed or
+suspended.</p>
+<p>
+All of the MzScheme (and MrEd) primitives are kill-safe and
+suspend-safe; that is, killing or suspending a thread never
+interferes with the application of primitives in other threads. For
+example, if a thread is killed while extracting a character from an
+input port, the character is either completely consumed or not
+consumed, and other threads can safely use the port.</p>
+<p>
+<a name="node_idx_918"></a><a name="node_kw_definitionthread/suspend-to-kill"></a><code class=scheme>(thread/suspend-to-kill</code><tt>&nbsp;</tt><code class=scheme><span class=variable>thunk</span></code><code class=scheme>)</code> is like <code class=scheme>(<code class=scheme>thread</code> <span class=variable>thunk</span>)</code>,
+except that ``killing'' the current thread
+through <code class=scheme>kill-thread</code> or <code class=scheme>custodian-shutdown-all</code>
+(see section&nbsp;<a href="mzscheme-Z-H-9.html#node_sec_9.2">9.2</a>) merely suspends the thread instead of
+terminating it.</p>
+<p>
+</p>
+<a name="node_sec_7.2"></a>
+<h2><a href="mzscheme.html#node_toc_node_sec_7.2">7.2&nbsp;&nbsp;Synchronizing Thread State</a></h2>
+<p><a name="node_idx_920"></a></p>
+<p>
+<a name="node_idx_922"></a><a name="node_kw_definitionthread-wait"></a><code class=scheme>(thread-wait</code><tt>&nbsp;</tt><code class=scheme><span class=variable>thread</span></code><code class=scheme>)</code> blocks execution of the current thread until
+<code class=scheme><span class=variable>thread</span></code> has terminated. Note that <code class=scheme>(thread-wait
+(current-thread))</code> deadlocks the current thread, but a break
+can end the deadlock (if breaking is enabled; see
+section&nbsp;<a href="mzscheme-Z-H-6.html#node_sec_6.6">6.6</a>).</p>
+<p>
+<a name="node_idx_924"></a><a name="node_kw_definitionthread-dead-waitable"></a><code class=scheme>(thread-dead-waitable</code><tt>&nbsp;</tt><code class=scheme><span class=variable>thread</span></code><code class=scheme>)</code> returns a waitable object
+(see section&nbsp;<a href="#node_sec_7.6">7.6</a>) that blocks until <code class=scheme><span class=variable>thread</span></code> has terminated.
+Unlike using <code class=scheme><span class=variable>thread</span></code> directly, however, reference to the
+waitable does not prevent <code class=scheme><span class=variable>thread</span></code> from being ``garbage
+collected.''</p>
+<p>
+<a name="node_idx_926"></a><a name="node_kw_definitionthread-resume-waitable"></a><code class=scheme>(thread-resume-waitable</code><tt>&nbsp;</tt><code class=scheme><span class=variable>thread</span></code><code class=scheme>)</code> returns a waitable object
+(see section&nbsp;<a href="#node_sec_7.6">7.6</a>) that blocks until <code class=scheme><span class=variable>thread</span></code> is running.
+(If <code class=scheme><span class=variable>thread</span></code> has terminated, the waitable will never unblock.)
+If <code class=scheme><span class=variable>thread</span></code> runs and is then suspended after a call
+to <code class=scheme>thread-resume-waitable</code>, the result waitable remains
+unblocked; after each suspend of <code class=scheme><span class=variable>thread</span></code> a fresh waitable object
+is generated to be returned by <code class=scheme>thread-resume-waitable</code>.  The
+unblock result of the waitable is <code class=scheme><span class=variable>thread</span></code>, but if <code class=scheme><span class=variable>thread</span></code>
+is never resumed, then reference to the waitable does not
+prevent <code class=scheme><span class=variable>thread</span></code> from being ``garbage collected.''</p>
+<p>
+<a name="node_idx_928"></a><a name="node_kw_definitionthread-suspend-waitable"></a><code class=scheme>(thread-suspend-waitable</code><tt>&nbsp;</tt><code class=scheme><span class=variable>thread</span></code><code class=scheme>)</code> returns a waitable object
+(see section&nbsp;<a href="#node_sec_7.6">7.6</a>) that blocks until <code class=scheme><span class=variable>thread</span></code> is suspended.
+(If <code class=scheme><span class=variable>thread</span></code> has terminated, the waitable will never unblock.)
+If <code class=scheme><span class=variable>thread</span></code> is suspended and the resumes after a call
+to <code class=scheme>thread-suspend-waitable</code>, the result waitable remains
+unblocked; after each resume of <code class=scheme><span class=variable>thread</span></code> a fresh waitable object
+is generated to be returned by <code class=scheme>thread-suspend-waitable</code>.</p>
+<p>
+</p>
+<a name="node_sec_7.3"></a>
+<h2><a href="mzscheme.html#node_toc_node_sec_7.3">7.3&nbsp;&nbsp;Additional Thread Utilities</a></h2>
+<p><a name="node_idx_930"></a></p>
+<p>
+<a name="node_idx_932"></a><a name="node_kw_definitioncurrent-thread"></a><code class=scheme>(current-thread</code><code class=scheme>)</code> returns the thread descriptor for the currently
+executing thread.</p>
+<p>
+<a name="node_idx_934"></a><a name="node_kw_definitionthread_Q_"></a><code class=scheme>(thread?</code><tt>&nbsp;</tt><code class=scheme><span class=variable>v</span></code><code class=scheme>)</code> returns <code class=scheme><span class=selfeval>#t</span></code> if <code class=scheme><span class=variable>v</span></code> is a thread
+descriptor, <code class=scheme><span class=selfeval>#f</span></code> otherwise.</p>
+<p>
+<a name="node_idx_936"></a><a name="node_kw_definitionsleep"></a><code class=scheme>(sleep</code><tt>&nbsp;</tt>[<code class=scheme><span class=variable>x</span></code>]<code class=scheme>)</code> causes the current thread to sleep for at least
+<code class=scheme><span class=variable>x</span></code> seconds, where <code class=scheme><span class=variable>x</span></code> is a non-negative real number. The
+<code class=scheme><span class=variable>x</span></code> argument defaults to 0 (allowing other threads to execute
+when operating system threads are not used). The value of <code class=scheme><span class=variable>x</span></code> can
+be non-integral to request a sleep duration to any precision, but the
+precision of the actual sleep time is unspecified.</p>
+<p>
+<a name="node_idx_938"></a>
+<a name="node_idx_940"></a><a name="node_kw_definitionthread-running_Q_"></a><code class=scheme>(thread-running?</code><tt>&nbsp;</tt><code class=scheme><span class=variable>thread</span></code><code class=scheme>)</code> returns <code class=scheme><span class=selfeval>#t</span></code> if <code class=scheme><span class=variable>thread</span></code> has not
+terminated and is not suspended, <code class=scheme><span class=selfeval>#f</span></code> otherwise.</p>
+<p>
+<a name="node_idx_942"></a><a name="node_kw_definitionthread-dead_Q_"></a><code class=scheme>(thread-dead?</code><tt>&nbsp;</tt><code class=scheme><span class=variable>thread</span></code><code class=scheme>)</code> returns <code class=scheme><span class=selfeval>#t</span></code> if <code class=scheme><span class=variable>thread</span></code> has
+terminated, <code class=scheme><span class=selfeval>#f</span></code> otherwise.</p>
+<p>
+<a name="node_idx_944"></a>
+<a name="node_idx_946"></a><a name="node_kw_definitionbreak-thread"></a><code class=scheme>(break-thread</code><tt>&nbsp;</tt><code class=scheme><span class=variable>thread</span></code><code class=scheme>)</code> registers a break with the specified
+thread. If breaking is disabled in <code class=scheme><span class=variable>thread</span></code>, the break will be
+ignored until breaks are re-enabled (see section&nbsp;<a href="mzscheme-Z-H-6.html#node_sec_6.6">6.6</a>).</p>
+<p>
+<a name="node_idx_948"></a>
+<a name="node_idx_950"></a><a name="node_kw_definitioncall-in-nested-thread"></a><code class=scheme>(call-in-nested-thread</code><tt>&nbsp;</tt><code class=scheme><span class=variable>thunk</span></code><tt>&nbsp;</tt>[<code class=scheme><span class=variable>custodian</span></code>]<code class=scheme>)</code> creates a nested thread
+managed by <code class=scheme><span class=variable>custodian</span></code> to execute <code class=scheme><span class=variable>thunk</span></code>.<a name="call_footnote_Temp_12"></a><a href="#footnote_Temp_12"><sup><small>9</small></sup></a> The current
+thread blocks until <code class=scheme><span class=variable>thunk</span></code> returns, and the result of the
+<code class=scheme><code class=scheme>call-in-nested-thread</code></code> call is the result returned by
+<code class=scheme><span class=variable>thunk</span></code>. The default value of <code class=scheme><span class=variable>custodian</span></code> is the current
+custodian (see section&nbsp;<a href="mzscheme-Z-H-9.html#node_sec_9.2">9.2</a>).</p>
+<p>
+The nested thread's exception handler is initialized to a procedure
+that jumps to the beginning of the thread and transfers the exception
+to the original thread. The handler thus terminates the nested thread
+and re-raises the exception in the original thread.</p>
+<p>
+If the thread created by <code class=scheme><code class=scheme>call-in-nested-thread</code></code> dies before
+<code class=scheme><span class=variable>thunk</span></code> returns, the <a name="node_idx_952"></a><code class=scheme>exn:thread</code> exception is raised in the original
+thread. If the original thread is killed before <code class=scheme><span class=variable>thunk</span></code> returns,
+a break is queued for the nested thread.</p>
+<p>
+If a break is queued for the original thread (with
+<code class=scheme><code class=scheme>break-thread</code></code>) while the nested thread is running, the break is
+redirected to the nested thread. If a break is already queued on the
+original thread when the nested thread is created, the break is moved
+to the nested thread. If a break remains queued on the nested thread
+when it completes, the break is moved to the original thread.</p>
+<p>
+</p>
+<a name="node_sec_7.4"></a>
+<h2><a href="mzscheme.html#node_toc_node_sec_7.4">7.4&nbsp;&nbsp;Semaphores</a></h2>
+<p><a name="node_idx_954"></a></p>
+<p>
+<a name="node_idx_956"></a>
+<a name="node_idx_958"></a>
+<a name="node_idx_960"></a>
+<a name="node_idx_962"></a>
+A <strong>semaphore</strong> is a value that is used to synchronize MzScheme
+threads. Each semaphore has an internal counter; when this counter is
+zero, the semaphore can block a thread's execution (through
+<code class=scheme><code class=scheme>semaphore-wait</code></code>) until another thread increments the counter
+(using <code class=scheme><code class=scheme>semaphore-post</code></code>). The maximum value for a semaphore's
+internal counter is platform-specific, but always at least 10000.</p>
+<p>
+A semaphore's counter is updated in a single-threaded manner, so that
+semaphores can be used for reliable synchronization. Semaphore
+waiting is <strong>fair</strong>: if a thread is blocked on a semaphore and
+the semaphore's internal value is non-zero arbitrarily often, then
+the thread is eventually unblocked.</p>
+<p>
+</p>
+<ul><p>
+</p>
+<li><p><a name="node_idx_964"></a><a name="node_kw_definitionmake-semaphore"></a><code class=scheme>(make-semaphore</code><tt>&nbsp;</tt>[<code class=scheme><span class=variable>init-k</span></code>]<code class=scheme>)</code> creates and returns a new
+semaphore with the counter initially set to <code class=scheme><span class=variable>init-k</span></code>, which
+defaults to <code class=scheme><span class=selfeval>0</span></code>. If <code class=scheme><span class=variable>init-k</span></code> is larger than a semaphore's
+maximum internal counter value, the
+<a name="node_idx_966"></a><code class=scheme>exn:application:mismatch</code> exception is raised.</p>
+<p>
+</p>
+<li><p><a name="node_idx_968"></a><a name="node_kw_definitionsemaphore_Q_"></a><code class=scheme>(semaphore?</code><tt>&nbsp;</tt><code class=scheme><span class=variable>v</span></code><code class=scheme>)</code> returns <code class=scheme><span class=selfeval>#t</span></code> if <code class=scheme><span class=variable>v</span></code> is a semaphore
+created by <code class=scheme><code class=scheme>make-semaphore</code></code>, <code class=scheme><span class=selfeval>#f</span></code> otherwise.</p>
+<p>
+</p>
+<li><p><a name="node_idx_970"></a><a name="node_kw_definitionsemaphore-post"></a><code class=scheme>(semaphore-post</code><tt>&nbsp;</tt><code class=scheme><span class=variable>sema</span></code><code class=scheme>)</code> increments the semaphore's internal
+counter and returns void. If the semaphore's internal counter has
+already reached its maximum value, the <a name="node_idx_972"></a><code class=scheme>exn:misc</code> exception is raised.</p>
+<p>
+</p>
+<li><p><a name="node_idx_974"></a><a name="node_kw_definitionsemaphore-wait"></a><code class=scheme>(semaphore-wait</code><tt>&nbsp;</tt><code class=scheme><span class=variable>sema</span></code><code class=scheme>)</code> blocks until the internal counter for
+semaphore <code class=scheme><span class=variable>sema</span></code> is non-zero. When the counter is non-zero, it is
+decremented and <code class=scheme><code class=scheme>semaphore-wait</code></code> returns void.</p>
+<p>
+</p>
+<li><p><a name="node_idx_976"></a><a name="node_kw_definitionsemaphore-try-wait_Q_"></a><code class=scheme>(semaphore-try-wait?</code><tt>&nbsp;</tt><code class=scheme><span class=variable>sema</span></code><code class=scheme>)</code> is like <code class=scheme><code class=scheme>semaphore-wait</code></code>,
+but <code class=scheme><code class=scheme>semaphore-try-wait?</code></code> never blocks execution.  If
+<code class=scheme><span class=variable>sema</span></code>'s internal counter is zero, <code class=scheme><code class=scheme>semaphore-try-wait?</code></code> returns
+<code class=scheme><span class=selfeval>#f</span></code> immediately without decrementing the counter. If
+<code class=scheme><span class=variable>sema</span></code>'s counter is positive, it is decremented and <code class=scheme><span class=selfeval>#t</span></code> is
+returned.</p>
+<p>
+</p>
+<li><p><a name="node_idx_978"></a><a name="node_kw_definitionsemaphore-wait/enable-break"></a><code class=scheme>(semaphore-wait/enable-break</code><tt>&nbsp;</tt><code class=scheme><span class=variable>sema</span></code><code class=scheme>)</code> is like
+<code class=scheme><code class=scheme>semaphore-wait</code></code>, but breaking is enabled (see
+section&nbsp;<a href="mzscheme-Z-H-6.html#node_sec_6.6">6.6</a>) while waiting on <code class=scheme><span class=variable>sema</span></code>. If breaking is
+disabled when <code class=scheme><code class=scheme>semaphore-wait/enable-break</code></code> is called, then
+either the semaphore's counter is decremented or the
+<a name="node_idx_980"></a><code class=scheme>exn:break</code> exception is raised, but not both.</p>
+<p>
+</p>
+<li><p><a name="node_idx_982"></a><a name="node_kw_definitionmake-semaphore-peek"></a><code class=scheme>(make-semaphore-peek</code><tt>&nbsp;</tt><code class=scheme><span class=variable>sema</span></code><code class=scheme>)</code> creates and returns a new
+waitable object (for use with <code class=scheme><code class=scheme>object-wait-multiple</code></code>, for
+example) that unblocks when <code class=scheme><span class=variable>sema</span></code> unblocks, but does not
+decrement <code class=scheme><span class=variable>sema</span></code>'s internal count.</p>
+<p>
+</p>
+</ul><p></p>
+<p>
+See also <code class=scheme><code class=scheme>object-wait-multiple</code></code> in section&nbsp;<a href="#node_sec_7.6">7.6</a>.</p>
+<p>
+</p>
+<a name="node_sec_7.5"></a>
+<h2><a href="mzscheme.html#node_toc_node_sec_7.5">7.5&nbsp;&nbsp;Channels</a></h2>
+<p><a name="node_idx_984"></a></p>
+<p>
+<a name="node_idx_986"></a>
+<a name="node_idx_988"></a>
+<a name="node_idx_990"></a>
+<a name="node_idx_992"></a>
+A <strong>synchronous channel</strong> is a value that is used to synchronize
+MzScheme threads with a one-way rendezvous: one thread sends a value
+to another thread, and both the sender and the receiver block until
+the (atomic) transaction is complete. Multiple senders and receivers
+can access a channel at once, but a single sender and receiver is
+selected for each transaction.</p>
+<p>
+Channel waiting is <strong>fair</strong>: if a thread is blocked on a channel
+and transaction opportunities for the channel occur arbitrarily
+often, then the thread eventually participates in a transaction.</p>
+<p>
+For buffered asynchronous channels, see Chapter&nbsp;<a href="../mzlib/mzlib-Z-H-2.html#node_chap_2">2</a>
+in <a href="../mzlib/mzlib.html"><i>PLT MzLib: Libraries Manual</i></a>.</p>
+<p>
+</p>
+<ul><p>
+</p>
+<li><p><a name="node_idx_994"></a><a name="node_kw_definitionmake-channel"></a><code class=scheme>(make-channel</code><code class=scheme>)</code> creates and returns a new channel. The
+channel can be used with <code class=scheme>channel-get</code>,
+with <code class=scheme>channel-try-get</code>, or as a waitable object
+(see section&nbsp;<a href="#node_sec_7.6">7.6</a>) to receive a value through the channel. The
+channel can be used with <code class=scheme>channel-put</code> or through the result
+of <code class=scheme>make-channel-put-waitable</code> to send a value through the
+channel.</p>
+<p>
+</p>
+<li><p><a name="node_idx_996"></a><a name="node_kw_definitionchannel_Q_"></a><code class=scheme>(channel?</code><tt>&nbsp;</tt><code class=scheme><span class=variable>v</span></code><code class=scheme>)</code> returns <code class=scheme><span class=selfeval>#t</span></code> if <code class=scheme><span class=variable>v</span></code> is a channel
+created by <code class=scheme>make-channel</code>, <code class=scheme><span class=selfeval>#f</span></code> otherwise.</p>
+<p>
+</p>
+<li><p><a name="node_idx_998"></a><a name="node_kw_definitionchannel-get"></a><code class=scheme>(channel-get</code><tt>&nbsp;</tt><code class=scheme><span class=variable>channel</span></code><code class=scheme>)</code> blocks until a sender is ready to
+provide a value through <code class=scheme><span class=variable>channel</span></code>. The result is the sent value.</p>
+<p>
+</p>
+<li><p><a name="node_idx_1000"></a><a name="node_kw_definitionchannel-try-get"></a><code class=scheme>(channel-try-get</code><tt>&nbsp;</tt><code class=scheme><span class=variable>channel</span></code><code class=scheme>)</code> receives and returns a value
+from <code class=scheme><span class=variable>channel</span></code> if a sender is immediately ready, otherwise
+returns <code class=scheme><span class=selfeval>#f</span></code>.</p>
+<p>
+</p>
+<li><p><a name="node_idx_1002"></a><a name="node_kw_definitionchannel-put"></a><code class=scheme>(channel-put</code><tt>&nbsp;</tt><code class=scheme><span class=variable>channel v</span></code><code class=scheme>)</code> blocks until a receiver is ready to
+accept the value <code class=scheme><span class=variable>v</span></code> through <code class=scheme><span class=variable>channel</span></code>. The result is
+void.</p>
+<p>
+</p>
+<li><p><a name="node_idx_1004"></a><a name="node_kw_definitionmake-channel-put-waitable"></a><code class=scheme>(make-channel-put-waitable</code><tt>&nbsp;</tt><code class=scheme><span class=variable>channel v</span></code><code class=scheme>)</code> returns a fresh
+waitable object for use with <code class=scheme>object-wait-multiple</code>
+(see section&nbsp;<a href="#node_sec_7.6">7.6</a>). The waitable blocks
+when <code class=scheme>(channel-put <code class=scheme><span class=variable>channel</span></code> <code class=scheme><span class=variable>v</span></code>)</code> would block, and
+the unblock result is the waitable itself.</p>
+<p>
+</p>
+</ul><p></p>
+<p>
+</p>
+<a name="node_sec_7.6"></a>
+<h2><a href="mzscheme.html#node_toc_node_sec_7.6">7.6&nbsp;&nbsp;Synchronizing Multiple Objects with Timeout</a></h2>
+<p><a name="node_idx_1006"></a></p>
+<p>
+<a name="node_idx_1008"></a><a name="node_idx_1010"></a><a name="node_idx_1012"></a><a name="node_kw_definitionobject-wait-multiple"></a><code class=scheme>(object-wait-multiple</code><tt>&nbsp;</tt><code class=scheme><span class=variable>timeout waitable</span></code><tt>&nbsp;</tt><tt>&middot;&middot;&middot;</tt><sup>1</sup><code class=scheme>)</code> blocks as long as all of
+the <code class=scheme><span class=variable>waitable</span></code>s are in a blocking state, as defined below, or
+until <code class=scheme><span class=variable>timeout</span></code> seconds have passed. The <code class=scheme><span class=variable>timeout</span></code> argument
+can be a real number or <code class=scheme><span class=selfeval>#f</span></code>; if <code class=scheme><span class=variable>timeout</span></code> is <code class=scheme><span class=selfeval>#f</span></code>,
+then <code class=scheme><code class=scheme>object-wait-multiple</code></code> does not return until
+some <code class=scheme><span class=variable>waitable</span></code> is unblocked.</p>
+<p>
+When at least one <code class=scheme><span class=variable>waitable</span></code> is unblocked, its unblock result
+(often <code class=scheme><span class=variable>waitable</span></code> itself) is returned.  If multiple
+<code class=scheme><span class=variable>waitable</span></code>s are unblocked at once, one of the <code class=scheme><span class=variable>waitable</span></code>s is
+chosen pseudo-randomly for the result. (The
+<code class=scheme>current-wait-pseudo-random-generator</code> parameter sets the
+random-number generator that controls this choice; see
+section&nbsp;<a href="#node_sec_7.7.1.10">7.7.1.10</a>.)</p>
+<p>
+Choosing an unblocked <code class=scheme><span class=variable>waitable</span></code> may affect the state of
+<code class=scheme><span class=variable>waitable</span></code>. For example, if the chosen unblocked <code class=scheme><span class=variable>waitable</span></code>
+is a semaphore, then the semaphore's internal count is decremented,
+just as with <code class=scheme><code class=scheme>semaphore-wait</code></code>. For any other built-in kind of
+waitable (such as a port), <code class=scheme><span class=variable>waitable</span></code>'s state is not modified.</p>
+<p>
+If <code class=scheme><code class=scheme>object-wait-multiple</code></code> returns because <code class=scheme><span class=variable>timeout</span></code>
+seconds have passed, the return value is <code class=scheme><span class=selfeval>#f</span></code>. If the value
+of <code class=scheme><span class=variable>timeout</span></code> is <code class=scheme><span class=selfeval>0</span></code>, each <code class=scheme><span class=variable>waitable</span></code> is checked at
+least once, so a <code class=scheme><span class=variable>timeout</span></code> value of <code class=scheme><span class=selfeval>0</span></code> can be used for
+polling.</p>
+<p>
+Only certain kinds of values, listed below, are waitable in
+stand-alone MzScheme. If any other kind of value is provided
+to <code class=scheme><code class=scheme>object-wait-multiple</code></code>,
+the <a name="node_idx_1014"></a><code class=scheme>exn:application:type</code> exception is raised. An extension or embedding
+application can extend the set of waitable values. In particular, an
+eventspace in MrEd is waitable.</p>
+<p>
+</p>
+<ul><p>
+</p>
+<li><p><code class=scheme><span class=variable>semaphore</span></code>  --  a semaphore is in a blocking state
+when <code class=scheme><code class=scheme>semaphore-wait</code></code> (see section&nbsp;<a href="#node_sec_7.4">7.4</a>) would block.
+The unblock result is the semaphore itself.</p>
+<p>
+</p>
+<li><p><code class=scheme><span class=variable>semaphore-peek</span></code>  --  a semaphore returned by
+<code class=scheme>make-semaphore-peek</code> applied to <code class=scheme><span class=variable>semaphore</span></code> (see
+section&nbsp;<a href="#node_sec_7.4">7.4</a>) is in in a blocking state while <code class=scheme><span class=variable>semaphore</span></code>
+is blocking. The unblock result is the <code class=scheme><span class=variable>semaphore-peek</span></code> itself.</p>
+<p>
+</p>
+<li><p><code class=scheme><span class=variable>channel</span></code>  --  a channel returned by <code class=scheme>make-channel</code>
+is in a blocking state when <code class=scheme>channel-get</code> would block (see
+section&nbsp;<a href="#node_sec_7.5">7.5</a>). The unblock result is the same as the
+<code class=scheme>channel-get</code> result.</p>
+<p>
+</p>
+<li><p><code class=scheme><span class=variable>channel-put</span></code>  --  a channel returned by
+<code class=scheme>make-channel-put-waitable</code> applied to <code class=scheme><span class=variable>channel</span></code> is in a
+blocking state when <code class=scheme>channel-put</code> would block on <code class=scheme><span class=variable>channel</span></code>
+(see section&nbsp;<a href="#node_sec_7.5">7.5</a>). The unblock result is the <code class=scheme><span class=variable>channel-put</span></code>
+itself.</p>
+<p>
+</p>
+<li><p><code class=scheme><span class=variable>input-port</span></code>  --  an input port is in a blocking state
+when <code class=scheme><code class=scheme>read-char</code></code> would block. The unblock result is the port
+itself.</p>
+<p>
+</p>
+<li><p><code class=scheme><span class=variable>output-port</span></code>  --  an output port is in a blocking state if
+<code class=scheme><code class=scheme>write-string-avail</code></code> would block (see section&nbsp;<a href="mzscheme-Z-H-11.html#node_sec_11.2.2">11.2.2</a>), unless
+the port contains buffered characters and
+<code class=scheme><code class=scheme>write-string-avail*</code></code> can flush part of the buffer (although
+<code class=scheme><code class=scheme>write-string-avail</code></code> might block).
+The unblock result is the port itself.</p>
+<p>
+</p>
+<li><p><code class=scheme><span class=variable>tcp-listener</span></code>  --  a TCP listener is in a blocking state
+when <code class=scheme><code class=scheme>tcp-accept</code></code> (see section&nbsp;<a href="mzscheme-Z-H-11.html#node_sec_11.4.1">11.4.1</a>) would block. The unblock
+result is the listener itself.</p>
+<p>
+</p>
+<li><p><code class=scheme><span class=variable>thread</span></code>  --  a thread is in a blocking state
+when <code class=scheme><code class=scheme>thread-wait</code></code> (see section&nbsp;<a href="#node_sec_7.2">7.2</a>) would block. The
+unblock result is the thread itself.</p>
+<p>
+</p>
+<li><p><code class=scheme><span class=variable>thread-dead-waitable</span></code>  --  a value returned
+by <code class=scheme>thread-dead-waitable</code> (see section&nbsp;<a href="#node_sec_7.2">7.2</a>) applied
+to <code class=scheme><span class=variable>thread</span></code> is in a blocking state until <code class=scheme><span class=variable>thread</span></code> has
+terminated. The unblock result is the waitable itself.</p>
+<p>
+</p>
+<li><p><code class=scheme><span class=variable>thread-resume-waitable</span></code>  --  a value returned
+by <code class=scheme>thread-resume-waitable</code> (see section&nbsp;<a href="#node_sec_7.2">7.2</a>) applied
+to <code class=scheme><span class=variable>thread</span></code> is in a blocking state until <code class=scheme><span class=variable>thread</span></code>
+subsequently resumes execution (if it was not already running). The
+unblock result is <code class=scheme><span class=variable>thread</span></code>.</p>
+<p>
+</p>
+<li><p><code class=scheme><span class=variable>thread-suspend-waitable</span></code>  --  a value returned
+by <code class=scheme>thread-suspend-waitable</code> (see section&nbsp;<a href="#node_sec_7.2">7.2</a>) applied
+to <code class=scheme><span class=variable>thread</span></code> is in a blocking state until <code class=scheme><span class=variable>thread</span></code>
+subsequently suspends execution (if it was not already suspended).
+The unblock result is <code class=scheme><span class=variable>thread</span></code>.</p>
+<p>
+</p>
+<li><p><code class=scheme><span class=variable>subprocess</span></code>  --  a subprocess is in a blocking state
+when <code class=scheme><code class=scheme>subprocess-wait</code></code> (see section&nbsp;<a href="mzscheme-Z-H-15.html#node_sec_15.2">15.2</a>) would block.
+The unblock result is the subprocess itself.</p>
+<p>
+</p>
+<li><p><code class=scheme><span class=variable>will-executor</span></code>  --  a will executor is in a blocking state
+when <code class=scheme><code class=scheme>will-execute</code></code> (see section&nbsp;<a href="mzscheme-Z-H-13.html#node_sec_13.2">13.2</a>) would block.
+The unblock result is the will executor itself.</p>
+<p>
+</p>
+<li><p><code class=scheme><span class=variable>udp-waitable</span></code>  --  a value returned
+by <code class=scheme>udp-&gt;send-waitble</code> or <code class=scheme>udp-&gt;receive-waitable</code>
+(see section&nbsp;<a href="mzscheme-Z-H-11.html#node_sec_11.4.2">11.4.2</a>) is in a blocking state when a send or receive on
+the original socket would block, respectively. The unblock result is
+the waitable itself.</p>
+<p>
+</p>
+<li><p><code class=scheme><span class=variable>waitable-set</span></code>  --  a value returned
+by <code class=scheme>waitables-&gt;waitable-set</code> (see below) is in a blocking
+state when all of the <code class=scheme><span class=variable>waitable</span></code>s supplied
+to <code class=scheme>waitables-&gt;waitable-set</code> are blocking. The unblock result
+is the unblock result of a randomly chosen unblocked <code class=scheme><span class=variable>waitable</span></code>
+in the set.</p>
+<p>
+</p>
+<li><p><code class=scheme><span class=variable>wrapped-waitable</span></code>  --  a value returned
+by <code class=scheme>make-wrapped-waitable</code> applied to <code class=scheme><span class=variable>waitable</span></code>
+and <code class=scheme><span class=variable>proc</span></code> is in a blocking state when <code class=scheme><span class=variable>waitable</span></code> is
+blocking. The unblock result is obtained by a tail call
+to <code class=scheme><span class=variable>proc</span></code> on the unblock result of <code class=scheme><span class=variable>waitable</span></code>.</p>
+<p>
+</p>
+<li><p><code class=scheme><span class=variable>guard-waitable</span></code>  --  a value returned
+by <code class=scheme>make-guard-waitable</code> applied to <code class=scheme><span class=variable>thunk</span></code> generates a
+new waitable every time that <code class=scheme><span class=variable>guard-waitable</span></code> is used
+with <code class=scheme><code class=scheme>object-wait-multiple</code></code> (or whenever it is in a waitable
+set used with <code class=scheme><code class=scheme>object-wait-multiple</code></code>, etc.); the generated
+waitable is the result of calling <code class=scheme><span class=variable>thunk</span></code> when the wait begins;
+if <code class=scheme><span class=variable>thunk</span></code> returns a non-waitable, then <code class=scheme><span class=variable>thunk</span></code>'s result is
+replaced with a waitable value that is unblocked and whose result
+is <code class=scheme><span class=variable>guard-waitable</span></code>.</p>
+<p>
+The waitable</p>
+<p>
+</p>
+<li><p><code class=scheme><span class=variable>nack-guard-waitable</span></code>  --  a value returned
+by <code class=scheme>make-nack-guard-waitable</code> applied to <code class=scheme><span class=variable>proc</span></code> generates
+a new waitable every time that <code class=scheme><span class=variable>nack-guard-waitable</span></code> is used
+with <code class=scheme><code class=scheme>object-wait-multiple</code></code> (or whenever it is in a waitable
+set used with <code class=scheme><code class=scheme>object-wait-multiple</code></code>, etc.); the generated
+waitable is the result of calling <code class=scheme><span class=variable>proc</span></code> with a NACK (``negative
+acknowledgment'') waitable when the wait begins; if <code class=scheme><span class=variable>proc</span></code>
+returns a non-waitable, then <code class=scheme><span class=variable>proc</span></code>'s result is replaced with a
+waitable value that is unblocked and whose result
+is <code class=scheme><span class=variable>nack-guard-waitable</span></code>.</p>
+<p>
+If the waitable from <code class=scheme><span class=variable>proc</span></code> is not ultimately chosen as the
+unblocked waitable, then the NACK waitable supplied to <code class=scheme><span class=variable>proc</span></code>
+becomes ready with a void value.  This NACK waitable becomes
+ready when the waitable is abandoned because some other waitable is
+chosen, because the waiting thread is dead, or because control
+escaped from the call to <code class=scheme><code class=scheme>object-wait-multiple</code></code> (even
+if <code class=scheme><span class=variable>nack-guard-waitable</span></code>'s <code class=scheme><span class=variable>proc</span></code> has not yet returned a
+value). If the waitable returned by <code class=scheme><span class=variable>proc</span></code> is chosen, then the
+NACK waitable never becomes ready.</p>
+<p>
+</p>
+<li><p><code class=scheme><span class=variable>poll-guard-waitable</span></code>  --  a value returned
+by <code class=scheme>make-poll-guard-waitable</code> applied to <code class=scheme><span class=variable>proc</span></code> generates
+a new waitable every time that <code class=scheme><span class=variable>poll-guard-waitable</span></code> is used
+with <code class=scheme><code class=scheme>object-wait-multiple</code></code> (or whenever it is in a waitable
+set used with <code class=scheme><code class=scheme>object-wait-multiple</code></code>, etc.); the generated
+waitable is the result of calling <code class=scheme><span class=variable>proc</span></code> with a
+boolean: <code class=scheme><span class=selfeval>#t</span></code> if the waitable will be used for a
+poll, <code class=scheme><span class=selfeval>#f</span></code> for a blocking wait.</p>
+<p>
+If <code class=scheme><span class=selfeval>#t</span></code> is supplied to <code class=scheme><span class=variable>proc</span></code>, if breaks are disabled, and
+if polling the resulting waitable produces a result, the waitable
+will certainly be chosen for its unblock result.</p>
+<p>
+</p>
+<li><p><code class=scheme><span class=variable>struct-waitable</span></code>  --  a structure whose type has
+the <code class=scheme>prop:waitable</code> property identifies/generates a waitable
+through the property; see section&nbsp;<a href="mzscheme-Z-H-4.html#node_sec_4.7">4.7</a> for further
+information.</p>
+<p>
+</p>
+</ul><p></p>
+<p>
+<a name="node_idx_1016"></a><a name="node_kw_definitionobject-wait-multiple/enable-break"></a><code class=scheme>(object-wait-multiple/enable-break</code><tt>&nbsp;</tt><code class=scheme><span class=variable>timeout waitable</span></code><tt>&nbsp;</tt><tt>&middot;&middot;&middot;</tt><sup>1</sup><code class=scheme>)</code> is
+like <code class=scheme><code class=scheme>object-wait-multiple</code></code>, but breaking is enabled
+(see section&nbsp;<a href="mzscheme-Z-H-6.html#node_sec_6.6">6.6</a>) while waiting on the <code class=scheme><span class=variable>waitable</span></code>s. If
+breaking is disabled when <code class=scheme><code class=scheme>object-wait-multiple/enable-break</code></code>
+is called, then either all <code class=scheme><span class=variable>waitable</span></code>s remain unchosen or
+the <a name="node_idx_1018"></a><code class=scheme>exn:break</code> exception is raised, but not both.</p>
+<p>
+<a name="node_idx_1020"></a><a name="node_kw_definitionwaitables->waitable-set"></a><code class=scheme>(waitables-&gt;waitable-set</code><tt>&nbsp;</tt><code class=scheme><span class=variable>waitable</span></code><tt>&nbsp;</tt><tt>&middot;&middot;&middot;</tt><code class=scheme>)</code> creates and returns a single
+waitable value that combines the waitable <code class=scheme><span class=variable>waitable</span></code>s. Supplying
+the result to <code class=scheme><code class=scheme>object-wait-multiple</code></code> is the same as supplying
+each <code class=scheme><span class=variable>waitable</span></code> to the same call.</p>
+<p>
+<a name="node_idx_1022"></a><a name="node_kw_definitionmake-wrapped-waitable"></a><code class=scheme>(make-wrapped-waitable</code><tt>&nbsp;</tt><code class=scheme><span class=variable>waitable convert-proc</span></code><code class=scheme>)</code> creates a waitable
+that is in a blocking state when <code class=scheme><span class=variable>waitable</span></code> is in a blocking
+state, but whose unblock result is determined by
+applying <code class=scheme><span class=variable>convert-proc</span></code> to the unblock result of <code class=scheme><span class=variable>waitable</span></code>.</p>
+<p>
+<a name="node_idx_1024"></a><a name="node_kw_definitionmake-guard-waitable"></a><code class=scheme>(make-guard-waitable</code><tt>&nbsp;</tt><code class=scheme><span class=variable>generator-thunk</span></code><code class=scheme>)</code> creates a value that
+behaves as a waitable, but that is actually a waitable generator. For
+details, see <code class=scheme>object-wait-multiple</code>, above.</p>
+<p>
+<a name="node_idx_1026"></a><a name="node_kw_definitionmake-nack-guard-waitable"></a><code class=scheme>(make-nack-guard-waitable</code><tt>&nbsp;</tt><code class=scheme><span class=variable>generator-proc</span></code><code class=scheme>)</code> creates a value that
+behaves as a waitable, but that is actually a waitable generator; the
+generator procedure receives a waitable that becomes ready with a
+void value if the generated waitable was not ultimately
+chosen. For details, see <code class=scheme>object-wait-multiple</code>, above.</p>
+<p>
+<a name="node_idx_1028"></a><a name="node_kw_definitionmake-poll-guard-waitable"></a><code class=scheme>(make-poll-guard-waitable</code><tt>&nbsp;</tt><code class=scheme><span class=variable>generator-proc</span></code><code class=scheme>)</code> creates a value that
+behaves as a waitable, but that is actually a waitable generator; the
+generator procedure receives a boolean indicating whether the
+waitable is used for polling. For details,
+see <code class=scheme>object-wait-multiple</code>, above.</p>
+<p>
+<a name="node_idx_1030"></a><a name="node_kw_definitionobject-waitable_Q_"></a><code class=scheme>(object-waitable?</code><tt>&nbsp;</tt><code class=scheme><span class=variable>v</span></code><code class=scheme>)</code> returns <code class=scheme><span class=selfeval>#t</span></code> if <code class=scheme><span class=variable>v</span></code> is a waitable
+object, <code class=scheme><span class=selfeval>#f</span></code> otherwise. See <code class=scheme>object-wait-multiple</code>,
+above, for the list of waitable object types.</p>
+<p>
+</p>
+<a name="node_sec_7.7"></a>
+<h2><a href="mzscheme.html#node_toc_node_sec_7.7">7.7&nbsp;&nbsp;Parameters</a></h2>
+<p><a name="node_idx_1032"></a></p>
+<p>
+<a name="node_idx_1034"></a>
+A <strong>parameter</strong><a name="node_idx_1036"></a> is a thread-specific setting, such a the
+current output port or the current directory for resolving relative
+pathnames. A <strong>parameter procedure</strong><a name="node_idx_1038"></a> sets and retrieves the
+value of a specific parameter. For example, the
+<code class=scheme><code class=scheme>current-output-port</code></code> parameter procedure sets and retrieves a
+port value that is used by <code class=scheme><code class=scheme>display</code></code> when a specific output port
+is not provided.  Applying a parameter procedure without an argument
+obtains the current value of a parameter in the current thread, and
+applying a parameter procedure to a single argument sets the
+parameter's value in the current thread (and returns void). For
+example, <code class=scheme>(current-output-port)</code> returns the current default
+output port, while <code class=scheme>(current-output-port <code class=scheme><span class=variable>p</span></code>)</code> sets the
+default output port to <code class=scheme><span class=variable>p</span></code>.</p>
+<p>
+</p>
+<a name="node_sec_7.7.1"></a>
+<h3><a href="mzscheme.html#node_toc_node_sec_7.7.1">7.7.1&nbsp;&nbsp;Built-in Parameters</a></h3>
+<p></p>
+<p>
+<a name="node_idx_1040"></a>
+MzScheme's built-in parameter procedures are listed in the following
+sections. The <code class=scheme><code class=scheme>make-parameter</code></code> procedure, described in
+section&nbsp;<a href="#node_sec_7.7.2">7.7.2</a>, creates a new parameter and returns a
+corresponding parameter procedure.</p>
+<p>
+
+
+
+</p>
+<p>
+</p>
+<a name="node_sec_7.7.1.1"></a>
+<h4><a href="mzscheme.html#node_toc_node_sec_7.7.1.1">7.7.1.1&nbsp;&nbsp;Current Directory</a></h4>
+<p></p>
+<ul>
+<a name="node_idx_1042"></a>
+<li><p> <a name="node_idx_1044"></a><a name="node_kw_definitioncurrent-directory"></a><code class=scheme>(current-directory</code><tt>&nbsp;</tt>[<code class=scheme><span class=variable>path</span></code>]<code class=scheme>)</code> gets or sets a string path that determines the
+current directory. When the parameter procedure is called to set the
+current directory, the path argument is expanded and then simplified
+using <code class=scheme><code class=scheme>simplify-path</code></code> (see section&nbsp;<a href="mzscheme-Z-H-11.html#node_sec_11.3.1">11.3.1</a>) and converted to
+an immutable string; expansion and simplification raise an exception
+if the path is ill-formed. Otherwise, if the given path cannot be
+made the current directory (e.g., because the path does not exist),
+the <a name="node_idx_1046"></a><code class=scheme>exn:i/o:filesystem</code> exception is raised.
+</p>
+</ul><p></p>
+<p>
+</p>
+<a name="node_sec_7.7.1.2"></a>
+<h4><a href="mzscheme.html#node_toc_node_sec_7.7.1.2">7.7.1.2&nbsp;&nbsp;Ports</a></h4>
+<p></p>
+<ul>
+<a name="node_idx_1048"></a>
+<li><p> <a name="node_idx_1050"></a><a name="node_kw_definitioncurrent-input-port"></a><code class=scheme>(current-input-port</code><tt>&nbsp;</tt>[<code class=scheme><span class=variable>input-port</span></code>]<code class=scheme>)</code> gets or sets an input port used by
+<code class=scheme><code class=scheme>read</code></code>, <code class=scheme><code class=scheme>read-char</code></code>, <code class=scheme><span class=variable>char-ready?</span></code>, <code class=scheme><code class=scheme>read-line</code></code>,
+<code class=scheme><code class=scheme>read-string</code></code>, and <code class=scheme><code class=scheme>read-string-avail!</code></code> when a specific input port
+is not provided.
+</p>
+<li><p> <a name="node_idx_1052"></a><a name="node_kw_definitioncurrent-output-port"></a><code class=scheme>(current-output-port</code><tt>&nbsp;</tt>[<code class=scheme><span class=variable>output-port</span></code>]<code class=scheme>)</code> gets or sets an output port used by
+<code class=scheme><code class=scheme>display</code></code>, <code class=scheme><code class=scheme>write</code></code>, <code class=scheme><code class=scheme>print</code></code>, <code class=scheme><code class=scheme>write-char</code></code>, and
+<code class=scheme><code class=scheme>printf</code></code> when a specific output port is not provided.
+</p>
+<li><p> <a name="node_idx_1054"></a><a name="node_kw_definitioncurrent-error-port"></a><code class=scheme>(current-error-port</code><tt>&nbsp;</tt>[<code class=scheme><span class=variable>output-port</span></code>]<code class=scheme>)</code> gets or sets an output port used by
+the default error display handler.
+</p>
+<li><p> <a name="node_idx_1056"></a><a name="node_kw_definitionglobal-port-print-handler"></a><code class=scheme>(global-port-print-handler</code><tt>&nbsp;</tt>[<code class=scheme><span class=variable>proc</span></code>]<code class=scheme>)</code> gets or sets a procedure that takes an
+arbitrary value and an output port. This <strong>global port print
+handler</strong><a name="node_idx_1058"></a> is called by the default port print handler (see
+section&nbsp;<a href="mzscheme-Z-H-11.html#node_sec_11.2.5">11.2.5</a>) to <code class=scheme><code class=scheme>print</code></code> values into a port.
+</p>
+<li><p> <a name="node_idx_1060"></a><a name="node_kw_definitionport-count-lines-enabled"></a><code class=scheme>(port-count-lines-enabled</code><tt>&nbsp;</tt>[<code class=scheme><span class=variable>on?</span></code>]<code class=scheme>)</code> gets or sets a boolean value that
+determines whether line counting is enabled automatically for newly
+created input ports; see also section&nbsp;<a href="mzscheme-Z-H-11.html#node_sec_11.2.3">11.2.3</a>. The default value is
+<code class=scheme><span class=selfeval>#f</span></code>.
+</p>
+</ul><p></p>
+<p>
+</p>
+<a name="node_sec_7.7.1.3"></a>
+<h4><a href="mzscheme.html#node_toc_node_sec_7.7.1.3">7.7.1.3&nbsp;&nbsp;Parsing</a></h4>
+<p></p>
+<ul>
+<a name="node_idx_1062"></a> <a name="node_idx_1064"></a>
+<li><p> <a name="node_idx_1066"></a><a name="node_kw_definitionread-case-sensitive"></a><code class=scheme>(read-case-sensitive</code><tt>&nbsp;</tt>[<code class=scheme><span class=variable>on?</span></code>]<code class=scheme>)</code> gets or sets a boolean value that controls
+parsing input symbols. When this parameter's value is <code class=scheme><span class=selfeval>#f</span></code>,
+the reader downcases symbols (e.g., <code class=schemeresponse><span class=variable>hi</span></code> when the input
+is any one of <code class=schemeresponse><span class=variable>hi</span></code>, <code class=schemeresponse><span class=variable>Hi</span></code>,
+<code class=schemeresponse><span class=variable>HI</span></code>, or <code class=schemeresponse><span class=variable>hI</span></code>). The parameter also affects
+the way that <code class=scheme><code class=scheme>write</code></code> prints symbols containing uppercase
+characters; if the parameter's value is <code class=scheme><span class=selfeval>#f</span></code>, then symbols are
+printed with uppercase characters quoted by a backslash
+(<tt>\</tt>) or vertical bar (|). The parameter's value is
+overridden by backslash and vertical-bar quotes and the <code class=scheme>#cs</code>
+and <code class=scheme>#ci</code> prefixes; see section&nbsp;<a href="mzscheme-Z-H-14.html#node_sec_14.3">14.3</a> for more
+information. While a module is loaded, the parameter is set to
+<code class=scheme><span class=selfeval>#f</span></code> (see section&nbsp;<a href="mzscheme-Z-H-5.html#node_sec_5.8">5.8</a>).
+<a name="node_idx_1068"></a>
+</p>
+<li><p> <a name="node_idx_1070"></a><a name="node_kw_definitionread-square-bracket-as-paren"></a><code class=scheme>(read-square-bracket-as-paren</code><tt>&nbsp;</tt>[<code class=scheme><span class=variable>on?</span></code>]<code class=scheme>)</code> gets or sets a boolean
+value that controls whether <a name="node_idx_1072"></a> square brackets (``['' and
+``]'') are treated as parentheses. See section&nbsp;<a href="mzscheme-Z-H-14.html#node_sec_14.3">14.3</a> for more
+information.
+<a name="node_idx_1074"></a>
+</p>
+<li><p> <a name="node_idx_1076"></a><a name="node_kw_definitionread-curly-brace-as-paren"></a><code class=scheme>(read-curly-brace-as-paren</code><tt>&nbsp;</tt>[<code class=scheme><span class=variable>on?</span></code>]<code class=scheme>)</code> gets or sets a boolean value
+that controls whether <a name="node_idx_1078"></a> curly braces (``{'' and
+``}'') are treated as parentheses. See section&nbsp;<a href="mzscheme-Z-H-14.html#node_sec_14.3">14.3</a> for more
+information.
+<a name="node_idx_1080"></a>
+</p>
+<li><p> <a name="node_idx_1082"></a><a name="node_kw_definitionread-accept-box"></a><code class=scheme>(read-accept-box</code><tt>&nbsp;</tt>[<code class=scheme><span class=variable>on?</span></code>]<code class=scheme>)</code> gets or sets a boolean value that controls
+parsing <code class=scheme><span class=selfeval>#\&amp;</span></code> input. See section&nbsp;<a href="mzscheme-Z-H-14.html#node_sec_14.3">14.3</a> for more information.
+<a name="node_idx_1084"></a>
+</p>
+<li><p> <a name="node_idx_1086"></a><a name="node_kw_definitionread-accept-compiled"></a><code class=scheme>(read-accept-compiled</code><tt>&nbsp;</tt>[<code class=scheme><span class=variable>on?</span></code>]<code class=scheme>)</code> gets or sets a boolean value that
+controls parsing pre-compiled input. See section&nbsp;<a href="mzscheme-Z-H-14.html#node_sec_14.3">14.3</a> for more
+information.
+<a name="node_idx_1088"></a>
+</p>
+<li><p> <a name="node_idx_1090"></a><a name="node_kw_definitionread-accept-bar-quote"></a><code class=scheme>(read-accept-bar-quote</code><tt>&nbsp;</tt>[<code class=scheme><span class=variable>on?</span></code>]<code class=scheme>)</code> gets or sets a boolean value that
+controls parsing and printing a vertical bar (|) in
+symbols. See section&nbsp;<a href="mzscheme-Z-H-14.html#node_sec_14.3">14.3</a> and section&nbsp;<a href="mzscheme-Z-H-14.html#node_sec_14.4">14.4</a> for more
+information.
+</p>
+<li><p> <a name="node_idx_1092"></a><a name="node_kw_definitionread-accept-graph"></a><code class=scheme>(read-accept-graph</code><tt>&nbsp;</tt>[<code class=scheme><span class=variable>on?</span></code>]<code class=scheme>)</code> gets or sets a boolean value that controls
+parsing input S-expressions with sharing. See section&nbsp;<a href="mzscheme-Z-H-14.html#node_sec_14.5">14.5</a>
+for more information.
+</p>
+<li><p> <a name="node_idx_1094"></a><a name="node_kw_definitionread-decimal-as-inexact"></a><code class=scheme>(read-decimal-as-inexact</code><tt>&nbsp;</tt>[<code class=scheme><span class=variable>on?</span></code>]<code class=scheme>)</code> gets or sets a boolean value that
+controls parsing input numbers with a decimal point or exponent (but
+no explicit exactness tag). See section&nbsp;<a href="mzscheme-Z-H-14.html#node_sec_14.5">14.5</a> for more
+information.
+</p>
+<li><p> <a name="node_idx_1096"></a><a name="node_kw_definitionread-accept-dot"></a><code class=scheme>(read-accept-dot</code><tt>&nbsp;</tt>[<code class=scheme><span class=variable>on?</span></code>]<code class=scheme>)</code> gets or sets a boolean value that controls
+parsing input with a dot, which is normally used for literal cons
+cells. See section&nbsp;<a href="mzscheme-Z-H-14.html#node_sec_14.3">14.3</a> for more information.
+</p>
+<li><p> <a name="node_idx_1098"></a><a name="node_kw_definitionread-accept-quasiquote"></a><code class=scheme>(read-accept-quasiquote</code><tt>&nbsp;</tt>[<code class=scheme><span class=variable>on?</span></code>]<code class=scheme>)</code> gets or sets a boolean value that controls
+parsing input with a backquote or comma, which is normally used for
+<code class=scheme><span class=keyword>quasiquote</span></code>, <code class=scheme><span class=keyword>unquote</span></code>, and <code class=scheme><span class=keyword>unquote-splicing</span></code>
+abbreviations. See section&nbsp;<a href="mzscheme-Z-H-14.html#node_sec_14.3">14.3</a> for more information.
+</p>
+</ul><p></p>
+<p>
+</p>
+<a name="node_sec_7.7.1.4"></a>
+<h4><a href="mzscheme.html#node_toc_node_sec_7.7.1.4">7.7.1.4&nbsp;&nbsp;Printing</a></h4>
+<p></p>
+<ul>
+<a name="node_idx_1100"></a>
+<li><p> <a name="node_idx_1102"></a><a name="node_kw_definitionprint-graph"></a><code class=scheme>(print-graph</code><tt>&nbsp;</tt>[<code class=scheme><span class=variable>on?</span></code>]<code class=scheme>)</code> gets or sets a boolean value that controls printing
+S-expressions with sharing. See section&nbsp;<a href="mzscheme-Z-H-14.html#node_sec_14.5">14.5</a> for more
+information.
+<a name="node_idx_1104"></a>
+</p>
+<li><p> <a name="node_idx_1106"></a><a name="node_kw_definitionprint-struct"></a><code class=scheme>(print-struct</code><tt>&nbsp;</tt>[<code class=scheme><span class=variable>on?</span></code>]<code class=scheme>)</code> gets or sets a boolean value that controls printing
+structure values. See section&nbsp;<a href="mzscheme-Z-H-14.html#node_sec_14.4">14.4</a> for more information.
+<a name="node_idx_1108"></a>
+</p>
+<li><p> <a name="node_idx_1110"></a><a name="node_kw_definitionprint-box"></a><code class=scheme>(print-box</code><tt>&nbsp;</tt>[<code class=scheme><span class=variable>on?</span></code>]<code class=scheme>)</code> gets or sets a boolean value that controls printing box
+values. See section&nbsp;<a href="mzscheme-Z-H-14.html#node_sec_14.4">14.4</a> for more information.
+<a name="node_idx_1112"></a>
+</p>
+<li><p> <a name="node_idx_1114"></a><a name="node_kw_definitionprint-vector-length"></a><code class=scheme>(print-vector-length</code><tt>&nbsp;</tt>[<code class=scheme><span class=variable>on?</span></code>]<code class=scheme>)</code> gets or sets a boolean value that controls
+printing vectors. See section&nbsp;<a href="mzscheme-Z-H-14.html#node_sec_14.4">14.4</a> for more information.
+<a name="node_idx_1116"></a>
+</p>
+<li><p> <a name="node_idx_1118"></a><a name="node_kw_definitionprint-hash-table"></a><code class=scheme>(print-hash-table</code><tt>&nbsp;</tt>[<code class=scheme><span class=variable>on?</span></code>]<code class=scheme>)</code> gets or sets a boolean value that controls
+printing hash tables. See section&nbsp;<a href="mzscheme-Z-H-14.html#node_sec_14.4">14.4</a> for more information.
+</p>
+</ul><p></p>
+<p>
+</p>
+<a name="node_sec_7.7.1.5"></a>
+<h4><a href="mzscheme.html#node_toc_node_sec_7.7.1.5">7.7.1.5&nbsp;&nbsp;Read-Eval-Print</a></h4>
+<p></p>
+<ul>
+<a name="node_idx_1120"></a>
+<li><p> <a name="node_idx_1122"></a><a name="node_kw_definitioncurrent-prompt-read"></a><code class=scheme>(current-prompt-read</code><tt>&nbsp;</tt>[<code class=scheme><span class=variable>proc</span></code>]<code class=scheme>)</code> gets or sets a procedure that takes no
+arguments, displays a prompt string, and returns an expression to
+evaluate. This <strong>prompt read handler</strong><a name="node_idx_1124"></a> is called by the read
+phase of <code class=scheme><code class=scheme>read-eval-print-loop</code></code> (see section&nbsp;<a href="mzscheme-Z-H-14.html#node_sec_14.1">14.1</a>).  The
+default prompt read handler prints ``&gt; '' and returns the result of
+<code class=scheme>(<code class=scheme>read-syntax</code> <span class=variable>name-string</span>)</code>, where <code class=scheme><span class=variable>name-string</span></code>
+corresponds to the current input source.
+<a name="node_idx_1126"></a>
+</p>
+<li><p> <a name="node_idx_1128"></a><a name="node_kw_definitioncurrent-eval"></a><code class=scheme>(current-eval</code><tt>&nbsp;</tt>[<code class=scheme><span class=variable>proc</span></code>]<code class=scheme>)</code> gets or sets a procedure that takes an
+expression -- in the form of syntax object, S-expression, compiled
+expression, or compiled expression wrapped in a syntax object -- and
+returns the expression's value (or values; see section&nbsp;<a href="mzscheme-Z-H-2.html#node_sec_2.2">2.2</a>). This
+<strong>evaluation handler</strong><a name="node_idx_1130"></a> is called by <code class=scheme><code class=scheme>eval</code></code>,
+<code class=scheme>eval-syntax</code>, the default load handler, and
+<code class=scheme><code class=scheme>read-eval-print-loop</code></code> to evaluate an expression (see
+section&nbsp;<a href="mzscheme-Z-H-14.html#node_sec_14.1">14.1</a>). The default evaluation handler compiles and
+executes the expression in the current namespace (determined by the
+<code class=scheme><code class=scheme>current-namespace</code></code> parameter); if the argument is a syntax
+object, it is treated like an argument to <code class=scheme>eval-syntax</code> and
+not given additional context.
+</p>
+<li><p> <a name="node_idx_1132"></a><a name="node_kw_definitioncurrent-namespace"></a><code class=scheme>(current-namespace</code><tt>&nbsp;</tt>[<code class=scheme><span class=variable>namespace</span></code>]<code class=scheme>)</code> gets or sets a namespace value (see
+section&nbsp;<a href="mzscheme-Z-H-8.html#node_chap_8">8</a>) that determines the namespace used to resolve
+module and identifier references. The <strong>current namespace</strong><a name="node_idx_1134"></a> is
+used by the default evaluation handler, the <code class=scheme><code class=scheme>compile</code></code>
+procedure, and other built-in procedures that operate on ``global''
+bindings.
+</p>
+<li><p> <a name="node_idx_1136"></a><a name="node_kw_definitioncurrent-print"></a><code class=scheme>(current-print</code><tt>&nbsp;</tt>[<code class=scheme><span class=variable>proc</span></code>]<code class=scheme>)</code> gets or sets a procedure that takes a value to
+print. This <strong>print handler</strong><a name="node_idx_1138"></a> is called by
+<code class=scheme><code class=scheme>read-eval-print-loop</code></code> (see section&nbsp;<a href="mzscheme-Z-H-14.html#node_sec_14.1">14.1</a>) to print the
+result of an evaluation (and the result is ignored). The default
+print handler <code class=scheme><code class=scheme>print</code></code>s the value to the current output port
+(determined by the <code class=scheme><code class=scheme>current-output-port</code></code> parameter) and then
+outputs a newline.
+</p>
+<li><p> <a name="node_idx_1140"></a><a name="node_kw_definitioncompile-allow-set!-undefined"></a><code class=scheme>(compile-allow-set!-undefined</code> [<code class=scheme><span class=variable>on?</span></code>]<code class=scheme>)</code> gets or sets
+a boolean value indicating how to compile a
+<a name="node_idx_1142"></a><code class=scheme><span class=keyword>set!</span></code> expression
+that mutates a global variable. If the value of this parameter is a
+true value, <code class=scheme><span class=keyword>set!</span></code> expressions for global variables are compiled
+so that the global variable is set even if it was not previously
+defined.  Otherwise, <code class=scheme><span class=keyword>set!</span></code> expressions for global variables are
+compiled to raise the <code class=scheme><span class=variable>exn:variable</span></code> exception if the global
+variable is not defined at the time the <code class=scheme><span class=keyword>set!</span></code> is performed.
+Note that this parameter is used when an expression is <em>compiled</em>, not when it is <em>evaluated</em>.
+</p>
+</ul><p></p>
+<p>
+</p>
+<a name="node_sec_7.7.1.6"></a>
+<h4><a href="mzscheme.html#node_toc_node_sec_7.7.1.6">7.7.1.6&nbsp;&nbsp;Loading</a></h4>
+<p></p>
+<ul>
+<a name="node_idx_1144"></a>
+<li><p> <a name="node_idx_1146"></a><a name="node_kw_definitioncurrent-load"></a><code class=scheme>(current-load</code><tt>&nbsp;</tt>[<code class=scheme><span class=variable>proc</span></code>]<code class=scheme>)</code> gets or sets a procedure that loads a file and
+returns the value (or values; see section&nbsp;<a href="mzscheme-Z-H-2.html#node_sec_2.2">2.2</a>) of the last expression
+read from the file.  This <strong>load handler</strong><a name="node_idx_1148"></a> is called by
+<a name="node_idx_1150"></a><code class=scheme>load</code>, <a name="node_idx_1152"></a><code class=scheme>load-relative</code>,
+<a name="node_idx_1154"></a><code class=scheme>load/use-compiled</code>, and <a name="node_idx_1156"></a><code class=scheme>load/cd</code>.</p>
+<p>
+A load handler procedure takes two arguments: a file path string and
+an expected module name. The expected module name is either a symbol
+or <code class=scheme><span class=selfeval>#f</span></code>; see section&nbsp;<a href="mzscheme-Z-H-5.html#node_sec_5.8">5.8</a> for further information.</p>
+<p>
+The default load handler reads expressions from the file (with
+compiled expressions enabled and line-counting enabled) and passes
+each expression to the current evaluation handler. The default load
+handler also treats a hash mark on the first line of the file as a
+comment (see section&nbsp;<a href="mzscheme-Z-H-14.html#node_sec_14.3">14.3</a>). The current load directory for
+loading the file is set before the load handler is called (see
+section&nbsp;<a href="mzscheme-Z-H-14.html#node_sec_14.1">14.1</a>).
+<a name="node_idx_1158"></a>
+</p>
+<li><p> <a name="node_idx_1160"></a><a name="node_kw_definitioncurrent-load-extension"></a><code class=scheme>(current-load-extension</code><tt>&nbsp;</tt>[<code class=scheme><span class=variable>proc</span></code>]<code class=scheme>)</code> gets or sets a procedure loads a dynamic
+extension (see section&nbsp;<a href="mzscheme-Z-H-14.html#node_sec_14.7">14.7</a>) and returns the extension's
+value(s). This <strong>load extension handler</strong><a name="node_idx_1162"></a> is called by
+<a name="node_idx_1164"></a><code class=scheme>load-extension</code>, <a name="node_idx_1166"></a><code class=scheme>load-relative</code>, and
+<a name="node_idx_1168"></a><code class=scheme>load/use-compiled</code>. </p>
+<p>
+A load extension handler procedure takes two arguments: a file path
+string and an expected module name. The expected module name is
+either a symbol or <code class=scheme><span class=selfeval>#f</span></code>; see section&nbsp;<a href="mzscheme-Z-H-5.html#node_sec_5.8">5.8</a> for
+further information.</p>
+<p>
+The default load extension handler loads an extension using operating
+system primitives.
+<a name="node_idx_1170"></a>
+</p>
+<li><p> <a name="node_idx_1172"></a><a name="node_kw_definitioncurrent-load/use-compiled"></a><code class=scheme>(current-load/use-compiled</code><tt>&nbsp;</tt>[<code class=scheme><span class=variable>proc</span></code>]<code class=scheme>)</code> gets or sets a procedure that loads a
+file or a compiled version of the file; see section&nbsp;<a href="mzscheme-Z-H-14.html#node_sec_14.1">14.1</a> for
+more information.  A <strong>load/use-compiled handler</strong><a name="node_idx_1174"></a> procedure
+takes the same arguments as a load handler. The handler is expected
+to call the load handler or the load-extension handler. Unlike a load
+handler or load-extension handler, a load/use-compiled handler is
+expected to set the current <code class=scheme>load-relative</code> directory.
+<a name="node_idx_1176"></a>
+</p>
+<li><p> <a name="node_idx_1178"></a><a name="node_kw_definitioncurrent-load-relative-directory"></a><code class=scheme>(current-load-relative-directory</code><tt>&nbsp;</tt>[<code class=scheme><span class=variable>path</span></code>]<code class=scheme>)</code> gets or sets a complete
+directory pathname or <code class=scheme><span class=selfeval>#f</span></code>. This current <code class=scheme><code class=scheme>load-relative</code></code>
+directory is set by <a name="node_idx_1180"></a><code class=scheme>load</code>, <a name="node_idx_1182"></a><code class=scheme>load-relative</code>,
+<a name="node_idx_1184"></a><code class=scheme>load/use-compiled</code>, <code class=scheme><code class=scheme>load/cd</code></code>,
+<a name="node_idx_1186"></a><code class=scheme>load-extension</code>, and <a name="node_idx_1188"></a><code class=scheme>load-relative-extension</code> to
+the directory of the file being loaded. This parameter is used by
+<a name="node_idx_1190"></a><code class=scheme>load-relative</code>, <a name="node_idx_1192"></a><code class=scheme>load/use-compiled</code> and
+<a name="node_idx_1194"></a><code class=scheme>load-relative-extension</code> (see section&nbsp;<a href="mzscheme-Z-H-14.html#node_sec_14.1">14.1</a>). When a
+new pathname is provided to the parameter procedure
+<code class=scheme><code class=scheme>current-load-relative-directory</code></code>, it is immediately expanded
+(see section&nbsp;<a href="mzscheme-Z-H-11.html#node_sec_11.3.1">11.3.1</a>) and converted to an immutable string;
+the result must be a complete pathname for an existing directory.
+</p>
+<li><p> <a name="node_idx_1196"></a><a name="node_kw_definitionuse-compiled-file-kinds"></a><code class=scheme>(use-compiled-file-kinds</code><tt>&nbsp;</tt>[<code class=scheme><span class=variable>kind-symbol</span></code>]<code class=scheme>)</code> gets or sets a symbol, either
+<code class=scheme><span class=selfeval>'all</span></code><a name="node_idx_1198"></a> or <code class=scheme><span class=selfeval>'none</span></code><a name="node_idx_1200"></a>, indicating whether
+<a name="node_idx_1202"></a><code class=scheme>load/used-compiled</code> (and thus <a name="node_idx_1204"></a><code class=scheme><span class=keyword>require</span></code>) should
+recognize compiled files. If the value of this parameter is
+<code class=scheme><span class=selfeval>'all</span></code>, then the default handler for <code class=scheme><code class=scheme>load/use-compiled</code></code>
+recognizes compiled files as described in section&nbsp;<a href="mzscheme-Z-H-14.html#node_sec_14.1">14.1</a>. If the
+value is <code class=scheme><span class=selfeval>'none</span></code>, then the default handler for
+<code class=scheme><code class=scheme>load/use-compiled</code></code> ignores compiled files.
+</p>
+<li><p> <a name="node_idx_1206"></a><a name="node_kw_definitioncurrent-library-collection-paths"></a><code class=scheme>(current-library-collection-paths</code><tt>&nbsp;</tt>[<code class=scheme><span class=variable>path-list</span></code>]<code class=scheme>)</code> gets or sets a list of
+complete directory pathnames for library collections used by
+<code class=scheme><span class=keyword>require</span></code>. See Chapter&nbsp;<a href="mzscheme-Z-H-16.html#node_chap_16">16</a> for more information. When
+a new list of pathnames is provided to the parameter procedure, it is
+converted to an immutable list of immutable strings.
+<a name="node_idx_1208"></a>
+</p>
+<li><p> <a name="node_idx_1210"></a><a name="node_kw_definitioncurrent-command-line-arguments"></a><code class=scheme>(current-command-line-arguments</code><tt>&nbsp;</tt>[<code class=scheme><span class=variable>string-vector</span></code>]<code class=scheme>)</code> gets or sets a vector of
+strings representing command-line arguments. The stand-alone version
+of MzScheme (and MrEd) initializes the parameter to contain extra
+command-line arguments. (The same vector is also installed as the
+value of the <a name="node_idx_1212"></a><code class=scheme>argv</code> global.)
+</p>
+</ul><p></p>
+<p>
+</p>
+<a name="node_sec_7.7.1.7"></a>
+<h4><a href="mzscheme.html#node_toc_node_sec_7.7.1.7">7.7.1.7&nbsp;&nbsp;Exceptions</a></h4>
+<p></p>
+<ul>
+<a name="node_idx_1214"></a> <a name="node_idx_1216"></a>
+<li><p> <a name="node_idx_1218"></a><a name="node_kw_definitioncurrent-exception-handler"></a><code class=scheme>(current-exception-handler</code><tt>&nbsp;</tt>[<code class=scheme><span class=variable>proc</span></code>]<code class=scheme>)</code> gets or sets a procedure that is
+invoked to handle an exception. See section&nbsp;<a href="mzscheme-Z-H-6.html#node_sec_6.1">6.1</a> for more
+information about exceptions.
+</p>
+<li><p> <a name="node_idx_1220"></a><a name="node_kw_definitioninitial-exception-handler"></a><code class=scheme>(initial-exception-handler</code><tt>&nbsp;</tt>[<code class=scheme><span class=variable>proc</span></code>]<code class=scheme>)</code> gets or sets a procedure that is
+used as the initial current exception handler for a new thread.
+</p>
+<li><p> <a name="node_idx_1222"></a><a name="node_kw_definitionerror-escape-handler"></a><code class=scheme>(error-escape-handler</code><tt>&nbsp;</tt>[<code class=scheme><span class=variable>proc</span></code>]<code class=scheme>)</code> gets or sets a procedure that takes no
+arguments and escapes from the dynamic context of an exception. The
+default error escape handler escapes to the start of the current
+thread, but <code class=scheme><code class=scheme>read-eval-print-loop</code></code> (see section&nbsp;<a href="mzscheme-Z-H-14.html#node_sec_14.1">14.1</a>) also
+sets the escape handler.  To report a run-time error, use <code class=scheme><code class=scheme>raise</code></code>
+(see section&nbsp;<a href="mzscheme-Z-H-6.html#node_sec_6.1">6.1</a>) or <code class=scheme><code class=scheme>error</code></code> (see section&nbsp;<a href="mzscheme-Z-H-6.html#node_sec_6.2">6.2</a>) instead
+of calling the error escape procedure directly.  If an exception is
+raised while the error escape handler is executing, an error message
+is printed using a primitive error printer and the primitive error
+escape handler is invoked. Unlike all other parameters, the value of
+the <code class=scheme><code class=scheme>error-escape-handler</code></code> parameter in a new thread is not
+inherited from the creating thread; instead, the parameter is always
+initialized to the default error escape handler.
+</p>
+<li><p> <a name="node_idx_1224"></a><a name="node_kw_definitionerror-display-handler"></a><code class=scheme>(error-display-handler</code><tt>&nbsp;</tt>[<code class=scheme><span class=variable>proc</span></code>]<code class=scheme>)</code> gets or sets a procedure that takes two
+arguments: a string to print as an error message, and a value
+representing a raised exception. This <strong>error display
+handler</strong><a name="node_idx_1226"></a> is called by the default exception handler with an error
+message and the exception value.  The default error display handler
+<code class=scheme><code class=scheme>display</code></code>s its first argument to the current error port
+(determined by the <code class=scheme><code class=scheme>current-error-port</code></code> parameter) and ignores
+the second argument.<a name="call_footnote_Temp_13"></a><a href="#footnote_Temp_13"><sup><small>10</small></sup></a>  To report
+a run-time error, use <code class=scheme><code class=scheme>raise</code></code> (see section&nbsp;<a href="mzscheme-Z-H-6.html#node_sec_6.1">6.1</a>) or
+<code class=scheme><code class=scheme>error</code></code> (see section&nbsp;<a href="mzscheme-Z-H-6.html#node_sec_6.2">6.2</a>) instead of calling the error
+display procedure directly.  If an exception is raised while the
+error display handler is executing, an error message is printed using
+a primitive error printer and the primitive error escape handler is
+invoked.
+</p>
+<li><p> <a name="node_idx_1228"></a><a name="node_kw_definitionerror-print-width"></a><code class=scheme>(error-print-width</code><tt>&nbsp;</tt>[<code class=scheme><span class=variable>k</span></code>]<code class=scheme>)</code> gets or sets an integer greater than <code class=scheme><span class=selfeval>3</span></code>.
+This value is used as the maximum number of characters used to print
+a Scheme value that is embedded in a primitive error message.
+</p>
+<li><p> <a name="node_idx_1230"></a><a name="node_kw_definitionerror-value->string-handler"></a><code class=scheme>(error-value-&gt;string-handler</code><tt>&nbsp;</tt>[<code class=scheme><span class=variable>proc</span></code>]<code class=scheme>)</code> gets or sets a procedure that takes
+an arbitrary Scheme value and an integer and returns a string.  This
+<strong>error value conversion handler</strong><a name="node_idx_1232"></a> is used to to print a
+Scheme value that is embedded in a primitive error message. The
+integer argument to the handler specifies the maximum number of
+characters that should be used to represent the value in the
+resulting string.  The default error value conversion handler
+<code class=scheme><code class=scheme>print</code></code>s the value into a string;<a name="call_footnote_Temp_14"></a><a href="#footnote_Temp_14"><sup><small>11</small></sup></a>
+if the printed form is too long, the printed form is truncated and
+the last three characters of the return string are set to ``...''.</p>
+<p>
+If the string returned by an error value conversion handler is longer
+than requested, the string is destructively ``truncated'' by setting
+the first extra position in the string to the null character. If a
+non-string is returned, then the string <code class=scheme><span class=selfeval>&quot;...&quot;</span></code> is used. If a
+primitive error string needs to be generated before the handler has
+returned, the default error value conversion handler is used.
+</p>
+<li><p> <a name="node_idx_1234"></a><a name="node_kw_definitionerror-print-source-location"></a><code class=scheme>(error-print-source-location</code><tt>&nbsp;</tt>[<code class=scheme><span class=variable>include?</span></code>]<code class=scheme>)</code> gets or sets a boolean that
+controls whether read and syntax error messages include source
+information, such as the source line and column or the expression.
+This parameter also controls the error message when a module-defined
+variable is accessed before its definition is executed; the parameter
+determines whether the message includes a module name. Only the
+message field of an <code class=scheme>exn:read</code>, <code class=scheme>exn:syntax</code>, or
+<code class=scheme>exn:variable</code> structure is affected by the parameter. The
+default is <code class=scheme><span class=selfeval>#t</span></code>.
+</p>
+</ul><p></p>
+<p>
+</p>
+<a name="node_sec_7.7.1.8"></a>
+<h4><a href="mzscheme.html#node_toc_node_sec_7.7.1.8">7.7.1.8&nbsp;&nbsp;Security</a></h4>
+<p></p>
+<ul>
+<li><p> <a name="node_idx_1236"></a><a name="node_kw_definitionbreak-enabled"></a><code class=scheme>(break-enabled</code><tt>&nbsp;</tt>[<code class=scheme><span class=variable>enabled?</span></code>]<code class=scheme>)</code> gets or sets a boolean value that controls
+whether breaks are allowed. See section&nbsp;<a href="mzscheme-Z-H-6.html#node_sec_6.6">6.6</a> for more
+information.
+<a name="node_idx_1238"></a>
+</p>
+<li><p> <a name="node_idx_1240"></a><a name="node_kw_definitioncurrent-security-guard"></a><code class=scheme>(current-security-guard</code><tt>&nbsp;</tt>[<code class=scheme><span class=variable>security-guard</span></code>]<code class=scheme>)</code> gets or sets a security guard
+(see section&nbsp;<a href="mzscheme-Z-H-9.html#node_sec_9.1">9.1</a>) that controls access to the filesystem
+and network.
+<a name="node_idx_1242"></a>
+</p>
+<li><p> <a name="node_idx_1244"></a><a name="node_kw_definitioncurrent-custodian"></a><code class=scheme>(current-custodian</code><tt>&nbsp;</tt>[<code class=scheme><span class=variable>custodian</span></code>]<code class=scheme>)</code> gets or sets a custodian (see
+section&nbsp;<a href="mzscheme-Z-H-9.html#node_sec_9.2">9.2</a>) that assumes responsibility for newly created
+threads, ports, TCP listeners, and UDP sockets.
+<a name="node_idx_1246"></a>
+</p>
+<li><p> <a name="node_idx_1248"></a><a name="node_kw_definitioncurrent-thread-group"></a><code class=scheme>(current-thread-group</code><tt>&nbsp;</tt>[<code class=scheme><span class=variable>thread-group</span></code>]<code class=scheme>)</code> gets or sets a thread group (see
+section&nbsp;<a href="mzscheme-Z-H-9.html#node_sec_9.3">9.3</a>) that determines CPU allocation for newly
+created threads.
+<a name="node_idx_1250"></a>
+</p>
+<li><p> <a name="node_idx_1252"></a><a name="node_kw_definitioncurrent-inspector"></a><code class=scheme>(current-inspector</code><tt>&nbsp;</tt>[<code class=scheme><span class=variable>inspector</span></code>]<code class=scheme>)</code> gets or sets an inspector (see
+section&nbsp;<a href="mzscheme-Z-H-4.html#node_sec_4.5">4.5</a>) that controls debugging access to newly created
+structure types.
+</p>
+</ul><p></p>
+<p>
+</p>
+<a name="node_sec_7.7.1.9"></a>
+<h4><a href="mzscheme.html#node_toc_node_sec_7.7.1.9">7.7.1.9&nbsp;&nbsp;Exiting</a></h4>
+<p></p>
+<ul>
+<a name="node_idx_1254"></a>
+<li><p> <a name="node_idx_1256"></a><a name="node_kw_definitionexit-handler"></a><code class=scheme>(exit-handler</code><tt>&nbsp;</tt>[<code class=scheme><span class=variable>proc</span></code>]<code class=scheme>)</code> gets or sets a procedure that takes a single
+argument. This <strong>exit handler</strong><a name="node_idx_1258"></a> is called by <a name="node_idx_1260"></a><code class=scheme>exit</code>.
+The default exit handler takes any argument and shuts down MzScheme;
+see section&nbsp;<a href="mzscheme-Z-H-14.html#node_sec_14.2">14.2</a> for information about exit codes.
+</p>
+</ul><p></p>
+<p>
+</p>
+<a name="node_sec_7.7.1.10"></a>
+<h4><a href="mzscheme.html#node_toc_node_sec_7.7.1.10">7.7.1.10&nbsp;&nbsp;Random Numbers</a></h4>
+<p></p>
+<ul>
+<a name="node_idx_1262"></a>
+<li><p> <a name="node_idx_1264"></a><a name="node_kw_definitioncurrent-pseudo-random-generator"></a><code class=scheme>(current-pseudo-random-generator</code><tt>&nbsp;</tt>[<code class=scheme><span class=variable>generator</span></code>]<code class=scheme>)</code> gets or sets a
+pseudo-random number generator (see section&nbsp;<a href="mzscheme-Z-H-3.html#node_sec_3.3">3.3</a>) used by
+<a name="node_idx_1266"></a><code class=scheme>random</code> and <a name="node_idx_1268"></a><code class=scheme>random-seed</code>.
+</p>
+<li><p> <a name="node_idx_1270"></a><a name="node_kw_definitioncurrent-wait-pseudo-random-generator"></a><code class=scheme>(current-wait-pseudo-random-generator</code><tt>&nbsp;</tt>[<code class=scheme><span class=variable>generator</span></code>]<code class=scheme>)</code> gets or sets a
+pseudo-random number generator (see section&nbsp;<a href="mzscheme-Z-H-3.html#node_sec_3.3">3.3</a>) used by
+<a name="node_idx_1272"></a><code class=scheme>object-wait-multiple</code> and
+<a name="node_idx_1274"></a><code class=scheme>object-wait-multiple/enable-break</code> (see section&nbsp;<a href="#node_sec_7.6">7.6</a>).
+</p>
+</ul><p></p>
+<p>
+</p>
+<a name="node_sec_7.7.1.11"></a>
+<h4><a href="mzscheme.html#node_toc_node_sec_7.7.1.11">7.7.1.11&nbsp;&nbsp;Locale</a></h4>
+<p></p>
+<ul>
+<a name="node_idx_1276"></a><li><p> <a name="node_idx_1278"></a><a name="node_kw_definitioncurrent-locale"></a><code class=scheme>(current-locale</code><tt>&nbsp;</tt>[<code class=scheme><span class=variable>string-or-#f</span></code>]<code class=scheme>)</code> gets or sets a string/boolean value that
+controls the interpretation of characters for functions such as
+<code class=scheme><code class=scheme>char-locale&lt;?</code></code>, <code class=scheme><code class=scheme>char-locale-upcase</code></code>, and
+<code class=scheme><code class=scheme>string-locale&lt;?</code></code>  (see section&nbsp;<a href="mzscheme-Z-H-3.html#node_sec_3.4">3.4</a> and
+section&nbsp;<a href="mzscheme-Z-H-3.html#node_sec_3.5">3.5</a>). When locale sensitivity is disabled by setting the
+parameter to <code class=scheme><span class=selfeval>#f</span></code>, characters are interpreted in a fully
+portable manner, which is the same as the standard procedures;
+otherwise, they are interpreted according to a locale setting (in the
+sense of the C library's <tt>setlocale</tt>). The <code class=scheme><span class=selfeval>&quot;&quot;</span></code> locale is
+always a synonym for the current machine's default locale; other
+locale names are platform-specific.<a name="call_footnote_Temp_15"></a><a href="#footnote_Temp_15"><sup><small>12</small></sup></a>
+String and character printing with <code class=scheme><code class=scheme>write</code></code> is affected by the
+parameter, because unprintable characters are printed with escapes
+(see section&nbsp;<a href="mzscheme-Z-H-14.html#node_sec_14.4">14.4</a>). Case conversion for case-insensitive symbols
+and regular expression patterns (see section&nbsp;<a href="mzscheme-Z-H-10.html#node_chap_10">10</a>) are <em>not</em>
+affected. The parameter's default value is <code class=scheme><span class=selfeval>&quot;&quot;</span></code>.
+</p>
+</ul><p></p>
+<p>
+</p>
+<a name="node_sec_7.7.1.12"></a>
+<h4><a href="mzscheme.html#node_toc_node_sec_7.7.1.12">7.7.1.12&nbsp;&nbsp;Modules</a></h4>
+<p></p>
+<ul>
+<li><p> <a name="node_idx_1280"></a><a name="node_kw_definitioncurrent-module-name-resolver"></a><code class=scheme>(current-module-name-resolver</code><tt>&nbsp;</tt>[<code class=scheme><span class=variable>proc</span></code>]<code class=scheme>)</code> gets or sets a procedure used to
+resolve module paths. See section&nbsp;<a href="mzscheme-Z-H-5.html#node_sec_5.4">5.4</a> for more information.
+</p>
+<li><p> <a name="node_idx_1282"></a><a name="node_kw_definitioncurrent-module-name-prefix"></a><code class=scheme>(current-module-name-prefix</code><tt>&nbsp;</tt>[<code class=scheme><span class=variable>symbol</span></code>]<code class=scheme>)</code> gets or sets a symbol prefixed onto
+a module declaration when it is evaluated. This parameter is intended
+for use by a module name resolver; see section&nbsp;<a href="mzscheme-Z-H-5.html#node_sec_5.4">5.4</a> for more
+information.
+</p>
+</ul><p></p>
+<p>
+</p>
+<a name="node_sec_7.7.2"></a>
+<h3><a href="mzscheme.html#node_toc_node_sec_7.7.2">7.7.2&nbsp;&nbsp;Parameter Utilities</a></h3>
+<p></p>
+<p>
+<a name="node_idx_1284"></a><a name="node_kw_definitionmake-parameter"></a><code class=scheme>(make-parameter</code><tt>&nbsp;</tt><code class=scheme><span class=variable>v</span></code><tt>&nbsp;</tt>[<code class=scheme><span class=variable>guard-proc</span></code>]<code class=scheme>)</code> returns a new parameter
+procedure. The value of the parameter is initialized to <code class=scheme><span class=variable>v</span></code> in
+all threads.  If <code class=scheme><span class=variable>guard-proc</span></code> is supplied, it is used as the
+parameter's guard procedure.  A guard procedure takes one
+argument. Whenever the parameter procedure is applied to an argument,
+the argument is passed on to the guard procedure. The result returned
+by the guard procedure is used as the new parameter value.  A guard
+procedure can raise an exception to reject a change to the
+parameter's value.</p>
+<p>
+<a name="node_idx_1286"></a><a name="node_kw_definitionparameter_Q_"></a><code class=scheme>(parameter?</code><tt>&nbsp;</tt><code class=scheme><span class=variable>v</span></code><code class=scheme>)</code> returns <code class=scheme><span class=selfeval>#t</span></code> if <code class=scheme><span class=variable>v</span></code> is a parameter
+procedure, <code class=scheme><span class=selfeval>#f</span></code> otherwise.</p>
+<p>
+<a name="node_idx_1288"></a><a name="node_kw_definitionparameter-procedure=_Q_"></a><code class=scheme>(parameter-procedure=?</code><tt>&nbsp;</tt><code class=scheme><span class=variable>a b</span></code><code class=scheme>)</code> returns <code class=scheme><span class=selfeval>#t</span></code> if the parameter
+procedures <code class=scheme><span class=variable>a</span></code> and <code class=scheme><span class=variable>b</span></code> always modify the same parameter,
+<code class=scheme><span class=selfeval>#f</span></code> otherwise.</p>
+<p>
+The <a name="node_kw_definitionparameterize"></a><a name="node_idx_1290"></a><code class=scheme><span class=keyword>parameterize</span></code> form evaluates an expression with
+temporarily values installed for a group of parameters. The syntax of
+<code class=scheme><span class=keyword>parameterize</span></code> is:
+</p>
+<div align=left><pre class=scheme>(<span class=keyword>parameterize</span> ((<span class=variable>parameter-expr</span> <span class=variable>value-expr</span>) <tt>&middot;&middot;&middot;</tt>) <span class=variable>body-expr</span> <tt>&middot;&middot;&middot;</tt><sup>1</sup>)
+</pre></div><p>
+The result of a <code class=scheme><span class=keyword>parameterize</span></code> expression is the result of the
+last <code class=scheme><span class=variable>body-expr</span></code>. The <code class=scheme><span class=variable>parameter-expr</span></code>s determine the
+parameters to set, and the <code class=scheme><span class=variable>value-expr</span></code>s determine the
+corresponding values to install before evaluating the
+<code class=scheme><span class=variable>body-expr</span></code>s. All of the <code class=scheme><span class=variable>parameter-expr</span></code>s are evaluated
+first (checked with <code class=scheme><code class=scheme>check-parameter-procedure</code></code>), then all
+<code class=scheme><span class=variable>value-expr</span></code>s are evaluated, and then the parameters are set.</p>
+<p>
+After the <code class=scheme><span class=variable>body-expr</span></code>s are evaluated, each parameter's setting is
+restored to its original value in the dynamic context of the
+<code class=scheme><span class=keyword>parameterize</span></code> expression. More generally, the values specified
+by the <code class=scheme><span class=variable>value-expr</span></code>s determine initial ``remembered'' values, and
+whenever control jumps into or out of the <code class=scheme><span class=variable>body-expr</span></code>s, the value
+of each parameter is swapped with the corresponding ``remembered''
+value.</p>
+<p>
+Examples:
+</p>
+<div align=left><pre class=scheme>(<span class=keyword>parameterize</span> ([<code class=scheme>exit-handler</code> (<span class=keyword>lambda</span> (<span class=variable>x</span>) <span class=keyword>'</span><span class=variable>no-exit</span>)]) 
+  (<code class=scheme>exit</code>)) <span class=comment>; =&gt; <code class=schemeresponse><span class=keyword>'</span><span class=variable>no-exit</span></code></span>
+
+(<span class=keyword>define</span> <span class=variable>p1</span> (<code class=scheme>make-parameter</code> <span class=selfeval>1</span>))
+(<span class=keyword>define</span> <span class=variable>p2</span> (<code class=scheme>make-parameter</code> <span class=selfeval>2</span>))
+(<span class=keyword>parameterize</span> ([<span class=variable>p1</span> <span class=selfeval>3</span>]
+               [<span class=variable>p2</span> (<span class=variable>p1</span>)]) 
+  (<code class=scheme>cons</code> (<span class=variable>p1</span>) (<span class=variable>p2</span>))) <span class=comment>; =&gt; <code class=schemeresponse><span class=keyword>'</span>(<span class=selfeval>3</span> . <span class=selfeval>1</span>)</code></span>
+
+(<span class=keyword>let</span> ([<span class=variable>k</span> (<span class=keyword>let/cc</span> <span class=variable>out</span> 
+           (<span class=keyword>parameterize</span> ([<span class=variable>p1</span> <span class=selfeval>2</span>]) 
+             (<span class=variable>p1</span> <span class=selfeval>3</span>) 
+             (<code class=scheme>cons</code> (<span class=keyword>let/cc</span> <span class=variable>k</span> 
+                     (<span class=variable>out</span> <span class=variable>k</span>)) 
+                   (<span class=variable>p1</span>))))]) 
+  (<span class=keyword>if</span> (<code class=scheme>procedure?</code> <span class=variable>k</span>) 
+      (<span class=variable>k</span> (<span class=variable>p1</span>))
+      <span class=variable>k</span>)) <span class=comment>; =&gt;  <code class=schemeresponse><span class=keyword>'</span>(<span class=selfeval>1</span> . <span class=selfeval>3</span>)</code></span>
+</pre></div><p></p>
+<p>
+<a name="node_idx_1292"></a><a name="node_kw_definitioncheck-parameter-procedure"></a><code class=scheme>(check-parameter-procedure</code><tt>&nbsp;</tt><code class=scheme><span class=variable>v</span></code><code class=scheme>)</code> returns <code class=scheme><span class=variable>v</span></code> if it is a
+procedure that can take both 0 arguments and 1 argument, and raises
+<code class=scheme><code class=scheme>exn:application:type</code></code> otherwise. The
+<code class=scheme><code class=scheme>check-parameter-procedure</code></code> procedure is used in the expansion of
+<code class=scheme><span class=keyword>parameterize</span></code>.</p>
+<p>
+</p>
+<p>
+</p>
+<div class=footnoterule><hr></div><p></p>
+<div class=footnote><p><a name="footnote_Temp_11"></a><a href="#call_footnote_Temp_11"><sup><small>8</small></sup></a> In MrEd, a handler thread for an
+eventspace is blocked on an internal semaphore when its event queue
+is empty. Thus, the handler thread is collectible when the eventspace
+is unreachable and contains no visible windows or running timers.</p>
+<p><a name="footnote_Temp_12"></a><a href="#call_footnote_Temp_12"><sup><small>9</small></sup></a> The
+nested thread's current custodian is inherited from the creating
+thread, independent of the <code class=scheme><span class=variable>custodian</span></code> argument.</p>
+<p><a name="footnote_Temp_13"></a><a href="#call_footnote_Temp_13"><sup><small>10</small></sup></a> The default error display handler in DrScheme
+uses the second argument to highlight a source location.</p>
+<p><a name="footnote_Temp_14"></a><a href="#call_footnote_Temp_14"><sup><small>11</small></sup></a> Using the current
+global port print handler; see section&nbsp;<a href="#node_sec_7.7.1.2">7.7.1.2</a>.</p>
+<p><a name="footnote_Temp_15"></a><a href="#call_footnote_Temp_15"><sup><small>12</small></sup></a> The <code class=scheme><span class=selfeval>&quot;C&quot;</span></code> locale is
+also always available; setting the locale to <code class=scheme><span class=selfeval>&quot;C&quot;</span></code> is the same
+as disabling locale sensitivity with <code class=scheme><span class=selfeval>#f</span></code> only when string and
+character operations are restricted to the first 128 characters.</p>
+</div>
+<div align=right class=navigation><i>[Go to <span><a href="mzscheme.html">first</a>, <a href="mzscheme-Z-H-6.html">previous</a></span><span>, <a href="mzscheme-Z-H-8.html">next</a></span> page<span>; &nbsp;&nbsp;</span><span><a href="mzscheme.html#node_toc_start">contents</a></span><span><span>; &nbsp;&nbsp;</span><a href="mzscheme-Z-H-19.html#node_index_start">index</a></span>]</i></div><p></p>
+</body>
+</html>

@@ -1,0 +1,215 @@
+<!doctype html public "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!--
+
+Generated from drscheme.tex by tex2page, v 2004-09-11
+(running on MzScheme 209, unix), 
+(c) Dorai Sitaram, 
+http://www.ccs.neu.edu/~dorai/tex2page/tex2page-doc.html
+
+-->
+<head>
+<title>
+PLT DrScheme: Programming Environment Manual
+</title>
+<link rel="stylesheet" type="text/css" href="drscheme-Z-S.css" title=default>
+<meta name=robots content="noindex,follow">
+</head>
+<body>
+<div align=right class=navigation><i>[Go to <span><a href="drscheme.html">first</a>, <a href="drscheme-Z-H-3.html">previous</a></span><span>, <a href="drscheme-Z-H-5.html">next</a></span> page<span>; &nbsp;&nbsp;</span><span><a href="drscheme.html#node_toc_start">contents</a></span><span><span>; &nbsp;&nbsp;</span><a href="drscheme-Z-H-6.html#node_index_start">index</a></span>]</i></div><p></p>
+<a name="node_chap_4"></a>
+<h1 class=chapter>
+<div class=chapterheading><a href="drscheme.html#node_toc_node_chap_4">Chapter 4</a></div><br>
+<a href="drscheme.html#node_toc_node_chap_4">Extending DrScheme</a></h1>
+<p><a name="node_idx_646"></a></p>
+<p>
+DrScheme supports two forms of extension to the programming
+environment:
+</p>
+<ul><p>
+</p>
+<li><p><a name="node_idx_648"></a><a name="node_idx_650"></a> A teachpack
+extends the set of procedures that are built into a language in DrScheme.
+For example, a teachpack might extend the Beginning Student language with
+a procedure for playing sounds.</p>
+<p>
+Teachpacks are particularly useful in a classroom setting, where an
+instructor can provide a teachpack that is designed for a specific
+exercise. To use the teachpack, each student must download the teachpack
+file and select it through the <tt>Language</tt><tt>|</tt><tt>Add Teachpack...</tt>
+menu item.</p>
+<p>
+</p>
+<li><p><a name="node_idx_652"></a> A <strong>tool</strong> extends the set of utilities within
+the DrScheme environment. For example, DrScheme's <tt>Check Syntax</tt>
+button starts a syntax-checking tool, and the <tt>Analyze</tt> button starts
+the MrSpidey tool.</p>
+<p>
+</p>
+</ul><p></p>
+<p>
+</p>
+<a name="node_sec_4.1"></a>
+<h2><a href="drscheme.html#node_toc_node_sec_4.1">4.1&nbsp;&nbsp;Teachpacks</a></h2>
+<p><a name="node_idx_654"></a>
+<a name="node_idx_656"></a></p>
+<p>
+Teachpacks are designed to supplement student programs with code that is
+beyond the teaching languages (Beginning Student, Intermediate Student, Advanced Student). For
+example, to enable students to play hangman, we supply a teachpack that
+</p>
+<ul>
+<li><p>implements the random choosing of a word 
+</p>
+<li><p>maintains the state variable of how many guesses have gone wrong 
+</p>
+<li><p>manages the GUI. 
+</p>
+</ul><p>
+All these tasks are beyond students in the third week and/or impose
+memorization of currently useless knowledge on students. The essence
+of the hangman game, however, is not. The use of teachpacks enables the
+students to implement the interesting part of this
+exercise and still be able to enjoy today's graphics without the useless
+memorization.</p>
+<p>
+A single Scheme source file defines a teachpack (although
+the file may access other files via <code class=scheme><span class=keyword>require</span></code>). The
+file must contain a module, according to the naming
+convention laid out in the MzScheme manual (the name of the
+file must be the name of the module, with an additional <tt>.scm</tt> or <tt>.ss</tt> extension on the filename).  Each
+exported syntax definition or value definition from the
+module is provided as a new primitive form or primtive
+operation to the user, respectively.</p>
+<p>
+As an example example, the following teachpack provides a
+lazy cons implementation. To test it, be sure to save it in
+a file named <tt><strong>lazycons.scm</strong></tt>.
+</p>
+<div align=left><pre class=scheme>(<span class=keyword>module</span> <span class=variable>lazycons</span> <code class=scheme>mzscheme</code>
+  (<span class=keyword>provide</span> (<span class=keyword>rename</span> <span class=selfeval>:lcons</span> <span class=variable>lcons</span>) <span class=variable>lcar</span> <span class=variable>lcdr</span>)
+
+  (<span class=keyword>define-struct</span> <span class=variable>lcons</span> (<span class=variable>hd</span> <span class=variable>tl</span>))
+
+  (<span class=keyword>define-syntax</span> (<span class=selfeval>:lcons</span> <span class=variable>stx</span>)
+    (<span class=keyword>syntax-case</span> <span class=variable>stx</span> ()
+      [(<span class=variable>_</span> <span class=variable>hd-exp</span> <span class=variable>tl-exp</span>)
+       (<span class=keyword>syntax</span> (<span class=variable>make-lcons</span> 
+                 (<span class=keyword>delay</span> <span class=variable>hd-exp</span>)
+                 (<span class=keyword>delay</span> <span class=variable>tl-exp</span>)))]))
+
+  (<span class=keyword>define</span> (<span class=variable>lcar</span> <span class=variable>lcons</span>) (<code class=scheme>force</code> (<span class=variable>lcons-hd</span> <span class=variable>lcons</span>)))
+  (<span class=keyword>define</span> (<span class=variable>lcdr</span> <span class=variable>lcons</span>) (<code class=scheme>force</code> (<span class=variable>lcons-tl</span> <span class=variable>lcons</span>))))
+</pre></div><p>
+Then, in this program:
+</p>
+<div align=left><pre class=scheme>(<span class=keyword>define</span> (<span class=variable>lmap</span> <span class=variable>f</span> <span class=variable>l</span>)
+  (<span class=variable>lcons</span>
+   (<span class=variable>f</span> (<span class=variable>lcar</span> <span class=variable>l</span>))
+   (<span class=variable>lmap</span> <span class=variable>f</span> (<span class=variable>lcdr</span> <span class=variable>l</span>))))
+
+(<span class=keyword>define</span> <span class=variable>all-nums</span> (<span class=variable>lcons</span> <span class=selfeval>1</span> (<span class=variable>lmap</span> <code class=scheme>add1</code> <span class=variable>all-nums</span>)))
+</pre></div><p>
+the list <code class=scheme><span class=variable>all-nums</span></code> is bound to an infinite list
+of ascending numbers.</p>
+<p>
+For more examples, see the <tt><strong>htdp</strong></tt> directory of the
+<tt><strong>teachpack</strong></tt> directory in the PLT installation.</p>
+<p>
+</p>
+<a name="node_sec_4.2"></a>
+<h2><a href="drscheme.html#node_toc_node_sec_4.2">4.2&nbsp;&nbsp;Tools</a></h2>
+<p><a name="node_idx_658"></a></p>
+<p>
+A separate manual describes the mechanism for defining a tool. See
+<a href="../tools/tools.html"><i>PLT Tools: DrScheme Extension Manual</i></a>.</p>
+<p>
+</p>
+<a name="node_sec_4.3"></a>
+<h2><a href="drscheme.html#node_toc_node_sec_4.3">4.3&nbsp;&nbsp;Environment Variables</a></h2>
+<p><a name="node_idx_660"></a>
+<a name="node_idx_662"></a></p>
+<p>
+This section lists the environment variables that affect
+DrScheme's behavior. See <a href="../mzscheme/mzscheme-Z-H-15.html#node_sec_15.4">the MzScheme
+manual</a> for general information about
+environment variables.
+</p>
+<ul>
+<li><p><strong>PLTNOTOOLS</strong> <a name="node_idx_664"></a>
+When this environment variable is set,
+DrScheme doesn't load any tools.</p>
+<p>
+</p>
+<li><p><strong>PLTONLYTOOL</strong> <a name="node_idx_666"></a>
+When this environment variable is
+set, DrScheme only loads the tools in the collection named
+by the value of the environment variable. If the variable is
+bound to a parenthesized list of collections, only the tools
+in those collections are loaded (The contents of the
+environment variable are <code class=scheme>|</code>read| and expected to be a
+single symbol or a list of symbols).</p>
+<p>
+</p>
+<li><p><strong>PLTDRCM</strong> <a name="node_idx_668"></a>
+When this environment variable is set,
+DrScheme installs the compilation manager before starting
+up, which means that the .zo files are automatically kept up
+to date, as DrScheme's (or a tools) source is modified.</p>
+<p>
+If the variable is set to <strong>trace</strong> then CM's output is
+traced, using the <code class=scheme><span class=variable>manager-trace-handler</span></code> procedure
+from the CM library.</p>
+<p>
+</p>
+<li><p><strong>PLTHDCM</strong> <a name="node_idx_670"></a>
+When this environment variable is set, Help Desk installs
+the compilation manager before starting up (but only in
+standalone mode), which means that the .zo files are
+automatically kept up to date, as Help Desk's source is
+modified.</p>
+<p>
+If the variable is set to <strong>trace</strong> then CM's output is
+traced, using the <code class=scheme><span class=variable>manager-trace-handler</span></code> procedure
+from the CM library.</p>
+<p>
+</p>
+<li><p><strong>PLTDRDEBUG</strong> <a name="node_idx_672"></a>
+When this environment variable is set,
+DrScheme starts up with errortrace enabled. If the variable
+is set to <strong>profile</strong>, DrScheme also records profiling
+information about itself.</p>
+<p>
+</p>
+<li><p><strong>PLTDRBREAK</strong><a name="node_idx_674"></a>
+When this environment variable is set, DrScheme creates a
+window with a break button, during startup. Clicking the
+button breaks DrScheme's eventspace's main thread. This
+works well in combination with PLTDRDEBUG since the source
+locations are reported for the breaks.</p>
+<p>
+</p>
+<li><p><strong>PLTDRTESTS</strong><a name="node_idx_676"></a> When this
+environment variable is set, DrScheme installs a special
+button in the button bar that starts the test suite. (This
+is only available in the source distribution)</p>
+<p>
+</p>
+<li><p><strong>PLTSTRINGCONSTANTS</strong><a name="node_idx_678"></a> When this
+environment variable is set, DrScheme prints out the
+string constants that have not yet been translated. If it
+is set to a particular language (corresponding to one of
+the files in plt/collects/string-constants) it only shows
+the unset string constants matching that language.</p>
+<p>
+This environment variable must be set when .zo files are
+made. To ensure that you see its output properly, run
+setup-plt with the -c option, set the environment
+variable, and then run setup-plt again.
+</p>
+</ul><p></p>
+<p>
+</p>
+<div align=right class=navigation><i>[Go to <span><a href="drscheme.html">first</a>, <a href="drscheme-Z-H-3.html">previous</a></span><span>, <a href="drscheme-Z-H-5.html">next</a></span> page<span>; &nbsp;&nbsp;</span><span><a href="drscheme.html#node_toc_start">contents</a></span><span><span>; &nbsp;&nbsp;</span><a href="drscheme-Z-H-6.html#node_index_start">index</a></span>]</i></div><p></p>
+</body>
+</html>

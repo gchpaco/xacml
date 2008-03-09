@@ -1,0 +1,166 @@
+<!doctype html public "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!--
+
+Generated from mzc.tex by tex2page, v 2004-09-11
+(running on MzScheme 209, unix), 
+(c) Dorai Sitaram, 
+http://www.ccs.neu.edu/~dorai/tex2page/tex2page-doc.html
+
+-->
+<head>
+<title>
+PLT mzc: MzScheme Compiler Manual
+</title>
+<link rel="stylesheet" type="text/css" href="mzc-Z-S.css" title=default>
+<meta name=robots content="noindex,follow">
+</head>
+<body>
+<div align=right class=navigation><i>[Go to <span><a href="mzc.html">first</a>, <a href="mzc-Z-H-5.html">previous</a></span><span>, <a href="mzc-Z-H-7.html">next</a></span> page<span>; &nbsp;&nbsp;</span><span><a href="mzc.html#node_toc_start">contents</a></span><span><span>; &nbsp;&nbsp;</span><a href="mzc-Z-H-8.html#node_index_start">index</a></span>]</i></div><p></p>
+<a name="node_chap_6"></a>
+<h1 class=chapter>
+<div class=chapterheading><a href="mzc.html#node_toc_node_chap_6">Chapter 6</a></div><br>
+<a href="mzc.html#node_toc_node_chap_6">Creating Distribution Archives</a></h1>
+<p><a name="node_idx_190"></a></p>
+<p>
+<a name="node_idx_192"></a>
+The command-line flags <tt>--plt</tt><a name="node_idx_194"></a> and
+<tt>--collection-plt</tt><a name="node_idx_196"></a> direct <tt><strong>mzc</strong></tt> to create an archive for
+distributing files to PLT users. A distribution archive usually has
+the suffix <tt><strong>.plt</strong></tt><a name="node_idx_198"></a>, which Help Desk and DrScheme recognize
+as archives to provide automatic unpacking facilities. The Setup PLT
+program also supports <tt><strong>.plt</strong></tt> unpacking.</p>
+<p>
+An archive contains the following elements:
+</p>
+<ul><p>
+</p>
+<li><p>a set of files and directories to be unpacked, and flags
+indicating whether they are to be unpacked relative to the PLT
+add-ons directory (which is user-specific), the PLT installation
+directory, or a user-selected directory.</p>
+<p>
+The files and directories for an archive are provided on the command
+line to <tt><strong>mzc</strong></tt>, either directly with <tt>--plt</tt> or in the form of
+collection names with <tt>--collection-plt</tt>.</p>
+<p>
+The <tt>--at-plt</tt> flag indicates that the files and directories
+should be unpacked relative to the user's add-ons directory, unless
+the user specifies the PLT installation directory when unpacking. The
+<tt>--collection-plt</tt> flag implies <tt>--at-plt</tt>.  The
+<tt>--all-users</tt> flag overrides <tt>--at-plt</tt>, and it indicates
+that the files and directories should be unpacked relative to the PLT
+installation directory, always.</p>
+<p>
+</p>
+<li><p>a flag for each file indicating whether it overwrites an
+existing file when the archive is unpacked; the default is to leave
+the old file in place, but <tt><strong>mzc</strong></tt>'s <tt>--replace</tt><a name="node_idx_200"></a> flag enables
+replacing for all files in the archive.</p>
+<p>
+</p>
+<li><p>a list of collections to be set-up (via Setup PLT) after the
+archive is unpacked; <tt><strong>mzc</strong></tt>'s <tt>++setup</tt><a name="node_idx_202"></a> flag adds a
+collection name to the archive's list, but each collection for 
+<tt>--collection-plt</tt> is added automatically.</p>
+<p>
+</p>
+<li><p>a name for the archive, which is reported to the user by the
+unpacking interface; <tt><strong>mzc</strong></tt>'s <tt>--plt-name</tt><a name="node_idx_204"></a> flag sets the
+archive's name, but a default name is determined automatically for
+<tt>--collection-plt</tt>.</p>
+<p>
+</p>
+<li><p>a list of required collections (with associated version
+numbers) and a list of conflicting collections; <tt><strong>mzc</strong></tt> always names
+the <tt><strong>mzscheme</strong></tt> collection in the required list (using the
+collection's pack-time version), <tt><strong>mzc</strong></tt> names each packed collection
+in the conflict list (so that a collection is not unpacked on top of
+a different version of the same collection), and <tt><strong>mzc</strong></tt> extracts
+other requirements and conflicts from the <tt><strong>info.ss</strong></tt> files of
+collections for <tt>--collection-plt</tt>.</p>
+<p>
+</p>
+</ul><p>
+Use the <tt>--plt</tt> flag to specify individual directories and files
+for the archive. Each file and directory must be specified with a
+relative path. By default, if the archive is unpacked with Help Desk
+or DrScheme, the user will be prompted for a target directory, and if
+Setup PLT is used to unpack the archive, the files and directories
+will be unpacked relative to the current directory. If the
+<tt>--at-plt</tt><a name="node_idx_206"></a> flag is provided to <tt><strong>mzc</strong></tt>, the files and
+directories will be unpacked relative to the PLT add-ons directory,
+instead. Finally, if the <tt>--all-users</tt><a name="node_idx_208"></a> flag is provided to
+<tt><strong>mzc</strong></tt>, the files and directories will be unpacked relative to the
+PLT installation directory, instead.</p>
+<p>
+Use the <tt>--collection-plt</tt> flag to pack one or more collections;
+sub-collections can be designated by using a forward slash (``/'') as
+a path separator on all platforms. In this mode, <tt><strong>mzc</strong></tt> automatically
+uses paths relative to the PLT installation or add-ons directory for
+the archived files, and the collections will be set-up after
+unpacking. In addition, <tt><strong>mzc</strong></tt> consults each collection's
+<tt><strong>info.ss</strong></tt> file, as described below, to determine the set of
+required and conflicting collections. Finally, <tt><strong>mzc</strong></tt> consults the
+first collection's <tt><strong>info.ss</strong></tt> file to obtain a default name for
+the archive.  For example, the following command creates a
+<tt><strong>sirmail.plt</strong></tt> archive for distributing a <tt><strong>sirmail</strong></tt>
+collection:
+</p>
+<p>  <tt><strong>mzc <tt>--collection-plt</tt> sirmail.plt sirmail</strong></tt></p>
+<p></p>
+<p>
+When packing collections, <tt><strong>mzc</strong></tt> checks the following fields of each
+collection's <tt><strong>info.ss</strong></tt> file (see section&nbsp;<a href="mzc-Z-H-7.html#node_chap_7">7</a>):
+</p>
+<ul><p>
+</p>
+<li><p><code class=scheme>requires</code>  --  a list of the form <code class=scheme>(<code class=scheme>list</code> (<code class=scheme>list</code>
+ <span class=variable>coll-path</span> <span class=variable>vers</span>) <tt>&middot;&middot;&middot;</tt>)</code> where each <code class=scheme><span class=variable>coll-path</span></code> is a non-empty
+list of relative-path strings, and each <code class=scheme><span class=variable>vers</span></code> is a (possibly
+empty) list of exact integers. The indicated collections must be
+installed at unpacking time, with version sequences that match as
+much of the version sequence specified in the corresponding
+<code class=scheme><span class=variable>vers</span></code>.</p>
+<p>
+A collection's version is indicated by a <code class=scheme>version</code> field in
+it's <tt><strong>info.ss</strong></tt> file, and the defalt version is the empty list.
+The version sequence generalized major and minor version numbers. For
+example, version <code class=scheme><span class=keyword>'</span>(<span class=selfeval>2</span> <span class=selfeval>5</span> <span class=selfeval>4</span> <span class=selfeval>7</span>)</code> of a collection can be used when
+any of <code class=scheme><span class=keyword>'</span>()</code>, <code class=scheme><span class=keyword>'</span>(<span class=selfeval>2</span>)</code>, <code class=scheme><span class=keyword>'</span>(<span class=selfeval>2</span> <span class=selfeval>5</span>)</code>, <code class=scheme><span class=keyword>'</span>(<span class=selfeval>2</span> <span class=selfeval>5</span>
+ <span class=selfeval>4</span>)</code>, or <code class=scheme><span class=keyword>'</span>(<span class=selfeval>2</span> <span class=selfeval>5</span> <span class=selfeval>4</span> <span class=selfeval>7</span>)</code> is required.</p>
+<p>
+</p>
+<li><p><code class=scheme>conflicts</code>  --  a list of the form <code class=scheme>(<code class=scheme>list</code>
+ <span class=variable>coll-path</span> <tt>&middot;&middot;&middot;</tt>)</code> where each <code class=scheme><span class=variable>coll-path</span></code> is a non-empty list of
+relative-path strings. The inidicated collections must <em>not</em> be
+installed at unpacking time.</p>
+<p>
+</p>
+</ul><p></p>
+<p>
+For example, the <tt><strong>info.ss</strong></tt> file in the <tt><strong>sirmail</strong></tt> collection
+might contain the following <code class=scheme>info</code> declaration:
+</p>
+<div align=left><pre class=scheme>(<span class=keyword>module</span> <code class=scheme><span class=keyword>info</span></code> (<code class=scheme><span class=keyword>lib</span></code> <span class=selfeval>&quot;infotab.ss&quot;</span> <span class=selfeval>&quot;setup&quot;</span>)
+  (<span class=keyword>define</span> <span class=variable>name</span> <span class=selfeval>&quot;SirMail&quot;</span>)
+  (<span class=keyword>define</span> <span class=variable>mred-launcher-libraries</span> (<code class=scheme>list</code> <span class=selfeval>&quot;sirmail.ss&quot;</span>))
+  (<span class=keyword>define</span> <span class=variable>mred-launcher-names</span> (<code class=scheme>list</code> <span class=selfeval>&quot;SirMail&quot;</span>))
+  (<span class=keyword>define</span> <span class=variable>requires</span> (<code class=scheme>list</code> (<code class=scheme>list</code> <span class=selfeval>&quot;mred&quot;</span>))))
+</pre></div><p>
+Then, the <tt><strong>sirmail.plt</strong></tt> file (created by the command-line example
+above) will contain the name ``SirMail''. When the archive is
+unpacked, the unpacker will check that the MrEd collection is
+installed (not just MzScheme), and that MrEd has the same version as
+when <tt><strong>sirmail.plt</strong></tt> was created.</p>
+<p>
+Although <tt><strong>mzc</strong></tt>'s command-line interface is sufficient for most
+purposes, the <tt><strong>pack.ss</strong></tt> library of the <tt><strong>setup</strong></tt> collection
+provides a general interface for constructing archives.</p>
+<p>
+</p>
+<p>
+</p>
+<div align=right class=navigation><i>[Go to <span><a href="mzc.html">first</a>, <a href="mzc-Z-H-5.html">previous</a></span><span>, <a href="mzc-Z-H-7.html">next</a></span> page<span>; &nbsp;&nbsp;</span><span><a href="mzc.html#node_toc_start">contents</a></span><span><span>; &nbsp;&nbsp;</span><a href="mzc-Z-H-8.html#node_index_start">index</a></span>]</i></div><p></p>
+</body>
+</html>

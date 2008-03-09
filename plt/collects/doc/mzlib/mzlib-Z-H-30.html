@@ -1,0 +1,94 @@
+<!doctype html public "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!--
+
+Generated from mzlib.tex by tex2page, v 2004-09-11
+(running on MzScheme 209, unix), 
+(c) Dorai Sitaram, 
+http://www.ccs.neu.edu/~dorai/tex2page/tex2page-doc.html
+
+-->
+<head>
+<title>
+PLT MzLib: Libraries Manual
+</title>
+<link rel="stylesheet" type="text/css" href="mzlib-Z-S.css" title=default>
+<meta name=robots content="noindex,follow">
+</head>
+<body>
+<div align=right class=navigation><i>[Go to <span><a href="mzlib.html">first</a>, <a href="mzlib-Z-H-29.html">previous</a></span><span>, <a href="mzlib-Z-H-31.html">next</a></span> page<span>; &nbsp;&nbsp;</span><span><a href="mzlib.html#node_toc_start">contents</a></span><span><span>; &nbsp;&nbsp;</span><a href="mzlib-Z-H-42.html#node_index_start">index</a></span>]</i></div><p></p>
+<a name="node_chap_30"></a>
+<h1 class=chapter>
+<div class=chapterheading><a href="mzlib.html#node_toc_node_chap_30">Chapter 30</a></div><br>
+<a href="mzlib.html#node_toc_node_chap_30"><tt><strong>restart.ss</strong></tt>: Simulating Stand-alone MzScheme</a></h1>
+<p><a name="node_idx_1036"></a><a name="node_idx_1038"></a></p>
+<p>
+
+
+</p>
+<p></p>
+<p>
+
+<a name="node_idx_1040"></a><a name="node_kw_definitionrestart-mzscheme"></a><code class=scheme>(restart-mzscheme</code><tt>&nbsp;</tt><code class=scheme><span class=variable>init-argv adjust-flag-table argv init-namespace</span></code><code class=scheme>)</code> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<small>P</small><small>R</small><small>O</small><small>C</small><small>E</small><small>D</small><small>U</small><small>R</small><small>E</small>
+</p>
+<p>
+Simulates starting the stand-alone version of MzScheme with the vector
+of command-line strings <code class=scheme><span class=variable>argv</span></code>. The <code class=scheme><span class=variable>init-argv</span></code>,
+<code class=scheme><span class=variable>adjust-flag-table</span></code>, and <code class=scheme><span class=variable>init-namespace</span></code> arguments are used
+to modify the default settings for command-line flags, adjust the
+parsing of command-line flags, and customize the initial namespace,
+respectively.</p>
+<p>
+The vector of strings <code class=scheme><span class=variable>init-argv</span></code> is read first with the standard
+MzScheme command-line parsing. Flags that load files or evaluate
+expressions (e.g., <tt>-f</tt> and <tt>-e</tt>) are ignored, but flags that
+set MzScheme's modes (e.g., <tt>-g</tt> or <tt>-m</tt>) effectively set the
+default mode before <code class=scheme><span class=variable>argv</span></code> is parsed.</p>
+<p>
+Before <code class=scheme><span class=variable>argv</span></code> is parsed, the procedure <code class=scheme><span class=variable>adjust-flag-table</span></code> is
+called with a command-line flag table as accepted by
+<code class=scheme>parse-command-line</code> (see section&nbsp;<a href="mzlib-Z-H-9.html#node_chap_9">9</a>). The return
+value must also be a table of command-line flags, and this table is
+used to parse <code class=scheme><span class=variable>argv</span></code>. The intent is to allow
+<code class=scheme>adjust-flag-table</code> to add or remove flags from the standard set.</p>
+<p>
+After <code class=scheme><span class=variable>argv</span></code> is parsed, a new thread and a namespace are created
+for the ``restarted'' MzScheme. (The new namespace is installed as
+the current namespace in the new thread.) In the new thread,
+restarting performs the following actions:
+</p>
+<ul><p>
+</p>
+<li><p>The <code class=scheme><span class=variable>init-namespace</span></code> procedure is called with no arguments.
+The return value is ignored.</p>
+<p>
+</p>
+<li><p>Expressions and files specified by <code class=scheme><span class=variable>argv</span></code> are evaluated and
+loaded.  If an error occurs, the remaining expressions and files are
+ignored, and the return value for <code class=scheme>restart-mzscheme</code> is set to
+<code class=scheme><span class=selfeval>#f</span></code>.</p>
+<p>
+</p>
+<li><p>The <code class=scheme>read-eval-print-loop</code> procedure is called, unless a
+flag in <code class=scheme><span class=variable>init-argv</span></code> or <code class=scheme><span class=variable>argv</span></code> disables it. When
+<code class=scheme>read-eval-print-loop</code> returns, the return value for 
+<code class=scheme>restart-mzscheme</code> is set to <code class=scheme><span class=selfeval>#t</span></code>.</p>
+<p>
+</p>
+</ul><p>
+Before evaluating command-line arguments, an exit handler is installed
+that immediately returns from <code class=scheme>restart-mzscheme</code> with the value
+supplied to the handler. This exit handler remains in effect when
+<code class=scheme>read-eval-print-loop</code> is called (unless a command-line argument
+changes it). If <code class=scheme>restart-mzscheme</code> returns normally, the return
+value is determined as described above. (Note that an error in a
+command-line expression followed by <code class=scheme>read-eval-print-loop</code>
+produces a <code class=scheme><span class=selfeval>#t</span></code> result. This is consistent with MzScheme's
+stand-alone behavior.)</p>
+<p>
+</p>
+<p>
+</p>
+<div align=right class=navigation><i>[Go to <span><a href="mzlib.html">first</a>, <a href="mzlib-Z-H-29.html">previous</a></span><span>, <a href="mzlib-Z-H-31.html">next</a></span> page<span>; &nbsp;&nbsp;</span><span><a href="mzlib.html#node_toc_start">contents</a></span><span><span>; &nbsp;&nbsp;</span><a href="mzlib-Z-H-42.html#node_index_start">index</a></span>]</i></div><p></p>
+</body>
+</html>

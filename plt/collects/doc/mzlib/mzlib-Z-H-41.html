@@ -1,0 +1,968 @@
+<!doctype html public "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!--
+
+Generated from mzlib.tex by tex2page, v 2004-09-11
+(running on MzScheme 209, unix), 
+(c) Dorai Sitaram, 
+http://www.ccs.neu.edu/~dorai/tex2page/tex2page-doc.html
+
+-->
+<head>
+<title>
+PLT MzLib: Libraries Manual
+</title>
+<link rel="stylesheet" type="text/css" href="mzlib-Z-S.css" title=default>
+<meta name=robots content="noindex,follow">
+</head>
+<body>
+<div align=right class=navigation><i>[Go to <span><a href="mzlib.html">first</a>, <a href="mzlib-Z-H-40.html">previous</a></span><span>, <a href="mzlib-Z-H-42.html">next</a></span> page<span>; &nbsp;&nbsp;</span><span><a href="mzlib.html#node_toc_start">contents</a></span><span><span>; &nbsp;&nbsp;</span><a href="mzlib-Z-H-42.html#node_index_start">index</a></span>]</i></div><p></p>
+<a name="node_chap_41"></a>
+<h1 class=chapter>
+<div class=chapterheading><a href="mzlib.html#node_toc_node_chap_41">Chapter 41</a></div><br>
+<a href="mzlib.html#node_toc_node_chap_41"><tt><strong>unitsig.ss</strong></tt>: Units with Signatures</a></h1>
+<p><a name="node_idx_1226"></a><a name="node_idx_1228"></a></p>
+<p>
+<a name="node_idx_1230"></a> <a name="node_idx_1232"></a>
+The unit syntax presented in section&nbsp;<a href="mzlib-Z-H-40.html#node_chap_40">40</a> poses a serious
+notational problem: each variable that is imported or exported must
+be separately enumerated in many <code class=scheme><span class=keyword>import</span></code>, <code class=scheme><span class=keyword>export</span></code>, and
+<code class=scheme><span class=keyword>link</span></code> clauses. Consider the phone book program example from
+section&nbsp;<a href="mzlib-Z-H-40.html#node_sec_40.3">40.3</a>: a realistic <code class=scheme><span class=variable>graphics@</span></code> unit would
+contain many more procedures than <code class=scheme><span class=variable>make-window</span></code> and
+<code class=scheme><span class=variable>make-button</span></code>, and it would be unreasonable to enumerate the
+entire graphics toolbox in every client module. Future extensions to
+the graphics library are likely, and while the program must certainly
+be re-compiled to take advantage of the changes, the programmer
+should not be required to change the program text in every place that
+the graphics library is used.</p>
+<p>
+This problem is solved by separating the specification of a unit's
+<strong>signature</strong><a name="node_idx_1234"></a> (or ``interface'') from its implementation.  A
+unit signature is essentially a list of variable names. A signature can
+be used in an import clause, an export clause, a link clause, or an
+invocation expression to import or link a set of variables at
+once. Signatures clarify the connections between units, prevent
+mis-orderings in the specification of imported variables, and provide
+better error messages when an illegal linkage is specified.</p>
+<p>
+Signatures are used to create <strong>units with signatures</strong><a name="node_idx_1236"></a>, a.k.a.
+<strong>signed units</strong><a name="node_idx_1238"></a>. Signatures and signed units are used
+together to create <strong>signed compound units</strong><a name="node_idx_1240"></a>. As in the core
+system, a signed compound unit is itself a signed unit.</p>
+<p>
+Signed units are first-class values, just like their counterparts in
+the core system. A signature is not a value. However, signature
+information is bundled into each signed unit value so that
+signature-based checks can be performed at run time (when signed
+units are linked and invoked).</p>
+<p>
+Along with its signature information, a signed unit includes a
+primitive unit from the core system that implements the signed
+unit. This underlying unit can be extracted for mixed-mode programs
+using both signed and unsigned units. More importantly, the semantics
+of signed units is the same as the semantics for regular units; the
+additional syntax only serves to specify signatures and to check
+signatures for linking.</p>
+<p>
+</p>
+<a name="node_sec_41.1"></a>
+<h2><a href="mzlib.html#node_toc_node_sec_41.1">41.1&nbsp;&nbsp;Importing and Exporting with Signatures</a></h2>
+<p><a name="node_idx_1242"></a></p>
+<p>
+The <a name="node_kw_definitionunit/sig"></a><a name="node_idx_1244"></a><code class=scheme><span class=keyword>unit/sig</span></code> form creates a signed unit in the same way
+that the <code class=scheme><span class=keyword>unit</span></code> form creates a unit in the core system. The only
+difference between these forms is that signatures are used to specify
+the imports and exports of a signed unit.</p>
+<p>
+In the primitive <code class=scheme><span class=keyword>unit</span></code> form, the <code class=scheme><span class=keyword>import</span></code> clause only
+determines the number of variables that will be imported when the
+unit is linked; there are no explicitly declared connections between
+the import variables. In contrast, a <code class=scheme><span class=keyword>unit/sig</span></code> form's
+<code class=scheme><span class=keyword>import</span></code> clause does not specify individual variables; instead,
+it specifies the signatures of units that will provide its imported
+variables, and all of the variables in each signature are
+imported. The ordered collection of signatures used for importing in
+a signed unit is the signed unit's <strong>import signature</strong><a name="node_idx_1246"></a>.</p>
+<p>
+Although the collection of variables to be exported from a
+<code class=scheme><span class=keyword>unit/sig</span></code> expression is specified by a signature rather than an
+immediate sequence of variables,<a name="call_footnote_Temp_21"></a><a href="#footnote_Temp_21"><sup><small>13</small></sup></a> variables are exported
+in a <code class=scheme><span class=keyword>unit/sig</span></code> form in the same way as in the <code class=scheme><span class=keyword>unit</span></code>
+form. The <strong>export signature</strong><a name="node_idx_1248"></a> of a signed unit is the
+collection of names exported by the unit.</p>
+<p>
+Example:
+</p>
+<div align=left><pre class=scheme>(<span class=keyword>define-signature</span> <span class=variable>arithmetic^</span> (<span class=variable>add</span> <span class=variable>subtract</span> <span class=variable>multiply</span> <span class=variable>divide</span> <span class=variable>power</span>))
+(<span class=keyword>define-signature</span> <span class=variable>calculus^</span> (<span class=variable>integrate</span>))
+(<span class=keyword>define-signature</span> <span class=variable>graphics^</span> (<span class=variable>add-pixel</span> <span class=variable>remove-pixel</span>))
+(<span class=keyword>define-signature</span> <span class=variable>gravity^</span> (<span class=variable>go</span>))
+(<span class=keyword>define</span> <span class=variable>gravity@</span>
+  (<span class=keyword>unit/sig</span> <span class=variable>gravity^</span> (<span class=keyword>import</span> <span class=variable>arithmetic^</span> <span class=variable>calculus^</span> <span class=variable>graphics^</span>)
+    (<span class=keyword>define</span> <span class=variable>go</span> (<span class=keyword>lambda</span> (<span class=variable>start-pos</span>) ... <span class=variable>subtract</span> ... <span class=variable>add-pixel</span> ...))))
+</pre></div><p></p>
+<p>
+In this program fragment, the signed unit <code class=scheme><span class=variable>gravity@</span></code> imports a
+collection of arithmetic procedures, a collection of calculus
+procedures, and a collection of graphics procedures. The arithmetic
+collection will be provided through a signed unit that matches the
+<code class=scheme><span class=variable>arithmetic^</span></code> (export) signature, while the graphics collection
+will be provided through a signed unit that matches the
+<code class=scheme><span class=variable>graphics^</span></code> (export) signature. The <code class=scheme><span class=variable>gravity@</span></code> signed
+unit itself has the export signature <code class=scheme><span class=variable>gravity^</span></code>.</p>
+<p>
+Suppose that the procedures in <code class=scheme><span class=variable>graphics^</span></code> were named
+<code class=scheme><span class=variable>add</span></code> and <code class=scheme><code class=scheme>remove</code></code> rather than <code class=scheme><span class=variable>add-pixel</span></code> and
+<code class=scheme><span class=variable>remove-pixel</span></code>. In this case, the <code class=scheme><span class=variable>gravity@</span></code> unit
+cannot import both the <code class=scheme><span class=variable>arithmetic^</span></code> and <code class=scheme><span class=variable>graphics^</span></code>
+signatures as above, because the name <code class=scheme><span class=variable>add</span></code> would be ambiguous
+in the unit body. To solve this naming problem, the imports of a
+signed unit can be distinguished by providing prefix tags:
+</p>
+<div align=left><pre class=scheme>(<span class=keyword>define-signature</span> <span class=variable>graphics^</span> (<span class=variable>add</span> <code class=scheme>remove</code>))
+(<span class=keyword>define</span> <span class=variable>gravity@</span>
+  (<span class=keyword>unit/sig</span> <span class=variable>gravity^</span> (<span class=keyword>import</span> (<span class=variable>a</span> <span class=keyword>:</span> <span class=variable>arithmetic^</span>) (<span class=variable>c</span> <span class=keyword>:</span> <span class=variable>calculus^</span>) (<span class=variable>g</span> <span class=keyword>:</span> <span class=variable>graphics^</span>))
+    (<span class=keyword>define</span> <span class=variable>go</span> (<span class=keyword>lambda</span> (<span class=variable>start-pos</span>) ... <span class=variable>a:subtract</span> ... <span class=variable>g:add</span> ...))))
+</pre></div><p></p>
+<p>
+Details for the syntax of signatures are in section&nbsp;<a href="#node_sec_41.2">41.2</a>.  The
+full <code class=scheme><span class=keyword>unit/sig</span></code> syntax is described in section&nbsp;<a href="#node_sec_41.3">41.3</a>.</p>
+<p>
+</p>
+<a name="node_sec_41.2"></a>
+<h2><a href="mzlib.html#node_toc_node_sec_41.2">41.2&nbsp;&nbsp;Signatures</a></h2>
+<p><a name="node_idx_1250"></a></p>
+<p>
+<a name="node_idx_1252"></a>
+A <code class=scheme><span class=variable>signature</span></code> is either a signature description or a bound
+signature identifier:
+</p>
+<div align=left><pre class=scheme>(<span class=variable>sig-element</span> <tt>&middot;&middot;&middot;</tt>) 
+<span class=variable>signature-identifier</span>
+
+<span class=variable>sig-element</span> is one of
+  <span class=variable>variable</span>
+  (<span class=keyword>struct</span> <span class=variable>base-identifier</span> (<span class=variable>field-identifier</span> <tt>&middot;&middot;&middot;</tt>) <span class=variable>omission</span> <tt>&middot;&middot;&middot;</tt>) 
+  (<code class=scheme><span class=keyword>open</span></code> <span class=variable>signature</span>) 
+  (<span class=keyword>unit</span> <span class=variable>identifier</span> <span class=keyword>:</span> <span class=variable>signature</span>)
+
+<span class=variable>omission</span> is one of
+  <span class=keyword>-selectors</span> 
+  <span class=keyword>-setters</span>
+  (<code class=scheme><span class=keyword>-</span></code> <span class=variable>variable</span>)
+</pre></div><p></p>
+<p>
+Together, the element descriptions determine the set of elements that
+compose the signature:
+</p>
+<ul><p>
+</p>
+<li><p>The simple <code class=scheme><span class=variable>variable</span></code> form adds a variable name to the new
+signature.</p>
+<p>
+</p>
+<li><p>The <code class=scheme><span class=keyword>struct</span></code> form expands into the list of variable
+names generated by a <code class=scheme><span class=keyword>define-struct</span></code> expression with the given
+<code class=scheme><span class=variable>base-identifier</span></code> and <code class=scheme><span class=variable>field-identifier</span></code>s.</p>
+<p>
+The actual structure type can contain additional fields; if a field
+identifier is omitted, the corresponding selector and setter names
+are not added to the signature. Optional <code class=scheme><span class=variable>omission</span></code>
+specifications can omit other kinds of names: <code class=scheme>-selectors</code> omits
+all field selector variables.  <code class=scheme><span class=keyword>-setters</span></code> omits all field setter
+variables, and <code class=scheme>(<code class=scheme><span class=keyword>-</span></code> <code class=scheme><span class=variable>variable</span></code>)</code> omits a specific generated
+<code class=scheme><span class=variable>variable</span></code>.</p>
+<p>
+In a unit importing the signature, the <code class=scheme><span class=variable>base-identifier</span></code> is also
+bound to expansion-time information about the structure type (see
+section&nbsp;<a href="../mzscheme/mzscheme-Z-H-12.html#node_sec_12.6.3">12.6.3</a> in <a href="../mzscheme/mzscheme.html"><i>PLT MzScheme: Language Manual</i></a>). The expansion-time information records the
+descriptor, constructor, predicate, field accessor, and field mutator
+bindings from the signature. It also indicates that the accessor and
+mutator sets are potentially incomplete (so <code class=scheme><span class=keyword>match</span></code> works with
+the structure type, but <code class=scheme><span class=keyword>shared</span></code> does not), either because the
+signature omits fields, or because the structure type is derived from
+a base type (which cannot be declared in a signature, currently).</p>
+<p>
+</p>
+<li><p>The <code class=scheme><span class=keyword>open</span></code> form copies all of the elements of another
+signature into the new signature description.</p>
+<p>
+</p>
+<li><p>The <code class=scheme><span class=keyword>unit</span></code> form creates a sub-signature within the new
+signature. A signature that includes a <code class=scheme>unit</code> clause corresponds
+to a signed compound unit that exports an embedded unit. (Embedded
+units are described in section&nbsp;<a href="#node_sec_41.6">41.6</a> and
+section&nbsp;<a href="#node_sec_41.7">41.7</a>.)</p>
+<p>
+</p>
+</ul><p></p>
+<p>
+The names of all elements in a signature must be
+distinct.<a name="call_footnote_Temp_22"></a><a href="#footnote_Temp_22"><sup><small>14</small></sup></a> Two signatures <strong>match</strong> when they contain
+the same element names, and when a name in both signatures is either
+a variable name in both signatures or a sub-signature name in both
+signatures such that the sub-signatures match. The order of elements
+within a signature is not important. A source signature
+<strong>satisfies</strong> a destination signature when the source signature
+has all of the elements of the destination signature, but the source
+signature may have additional elements.</p>
+<p>
+The <a name="node_kw_definitiondefine-signature"></a><a name="node_idx_1254"></a><code class=scheme><span class=keyword>define-signature</span></code> form binds a signature to an
+identifier:
+</p>
+<div align=left><pre class=scheme>(<span class=keyword>define-signature</span> <span class=variable>signature-identifier</span> <span class=variable>signature</span>)
+</pre></div><p>
+The <code class=scheme><span class=keyword>let-signature</span></code> form binds a signature to an identifier
+within a body of expressions:
+</p>
+<div align=left><pre class=scheme>(<span class=keyword>let-signature</span> <span class=variable>identifier</span> <span class=variable>signature</span> <span class=variable>body-expr</span> <tt>&middot;&middot;&middot;</tt><sup>1</sup>)
+</pre></div><p></p>
+<p>
+For various purposes, signatures must be flattened into a linear
+sequence of variables. The flattening operation is defined as
+follows:
+</p>
+<ul><p>
+</p>
+<li><p>All variable name elements of the signature are included in
+the flattened signature.</p>
+<p>
+</p>
+<li><p>For each sub-signature element named <code class=scheme><span class=variable>s</span></code>, the sub-signature
+is flattened, and then each variable name in the flattened
+sub-signature is prefixed with <code class=scheme><code class=scheme><span class=variable>s</span></code>:</code> and included in the
+flattened signature.</p>
+<p>
+</p>
+</ul><p></p>
+<p>
+</p>
+<a name="node_sec_41.3"></a>
+<h2><a href="mzlib.html#node_toc_node_sec_41.3">41.3&nbsp;&nbsp;Signed Units</a></h2>
+<p><a name="node_idx_1256"></a></p>
+<p>
+The <a name="node_kw_definitionunit/sig"></a><a name="node_idx_1258"></a><code class=scheme><span class=keyword>unit/sig</span></code> form creates a signed unit:
+</p>
+<div align=left><pre class=scheme>(<span class=keyword>unit/sig</span> <span class=variable>signature</span> 
+  (<span class=keyword>import</span> <span class=variable>import-element</span> <tt>&middot;&middot;&middot;</tt>) 
+  <span class=variable>renames</span>
+  <span class=variable>unit-body-expr</span>
+  <tt>&middot;&middot;&middot;</tt>)
+
+<span class=variable>import-element</span> is one of
+  <span class=variable>signature</span>
+  (<span class=variable>identifier</span> <span class=keyword>:</span> <span class=variable>signature</span>) 
+
+<span class=variable>renames</span> is either empty or
+  (<span class=keyword>rename</span> (<span class=variable>internal-variable</span> <span class=variable>signature-variable</span>) <tt>&middot;&middot;&middot;</tt>)
+</pre></div><p></p>
+<p>
+The <code class=scheme><span class=variable>signature</span></code> immediately following <code class=scheme><span class=keyword>unit/sig</span></code> specifies the
+export signature of the signed unit. This signature cannot contain
+sub-signatures. Each element of the signature must have a
+corresponding variable definition in one of the
+<code class=scheme><span class=variable>unit-body-expr</span></code>s, modulo the optional <a name="node_kw_definitionrename"></a><a name="node_idx_1260"></a><code class=scheme><span class=keyword>rename</span></code> clause. If
+the <code class=scheme><span class=keyword>rename</span></code> clause is present, it maps <code class=scheme><span class=variable>internal-variable</span></code>s
+defined in the <code class=scheme><span class=variable>unit-body-expr</span></code>s to <code class=scheme><span class=variable>signature-variable</span></code>s in
+the export signature.</p>
+<p>
+The <code class=scheme><span class=variable>import-element</span></code>s specify imports for the signed unit.  The
+names bound within the <code class=scheme><span class=variable>signed-unit-body-expr</span></code>s to imported
+bindings are constructed by flattening the signatures according to
+the algorithm in section&nbsp;<a href="#node_sec_41.2">41.2</a>:
+</p>
+<ul><p>
+</p>
+<li><p>For each <code class=scheme><span class=variable>import-element</span></code> using the <code class=scheme><span class=variable>signature</span></code> form,
+the variables in the flattened signature are bound in the
+<code class=scheme><span class=variable>signed-unit-body-expr</span></code>s.</p>
+<p>
+</p>
+<li><p>For each <code class=scheme><span class=variable>import-element</span></code> using the <code class=scheme>(<code class=scheme><span class=variable>identifier</span></code>
+: <code class=scheme><span class=variable>signature</span></code>)</code> form, the variables in the flattened signature
+are prefixed with <code class=scheme><code class=scheme><span class=variable>identifier</span></code>:</code> and the prefixed variables
+are bound in the <code class=scheme><span class=variable>signed-unit-body-expr</span></code>s.</p>
+<p>
+</p>
+</ul><p></p>
+<p>
+</p>
+<a name="node_sec_41.4"></a>
+<h2><a href="mzlib.html#node_toc_node_sec_41.4">41.4&nbsp;&nbsp;Linking with Signatures</a></h2>
+<p><a name="node_idx_1262"></a></p>
+<p>
+The <a name="node_kw_definitioncompound-unit/sig"></a><a name="node_idx_1264"></a><code class=scheme><span class=keyword>compound-unit/sig</span></code> form links signed units into a
+signed compound unit in the same way that the <code class=scheme><span class=keyword>compound-unit</span></code>
+form links primitive units. In the <code class=scheme><span class=keyword>compound-unit/sig</span></code> form,
+signatures are used for importing just as in <code class=scheme><span class=keyword>unit/sig</span></code> (except
+that all import signatures must have a tag), but the use of
+signatures for linking and exporting is more complex.</p>
+<p>
+Within a <code class=scheme><span class=keyword>compound-unit/sig</span></code> expression, each unit to be linked is
+represented by a tag. Each tag is followed by a signature and an
+expression. A tag's expression evaluates (at link-time) to a signed
+unit for linking. The export signature of this unit must
+<strong>satisfy</strong> the tag's signature. ``Satisfy'' <em>does not</em> mean
+``match exactly''; satisfaction requires that the unit exports at
+least the variables specified in the tag's signature, but the unit
+may actually export additional variables. Those additional variables
+are ignored for linking and are effectively hidden by the compound
+unit.</p>
+<p>
+To specify the compound unit's linkage, an entire unit is provided
+(via its tag) for each import of each linked unit. The number of
+units provided by a linkage must match the number of signatures
+imported by the linked unit, and the tag signature for each provided
+unit must match (exactly) the corresponding imported signature.</p>
+<p>
+The following example shows the linking of an arithmetic unit, a
+calculus unit, a graphics unit, and a gravity modeling unit:
+</p>
+<div align=left><pre class=scheme>(<span class=keyword>define-signature</span> <span class=variable>arithmetic^</span> (<span class=variable>add</span> <span class=variable>subtract</span> <span class=variable>multiply</span> <span class=variable>divide</span> <span class=variable>power</span>))
+(<span class=keyword>define-signature</span> <span class=variable>calculus^</span> (<span class=variable>integrate</span>))
+(<span class=keyword>define-signature</span> <span class=variable>graphics^</span> (<span class=variable>add-pixel</span> <span class=variable>remove-pixel</span>))
+(<span class=keyword>define-signature</span> <span class=variable>gravity^</span> (<span class=variable>go</span>))
+(<span class=keyword>define</span> <span class=variable>arithmetic@</span> (<span class=keyword>unit/sig</span> <span class=variable>arithmetic^</span> (<span class=keyword>import</span>) ...))
+(<span class=keyword>define</span> <span class=variable>calculus@</span> (<span class=keyword>unit/sig</span> <span class=variable>calculus^</span> (<span class=keyword>import</span> <span class=variable>arithmetic^</span>) ...))
+(<span class=keyword>define</span> <span class=variable>graphics@</span> (<span class=keyword>unit/sig</span> <span class=variable>graphics^</span> (<span class=keyword>import</span>) ...))
+(<span class=keyword>define</span> <span class=variable>gravity@</span> (<span class=keyword>unit/sig</span> <span class=variable>gravity^</span> (<span class=keyword>import</span> <span class=variable>arithmetic^</span> <span class=variable>calculus^</span> <span class=variable>graphics^</span>) ...))
+(<span class=keyword>define</span> <span class=variable>model@</span>
+  (<span class=keyword>compound-unit/sig</span>
+    (<span class=keyword>import</span>)
+    (<span class=keyword>link</span> (<span class=variable>ARITHMETIC</span> <span class=keyword>:</span> <span class=variable>arithmetic^</span> (<span class=variable>arithmetic@</span>))
+          (<span class=variable>CALCULUS</span> <span class=keyword>:</span> <span class=variable>calculus^</span> (<span class=variable>calculus@</span> <span class=variable>ARITHMETIC</span>)))
+          (<span class=variable>GRAPHICS</span> <span class=keyword>:</span> <span class=variable>graphics^</span> (<span class=variable>graphics@</span>))
+          (<span class=variable>GRAVITY</span> <span class=keyword>:</span> <span class=variable>gravity^</span> (<span class=variable>gravity@</span> <span class=variable>ARITHMETIC</span> <span class=variable>CALCULUS</span> <span class=variable>GRAPHICS</span>)))
+    (<span class=keyword>export</span> (<code class=scheme><span class=keyword>var</span></code> (<span class=variable>GRAVITY</span> <span class=variable>go</span>)))))
+</pre></div><p></p>
+<p>
+In the <code class=scheme><span class=keyword>compound-unit/sig</span></code> expression for <code class=scheme><span class=variable>model@</span></code>, all
+link-time signature checks succeed since, for example,
+<code class=scheme><span class=variable>arithmetic@</span></code> does indeed implement <code class=scheme><span class=variable>arithmetic^</span></code> and
+<code class=scheme><span class=variable>gravity@</span></code> does indeed import units with the
+<code class=scheme><span class=variable>arithmetic^</span></code>, <code class=scheme><span class=variable>calculus^</span></code>, and <code class=scheme><span class=variable>graphics^</span></code> signatures.</p>
+<p>
+The export signature of a signed compound unit is implicitly specified
+by the <code class=scheme><span class=keyword>export</span></code> clause. In the above example, the <code class=scheme><span class=variable>model@</span></code>
+compound unit exports a <code class=scheme><span class=variable>go</span></code> variable, so its export signature is
+the same as <code class=scheme><span class=variable>gravity^</span></code>. More forms for exporting are described
+in section&nbsp;<a href="#node_sec_41.6">41.6</a>.</p>
+<p>
+</p>
+<a name="node_sec_41.5"></a>
+<h2><a href="mzlib.html#node_toc_node_sec_41.5">41.5&nbsp;&nbsp;Restricting Signatures</a></h2>
+<p><a name="node_idx_1266"></a></p>
+<p>
+As explained in section&nbsp;<a href="#node_sec_41.4">41.4</a>, the signature checking for a
+linkage requires that a provided signature <em>exactly</em> matches the
+corresponding import signature. At first glance, this requirement
+appears to be overly strict; it might seem that the provided
+signature need only <em>satisfy</em> the imported signature. The reason
+for requiring an exact match at linkages is that a
+<code class=scheme><span class=keyword>compound-unit/sig</span></code> expression is expanded into a
+<code class=scheme><span class=keyword>compound-unit</span></code> expression. Thus, the number and order of the
+variables used for linking must be fully known at compile time.</p>
+<p>
+The exact-match requirement does not pose any obstacle as long as a
+unit is linked into only one other unit. In this case, the signature
+specified with the unit's tag can be contrived to match the importing
+signature. However, a single unit may need to be linked into
+different units, each of which may use different importing
+signatures. In this case, the tag's signature must be ``bigger'' than
+both of the uses, and a <strong>restricting signature</strong> is explicitly
+provided at each linkage.  The tag must satisfy every restricting
+signature (this is a syntactic check), and each restricting signature
+must exactly match the importing signature (this is a run-time
+check).</p>
+<p>
+In the example from section&nbsp;<a href="#node_sec_41.4">41.4</a>, both <code class=scheme><span class=variable>calculus@</span></code> and
+<code class=scheme><span class=variable>gravity@</span></code> import numerical procedures, so both import the
+<code class=scheme><span class=variable>arithmetic^</span></code> signature. However, <code class=scheme><span class=variable>calculus@</span></code> does not
+actually need the <code class=scheme><span class=variable>power</span></code> procedure to implement <code class=scheme><span class=variable>integrate</span></code>;
+therefore, <code class=scheme><span class=variable>calculus@</span></code> could be as effectively implemented in
+the following way:
+</p>
+<div align=left><pre class=scheme>(<span class=keyword>define-signature</span> <span class=variable>simple-arithmetic^</span> (<span class=variable>add</span> <span class=variable>subtract</span> <span class=variable>multiply</span> <span class=variable>divide</span>))
+(<span class=keyword>define</span> <span class=variable>calculus@</span> (<span class=keyword>unit/sig</span> <span class=variable>calculus^</span> (<span class=keyword>import</span> <span class=variable>simple-arithmetic^</span>) ...))
+</pre></div><p></p>
+<p>
+Now, the old <code class=scheme><span class=keyword>compound-unit/sig</span></code> expression for <code class=scheme><span class=variable>model@</span></code>
+no longer works. Although the old expression is still syntactically
+correct, link-time signature checking will discover that
+<code class=scheme><span class=variable>calculus@</span></code> expects an import matching the signature
+<code class=scheme><span class=variable>simple-arithmetic^</span></code> but it was provided a linkage with the
+signature <code class=scheme><span class=variable>arithmetic^</span></code>.  On the other hand, changing the
+signature associated with <code class=scheme><span class=variable>ARITHMETIC</span></code> to
+<code class=scheme><span class=variable>simple-arithmetic^</span></code> would cause a link-time error for the
+linkage to <code class=scheme><span class=variable>gravity@</span></code>, since it imports the
+<code class=scheme><span class=variable>arithmetic^</span></code> signature.</p>
+<p>
+The solution is to restrict the signature of <code class=scheme><span class=variable>ARITHMETIC</span></code> in
+the linkage for <code class=scheme><span class=variable>CALCULUS</span></code>:
+</p>
+<div align=left><pre class=scheme>(<span class=keyword>define</span> <span class=variable>model@</span>
+  (<span class=keyword>compound-unit/sig</span>
+    (<span class=keyword>import</span>)
+    (<span class=keyword>link</span> (<span class=variable>ARITHMETIC</span> <span class=keyword>:</span> <span class=variable>arithmetic^</span> (<span class=variable>arithmetic@</span>))
+          (<span class=variable>CALCULUS</span> <span class=keyword>:</span> <span class=variable>calculus^</span> (<span class=variable>calculus@</span> (<span class=variable>ARITHMETIC</span> <span class=keyword>:</span> <span class=variable>simple-arithmetic^</span>))))
+          (<span class=variable>GRAPHICS</span> <span class=keyword>:</span> <span class=variable>graphics^</span> (<span class=variable>graphics@</span>))
+          (<span class=variable>GRAVITY</span> <span class=keyword>:</span> <span class=variable>gravity^</span> (<span class=variable>gravity@</span> <span class=variable>ARITHMETIC</span> <span class=variable>CALCULUS</span> <span class=variable>GRAPHICS</span>)))
+    (<span class=keyword>export</span> (<code class=scheme><span class=keyword>var</span></code> (<span class=variable>GRAVITY</span> <span class=variable>go</span>)))))
+</pre></div><p>
+A syntactic check will ensure that <code class=scheme><span class=variable>arithmetic^</span></code> satisfies
+<code class=scheme><span class=variable>simple-arithmetic^</span></code> (i.e., <code class=scheme><span class=variable>arithmetic^</span></code> contains at
+least the variables of <code class=scheme><span class=variable>simple-arithmetic^</span></code>). Now, all
+link-time signature checks will succeed, as well.</p>
+<p>
+</p>
+<a name="node_sec_41.6"></a>
+<h2><a href="mzlib.html#node_toc_node_sec_41.6">41.6&nbsp;&nbsp;Embedded Units</a></h2>
+<p><a name="node_idx_1268"></a></p>
+<p>
+Signed compound units can re-export variables from linked units in the
+same way that core compound units can re-export variables.  The
+difference in this case is that the collection of variables that are
+re-exported determines an export signature for the compound
+unit. Using certain export forms, such as the <code class=scheme><span class=keyword>open</span></code> form
+instead of the <code class=scheme><span class=variable>var</span></code> form (see section&nbsp;<a href="#node_sec_41.7">41.7</a>),
+makes it easier to export a number of variables at once, but these
+are simply shorthand notations.</p>
+<p>
+Signed compound units can also export entire units as well as
+variables. Such an exported unit is an <strong>embedded unit</strong> of the
+compound unit. Extending the example from section&nbsp;<a href="#node_sec_41.5">41.5</a>, the
+entire <code class=scheme><span class=variable>gravity@</span></code> unit can be exported from <code class=scheme><span class=variable>model@</span></code>
+using the <code class=scheme><span class=keyword>unit</span></code> export form:
+</p>
+<div align=left><pre class=scheme>(<span class=keyword>define</span> <span class=variable>model@</span>
+  (<span class=keyword>compound-unit/sig</span>
+    (<span class=keyword>import</span>)
+    (<span class=keyword>link</span> (<span class=variable>ARITHMETIC</span> <span class=keyword>:</span> <span class=variable>arithmetic^</span> (<span class=variable>arithmetic@</span>))
+          (<span class=variable>CALCULUS</span> <span class=keyword>:</span> <span class=variable>calculus^</span> (<span class=variable>calculus@</span> (<span class=variable>ARITHMETIC</span> <span class=keyword>:</span> <span class=variable>simple-arithmetic^</span>))))
+          (<span class=variable>GRAPHICS</span> <span class=keyword>:</span> <span class=variable>graphics^</span> (<span class=variable>graphics@</span>))
+          (<span class=variable>GRAVITY</span> <span class=keyword>:</span> <span class=variable>gravity^</span> (<span class=variable>gravity@</span> <span class=variable>ARITHMETIC</span> <span class=variable>CALCULUS</span> <span class=variable>GRAPHICS</span>)))
+    (<span class=keyword>export</span> (<span class=keyword>unit</span> <span class=variable>GRAVITY</span>))))
+</pre></div><p>
+The export signature of <code class=scheme><span class=variable>model@</span></code> no longer matches
+<code class=scheme><span class=variable>gravity^</span></code>. When a compound unit exports an embedded unit, the
+export signature of the compound unit has a sub-signature that
+corresponds to the full export signature of the embedded unit. The
+following signature, <code class=scheme><span class=variable>model^</span></code>, is the export signature for the
+revised <code class=scheme><span class=variable>model@</span></code>:
+</p>
+<div align=left><pre class=scheme>(<span class=keyword>define-signature</span> <span class=variable>model^</span> ((<span class=keyword>unit</span> <span class=variable>GRAVITY</span> <span class=keyword>:</span> <span class=variable>gravity^</span>)))
+</pre></div><p>
+The signature <code class=scheme><span class=variable>model^</span></code> matches the (implicit) export signature
+of <code class=scheme><span class=variable>model@</span></code> since it contains a sub-signature named
+<code class=scheme><span class=variable>GRAVITY</span></code> -- matching the tag used to export the <code class=scheme><span class=variable>gravity@</span></code>
+unit -- that matches the export signature of <code class=scheme><span class=variable>gravity@</span></code>.</p>
+<p>
+The export form <code class=scheme>(<span class=keyword>unit</span> <span class=variable>GRAVITY</span>)</code> does not export any variable
+other than <code class=scheme><span class=variable>gravity@</span></code>'s <code class=scheme><span class=variable>go</span></code>, but the ``unitness'' of
+<code class=scheme><span class=variable>gravity@</span></code> is intact. The embedded <code class=scheme><span class=variable>GRAVITY</span></code> unit is
+now available for linking when <code class=scheme><span class=variable>model@</span></code> is linked to other
+units.</p>
+<p>
+Example:
+</p>
+<div align=left><pre class=scheme>(<span class=keyword>define</span> <span class=variable>tester@</span> (<span class=keyword>unit/sig</span> () (<span class=keyword>import</span> <span class=variable>gravity^</span>) (<span class=variable>go</span> <span class=selfeval>0</span>)))
+(<span class=keyword>define</span> <span class=variable>test-program@</span>
+  (<span class=keyword>compound-unit/sig</span>
+     (<span class=keyword>import</span>)
+     (<span class=keyword>link</span> (<span class=variable>MODEL</span> <span class=keyword>:</span> <span class=variable>model^</span> (<span class=variable>model@</span>))
+           (<span class=variable>TESTER</span> <span class=keyword>:</span> () (<span class=variable>tester@</span> (<span class=variable>MODEL</span> <span class=variable>GRAVITY</span>))))
+     (<span class=keyword>export</span>)))
+</pre></div><p></p>
+<p>
+The embedded <code class=scheme><span class=variable>GRAVITY</span></code> unit is linked as an import into the
+<code class=scheme><span class=variable>tester@</span></code> unit by using the path <code class=scheme>(<span class=variable>MODEL</span> <span class=variable>GRAVITY</span>)</code>.</p>
+<p>
+</p>
+<a name="node_sec_41.7"></a>
+<h2><a href="mzlib.html#node_toc_node_sec_41.7">41.7&nbsp;&nbsp;Signed Compound Units</a></h2>
+<p><a name="node_idx_1270"></a></p>
+<p>
+The <a name="node_kw_definitioncompound-unit/sig"></a><a name="node_idx_1272"></a><code class=scheme><span class=keyword>compound-unit/sig</span></code> form links multiple signed units
+into a new signed compound unit:
+</p>
+<div align=left><pre class=scheme>(<span class=keyword>compound-unit/sig</span> 
+  (<span class=keyword>import</span> (<span class=variable>tag</span> <span class=keyword>:</span> <span class=variable>signature</span>) <tt>&middot;&middot;&middot;</tt>) 
+  (<span class=keyword>link</span> (<span class=variable>tag</span> <span class=keyword>:</span> <span class=variable>signature</span> (<span class=variable>expr</span> <span class=variable>linkage</span> <tt>&middot;&middot;&middot;</tt>)) <tt>&middot;&middot;&middot;</tt>) 
+  (<span class=keyword>export</span> <span class=variable>export-element</span> <tt>&middot;&middot;&middot;</tt>)) 
+
+<span class=variable>linkage</span> is
+  <span class=variable>unit-path</span>
+
+<span class=variable>unit-path</span> is one of
+  <span class=variable>simple-unit-path</span>
+  (<span class=variable>simple-unit-path</span> <span class=keyword>:</span> <span class=variable>signature</span>) 
+
+<span class=variable>simple-unit-path</span> is one of
+  <span class=variable>tag</span> 
+  (<span class=variable>tag</span> <span class=variable>identifier</span> <tt>&middot;&middot;&middot;</tt>) 
+
+<span class=variable>export-element</span> is one of
+  (<code class=scheme><span class=keyword>var</span></code> (<span class=variable>simple-unit-path</span> <span class=variable>variable</span>)) 
+  (<code class=scheme><span class=keyword>var</span></code> (<span class=variable>simple-unit-path</span> <span class=variable>variable</span>) <span class=variable>external-variable</span>) 
+  (<code class=scheme><span class=keyword>open</span></code> <span class=variable>unit-path</span>) 
+  (<span class=keyword>unit</span> <span class=variable>unit-path</span>) 
+  (<span class=keyword>unit</span> <span class=variable>unit-path</span> <span class=variable>variable</span>)
+
+<span class=variable>tag</span> is
+  <span class=variable>identifier</span>
+</pre></div><p></p>
+<p>
+The <code class=scheme><span class=keyword>import</span></code> clause is similar to the <code class=scheme><span class=keyword>import</span></code> clause
+of a <code class=scheme><span class=keyword>unit/sig</span></code> expression, except that all imported signatures
+must be given a <code class=scheme><span class=variable>tag</span></code> identifier.</p>
+<p>
+The <code class=scheme><span class=keyword>link</span></code> clause of a <code class=scheme><span class=keyword>compound-unit/sig</span></code> expression is
+different from the <code class=scheme><span class=keyword>link</span></code> clause of a <code class=scheme><span class=keyword>compound-unit</span></code> expression
+in two important aspects:
+</p>
+<ul><p>
+</p>
+<li><p>Each sub-unit tag is followed by a <code class=scheme><span class=variable>signature</span></code>. This signature
+corresponds to the export signature of the signed unit that will be
+associated with the tag.</p>
+<p>
+</p>
+<li><p>The linkage specification consists of references to entire
+signed units rather than to individual variables that are exported by
+units.  A referencing <code class=scheme><span class=variable>unit-path</span></code> has one of four forms:</p>
+<p>
+</p>
+<ul><p>
+</p>
+<li><p>The <code class=scheme><span class=variable>tag</span></code> form references an imported unit or another
+sub-unit.</p>
+<p>
+</p>
+<li><p>The <code class=scheme>(<code class=scheme><span class=variable>tag</span></code> : <code class=scheme><span class=variable>signature</span></code>)</code> form references an
+imported unit or another sub-unit, and then restricts the effective
+signature of the referenced unit to <code class=scheme><span class=variable>signature</span></code>.</p>
+<p>
+</p>
+<li><p>The <code class=scheme>(<code class=scheme><span class=variable>tag</span></code> <code class=scheme><span class=variable>identifier</span></code> <tt>&middot;&middot;&middot;</tt>)</code> references an
+embedded unit within a signed compound unit. The signature for the
+<code class=scheme><span class=variable>tag</span></code> unit must contain a sub-signature that corresponds to the
+embedded unit, where the sub-signature's name is the initial
+<code class=scheme><span class=variable>identifier</span></code>. Additional <code class=scheme><span class=variable>identifier</span></code>s trace a path into
+nested sub-signatures to a final embedded unit. The degenerate
+<code class=scheme>(<code class=scheme><span class=variable>tag</span></code>)</code> form is equivalent to <code class=scheme><span class=variable>tag</span></code>.</p>
+<p>
+</p>
+<li><p>The <code class=scheme>((<code class=scheme><span class=variable>tag</span></code> <code class=scheme><span class=variable>identifier</span></code> <tt>&middot;&middot;&middot;</tt>) : <code class=scheme><span class=variable>signature</span></code>)</code>
+form is like the <code class=scheme>(<code class=scheme><span class=variable>tag</span></code> <code class=scheme><span class=variable>identifier</span></code>
+<tt>&middot;&middot;&middot;</tt>)</code> form except the effective signature of the referenced unit
+is restricted to <code class=scheme><span class=variable>signature</span></code>.</p>
+<p>
+</p>
+</ul><p></p>
+<p>
+</p>
+</ul><p></p>
+<p>
+The <code class=scheme><span class=keyword>export</span></code> clause determines which variables in the sub-units
+are re-exported and implicitly determines the export signature of the
+new compound unit. A signed compound unit can export both individual
+variables and entire signed units. When an entire signed unit is
+exported, it becomes an embedded unit of the resulting compound unit.</p>
+<p>
+There are five different forms for specifying exports:
+</p>
+<ul><p>
+</p>
+<li><p>The <code class=scheme>(<code class=scheme><span class=keyword>var</span></code> (<span class=variable>unit-path</span> <span class=variable>variable</span>))</code> form exports
+<code class=scheme><span class=variable>variable</span></code> from the unit referenced by <code class=scheme><span class=variable>unit-path</span></code>. The
+export signature for the signed compound unit includes a
+<code class=scheme><span class=variable>variable</span></code> element.</p>
+<p>
+</p>
+<li><p>The <code class=scheme>(<code class=scheme><span class=keyword>var</span></code> (<span class=variable>unit-path</span> <span class=variable>variable</span>) <span class=variable>external-variable</span>)</code>
+form exports <code class=scheme><span class=variable>variable</span></code> from the unit referenced by
+<code class=scheme><span class=variable>unit-path</span></code>. The export signature for the signed compound unit
+includes an <code class=scheme><span class=variable>external-variable</span></code> element.</p>
+<p>
+</p>
+<li><p>The <code class=scheme>(<code class=scheme><span class=keyword>open</span></code> <span class=variable>unit-path</span>)</code> form exports variables and
+embedded units from the referenced unit.  The collection of variables
+that are actually exported depends on the <strong>effective
+signature</strong><a name="node_idx_1274"></a> of the referenced unit:
+</p>
+<ul><p>
+</p>
+<li><p>If <code class=scheme><span class=variable>unit-path</span></code> includes a signature restriction, then 
+only elements from the restricting signature are exported.</p>
+<p>
+</p>
+<li><p>Otherwise, if the referenced unit is an embedded unit, 
+then only  the elements from the associated sub-signature are exported.</p>
+<p>
+</p>
+<li><p>Otherwise, <code class=scheme><span class=variable>unit-path</span></code> is just <code class=scheme><span class=variable>tag</span></code>; in this case,
+only elements from the signature associated with the <code class=scheme><span class=variable>tag</span></code> are
+exported.</p>
+<p>
+</p>
+</ul><p>
+In all cases, the export signature for the signed compound unit
+includes a copy of each element from the effective signature.</p>
+<p>
+</p>
+<li><p>The <code class=scheme>(<span class=keyword>unit</span> <span class=variable>unit-path</span>)</code> form exports the referenced
+unit as an embedded unit. The export signature for the signed
+compound unit includes a sub-signature corresponding to the effective
+signature from <code class=scheme><span class=variable>unit-path</span></code>. The name of the sub-signature in the
+compound unit's export signature depends on <code class=scheme><span class=variable>unit-path</span></code>:
+</p>
+<ul><p>
+</p>
+<li><p>If <code class=scheme><span class=variable>unit-path</span></code> refers to a tagged import or a sub-unit,
+then the tag is used for the sub-signature name.</p>
+<p>
+</p>
+<li><p>Otherwise, the referenced sub-unit was an embedded unit, and
+the original name for the associated sub-signature is re-used for
+the export signature's sub-signature.</p>
+<p>
+</p>
+</ul><p></p>
+<p>
+</p>
+<li><p>The <code class=scheme>(<span class=keyword>unit</span> <span class=variable>unit-path</span> <span class=variable>identifier</span>)</code> form exports an
+embedded unit like <code class=scheme>(<span class=keyword>unit</span> <span class=variable>unit-path</span>)</code> form, but
+<code class=scheme><span class=variable>identifier</span></code> is used for the name of the sub-signature in the
+compound unit's export signature.</p>
+<p>
+</p>
+</ul><p></p>
+<p>
+The collection of names exported by a compound unit must form a legal
+signature. This means that all exported names must be distinct.</p>
+<p>
+Run-time checks insure that all <code class=scheme><span class=keyword>link</span></code> clause <code class=scheme><span class=variable>expr</span></code>s evaluate
+to a signed unit, and that all linkages match according to the
+specified signatures:
+</p>
+<ul><p>
+</p>
+<li><p>If an <code class=scheme><span class=variable>expr</span></code> evaluates to anything other than a signed
+unit, the <a name="node_idx_1276"></a><code class=scheme>exn:fail:unit</code> exception is raised.</p>
+<p>
+</p>
+<li><p>If the export signature for a signed unit does not satisfy the
+signature specified with its tag, the <a name="node_idx_1278"></a><code class=scheme>exn:fail:unit</code> exception is raised.</p>
+<p>
+</p>
+<li><p>If the number of units specified in a linkage does not match the
+number imported by a linking unit, the <a name="node_idx_1280"></a><code class=scheme>exn:fail:unit</code> exception is raised.</p>
+<p>
+</p>
+<li><p>If the (effective) signature of a provided unit does not match
+the corresponding import signature, then the <a name="node_idx_1282"></a><code class=scheme>exn:fail:unit</code> exception is raised.</p>
+<p>
+</p>
+</ul><p></p>
+<p>
+</p>
+<a name="node_sec_41.8"></a>
+<h2><a href="mzlib.html#node_toc_node_sec_41.8">41.8&nbsp;&nbsp;Invoking Signed Units</a></h2>
+<p><a name="node_idx_1284"></a></p>
+<p>
+Signed units are invoked using the <a name="node_kw_definitioninvoke-unit/sig"></a><a name="node_idx_1286"></a><code class=scheme><span class=keyword>invoke-unit/sig</span></code> form:
+</p>
+<div align=left><pre class=scheme>  (<span class=keyword>invoke-unit/sig</span> <span class=variable>expr</span> <span class=variable>invoke-linkage</span> <tt>&middot;&middot;&middot;</tt>)
+
+<span class=variable>invoke-linkage</span> is one of
+  <span class=variable>signature</span>
+  (<span class=variable>identifier</span> <span class=keyword>:</span> <span class=variable>signature</span>)
+</pre></div><p></p>
+<p>
+If the invoked unit requires no imports, the <code class=scheme><span class=keyword>invoke-unit/sig</span></code>
+form is used in the same way as <code class=scheme><span class=keyword>invoke-unit</span></code>. Otherwise, the
+<code class=scheme><span class=variable>invoke-linkage</span></code> signatures must match the import signatures of
+the signed unit to be invoked. If the signatures match, then
+variables in the environment of the <code class=scheme><span class=keyword>invoke-unit/sig</span></code>
+expression are used for immediate linking; the variables used for
+linking are the ones with names corresponding to the flattened
+signatures.  The signature flattening algorithm is specified in
+section&nbsp;<a href="#node_sec_41.2">41.2</a>; when the <code class=scheme>(<span class=variable>identifier</span> <span class=keyword>:</span> <span class=variable>signature</span>)</code> form
+is used, <code class=scheme><code class=scheme><span class=variable>identifier</span></code>:</code> is prefixed onto each variable name
+in the flattened signature and the prefixed name is used.</p>
+<p>
+
+<a name="node_kw_definitiondefine-values/invoke-unit/sig"></a><a name="node_idx_1288"></a>
+</p>
+<p></p>
+<p>
+
+<code class=scheme>(<code class=scheme><span class=keyword>define-values/invoke-unit/sig</span></code> <code class=scheme><span class=variable>signature unit/sig-expr [prefix invoke-linkage <tt>&middot;&middot;&middot;</tt>]</span></code>)</code> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<small>S</small><small>Y</small><small>N</small><small>T</small><small>A</small><small>X</small>
+</p>
+<p>
+This form is the signed-unit version of
+<code class=scheme><span class=keyword>define-values/invoke-unit</span></code>. The names defined by the
+expansion of <code class=scheme><span class=keyword>define-values/invoke-unit/sig</span></code> are determined by
+flattening the <code class=scheme><span class=variable>signature</span></code> specified before <code class=scheme><span class=variable>unit-expr</span></code>, then
+adding the <code class=scheme><span class=variable>prefix</span></code> (if any).  See section&nbsp;<a href="#node_sec_41.2">41.2</a> for more
+information about signature flattening.</p>
+<p>
+Each <code class=scheme><span class=variable>invoke-linkage</span></code> is either <code class=scheme><span class=variable>signature</span></code> or
+<code class=scheme>(<span class=variable>identifier</span> <span class=keyword>:</span> <span class=variable>signature</span>)</code>, as in <code class=scheme><span class=keyword>invoke-unit/sig</span></code>.</p>
+<p>
+
+<a name="node_kw_definitionnamespace-variable-bind/invoke-unit/sig"></a><a name="node_idx_1290"></a>
+</p>
+<p></p>
+<p>
+
+<code class=scheme>(<code class=scheme><span class=keyword>namespace-variable-bind/invoke-unit/sig</span></code> <code class=scheme><span class=variable>signature unit/sig-expr [prefix invoke-linkage <tt>&middot;&middot;&middot;</tt>]</span></code>)</code> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<small>S</small><small>Y</small><small>N</small><small>T</small><small>A</small><small>X</small>
+</p>
+<p>
+This form is the signed-unit version of
+<code class=scheme><span class=variable>namespace-variable-bind/invoke-unit</span></code>. See also
+<code class=scheme><span class=keyword>define-values/invoke-unit/sig</span></code>.</p>
+<p>
+
+<a name="node_kw_definitionprovide-signature-elements"></a><a name="node_idx_1292"></a>
+</p>
+<p></p>
+<p>
+
+<code class=scheme>(<code class=scheme><span class=keyword>provide-signature-elements</span></code> <code class=scheme><span class=variable>signature</span></code>)</code> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<small>S</small><small>Y</small><small>N</small><small>T</small><small>A</small><small>X</small>
+</p>
+<p>
+Exports from a module every name in the flattened form of
+<code class=scheme><span class=variable>signature</span></code>.</p>
+<p>
+</p>
+<a name="node_sec_41.9"></a>
+<h2><a href="mzlib.html#node_toc_node_sec_41.9">41.9&nbsp;&nbsp;Extracting a Primitive Unit from a Signed Unit</a></h2>
+<p><a name="node_idx_1294"></a></p>
+<p>
+The procedure <a name="node_kw_definitionunit/sig->unit"></a><a name="node_idx_1296"></a><code class=scheme><span class=keyword>unit/sig-&gt;unit</span></code> extracts and returns the
+primitive unit from a signed unit.</p>
+<p>
+The names exported by the primitive unit correspond to the
+flattened export signature of the signed unit; see section&nbsp;<a href="#node_sec_41.2">41.2</a>
+for the flattening algorithm.</p>
+<p>
+The number of import variables for the primitive unit matches the
+total number of variables in the flattened forms of the signed
+unit's import signatures. The order of import variables is as follows:
+</p>
+<ul><p>
+</p>
+<li><p>All of the variables for a single import signature are grouped
+together, and the relative order of these groups follows the order of
+the import signatures.</p>
+<p>
+</p>
+<li><p>Within an import signature:</p>
+<p>
+</p>
+<ul><p>
+</p>
+<li><p>variable names are ordered according to <code class=scheme><code class=scheme>string&lt;?</code></code>;</p>
+<p>
+</p>
+<li><p>all names from sub-signatures follow the variable names;</p>
+<p>
+</p>
+<li><p>names from a single sub-signature are grouped together and
+ordered within the sub-signature group following this algorithm
+recursively; and</p>
+<p>
+</p>
+<li><p>the sub-signatures are ordered among themselves using
+<code class=scheme><code class=scheme>string&lt;?</code></code>  on the sub-signature names.</p>
+<p>
+</p>
+</ul><p></p>
+<p>
+</p>
+</ul><p></p>
+<p>
+</p>
+<a name="node_sec_41.10"></a>
+<h2><a href="mzlib.html#node_toc_node_sec_41.10">41.10&nbsp;&nbsp;Adding a Signature to Primitive Units</a></h2>
+<p><a name="node_idx_1298"></a></p>
+<p>
+The <a name="node_kw_definitionunit->unit/sig"></a><a name="node_idx_1300"></a><code class=scheme><span class=keyword>unit-&gt;unit/sig</span></code> syntactic form wraps a primitive unit
+with import and export signatures:
+</p>
+<div align=left><pre class=scheme>(<span class=keyword>unit-&gt;unit/sig</span> <span class=variable>expr</span> (<span class=variable>signature</span> <tt>&middot;&middot;&middot;</tt>) <span class=variable>signature</span>)
+</pre></div><p>
+The last <code class=scheme><span class=variable>signature</span></code> is used for the export signature and the
+other <code class=scheme><span class=variable>signature</span></code>s specify the import signatures. If <code class=scheme><span class=variable>expr</span></code>
+does not evaluate to a unit or the unit does not match the signature,
+no error is reported until the primitive linker discovers the
+problem.</p>
+<p>
+</p>
+<a name="node_sec_41.11"></a>
+<h2><a href="mzlib.html#node_toc_node_sec_41.11">41.11&nbsp;&nbsp;Expanding Signed Unit Expressions</a></h2>
+<p><a name="node_idx_1302"></a></p>
+<p>
+The <code class=scheme><span class=keyword>unit/sig</span></code>, <code class=scheme><span class=keyword>compound-unit/sig</span></code>, and <code class=scheme><span class=keyword>invoke-unit/sig</span></code>
+forms expand into expressions using the <code class=scheme><span class=keyword>unit</span></code>,
+<code class=scheme><span class=keyword>compound-unit</span></code>, and <code class=scheme><span class=keyword>invoke-unit</span></code> forms, respectively.</p>
+<p>
+<a name="node_idx_1304"></a> <a name="node_idx_1306"></a>
+<a name="node_idx_1308"></a>  <a name="node_idx_1310"></a>
+<a name="node_kw_definitionsigned-unit_Q_"></a> <a name="node_kw_definitionsigned-unit-unit"></a>
+<a name="node_kw_definitionsigned-unit-imports"></a>  <a name="node_kw_definitionsigned-unit-exports"></a>
+A signed unit value is represented by a <code class=scheme><span class=variable>signed-unit</span></code> structure
+with the following fields:
+</p>
+<ul><p>
+</p>
+<li><p><code class=scheme>unit</code>  --  the primitive unit implementing the signed unit's content</p>
+<p>
+</p>
+<li><p><code class=scheme>imports</code>  --  the import signatures, represented as a list
+of pairs, where each pair consists of</p>
+<p>
+</p>
+<ul><p>
+</p>
+<li><p>a tag symbol, used for error reporting; and</p>
+<p>
+</p>
+<li><p>an ``exploded signature''; an exploded signature is a vector of
+signature elements, where each element is either</p>
+<p>
+</p>
+<ul><p>
+</p>
+<li><p>a symbol, representing a variable in the signature; or</p>
+<p>
+</p>
+<li><p>a pair consisting of a symbol and an exploded signature, 
+representing a name sub-signature.</p>
+<p>
+</p>
+</ul><p></p>
+<p>
+</p>
+</ul><p></p>
+<p>
+</p>
+<li><p><code class=scheme>exports</code>  --  the export signature, represented as an
+exploded signature</p>
+<p>
+</p>
+</ul><p></p>
+<p>
+To perform the signature checking needed by <code class=scheme>compound-unit/sig</code>,
+MzScheme provides two procedures:
+</p>
+<ul><p>
+</p>
+<li><p><a name="node_idx_1312"></a><a name="node_kw_definitionverify-signature-match"></a><code class=scheme>(verify-signature-match</code><tt>&nbsp;</tt><code class=scheme><span class=variable>where exact? dest-context dest-sig
+src-context src-sig</span></code><code class=scheme>)</code> raises an exception unless the exploded
+signatures <code class=scheme><span class=variable>dest-sig</span></code> and <code class=scheme><span class=variable>src-sig</span></code> match. If <code class=scheme><span class=variable>exact?</span></code> is
+<code class=scheme><span class=selfeval>#f</span></code>, then <code class=scheme><span class=variable>src-sig</span></code> need only satisfy <code class=scheme><span class=variable>dest-sig</span></code>,
+otherwise the signatures must match exactly. The <code class=scheme><span class=variable>where</span></code> symbol
+and <code class=scheme><span class=variable>dest-context</span></code> and <code class=scheme><span class=variable>src-context</span></code> strings are used for
+generating an error message string: <code class=scheme><span class=variable>where</span></code> is used as the name
+of the signaling procedure and <code class=scheme><span class=variable>dest-context</span></code> and
+<code class=scheme><span class=variable>src-context</span></code> are used as the respective signature names.</p>
+<p>
+If the match succeeds, void is returned. If the match fails, the
+<a name="node_idx_1314"></a><code class=scheme>exn:fail:unit</code> exception is raised for one of the following reasons:
+</p>
+<ul><p>
+</p>
+<li><p>The signatures fail to match because <code class=scheme><span class=variable>src-sig</span></code> is missing
+an element.</p>
+<p>
+</p>
+<li><p>The signatures fail to match because <code class=scheme><span class=variable>src-sig</span></code> contains
+an extra element.</p>
+<p>
+</p>
+<li><p>The signatures fail to match because <code class=scheme><span class=variable>src-dest</span></code> and
+<code class=scheme><span class=variable>src-sig</span></code> contain the same element name but for different
+element types.</p>
+<p>
+</p>
+</ul><p></p>
+<p>
+</p>
+<li><p><a name="node_idx_1316"></a><a name="node_kw_definitionverify-linkage-signature-match"></a><code class=scheme>(verify-linkage-signature-match</code><tt>&nbsp;</tt><code class=scheme><span class=variable>where tags units
+export-sigs linking-sigs</span></code><code class=scheme>)</code> performs all of the run-time signature
+checking required by a <code class=scheme>compound-unit/sig</code> or
+<code class=scheme>invoke-unit/sig</code> expression. The <code class=scheme><span class=variable>where</span></code> symbol is used for
+error reporting.  The <code class=scheme><span class=variable>tags</span></code> argument is a list of tag symbols,
+and the <code class=scheme><span class=variable>units</span></code> argument is the corresponding list of candidate
+signed unit values.  (The procedure will check whether these values
+are actually signed unit values.)</p>
+<p>
+The <code class=scheme><span class=variable>export-sigs</span></code> list contains one exploded signature for each
+tag; these correspond to the tag signatures provided in the original
+<code class=scheme>compound-unit/sig</code> expression. The <code class=scheme><span class=variable>linking-sigs</span></code> list
+contains a list of named exploded signatures for each tag (where a
+``named signature'' is a pair consisting of a name symbol and an
+exploded signature); every tag's list corresponds to the signatures
+that were specified or inferred for the tag's linkage specification
+in the original <code class=scheme>compound-unit/sig</code> expression. The names on the
+linking signatures are used for error messages.</p>
+<p>
+If all linking checks succeed, void is returned. If any check
+fails, the <a name="node_idx_1318"></a><code class=scheme>exn:fail:unit</code> exception is raised for one of the following reasons:
+</p>
+<ul><p>
+</p>
+<li><p>A value in the <code class=scheme><span class=variable>units</span></code> list is not a signed unit.</p>
+<p>
+</p>
+<li><p>The number of import signatures associated with a unit does
+not agree with the number of linking signatures specified by the
+corresponding list in <code class=scheme><span class=variable>linking-sigs</span></code>.</p>
+<p>
+</p>
+<li><p>A linking signature does not exactly match the signature
+expected by an importing unit.</p>
+<p>
+</p>
+</ul><p></p>
+<p>
+</p>
+</ul><p></p>
+<p>
+
+<a name="node_kw_definitionsignature->symbols"></a><a name="node_idx_1320"></a>
+</p>
+<p></p>
+<p>
+
+<code class=scheme>(<code class=scheme><span class=keyword>signature-&gt;symbols</span></code> <code class=scheme><span class=variable>name</span></code>)</code> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<small>S</small><small>Y</small><small>N</small><small>T</small><small>A</small><small>X</small>
+</p>
+<p>
+Expands to the ``exploded'' version (see section&nbsp;<a href="#node_sec_41.11">41.11</a>) of the
+signature bound to <code class=scheme><span class=variable>name</span></code> (where <code class=scheme><span class=variable>name</span></code> is an
+unevaluated identifier).</p>
+<p>
+
+
+
+
+</p>
+<p>
+
+</p>
+<p>
+</p>
+<div class=footnoterule><hr></div><p></p>
+<div class=footnote><p><a name="footnote_Temp_21"></a><a href="#call_footnote_Temp_21"><sup><small>13</small></sup></a> Of course, a signature <em>can</em> be specified as an immediate signature.</p>
+<p><a name="footnote_Temp_22"></a><a href="#call_footnote_Temp_22"><sup><small>14</small></sup></a> Element names are compared using the printed form
+of the name. This is different from any other syntactic form, where
+variable names are compared as symbols. This distinction is relevant
+only when source code is generated within Scheme rather than read
+from a text source.</p>
+</div>
+<div align=right class=navigation><i>[Go to <span><a href="mzlib.html">first</a>, <a href="mzlib-Z-H-40.html">previous</a></span><span>, <a href="mzlib-Z-H-42.html">next</a></span> page<span>; &nbsp;&nbsp;</span><span><a href="mzlib.html#node_toc_start">contents</a></span><span><span>; &nbsp;&nbsp;</span><a href="mzlib-Z-H-42.html#node_index_start">index</a></span>]</i></div><p></p>
+</body>
+</html>

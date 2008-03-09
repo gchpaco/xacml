@@ -1,0 +1,124 @@
+\indexentry{Miscellaneous Libraries|expandhtmlindex}{2}
+\indexentry{Viewport Graphics|expandhtmlindex}{4}
+\indexentry{viewport|expandhtmlindex}{6}
+\indexentry{graphics!simple|expandhtmlindex}{8}
+\indexentry{graphics.ss@\File{graphics.ss}|expandhtmlindex}{10}
+\indexentry{Basic Commands|expandhtmlindex}{12}
+\indexentry{open-graphics@\rawscm{open-graphics}|expandhtmlindex}{14}
+\indexentry{close-graphics@\rawscm{close-graphics}|expandhtmlindex}{16}
+\indexentry{open-viewport@\rawscm{open-viewport}|expandhtmlindex}{18}
+\indexentry{open-pixmap@\rawscm{open-pixmap}|expandhtmlindex}{20}
+\indexentry{close-viewport@\rawscm{close-viewport}|expandhtmlindex}{22}
+\indexentry{Position Operations|expandhtmlindex}{24}
+\indexentry{make-posn@\rawscm{make-posn}|expandhtmlindex}{26}
+\indexentry{posn-x@\rawscm{posn-x}|expandhtmlindex}{28}
+\indexentry{posn?@\rawscm{posn?}|expandhtmlindex}{30}
+\indexentry{get-pixel@\rawscm{get-pixel}|expandhtmlindex}{32}
+\indexentry{get-color-pixel@\rawscm{get-color-pixel}|expandhtmlindex}{34}
+\indexentry{test-pixel@\rawscm{test-pixel}|expandhtmlindex}{36}
+\indexentry{Color Operations|expandhtmlindex}{38}
+\indexentry{make-rgb@\rawscm{make-rgb}|expandhtmlindex}{40}
+\indexentry{rgb-red@\rawscm{rgb-red}|expandhtmlindex}{42}
+\indexentry{rgb?@\rawscm{rgb?}|expandhtmlindex}{44}
+\indexentry{change-color@\rawscm{change-color}|expandhtmlindex}{46}
+\indexentry{default-display-is-color?@\rawscm{default-display-is-color?}|expandhtmlindex}{48}
+\indexentry{Draw, Clear and Flip Operations|expandhtmlindex}{50}
+\indexentry{draw-viewport@\rawscm{draw-viewport}|expandhtmlindex}{52}
+\indexentry{clear-viewport@\rawscm{clear-viewport}|expandhtmlindex}{54}
+\indexentry{flip-viewport@\rawscm{flip-viewport}|expandhtmlindex}{56}
+\indexentry{copy-viewport@\rawscm{copy-viewport}|expandhtmlindex}{58}
+\indexentry{draw-pixel@\rawscm{draw-pixel}|expandhtmlindex}{60}
+\indexentry{clear-pixel@\rawscm{clear-pixel}|expandhtmlindex}{62}
+\indexentry{flip-pixel@\rawscm{flip-pixel}|expandhtmlindex}{64}
+\indexentry{draw-line@\rawscm{draw-line}|expandhtmlindex}{66}
+\indexentry{clear-line@\rawscm{clear-line}|expandhtmlindex}{68}
+\indexentry{flip-line@\rawscm{flip-line}|expandhtmlindex}{70}
+\indexentry{draw-rectangle@\rawscm{draw-rectangle}|expandhtmlindex}{72}
+\indexentry{clear-rectangle@\rawscm{clear-rectangle}|expandhtmlindex}{74}
+\indexentry{flip-rectangle@\rawscm{flip-rectangle}|expandhtmlindex}{76}
+\indexentry{draw-solid-rectangle@\rawscm{draw-solid-rectangle}|expandhtmlindex}{78}
+\indexentry{clear-solid-rectangle@\rawscm{clear-solid-rectangle}|expandhtmlindex}{80}
+\indexentry{flip-solid-rectangle@\rawscm{flip-solid-rectangle}|expandhtmlindex}{82}
+\indexentry{draw-ellipse@\rawscm{draw-ellipse}|expandhtmlindex}{84}
+\indexentry{clear-ellipse@\rawscm{clear-ellipse}|expandhtmlindex}{86}
+\indexentry{flip-ellipse@\rawscm{flip-ellipse}|expandhtmlindex}{88}
+\indexentry{draw-solid-ellipse@\rawscm{draw-solid-ellipse}|expandhtmlindex}{90}
+\indexentry{clear-solid-ellipse@\rawscm{clear-solid-ellipse}|expandhtmlindex}{92}
+\indexentry{flip-solid-ellipse@\rawscm{flip-solid-ellipse}|expandhtmlindex}{94}
+\indexentry{draw-polygon@\rawscm{draw-polygon}|expandhtmlindex}{96}
+\indexentry{clear-polygon@\rawscm{clear-polygon}|expandhtmlindex}{98}
+\indexentry{flip-polygon@\rawscm{flip-polygon}|expandhtmlindex}{100}
+\indexentry{draw-solid-polygon@\rawscm{draw-solid-polygon}|expandhtmlindex}{102}
+\indexentry{clear-solid-polygon@\rawscm{clear-solid-polygon}|expandhtmlindex}{104}
+\indexentry{flip-solid-polygon@\rawscm{flip-solid-polygon}|expandhtmlindex}{106}
+\indexentry{draw-string@\rawscm{draw-string}|expandhtmlindex}{108}
+\indexentry{clear-string@\rawscm{clear-string}|expandhtmlindex}{110}
+\indexentry{flip-string@\rawscm{flip-string}|expandhtmlindex}{112}
+\indexentry{draw-pixmap-posn@\rawscm{draw-pixmap-posn}|expandhtmlindex}{114}
+\indexentry{draw-pixmap@\rawscm{draw-pixmap}|expandhtmlindex}{116}
+\indexentry{save-pixmap@\rawscm{save-pixmap}|expandhtmlindex}{118}
+\indexentry{Miscellaneous Operations|expandhtmlindex}{120}
+\indexentry{get-string-size@\rawscm{get-string-size}|expandhtmlindex}{122}
+\indexentry{viewport->snip@\rawscm{viewport->snip}|expandhtmlindex}{124}
+\indexentry{viewport-dc@\rawscm{viewport-dc}|expandhtmlindex}{126}
+\indexentry{viewport-offscreen-dc@\rawscm{viewport-offscreen-dc}|expandhtmlindex}{128}
+\indexentry{An Example|expandhtmlindex}{130}
+\indexentry{A More Complicated Example|expandhtmlindex}{132}
+\indexentry{Protecting Graphics Operations|expandhtmlindex}{134}
+\indexentry{Mouse Operations|expandhtmlindex}{136}
+\indexentry{get-mouse-click@\rawscm{get-mouse-click}|expandhtmlindex}{138}
+\indexentry{ready-mouse-click@\rawscm{ready-mouse-click}|expandhtmlindex}{140}
+\indexentry{ready-mouse-release@\rawscm{ready-mouse-release}|expandhtmlindex}{142}
+\indexentry{query-mouse-posn@\rawscm{query-mouse-posn}|expandhtmlindex}{144}
+\indexentry{mouse-click-posn@\rawscm{mouse-click-posn}|expandhtmlindex}{146}
+\indexentry{left-mouse-click?@\rawscm{left-mouse-click?}|expandhtmlindex}{148}
+\indexentry{middle-mouse-click?@\rawscm{middle-mouse-click?}|expandhtmlindex}{150}
+\indexentry{right-mouse-click?@\rawscm{right-mouse-click?}|expandhtmlindex}{152}
+\indexentry{viewport-flush-input@\rawscm{viewport-flush-input}|expandhtmlindex}{154}
+\indexentry{Keyboard Operations|expandhtmlindex}{156}
+\indexentry{get-key-press@\rawscm{get-key-press}|expandhtmlindex}{158}
+\indexentry{ready-key-press@\rawscm{ready-key-press}|expandhtmlindex}{160}
+\indexentry{key-value@\rawscm{key-value}|expandhtmlindex}{162}
+\indexentry{\#/return@\rawscm{\#/return}|expandhtmlindex}{164}
+\indexentry{viewport-flush-input@\rawscm{viewport-flush-input}|expandhtmlindex}{166}
+\indexentry{Unitized Graphics|expandhtmlindex}{168}
+\indexentry{graphics^@\scmsig{graphics}|expandhtmlindex}{170}
+\indexentry{graphics:posn-less^@\scmsig{graphics:posn-less}|expandhtmlindex}{172}
+\indexentry{graphics:posn^@\scmsig{graphics:posn}|expandhtmlindex}{174}
+\indexentry{graphics"@@\rawscm{graphics"@}|expandhtmlindex}{176}
+\indexentry{Turtles|expandhtmlindex}{178}
+\indexentry{Turtles|expandhtmlindex}{180}
+\indexentry{turtles.ss@\File{turtles.ss}|expandhtmlindex}{182}
+\indexentry{turtles@\rawscm{turtles}|expandhtmlindex}{184}
+\indexentry{move@\rawscm{move}|expandhtmlindex}{186}
+\indexentry{draw@\rawscm{draw}|expandhtmlindex}{188}
+\indexentry{erase@\rawscm{erase}|expandhtmlindex}{190}
+\indexentry{move-offset@\rawscm{move-offset}|expandhtmlindex}{192}
+\indexentry{draw-offset@\rawscm{draw-offset}|expandhtmlindex}{194}
+\indexentry{erase-offset@\rawscm{erase-offset}|expandhtmlindex}{196}
+\indexentry{turn@\rawscm{turn}|expandhtmlindex}{198}
+\indexentry{turn@\rawscm{turn}|expandhtmlindex}{200}
+\indexentry{clear@\rawscm{clear}|expandhtmlindex}{202}
+\indexentry{split@\rawscm{split}|expandhtmlindex}{204}
+\indexentry{split*@\rawscm{split*}|expandhtmlindex}{206}
+\indexentry{tprompt@\rawscm{tprompt}|expandhtmlindex}{208}
+\indexentry{Serpinski Triangle|expandhtmlindex}{210}
+\indexentry{Koch Snowflake|expandhtmlindex}{212}
+\indexentry{Lorenz Attractor|expandhtmlindex}{214}
+\indexentry{Butterfly Attractor|expandhtmlindex}{216}
+\indexentry{Peano space-filling curve|expandhtmlindex}{218}
+\indexentry{Fern Fractal|expandhtmlindex}{220}
+\indexentry{Value Turtles|expandhtmlindex}{222}
+\indexentry{Value Turtles|expandhtmlindex}{224}
+\indexentry{Turtles!Value|expandhtmlindex}{226}
+\indexentry{value-turtles.ss@\File{value-turtles.ss}|expandhtmlindex}{228}
+\indexentry{turtles@\rawscm{turtles}|expandhtmlindex}{230}
+\indexentry{move@\rawscm{move}|expandhtmlindex}{232}
+\indexentry{draw@\rawscm{draw}|expandhtmlindex}{234}
+\indexentry{erase@\rawscm{erase}|expandhtmlindex}{236}
+\indexentry{move-offset@\rawscm{move-offset}|expandhtmlindex}{238}
+\indexentry{draw-offset@\rawscm{draw-offset}|expandhtmlindex}{240}
+\indexentry{erase-offset@\rawscm{erase-offset}|expandhtmlindex}{242}
+\indexentry{turn@\rawscm{turn}|expandhtmlindex}{244}
+\indexentry{turn@\rawscm{turn}|expandhtmlindex}{246}
+\indexentry{merge@\rawscm{merge}|expandhtmlindex}{248}

@@ -1,0 +1,90 @@
+<!doctype html public "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!--
+
+Generated from mzlib.tex by tex2page, v 2004-09-11
+(running on MzScheme 209, unix), 
+(c) Dorai Sitaram, 
+http://www.ccs.neu.edu/~dorai/tex2page/tex2page-doc.html
+
+-->
+<head>
+<title>
+PLT MzLib: Libraries Manual
+</title>
+<link rel="stylesheet" type="text/css" href="mzlib-Z-S.css" title=default>
+<meta name=robots content="noindex,follow">
+</head>
+<body>
+<div align=right class=navigation><i>[Go to <span><a href="mzlib.html">first</a>, <a href="mzlib-Z-H-36.html">previous</a></span><span>, <a href="mzlib-Z-H-38.html">next</a></span> page<span>; &nbsp;&nbsp;</span><span><a href="mzlib.html#node_toc_start">contents</a></span><span><span>; &nbsp;&nbsp;</span><a href="mzlib-Z-H-42.html#node_index_start">index</a></span>]</i></div><p></p>
+<a name="node_chap_37"></a>
+<h1 class=chapter>
+<div class=chapterheading><a href="mzlib.html#node_toc_node_chap_37">Chapter 37</a></div><br>
+<a href="mzlib.html#node_toc_node_chap_37"><tt><strong>trace.ss</strong></tt>: Tracing Top-level Procedure Calls</a></h1>
+<p><a name="node_idx_1154"></a><a name="node_idx_1156"></a></p>
+<p>
+This library mimics the tracing facility available in 
+Chez Scheme<sup><span class=tiny>TM</span></sup>.</p>
+<p>
+
+
+</p>
+<p></p>
+<p>
+
+<a name="node_idx_1158"></a><a name="node_kw_definitiontrace"></a><code class=scheme>(trace</code><tt>&nbsp;</tt><code class=scheme><span class=variable>name</span></code><tt>&nbsp;</tt><tt>&middot;&middot;&middot;</tt><code class=scheme>)</code> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<small>S</small><small>Y</small><small>N</small><small>T</small><small>A</small><small>X</small>
+</p>
+<p>
+This form takes a sequence of global variables names; each name must
+be defined as as procedure in the current namespace when the
+<code class=scheme>trace</code> expression is evaluated.  Each <code class=scheme><span class=variable>name</span></code> provided to
+<code class=scheme>trace</code> is then redefined to a new procedure. This new procedure
+traces procedure-calls and procedure-returns by printing the arguments
+and results of the call.  If multiple values are returned, each value
+is displayed starting on a separate line.</p>
+<p>
+When traced procedures invoke each other, this is shown by printing a
+nesting prefix. If the nesting depth grows to ten and beyond, a number
+is printed to show the actual nesting depth.</p>
+<p>
+The <code class=scheme>trace</code> macro can be used on a name that is already traced in
+the current namespace.  In this case, assuming that the name has not
+been redefined, <code class=scheme>trace</code> has no effect.  If the name <em>has</em> been
+redefined, then a new trace is installed. If <code class=scheme>trace</code> is used on
+the same name in two different eventspaces, then the first installed
+trace will remain intact but it will no longer be recognized by the
+<code class=scheme>trace</code> and <code class=scheme>untrace</code> forms.</p>
+<p>
+The value of a <code class=scheme>trace</code> expression is the list of names specified
+for tracing.</p>
+<p>
+Tracing does not respect tail calls; i.e., tracing a procedure that
+ends with a tail call checks the call so that it executes (and prints)
+as a non-tail call. Untracing a procedure restores its tail call
+behavior. Only one procedure can be traced for any single name across
+all namespaces.</p>
+<p>
+
+
+</p>
+<p></p>
+<p>
+
+<a name="node_idx_1160"></a><a name="node_kw_definitionuntrace"></a><code class=scheme>(untrace</code><tt>&nbsp;</tt><code class=scheme><span class=variable>name</span></code><tt>&nbsp;</tt><tt>&middot;&middot;&middot;</tt><code class=scheme>)</code> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<small>S</small><small>Y</small><small>N</small><small>T</small><small>A</small><small>X</small>
+</p>
+<p>
+This form undoes the effects of the <code class=scheme>trace</code> form for each
+<code class=scheme><span class=variable>name</span></code>, but only if the current definition of <code class=scheme><span class=variable>name</span></code> is
+the one previously installed by <code class=scheme>trace</code>. If the current definition
+for <code class=scheme><span class=variable>name</span></code> is not the procedure installed by <code class=scheme>trace</code>, then the
+definition is not changed.</p>
+<p>
+The value of an <code class=scheme>untrace</code> expression is the list of names restored
+to their untraced definitions.</p>
+<p>
+</p>
+<p>
+</p>
+<div align=right class=navigation><i>[Go to <span><a href="mzlib.html">first</a>, <a href="mzlib-Z-H-36.html">previous</a></span><span>, <a href="mzlib-Z-H-38.html">next</a></span> page<span>; &nbsp;&nbsp;</span><span><a href="mzlib.html#node_toc_start">contents</a></span><span><span>; &nbsp;&nbsp;</span><a href="mzlib-Z-H-42.html#node_index_start">index</a></span>]</i></div><p></p>
+</body>
+</html>

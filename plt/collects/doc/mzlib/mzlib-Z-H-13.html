@@ -1,0 +1,1212 @@
+<!doctype html public "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!--
+
+Generated from mzlib.tex by tex2page, v 2004-09-11
+(running on MzScheme 209, unix), 
+(c) Dorai Sitaram, 
+http://www.ccs.neu.edu/~dorai/tex2page/tex2page-doc.html
+
+-->
+<head>
+<title>
+PLT MzLib: Libraries Manual
+</title>
+<link rel="stylesheet" type="text/css" href="mzlib-Z-S.css" title=default>
+<meta name=robots content="noindex,follow">
+</head>
+<body>
+<div align=right class=navigation><i>[Go to <span><a href="mzlib.html">first</a>, <a href="mzlib-Z-H-12.html">previous</a></span><span>, <a href="mzlib-Z-H-14.html">next</a></span> page<span>; &nbsp;&nbsp;</span><span><a href="mzlib.html#node_toc_start">contents</a></span><span><span>; &nbsp;&nbsp;</span><a href="mzlib-Z-H-42.html#node_index_start">index</a></span>]</i></div><p></p>
+<a name="node_chap_13"></a>
+<h1 class=chapter>
+<div class=chapterheading><a href="mzlib.html#node_toc_node_chap_13">Chapter 13</a></div><br>
+<a href="mzlib.html#node_toc_node_chap_13"><tt><strong>contract.ss</strong></tt>: Contracts</a></h1>
+<p><a name="node_idx_388"></a><a name="node_idx_390"></a> </p>
+<p>
+MzLib's <tt><strong>contract.ss</strong></tt><a name="node_idx_392"></a> library defines new
+forms of expression that specify contracts and new forms of
+expression that attach contracts to values.</p>
+<p>
+This section describes three classes of contracts: contracts
+for flat values (described in
+section&nbsp;<a href="#node_sec_13.1">13.1</a>), contracts for functions
+(described in section&nbsp;<a href="#node_sec_13.2">13.2</a>), and contracts
+for objects and classes (described in
+section&nbsp;<a href="#node_sec_13.3">13.3</a>).</p>
+<p>
+In addition, this section describes how to establishing a
+contract on a value (in
+section&nbsp;<a href="#node_sec_13.4">13.4</a>).</p>
+<p>
+</p>
+<a name="node_sec_13.1"></a>
+<h2><a href="mzlib.html#node_toc_node_sec_13.1">13.1&nbsp;&nbsp;Flat Contracts</a></h2>
+<p><a name="node_idx_394"></a>
+
+<a name="node_idx_396"></a></p>
+<p>
+A contract for a flat value can be a predicate that accepts
+the value and returns a boolean indicating if the contract
+holds.</p>
+<p>
+
+
+</p>
+<p></p>
+<p>
+
+<a name="node_idx_398"></a><a name="node_kw_definitionflat-contract"></a><code class=scheme>(flat-contract</code><tt>&nbsp;</tt><code class=scheme><span class=variable>predicate</span></code><code class=scheme>)</code> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<small>F</small><small>L</small><small>A</small><small>T</small>-<small>C</small><small>O</small><small>N</small><small>T</small><small>R</small><small>A</small><small>C</small><small>T</small>
+</p>
+<p>
+Constructs a contract from <code class=scheme><span class=variable>predicate</span></code>.</p>
+<p>
+
+
+</p>
+<p></p>
+<p>
+
+<a name="node_idx_400"></a><a name="node_kw_definitionflat-named-contract"></a><code class=scheme>(flat-named-contract</code><tt>&nbsp;</tt><code class=scheme><span class=variable>type-name predicate</span></code><code class=scheme>)</code> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<small>F</small><small>L</small><small>A</small><small>T</small>-<small>C</small><small>O</small><small>N</small><small>T</small><small>R</small><small>A</small><small>C</small><small>T</small>
+</p>
+<p>
+For better error reporting, a flat
+contract can be constructed with
+<code class=scheme><span class=variable>flat-named-contract</span></code>, a procedure that accepts two
+arguments. The first argument must be a string that
+describes the type that the predicate checks for. The second
+argument is the predicate itself. </p>
+<p>
+
+<a name="node_kw_definitionany_Q_"></a>
+</p>
+<p></p>
+<p>
+
+<a name="node_idx_402"></a><code class=scheme>any?</code> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<small>F</small><small>L</small><small>A</small><small>T</small>-<small>C</small><small>O</small><small>N</small><small>T</small><small>R</small><small>A</small><small>C</small><small>T</small>
+</p>
+<p>
+<code class=scheme><span class=variable>any?</span></code> is a flat contract that accepts any value.</p>
+<p>
+If you are using this predicate as the result portion of a
+function contract, consider using <code class=scheme><span class=variable>any</span></code> instead. It
+behaves the same, but in that one restrictive context has
+better memory performance.</p>
+<p>
+
+
+</p>
+<p></p>
+<p>
+
+<a name="node_idx_404"></a><a name="node_kw_definitionunion"></a><code class=scheme>(union</code><tt>&nbsp;</tt><code class=scheme><span class=variable>contract</span></code><tt>&nbsp;</tt><tt>&middot;&middot;&middot;</tt><code class=scheme>)</code> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<small>C</small><small>O</small><small>N</small><small>T</small><small>R</small><small>A</small><small>C</small><small>T</small>
+</p>
+<p>
+<code class=scheme><span class=variable>union</span></code> accepts any number of
+predicates and at most one function contract and returns
+a contract that corresponds to the union of them all. If
+all of the arguments are predicates or flat contracts, it
+returns a flat contract.</p>
+<p>
+
+
+</p>
+<p></p>
+<p>
+
+<a name="node_idx_406"></a><a name="node_kw_definitionand/c"></a><code class=scheme>(and/c</code><tt>&nbsp;</tt><code class=scheme><span class=variable>contract</span></code><tt>&nbsp;</tt><tt>&middot;&middot;&middot;</tt><code class=scheme>)</code> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<small>C</small><small>O</small><small>N</small><small>T</small><small>R</small><small>A</small><small>C</small><small>T</small>
+</p>
+<p>
+<code class=scheme><span class=variable>and/c</span></code> accepts any number of contracts and returns
+a contract that checks that all of the argument contracts
+hold. If all of the arguments are flat
+contracts, <code class=scheme><span class=variable>and/c</span></code> produces a flat contract.</p>
+<p>
+
+
+</p>
+<p></p>
+<p>
+
+<a name="node_idx_408"></a><a name="node_kw_definitionnot/f"></a><code class=scheme>(not/f</code><tt>&nbsp;</tt><code class=scheme><span class=variable>flat-contract</span></code><code class=scheme>)</code> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<small>F</small><small>L</small><small>A</small><small>T</small>-<small>C</small><small>O</small><small>N</small><small>T</small><small>R</small><small>A</small><small>C</small><small>T</small>
+</p>
+<p>
+<code class=scheme><span class=variable>not/f</span></code> accepts a flat contracts (or
+a predicate which is implicitly converted to a flat
+contracts via <code class=scheme><span class=variable>flat-contract</span></code>) and returns a
+flat contract that checks the reverse of the argument.</p>
+<p>
+
+
+</p>
+<p></p>
+<p>
+
+<a name="node_idx_410"></a><a name="node_kw_definition>=/c"></a><code class=scheme>(&gt;=/c</code><tt>&nbsp;</tt><code class=scheme><span class=variable>number</span></code><code class=scheme>)</code> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<small>F</small><small>L</small><small>A</small><small>T</small>-<small>C</small><small>O</small><small>N</small><small>T</small><small>R</small><small>A</small><small>C</small><small>T</small>
+</p>
+<p>
+<code class=scheme><span class=variable>&gt;=/c</span></code> accepts a number and returns a flat contract
+that requires the input to be a number and greater than or
+equal to the original input.</p>
+<p>
+
+
+</p>
+<p></p>
+<p>
+
+<a name="node_idx_412"></a><a name="node_kw_definition<=/c"></a><code class=scheme>(&lt;=/c</code><tt>&nbsp;</tt><code class=scheme><span class=variable>number</span></code><code class=scheme>)</code> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<small>F</small><small>L</small><small>A</small><small>T</small>-<small>C</small><small>O</small><small>N</small><small>T</small><small>R</small><small>A</small><small>C</small><small>T</small>
+</p>
+<p>
+<a name="node_idx_414"></a> <code class=scheme><span class=variable>&lt;=/c</span></code> accepts a number and returns a
+flat contract that requires the input to be a number and
+less than or equal to the original input.</p>
+<p>
+
+
+</p>
+<p></p>
+<p>
+
+<a name="node_idx_416"></a><a name="node_kw_definition>/c"></a><code class=scheme>(&gt;/c</code><tt>&nbsp;</tt><code class=scheme><span class=variable>number</span></code><code class=scheme>)</code> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<small>F</small><small>L</small><small>A</small><small>T</small>-<small>C</small><small>O</small><small>N</small><small>T</small><small>R</small><small>A</small><small>C</small><small>T</small>
+</p>
+<p>
+<code class=scheme><span class=variable>&gt;/c</span></code> accepts a number and returns a flat contract
+that requires the input to be a number and greater than
+the original input.</p>
+<p>
+
+
+</p>
+<p></p>
+<p>
+
+<a name="node_idx_418"></a><a name="node_kw_definition</c"></a><code class=scheme>(&lt;/c</code><tt>&nbsp;</tt><code class=scheme><span class=variable>number</span></code><code class=scheme>)</code> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<small>F</small><small>L</small><small>A</small><small>T</small>-<small>C</small><small>O</small><small>N</small><small>T</small><small>R</small><small>A</small><small>C</small><small>T</small>
+</p>
+<p>
+<code class=scheme><span class=variable>&lt;/c</span></code> accepts a number and returns a flat contract
+that requires the input to be a number and less than the
+original input.</p>
+<p>
+
+
+</p>
+<p></p>
+<p>
+
+<a name="node_idx_420"></a><a name="node_kw_definitioninteger-in"></a><code class=scheme>(integer-in</code><tt>&nbsp;</tt><code class=scheme><span class=variable>number number</span></code><code class=scheme>)</code> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<small>F</small><small>L</small><small>A</small><small>T</small>-<small>C</small><small>O</small><small>N</small><small>T</small><small>R</small><small>A</small><small>C</small><small>T</small>
+</p>
+<p>
+<code class=scheme><span class=variable>integer-in</span></code> accepts two numbers and returns a
+flat contract that recognizes if integers between the two
+inputs, or equal to one of its inputs.</p>
+<p>
+
+
+</p>
+<p></p>
+<p>
+
+<a name="node_idx_422"></a><a name="node_kw_definitionreal-in"></a><code class=scheme>(real-in</code><tt>&nbsp;</tt><code class=scheme><span class=variable>number number</span></code><code class=scheme>)</code> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<small>F</small><small>L</small><small>A</small><small>T</small>-<small>C</small><small>O</small><small>N</small><small>T</small><small>R</small><small>A</small><small>C</small><small>T</small>
+</p>
+<p>
+<code class=scheme><span class=variable>real-in</span></code> accepts two numbers and returns a
+flat contract that recognizes real numbers between the two
+inputs, or equal to one of its inputs.</p>
+<p>
+
+<a name="node_kw_definitionnatural-number_Q_"></a>
+</p>
+<p></p>
+<p>
+
+<a name="node_idx_424"></a><code class=scheme>natural-number?</code> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<small>F</small><small>L</small><small>A</small><small>T</small>-<small>C</small><small>O</small><small>N</small><small>T</small><small>R</small><small>A</small><small>C</small><small>T</small>
+</p>
+<p>
+<code class=scheme><span class=variable>natural-number?</span></code> is a contract that recognizes
+natural numbers (<i>i.e.</i>, an integer that is either
+positive or zero).</p>
+<p>
+
+
+</p>
+<p></p>
+<p>
+
+<a name="node_idx_426"></a><a name="node_kw_definitionstring/len"></a><code class=scheme>(string/len</code><tt>&nbsp;</tt><code class=scheme><span class=variable>number</span></code><code class=scheme>)</code> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<small>F</small><small>L</small><small>A</small><small>T</small>-<small>C</small><small>O</small><small>N</small><small>T</small><small>R</small><small>A</small><small>C</small><small>T</small>
+</p>
+<p>
+<code class=scheme><span class=variable>string/len</span></code> accepts a number and returns a flat contract
+that recognizes strings that have fewer than that number
+of characters.</p>
+<p>
+
+<a name="node_kw_definitionfalse_Q_"></a>
+</p>
+<p></p>
+<p>
+
+<a name="node_idx_428"></a><code class=scheme>false?</code> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<small>F</small><small>L</small><small>A</small><small>T</small>-<small>C</small><small>O</small><small>N</small><small>T</small><small>R</small><small>A</small><small>C</small><small>T</small>
+</p>
+<p>
+<code class=scheme><span class=variable>false?</span></code> is a flat contract that recognizes <code class=scheme><span class=selfeval>#f</span></code>.</p>
+<p>
+
+<a name="node_kw_definitionprintable_Q_"></a>
+</p>
+<p></p>
+<p>
+
+<a name="node_idx_430"></a><code class=scheme>printable?</code> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<small>F</small><small>L</small><small>A</small><small>T</small>-<small>C</small><small>O</small><small>N</small><small>T</small><small>R</small><small>A</small><small>C</small><small>T</small>
+</p>
+<p>
+<code class=scheme><span class=variable>printable?</span></code> is a flat contract that recognizes
+values that can be written out and read back in
+with <code class=scheme><code class=scheme>write</code></code> and <code class=scheme><code class=scheme>read</code></code>.</p>
+<p>
+
+
+</p>
+<p></p>
+<p>
+
+<a name="node_idx_432"></a><a name="node_kw_definitionsymbols"></a><code class=scheme>(symbols</code><tt>&nbsp;</tt><code class=scheme><span class=variable>symbol</span></code><tt>&nbsp;</tt><tt>&middot;&middot;&middot;</tt><sup>1</sup><code class=scheme>)</code> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<small>F</small><small>L</small><small>A</small><small>T</small>-<small>C</small><small>O</small><small>N</small><small>T</small><small>R</small><small>A</small><small>C</small><small>T</small>
+</p>
+<p>
+<code class=scheme><span class=variable>symbols</span></code> accepts any number of symbols and returns a
+flat contract that recognizes for those symbols.</p>
+<p>
+
+
+</p>
+<p></p>
+<p>
+
+<a name="node_idx_434"></a><a name="node_kw_definitionis-a_Q_/c"></a><code class=scheme>(is-a?/c</code><tt>&nbsp;</tt><code class=scheme><span class=variable>class-or-interface</span></code><code class=scheme>)</code> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<small>F</small><small>L</small><small>A</small><small>T</small>-<small>C</small><small>O</small><small>N</small><small>T</small><small>R</small><small>A</small><small>C</small><small>T</small>
+</p>
+<p>
+<code class=scheme><span class=variable>is-a?/c</span></code> accepts a class or
+interface and returns a flat contract that recognizes if
+objects are subclasses of the class or implement the
+interface.</p>
+<p>
+
+
+</p>
+<p></p>
+<p>
+
+<a name="node_idx_436"></a><a name="node_kw_definitionimplementation_Q_/c"></a><code class=scheme>(implementation?/c</code><tt>&nbsp;</tt><code class=scheme><span class=variable>interface</span></code><code class=scheme>)</code> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<small>F</small><small>L</small><small>A</small><small>T</small>-<small>C</small><small>O</small><small>N</small><small>T</small><small>R</small><small>A</small><small>C</small><small>T</small>
+</p>
+<p>
+<code class=scheme><span class=variable>implementation?/c</span></code>
+accepts an interface and returns a flat contract that
+recognizes if classes are implement the given interface.</p>
+<p>
+
+
+</p>
+<p></p>
+<p>
+
+<a name="node_idx_438"></a><a name="node_kw_definitionsubclass_Q_/c"></a><code class=scheme>(subclass?/c</code><tt>&nbsp;</tt><code class=scheme><span class=variable>class</span></code><code class=scheme>)</code> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<small>F</small><small>L</small><small>A</small><small>T</small>-<small>C</small><small>O</small><small>N</small><small>T</small><small>R</small><small>A</small><small>C</small><small>T</small>
+</p>
+<p>
+<code class=scheme><span class=variable>subclass?/c</span></code> accepts a class
+and returns a flat-contract that recognizes classes that
+are subclasses of the original class.</p>
+<p>
+
+
+</p>
+<p></p>
+<p>
+
+<a name="node_idx_440"></a><a name="node_kw_definitionlistof"></a><code class=scheme>(listof</code><tt>&nbsp;</tt><code class=scheme><span class=variable>flat-contract</span></code><code class=scheme>)</code> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<small>F</small><small>L</small><small>A</small><small>T</small>-<small>C</small><small>O</small><small>N</small><small>T</small><small>R</small><small>A</small><small>C</small><small>T</small>
+</p>
+<p>
+<code class=scheme><span class=variable>listof</span></code> accepts a flat contract (or a predicate
+which is converted to a flat contract) and returns a flat
+contract that checks for lists whose elements match the
+original flat contract.</p>
+<p>
+
+
+</p>
+<p></p>
+<p>
+
+<a name="node_idx_442"></a><a name="node_kw_definitionlist-immutableof"></a><code class=scheme>(list-immutableof</code><tt>&nbsp;</tt><code class=scheme><span class=variable>contract</span></code><code class=scheme>)</code> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<small>C</small><small>O</small><small>N</small><small>T</small><small>R</small><small>A</small><small>C</small><small>T</small>
+</p>
+<p>
+<code class=scheme><span class=variable>list-immutableof</span></code> accepts a contract (or a predicate
+which is converted to a flat contract) and returns a
+contract that checks for immutable lists whose elements
+match the original contract. In contrast
+to <code class=scheme><span class=variable>listof</span></code>, <code class=scheme><span class=variable>list-immutableof</span></code> accepts
+arbitrary contracts, not just flat contracts.</p>
+<p>
+Beware, however, that when a value is applied to this
+contract, the result will not be <code class=scheme><code class=scheme>eq?</code></code> to the
+input.</p>
+<p>
+
+
+</p>
+<p></p>
+<p>
+
+<a name="node_idx_444"></a><a name="node_kw_definitionvectorof"></a><code class=scheme>(vectorof</code><tt>&nbsp;</tt><code class=scheme><span class=variable>flat-contract</span></code><code class=scheme>)</code> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<small>F</small><small>L</small><small>A</small><small>T</small>-<small>C</small><small>O</small><small>N</small><small>T</small><small>R</small><small>A</small><small>C</small><small>T</small>
+</p>
+<p>
+<code class=scheme><span class=variable>vectorof</span></code> accepts a flat contract (or a predicate
+which is converted to a flat contract
+via <code class=scheme><span class=variable>flat-contract</span></code>) and returns a predicate that
+checks for vectors whose elements match the original
+flat contract.</p>
+<p>
+
+
+</p>
+<p></p>
+<p>
+
+<a name="node_idx_446"></a><a name="node_kw_definitionvector-immutableof"></a><code class=scheme>(vector-immutableof</code><tt>&nbsp;</tt><code class=scheme><span class=variable>contract</span></code><code class=scheme>)</code> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<small>C</small><small>O</small><small>N</small><small>T</small><small>R</small><small>A</small><small>C</small><small>T</small>
+</p>
+<p>
+<code class=scheme><span class=variable>vector-immutableof</span></code> accepts a contract (or a predicate
+which is converted to a flat contract) and returns a
+contract that checks for immutable lists whose elements
+match the original contract. In contrast
+to <code class=scheme><span class=variable>vectorof</span></code>, <code class=scheme><span class=variable>vector-immutableof</span></code> accepts
+arbitrary contracts, not just flat contracts.</p>
+<p>
+Beware, however, that when a value is applied to this
+contract, the result will not be <code class=scheme><code class=scheme>eq?</code></code> to the
+input.</p>
+<p>
+
+
+</p>
+<p></p>
+<p>
+
+<a name="node_idx_448"></a><a name="node_kw_definitionvector/p"></a><code class=scheme>(vector/p</code><tt>&nbsp;</tt><code class=scheme><span class=variable>flat-contract</span></code><tt>&nbsp;</tt><tt>&middot;&middot;&middot;</tt><code class=scheme>)</code> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<small>F</small><small>L</small><small>A</small><small>T</small>-<small>C</small><small>O</small><small>N</small><small>T</small><small>R</small><small>A</small><small>C</small><small>T</small>
+</p>
+<p>
+<code class=scheme><span class=variable>vector/p</span></code> accepts any number of flat contracts (or predicates
+which are converted to flat contracts
+via <code class=scheme><span class=variable>flat-contract</span></code>) and returns a flat-contract that
+recognizes vectors. The number of elements in the vector
+must match the number of arguments supplied
+to <code class=scheme><span class=variable>vector/p</span></code> and the elements of the vector must
+match the corresponding flat contracts.</p>
+<p>
+
+
+</p>
+<p></p>
+<p>
+
+<a name="node_idx_450"></a><a name="node_kw_definitionvector-immutable/c"></a><code class=scheme>(vector-immutable/c</code><tt>&nbsp;</tt><code class=scheme><span class=variable>contract</span></code><tt>&nbsp;</tt><tt>&middot;&middot;&middot;</tt><code class=scheme>)</code> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<small>C</small><small>O</small><small>N</small><small>T</small><small>R</small><small>A</small><small>C</small><small>T</small>
+</p>
+<p>
+<code class=scheme><span class=variable>vector-immutable/c</span></code> accepts any number of contracts (or predicates
+which are converted to flat contracts
+via <code class=scheme><span class=variable>flat-contract</span></code>) and returns a contract that
+recognizes vectors. The number of elements in the vector
+must match the number of arguments supplied
+to <code class=scheme><span class=variable>vector-immutable/c</span></code> and the elements of the
+vector must match the corresponding contracts.</p>
+<p>
+In contrast to <code class=scheme><span class=variable>vector/p</span></code>, <code class=scheme><span class=variable>vector-immutable/c</span></code>
+accepts arbitrary contracts, not just flat contracts.
+Beware, however, that when a value is applied to this
+contract, the result will not be <code class=scheme><code class=scheme>eq?</code></code> to the
+input.</p>
+<p>
+
+
+</p>
+<p></p>
+<p>
+
+<a name="node_idx_452"></a><a name="node_kw_definitionbox/p"></a><code class=scheme>(box/p</code><tt>&nbsp;</tt><code class=scheme><span class=variable>flat-contract</span></code><code class=scheme>)</code> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<small>F</small><small>L</small><small>A</small><small>T</small>-<small>C</small><small>O</small><small>N</small><small>T</small><small>R</small><small>A</small><small>C</small><small>T</small>
+</p>
+<p>
+<code class=scheme><span class=variable>box/p</span></code> accepts a flat contract (or predicate that
+is converted to a flat contract via <code class=scheme><span class=variable>flat-contract</span></code>)
+and returns a flat contract that recognizes for boxes whose
+contents match <code class=scheme><span class=variable>box/p</span></code>'s argument.</p>
+<p>
+
+
+</p>
+<p></p>
+<p>
+
+<a name="node_idx_454"></a><a name="node_kw_definitionbox-immutable/c"></a><code class=scheme>(box-immutable/c</code><tt>&nbsp;</tt><code class=scheme><span class=variable>contract</span></code><code class=scheme>)</code> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<small>C</small><small>O</small><small>N</small><small>T</small><small>R</small><small>A</small><small>C</small><small>T</small>
+</p>
+<p>
+<code class=scheme><span class=variable>box-immutable/c</span></code> accepts any number of contracts (or predicates
+which are converted to flat contracts
+via <code class=scheme><span class=variable>flat-contract</span></code>) and returns a contract that
+recognizes vectors. The number of elements in the vector
+must match the number of arguments supplied
+to <code class=scheme><span class=variable>box-immutable/c</span></code> and the elements of the
+vector must match the corresponding contracts.</p>
+<p>
+In contrast to <code class=scheme><span class=variable>box/p</span></code>, <code class=scheme><span class=variable>box-immutable/c</span></code>
+accepts arbitrary contracts, not just flat contracts.
+Beware, however, that when a value is applied to this
+contract, the result will not be <code class=scheme><code class=scheme>eq?</code></code> to the
+input.</p>
+<p>
+
+
+</p>
+<p></p>
+<p>
+
+<a name="node_idx_456"></a><a name="node_kw_definitioncons/p"></a><code class=scheme>(cons/p</code><tt>&nbsp;</tt><code class=scheme><span class=variable>flat-contract flat-contract</span></code><code class=scheme>)</code> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<small>F</small><small>L</small><small>A</small><small>T</small>-<small>C</small><small>O</small><small>N</small><small>T</small><small>R</small><small>A</small><small>C</small><small>T</small>
+</p>
+<p>
+<code class=scheme><span class=variable>cons/p</span></code> accepts two flat contracts (or predicates
+that are converted to flat contracts
+via <code class=scheme><span class=variable>flat-contract</span></code>) and returns a flat contract
+that recognizes cons cells whose car and cdr correspond
+to <code class=scheme><span class=variable>cons/p</span></code>'s two arguments.</p>
+<p>
+
+
+</p>
+<p></p>
+<p>
+
+<a name="node_idx_458"></a><a name="node_kw_definitioncons-immutable/c"></a><code class=scheme>(cons-immutable/c</code><tt>&nbsp;</tt><code class=scheme><span class=variable>contract contract</span></code><code class=scheme>)</code> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<small>C</small><small>O</small><small>N</small><small>T</small><small>R</small><small>A</small><small>C</small><small>T</small>
+</p>
+<p>
+<code class=scheme><span class=variable>cons-immutable/c</span></code> accepts two contracts (or predicates
+that are converted to flat contracts
+via <code class=scheme><span class=variable>flat-contract</span></code>) and returns a contract that
+recognizes immutable cons cells whose car and cdr
+correspond to <code class=scheme><span class=variable>cons-immutable/c</span></code>'s two arguments.
+In contrast to <code class=scheme><span class=variable>cons/p</span></code>, <code class=scheme><span class=variable>cons-immutable/c</span></code>
+accepts arbitrary contracts, not just flat contracts.</p>
+<p>
+Beware, however, that when a value is applied to this
+contract, the result will not be <code class=scheme><code class=scheme>eq?</code></code> to the
+input.</p>
+<p>
+
+
+</p>
+<p></p>
+<p>
+
+<a name="node_idx_460"></a><a name="node_kw_definitionlist/p"></a><code class=scheme>(list/p</code><tt>&nbsp;</tt><code class=scheme><span class=variable>flat-contract</span></code><tt>&nbsp;</tt><tt>&middot;&middot;&middot;</tt><code class=scheme>)</code> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<small>F</small><small>L</small><small>A</small><small>T</small>-<small>C</small><small>O</small><small>N</small><small>T</small><small>R</small><small>A</small><small>C</small><small>T</small>
+</p>
+<p>
+<code class=scheme><span class=variable>list/p</span></code> accepts an arbitrary
+number of flat contracts (or predicates that are converted to
+flat contracts via <code class=scheme><span class=variable>flat-contract</span></code>) and returns a
+flat contract that recognizes for lists whose length is the same as
+the number of arguments to
+<code class=scheme><span class=variable>list/p</span></code> and whose elements match those arguments.</p>
+<p>
+
+
+</p>
+<p></p>
+<p>
+
+<a name="node_idx_462"></a><a name="node_kw_definitionlist-immutable/c"></a><code class=scheme>(list-immutable/c</code><tt>&nbsp;</tt><code class=scheme><span class=variable>flat-contract</span></code><tt>&nbsp;</tt><tt>&middot;&middot;&middot;</tt><code class=scheme>)</code> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<small>C</small><small>O</small><small>N</small><small>T</small><small>R</small><small>A</small><small>C</small><small>T</small>
+</p>
+<p>
+<code class=scheme><span class=variable>list-immutable/c</span></code> accepts an arbitrary
+number of contracts (or predicates that are converted to
+flat contracts via <code class=scheme><span class=variable>flat-contract</span></code>) and returns a
+contract that recognizes for lists whose length is the same
+as the number of arguments to
+<code class=scheme><span class=variable>list-immutable/c</span></code> and whose elements match those arguments.</p>
+<p>
+In contrast to <code class=scheme><span class=variable>list/p</span></code>, <code class=scheme><span class=variable>list-immutable/c</span></code>
+accepts arbitrary contracts, not just flat contracts.
+Beware, however, that when a value is applied to this
+contract, the result will not be <code class=scheme><code class=scheme>eq?</code></code> to the
+input.</p>
+<p>
+
+<a name="node_kw_definitionflat-rec-contract"></a><a name="node_idx_464"></a>
+</p>
+<p></p>
+<p>
+
+<code class=scheme>(<code class=scheme><span class=keyword>flat-rec-contract</span></code> <code class=scheme><span class=variable>name flat-contract <tt>&middot;&middot;&middot;</tt></span></code>)</code> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<small>S</small><small>Y</small><small>N</small><small>T</small><small>A</small><small>X</small>
+</p>
+<p>
+Each <code class=scheme><span class=variable>flat-rec-contract</span></code> form constructs a flat
+recursive contract. The first argument is the name of the
+contract and the following arguments are flat contract
+expressions that may refer to <code class=scheme><span class=variable>name</span></code>. </p>
+<p>
+As an example, this contract:
+</p>
+<div align=left><pre class=scheme>   (<span class=variable>flat-rec-contract</span> <span class=variable>sexp</span>
+     (<span class=variable>cons/c</span> <span class=variable>sexp</span> <span class=variable>sexp</span>)
+     <code class=scheme>number?</code>
+     <code class=scheme>symbol?</code>)
+</pre></div><p>
+is a flat contract that checks for (a limited form of)
+s-expressions. It says that an <code class=scheme><span class=variable>sexp</span></code> is either
+two <code class=scheme><span class=variable>sexp</span></code> combined with <code class=scheme><code class=scheme>cons</code></code>, or a number,
+or a symbol.</p>
+<p>
+
+<a name="node_kw_definitionflat-murec-contract"></a><a name="node_idx_466"></a>
+</p>
+<p></p>
+<p>
+
+<code class=scheme>(<code class=scheme><span class=keyword>flat-murec-contract</span></code> <code class=scheme><span class=variable>([name flat-contract <tt>&middot;&middot;&middot;</tt>] <tt>&middot;&middot;&middot;</tt>) body <tt>&middot;&middot;&middot;</tt></span></code>)</code> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<small>S</small><small>Y</small><small>N</small><small>T</small><small>A</small><small>X</small>
+</p>
+<p>
+The <code class=scheme><span class=variable>flat-murec-contract</span></code> form is a generalization
+of <code class=scheme><span class=variable>flat-rec-contracts</span></code> for defining several
+mutually recursive flat contracts simultaneously. </p>
+<p>
+Each of the names is visible in the
+entire <code class=scheme><span class=variable>flat-murec-contract</span></code> and the result of the
+final body expression is the result of the entire form.</p>
+<p>
+
+
+</p>
+<p></p>
+<p>
+
+<a name="node_idx_468"></a><a name="node_kw_definitionanaphoric-contracts"></a><code class=scheme>(anaphoric-contracts</code><code class=scheme>)</code> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<small>C</small><small>O</small><small>N</small><small>T</small><small>R</small><small>A</small><small>C</small><small>T</small> <small>C</small><small>O</small><small>N</small><small>T</small><small>R</small><small>A</small><small>C</small><small>T</small>
+</p>
+<p>
+
+
+</p>
+<p></p>
+<p>
+
+<a name="node_idx_470"></a><a name="node_kw_definitionanaphoric-contracts"></a><code class=scheme>(anaphoric-contracts</code><tt>&nbsp;</tt><code class=scheme><span class=variable>'equal</span></code><code class=scheme>)</code> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<small>C</small><small>O</small><small>N</small><small>T</small><small>R</small><small>A</small><small>C</small><small>T</small> <small>C</small><small>O</small><small>N</small><small>T</small><small>R</small><small>A</small><small>C</small><small>T</small>
+</p>
+<p>
+Returns two linked anaphoric contracts. The first allows
+all values, and the second only allows values that the
+first has previously seen.</p>
+<p>
+</p>
+<a name="node_sec_13.2"></a>
+<h2><a href="mzlib.html#node_toc_node_sec_13.2">13.2&nbsp;&nbsp;Function Contracts</a></h2>
+<p><a name="node_idx_472"></a>
+<a name="node_idx_474"></a>
+</p>
+<p>
+-&gt;
+</p>
+<p>
+This section describes the contract constructors for
+function contracts. This is their shape:
+</p>
+<div align=left><pre class=scheme><span class=variable>contract-expr</span> <span class=selfeval>::==</span>
+ | (<span class=keyword>case-&gt;</span> <span class=variable>arrow-contract-expr</span> <tt>&middot;&middot;&middot;</tt>)
+ | <span class=variable>arrow-contract-expr</span>
+
+<span class=variable>arrow-contract-expr</span> <span class=selfeval>::==</span> 
+ | (<span class=keyword>-&gt;</span> <span class=variable>expr</span> <tt>&middot;&middot;&middot;</tt> <span class=variable>expr</span>)
+ | (<span class=keyword>-&gt;</span> <span class=variable>expr</span> <tt>&middot;&middot;&middot;</tt> <span class=keyword>any</span>)
+ | (<span class=keyword>-&gt;</span> <span class=variable>expr</span> <tt>&middot;&middot;&middot;</tt> (<code class=scheme>values</code> <span class=variable>expr</span> <tt>&middot;&middot;&middot;</tt>))
+
+ | (<span class=keyword>-&gt;*</span> (<span class=variable>expr</span> <tt>&middot;&middot;&middot;</tt>) (<span class=variable>expr</span> <tt>&middot;&middot;&middot;</tt>))
+ | (<span class=keyword>-&gt;*</span> (<span class=variable>expr</span> <tt>&middot;&middot;&middot;</tt>) <span class=keyword>any</span>)
+ | (<span class=keyword>-&gt;*</span> (<span class=variable>expr</span> <tt>&middot;&middot;&middot;</tt>) <span class=variable>expr</span> (<span class=variable>expr</span> <tt>&middot;&middot;&middot;</tt>))
+ | (<span class=keyword>-&gt;*</span> (<span class=variable>expr</span> <tt>&middot;&middot;&middot;</tt>) <span class=variable>expr</span> <span class=keyword>any</span>)
+
+ | (<span class=keyword>-&gt;d</span> <span class=variable>expr</span> <tt>&middot;&middot;&middot;</tt> <span class=variable>expr</span>)
+ | (<span class=keyword>-&gt;d*</span> (<span class=variable>expr</span> <tt>&middot;&middot;&middot;</tt>) <span class=variable>expr</span>)
+ | (<span class=keyword>-&gt;d*</span> (<span class=variable>expr</span> <tt>&middot;&middot;&middot;</tt>) <span class=variable>expr</span> <span class=variable>expr</span>)
+
+ | (<span class=keyword>-&gt;r</span> ((<span class=variable>id</span> <span class=variable>expr</span>) <tt>&middot;&middot;&middot;</tt>) <span class=variable>expr</span>)
+ | (<span class=keyword>-&gt;r</span> ((<span class=variable>id</span> <span class=variable>expr</span>) <tt>&middot;&middot;&middot;</tt>) <span class=keyword>any</span>)
+ | (<span class=keyword>-&gt;r</span> ((<span class=variable>id</span> <span class=variable>expr</span>) <tt>&middot;&middot;&middot;</tt>) (<code class=scheme>values</code> (<span class=variable>id</span> <span class=variable>expr</span>) <tt>&middot;&middot;&middot;</tt>))
+ | (<span class=keyword>-&gt;r</span> ((<span class=variable>id</span> <span class=variable>expr</span>) <tt>&middot;&middot;&middot;</tt>) <span class=variable>id</span> <span class=variable>expr</span> <span class=variable>expr</span>)
+ | (<span class=keyword>-&gt;r</span> ((<span class=variable>id</span> <span class=variable>expr</span>) <tt>&middot;&middot;&middot;</tt>) <span class=variable>id</span> <span class=variable>expr</span> <span class=keyword>any</span>)
+ | (<span class=keyword>-&gt;r</span> ((<span class=variable>id</span> <span class=variable>expr</span>) <tt>&middot;&middot;&middot;</tt>) <span class=variable>id</span> <span class=variable>expr</span> (<code class=scheme>values</code> (<span class=variable>id</span> <span class=variable>expr</span>) <tt>&middot;&middot;&middot;</tt>))
+
+ | (<span class=keyword>opt-&gt;</span> (<span class=variable>expr</span> <tt>&middot;&middot;&middot;</tt>) (<span class=variable>expr</span> <tt>&middot;&middot;&middot;</tt>) <span class=variable>expr</span>)
+ | (<span class=keyword>opt-&gt;*</span> (<span class=variable>expr</span> <tt>&middot;&middot;&middot;</tt>) (<span class=variable>expr</span> <tt>&middot;&middot;&middot;</tt>) <span class=keyword>any</span>)
+ | (<span class=keyword>opt-&gt;*</span> (<span class=variable>expr</span> <tt>&middot;&middot;&middot;</tt>) (<span class=variable>expr</span> <tt>&middot;&middot;&middot;</tt>) (<span class=variable>expr</span> <tt>&middot;&middot;&middot;</tt>))
+</pre></div><p></p>
+<p>
+where <code class=scheme><span class=variable>expr</span></code> is any expression.</p>
+<p>
+
+<a name="node_kw_definition->"></a><a name="node_idx_476"></a>
+</p>
+<p></p>
+<p>
+
+<code class=scheme>(<code class=scheme><span class=keyword>-&gt;</span></code> <code class=scheme><span class=variable>expr <tt>&middot;&middot;&middot;</tt></span></code>)</code> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<small>S</small><small>Y</small><small>N</small><small>T</small><small>A</small><small>X</small>
+</p>
+<p>
+
+<a name="node_kw_definition->"></a><a name="node_idx_478"></a>
+</p>
+<p></p>
+<p>
+
+<code class=scheme>(<code class=scheme><span class=keyword>-&gt;</span></code> <code class=scheme><span class=variable>expr <tt>&middot;&middot;&middot;</tt><strong>any</strong></span></code>)</code> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<small>S</small><small>Y</small><small>N</small><small>T</small><small>A</small><small>X</small>
+</p>
+<p>
+The <code class=scheme><span class=keyword>-&gt;</span></code> contract is for functions that accept a
+fixed number of arguments and return a single result. The
+last argument to <code class=scheme><span class=keyword>-&gt;</span></code> is the contract on the result
+of the function and the other arguments are the contracts on
+the arguments to the function. Each of the arguments to
+<code class=scheme><span class=keyword>-&gt;</span></code> must be another contract expression or a
+predicate. For example, this expression:
+</p>
+<div align=left><pre class=scheme>(<span class=variable>integer?</span> <span class=variable>boolean?</span> . <span class=keyword>-&gt;</span> . <span class=variable>integer?</span>)
+</pre></div><p>
+is a contract on functions of two arguments. The first must
+be an integer and the second a boolean and the function must
+return an integer. (This example uses
+MzScheme's infix notation
+so that the <code class=scheme><span class=keyword>-&gt;</span></code> appears in a suggestive place; see section&nbsp;<a href="../mzscheme/mzscheme-Z-H-14.html#node_sec_14.3">14.3</a> in <a href="../mzscheme/mzscheme.html"><i>PLT MzScheme: Language Manual</i></a>).</p>
+<p>
+If <code class=scheme><span class=keyword>any</span></code> is used as the last argument to <code class=scheme><span class=keyword>-&gt;</span></code>,
+no contract checking is performed on the result of the
+function, and tail-recursion is preserved. Except for the
+memory performance, this is the same as using <code class=scheme><span class=variable>any?</span></code>
+in the result.</p>
+<p>
+The final case of <code class=scheme><span class=keyword>-&gt;</span></code> expressions
+treats <code class=scheme><code class=scheme>values</code></code> as a local keyword - that is, you
+may not return multiple values to this position, instead if
+the word <code class=scheme><code class=scheme>values</code></code> syntactically appears in the in
+the last argument to <code class=scheme><span class=keyword>-&gt;</span></code> the function is treated as
+a multiple value return (this is a shorthand for the two
+argument variant on <code class=scheme><span class=keyword>-&gt;*</span></code>).</p>
+<p>
+
+<a name="node_kw_definition->*"></a><a name="node_idx_480"></a>
+</p>
+<p></p>
+<p>
+
+<code class=scheme>(<code class=scheme><span class=keyword>-&gt;*</span></code> <code class=scheme><span class=variable>(expr <tt>&middot;&middot;&middot;</tt>) (expr <tt>&middot;&middot;&middot;</tt>)</span></code>)</code> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<small>S</small><small>Y</small><small>N</small><small>T</small><small>A</small><small>X</small>
+</p>
+<p>
+</p>
+<p>
+
+<a name="node_kw_definition->*"></a><a name="node_idx_482"></a>
+</p>
+<p></p>
+<p>
+
+<code class=scheme>(<code class=scheme><span class=keyword>-&gt;*</span></code> <code class=scheme><span class=variable>(expr <tt>&middot;&middot;&middot;</tt>) <strong>any</strong></span></code>)</code> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<small>S</small><small>Y</small><small>N</small><small>T</small><small>A</small><small>X</small>
+</p>
+<p>
+</p>
+<p>
+
+<a name="node_kw_definition->*"></a><a name="node_idx_484"></a>
+</p>
+<p></p>
+<p>
+
+<code class=scheme>(<code class=scheme><span class=keyword>-&gt;*</span></code> <code class=scheme><span class=variable>(expr <tt>&middot;&middot;&middot;</tt>) expr (expr <tt>&middot;&middot;&middot;</tt>)</span></code>)</code> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<small>S</small><small>Y</small><small>N</small><small>T</small><small>A</small><small>X</small>
+</p>
+<p>
+</p>
+<p>
+
+<a name="node_kw_definition->*"></a><a name="node_idx_486"></a>
+</p>
+<p></p>
+<p>
+
+<code class=scheme>(<code class=scheme><span class=keyword>-&gt;*</span></code> <code class=scheme><span class=variable>(expr <tt>&middot;&middot;&middot;</tt>) expr <strong>any</strong></span></code>)</code> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<small>S</small><small>Y</small><small>N</small><small>T</small><small>A</small><small>X</small>
+</p>
+<p>
+</p>
+<p>
+The <code class=scheme><span class=keyword>-&gt;*</span></code> expression is for functions that return
+multiple results and/or have rest arguments. If two
+arguments are supplied, the first is the contracts on the
+arguments to the function and the second is the contract on
+the results of the function. If three arguments are
+supplied, the first argument contains the contracts on the
+arguments to the function (excluding the rest argument), the
+second contains the contract on the rest argument to the
+function and the final argument is the contracts on the
+results of the function. The final argument can
+be <code class=scheme><span class=keyword>any</span></code> which, like <code class=scheme><span class=keyword>-&gt;</span></code> means that no
+contract is enforced on the result of the function and
+tail-recursion is preserved.</p>
+<p>
+
+<a name="node_kw_definition->d"></a><a name="node_idx_488"></a>
+</p>
+<p></p>
+<p>
+
+<code class=scheme>(<code class=scheme><span class=keyword>-&gt;d</span></code> <code class=scheme><span class=variable>expr <tt>&middot;&middot;&middot;</tt></span></code>)</code> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<small>S</small><small>Y</small><small>N</small><small>T</small><small>A</small><small>X</small>
+</p>
+<p>
+
+<a name="node_kw_definition->d*"></a><a name="node_idx_490"></a>
+</p>
+<p></p>
+<p>
+
+<code class=scheme>(<code class=scheme><span class=keyword>-&gt;d*</span></code> <code class=scheme><span class=variable>(expr <tt>&middot;&middot;&middot;</tt>) expr)</span></code>)</code> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<small>S</small><small>Y</small><small>N</small><small>T</small><small>A</small><small>X</small>
+</p>
+<p>
+
+<a name="node_kw_definition->d*"></a><a name="node_idx_492"></a>
+</p>
+<p></p>
+<p>
+
+<code class=scheme>(<code class=scheme><span class=keyword>-&gt;d*</span></code> <code class=scheme><span class=variable>(expr <tt>&middot;&middot;&middot;</tt>) expr expr</span></code>)</code> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<small>S</small><small>Y</small><small>N</small><small>T</small><small>A</small><small>X</small>
+</p>
+<p>
+The <code class=scheme><span class=keyword>-&gt;d</span></code> and <code class=scheme><span class=keyword>-&gt;d*</span></code> contract constructors are
+like their <strong>d</strong>-less counterparts, except that the
+result portion is a function that accepts the original
+arguments to the function and returns the range contracts. 
+The range contract function for <code class=scheme><span class=keyword>-&gt;d*</span></code> must return
+multiple values: one for each result of the original
+function. 
+As an example, this is the contract for <code class=scheme><code class=scheme>sqrt</code></code>:
+</p>
+<div align=left><pre class=scheme>(<code class=scheme>number?</code> 
+ . <span class=keyword>-&gt;d</span> .
+ (<span class=keyword>lambda</span> (<span class=variable>in</span>)
+   (<span class=keyword>lambda</span> (<span class=variable>out</span>)
+     (<span class=keyword>and</span> (<code class=scheme>number?</code> <span class=variable>out</span>)
+          (<span class=variable>abs</span> (<span class=variable>-</span> (<span class=variable>*</span> <span class=variable>out</span> <span class=variable>out</span>) <span class=variable>in</span>) <span class=selfeval>0.01</span>)))))
+</pre></div><p>
+It says that the input must be a number and that the
+difference between the square of the result and the original
+number is less than <code class=scheme><span class=selfeval>0.01</span></code>.</p>
+<p>
+
+<a name="node_kw_definition->r"></a><a name="node_idx_494"></a>
+</p>
+<p></p>
+<p>
+
+<code class=scheme>(<code class=scheme><span class=keyword>-&gt;r</span></code> <code class=scheme><span class=variable>([id expr] <tt>&middot;&middot;&middot;</tt>) expr</span></code>)</code> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<small>S</small><small>Y</small><small>N</small><small>T</small><small>A</small><small>X</small>
+</p>
+<p>
+The <code class=scheme><span class=keyword>-&gt;r</span></code> contract allows you to build a contract
+where the arguments to a function may all depend on each
+other and the result of the function may depend on all of
+the arguments. </p>
+<p>
+Each of the <code class=scheme><span class=variable>id</span></code>s names one of the actual arguments
+to the function with the contract. Each of the names is
+available to all of the other contracts. For example, to
+define a function that accepts three arguments where the
+second argument and the result must both be between the
+first, you might write:</p>
+<p>
+</p>
+<div align=left><pre class=scheme>(<span class=keyword>-&gt;r</span> ([<span class=variable>x</span> <code class=scheme>number?</code>] [<span class=variable>y</span> (<span class=variable>and/c</span> (<span class=variable>&gt;=/c</span> <span class=variable>x</span>) (<span class=variable>&lt;=/c</span> <span class=variable>z</span>))] [<span class=variable>z</span> <code class=scheme>number?</code>])
+     (<span class=variable>and/c</span> <code class=scheme>number?</code> (<span class=variable>&gt;=/c</span> <span class=variable>x</span>) (<span class=variable>&lt;=/c</span> <span class=variable>z</span>)))
+</pre></div><p></p>
+<p>
+
+<a name="node_kw_definition->r"></a><a name="node_idx_496"></a>
+</p>
+<p></p>
+<p>
+
+<code class=scheme>(<code class=scheme><span class=keyword>-&gt;r</span></code> <code class=scheme><span class=variable>([id expr] <tt>&middot;&middot;&middot;</tt>) any</span></code>)</code> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<small>S</small><small>Y</small><small>N</small><small>T</small><small>A</small><small>X</small>
+</p>
+<p>
+This variation on <code class=scheme><span class=keyword>-&gt;r</span></code> does not check anything
+about the result of the function, which preserves tail recursion.</p>
+<p>
+
+<a name="node_kw_definition->r"></a><a name="node_idx_498"></a>
+</p>
+<p></p>
+<p>
+
+<code class=scheme>(<code class=scheme><span class=keyword>-&gt;r</span></code> <code class=scheme><span class=variable>([id expr] <tt>&middot;&middot;&middot;</tt>) (values [id expr] ...)</span></code>)</code> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<small>S</small><small>Y</small><small>N</small><small>T</small><small>A</small><small>X</small>
+</p>
+<p>
+This variation on <code class=scheme><span class=keyword>-&gt;r</span></code> allows multiple value return
+values. The <code class=scheme><span class=variable>id</span></code>s for the domain are bound in all of
+the <code class=scheme><span class=variable>expr</span></code>s, but the <code class=scheme><span class=variable>id</span></code>s for the range (the
+ones inside <code class=scheme><code class=scheme>values</code></code>) are only bound in
+the <code class=scheme><span class=variable>exprs</span></code> inside the <code class=scheme><code class=scheme>values</code></code>.</p>
+<p>
+As an example, this contract:
+</p>
+<div align=left><pre class=scheme>(<span class=keyword>-&gt;r</span> () (<code class=scheme>values</code> [<span class=variable>x</span> <code class=scheme>number?</code>]
+                [<span class=variable>y</span> (<span class=variable>and/c</span> (<span class=variable>&gt;=/c</span> <span class=variable>x</span>) (<span class=variable>&lt;=/c</span> <span class=variable>z</span>))]
+                [<span class=variable>z</span> <code class=scheme>number?</code>]))
+</pre></div><p>
+matches functions that accept no arguments and that return
+three numberic values that are in ascending order.</p>
+<p>
+
+<a name="node_kw_definition->r"></a><a name="node_idx_500"></a>
+</p>
+<p></p>
+<p>
+
+<code class=scheme>(<code class=scheme><span class=keyword>-&gt;r</span></code> <code class=scheme><span class=variable>([id expr] <tt>&middot;&middot;&middot;</tt>) id expr expr</span></code>)</code> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<small>S</small><small>Y</small><small>N</small><small>T</small><small>A</small><small>X</small>
+</p>
+<p>
+
+<a name="node_kw_definition->r"></a><a name="node_idx_502"></a>
+</p>
+<p></p>
+<p>
+
+<code class=scheme>(<code class=scheme><span class=keyword>-&gt;r</span></code> <code class=scheme><span class=variable>([id expr] <tt>&middot;&middot;&middot;</tt>) id expr any</span></code>)</code> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<small>S</small><small>Y</small><small>N</small><small>T</small><small>A</small><small>X</small>
+</p>
+<p>
+
+<a name="node_kw_definition->r"></a><a name="node_idx_504"></a>
+</p>
+<p></p>
+<p>
+
+<code class=scheme>(<code class=scheme><span class=keyword>-&gt;r</span></code> <code class=scheme><span class=variable>([id expr] <tt>&middot;&middot;&middot;</tt>) id expr (values [id expr] ...)</span></code>)</code> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<small>S</small><small>Y</small><small>N</small><small>T</small><small>A</small><small>X</small>
+</p>
+<p>
+These three forms of the <code class=scheme><span class=keyword>-&gt;r</span></code> contract are just like the
+previous ones, except that the functions they matches must
+accept arbitrarily many arguments. The extra <code class=scheme><span class=variable>id</span></code>
+and the <code class=scheme><span class=variable>expr</span></code> just following it specify the
+contracts on the extra arguments. The value of <code class=scheme><span class=variable>id</span></code>
+will alway be a list (of the extra arguments).</p>
+<p>
+
+<a name="node_kw_definitioncase->"></a><a name="node_idx_506"></a>
+</p>
+<p></p>
+<p>
+
+<code class=scheme>(<code class=scheme><span class=keyword>case-&gt;</span></code> <code class=scheme><span class=variable>arrow-contract-expr <tt>&middot;&middot;&middot;</tt></span></code>)</code> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<small>C</small><small>O</small><small>N</small><small>T</small><small>R</small><small>A</small><small>C</small><small>T</small>-<small>C</small><small>A</small><small>S</small><small>E</small>-&gt;
+</p>
+<p>
+The <code class=scheme><span class=keyword>case-&gt;</span></code> expression constructs a contract for
+case-lambda function. It's arguments must all be function
+contracts, built by one of <code class=scheme><span class=keyword>-&gt;</span></code>, <code class=scheme><span class=keyword>-&gt;d</span></code>,
+<code class=scheme><span class=keyword>-&gt;*</span></code>, or <code class=scheme><span class=keyword>-&gt;d*</span></code>.</p>
+<p>
+
+<a name="node_kw_definitionopt->"></a><a name="node_idx_508"></a>
+</p>
+<p></p>
+<p>
+
+<code class=scheme>(<code class=scheme><span class=keyword>opt-&gt;</span></code> <code class=scheme><span class=variable>(req-contracts <tt>&middot;&middot;&middot;</tt>) (opt-contracts <tt>&middot;&middot;&middot;</tt>) res-contract)</span></code>)</code> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<small>S</small><small>Y</small><small>N</small><small>T</small><small>A</small><small>X</small>
+</p>
+<p>
+
+<a name="node_kw_definitionopt->*"></a><a name="node_idx_510"></a>
+</p>
+<p></p>
+<p>
+
+<code class=scheme>(<code class=scheme><span class=keyword>opt-&gt;*</span></code> <code class=scheme><span class=variable>(req-contracts <tt>&middot;&middot;&middot;</tt>) (opt-contracts <tt>&middot;&middot;&middot;</tt>) (res-contracts <tt>&middot;&middot;&middot;</tt>)</span></code>)</code> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<small>S</small><small>Y</small><small>N</small><small>T</small><small>A</small><small>X</small>
+</p>
+<p>
+
+<a name="node_kw_definitionopt->*"></a><a name="node_idx_512"></a>
+</p>
+<p></p>
+<p>
+
+<code class=scheme>(<code class=scheme><span class=keyword>opt-&gt;*</span></code> <code class=scheme><span class=variable>(req-contracts <tt>&middot;&middot;&middot;</tt>) (opt-contracts <tt>&middot;&middot;&middot;</tt>) any</span></code>)</code> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<small>S</small><small>Y</small><small>N</small><small>T</small><small>A</small><small>X</small>
+</p>
+<p>
+The <code class=scheme><span class=keyword>opt-&gt;</span></code> expression constructs a contract for an
+<code class=scheme><span class=keyword>opt-lambda</span></code> function. The first arguments are the
+required parameters, the second arguments are the optional
+parameters and the final argument is the result. 
+The <code class=scheme><span class=variable>req-contracts</span></code> expressions,
+the <code class=scheme><span class=variable>opt-contracts</span></code> expressions, and
+the <code class=scheme><span class=variable>res-contract</span></code> expressions can be any expression
+that evaluates to a contract value.</p>
+<p>
+Each <code class=scheme><span class=keyword>opt-&gt;</span></code> expression expands into <code class=scheme><span class=keyword>case-&gt;</span></code>.</p>
+<p>
+The <code class=scheme><span class=keyword>opt-&gt;*</span></code> expression constructs a contract for an
+<code class=scheme><span class=keyword>opt-lambda</span></code> function. The only difference between
+<code class=scheme><span class=keyword>opt-&gt;</span></code> and <code class=scheme><span class=keyword>opt-&gt;*</span></code> is that multiple return
+values are permitted with <code class=scheme><span class=keyword>opt-&gt;*</span></code> and they are
+specified in the last clause of an <code class=scheme><span class=keyword>opt-&gt;*</span></code>
+expression. A result
+of <code class=scheme><span class=keyword>any</span></code> means any value or any number of values may
+be returned, and the contract does not inhibit
+tail-recursion.</p>
+<p>
+</p>
+<a name="node_sec_13.3"></a>
+<h2><a href="mzlib.html#node_toc_node_sec_13.3">13.3&nbsp;&nbsp;Object and Class Contracts</a></h2>
+<p><a name="node_idx_514"></a>
+<a name="node_idx_516"></a>
+</p>
+<p>
+This section describes contracts on classes and
+objects. Here is the basic shape of an object contract:</p>
+<p>
+</p>
+<div align=left><pre class=scheme><span class=variable>contract-expr</span> <span class=selfeval>::==</span> <tt>&middot;&middot;&middot;</tt>
+ | (<span class=variable>object-contract</span> <span class=variable>meth/field-spec</span> <tt>&middot;&middot;&middot;</tt>)
+
+<span class=variable>meth/field-spec</span> <span class=selfeval>::==</span>
+   (<span class=variable>meth-name</span> <span class=variable>meth-contract</span>)
+ | (<span class=keyword>field</span> <span class=variable>field-name</span> <span class=variable>contract-expr</span>)
+
+<span class=variable>meth-contract</span> <span class=selfeval>::==</span>
+   (<span class=keyword>opt-&gt;</span> (<span class=variable>required-contract-expr</span> <tt>&middot;&middot;&middot;</tt>)
+          (<span class=variable>optional-contract-expr</span> <tt>&middot;&middot;&middot;</tt>)
+          <span class=keyword>any</span>)
+   (<span class=keyword>opt-&gt;</span> (<span class=variable>required-contract-expr</span> <tt>&middot;&middot;&middot;</tt>)
+          (<span class=variable>optional-contract-expr</span> <tt>&middot;&middot;&middot;</tt>)
+          <span class=variable>result-contract-expr</span>)
+ | (<span class=keyword>opt-&gt;*</span> (<span class=variable>required-contract-expr</span> <tt>&middot;&middot;&middot;</tt>)
+           (<span class=variable>optional-contract-expr</span> <tt>&middot;&middot;&middot;</tt>)
+           (<span class=variable>result-contract-expr</span> <tt>&middot;&middot;&middot;</tt>))
+ | (<span class=keyword>case-&gt;</span> <span class=variable>meth-arrow-contract</span> <tt>&middot;&middot;&middot;</tt>)
+ | <span class=variable>meth-arrow-contract</span>
+
+<span class=variable>meth-arrow-contract</span> <span class=selfeval>::==</span>
+   (<span class=keyword>-&gt;</span> <span class=variable>dom-contract-expr</span> <tt>&middot;&middot;&middot;</tt> <span class=variable>rng-contract-expr</span>)
+ | (<span class=keyword>-&gt;</span> <span class=variable>dom-contract-expr</span> <tt>&middot;&middot;&middot;</tt> (<code class=scheme>values</code> <span class=variable>rng-contract-expr</span> <tt>&middot;&middot;&middot;</tt>))
+ | (<span class=keyword>-&gt;*</span> (<span class=variable>dom-contract-expr</span> <tt>&middot;&middot;&middot;</tt>) (<span class=variable>rng-contract-expr</span> <tt>&middot;&middot;&middot;</tt>))
+ | (<span class=keyword>-&gt;*</span> (<span class=variable>dom-contract-expr</span> <tt>&middot;&middot;&middot;</tt>) <span class=variable>rest-arg-contract-expr</span> (<span class=variable>rng-contract-expr</span> <tt>&middot;&middot;&middot;</tt>))
+ | (<span class=keyword>-&gt;d</span> <span class=variable>dom-contract-expr</span> <tt>&middot;&middot;&middot;</tt> <span class=variable>rng-contract-proc-expr</span>)
+ | (<span class=keyword>-&gt;d*</span> (<span class=variable>dom-contract-expr</span> <tt>&middot;&middot;&middot;</tt>) <span class=variable>rng-contract-proc-expr</span>)
+ | (<span class=keyword>-&gt;d*</span> (<span class=variable>dom-contract-expr</span> <tt>&middot;&middot;&middot;</tt>) <span class=variable>rest-contract-expr</span> <span class=variable>rng-contract-proc-expr</span>)
+ | (<span class=keyword>-&gt;r</span> ((<span class=variable>id</span> <span class=variable>expr</span>) <tt>&middot;&middot;&middot;</tt>) <span class=variable>expr</span>)
+ | (<span class=keyword>-&gt;r</span> ((<span class=variable>id</span> <span class=variable>expr</span>) <tt>&middot;&middot;&middot;</tt>) <span class=variable>id</span> <span class=variable>expr</span> <span class=variable>expr</span>)
+</pre></div><p></p>
+<p>
+Each of the contracts for methods has the same semantics as
+the corresponding function contract (discussed above), but
+the syntax of the method contract must be written directly
+in the body of the object-contract (much like the way that
+methods in class definitions use the same syntax as regular
+function definitions, but cannot be arbitrary
+procedures).</p>
+<p>
+
+<a name="node_kw_definitionmixin-contract"></a>
+</p>
+<p></p>
+<p>
+
+<a name="node_idx_518"></a><code class=scheme>mixin-contract</code> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<small>C</small><small>O</small><small>N</small><small>T</small><small>R</small><small>A</small><small>C</small><small>T</small>
+</p>
+<p>
+<code class=scheme><span class=variable>mixin-contract</span></code> is a
+contract that recognizes mixins. It is a function
+contract. It guarantees that the input to the function is
+a class and the result of the function is a subclass of
+the input.</p>
+<p>
+
+
+</p>
+<p></p>
+<p>
+
+<a name="node_idx_520"></a><a name="node_kw_definitionmake-mixin-contract"></a><code class=scheme>(make-mixin-contract</code><tt>&nbsp;</tt><code class=scheme><span class=variable>class-or-interface</span></code><tt>&nbsp;</tt><tt>&middot;&middot;&middot;</tt><code class=scheme>)</code> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<small>C</small><small>O</small><small>N</small><small>T</small><small>R</small><small>A</small><small>C</small><small>T</small>
+</p>
+<p>
+<code class=scheme><span class=variable>make-mixin-contract</span></code>
+is a function that constructs mixins contracts. It accepts
+any number of classes and interfaces and returns a
+function contract. The function contract guarantees that
+the input to the function implements the interfaces and is
+derived from the classes and that the result of the
+function is a subclass of the input.</p>
+<p>
+</p>
+<a name="node_sec_13.4"></a>
+<h2><a href="mzlib.html#node_toc_node_sec_13.4">13.4&nbsp;&nbsp;Attaching Contracts to Values</a></h2>
+<p><a name="node_idx_522"></a>
+
+<a name="node_idx_524"></a></p>
+<p>
+There are three special forms that attach contract
+specification to values: <code class=scheme><span class=keyword>provide/contract</span></code>, 
+<code class=scheme><span class=keyword>define/contract</span></code>, and <code class=scheme><span class=keyword>contract</span></code>.</p>
+<p>
+
+<a name="node_kw_definitionprovide/contract"></a><a name="node_idx_526"></a>
+</p>
+<p></p>
+<p>
+
+<code class=scheme>(<code class=scheme><span class=keyword>provide/contract</span></code> <code class=scheme><span class=variable>p/c-item <tt>&middot;&middot;&middot;</tt></span></code>)</code> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<small>S</small><small>Y</small><small>N</small><small>T</small><small>A</small><small>X</small>
+</p>
+<p>
+</p>
+<div align=left><pre class=scheme><span class=variable>p/c-item</span> is one of
+  (<span class=keyword>struct</span> <span class=variable>identifier</span> ((<span class=variable>identifier</span> <span class=variable>contract-expr</span>) <tt>&middot;&middot;&middot;</tt>))
+  (<span class=keyword>rename</span> <span class=variable>id</span> <span class=variable>id</span> <span class=variable>contract-expr</span>)
+  (<span class=variable>id</span> <span class=variable>contract-expr</span>)
+</pre></div><p></p>
+<p>
+A <code class=scheme><span class=keyword>provide/contract</span></code> form can only appear at the
+top-level of a module (see section&nbsp;<a href="../mzscheme/mzscheme-Z-H-5.html#node_chap_5">5</a> in <a href="../mzscheme/mzscheme.html"><i>PLT MzScheme: Language Manual</i></a>). As with
+<code class=scheme><span class=keyword>provide</span></code>, each identifier is provided from the
+module. In addition, clients of the module must live up to
+the contract specified by <code class=scheme><span class=variable>expr</span></code>.</p>
+<p>
+The <code class=scheme><span class=keyword>provide/contract</span></code> form treats modules as units
+of blame. The module that defines the provided variable is
+expected to meet the (co-variant) positions of the
+contract. Each module that imports the provided variable
+must obey the negative (contra-variant) positions of the
+contract. </p>
+<p>
+Only uses of the contracted variable outside the module are
+checked.</p>
+<p>
+The <code class=scheme><span class=keyword>rename</span></code> form of a <code class=scheme><span class=keyword>provide/contract</span></code>
+exports the first variable (the internal name) with the name
+specified by the second variable (the external name).</p>
+<p>
+The <code class=scheme><span class=keyword>struct</span></code> form of a <code class=scheme><span class=keyword>provide/contract</span></code>
+clause provides a structure definition. Each field has a
+contract that dictates the contents of the fields.</p>
+<p>
+
+<a name="node_kw_definitiondefine/contract"></a><a name="node_idx_528"></a>
+</p>
+<p></p>
+<p>
+
+<code class=scheme>(<code class=scheme><span class=keyword>define/contract</span></code> <code class=scheme><span class=variable>id contract-expr init-value-expr</span></code>)</code> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<small>S</small><small>Y</small><small>N</small><small>T</small><small>A</small><small>X</small>
+</p>
+<p>
+The <code class=scheme><span class=keyword>define/contract</span></code> form attaches the contract
+<code class=scheme><span class=variable>contract-expr</span></code> to <code class=scheme><span class=variable>init-value-expr</span></code> and binds
+that to <code class=scheme><span class=variable>id</span></code>. </p>
+<p>
+The <code class=scheme><span class=keyword>define/contract</span></code> form treats individual
+definitions as units of blame. The definition itself is
+responsible for positive (co-variant) positions of the
+contract and each reference to <code class=scheme><span class=variable>id</span></code> (including those
+in the initial value expression) must meet the negative
+positions of the contract.</p>
+<p>
+Error messages with <code class=scheme><span class=keyword>define/contract</span></code> are not as
+clear as those provided by <code class=scheme><span class=keyword>provide/contract</span></code> because
+<code class=scheme><span class=keyword>define/contract</span></code> cannot detect the name of the
+definition where the reference to the defined variable
+occurs. Instead, it uses the source location of the
+reference to the variable as the name of that definition.</p>
+<p>
+
+<a name="node_kw_definitioncontract"></a><a name="node_idx_530"></a>
+</p>
+<p></p>
+<p>
+
+<code class=scheme>(<code class=scheme><span class=keyword>contract</span></code> <code class=scheme><span class=variable>contract-expr to-protect-expr positive-blame negative-blame</span></code>)</code> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<small>S</small><small>Y</small><small>N</small><small>T</small><small>A</small><small>X</small>
+</p>
+<p>
+
+<a name="node_kw_definitioncontract"></a><a name="node_idx_532"></a>
+</p>
+<p></p>
+<p>
+
+<code class=scheme>(<code class=scheme><span class=keyword>contract</span></code> <code class=scheme><span class=variable>contract-expr to-protect-expr positive-blame negative-blame contract-source</span></code>)</code> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<small>S</small><small>Y</small><small>N</small><small>T</small><small>A</small><small>X</small>
+</p>
+<p>
+The <code class=scheme><span class=keyword>contract</span></code> special form is the primitive
+mechanism for attaching a contract to a value. Its purpose
+is as a target for the expansion of some higher-level
+contract specifying form. </p>
+<p>
+The <code class=scheme><span class=keyword>contract</span></code> form has this shape:
+</p>
+<div align=left><pre class=scheme>(<span class=keyword>contract</span> <span class=variable>expr</span> <span class=variable>to-protect-expr</span> <span class=variable>positive-blame</span> <span class=variable>negative-blame</span> <span class=variable>contract-source</span>)
+</pre></div><p>
+The <code class=scheme><span class=keyword>contract</span></code> expression adds the contract specified
+by the first argument to the value in the second argument.
+The result of a <code class=scheme><span class=keyword>contract</span></code> expression is the result
+of the <code class=scheme><span class=variable>to-protect-expr</span></code> expression, but with the
+contract specified by <code class=scheme><span class=variable>contract-expr</span></code> enforced on
+<code class=scheme><span class=variable>to-protect-expr</span></code>.  The expressions
+<code class=scheme><span class=variable>positive-blame</span></code> and <code class=scheme><span class=variable>negative-blame</span></code> must be
+symbols indicating how to assign blame for positive and
+negative positions of the contract specified by
+<code class=scheme><span class=variable>contract-expr</span></code>. Finally, <code class=scheme><span class=variable>contract-source</span></code>,
+if specified, indicates where the contract was assumed. It
+must be a syntax object specifying the source location of
+the location where the contract was assumed. If the syntax
+object wraps a symbol, the symbol is used as the name of the
+primitive whose contract was assumed. If
+absent, it defaults to the source location of the
+<code class=scheme><span class=keyword>contract</span></code> expression.</p>
+<p>
+</p>
+<a name="node_sec_13.5"></a>
+<h2><a href="mzlib.html#node_toc_node_sec_13.5">13.5&nbsp;&nbsp;Contract Utility</a></h2>
+<p><a name="node_idx_534"></a></p>
+<p>
+
+<a name="node_kw_definitioncontract_Q_"></a>
+</p>
+<p></p>
+<p>
+
+<a name="node_idx_536"></a><code class=scheme>contract?</code> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<small>P</small><small>R</small><small>E</small><small>D</small><small>I</small><small>C</small><small>A</small><small>T</small><small>E</small>
+</p>
+<p>
+The procedure <code class=scheme><span class=variable>contract?</span></code> returns <code class=scheme><span class=selfeval>#t</span></code> if its
+argument is a contract (ie, constructed with one of the
+combinators described in this section).</p>
+<p>
+
+<a name="node_kw_definitionflat-contract_Q_"></a>
+</p>
+<p></p>
+<p>
+
+<a name="node_idx_538"></a><code class=scheme>flat-contract?</code> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<small>P</small><small>R</small><small>E</small><small>D</small><small>I</small><small>C</small><small>A</small><small>T</small><small>E</small>
+</p>
+<p>
+This predicate returns true when its argument is a contract
+that has been constructed with <code class=scheme><span class=variable>flat-contract</span></code> (and
+thus is essentially just a predicate).</p>
+<p>
+
+
+</p>
+<p></p>
+<p>
+
+<a name="node_idx_540"></a><a name="node_kw_definitionflat-contract-predicate"></a><code class=scheme>(flat-contract-predicate</code><tt>&nbsp;</tt><code class=scheme><span class=variable>value</span></code><code class=scheme>)</code> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<small>S</small><small>E</small><small>L</small><small>E</small><small>C</small><small>T</small><small>O</small><small>R</small>
+</p>
+<p>
+This function extracts the predicate from a flat contract.</p>
+<p>
+</p>
+<p>
+</p>
+<div align=right class=navigation><i>[Go to <span><a href="mzlib.html">first</a>, <a href="mzlib-Z-H-12.html">previous</a></span><span>, <a href="mzlib-Z-H-14.html">next</a></span> page<span>; &nbsp;&nbsp;</span><span><a href="mzlib.html#node_toc_start">contents</a></span><span><span>; &nbsp;&nbsp;</span><a href="mzlib-Z-H-42.html#node_index_start">index</a></span>]</i></div><p></p>
+</body>
+</html>

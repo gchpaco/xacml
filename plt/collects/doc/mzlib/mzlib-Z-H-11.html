@@ -1,0 +1,158 @@
+<!doctype html public "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!--
+
+Generated from mzlib.tex by tex2page, v 2004-09-11
+(running on MzScheme 209, unix), 
+(c) Dorai Sitaram, 
+http://www.ccs.neu.edu/~dorai/tex2page/tex2page-doc.html
+
+-->
+<head>
+<title>
+PLT MzLib: Libraries Manual
+</title>
+<link rel="stylesheet" type="text/css" href="mzlib-Z-S.css" title=default>
+<meta name=robots content="noindex,follow">
+</head>
+<body>
+<div align=right class=navigation><i>[Go to <span><a href="mzlib.html">first</a>, <a href="mzlib-Z-H-10.html">previous</a></span><span>, <a href="mzlib-Z-H-12.html">next</a></span> page<span>; &nbsp;&nbsp;</span><span><a href="mzlib.html#node_toc_start">contents</a></span><span><span>; &nbsp;&nbsp;</span><a href="mzlib-Z-H-42.html#node_index_start">index</a></span>]</i></div><p></p>
+<a name="node_chap_11"></a>
+<h1 class=chapter>
+<div class=chapterheading><a href="mzlib.html#node_toc_node_chap_11">Chapter 11</a></div><br>
+<a href="mzlib.html#node_toc_node_chap_11"><tt><strong>compat.ss</strong></tt>: Compatibility</a></h1>
+<p><a name="node_idx_364"></a><a name="node_idx_366"></a></p>
+<p>
+This library defines a number of procedures and syntactic forms that
+are commonly provided by other Scheme implementations. Most of the
+procedures are aliases for built-in MzScheme procedures, as shown in
+the table below. The remaining procedures and forms are described
+below.</p>
+<p>
+</p>
+<div align=center><table><tr><td>
+
+<tt>
+<table border=0><tr><td valign=top >Compatible </td><td valign=top >MzScheme </td></tr>
+<tr><td valign=top >=? </td><td valign=top >= </td></tr>
+<tr><td valign=top >&lt;? </td><td valign=top >&lt; </td></tr>
+<tr><td valign=top >&gt;? </td><td valign=top >&gt; </td></tr>
+<tr><td valign=top >&lt;=? </td><td valign=top >&lt;= </td></tr>
+<tr><td valign=top >&gt;=? </td><td valign=top >&gt;= </td></tr>
+<tr><td valign=top >1+ </td><td valign=top >add1 </td></tr>
+<tr><td valign=top >1- </td><td valign=top >sub1 </td></tr>
+<tr><td valign=top >gentemp </td><td valign=top >gensym </td></tr>
+<tr><td valign=top >flush-output-port </td><td valign=top >flush-output </td></tr>
+<tr><td valign=top >real-time </td><td valign=top >current-milliseconds
+</td></tr></table>
+
+</tt>
+</td></tr></table></div>
+<p>
+
+
+</p>
+<p></p>
+<p>
+
+<a name="node_idx_368"></a><a name="node_kw_definitionatom_Q_"></a><code class=scheme>(atom?</code><tt>&nbsp;</tt><code class=scheme><span class=variable>v</span></code><code class=scheme>)</code> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<small>P</small><small>R</small><small>O</small><small>C</small><small>E</small><small>D</small><small>U</small><small>R</small><small>E</small>
+</p>
+<p>
+Same as <code class=scheme>(<code class=scheme>not</code> (<span class=variable>pair?</span> <span class=variable>v</span>))</code>.</p>
+<p>
+
+<a name="node_kw_definitiondefine-structure"></a><a name="node_idx_370"></a>
+</p>
+<p></p>
+<p>
+
+<code class=scheme>(<code class=scheme><span class=keyword>define-structure</span></code> <code class=scheme><span class=variable>(name-identifier field-identifier <tt>&middot;&middot;&middot;</tt>)</span></code>)</code> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<small>S</small><small>Y</small><small>N</small><small>T</small><small>A</small><small>X</small>
+</p>
+<p>
+Like <code class=scheme>define-struct</code>, except that the <code class=scheme><span class=variable>name-identifier</span></code> is
+moved inside the parenthesis for fields. A second form of
+<code class=scheme><span class=keyword>define-structure</span></code>, below, supports initial-value expressions
+for fields.</p>
+<p>
+
+<a name="node_kw_definitiondefine-structure"></a><a name="node_idx_372"></a>
+</p>
+<p></p>
+<p>
+
+<code class=scheme>(<code class=scheme><span class=keyword>define-structure</span></code> <code class=scheme><span class=variable>(name-identifier field-identifier <tt>&middot;&middot;&middot;</tt>) ((init-field-identifier init-expr) <tt>&middot;&middot;&middot;</tt>)</span></code>)</code> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<small>S</small><small>Y</small><small>N</small><small>T</small><small>A</small><small>X</small>
+</p>
+<p>
+Like <code class=scheme>define-struct</code>, except that the <code class=scheme><span class=variable>name-identifier</span></code> is
+moved inside the parenthesis for fields, and additional fields can be
+specified with initial-value expressions.</p>
+<p>
+The <code class=scheme><span class=variable>init-field-identifier</span></code>s do not have corresponding arguments
+for the <code class=scheme>make-<code class=scheme><span class=variable>name-identifier</span></code></code> constructor. Instead, the
+<code class=scheme><span class=variable>init-field-identifier</span></code>'s <code class=scheme><span class=variable>init-expr</span></code> is evaluated to obtain
+the field's value when the constructor is called. The
+<code class=scheme><span class=variable>field-identifier</span></code>s are bound in <code class=scheme><span class=variable>init-expr</span></code>s, but not the
+<code class=scheme><span class=variable>init-field-identifier</span></code>s.</p>
+<p>
+Example:
+</p>
+<div align=left><pre class=scheme>(<span class=keyword>define-structure</span> (<span class=variable>add</span> <span class=variable>left</span> <span class=variable>right</span>) ([<span class=variable>sum</span> (<span class=variable>+</span> <span class=variable>left</span> <span class=variable>right</span>)]))
+(<span class=variable>add-sum</span> (<span class=variable>make-add</span> <span class=selfeval>3</span> <span class=selfeval>6</span>)) <span class=comment>; =&gt; <code class=schemeresponse><span class=selfeval>9</span></code></span>
+</pre></div><p></p>
+<p>
+
+
+</p>
+<p></p>
+<p>
+
+<a name="node_idx_374"></a><a name="node_kw_definitiongetprop"></a><code class=scheme>(getprop</code><tt>&nbsp;</tt><code class=scheme><span class=variable>sym property default</span></code><code class=scheme>)</code> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<small>P</small><small>R</small><small>O</small><small>C</small><small>E</small><small>D</small><small>U</small><small>R</small><small>E</small>
+</p>
+<p>
+Gets a property value associated with the symbol <code class=scheme><span class=variable>sym</span></code>.
+The <code class=scheme><span class=variable>property</span></code> argument is also a symbol that names the
+property to be found. If the property is not found, <code class=scheme><span class=variable>default</span></code>
+is returned. If the <code class=scheme><span class=variable>default</span></code> argument is omitted, <code class=scheme><span class=selfeval>#f</span></code>
+is used as the default.</p>
+<p>
+
+
+</p>
+<p></p>
+<p>
+
+<a name="node_idx_376"></a><a name="node_kw_definitionnew-cafe"></a><code class=scheme>(new-cafe</code><tt>&nbsp;</tt>[<code class=scheme><span class=variable>eval-handler</span></code>]<code class=scheme>)</code> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<small>P</small><small>R</small><small>O</small><small>C</small><small>E</small><small>D</small><small>U</small><small>R</small><small>E</small>
+</p>
+<p>
+Emulates Chez Scheme's <code class=scheme>new-cafe</code>.</p>
+<p>
+
+
+</p>
+<p></p>
+<p>
+
+<a name="node_idx_378"></a><a name="node_kw_definitionputprop"></a><code class=scheme>(putprop</code><tt>&nbsp;</tt><code class=scheme><span class=variable>sym property value</span></code><code class=scheme>)</code> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<small>P</small><small>R</small><small>O</small><small>C</small><small>E</small><small>D</small><small>U</small><small>R</small><small>E</small>
+</p>
+<p>
+Installs a value for <code class=scheme><span class=variable>property</span></code> of the symbol <code class=scheme><span class=variable>sym</span></code>.
+See <code class=scheme>getprop</code> above.</p>
+<p>
+
+
+</p>
+<p></p>
+<p>
+
+<a name="node_idx_380"></a><a name="node_kw_definitionsort"></a><code class=scheme>(sort</code><tt>&nbsp;</tt><code class=scheme><span class=variable>less-than?-proc list</span></code><code class=scheme>)</code> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<small>P</small><small>R</small><small>O</small><small>C</small><small>E</small><small>D</small><small>U</small><small>R</small><small>E</small>
+</p>
+<p>
+This is the same as <code class=scheme>mergesort</code> (see section&nbsp;<a href="mzlib-Z-H-21.html#node_chap_21">21</a>) with
+the arguments reversed.</p>
+<p>
+</p>
+<p>
+</p>
+<div align=right class=navigation><i>[Go to <span><a href="mzlib.html">first</a>, <a href="mzlib-Z-H-10.html">previous</a></span><span>, <a href="mzlib-Z-H-12.html">next</a></span> page<span>; &nbsp;&nbsp;</span><span><a href="mzlib.html#node_toc_start">contents</a></span><span><span>; &nbsp;&nbsp;</span><a href="mzlib-Z-H-42.html#node_index_start">index</a></span>]</i></div><p></p>
+</body>
+</html>

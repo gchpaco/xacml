@@ -1,0 +1,767 @@
+<!doctype html public "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!--
+
+Generated from mzlib.tex by tex2page, v 2004-09-11
+(running on MzScheme 209, unix), 
+(c) Dorai Sitaram, 
+http://www.ccs.neu.edu/~dorai/tex2page/tex2page-doc.html
+
+-->
+<head>
+<title>
+PLT MzLib: Libraries Manual
+</title>
+<link rel="stylesheet" type="text/css" href="mzlib-Z-S.css" title=default>
+<meta name=robots content="noindex,follow">
+</head>
+<body>
+<div align=right class=navigation><i>[Go to <span><a href="mzlib.html">first</a>, <a href="mzlib-Z-H-41.html">previous</a></span><span class=disable>, next</span> page<span>; &nbsp;&nbsp;</span><span><a href="mzlib.html#node_toc_start">contents</a></span><span class=disable><span>; &nbsp;&nbsp;</span>index</span>]</i></div><p></p>
+<a name="node_chap_Temp_23"></a>
+<h1 class=chapter>
+<div class=chapterheading>&nbsp;</div><br>
+<a href="mzlib.html#node_toc_node_chap_Temp_23">Index</a></h1>
+<p>
+<a name="node_index_start"></a></p>
+<p>
+<br>
+<a href="mzlib-Z-H-14.html#node_idx_554"><code class=scheme><span class=selfeval>'american</span></code></a><br>
+<a href="mzlib-Z-H-14.html#node_idx_556"><code class=scheme><span class=selfeval>'chinese</span></code></a><br>
+<a href="mzlib-Z-H-18.html#node_idx_688"><code class=scheme><span class=selfeval>'dir</span></code></a><br>
+<a href="mzlib-Z-H-29.html#node_idx_1028"><code class=scheme><span class=selfeval>'done-error</span></code></a><br>
+<a href="mzlib-Z-H-29.html#node_idx_1026"><code class=scheme><span class=selfeval>'done-ok</span></code></a><br>
+<a href="mzlib-Z-H-18.html#node_idx_686"><code class=scheme><span class=selfeval>'file</span></code></a><br>
+<a href="mzlib-Z-H-9.html#node_idx_330"><code class=scheme><span class=selfeval>'final</span></code></a><br>
+<a href="mzlib-Z-H-14.html#node_idx_558"><code class=scheme><span class=selfeval>'german</span></code></a><br>
+<a href="mzlib-Z-H-9.html#node_idx_332"><code class=scheme><span class=selfeval>'help-labels</span></code></a><br>
+<a href="mzlib-Z-H-14.html#node_idx_560"><code class=scheme><span class=selfeval>'indian</span></code></a><br>
+<a href="mzlib-Z-H-28.html#node_idx_966"><code class=scheme><span class=selfeval>'infinity</span></code></a><br>
+<a href="mzlib-Z-H-29.html#node_idx_1020"><code class=scheme><span class=selfeval>'interrupt</span></code></a><br>
+<a href="mzlib-Z-H-14.html#node_idx_562"><code class=scheme><span class=selfeval>'irish</span></code></a><br>
+<a href="mzlib-Z-H-14.html#node_idx_564"><code class=scheme><span class=selfeval>'iso-8601</span></code></a><br>
+<a href="mzlib-Z-H-14.html#node_idx_568"><code class=scheme><span class=selfeval>'julian</span></code></a><br>
+<a href="mzlib-Z-H-29.html#node_idx_1022"><code class=scheme><span class=selfeval>'kill</span></code></a><br>
+<a href="mzlib-Z-H-18.html#node_idx_690"><code class=scheme><span class=selfeval>'link</span></code></a>, <a href="mzlib-Z-H-18.html#node_idx_692">[2]</a><br>
+<a href="mzlib-Z-H-9.html#node_idx_328"><code class=scheme><span class=selfeval>'multi</span></code></a><br>
+<a href="mzlib-Z-H-9.html#node_idx_326"><code class=scheme><span class=selfeval>'once-any</span></code></a><br>
+<a href="mzlib-Z-H-9.html#node_idx_324"><code class=scheme><span class=selfeval>'once-each</span></code></a><br>
+<a href="mzlib-Z-H-14.html#node_idx_566"><code class=scheme><span class=selfeval>'rfc2822</span></code></a><br>
+<a href="mzlib-Z-H-29.html#node_idx_1024"><code class=scheme><span class=selfeval>'running</span></code></a><br>
+<a href="mzlib-Z-H-29.html#node_idx_1016"><code class=scheme><span class=selfeval>'status</span></code></a><br>
+<a href="mzlib-Z-H-18.html#node_idx_700"><code class=scheme><span class=selfeval>'truncate</span></code></a><br>
+<a href="mzlib-Z-H-29.html#node_idx_1018"><code class=scheme><span class=selfeval>'wait</span></code></a><br>
+<a href="mzlib-Z-H-13.html#node_idx_476"><code class=scheme><span class=keyword>-&gt;</span></code></a>, <a href="mzlib-Z-H-13.html#node_idx_478">[2]</a><br>
+<a href="mzlib-Z-H-13.html#node_idx_480"><code class=scheme><span class=keyword>-&gt;*</span></code></a>, <a href="mzlib-Z-H-13.html#node_idx_482">[2]</a>, 
+<a href="mzlib-Z-H-13.html#node_idx_484">[3]</a>, <a href="mzlib-Z-H-13.html#node_idx_486">[4]</a><br>
+<a href="mzlib-Z-H-13.html#node_idx_488"><code class=scheme><span class=keyword>-&gt;d</span></code></a><br>
+<a href="mzlib-Z-H-13.html#node_idx_490"><code class=scheme><span class=keyword>-&gt;d*</span></code></a>, <a href="mzlib-Z-H-13.html#node_idx_492">[2]</a><br>
+<a href="mzlib-Z-H-13.html#node_idx_494"><code class=scheme><span class=keyword>-&gt;r</span></code></a>, <a href="mzlib-Z-H-13.html#node_idx_496">[2]</a>, 
+<a href="mzlib-Z-H-13.html#node_idx_498">[3]</a>, <a href="mzlib-Z-H-13.html#node_idx_500">[4]</a>, 
+<a href="mzlib-Z-H-13.html#node_idx_502">[5]</a>, <a href="mzlib-Z-H-13.html#node_idx_504">[6]</a><br>
+<a href="mzlib-Z-H-33.html#node_idx_1074"><code class=scheme>:</code></a><br>
+<a href="mzlib-Z-H-13.html#node_idx_418"><code class=scheme>&lt;/c</code></a><br>
+<a href="mzlib-Z-H-13.html#node_idx_414">&lt;=/c</a><br>
+<a href="mzlib-Z-H-13.html#node_idx_412"><code class=scheme>&lt;=/c</code></a><br>
+<a href="mzlib-Z-H-13.html#node_idx_416"><code class=scheme>&gt;/c</code></a><br>
+<a href="mzlib-Z-H-13.html#node_idx_410"><code class=scheme>&gt;=/c</code></a><br>
+<a href="mzlib-Z-H-2.html#node_idx_4"><tt><strong>async-channel.ss</strong></tt>: Buffered Asynchronous Channels</a><br>
+<a href="mzlib-Z-H-3.html#node_idx_18"><tt><strong>awk.ss</strong></tt>: Awk-like Syntax</a><br>
+<a href="mzlib-Z-H-6.html#node_idx_270"><tt><strong>class-old.ss</strong></tt>: Version-100 Classes</a><br>
+<a href="mzlib-Z-H-4.html#node_idx_32"><tt><strong>class.ss</strong></tt>: Classes and Objects</a><br>
+<a href="mzlib-Z-H-5.html#node_idx_250"><tt><strong>class100.ss</strong></tt>: Version-100-Style Classes</a><br>
+<a href="mzlib-Z-H-8.html#node_idx_294"><tt><strong>cm-accomplice.ss</strong></tt>: Compilation Manager Hook for Syntax Transformers</a><br>
+<a href="mzlib-Z-H-7.html#node_idx_274"><tt><strong>cm.ss</strong></tt>: Compilation Manager</a><br>
+<a href="mzlib-Z-H-9.html#node_idx_300"><tt><strong>cmdline.ss</strong></tt>: Command-line Parsing</a><br>
+<a href="mzlib-Z-H-10.html#node_idx_334"><tt><strong>cml.ss</strong></tt>: Concurrent ML Compatibility</a><br>
+<a href="mzlib-Z-H-11.html#node_idx_364"><tt><strong>compat.ss</strong></tt>: Compatibility</a><br>
+<a href="mzlib-Z-H-12.html#node_idx_382"><tt><strong>compile.ss</strong></tt>: Compiling Files</a><br>
+<a href="mzlib-Z-H-13.html#node_idx_388"><tt><strong>contract.ss</strong></tt>: Contracts</a><br>
+<a href="mzlib-Z-H-14.html#node_idx_542"><tt><strong>date.ss</strong></tt>: Dates</a><br>
+<a href="mzlib-Z-H-15.html#node_idx_576"><tt><strong>deflate.ss</strong></tt>: Deflating (Compressing) Data</a><br>
+<a href="mzlib-Z-H-16.html#node_idx_586"><tt><strong>defmacro.ss</strong></tt>: Non-Hygienic Macros</a><br>
+<a href="mzlib-Z-H-17.html#node_idx_596"><tt><strong>etc.ss</strong></tt>: Useful Procedures and Syntax</a><br>
+<a href="mzlib-Z-H-18.html#node_idx_648"><tt><strong>file.ss</strong></tt>: Filesystem Utilities</a><br>
+<a href="mzlib-Z-H-19.html#node_idx_708"><tt><strong>include.ss</strong></tt>: Textually Including Source</a><br>
+<a href="mzlib-Z-H-20.html#node_idx_720"><tt><strong>inflate.ss</strong></tt>: Inflating Compressed Data</a><br>
+<a href="mzlib-Z-H-21.html#node_idx_736"><tt><strong>list.ss</strong></tt>: List Utilities</a><br>
+<a href="mzlib-Z-H-22.html#node_idx_796"><tt><strong>match.ss</strong></tt>: Pattern Matching</a><br>
+<a href="mzlib-Z-H-23.html#node_idx_820"><tt><strong>math.ss</strong></tt>: Math</a><br>
+<a href="mzlib-Z-H-24.html#node_idx_838"><tt><strong>package.ss</strong></tt>: Local-Definition Scope Control</a><br>
+<a href="mzlib-Z-H-25.html#node_idx_884"><tt><strong>pconvert.ss</strong></tt>: Converted Printing</a><br>
+<a href="mzlib-Z-H-26.html#node_idx_922"><tt><strong>plt-match.ss</strong></tt>: Pattern Matching</a><br>
+<a href="mzlib-Z-H-27.html#node_idx_926"><tt><strong>pregexp.ss</strong></tt>: Perl-Style Regular Expressions</a><br>
+<a href="mzlib-Z-H-28.html#node_idx_954"><tt><strong>pretty.ss</strong></tt>: Pretty Printing</a><br>
+<a href="mzlib-Z-H-29.html#node_idx_994"><tt><strong>process.ss</strong></tt>: Process and Shell-Command Execution</a><br>
+<a href="mzlib-Z-H-30.html#node_idx_1036"><tt><strong>restart.ss</strong></tt>: Simulating Stand-alone MzScheme</a><br>
+<a href="mzlib-Z-H-31.html#node_idx_1042"><tt><strong>sendevent.ss</strong></tt>: AppleEvents</a><br>
+<a href="mzlib-Z-H-32.html#node_idx_1062"><tt><strong>shared.ss</strong></tt>: Graph Constructor Syntax</a><br>
+<a href="mzlib-Z-H-33.html#node_idx_1068"><tt><strong>spidey.ss</strong></tt>: MrSpidey Annotations</a><br>
+<a href="mzlib-Z-H-34.html#node_idx_1086"><tt><strong>string.ss</strong></tt>: String Utilities</a><br>
+<a href="mzlib-Z-H-35.html#node_idx_1124"><tt><strong>surrogate.ss</strong></tt>: Proxy-like Design Pattern</a><br>
+<a href="mzlib-Z-H-36.html#node_idx_1130"><tt><strong>thread.ss</strong></tt>: Thread Utilities</a><br>
+<a href="mzlib-Z-H-37.html#node_idx_1154"><tt><strong>trace.ss</strong></tt>: Tracing Top-level Procedure Calls</a><br>
+<a href="mzlib-Z-H-38.html#node_idx_1162"><tt><strong>traceld.ss</strong></tt>: Tracing File Loads</a><br>
+<a href="mzlib-Z-H-39.html#node_idx_1166"><tt><strong>transcr.ss</strong></tt>: Transcripts</a><br>
+<a href="mzlib-Z-H-40.html#node_idx_1176"><tt><strong>unit.ss</strong></tt>: Core Units</a><br>
+<a href="mzlib-Z-H-41.html#node_idx_1226"><tt><strong>unitsig.ss</strong></tt>: Units with Signatures</a></p>
+<p>
+</p>
+<p></p>
+<p>
+<br>
+<a href="mzlib-Z-H-25.html#node_idx_888"><code class=scheme>abbreviate-cons-as-list</code></a><br>
+<a href="mzlib-Z-H-41.html#node_idx_1298">Adding a Signature to Primitive Units</a><br>
+<a href="mzlib-Z-H-27.html#node_idx_952">An extended example</a><br>
+<a href="mzlib-Z-H-13.html#node_idx_468"><code class=scheme>anaphoric-contracts</code></a>, 
+<a href="mzlib-Z-H-13.html#node_idx_470">[2]</a><br>
+<a href="mzlib-Z-H-13.html#node_idx_406"><code class=scheme>and/c</code></a><br>
+<a href="mzlib-Z-H-13.html#node_idx_402"><code class=scheme>any?</code></a><br>
+<a href="mzlib-Z-H-31.html#node_idx_1046">AppleEvents</a><br>
+<a href="mzlib-Z-H-21.html#node_idx_754"><code class=scheme>assf</code></a><br>
+<a href="mzlib-Z-H-2.html#node_idx_10"><code class=scheme>async-channel-get</code></a><br>
+<a href="mzlib-Z-H-2.html#node_idx_14"><code class=scheme>async-channel-put</code></a><br>
+<a href="mzlib-Z-H-2.html#node_idx_12"><code class=scheme>async-channel-try-get</code></a><br>
+<a href="mzlib-Z-H-2.html#node_idx_6"><tt><strong>async-channel.ss</strong></tt></a><br>
+<a href="mzlib-Z-H-11.html#node_idx_368"><code class=scheme>atom?</code></a><br>
+<a href="mzlib-Z-H-13.html#node_idx_522">Attaching Contracts to Values</a><br>
+<a href="mzlib-Z-H-3.html#node_idx_22"><code class=scheme><span class=keyword>awk</span></code></a><br>
+<a href="mzlib-Z-H-3.html#node_idx_20"><tt><strong>awk.ss</strong></tt></a></p>
+<p>
+</p>
+<p></p>
+<p>
+<br>
+<a href="mzlib-Z-H-17.html#node_idx_600"><code class=scheme>boolean=?</code></a><br>
+<a href="mzlib-Z-H-25.html#node_idx_890"><code class=scheme>booleans-as-true/false</code></a><br>
+<a href="mzlib-Z-H-13.html#node_idx_454"><code class=scheme>box-immutable/c</code></a><br>
+<a href="mzlib-Z-H-13.html#node_idx_452"><code class=scheme>box/p</code></a><br>
+<a href="mzlib-Z-H-18.html#node_idx_652"><code class=scheme>build-absolute-path</code></a><br>
+<a href="mzlib-Z-H-17.html#node_idx_604"><code class=scheme>build-list</code></a><br>
+<a href="mzlib-Z-H-18.html#node_idx_654"><code class=scheme>build-path</code></a>, 
+<a href="mzlib-Z-H-18.html#node_idx_658">[2]</a><br>
+<a href="mzlib-Z-H-18.html#node_idx_656"><code class=scheme>build-relative-path</code></a><br>
+<a href="mzlib-Z-H-25.html#node_idx_896"><code class=scheme>build-share</code></a><br>
+<a href="mzlib-Z-H-17.html#node_idx_606"><code class=scheme>build-string</code></a><br>
+<a href="mzlib-Z-H-17.html#node_idx_608"><code class=scheme>build-vector</code></a></p>
+<p>
+</p>
+<p></p>
+<p>
+<br>
+<a href="mzlib-Z-H-18.html#node_idx_660"><code class=scheme>call-with-input-file*</code></a><br>
+<a href="mzlib-Z-H-18.html#node_idx_662"><code class=scheme>call-with-output-file*</code></a><br>
+<a href="mzlib-Z-H-13.html#node_idx_506"><code class=scheme><span class=keyword>case-&gt;</span></code></a><br>
+<a href="mzlib-Z-H-10.html#node_idx_344"><code class=scheme>channel</code></a><br>
+<a href="mzlib-Z-H-10.html#node_idx_346"><code class=scheme>channel-recv-evt</code></a><br>
+<a href="mzlib-Z-H-10.html#node_idx_348"><code class=scheme>channel-send-evt</code></a><br>
+<a href="mzlib-Z-H-10.html#node_idx_350"><code class=scheme>choice-evt</code></a><br>
+<a href="mzlib-Z-H-4.html#node_idx_92"><code class=scheme><span class=keyword>class</span></code></a><br>
+<a href="mzlib-Z-H-4.html#node_idx_90"><code class=scheme><span class=keyword>class*</span></code></a><br>
+<a href="mzlib-Z-H-4.html#node_idx_68"><code class=scheme><span class=keyword>class*/names</span></code></a><br>
+<a href="mzlib-Z-H-4.html#node_idx_228"><code class=scheme>class-&gt;interface</code></a><br>
+<a href="mzlib-Z-H-4.html#node_idx_204"><code class=scheme><span class=keyword>class-field-accessor</span></code></a><br>
+<a href="mzlib-Z-H-4.html#node_idx_206"><code class=scheme><span class=keyword>class-field-mutator</span></code></a><br>
+<a href="mzlib-Z-H-4.html#node_idx_248"><code class=scheme>class-info</code></a><br>
+<a href="mzlib-Z-H-6.html#node_idx_272"><tt><strong>class-old.ss</strong></tt></a><br>
+<a href="mzlib-Z-H-4.html#node_idx_34"><tt><strong>class.ss</strong></tt></a><br>
+<a href="mzlib-Z-H-5.html#node_idx_254"><code class=scheme><span class=keyword>class100</span></code></a>, <a href="mzlib-Z-H-5.html#node_idx_264">[2]</a><br>
+<a href="mzlib-Z-H-5.html#node_idx_256"><code class=scheme><span class=keyword>class100*</span></code></a>, <a href="mzlib-Z-H-5.html#node_idx_262">[2]</a><br>
+<a href="mzlib-Z-H-5.html#node_idx_268"><code class=scheme><span class=keyword>class100*-asi</span></code></a><br>
+<a href="mzlib-Z-H-5.html#node_idx_258"><code class=scheme><span class=keyword>class100*/names</span></code></a>, 
+<a href="mzlib-Z-H-5.html#node_idx_260">[2]</a><br>
+<a href="mzlib-Z-H-5.html#node_idx_266"><code class=scheme><span class=keyword>class100-asi</span></code></a><br>
+<a href="mzlib-Z-H-5.html#node_idx_252"><tt><strong>class100.ss</strong></tt></a><br>
+<a href="mzlib-Z-H-4.html#node_idx_220"><code class=scheme>class?</code></a><br>
+<a href="mzlib-Z-H-4.html#node_idx_38">classes</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="mzlib-Z-H-4.html#node_idx_66">creating</a><br>
+<a href="mzlib-Z-H-8.html#node_idx_296"><tt><strong>cm-accomplice.ss</strong></tt></a><br>
+<a href="mzlib-Z-H-7.html#node_idx_276"><tt><strong>cm.ss</strong></tt></a><br>
+<a href="mzlib-Z-H-9.html#node_idx_302"><tt><strong>cmdline.ss</strong></tt></a><br>
+<a href="mzlib-Z-H-10.html#node_idx_336"><tt><strong>cml.ss</strong></tt></a><br>
+<a href="mzlib-Z-H-9.html#node_idx_304"><code class=scheme><span class=keyword>command-line</span></code></a><br>
+<a href="mzlib-Z-H-11.html#node_idx_366"><tt><strong>compat.ss</strong></tt></a><br>
+<a href="mzlib-Z-H-12.html#node_idx_386"><code class=scheme>compile-file</code></a><br>
+<a href="mzlib-Z-H-12.html#node_idx_384"><tt><strong>compile.ss</strong></tt></a><br>
+<a href="mzlib-Z-H-17.html#node_idx_610"><code class=scheme>compose</code></a><br>
+<a href="mzlib-Z-H-40.html#node_idx_1208"><code class=scheme><span class=keyword>compound-unit</span></code></a><br>
+<a href="mzlib-Z-H-41.html#node_idx_1264"><code class=scheme><span class=keyword>compound-unit/sig</span></code></a>, 
+<a href="mzlib-Z-H-41.html#node_idx_1272">[2]</a><br>
+<a href="mzlib-Z-H-23.html#node_idx_824"><code class=scheme>conjugate</code></a><br>
+<a href="mzlib-Z-H-13.html#node_idx_458"><code class=scheme>cons-immutable/c</code></a><br>
+<a href="mzlib-Z-H-13.html#node_idx_456"><code class=scheme>cons/p</code></a><br>
+<a href="mzlib-Z-H-21.html#node_idx_756"><code class=scheme>cons?</code></a><br>
+<a href="mzlib-Z-H-25.html#node_idx_898"><code class=scheme>constructor-style-printing</code></a><br>
+<a href="mzlib-Z-H-36.html#node_idx_1134"><code class=scheme>consumer-thread</code></a><br>
+<a href="mzlib-Z-H-13.html#node_idx_530"><code class=scheme><span class=keyword>contract</span></code></a>, <a href="mzlib-Z-H-13.html#node_idx_532">[2]</a><br>
+<a href="mzlib-Z-H-13.html#node_idx_534">Contract Utility</a><br>
+<a href="mzlib-Z-H-13.html#node_idx_390"><tt><strong>contract.ss</strong></tt></a>, 
+<a href="mzlib-Z-H-13.html#node_idx_392">[2]</a><br>
+<a href="mzlib-Z-H-13.html#node_idx_536"><code class=scheme>contract?</code></a><br>
+<a href="mzlib-Z-H-13.html#node_idx_524">Contracts on Values</a><br>
+<a href="mzlib-Z-H-18.html#node_idx_664"><code class=scheme>copy-directory/files</code></a><br>
+<a href="mzlib-Z-H-36.html#node_idx_1136"><code class=scheme>copy-port</code></a><br>
+<a href="mzlib-Z-H-23.html#node_idx_826"><code class=scheme>cosh</code></a><br>
+<a href="mzlib-Z-H-4.html#node_idx_62">Creating Classes</a><br>
+<a href="mzlib-Z-H-4.html#node_idx_50">Creating Interfaces</a><br>
+<a href="mzlib-Z-H-4.html#node_idx_158">Creating Objects</a><br>
+<a href="mzlib-Z-H-40.html#node_idx_1182">Creating Units</a><br>
+<a href="mzlib-Z-H-25.html#node_idx_900"><code class=scheme>current-build-share-hook</code></a><br>
+<a href="mzlib-Z-H-25.html#node_idx_902"><code class=scheme>current-build-share-name-hook</code></a><br>
+<a href="mzlib-Z-H-25.html#node_idx_904"><code class=scheme>current-print-convert-hook</code></a><br>
+<a href="mzlib-Z-H-25.html#node_idx_906"><code class=scheme>current-read-eval-convert-print-prompt</code></a><br>
+<a href="mzlib-Z-H-10.html#node_idx_360"><code class=scheme>current-time</code></a></p>
+<p>
+</p>
+<p></p>
+<p>
+<br>
+<a href="mzlib-Z-H-14.html#node_idx_548">date</a><br>
+<a href="mzlib-Z-H-14.html#node_idx_572"><code class=scheme>date-&gt;julian/scalinger</code></a><br>
+<a href="mzlib-Z-H-14.html#node_idx_546"><code class=scheme>date-&gt;string</code></a><br>
+<a href="mzlib-Z-H-14.html#node_idx_552"><code class=scheme>date-display-format</code></a><br>
+<a href="mzlib-Z-H-14.html#node_idx_544"><tt><strong>date.ss</strong></tt></a><br>
+<a href="mzlib-Z-H-24.html#node_idx_862"><code class=scheme><span class=keyword>define*</span></code></a>, <a href="mzlib-Z-H-24.html#node_idx_864">[2]</a><br>
+<a href="mzlib-Z-H-24.html#node_idx_858"><code class=scheme><span class=keyword>define*-dot</span></code></a><br>
+<a href="mzlib-Z-H-24.html#node_idx_866"><code class=scheme><span class=keyword>define*-syntax</span></code></a>, 
+<a href="mzlib-Z-H-24.html#node_idx_868">[2]</a><br>
+<a href="mzlib-Z-H-24.html#node_idx_872"><code class=scheme><span class=keyword>define*-syntaxes</span></code></a><br>
+<a href="mzlib-Z-H-24.html#node_idx_870"><code class=scheme><span class=keyword>define*-values</span></code></a><br>
+<a href="mzlib-Z-H-33.html#node_idx_1078"><code class=scheme>define-constructor</code></a><br>
+<a href="mzlib-Z-H-24.html#node_idx_856"><code class=scheme><span class=keyword>define-dot</span></code></a><br>
+<a href="mzlib-Z-H-4.html#node_idx_156"><code class=scheme><span class=keyword>define-local-member-name</span></code></a><br>
+<a href="mzlib-Z-H-16.html#node_idx_590"><code class=scheme><span class=keyword>define-macro</span></code></a>, 
+<a href="mzlib-Z-H-16.html#node_idx_592">[2]</a><br>
+<a href="mzlib-Z-H-41.html#node_idx_1254"><code class=scheme><span class=keyword>define-signature</span></code></a><br>
+<a href="mzlib-Z-H-11.html#node_idx_370"><code class=scheme><span class=keyword>define-structure</span></code></a>, 
+<a href="mzlib-Z-H-11.html#node_idx_372">[2]</a><br>
+<a href="mzlib-Z-H-17.html#node_idx_612"><code class=scheme><span class=keyword>define-syntax-set</span></code></a><br>
+<a href="mzlib-Z-H-33.html#node_idx_1080"><code class=scheme>define-type</code></a><br>
+<a href="mzlib-Z-H-40.html#node_idx_1198"><code class=scheme><span class=keyword>define-values/invoke-unit</span></code></a><br>
+<a href="mzlib-Z-H-41.html#node_idx_1288"><code class=scheme><span class=keyword>define-values/invoke-unit/sig</span></code></a><br>
+<a href="mzlib-Z-H-13.html#node_idx_528"><code class=scheme><span class=keyword>define/contract</span></code></a><br>
+<a href="mzlib-Z-H-4.html#node_idx_108"><code class=scheme><span class=keyword>define/override</span></code></a><br>
+<a href="mzlib-Z-H-4.html#node_idx_110"><code class=scheme><span class=keyword>define/override-final</span></code></a><br>
+<a href="mzlib-Z-H-4.html#node_idx_112"><code class=scheme><span class=keyword>define/private</span></code></a><br>
+<a href="mzlib-Z-H-4.html#node_idx_104"><code class=scheme><span class=keyword>define/public</span></code></a><br>
+<a href="mzlib-Z-H-4.html#node_idx_106"><code class=scheme><span class=keyword>define/public-final</span></code></a><br>
+<a href="mzlib-Z-H-15.html#node_idx_584"><code class=scheme>deflate</code></a><br>
+<a href="mzlib-Z-H-15.html#node_idx_578"><tt><strong>deflate.ss</strong></tt></a><br>
+<a href="mzlib-Z-H-16.html#node_idx_594"><code class=scheme><span class=keyword>defmacro</span></code></a><br>
+<a href="mzlib-Z-H-16.html#node_idx_588"><tt><strong>defmacro.ss</strong></tt></a><br>
+<a href="mzlib-Z-H-18.html#node_idx_668"><code class=scheme>delete-directory/files</code></a><br>
+<a href="mzlib-Z-H-4.html#node_idx_44">derived class</a><br>
+<a href="mzlib-Z-H-24.html#node_idx_854"><code class=scheme><span class=keyword>dot</span></code></a><br>
+<a href="mzlib-Z-H-36.html#node_idx_1138"><code class=scheme>dynamic-disable-break</code></a><br>
+<a href="mzlib-Z-H-36.html#node_idx_1140"><code class=scheme>dynamic-enable-break</code></a></p>
+<p>
+</p>
+<p></p>
+<p>
+<br>
+<a href="mzlib-Z-H-23.html#node_idx_828"><code class=scheme>e</code></a><br>
+<a href="mzlib-Z-H-41.html#node_idx_1274">effective  signature</a><br>
+<a href="mzlib-Z-H-21.html#node_idx_752"><code class=scheme>eighth</code></a><br>
+<a href="mzlib-Z-H-41.html#node_idx_1268">Embedded Units</a><br>
+<a href="mzlib-Z-H-21.html#node_idx_758"><code class=scheme>empty</code></a><br>
+<a href="mzlib-Z-H-21.html#node_idx_760"><code class=scheme>empty?</code></a><br>
+<a href="mzlib-Z-H-17.html#node_idx_598"><tt><strong>etc.ss</strong></tt></a><br>
+<a href="mzlib-Z-H-34.html#node_idx_1090"><code class=scheme>eval-string</code></a><br>
+<a href="mzlib-Z-H-17.html#node_idx_614"><code class=scheme><span class=keyword>evcase</span></code></a><br>
+<a href="mzlib-Z-H-22.html#node_idx_818">Examples</a><br>
+<a href="mzlib-Z-H-9.html#node_idx_310"><code class=scheme>exn:fail</code></a>, <a href="mzlib-Z-H-9.html#node_idx_314">[2]</a>, 
+<a href="mzlib-Z-H-9.html#node_idx_318">[3]</a>, <a href="mzlib-Z-H-9.html#node_idx_322">[4]</a>, 
+<a href="mzlib-Z-H-20.html#node_idx_726">[5]</a>, <a href="mzlib-Z-H-20.html#node_idx_730">[6]</a>, 
+<a href="mzlib-Z-H-20.html#node_idx_734">[7]</a>, <a href="mzlib-Z-H-31.html#node_idx_1058">[8]</a>, 
+<a href="mzlib-Z-H-31.html#node_idx_1060">[9]</a>, <a href="mzlib-Z-H-34.html#node_idx_1100">[10]</a>, 
+<a href="mzlib-Z-H-34.html#node_idx_1110">[11]</a>, <a href="mzlib-Z-H-34.html#node_idx_1118">[12]</a><br>
+<a href="mzlib-Z-H-4.html#node_idx_164"><code class=scheme>exn:fail:contract</code></a>, 
+<a href="mzlib-Z-H-4.html#node_idx_190">[2]</a>, <a href="mzlib-Z-H-7.html#node_idx_280">[3]</a>, 
+<a href="mzlib-Z-H-17.html#node_idx_602">[4]</a>, <a href="mzlib-Z-H-17.html#node_idx_640">[5]</a>, 
+<a href="mzlib-Z-H-29.html#node_idx_1004">[6]</a>, <a href="mzlib-Z-H-31.html#node_idx_1052">[7]</a>, 
+<a href="mzlib-Z-H-31.html#node_idx_1054">[8]</a><br>
+<a href="mzlib-Z-H-18.html#node_idx_666"><code class=scheme>exn:fail:filesystem</code></a>, 
+<a href="mzlib-Z-H-18.html#node_idx_670">[2]</a><br>
+<a href="mzlib-Z-H-4.html#node_idx_56"><code class=scheme>exn:fail:object</code></a>, 
+<a href="mzlib-Z-H-4.html#node_idx_58">[2]</a>, <a href="mzlib-Z-H-4.html#node_idx_60">[3]</a>, 
+<a href="mzlib-Z-H-4.html#node_idx_82">[4]</a>, <a href="mzlib-Z-H-4.html#node_idx_84">[5]</a>, 
+<a href="mzlib-Z-H-4.html#node_idx_86">[6]</a>, <a href="mzlib-Z-H-4.html#node_idx_88">[7]</a>, 
+<a href="mzlib-Z-H-4.html#node_idx_122">[8]</a>, <a href="mzlib-Z-H-4.html#node_idx_124">[9]</a>, 
+<a href="mzlib-Z-H-4.html#node_idx_126">[10]</a>, <a href="mzlib-Z-H-4.html#node_idx_134">[11]</a>, 
+<a href="mzlib-Z-H-4.html#node_idx_146">[12]</a>, <a href="mzlib-Z-H-4.html#node_idx_148">[13]</a>, 
+<a href="mzlib-Z-H-4.html#node_idx_154">[14]</a>, <a href="mzlib-Z-H-4.html#node_idx_170">[15]</a>, 
+<a href="mzlib-Z-H-4.html#node_idx_172">[16]</a>, <a href="mzlib-Z-H-4.html#node_idx_174">[17]</a>, 
+<a href="mzlib-Z-H-4.html#node_idx_192">[18]</a>, <a href="mzlib-Z-H-4.html#node_idx_212">[19]</a><br>
+<a href="mzlib-Z-H-40.html#node_idx_1200"><code class=scheme>exn:fail:unit</code></a>, 
+<a href="mzlib-Z-H-40.html#node_idx_1216">[2]</a>, <a href="mzlib-Z-H-40.html#node_idx_1218">[3]</a>, 
+<a href="mzlib-Z-H-40.html#node_idx_1220">[4]</a>, <a href="mzlib-Z-H-41.html#node_idx_1276">[5]</a>, 
+<a href="mzlib-Z-H-41.html#node_idx_1278">[6]</a>, <a href="mzlib-Z-H-41.html#node_idx_1280">[7]</a>, 
+<a href="mzlib-Z-H-41.html#node_idx_1282">[8]</a>, <a href="mzlib-Z-H-41.html#node_idx_1314">[9]</a>, 
+<a href="mzlib-Z-H-41.html#node_idx_1318">[10]</a><br>
+<a href="mzlib-Z-H-29.html#node_idx_1008"><code class=scheme>exn:fail:unsupported</code></a>, 
+<a href="mzlib-Z-H-31.html#node_idx_1050">[2]</a>, <a href="mzlib-Z-H-31.html#node_idx_1056">[3]</a>, 
+<a href="mzlib-Z-H-39.html#node_idx_1174">[4]</a><br>
+<a href="mzlib-Z-H-41.html#node_idx_1302">Expanding Signed Unit Expressions</a><br>
+<a href="mzlib-Z-H-18.html#node_idx_672"><code class=scheme>explode-path</code></a><br>
+<a href="mzlib-Z-H-40.html#node_idx_1190"><code class=scheme><span class=keyword>export</span></code></a>, <a href="mzlib-Z-H-40.html#node_idx_1214">[2]</a><br>
+<a href="mzlib-Z-H-41.html#node_idx_1248">export signature</a><br>
+<a href="mzlib-Z-H-34.html#node_idx_1092"><code class=scheme>expr-&gt;string</code></a><br>
+<a href="mzlib-Z-H-41.html#node_idx_1294">Extracting a Primitive Unit from a Signed Unit</a></p>
+<p>
+</p>
+<p></p>
+<p>
+<br>
+<a href="mzlib-Z-H-17.html#node_idx_616"><code class=scheme>false</code></a><br>
+<a href="mzlib-Z-H-13.html#node_idx_428"><code class=scheme>false?</code></a><br>
+<a href="mzlib-Z-H-4.html#node_idx_128"><code class=scheme><span class=keyword>field</span></code></a><br>
+<a href="mzlib-Z-H-4.html#node_idx_176">Field and Method Access</a><br>
+<a href="mzlib-Z-H-4.html#node_idx_200"><code class=scheme><span class=keyword>field-bound?</span></code></a><br>
+<a href="mzlib-Z-H-4.html#node_idx_202"><code class=scheme>field-names</code></a><br>
+fields
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="mzlib-Z-H-4.html#node_idx_178">accessing</a><br>
+<a href="mzlib-Z-H-21.html#node_idx_746"><code class=scheme>fifth</code></a><br>
+<a href="mzlib-Z-H-18.html#node_idx_674"><code class=scheme>file-name-from-path</code></a><br>
+<a href="mzlib-Z-H-18.html#node_idx_650"><tt><strong>file.ss</strong></tt></a><br>
+<a href="mzlib-Z-H-18.html#node_idx_676"><code class=scheme>filename-extension</code></a><br>
+<a href="mzlib-Z-H-21.html#node_idx_762"><code class=scheme>filter</code></a><br>
+<a href="mzlib-Z-H-9.html#node_idx_316"><code class=scheme><span class=keyword>final</span></code></a><br>
+<a href="mzlib-Z-H-18.html#node_idx_678"><code class=scheme>find-files</code></a><br>
+<a href="mzlib-Z-H-18.html#node_idx_680"><code class=scheme>find-library</code></a><br>
+<a href="mzlib-Z-H-18.html#node_idx_682"><code class=scheme>find-relative-path</code></a><br>
+<a href="mzlib-Z-H-14.html#node_idx_570"><code class=scheme>find-seconds</code></a><br>
+<a href="mzlib-Z-H-21.html#node_idx_764"><code class=scheme>first</code></a><br>
+<a href="mzlib-Z-H-13.html#node_idx_394">Flat Contracts</a>, <a href="mzlib-Z-H-13.html#node_idx_396">[2]</a><br>
+<a href="mzlib-Z-H-13.html#node_idx_398"><code class=scheme>flat-contract</code></a><br>
+<a href="mzlib-Z-H-13.html#node_idx_540"><code class=scheme>flat-contract-predicate</code></a><br>
+<a href="mzlib-Z-H-13.html#node_idx_538"><code class=scheme>flat-contract?</code></a><br>
+<a href="mzlib-Z-H-13.html#node_idx_466"><code class=scheme><span class=keyword>flat-murec-contract</span></code></a><br>
+<a href="mzlib-Z-H-13.html#node_idx_400"><code class=scheme>flat-named-contract</code></a><br>
+<a href="mzlib-Z-H-13.html#node_idx_464"><code class=scheme><span class=keyword>flat-rec-contract</span></code></a><br>
+<a href="mzlib-Z-H-18.html#node_idx_684"><code class=scheme>fold-files</code></a><br>
+<a href="mzlib-Z-H-21.html#node_idx_766"><code class=scheme>foldl</code></a><br>
+<a href="mzlib-Z-H-21.html#node_idx_768"><code class=scheme>foldr</code></a><br>
+<a href="mzlib-Z-H-21.html#node_idx_744"><code class=scheme>fourth</code></a><br>
+<a href="mzlib-Z-H-13.html#node_idx_472">Function Contracts</a>, 
+<a href="mzlib-Z-H-13.html#node_idx_474">[2]</a></p>
+<p>
+</p>
+<p></p>
+<p>
+<br>
+<a href="mzlib-Z-H-4.html#node_idx_208"><code class=scheme><span class=keyword>generic</span></code></a><br>
+<a href="mzlib-Z-H-4.html#node_idx_198"><code class=scheme><span class=keyword>get-field</span></code></a><br>
+<a href="mzlib-Z-H-18.html#node_idx_694"><code class=scheme>get-preference</code></a><br>
+<a href="mzlib-Z-H-25.html#node_idx_908"><code class=scheme>get-shared</code></a><br>
+<a href="mzlib-Z-H-11.html#node_idx_374"><code class=scheme>getprop</code></a><br>
+<a href="mzlib-Z-H-10.html#node_idx_354"><code class=scheme>guard-evt</code></a><br>
+<a href="mzlib-Z-H-20.html#node_idx_724"><code class=scheme>gunzip</code></a><br>
+<a href="mzlib-Z-H-20.html#node_idx_728"><code class=scheme>gunzip-through-ports</code></a><br>
+<a href="mzlib-Z-H-15.html#node_idx_580"><code class=scheme>gzip</code></a><br>
+<a href="mzlib-Z-H-15.html#node_idx_582"><code class=scheme>gzip-through-ports</code></a></p>
+<p>
+</p>
+<p></p>
+<p>
+<br>
+<a href="mzlib-Z-H-17.html#node_idx_646"><code class=scheme><span class=keyword>hash-table</span></code></a></p>
+<p>
+</p>
+<p></p>
+<p>
+<br>
+<a href="mzlib-Z-H-17.html#node_idx_618"><code class=scheme>identity</code></a><br>
+<a href="mzlib-Z-H-4.html#node_idx_238"><code class=scheme>implementation?</code></a><br>
+<a href="mzlib-Z-H-13.html#node_idx_436"><code class=scheme>implementation?/c</code></a><br>
+<a href="mzlib-Z-H-40.html#node_idx_1188"><code class=scheme><span class=keyword>import</span></code></a>, <a href="mzlib-Z-H-40.html#node_idx_1210">[2]</a><br>
+<a href="mzlib-Z-H-41.html#node_idx_1246">import signature</a><br>
+<a href="mzlib-Z-H-41.html#node_idx_1242">Importing and Exporting with Signatures</a><br>
+<a href="mzlib-Z-H-19.html#node_idx_712"><code class=scheme><span class=keyword>include</span></code></a><br>
+<a href="mzlib-Z-H-19.html#node_idx_714"><code class=scheme><span class=keyword>include-at/relative-to</span></code></a><br>
+<a href="mzlib-Z-H-19.html#node_idx_716"><code class=scheme><span class=keyword>include-at/relative-to/reader</span></code></a><br>
+<a href="mzlib-Z-H-19.html#node_idx_710"><tt><strong>include.ss</strong></tt></a><br>
+<a href="mzlib-Z-H-19.html#node_idx_718"><code class=scheme><span class=keyword>include/reader</span></code></a><br>
+<a href="mzlib-Z-H-20.html#node_idx_732"><code class=scheme>inflate</code></a><br>
+<a href="mzlib-Z-H-20.html#node_idx_722"><tt><strong>inflate.ss</strong></tt></a><br>
+<a href="mzlib-Z-H-4.html#node_idx_150"><code class=scheme><span class=keyword>inherit</span></code></a><br>
+<a href="mzlib-Z-H-4.html#node_idx_132"><code class=scheme><span class=keyword>inherit-field</span></code></a><br>
+<a href="mzlib-Z-H-4.html#node_idx_40">inheritance</a><br>
+<a href="mzlib-Z-H-4.html#node_idx_114"><code class=scheme><span class=keyword>init</span></code></a><br>
+<a href="mzlib-Z-H-4.html#node_idx_116"><code class=scheme><span class=keyword>init-field</span></code></a>, <a href="mzlib-Z-H-4.html#node_idx_130">[2]</a><br>
+<a href="mzlib-Z-H-4.html#node_idx_118"><code class=scheme><span class=keyword>init-rest</span></code></a><br>
+<a href="mzlib-Z-H-36.html#node_idx_1142"><code class=scheme>input-port-append</code></a><br>
+<a href="mzlib-Z-H-25.html#node_idx_910"><code class=scheme>install-converting-printer</code></a><br>
+<a href="mzlib-Z-H-4.html#node_idx_168"><code class=scheme><span class=keyword>instantiate</span></code></a><br>
+<a href="mzlib-Z-H-13.html#node_idx_420"><code class=scheme>integer-in</code></a><br>
+<a href="mzlib-Z-H-4.html#node_idx_54"><code class=scheme><span class=keyword>interface</span></code></a><br>
+<a href="mzlib-Z-H-4.html#node_idx_244"><code class=scheme>interface-&gt;method-names</code></a><br>
+<a href="mzlib-Z-H-4.html#node_idx_240"><code class=scheme>interface-extension?</code></a><br>
+<a href="mzlib-Z-H-4.html#node_idx_222"><code class=scheme>interface?</code></a><br>
+interfaces
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="mzlib-Z-H-4.html#node_idx_52">creating</a><br>
+<a href="mzlib-Z-H-27.html#node_idx_932">Introduction</a><br>
+<a href="mzlib-Z-H-40.html#node_idx_1196"><code class=scheme><span class=keyword>invoke-unit</span></code></a><br>
+<a href="mzlib-Z-H-41.html#node_idx_1286"><code class=scheme><span class=keyword>invoke-unit/sig</span></code></a><br>
+<a href="mzlib-Z-H-41.html#node_idx_1284">Invoking Signed Units</a><br>
+<a href="mzlib-Z-H-40.html#node_idx_1192">Invoking Units</a><br>
+<a href="mzlib-Z-H-4.html#node_idx_232"><code class=scheme>is-a?</code></a>, <a href="mzlib-Z-H-4.html#node_idx_234">[2]</a><br>
+<a href="mzlib-Z-H-13.html#node_idx_434"><code class=scheme>is-a?/c</code></a></p>
+<p>
+</p>
+<p></p>
+<p>
+<br>
+<a href="mzlib-Z-H-14.html#node_idx_574"><code class=scheme>julian/scalinger-&gt;string</code></a></p>
+<p>
+</p>
+<p></p>
+<p>
+<br>
+<a href="mzlib-Z-H-21.html#node_idx_770"><code class=scheme>last-pair</code></a><br>
+<a href="mzlib-Z-H-17.html#node_idx_620"><code class=scheme><span class=keyword>let+</span></code></a><br>
+<a href="mzlib-Z-H-40.html#node_idx_1212"><code class=scheme><span class=keyword>link</span></code></a><br>
+<a href="mzlib-Z-H-40.html#node_idx_1204">Linking Units and Creating Compound Units</a><br>
+<a href="mzlib-Z-H-41.html#node_idx_1262">Linking with Signatures</a><br>
+<a href="mzlib-Z-H-13.html#node_idx_462"><code class=scheme>list-immutable/c</code></a><br>
+<a href="mzlib-Z-H-13.html#node_idx_442"><code class=scheme>list-immutableof</code></a><br>
+<a href="mzlib-Z-H-21.html#node_idx_738"><tt><strong>list.ss</strong></tt></a><br>
+<a href="mzlib-Z-H-13.html#node_idx_460"><code class=scheme>list/p</code></a><br>
+<a href="mzlib-Z-H-13.html#node_idx_440"><code class=scheme>listof</code></a><br>
+<a href="mzlib-Z-H-17.html#node_idx_622"><code class=scheme><span class=keyword>local</span></code></a><br>
+<a href="mzlib-Z-H-17.html#node_idx_624"><code class=scheme>loop-until</code></a></p>
+<p>
+</p>
+<p></p>
+<p>
+<br>
+<a href="mzlib-Z-H-2.html#node_idx_8"><code class=scheme>make-async-channel</code></a><br>
+<a href="mzlib-Z-H-2.html#node_idx_16"><code class=scheme>make-async-channel-put-waitable</code></a><br>
+<a href="mzlib-Z-H-7.html#node_idx_288"><code class=scheme>make-caching-managed-compile-zo</code></a><br>
+<a href="mzlib-Z-H-7.html#node_idx_278"><code class=scheme>make-compilation-manager-load/use-compiled-handler</code></a><br>
+<a href="mzlib-Z-H-18.html#node_idx_696"><code class=scheme>make-directory*</code></a><br>
+<a href="mzlib-Z-H-4.html#node_idx_210"><code class=scheme>make-generic</code></a><br>
+<a href="mzlib-Z-H-36.html#node_idx_1144"><code class=scheme>make-limited-input-port</code></a><br>
+<a href="mzlib-Z-H-13.html#node_idx_520"><code class=scheme>make-mixin-contract</code></a><br>
+<a href="mzlib-Z-H-4.html#node_idx_120"><code class=scheme>make-object</code></a>, 
+<a href="mzlib-Z-H-4.html#node_idx_162">[2]</a><br>
+<a href="mzlib-Z-H-36.html#node_idx_1146"><code class=scheme>make-single-threader</code></a><br>
+<a href="mzlib-Z-H-18.html#node_idx_698"><code class=scheme>make-temporary-file</code></a><br>
+<a href="mzlib-Z-H-7.html#node_idx_282"><code class=scheme>managed-compile-zo</code></a><br>
+<a href="mzlib-Z-H-7.html#node_idx_290"><code class=scheme>manager-compile-notify-handler</code></a><br>
+<a href="mzlib-Z-H-7.html#node_idx_284"><code class=scheme>manager-trace-handler</code></a>, 
+<a href="mzlib-Z-H-7.html#node_idx_292">[2]</a><br>
+<a href="mzlib-Z-H-22.html#node_idx_802"><code class=scheme><span class=keyword>match</span></code></a><br>
+<a href="mzlib-Z-H-22.html#node_idx_814"><code class=scheme><span class=keyword>match-define</span></code></a><br>
+<a href="mzlib-Z-H-22.html#node_idx_804"><code class=scheme><span class=keyword>match-lambda</span></code></a><br>
+<a href="mzlib-Z-H-22.html#node_idx_806"><code class=scheme><span class=keyword>match-lambda*</span></code></a><br>
+<a href="mzlib-Z-H-22.html#node_idx_808"><code class=scheme><span class=keyword>match-let</span></code></a><br>
+<a href="mzlib-Z-H-22.html#node_idx_810"><code class=scheme><span class=keyword>match-let*</span></code></a><br>
+<a href="mzlib-Z-H-22.html#node_idx_812"><code class=scheme><span class=keyword>match-letrec</span></code></a><br>
+<a href="mzlib-Z-H-22.html#node_idx_798"><tt><strong>match.ss</strong></tt></a><br>
+<a href="mzlib-Z-H-3.html#node_idx_26"><code class=scheme>match:end</code></a><br>
+<a href="mzlib-Z-H-3.html#node_idx_24"><code class=scheme>match:start</code></a><br>
+<a href="mzlib-Z-H-3.html#node_idx_28"><code class=scheme>match:substring</code></a><br>
+<a href="mzlib-Z-H-23.html#node_idx_822"><tt><strong>math.ss</strong></tt></a><br>
+<a href="mzlib-Z-H-21.html#node_idx_772"><code class=scheme>memf</code></a><br>
+<a href="mzlib-Z-H-36.html#node_idx_1148"><code class=scheme>merge-input</code></a><br>
+<a href="mzlib-Z-H-21.html#node_idx_774"><code class=scheme>mergesort</code></a><br>
+<a href="mzlib-Z-H-4.html#node_idx_242"><code class=scheme>method-in-interface?</code></a><br>
+methods
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="mzlib-Z-H-4.html#node_idx_180">accessing</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="mzlib-Z-H-4.html#node_idx_184">applying</a><br>
+<a href="mzlib-Z-H-13.html#node_idx_518"><code class=scheme>mixin-contract</code></a><br>
+<a href="mzlib-Z-H-33.html#node_idx_1072">MrSpidey</a><br>
+<a href="mzlib-Z-H-33.html#node_idx_1082"><code class=scheme>mrspidey:control</code></a><br>
+<a href="mzlib-Z-H-9.html#node_idx_306"><code class=scheme><span class=keyword>multi</span></code></a><br>
+<a href="mzlib-Z-H-1.html#node_idx_2">MzLib</a></p>
+<p>
+</p>
+<p></p>
+<p>
+<br>
+<a href="mzlib-Z-H-10.html#node_idx_356"><code class=scheme>nack-guard-evt</code></a><br>
+<a href="mzlib-Z-H-17.html#node_idx_626"><code class=scheme>namespace-defined?</code></a><br>
+<a href="mzlib-Z-H-40.html#node_idx_1202"><code class=scheme><span class=keyword>namespace-variable-bind/invoke-unit</span></code></a><br>
+<a href="mzlib-Z-H-41.html#node_idx_1290"><code class=scheme><span class=keyword>namespace-variable-bind/invoke-unit/sig</span></code></a><br>
+<a href="mzlib-Z-H-17.html#node_idx_628"><code class=scheme><span class=keyword>nand</span></code></a><br>
+<a href="mzlib-Z-H-13.html#node_idx_424"><code class=scheme>natural-number?</code></a><br>
+<a href="mzlib-Z-H-4.html#node_idx_166"><code class=scheme><span class=keyword>new</span></code></a><br>
+<a href="mzlib-Z-H-11.html#node_idx_376"><code class=scheme>new-cafe</code></a><br>
+<a href="mzlib-Z-H-17.html#node_idx_630"><code class=scheme><span class=keyword>nor</span></code></a><br>
+<a href="mzlib-Z-H-18.html#node_idx_702"><code class=scheme>normalize-path</code></a><br>
+<a href="mzlib-Z-H-13.html#node_idx_408"><code class=scheme>not/f</code></a></p>
+<p>
+</p>
+<p></p>
+<p>
+<br>
+<a href="mzlib-Z-H-13.html#node_idx_514">Object and Class Contracts</a><br>
+<a href="mzlib-Z-H-13.html#node_idx_516">Object Contracts</a><br>
+<a href="mzlib-Z-H-4.html#node_idx_48">Object Example</a><br>
+<a href="mzlib-Z-H-4.html#node_idx_216">Object, Class, and Interface Utilities</a><br>
+<a href="mzlib-Z-H-4.html#node_idx_226"><code class=scheme>object-&gt;vector</code></a><br>
+<a href="mzlib-Z-H-4.html#node_idx_246"><code class=scheme>object-info</code></a><br>
+<a href="mzlib-Z-H-4.html#node_idx_230"><code class=scheme>object-interface</code></a><br>
+<a href="mzlib-Z-H-4.html#node_idx_224"><code class=scheme>object=?</code></a><br>
+<a href="mzlib-Z-H-4.html#node_idx_218"><code class=scheme>object?</code></a><br>
+<a href="mzlib-Z-H-4.html#node_idx_64"><code class=scheme>object%</code></a><br>
+<a href="mzlib-Z-H-4.html#node_idx_36">objects</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="mzlib-Z-H-4.html#node_idx_160">creating</a><br>
+<a href="mzlib-Z-H-9.html#node_idx_312"><code class=scheme><span class=keyword>once-any</span></code></a><br>
+<a href="mzlib-Z-H-9.html#node_idx_308"><code class=scheme><span class=keyword>once-each</span></code></a><br>
+<a href="mzlib-Z-H-24.html#node_idx_850"><code class=scheme><span class=keyword>open</span></code></a><br>
+<a href="mzlib-Z-H-24.html#node_idx_852"><code class=scheme><span class=keyword>open*</span></code></a><br>
+<a href="mzlib-Z-H-24.html#node_idx_882"><code class=scheme><span class=keyword>open*/derived</span></code></a><br>
+<a href="mzlib-Z-H-24.html#node_idx_880"><code class=scheme><span class=keyword>open/derived</span></code></a><br>
+<a href="mzlib-Z-H-13.html#node_idx_508"><code class=scheme><span class=keyword>opt-&gt;</span></code></a><br>
+<a href="mzlib-Z-H-13.html#node_idx_510"><code class=scheme><span class=keyword>opt-&gt;*</span></code></a>, <a href="mzlib-Z-H-13.html#node_idx_512">[2]</a><br>
+<a href="mzlib-Z-H-17.html#node_idx_632"><code class=scheme><span class=keyword>opt-lambda</span></code></a><br>
+<a href="mzlib-Z-H-4.html#node_idx_138"><code class=scheme><span class=keyword>override</span></code></a><br>
+<a href="mzlib-Z-H-4.html#node_idx_98"><code class=scheme><span class=keyword>override*</span></code></a><br>
+<a href="mzlib-Z-H-4.html#node_idx_142"><code class=scheme><span class=keyword>override-final</span></code></a><br>
+<a href="mzlib-Z-H-4.html#node_idx_100"><code class=scheme><span class=keyword>override-final*</span></code></a><br>
+<a href="mzlib-Z-H-4.html#node_idx_42">overriding</a></p>
+<p>
+</p>
+<p></p>
+<p>
+<br>
+<a href="mzlib-Z-H-24.html#node_idx_842"><code class=scheme><span class=keyword>package</span></code></a>, <a href="mzlib-Z-H-24.html#node_idx_844">[2]</a><br>
+<a href="mzlib-Z-H-24.html#node_idx_846"><code class=scheme><span class=keyword>package*</span></code></a>, <a href="mzlib-Z-H-24.html#node_idx_848">[2]</a><br>
+<a href="mzlib-Z-H-24.html#node_idx_840"><tt><strong>package.ss</strong></tt></a><br>
+<a href="mzlib-Z-H-24.html#node_idx_876"><code class=scheme><span class=keyword>package/derived</span></code></a>, 
+<a href="mzlib-Z-H-24.html#node_idx_878">[2]</a><br>
+<a href="mzlib-Z-H-9.html#node_idx_320"><code class=scheme>parse-command-line</code></a><br>
+<a href="mzlib-Z-H-18.html#node_idx_704"><code class=scheme>path-only</code></a><br>
+<a href="mzlib-Z-H-22.html#node_idx_800">pattern matching</a><br>
+<a href="mzlib-Z-H-22.html#node_idx_816">Patterns</a><br>
+<a href="mzlib-Z-H-25.html#node_idx_886"><tt><strong>pconvert.ss</strong></tt></a><br>
+<a href="mzlib-Z-H-27.html#node_idx_930">Perl</a><br>
+<a href="mzlib-Z-H-23.html#node_idx_830"><code class=scheme>pi</code></a><br>
+<a href="mzlib-Z-H-26.html#node_idx_924"><tt><strong>plt-match.ss</strong></tt></a><br>
+<a href="mzlib-Z-H-33.html#node_idx_1076"><code class=scheme>polymorphic</code></a><br>
+<a href="mzlib-Z-H-27.html#node_idx_936"><code class=scheme>pregexp</code></a><br>
+<a href="mzlib-Z-H-27.html#node_idx_940"><code class=scheme>pregexp-match</code></a><br>
+<a href="mzlib-Z-H-27.html#node_idx_938"><code class=scheme>pregexp-match-positions</code></a><br>
+<a href="mzlib-Z-H-27.html#node_idx_948"><code class=scheme>pregexp-quote</code></a><br>
+<a href="mzlib-Z-H-27.html#node_idx_944"><code class=scheme>pregexp-replace</code></a><br>
+<a href="mzlib-Z-H-27.html#node_idx_946"><code class=scheme>pregexp-replace*</code></a><br>
+<a href="mzlib-Z-H-27.html#node_idx_942"><code class=scheme>pregexp-split</code></a><br>
+<a href="mzlib-Z-H-27.html#node_idx_928"><tt><strong>pregexp.ss</strong></tt></a><br>
+<a href="mzlib-Z-H-28.html#node_idx_958"><code class=scheme>pretty-display</code></a><br>
+<a href="mzlib-Z-H-28.html#node_idx_960"><code class=scheme>pretty-print</code></a><br>
+<a href="mzlib-Z-H-28.html#node_idx_992"><code class=scheme>pretty-print-.-symbol-without-bars</code></a><br>
+<a href="mzlib-Z-H-28.html#node_idx_964"><code class=scheme>pretty-print-columns</code></a><br>
+<a href="mzlib-Z-H-28.html#node_idx_962"><code class=scheme>pretty-print-current-style-table</code></a><br>
+<a href="mzlib-Z-H-28.html#node_idx_968"><code class=scheme>pretty-print-depth</code></a><br>
+<a href="mzlib-Z-H-28.html#node_idx_970"><code class=scheme>pretty-print-display-string-handler</code></a><br>
+<a href="mzlib-Z-H-28.html#node_idx_972"><code class=scheme>pretty-print-exact-as-decimal</code></a><br>
+<a href="mzlib-Z-H-28.html#node_idx_974"><code class=scheme>pretty-print-extend-style-table</code></a><br>
+<a href="mzlib-Z-H-28.html#node_idx_976"><code class=scheme>pretty-print-handler</code></a><br>
+<a href="mzlib-Z-H-28.html#node_idx_986"><code class=scheme>pretty-print-post-print-hook</code></a><br>
+<a href="mzlib-Z-H-28.html#node_idx_988"><code class=scheme>pretty-print-pre-print-hook</code></a><br>
+<a href="mzlib-Z-H-28.html#node_idx_978"><code class=scheme>pretty-print-print-hook</code></a><br>
+<a href="mzlib-Z-H-28.html#node_idx_980"><code class=scheme>pretty-print-print-line</code></a><br>
+<a href="mzlib-Z-H-28.html#node_idx_982"><code class=scheme>pretty-print-show-inexactness</code></a><br>
+<a href="mzlib-Z-H-28.html#node_idx_990"><code class=scheme>pretty-print-size-hook</code></a><br>
+<a href="mzlib-Z-H-28.html#node_idx_984"><code class=scheme>pretty-print-style-table?</code></a><br>
+<a href="mzlib-Z-H-28.html#node_idx_956"><tt><strong>pretty.ss</strong></tt></a><br>
+<a href="mzlib-Z-H-25.html#node_idx_912"><code class=scheme>print-convert</code></a><br>
+<a href="mzlib-Z-H-25.html#node_idx_914"><code class=scheme>print-convert-expr</code></a><br>
+<a href="mzlib-Z-H-13.html#node_idx_430"><code class=scheme>printable?</code></a><br>
+<a href="mzlib-Z-H-4.html#node_idx_144"><code class=scheme><span class=keyword>private</span></code></a><br>
+<a href="mzlib-Z-H-4.html#node_idx_102"><code class=scheme><span class=keyword>private*</span></code></a><br>
+<a href="mzlib-Z-H-29.html#node_idx_1014"><code class=scheme>process</code></a><br>
+<a href="mzlib-Z-H-29.html#node_idx_1030"><code class=scheme>process*</code></a><br>
+<a href="mzlib-Z-H-29.html#node_idx_1034"><code class=scheme>process*/ports</code></a><br>
+<a href="mzlib-Z-H-29.html#node_idx_996"><tt><strong>process.ss</strong></tt></a><br>
+<a href="mzlib-Z-H-29.html#node_idx_1032"><code class=scheme>process/ports</code></a><br>
+<a href="mzlib-Z-H-29.html#node_idx_998">processes</a><br>
+<a href="mzlib-Z-H-41.html#node_idx_1292"><code class=scheme><span class=keyword>provide-signature-elements</span></code></a><br>
+<a href="mzlib-Z-H-13.html#node_idx_526"><code class=scheme><span class=keyword>provide/contract</span></code></a><br>
+<a href="mzlib-Z-H-4.html#node_idx_136"><code class=scheme><span class=keyword>public</span></code></a><br>
+<a href="mzlib-Z-H-4.html#node_idx_94"><code class=scheme><span class=keyword>public*</span></code></a><br>
+<a href="mzlib-Z-H-4.html#node_idx_140"><code class=scheme><span class=keyword>public-final</span></code></a><br>
+<a href="mzlib-Z-H-4.html#node_idx_96"><code class=scheme><span class=keyword>public-final*</span></code></a><br>
+<a href="mzlib-Z-H-18.html#node_idx_706"><code class=scheme>put-preferences</code></a><br>
+<a href="mzlib-Z-H-11.html#node_idx_378"><code class=scheme>putprop</code></a></p>
+<p>
+</p>
+<p></p>
+<p>
+<br>
+<a href="mzlib-Z-H-25.html#node_idx_916"><code class=scheme>quasi-read-style-printing</code></a><br>
+<a href="mzlib-Z-H-21.html#node_idx_776"><code class=scheme>quicksort</code></a></p>
+<p>
+</p>
+<p></p>
+<p>
+<br>
+<a href="mzlib-Z-H-34.html#node_idx_1094"><code class=scheme>read-from-string</code></a><br>
+<a href="mzlib-Z-H-34.html#node_idx_1096"><code class=scheme>read-from-string-all</code></a><br>
+<a href="mzlib-Z-H-13.html#node_idx_422"><code class=scheme>real-in</code></a><br>
+<a href="mzlib-Z-H-17.html#node_idx_636"><code class=scheme><span class=keyword>rec</span></code></a><br>
+<a href="mzlib-Z-H-17.html#node_idx_634"><code class=scheme><span class=keyword>recur</span></code></a><br>
+<a href="mzlib-Z-H-27.html#node_idx_934">Regexp procedures</a><br>
+<a href="mzlib-Z-H-3.html#node_idx_30"><code class=scheme>regexp-exec</code></a><br>
+<a href="mzlib-Z-H-34.html#node_idx_1098"><code class=scheme>regexp-match*</code></a><br>
+<a href="mzlib-Z-H-34.html#node_idx_1104"><code class=scheme>regexp-match-exact?</code></a><br>
+<a href="mzlib-Z-H-34.html#node_idx_1106"><code class=scheme>regexp-match-peek-positions*</code></a><br>
+<a href="mzlib-Z-H-34.html#node_idx_1108"><code class=scheme>regexp-match-positions*</code></a><br>
+<a href="mzlib-Z-H-34.html#node_idx_1102"><code class=scheme>regexp-match/fail-without-reading</code></a><br>
+<a href="mzlib-Z-H-34.html#node_idx_1112"><code class=scheme>regexp-quote</code></a><br>
+<a href="mzlib-Z-H-34.html#node_idx_1114"><code class=scheme>regexp-replace-quote</code></a><br>
+<a href="mzlib-Z-H-34.html#node_idx_1116"><code class=scheme>regexp-split</code></a><br>
+<a href="mzlib-Z-H-8.html#node_idx_298"><code class=scheme>register-external-file</code></a><br>
+<a href="mzlib-Z-H-21.html#node_idx_778"><code class=scheme>remove</code></a><br>
+<a href="mzlib-Z-H-21.html#node_idx_780"><code class=scheme>remove*</code></a><br>
+<a href="mzlib-Z-H-21.html#node_idx_782"><code class=scheme>remq</code></a><br>
+<a href="mzlib-Z-H-21.html#node_idx_784"><code class=scheme>remq*</code></a><br>
+<a href="mzlib-Z-H-21.html#node_idx_786"><code class=scheme>remv</code></a><br>
+<a href="mzlib-Z-H-21.html#node_idx_788"><code class=scheme>remv*</code></a><br>
+<a href="mzlib-Z-H-4.html#node_idx_152"><code class=scheme><span class=keyword>rename</span></code></a>, <a href="mzlib-Z-H-41.html#node_idx_1260">[2]</a><br>
+<a href="mzlib-Z-H-24.html#node_idx_874"><code class=scheme><span class=keyword>rename*-potential-package</span></code></a><br>
+<a href="mzlib-Z-H-24.html#node_idx_860"><code class=scheme><span class=keyword>rename-potential-package</span></code></a><br>
+<a href="mzlib-Z-H-21.html#node_idx_790"><code class=scheme>rest</code></a><br>
+<a href="mzlib-Z-H-30.html#node_idx_1040"><code class=scheme>restart-mzscheme</code></a><br>
+<a href="mzlib-Z-H-30.html#node_idx_1038"><tt><strong>restart.ss</strong></tt></a><br>
+<a href="mzlib-Z-H-41.html#node_idx_1266">Restricting Signatures</a><br>
+<a href="mzlib-Z-H-36.html#node_idx_1150"><code class=scheme>run-server</code></a></p>
+<p>
+</p>
+<p></p>
+<p>
+<br>
+<a href="mzlib-Z-H-21.html#node_idx_740"><code class=scheme>second</code></a><br>
+<a href="mzlib-Z-H-14.html#node_idx_550"><code class=scheme>seconds-&gt;date</code></a><br>
+self (for objects), <em>see</em>  <code class=scheme>this</code>
+<br>
+<a href="mzlib-Z-H-4.html#node_idx_186"><code class=scheme><span class=keyword>send</span></code></a><br>
+<a href="mzlib-Z-H-4.html#node_idx_194"><code class=scheme><span class=keyword>send*</span></code></a><br>
+<a href="mzlib-Z-H-31.html#node_idx_1048"><code class=scheme>send-event</code></a><br>
+<a href="mzlib-Z-H-4.html#node_idx_214"><code class=scheme><span class=keyword>send-generic</span></code></a><br>
+<a href="mzlib-Z-H-4.html#node_idx_188"><code class=scheme><span class=keyword>send/apply</span></code></a><br>
+<a href="mzlib-Z-H-31.html#node_idx_1044"><tt><strong>sendevent.ss</strong></tt></a><br>
+<a href="mzlib-Z-H-4.html#node_idx_182"><code class=scheme>set!</code></a><br>
+<a href="mzlib-Z-H-21.html#node_idx_792"><code class=scheme>set-first!</code></a><br>
+<a href="mzlib-Z-H-21.html#node_idx_794"><code class=scheme>set-rest!</code></a><br>
+<a href="mzlib-Z-H-21.html#node_idx_750"><code class=scheme>seventh</code></a><br>
+<a href="mzlib-Z-H-23.html#node_idx_834"><code class=scheme>sgn</code></a><br>
+<a href="mzlib-Z-H-32.html#node_idx_1066"><code class=scheme><span class=keyword>shared</span></code></a><br>
+<a href="mzlib-Z-H-32.html#node_idx_1064"><tt><strong>shared.ss</strong></tt></a><br>
+<a href="mzlib-Z-H-25.html#node_idx_918"><code class=scheme>show-sharing</code></a><br>
+<a href="mzlib-Z-H-41.html#node_idx_1234">signature</a><br>
+<a href="mzlib-Z-H-41.html#node_idx_1320"><code class=scheme><span class=keyword>signature-&gt;symbols</span></code></a><br>
+<a href="mzlib-Z-H-41.html#node_idx_1250">Signatures</a><br>
+<a href="mzlib-Z-H-41.html#node_idx_1230">signatures</a>, <a href="mzlib-Z-H-41.html#node_idx_1252">[2]</a><br>
+<a href="mzlib-Z-H-41.html#node_idx_1270">Signed Compound Units</a><br>
+<a href="mzlib-Z-H-41.html#node_idx_1240">signed compound units</a><br>
+<a href="mzlib-Z-H-41.html#node_idx_1256">Signed Units</a><br>
+<a href="mzlib-Z-H-41.html#node_idx_1238">signed units</a><br>
+<a href="mzlib-Z-H-41.html#node_idx_1310"><code class=scheme>signed-unit-exports</code></a><br>
+<a href="mzlib-Z-H-41.html#node_idx_1308"><code class=scheme>signed-unit-imports</code></a><br>
+<a href="mzlib-Z-H-41.html#node_idx_1306"><code class=scheme>signed-unit-unit</code></a><br>
+<a href="mzlib-Z-H-41.html#node_idx_1304"><code class=scheme>signed-unit?</code></a><br>
+<a href="mzlib-Z-H-23.html#node_idx_832"><code class=scheme>sinh</code></a><br>
+<a href="mzlib-Z-H-21.html#node_idx_748"><code class=scheme>sixth</code></a><br>
+<a href="mzlib-Z-H-11.html#node_idx_380"><code class=scheme>sort</code></a><br>
+<a href="mzlib-Z-H-10.html#node_idx_338"><code class=scheme>spawn</code></a><br>
+<a href="mzlib-Z-H-33.html#node_idx_1070"><tt><strong>spidey.ss</strong></tt></a><br>
+<a href="mzlib-Z-H-23.html#node_idx_836"><code class=scheme>sqr</code></a><br>
+<a href="mzlib-Z-H-34.html#node_idx_1120"><code class=scheme>string-lowercase!</code></a><br>
+<a href="mzlib-Z-H-34.html#node_idx_1122"><code class=scheme>string-uppercase!</code></a><br>
+<a href="mzlib-Z-H-34.html#node_idx_1088"><tt><strong>string.ss</strong></tt></a><br>
+<a href="mzlib-Z-H-13.html#node_idx_426"><code class=scheme>string/len</code></a><br>
+<a href="mzlib-Z-H-4.html#node_idx_236"><code class=scheme>subclass?</code></a><br>
+<a href="mzlib-Z-H-13.html#node_idx_438"><code class=scheme>subclass?/c</code></a><br>
+<a href="mzlib-Z-H-29.html#node_idx_1000">subprocesses</a><br>
+<a href="mzlib-Z-H-4.html#node_idx_76"><code class=scheme><span class=keyword>super-instantiate</span></code></a><br>
+<a href="mzlib-Z-H-4.html#node_idx_78"><code class=scheme>super-make-object</code></a><br>
+<a href="mzlib-Z-H-4.html#node_idx_80"><code class=scheme><span class=keyword>super-new</span></code></a><br>
+<a href="mzlib-Z-H-4.html#node_idx_46">superclass</a><br>
+superclass initialization, <em>see</em>  <code class=scheme>super-init</code>
+<br>
+<a href="mzlib-Z-H-35.html#node_idx_1128"><code class=scheme>surrogate</code></a><br>
+<a href="mzlib-Z-H-35.html#node_idx_1126"><tt><strong>surrogate.ss</strong></tt></a><br>
+<a href="mzlib-Z-H-17.html#node_idx_638"><code class=scheme>symbol=?</code></a><br>
+<a href="mzlib-Z-H-13.html#node_idx_432"><code class=scheme>symbols</code></a><br>
+<a href="mzlib-Z-H-10.html#node_idx_340"><code class=scheme>sync</code></a><br>
+<a href="mzlib-Z-H-10.html#node_idx_342"><code class=scheme>sync/enable-break</code></a><br>
+<a href="mzlib-Z-H-29.html#node_idx_1002"><code class=scheme>system</code></a><br>
+<a href="mzlib-Z-H-29.html#node_idx_1006"><code class=scheme>system*</code></a><br>
+<a href="mzlib-Z-H-29.html#node_idx_1012"><code class=scheme>system*/exit-code</code></a><br>
+<a href="mzlib-Z-H-29.html#node_idx_1010"><code class=scheme>system/exit-code</code></a></p>
+<p>
+</p>
+<p></p>
+<p>
+<br>
+<a href="mzlib-Z-H-27.html#node_idx_950">The regexp pattern language</a><br>
+<a href="mzlib-Z-H-21.html#node_idx_742"><code class=scheme>third</code></a><br>
+<a href="mzlib-Z-H-4.html#node_idx_74"><code class=scheme>this</code></a><br>
+<a href="mzlib-Z-H-17.html#node_idx_642"><code class=scheme><span class=keyword>this-expression-source-directory</span></code></a><br>
+<a href="mzlib-Z-H-10.html#node_idx_358"><code class=scheme>thread-done-evt</code></a><br>
+<a href="mzlib-Z-H-36.html#node_idx_1132"><tt><strong>thread.ss</strong></tt></a><br>
+<a href="mzlib-Z-H-10.html#node_idx_362"><code class=scheme>time-evt</code></a><br>
+<a href="mzlib-Z-H-37.html#node_idx_1158"><code class=scheme>trace</code></a><br>
+<a href="mzlib-Z-H-37.html#node_idx_1156"><tt><strong>trace.ss</strong></tt></a><br>
+<a href="mzlib-Z-H-38.html#node_idx_1164"><tt><strong>traceld.ss</strong></tt></a><br>
+<a href="mzlib-Z-H-39.html#node_idx_1168"><tt><strong>transcr.ss</strong></tt></a><br>
+<a href="mzlib-Z-H-39.html#node_idx_1172"><code class=scheme>transcript-off</code></a><br>
+<a href="mzlib-Z-H-39.html#node_idx_1170"><code class=scheme>transcript-on</code></a><br>
+<a href="mzlib-Z-H-17.html#node_idx_644"><code class=scheme>true</code></a><br>
+<a href="mzlib-Z-H-7.html#node_idx_286"><code class=scheme>trust-existing-zos</code></a><br>
+<a href="mzlib-Z-H-33.html#node_idx_1084"><code class=scheme>type:</code></a></p>
+<p>
+</p>
+<p></p>
+<p>
+<br>
+<a href="mzlib-Z-H-13.html#node_idx_404"><code class=scheme>union</code></a><br>
+<a href="mzlib-Z-H-40.html#node_idx_1186"><code class=scheme><span class=keyword>unit</span></code></a><br>
+<a href="mzlib-Z-H-40.html#node_idx_1222">Unit Utilities</a><br>
+<a href="mzlib-Z-H-41.html#node_idx_1300"><code class=scheme><span class=keyword>unit-&gt;unit/sig</span></code></a><br>
+<a href="mzlib-Z-H-40.html#node_idx_1178"><tt><strong>unit.ss</strong></tt></a><br>
+<a href="mzlib-Z-H-41.html#node_idx_1244"><code class=scheme><span class=keyword>unit/sig</span></code></a>, <a href="mzlib-Z-H-41.html#node_idx_1258">[2]</a><br>
+<a href="mzlib-Z-H-41.html#node_idx_1296"><code class=scheme><span class=keyword>unit/sig-&gt;unit</span></code></a><br>
+<a href="mzlib-Z-H-40.html#node_idx_1224"><code class=scheme>unit?</code></a><br>
+<a href="mzlib-Z-H-40.html#node_idx_1180">units</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="mzlib-Z-H-40.html#node_idx_1206">compound</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="mzlib-Z-H-40.html#node_idx_1184">creating</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="mzlib-Z-H-40.html#node_idx_1194">invoking</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="mzlib-Z-H-41.html#node_idx_1232">signatures</a><br>
+<a href="mzlib-Z-H-41.html#node_idx_1236">units with signatures</a><br>
+<a href="mzlib-Z-H-41.html#node_idx_1228"><tt><strong>unitsig.ss</strong></tt></a><br>
+<a href="mzlib-Z-H-37.html#node_idx_1160"><code class=scheme>untrace</code></a><br>
+<a href="mzlib-Z-H-25.html#node_idx_892"><code class=scheme>use-named/undefined-handler</code></a>, 
+<a href="mzlib-Z-H-25.html#node_idx_894">[2]</a></p>
+<p>
+</p>
+<p></p>
+<p>
+<br>
+<a href="mzlib-Z-H-13.html#node_idx_450"><code class=scheme>vector-immutable/c</code></a><br>
+<a href="mzlib-Z-H-13.html#node_idx_446"><code class=scheme>vector-immutableof</code></a><br>
+<a href="mzlib-Z-H-13.html#node_idx_448"><code class=scheme>vector/p</code></a><br>
+<a href="mzlib-Z-H-13.html#node_idx_444"><code class=scheme>vectorof</code></a><br>
+<a href="mzlib-Z-H-41.html#node_idx_1316"><code class=scheme>verify-linkage-signature-match</code></a><br>
+<a href="mzlib-Z-H-41.html#node_idx_1312"><code class=scheme>verify-signature-match</code></a></p>
+<p>
+</p>
+<p></p>
+<p>
+<br>
+<a href="mzlib-Z-H-25.html#node_idx_920"><code class=scheme>whole/fractional-exact-numbers</code></a><br>
+<a href="mzlib-Z-H-4.html#node_idx_196"><code class=scheme><span class=keyword>with-method</span></code></a><br>
+<a href="mzlib-Z-H-36.html#node_idx_1152"><code class=scheme>with-semaphore</code></a><br>
+<a href="mzlib-Z-H-10.html#node_idx_352"><code class=scheme>wrap-evt</code></a></p>
+<p>
+</p>
+
+<p>
+</p>
+<div align=right class=navigation><i>[Go to <span><a href="mzlib.html">first</a>, <a href="mzlib-Z-H-41.html">previous</a></span><span class=disable>, next</span> page<span>; &nbsp;&nbsp;</span><span><a href="mzlib.html#node_toc_start">contents</a></span><span class=disable><span>; &nbsp;&nbsp;</span>index</span>]</i></div><p></p>
+</body>
+</html>

@@ -1,0 +1,339 @@
+<!doctype html public "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!--
+
+Generated from mzlib.tex by tex2page, v 2004-09-11
+(running on MzScheme 209, unix), 
+(c) Dorai Sitaram, 
+http://www.ccs.neu.edu/~dorai/tex2page/tex2page-doc.html
+
+-->
+<head>
+<title>
+PLT MzLib: Libraries Manual
+</title>
+<link rel="stylesheet" type="text/css" href="mzlib-Z-S.css" title=default>
+<meta name=robots content="noindex,follow">
+</head>
+<body>
+<div align=right class=navigation><i>[Go to <span><a href="mzlib.html">first</a>, <a href="mzlib-Z-H-27.html">previous</a></span><span>, <a href="mzlib-Z-H-29.html">next</a></span> page<span>; &nbsp;&nbsp;</span><span><a href="mzlib.html#node_toc_start">contents</a></span><span><span>; &nbsp;&nbsp;</span><a href="mzlib-Z-H-42.html#node_index_start">index</a></span>]</i></div><p></p>
+<a name="node_chap_28"></a>
+<h1 class=chapter>
+<div class=chapterheading><a href="mzlib.html#node_toc_node_chap_28">Chapter 28</a></div><br>
+<a href="mzlib.html#node_toc_node_chap_28"><tt><strong>pretty.ss</strong></tt>: Pretty Printing</a></h1>
+<p><a name="node_idx_954"></a><a name="node_idx_956"></a></p>
+<p>
+
+
+</p>
+<p></p>
+<p>
+
+<a name="node_idx_958"></a><a name="node_kw_definitionpretty-display"></a><code class=scheme>(pretty-display</code><tt>&nbsp;</tt><code class=scheme><span class=variable>v</span></code><tt>&nbsp;</tt>[<code class=scheme><span class=variable>port</span></code>]<code class=scheme>)</code> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<small>P</small><small>R</small><small>O</small><small>C</small><small>E</small><small>D</small><small>U</small><small>R</small><small>E</small>
+</p>
+<p>
+Same as <code class=scheme>pretty-print</code>, but <code class=scheme><span class=variable>v</span></code> is printed like <code class=scheme>display</code>
+instead of like <code class=scheme>write</code>.</p>
+<p>
+
+
+</p>
+<p></p>
+<p>
+
+<a name="node_idx_960"></a><a name="node_kw_definitionpretty-print"></a><code class=scheme>(pretty-print</code><tt>&nbsp;</tt><code class=scheme><span class=variable>v</span></code><tt>&nbsp;</tt>[<code class=scheme><span class=variable>port</span></code>]<code class=scheme>)</code> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<small>P</small><small>R</small><small>O</small><small>C</small><small>E</small><small>D</small><small>U</small><small>R</small><small>E</small>
+</p>
+<p>
+Pretty-prints the value <code class=scheme><span class=variable>v</span></code> using the same printed form as
+<code class=scheme>write</code>, but with newlines and whitespace inserted to avoid
+lines longer than <code class=scheme>(pretty-print-columns)</code>, as controlled by
+<code class=scheme>(pretty-print-current-style-table)</code>. The printed form ends in
+a newline unless the <code class=scheme>pretty-print-columns</code> parameter is set
+to <code class=scheme><span class=selfeval>'infinity</span></code>.</p>
+<p>
+If <code class=scheme><span class=variable>port</span></code> is provided, <code class=scheme><span class=variable>v</span></code> is printed into <code class=scheme><span class=variable>port</span></code>;
+otherwise, <code class=scheme><span class=variable>v</span></code> is printed to the current output port.</p>
+<p>
+In addition to the parameters defined by the <tt><strong>pretty</strong></tt> library,
+<code class=scheme>pretty-print</code> conforms to the <code class=scheme>print-graph</code>,
+<code class=scheme>print-struct</code>, and <code class=scheme>print-vector-length</code> parameters.</p>
+<p>
+
+
+</p>
+<p></p>
+<p>
+
+<a name="node_idx_962"></a><a name="node_kw_definitionpretty-print-current-style-table"></a><code class=scheme>(pretty-print-current-style-table</code><tt>&nbsp;</tt><code class=scheme><span class=variable>style-table</span></code><tt>&nbsp;</tt>[<code class=scheme><span class=variable>procedure</span></code>]<code class=scheme>)</code> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</p>
+<p>
+Parameter that holds a table of style mappings. See
+<code class=scheme>pretty-print-extend-style-table</code>.</p>
+<p>
+
+
+</p>
+<p></p>
+<p>
+
+<a name="node_idx_964"></a><a name="node_kw_definitionpretty-print-columns"></a><code class=scheme>(pretty-print-columns</code><tt>&nbsp;</tt>[<code class=scheme><span class=variable>width</span></code>]<code class=scheme>)</code> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<small>P</small><small>R</small><small>O</small><small>C</small><small>E</small><small>D</small><small>U</small><small>R</small><small>E</small>
+</p>
+<p>
+Parameter that sets the default width for pretty printing to
+<code class=scheme><span class=variable>width</span></code> and returns void. If no <code class=scheme><span class=variable>width</span></code> argument is
+provided, the current value is returned instead.</p>
+<p>
+If the display width is <code class=scheme><span class=selfeval>'infinity</span></code><a name="node_idx_966"></a>, then pretty-printed
+output is never broken into lines, and a newline is not added to the
+end of the output.</p>
+<p>
+
+
+</p>
+<p></p>
+<p>
+
+<a name="node_idx_968"></a><a name="node_kw_definitionpretty-print-depth"></a><code class=scheme>(pretty-print-depth</code><tt>&nbsp;</tt>[<code class=scheme><span class=variable>depth</span></code>]<code class=scheme>)</code> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<small>P</small><small>R</small><small>O</small><small>C</small><small>E</small><small>D</small><small>U</small><small>R</small><small>E</small>
+</p>
+<p>
+Parameter that sets the default depth for recursive pretty printing to
+<code class=scheme><span class=variable>depth</span></code> and returns void. If no <code class=scheme><span class=variable>depth</span></code> argument is
+provided, the current value is returned instead. A depth of 0
+indicates that only simple values are printed; Scheme values within
+other values (e.g. the elements of a list) are replaced with ``...''.</p>
+<p>
+
+
+</p>
+<p></p>
+<p>
+
+<a name="node_idx_970"></a><a name="node_kw_definitionpretty-print-display-string-handler"></a><code class=scheme>(pretty-print-display-string-handler</code><tt>&nbsp;</tt>[<code class=scheme><span class=variable>f</span></code>]<code class=scheme>)</code> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<small>P</small><small>R</small><small>O</small><small>C</small><small>E</small><small>D</small><small>U</small><small>R</small><small>E</small>
+</p>
+<p>
+Parameter that sets the procedure for displaying final strings to a
+port to output pretty-printed values. The default handler is
+the default port display handler (see section&nbsp;<a href="../mzscheme/mzscheme-Z-H-11.html#node_sec_11.2.5">11.2.5</a> in <a href="../mzscheme/mzscheme.html"><i>PLT MzScheme: Language Manual</i></a>).</p>
+<p>
+
+
+</p>
+<p></p>
+<p>
+
+<a name="node_idx_972"></a><a name="node_kw_definitionpretty-print-exact-as-decimal"></a><code class=scheme>(pretty-print-exact-as-decimal</code><tt>&nbsp;</tt>[<code class=scheme><span class=variable>as-decimal?</span></code>]<code class=scheme>)</code> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<small>P</small><small>R</small><small>O</small><small>C</small><small>E</small><small>D</small><small>U</small><small>R</small><small>E</small>
+</p>
+<p>
+Parameter that determines how exact non-integers are printed.  If the
+parameter's value is <code class=scheme><span class=selfeval>#t</span></code>, then an exact non-integer with a
+decimal representation is printed as a decimal number instead of a
+fraction. The initial value is <code class=scheme><span class=selfeval>#f</span></code>.</p>
+<p>
+
+
+</p>
+<p></p>
+<p>
+
+<a name="node_idx_974"></a><a name="node_kw_definitionpretty-print-extend-style-table"></a><code class=scheme>(pretty-print-extend-style-table</code><tt>&nbsp;</tt><code class=scheme><span class=variable>style-table symbol-list like-symbol-list</span></code><code class=scheme>)</code> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<small>P</small><small>R</small><small>O</small><small>C</small><small>E</small><small>D</small><small>U</small><small>R</small><small>E</small>
+</p>
+<p>
+Creates a new style table by extending an existing
+<code class=scheme><span class=variable>style-table</span></code>, so that the style mapping for each symbol of
+<code class=scheme><span class=variable>like-symbol-list</span></code> in the original table is used for the
+corresponding symbol of <code class=scheme><span class=variable>symbol-list</span></code> in the new table. The
+<code class=scheme><span class=variable>symbol-list</span></code> and <code class=scheme><span class=variable>like-symbol-list</span></code> lists must have the same
+length. The <code class=scheme><span class=variable>style-table</span></code> argument can be <code class=scheme><span class=selfeval>#f</span></code>, in which
+case with default mappings are used for the original table (see
+below).</p>
+<p>
+The style mapping for a symbol controls the way that whitespace is
+inserted when printing a list that starts with the symbol. In the
+absence of any mapping, when a list is broken across multiple lines,
+each element of the list is printed on its own line, each with the
+same indentation.</p>
+<p>
+The default style mapping includes mappings for the following symbols,
+so that the output follows popular code-formatting rules:
+</p>
+<div align=left><pre class=scheme><span class=keyword>lambda</span> <span class=keyword>case-lambda</span>
+<span class=keyword>define</span> <span class=keyword>define-macro</span> <span class=keyword>define-syntax</span>
+<span class=keyword>let</span> <span class=keyword>letrec</span> <span class=keyword>let*</span>
+<span class=keyword>let-syntax</span> <span class=keyword>letrec-syntax</span>
+<span class=keyword>let-values</span> <span class=keyword>letrec-values</span> <span class=keyword>let*-values</span>
+<span class=keyword>let-syntaxes</span> <span class=keyword>letrec-syntaxes</span>
+<span class=keyword>begin</span> <span class=keyword>begin0</span> <span class=keyword>do</span>
+<span class=keyword>if</span> <span class=keyword>set!</span> <span class=keyword>set!-values</span>
+<span class=keyword>unless</span> <span class=keyword>when</span>
+<span class=keyword>cond</span> <span class=keyword>case</span> <span class=keyword>and</span> <span class=keyword>or</span>
+<span class=keyword>module</span>
+<span class=keyword>syntax-rules</span> <span class=keyword>syntax-case</span> <span class=keyword>letrec-syntaxes+values</span>
+<span class=keyword>import</span> <span class=keyword>export</span> <span class=keyword>require</span> <span class=keyword>require-for-syntax</span> <span class=keyword>provide</span> <span class=keyword>link</span>
+<span class=keyword>public</span> <span class=keyword>private</span> <span class=keyword>override</span> <span class=keyword>rename</span> <span class=keyword>inherit</span> <span class=keyword>field</span> <span class=keyword>init</span>
+<span class=keyword>shared</span> <span class=keyword>send</span> <span class=keyword>class</span> <span class=keyword>instantiate</span> <code class=scheme>make-object</code>
+</pre></div><p></p>
+<p>
+
+
+</p>
+<p></p>
+<p>
+
+<a name="node_idx_976"></a><a name="node_kw_definitionpretty-print-handler"></a><code class=scheme>(pretty-print-handler</code><tt>&nbsp;</tt><code class=scheme><span class=variable>v</span></code><code class=scheme>)</code> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<small>P</small><small>R</small><small>O</small><small>C</small><small>E</small><small>D</small><small>U</small><small>R</small><small>E</small>
+</p>
+<p>
+Pretty-prints <code class=scheme><span class=variable>v</span></code> if <code class=scheme><span class=variable>v</span></code> is not void or prints nothing
+otherwise. Pass this procedure to <code class=scheme>current-print</code> to install the
+pretty printer into the <code class=scheme>read</code>-<code class=scheme>eval</code>-<code class=scheme>print</code> loop.</p>
+<p>
+
+
+</p>
+<p></p>
+<p>
+
+<a name="node_idx_978"></a><a name="node_kw_definitionpretty-print-print-hook"></a><code class=scheme>(pretty-print-print-hook</code><tt>&nbsp;</tt>[<code class=scheme><span class=variable>hook</span></code>]<code class=scheme>)</code> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<small>P</small><small>R</small><small>O</small><small>C</small><small>E</small><small>D</small><small>U</small><small>R</small><small>E</small>
+</p>
+<p>
+Parameter that sets the print hook for pretty-printing to <code class=scheme><span class=variable>hook</span></code>.
+If <code class=scheme><span class=variable>hook</span></code> is not provided, the current hook is returned.</p>
+<p>
+The print hook is applied to a value for printing when the sizing hook
+(see <code class=scheme>pretty-print-size-hook</code>) returns an integer size for the
+value.</p>
+<p>
+The print hook receives three arguments. The first argument is the
+value to print.  The second argument is a Boolean: <code class=scheme><span class=selfeval>#t</span></code> for
+printing like <code class=scheme>display</code> and <code class=scheme><span class=selfeval>#f</span></code> for printing like
+<code class=scheme>write</code>. The third argument is the destination port.</p>
+<p>
+
+
+</p>
+<p></p>
+<p>
+
+<a name="node_idx_980"></a><a name="node_kw_definitionpretty-print-print-line"></a><code class=scheme>(pretty-print-print-line</code><tt>&nbsp;</tt>[<code class=scheme><span class=variable>liner</span></code>]<code class=scheme>)</code> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<small>P</small><small>R</small><small>O</small><small>C</small><small>E</small><small>D</small><small>U</small><small>R</small><small>E</small>
+</p>
+<p>
+Parameter that sets a procedure for printing the newline separator
+between lines of a pretty-printed value. The <code class=scheme><span class=variable>liner</span></code> procedure is
+called with four arguments: a new line number, an output port, the
+old line's length, and the number of destination columns. The return
+value from <code class=scheme><span class=variable>liner</span></code> is the number of extra characters it printed
+at the beginning of the new line.</p>
+<p>
+The <code class=scheme><span class=variable>liner</span></code> procedure is called before any characters are printed
+with <code class=scheme>0</code> as the line number and <code class=scheme>0</code> as the old line length;
+<code class=scheme><span class=variable>liner</span></code> is called after the last character for a value is printed
+with <code class=scheme><span class=selfeval>#f</span></code> as the line number and with the length of the last
+line. Whenever the pretty-printer starts a new line, <code class=scheme><span class=variable>liner</span></code> is
+called with the new line's number (where the first new line is
+numbered <code class=scheme>1</code>) and the just-finished line's length. The
+destination columns argument to <code class=scheme><span class=variable>liner</span></code> is always the total width
+of the destination printing area, or <code class=scheme><span class=selfeval>'infinity</span></code> if
+pretty-printed values are not broken into lines.</p>
+<p>
+The default <code class=scheme><span class=variable>liner</span></code> procedure prints a newline whenever the line
+number is not <code class=scheme>0</code> and the column count is not <code class=scheme><span class=selfeval>'infinity</span></code>,
+always returning <code class=scheme>0</code>. A custom <code class=scheme><span class=variable>liner</span></code> procedure can be used
+to print extra text before each line of pretty-printed output; the
+number of characters printed before each line should be returned by
+<code class=scheme><span class=variable>liner</span></code> so that the next line break can be chosen correctly.</p>
+<p>
+
+
+</p>
+<p></p>
+<p>
+
+<a name="node_idx_982"></a><a name="node_kw_definitionpretty-print-show-inexactness"></a><code class=scheme>(pretty-print-show-inexactness</code><tt>&nbsp;</tt>[<code class=scheme><span class=variable>explicit?</span></code>]<code class=scheme>)</code> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<small>P</small><small>R</small><small>O</small><small>C</small><small>E</small><small>D</small><small>U</small><small>R</small><small>E</small>
+</p>
+<p>
+Parameter that determines how inexact numbers are printed.  If the
+parameter's value is <code class=scheme><span class=selfeval>#t</span></code>, then inexact numbers are always
+printed with a leading <code class=scheme>#i</code>. The initial value is <code class=scheme><span class=selfeval>#f</span></code>.</p>
+<p>
+
+
+</p>
+<p></p>
+<p>
+
+<a name="node_idx_984"></a><a name="node_kw_definitionpretty-print-style-table_Q_"></a><code class=scheme>(pretty-print-style-table?</code><tt>&nbsp;</tt><code class=scheme><span class=variable>v</span></code><code class=scheme>)</code> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<small>P</small><small>R</small><small>O</small><small>C</small><small>E</small><small>D</small><small>U</small><small>R</small><small>E</small>
+</p>
+<p>
+Returns <code class=scheme><span class=selfeval>#t</span></code> if <code class=scheme><span class=variable>v</span></code> is a style table,<code class=scheme><span class=selfeval>#f</span></code> otherwise.</p>
+<p>
+
+
+</p>
+<p></p>
+<p>
+
+<a name="node_idx_986"></a><a name="node_kw_definitionpretty-print-post-print-hook"></a><code class=scheme>(pretty-print-post-print-hook</code><tt>&nbsp;</tt>[<code class=scheme><span class=variable>hook</span></code>]<code class=scheme>)</code> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<small>P</small><small>R</small><small>O</small><small>C</small><small>E</small><small>D</small><small>U</small><small>R</small><small>E</small>
+</p>
+<p>
+Parameter that sets a procedure to be called just after an object is
+printed. The hook receives two arguments: the object and the output
+port.</p>
+<p>
+
+
+</p>
+<p></p>
+<p>
+
+<a name="node_idx_988"></a><a name="node_kw_definitionpretty-print-pre-print-hook"></a><code class=scheme>(pretty-print-pre-print-hook</code><tt>&nbsp;</tt>[<code class=scheme><span class=variable>hook</span></code>]<code class=scheme>)</code> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<small>P</small><small>R</small><small>O</small><small>C</small><small>E</small><small>D</small><small>U</small><small>R</small><small>E</small>
+</p>
+<p>
+Parameter that sets a procedure to be called just before an object is
+printed. The hook receives two arguments: the object and the output
+port.</p>
+<p>
+
+
+</p>
+<p></p>
+<p>
+
+<a name="node_idx_990"></a><a name="node_kw_definitionpretty-print-size-hook"></a><code class=scheme>(pretty-print-size-hook</code><tt>&nbsp;</tt>[<code class=scheme><span class=variable>hook</span></code>]<code class=scheme>)</code> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<small>P</small><small>R</small><small>O</small><small>C</small><small>E</small><small>D</small><small>U</small><small>R</small><small>E</small>
+</p>
+<p>
+Parameter that sets the sizing hook for pretty-printing to <code class=scheme><span class=variable>hook</span></code>.
+If <code class=scheme><span class=variable>hook</span></code> is not provided, the current hook is returned.</p>
+<p>
+The sizing hook is applied to each value to be printed. If the hook
+returns <code class=scheme><span class=selfeval>#f</span></code>, then printing is handled internally by the
+pretty-printer. Otherwise, the value should be an integer specifying
+the length of the printed value in characters; the print hook will be
+called to actually print the value (see
+<code class=scheme>pretty-print-print-hook</code>).</p>
+<p>
+The sizing hook receives three arguments. The first argument is the
+value to print.  The second argument is a Boolean: <code class=scheme><span class=selfeval>#t</span></code> for
+printing like <code class=scheme>display</code> and <code class=scheme><span class=selfeval>#f</span></code> for printing like
+<code class=scheme>write</code>. The third argument is the destination port.  The sizing
+hook may be applied to a single value multiple times during
+pretty-printing.</p>
+<p>
+
+
+</p>
+<p></p>
+<p>
+
+<a name="node_idx_992"></a><a name="node_kw_definitionpretty-print-.-symbol-without-bars"></a><code class=scheme>(pretty-print-.-symbol-without-bars</code><tt>&nbsp;</tt>[<code class=scheme><span class=variable>bool</span></code>]<code class=scheme>)</code> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<small>P</small><small>R</small><small>O</small><small>C</small><small>E</small><small>D</small><small>U</small><small>R</small><small>E</small>
+</p>
+<p>
+Parameter that controls the printing of the symbol whose print name is
+just a period. If set to a true value, it is printed as only the period.
+If set to a false value, it is printed as a period with vertical bars
+surrounding it.</p>
+<p>
+</p>
+<p>
+</p>
+<div align=right class=navigation><i>[Go to <span><a href="mzlib.html">first</a>, <a href="mzlib-Z-H-27.html">previous</a></span><span>, <a href="mzlib-Z-H-29.html">next</a></span> page<span>; &nbsp;&nbsp;</span><span><a href="mzlib.html#node_toc_start">contents</a></span><span><span>; &nbsp;&nbsp;</span><a href="mzlib-Z-H-42.html#node_index_start">index</a></span>]</i></div><p></p>
+</body>
+</html>

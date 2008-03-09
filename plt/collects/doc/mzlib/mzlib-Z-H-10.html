@@ -1,0 +1,192 @@
+<!doctype html public "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!--
+
+Generated from mzlib.tex by tex2page, v 2004-09-11
+(running on MzScheme 209, unix), 
+(c) Dorai Sitaram, 
+http://www.ccs.neu.edu/~dorai/tex2page/tex2page-doc.html
+
+-->
+<head>
+<title>
+PLT MzLib: Libraries Manual
+</title>
+<link rel="stylesheet" type="text/css" href="mzlib-Z-S.css" title=default>
+<meta name=robots content="noindex,follow">
+</head>
+<body>
+<div align=right class=navigation><i>[Go to <span><a href="mzlib.html">first</a>, <a href="mzlib-Z-H-9.html">previous</a></span><span>, <a href="mzlib-Z-H-11.html">next</a></span> page<span>; &nbsp;&nbsp;</span><span><a href="mzlib.html#node_toc_start">contents</a></span><span><span>; &nbsp;&nbsp;</span><a href="mzlib-Z-H-42.html#node_index_start">index</a></span>]</i></div><p></p>
+<a name="node_chap_10"></a>
+<h1 class=chapter>
+<div class=chapterheading><a href="mzlib.html#node_toc_node_chap_10">Chapter 10</a></div><br>
+<a href="mzlib.html#node_toc_node_chap_10"><tt><strong>cml.ss</strong></tt>: Concurrent ML Compatibility</a></h1>
+<p><a name="node_idx_334"></a><a name="node_idx_336"></a></p>
+<p>
+This library defines a number of procedures that wrap MzScheme
+concurrency procedures. The wrapper procedures have names and
+interfaces that more closely match those of Concurrent ML.</p>
+<p>
+
+
+</p>
+<p></p>
+<p>
+
+<a name="node_idx_338"></a><a name="node_kw_definitionspawn"></a><code class=scheme>(spawn</code><tt>&nbsp;</tt><code class=scheme><span class=variable>thunk</span></code><code class=scheme>)</code> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<small>P</small><small>R</small><small>O</small><small>C</small><small>E</small><small>D</small><small>U</small><small>R</small><small>E</small>
+</p>
+<p>
+Equivalent to <code class=scheme>(thread/suspend-to-kill <code class=scheme><span class=variable>thunk</span></code>)</code>
+(see section&nbsp;<a href="../mzscheme/mzscheme-Z-H-7.html#node_sec_7.1">7.1</a> in <a href="../mzscheme/mzscheme.html"><i>PLT MzScheme: Language Manual</i></a>).</p>
+<p>
+
+
+</p>
+<p></p>
+<p>
+
+<a name="node_idx_340"></a><a name="node_kw_definitionsync"></a><code class=scheme>(sync</code><tt>&nbsp;</tt><code class=scheme><span class=variable>waitable</span></code><code class=scheme>)</code> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<small>P</small><small>R</small><small>O</small><small>C</small><small>E</small><small>D</small><small>U</small><small>R</small><small>E</small>
+</p>
+<p>
+Equivalent to <code class=scheme>(object-wait-multiple <code class=scheme><span class=selfeval>#f</span></code> <code class=scheme><span class=variable>waitable</span></code>)</code>
+(see section&nbsp;<a href="../mzscheme/mzscheme-Z-H-7.html#node_sec_7.6">7.6</a> in <a href="../mzscheme/mzscheme.html"><i>PLT MzScheme: Language Manual</i></a>).</p>
+<p>
+
+
+</p>
+<p></p>
+<p>
+
+<a name="node_idx_342"></a><a name="node_kw_definitionsync/enable-break"></a><code class=scheme>(sync/enable-break</code><tt>&nbsp;</tt><code class=scheme><span class=variable>waitable</span></code><code class=scheme>)</code> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<small>P</small><small>R</small><small>O</small><small>C</small><small>E</small><small>D</small><small>U</small><small>R</small><small>E</small>
+</p>
+<p>
+Equivalent to <code class=scheme>(object-wait-multiple/enable-break <code class=scheme><span class=selfeval>#f</span></code> <code class=scheme><span class=variable>waitable</span></code>)</code>
+(see section&nbsp;<a href="../mzscheme/mzscheme-Z-H-7.html#node_sec_7.6">7.6</a> in <a href="../mzscheme/mzscheme.html"><i>PLT MzScheme: Language Manual</i></a>).</p>
+<p>
+
+
+</p>
+<p></p>
+<p>
+
+<a name="node_idx_344"></a><a name="node_kw_definitionchannel"></a><code class=scheme>(channel</code><code class=scheme>)</code> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</p>
+<p>
+procedure</p>
+<p>
+Equivalent to <code class=scheme>(make-channel)</code>
+(see section&nbsp;<a href="../mzscheme/mzscheme-Z-H-7.html#node_sec_7.5">7.5</a> in <a href="../mzscheme/mzscheme.html"><i>PLT MzScheme: Language Manual</i></a>).</p>
+<p>
+
+
+</p>
+<p></p>
+<p>
+
+<a name="node_idx_346"></a><a name="node_kw_definitionchannel-recv-evt"></a><code class=scheme>(channel-recv-evt</code><tt>&nbsp;</tt><code class=scheme><span class=variable>channel</span></code><code class=scheme>)</code> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<small>P</small><small>R</small><small>O</small><small>C</small><small>E</small><small>D</small><small>U</small><small>R</small><small>E</small>
+</p>
+<p>
+Equivalent to <code class=scheme><span class=variable>channel</span></code>.</p>
+<p>
+
+
+</p>
+<p></p>
+<p>
+
+<a name="node_idx_348"></a><a name="node_kw_definitionchannel-send-evt"></a><code class=scheme>(channel-send-evt</code><tt>&nbsp;</tt><code class=scheme><span class=variable>channel v</span></code><code class=scheme>)</code> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<small>P</small><small>R</small><small>O</small><small>C</small><small>E</small><small>D</small><small>U</small><small>R</small><small>E</small>
+</p>
+<p>
+Equivalent to <code class=scheme>(make-channel-put-waitable <code class=scheme><span class=variable>channel</span></code> <code class=scheme><span class=variable>v</span></code>)</code>
+(see section&nbsp;<a href="../mzscheme/mzscheme-Z-H-7.html#node_sec_7.5">7.5</a> in <a href="../mzscheme/mzscheme.html"><i>PLT MzScheme: Language Manual</i></a>).</p>
+<p>
+
+
+</p>
+<p></p>
+<p>
+
+<a name="node_idx_350"></a><a name="node_kw_definitionchoice-evt"></a><code class=scheme>(choice-evt</code><tt>&nbsp;</tt><code class=scheme><span class=variable>waitable</span></code><tt>&nbsp;</tt><tt>&middot;&middot;&middot;</tt><code class=scheme>)</code> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<small>P</small><small>R</small><small>O</small><small>C</small><small>E</small><small>D</small><small>U</small><small>R</small><small>E</small>
+</p>
+<p>
+Equivalent to <code class=scheme>(waitables-&gt;waitable-set <code class=scheme><span class=variable>waitable</span></code> <tt>&middot;&middot;&middot;</tt>)</code>
+(see section&nbsp;<a href="../mzscheme/mzscheme-Z-H-7.html#node_sec_7.6">7.6</a> in <a href="../mzscheme/mzscheme.html"><i>PLT MzScheme: Language Manual</i></a>).</p>
+<p>
+
+
+</p>
+<p></p>
+<p>
+
+<a name="node_idx_352"></a><a name="node_kw_definitionwrap-evt"></a><code class=scheme>(wrap-evt</code><tt>&nbsp;</tt><code class=scheme><span class=variable>waitable proc</span></code><code class=scheme>)</code> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<small>P</small><small>R</small><small>O</small><small>C</small><small>E</small><small>D</small><small>U</small><small>R</small><small>E</small>
+</p>
+<p>
+Equivalent to <code class=scheme>(make-wrapped-waitable <code class=scheme><span class=variable>waitable</span></code> <code class=scheme><span class=variable>proc</span></code>)</code>
+(see section&nbsp;<a href="../mzscheme/mzscheme-Z-H-7.html#node_sec_7.6">7.6</a> in <a href="../mzscheme/mzscheme.html"><i>PLT MzScheme: Language Manual</i></a>).</p>
+<p>
+
+
+</p>
+<p></p>
+<p>
+
+<a name="node_idx_354"></a><a name="node_kw_definitionguard-evt"></a><code class=scheme>(guard-evt</code><tt>&nbsp;</tt><code class=scheme><span class=variable>thunk</span></code><code class=scheme>)</code> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<small>P</small><small>R</small><small>O</small><small>C</small><small>E</small><small>D</small><small>U</small><small>R</small><small>E</small>
+</p>
+<p>
+Equivalent to <code class=scheme>(make-guard-waitable <code class=scheme><span class=variable>thunk</span></code>)</code>
+(see section&nbsp;<a href="../mzscheme/mzscheme-Z-H-7.html#node_sec_7.6">7.6</a> in <a href="../mzscheme/mzscheme.html"><i>PLT MzScheme: Language Manual</i></a>).</p>
+<p>
+
+
+</p>
+<p></p>
+<p>
+
+<a name="node_idx_356"></a><a name="node_kw_definitionnack-guard-evt"></a><code class=scheme>(nack-guard-evt</code><tt>&nbsp;</tt><code class=scheme><span class=variable>proc</span></code><code class=scheme>)</code> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<small>P</small><small>R</small><small>O</small><small>C</small><small>E</small><small>D</small><small>U</small><small>R</small><small>E</small>
+</p>
+<p>
+Equivalent to <code class=scheme>(make-nack-guard-waitable <code class=scheme><span class=variable>proc</span></code>)</code>
+(see section&nbsp;<a href="../mzscheme/mzscheme-Z-H-7.html#node_sec_7.6">7.6</a> in <a href="../mzscheme/mzscheme.html"><i>PLT MzScheme: Language Manual</i></a>).</p>
+<p>
+
+
+</p>
+<p></p>
+<p>
+
+<a name="node_idx_358"></a><a name="node_kw_definitionthread-done-evt"></a><code class=scheme>(thread-done-evt</code><tt>&nbsp;</tt><code class=scheme><span class=variable>thread</span></code><code class=scheme>)</code> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<small>P</small><small>R</small><small>O</small><small>C</small><small>E</small><small>D</small><small>U</small><small>R</small><small>E</small>
+</p>
+<p>
+Equivalent to <code class=scheme>(thread-dead-waitable <code class=scheme><span class=variable>thread</span></code>)</code>
+(see section&nbsp;<a href="../mzscheme/mzscheme-Z-H-7.html#node_sec_7.2">7.2</a> in <a href="../mzscheme/mzscheme.html"><i>PLT MzScheme: Language Manual</i></a>).</p>
+<p>
+
+
+</p>
+<p></p>
+<p>
+
+<a name="node_idx_360"></a><a name="node_kw_definitioncurrent-time"></a><code class=scheme>(current-time</code><code class=scheme>)</code> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<small>P</small><small>R</small><small>O</small><small>C</small><small>E</small><small>D</small><small>U</small><small>R</small><small>E</small>
+</p>
+<p>
+Equivalent to <code class=scheme>(current-seconds)</code>
+(see section&nbsp;<a href="../mzscheme/mzscheme-Z-H-15.html#node_sec_15.1">15.1</a> in <a href="../mzscheme/mzscheme.html"><i>PLT MzScheme: Language Manual</i></a>).</p>
+<p>
+
+
+</p>
+<p></p>
+<p>
+
+<a name="node_idx_362"></a><a name="node_kw_definitiontime-evt"></a><code class=scheme>(time-evt</code><tt>&nbsp;</tt><code class=scheme><span class=variable>k</span></code><code class=scheme>)</code> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<small>P</small><small>R</small><small>O</small><small>C</small><small>E</small><small>D</small><small>U</small><small>R</small><small>E</small>
+</p>
+<p>
+Returns a waitable that is ready whenever <code class=scheme>(current-time)</code>
+returns a value greater than or equal to <code class=scheme><span class=variable>k</span></code>.</p>
+<p>
+</p>
+<p>
+</p>
+<div align=right class=navigation><i>[Go to <span><a href="mzlib.html">first</a>, <a href="mzlib-Z-H-9.html">previous</a></span><span>, <a href="mzlib-Z-H-11.html">next</a></span> page<span>; &nbsp;&nbsp;</span><span><a href="mzlib.html#node_toc_start">contents</a></span><span><span>; &nbsp;&nbsp;</span><a href="mzlib-Z-H-42.html#node_index_start">index</a></span>]</i></div><p></p>
+</body>
+</html>

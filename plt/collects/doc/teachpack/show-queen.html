@@ -1,0 +1,34 @@
+<html>
+<head>
+<title>Teachpack : Show Queen</title>
+</head>
+<body bgcolor="#ffffff" text="#000000"
+      link="#009900" vlink="#007700" alink="#cc0000">
+
+<a href="index.html">Teachpacks for How to Design Programs</a>
+
+<h1>Show Queen</h1>
+
+<hr> <h3><a name="show-queen.ss">show-queen.ss</a></h3> <!-- DOCNOTE="teach=show-queen.ss" -->
+
+<p>The teachpack <code>show-queen.ss</code> provides the
+operation <code><a name="show-queen">show-queen</a></code>. It implements a GUI for
+exploring the n-queens problem.</p>
+
+<p>The function <code>show-queen</code> consumes a list of
+lists of booleans that describes a board. Each of the inner
+lists must have the same length as the outer list. The
+<code>true</code>s correspond to positions where queens are,
+and the <code>false</code>s correspond to empty squares. The
+function returns nothing.
+
+<p>In the GUI window that <code>show-queen</code> opens, the
+red and orange dots show where the queens are. The green dot
+shows where the mouse cursor is. Each queen that threatens
+the green spot is shown in red, and the queens that do not
+threaten the green spot are shown in orange.
+
+<br>
+<br>
+</body>
+</html>

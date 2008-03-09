@@ -1,0 +1,809 @@
+<!doctype html public "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!--
+
+Generated from misclib.tex by tex2page, v 2004-09-11
+(running on MzScheme 209, unix), 
+(c) Dorai Sitaram, 
+http://www.ccs.neu.edu/~dorai/tex2page/tex2page-doc.html
+
+-->
+<head>
+<title>
+PLT Miscellaneous Libraries: Reference Manual
+</title>
+<link rel="stylesheet" type="text/css" href="misclib-Z-S.css" title=default>
+<meta name=robots content="noindex,follow">
+</head>
+<body>
+<div align=right class=navigation><i>[Go to <span><a href="misclib.html">first</a>, <a href="misclib-Z-H-1.html">previous</a></span><span>, <a href="misclib-Z-H-3.html">next</a></span> page<span>; &nbsp;&nbsp;</span><span><a href="misclib.html#node_toc_start">contents</a></span><span><span>; &nbsp;&nbsp;</span><a href="misclib-Z-H-4.html#node_index_start">index</a></span>]</i></div><p></p>
+<a name="node_chap_2"></a>
+<h1 class=chapter>
+<div class=chapterheading><a href="misclib.html#node_toc_node_chap_2">Chapter 2</a></div><br>
+<a href="misclib.html#node_toc_node_chap_2">Viewport Graphics</a></h1>
+<p><a name="node_idx_4"></a></p>
+<p>
+<a name="node_idx_6"></a> <a name="node_idx_8"></a>
+The viewport graphics library is a relatively simple toolbox of
+graphics commands. The library is not very powerful; it is intended
+as a simplified alternative to MrEd's full graphical toolbox.</p>
+<p>
+The graphics library originated as SIXlib, a library of X Windows
+commands available within Chez Scheme at Rice University. The
+functionality of that library has been reproduced (with backward
+compatibility) in this version.</p>
+<p>
+To use the viewport graphics library in a PLT language, load it via
+<code class=scheme><span class=keyword>require</span></code>:
+</p>
+<div align=left><pre class=scheme>(<span class=keyword>require</span> (<span class=variable>lib</span> <span class=selfeval>&quot;graphics.ss&quot;</span> <span class=selfeval>&quot;graphics&quot;</span>))
+</pre></div><p>
+which loads the <tt><strong>graphics.ss</strong></tt><a name="node_idx_10"></a> library from the
+<tt><strong>graphics</strong></tt> collection. All of the names defined in this chapter
+will then be available.</p>
+<p>
+</p>
+<a name="node_sec_2.1"></a>
+<h2><a href="misclib.html#node_toc_node_sec_2.1">2.1&nbsp;&nbsp;Basic Commands</a></h2>
+<p><a name="node_idx_12"></a></p>
+<p>
+</p>
+<ul>
+<li><p><a name="node_idx_14"></a><a name="node_kw_definitionopen-graphics"></a> 
+<code class=scheme>(open-graphics)</code> <br>
+Initializes the library's graphics routines. It must be
+called before any other graphics operations.</p>
+<p>
+</p>
+<li><p><a name="node_idx_16"></a><a name="node_kw_definitionclose-graphics"></a>
+<code class=scheme>(close-graphics)</code> <br>
+Closes all of the windows and until
+<code class=scheme>open-graphics</code> is called again, no graphics routines will work.</p>
+<p>
+</p>
+<li><p><a name="node_idx_18"></a><a name="node_kw_definitionopen-viewport"></a>
+<code class=scheme>(open-viewport <code class=scheme><span class=variable>name</span></code> <code class=scheme><span class=variable>horiz</span></code> <code class=scheme><span class=variable>vert</span></code>)</code> <br>
+Takes a string <code class=scheme><span class=variable>name</span></code> and integers <code class=scheme><span class=variable>horiz</span></code> and <code class=scheme><span class=variable>vert</span></code> and
+creates a new window called <code class=scheme><span class=variable>name</span></code>.  The window is
+<code class=scheme><span class=variable>horiz</span></code> pixels wide and <code class=scheme><span class=variable>vert</span></code> pixels high. 
+For backward compatibility, a single <code class=scheme>posn</code> value (see below) can be
+submitted in the place of <code class=scheme><span class=variable>horiz</span></code> and <code class=scheme><span class=variable>vert</span></code>.  <code class=scheme><span class=variable>open-viewport</span></code>
+returns a viewport descriptor.</p>
+<p>
+</p>
+<li><p><a name="node_idx_20"></a><a name="node_kw_definitionopen-pixmap"></a>
+<code class=scheme>(open-pixmap <code class=scheme><span class=variable>name</span></code> <code class=scheme><span class=variable>horiz</span></code> <code class=scheme><span class=variable>vert</span></code>)</code> <br>
+Like <code class=scheme>open-viewport</code>, but the resulting viewport is not displayed
+on the screen. Offscreen pixmaps are useful for executing a sequence
+of drawing commands and displaying them all at once with
+<code class=scheme>copy-viewport</code>.</p>
+<p>
+Offscreen pixmaps are also useful in conjunction with viewport-&gt;snip (see below). This allows functions to compute with graphical objects and view the graphics when results are returned to the interactions window.</p>
+<p>
+</p>
+<li><p><a name="node_idx_22"></a><a name="node_kw_definitionclose-viewport"></a>
+<code class=scheme>(close-viewport <code class=scheme><span class=variable>viewport</span></code>)</code> <br>
+Takes a viewport descriptor.  It removes the viewport
+from the screen and makes subsequent operations dealing with the
+viewport illegal.</p>
+<p>
+</p>
+</ul><p></p>
+<p>
+</p>
+<a name="node_sec_2.2"></a>
+<h2><a href="misclib.html#node_toc_node_sec_2.2">2.2&nbsp;&nbsp;Position Operations</a></h2>
+<p><a name="node_idx_24"></a></p>
+<p>
+A position is a pixel location within a viewport.  The upper-left
+corner is pixel (0, 0) and the orientation of the position
+coordinates within a viewport is as follows:</p>
+<p>
+</p>
+<div align=center><table><tr><td>
+
+<img src="misclib-Z-G-1.gif" border="0" alt="[misclib-Z-G-1.gif]">
+</td></tr></table></div>
+<p>
+</p>
+<ul>
+<li><p><a name="node_idx_26"></a><a name="node_kw_definitionmake-posn"></a>
+<code class=scheme>(make-posn <code class=scheme><span class=variable>x</span></code> <code class=scheme><span class=variable>y</span></code>)</code> <br>
+Takes two integers and returns a position 
+with the specified <code class=scheme><span class=variable>x</span></code> and <code class=scheme><span class=variable>y</span></code> coordinates.</p>
+<p>
+</p>
+<li><p><a name="node_idx_28"></a><a name="node_kw_definitionposn-x"></a>
+<code class=scheme>(posn-x <code class=scheme><span class=variable>p</span></code>)</code>, <code class=scheme>(posn-y <code class=scheme><span class=variable>p</span></code>)</code> <br>
+Return the <code class=scheme><span class=variable>x</span></code> and <code class=scheme><span class=variable>y</span></code> coordinates, respectively, of a position.</p>
+<p>
+</p>
+<li><p><a name="node_idx_30"></a><a name="node_kw_definitionposn_Q_"></a>
+<code class=scheme>(posn? <code class=scheme><span class=variable>v</span></code>)</code> <br>
+Reports whether <code class=scheme><span class=variable>v</span></code> is a position.</p>
+<p>
+</p>
+<li><p><a name="node_idx_32"></a><a name="node_kw_definitionget-pixel"></a>
+<code class=scheme>((get-pixel <code class=scheme><span class=variable>viewport</span></code>) <code class=scheme><span class=variable>p</span></code>)</code> <br>
+Returns the color of the pixel at position <code class=scheme><span class=variable>p</span></code> in <code class=scheme><span class=variable>viewport</span></code>;
+0 denotes white and 1 denotes not white.</p>
+<p>
+</p>
+<li><p><a name="node_idx_34"></a><a name="node_kw_definitionget-color-pixel"></a>
+<code class=scheme>((get-color-pixel <code class=scheme><span class=variable>viewport</span></code>) <code class=scheme><span class=variable>p</span></code>)</code> <br>
+Returns an RGB value for color of the pixel at position <code class=scheme><span class=variable>p</span></code> in
+<code class=scheme><span class=variable>viewport</span></code>.</p>
+<p>
+</p>
+<li><p><a name="node_idx_36"></a><a name="node_kw_definitiontest-pixel"></a>
+<code class=scheme>((test-pixel <code class=scheme><span class=variable>viewport</span></code>) <code class=scheme><span class=variable>color</span></code>)</code> <br>
+Returns the color that will actually be used if <code class=scheme><span class=variable>color</span></code> is used
+to draw.</p>
+<p>
+</p>
+</ul><p></p>
+<p>
+</p>
+<a name="node_sec_2.3"></a>
+<h2><a href="misclib.html#node_toc_node_sec_2.3">2.3&nbsp;&nbsp;Color Operations</a></h2>
+<p><a name="node_idx_38"></a></p>
+<p>
+A color can be represented in three ways: as a color index (an integer
+in 0 to 299, inclusive), as a color name string, or as a <code class=scheme>rgb</code>
+value. All drawing functions which take a color argument accept
+colors in any form. An <code class=scheme>rgb</code> value is assigned to an index with
+<code class=scheme>change-color</code>.</p>
+<p>
+</p>
+<ul><p>
+</p>
+<li><p><a name="node_idx_40"></a><a name="node_kw_definitionmake-rgb"></a>
+<code class=scheme>(make-rgb <code class=scheme><span class=variable>red</span></code> <code class=scheme><span class=variable>green</span></code> <code class=scheme><span class=variable>blue</span></code>)</code> <br>
+Takes three values in the range 0 (dark) to 1 (bright) and returns an
+<code class=scheme>rgb</code> (a color).</p>
+<p>
+</p>
+<li><p><a name="node_idx_42"></a><a name="node_kw_definitionrgb-red"></a>
+<code class=scheme>(rgb-red <code class=scheme><span class=variable>color</span></code>)<br>
+(rgb-blue <code class=scheme><span class=variable>color</span></code>)<br>
+(rgb-green <code class=scheme><span class=variable>color</span></code>)</code> <br>
+Return the red, green, and blue components, respectively, of a color.</p>
+<p>
+</p>
+<li><p><a name="node_idx_44"></a><a name="node_kw_definitionrgb_Q_"></a>
+<code class=scheme>(rgb? <code class=scheme><span class=variable>v</span></code>)</code> <br>
+Reports whether <code class=scheme><span class=variable>v</span></code> is a color.</p>
+<p>
+</p>
+<li><p><a name="node_idx_46"></a><a name="node_kw_definitionchange-color"></a>
+<code class=scheme>(change-color <code class=scheme><span class=variable>index</span></code> <code class=scheme><span class=variable>rgb</span></code>)</code> <br>
+Changes the color at <code class=scheme><span class=variable>index</span></code> in the color table to the
+color specified in <code class=scheme><span class=variable>rgb</span></code>. Only the first twenty-one indices
+are initialized; a color index should not be used until it has
+been initialized.</p>
+<p>
+</p>
+<li><p><a name="node_idx_48"></a><a name="node_kw_definitiondefault-display-is-color_Q_"></a>
+<code class=scheme>(default-display-is-color?)</code> <br>
+Returns <code class=scheme>#t</code> if the default display
+screen for viewports is in color or <code class=scheme>#f</code> otherwise.
+</p>
+</ul><p></p>
+<p>
+</p>
+<a name="node_sec_2.4"></a>
+<h2><a href="misclib.html#node_toc_node_sec_2.4">2.4&nbsp;&nbsp;Draw, Clear and Flip Operations</a></h2>
+<p><a name="node_idx_50"></a></p>
+<p>
+These are the basic graphics operations for drawing to a viewport.
+Each function takes a viewport as its argument and returns a function
+operating within that viewport.
+Further arguments, if any, are curried.
+For example, <code class=scheme>(draw-line viewport)</code> returns a
+function, that can then be applied to the proper arguments to draw a
+line in the viewport corresponding to viewport descriptor <code class=scheme><span class=variable>viewport</span></code>.
+An example follows.</p>
+<p>
+Where ``draw-'' commands make pixels black, ``clear-'' commands make them
+white.</p>
+<p>
+Where ``draw-'' commands make pixels black, a ``flip-'' commands cause
+them to change.</p>
+<p>
+</p>
+<a name="node_sec_2.4.1"></a>
+<h3><a href="misclib.html#node_toc_node_sec_2.4.1">2.4.1&nbsp;&nbsp;Viewports</a></h3>
+<p></p>
+<ul>
+<li><p><a name="node_idx_52"></a><a name="node_kw_definitiondraw-viewport"></a>
+<code class=scheme>((draw-viewport <code class=scheme><span class=variable>viewport</span></code>) <code class=scheme><span class=variable>color</span></code>)</code> <br>
+Takes a viewport descriptor.  It returns a
+function that colors the entire contents of <code class=scheme><span class=variable>viewport</span></code>.
+The optional <code class=scheme><span class=variable>color</span></code> argument defaults to black.</p>
+<p>
+</p>
+<li><p><a name="node_idx_54"></a><a name="node_kw_definitionclear-viewport"></a>
+<code class=scheme>((clear-viewport <code class=scheme><span class=variable>viewport</span></code>))</code> <br>
+Takes a viewport descriptor.  It returns a
+function that whitens the entire contents of <code class=scheme><span class=variable>viewport</span></code>.</p>
+<p>
+</p>
+<li><p><a name="node_idx_56"></a><a name="node_kw_definitionflip-viewport"></a>
+<code class=scheme>((flip-viewport <code class=scheme><span class=variable>viewport</span></code>))</code> <br>
+Takes a viewport descriptor.  
+It returns a function that flips the contents of <code class=scheme><span class=variable>viewport</span></code>.</p>
+<p>
+</p>
+<li><p><a name="node_idx_58"></a><a name="node_kw_definitioncopy-viewport"></a>
+<code class=scheme>(copy-viewport <code class=scheme><span class=variable>source-viewport</span></code> <code class=scheme><span class=variable>destination-viewport</span></code>)</code> <br>
+Takes two viewport descriptors.  
+It copies the <code class=scheme><span class=variable>source-viewport</span></code> into the <code class=scheme><span class=variable>destination-viewport</span></code>.
+</p>
+</ul><p></p>
+<p>
+</p>
+<a name="node_sec_2.4.2"></a>
+<h3><a href="misclib.html#node_toc_node_sec_2.4.2">2.4.2&nbsp;&nbsp;Pixels</a></h3>
+<p></p>
+<ul>
+<li><p><a name="node_idx_60"></a><a name="node_kw_definitiondraw-pixel"></a>
+<code class=scheme>((draw-pixel viewport) <code class=scheme><span class=variable>p</span></code> <code class=scheme><span class=variable>color</span></code>)</code> <br>
+Takes a viewport descriptor.  It returns a function that
+draws a pixel in <code class=scheme><span class=variable>viewport</span></code> at the specified position.
+The optional <code class=scheme><span class=variable>color</span></code> argument defaults to black.</p>
+<p>
+</p>
+<li><p><a name="node_idx_62"></a><a name="node_kw_definitionclear-pixel"></a>
+<code class=scheme>((clear-pixel <code class=scheme><span class=variable>viewport</span></code>) <code class=scheme><span class=variable>p</span></code>)</code> <br>
+Takes a viewport descriptor.  It returns a function that
+clears a pixel in  <code class=scheme><span class=variable>viewport</span></code> at the specified position.</p>
+<p>
+</p>
+<li><p><a name="node_idx_64"></a><a name="node_kw_definitionflip-pixel"></a>
+<code class=scheme>((flip-pixel <code class=scheme><span class=variable>viewport</span></code>) <code class=scheme><span class=variable>p</span></code>)</code> <br>
+Takes a viewport descriptor.  It returns a function that
+flips a pixel in <code class=scheme><span class=variable>viewport</span></code> at the specified position.
+</p>
+</ul><p></p>
+<p>
+</p>
+<a name="node_sec_2.4.3"></a>
+<h3><a href="misclib.html#node_toc_node_sec_2.4.3">2.4.3&nbsp;&nbsp;Lines</a></h3>
+<p></p>
+<ul>
+<li><p><a name="node_idx_66"></a><a name="node_kw_definitiondraw-line"></a>
+<code class=scheme>((draw-line <code class=scheme><span class=variable>viewport</span></code>) <code class=scheme><span class=variable>p1</span></code> <code class=scheme><span class=variable>p2</span></code> <code class=scheme><span class=variable>color</span></code>)</code> <br>
+Takes a viewport descriptor.  It returns a function that
+draws a line in the <code class=scheme><span class=variable>viewport</span></code> connecting positions <code class=scheme><span class=variable>p1</span></code> and <code class=scheme><span class=variable>p2</span></code>.
+The optional <code class=scheme><span class=variable>color</span></code> argument defaults to black.</p>
+<p>
+</p>
+<li><p><a name="node_idx_68"></a><a name="node_kw_definitionclear-line"></a>
+<code class=scheme>((clear-line <code class=scheme><span class=variable>viewport</span></code>) <code class=scheme><span class=variable>p1</span></code> <code class=scheme><span class=variable>p2</span></code>)</code> <br>
+Takes a viewport descriptor.  It returns a function that
+clears a line in <code class=scheme><span class=variable>viewport</span></code> connecting positions <code class=scheme><span class=variable>p1</span></code> and <code class=scheme><span class=variable>p2</span></code>.</p>
+<p>
+</p>
+<li><p><a name="node_idx_70"></a><a name="node_kw_definitionflip-line"></a>
+<code class=scheme>((flip-line <code class=scheme><span class=variable>viewport</span></code>) <code class=scheme><span class=variable>p1</span></code> <code class=scheme><span class=variable>p2</span></code>)</code> <br>
+Takes a viewport descriptor.  It returns a function that
+flips a line in <code class=scheme><span class=variable>viewport</span></code> connecting positions <code class=scheme><span class=variable>p1</span></code> and <code class=scheme><span class=variable>p2</span></code>.
+</p>
+</ul><p></p>
+<p>
+</p>
+<a name="node_sec_2.4.4"></a>
+<h3><a href="misclib.html#node_toc_node_sec_2.4.4">2.4.4&nbsp;&nbsp;Rectangles</a></h3>
+<p></p>
+<ul>
+<li><p><a name="node_idx_72"></a><a name="node_kw_definitiondraw-rectangle"></a>
+<code class=scheme>((draw-rectangle <code class=scheme><span class=variable>viewport</span></code>) <code class=scheme><span class=variable>posn</span></code> <code class=scheme><span class=variable>width</span></code> <code class=scheme><span class=variable>height</span></code> <code class=scheme><span class=variable>color</span></code>)</code> <br>
+Takes a viewport descriptor.  It returns a function
+that draws a rectangle border in the <code class=scheme><span class=variable>viewport</span></code> with the top-left of
+the rectangle at the position <code class=scheme><span class=variable>posn</span></code> and with sides <code class=scheme><span class=variable>width</span></code> across
+and <code class=scheme><span class=variable>height</span></code> tall.
+The optional <code class=scheme><span class=variable>color</span></code> argument defaults to black.</p>
+<p>
+</p>
+<li><p><a name="node_idx_74"></a><a name="node_kw_definitionclear-rectangle"></a>
+<code class=scheme>((clear-rectangle <code class=scheme><span class=variable>viewport</span></code>) <code class=scheme><span class=variable>posn</span></code> <code class=scheme><span class=variable>width</span></code> <code class=scheme><span class=variable>height</span></code>)</code> <br>
+Takes a viewport descriptor.  It returns a function that
+clears a rectangle border in the <code class=scheme><span class=variable>viewport</span></code> with the top-left of the rectangle
+at the position <code class=scheme><span class=variable>posn</span></code> and with sides <code class=scheme><span class=variable>width</span></code> across and <code class=scheme><span class=variable>height</span></code> tall.
+The optional <code class=scheme><span class=variable>color</span></code> argument defaults to black.</p>
+<p>
+</p>
+<li><p><a name="node_idx_76"></a><a name="node_kw_definitionflip-rectangle"></a>
+<code class=scheme>((flip-rectangle <code class=scheme><span class=variable>viewport</span></code>) <code class=scheme><span class=variable>posn</span></code> <code class=scheme><span class=variable>width</span></code> <code class=scheme><span class=variable>height</span></code> <code class=scheme><span class=variable>color</span></code>)</code> <br>
+Takes a viewport descriptor.  It returns a function that
+flips a rectangle border in the <code class=scheme><span class=variable>viewport</span></code> with the top-left of the rectangle
+at the position <code class=scheme><span class=variable>posn</span></code> and with sides <code class=scheme><span class=variable>width</span></code> across and <code class=scheme><span class=variable>height</span></code> tall.
+The optional <code class=scheme><span class=variable>color</span></code> argument defaults to black.</p>
+<p>
+</p>
+<li><p><a name="node_idx_78"></a><a name="node_kw_definitiondraw-solid-rectangle"></a>
+<code class=scheme>((draw-solid-rectangle <code class=scheme><span class=variable>viewport</span></code>) <code class=scheme><span class=variable>posn</span></code> <code class=scheme><span class=variable>width</span></code> <code class=scheme><span class=variable>height</span></code> 
+<code class=scheme><span class=variable>color</span></code>)</code> <br>
+Takes a viewport descriptor.  It returns a function that
+paints a solid rectangle in the <code class=scheme><span class=variable>viewport</span></code> with the top-left of the rectangle
+at the position <code class=scheme><span class=variable>posn</span></code> and with sides <code class=scheme><span class=variable>width</span></code> across and <code class=scheme><span class=variable>height</span></code> tall.
+The optional <code class=scheme><span class=variable>color</span></code> argument defaults to black.</p>
+<p>
+</p>
+<li><p><a name="node_idx_80"></a><a name="node_kw_definitionclear-solid-rectangle"></a>
+<code class=scheme>((clear-solid-rectangle <code class=scheme><span class=variable>viewport</span></code>) <code class=scheme><span class=variable>posn</span></code> <code class=scheme><span class=variable>width</span></code> <code class=scheme><span class=variable>height</span></code>)</code> <br>
+Takes a viewport descriptor.  It returns a function that
+erases a solid rectangle in the <code class=scheme><span class=variable>viewport</span></code> with the top-left of the rectangle
+at the position <code class=scheme><span class=variable>posn</span></code> and with sides <code class=scheme><span class=variable>width</span></code> across and <code class=scheme><span class=variable>height</span></code> tall.
+The optional <code class=scheme><span class=variable>color</span></code> argument defaults to black.</p>
+<p>
+</p>
+<li><p><a name="node_idx_82"></a><a name="node_kw_definitionflip-solid-rectangle"></a>
+<code class=scheme>((flip-solid-rectangle <code class=scheme><span class=variable>viewport</span></code>) <code class=scheme><span class=variable>posn</span></code> <code class=scheme><span class=variable>width</span></code> <code class=scheme><span class=variable>height</span></code> 
+<code class=scheme><span class=variable>color</span></code>)</code> <br>
+Takes a viewport descriptor.  It returns a function that
+flips a solid rectangle in the <code class=scheme><span class=variable>viewport</span></code> with the top-left of the rectangle
+at the position <code class=scheme><span class=variable>posn</span></code> and with sides <code class=scheme><span class=variable>width</span></code> across and <code class=scheme><span class=variable>height</span></code> tall.
+The optional <code class=scheme><span class=variable>color</span></code> argument defaults to black.
+</p>
+</ul><p></p>
+<p>
+</p>
+<a name="node_sec_2.4.5"></a>
+<h3><a href="misclib.html#node_toc_node_sec_2.4.5">2.4.5&nbsp;&nbsp;Ellipses</a></h3>
+<p></p>
+<ul>
+<li><p><a name="node_idx_84"></a><a name="node_kw_definitiondraw-ellipse"></a>
+<code class=scheme>((draw-ellipse <code class=scheme><span class=variable>viewport</span></code>) <code class=scheme><span class=variable>posn</span></code> <code class=scheme><span class=variable>width</span></code> <code class=scheme><span class=variable>height</span></code> 
+<code class=scheme><span class=variable>color</span></code>)</code> <br>
+Takes a viewport descriptor.  It returns a function that
+draws an ellipse border in the <code class=scheme><span class=variable>viewport</span></code>. The <code class=scheme><span class=variable>posn</span></code>, <code class=scheme><span class=variable>width</span></code>, 
+and <code class=scheme><span class=variable>height</span></code>  arguments are as in <code class=scheme>draw-rectangle</code>; the ellipse
+is inscribed within the specified rectangle.
+The optional <code class=scheme><span class=variable>color</span></code> argument defaults to black.</p>
+<p>
+</p>
+<li><p><a name="node_idx_86"></a><a name="node_kw_definitionclear-ellipse"></a>
+<code class=scheme>((clear-ellipse <code class=scheme><span class=variable>viewport</span></code>) <code class=scheme><span class=variable>posn</span></code> <code class=scheme><span class=variable>width</span></code> <code class=scheme><span class=variable>height</span></code>)</code> <br>
+Takes a viewport descriptor.  It returns a function that
+clears an ellipse border in the <code class=scheme><span class=variable>viewport</span></code>. The <code class=scheme><span class=variable>posn</span></code>, <code class=scheme><span class=variable>width</span></code>, 
+and <code class=scheme><span class=variable>height</span></code>  arguments are as in <code class=scheme>clear-rectangle</code>; the ellipse
+is inscribed within the specified rectangle.
+The optional <code class=scheme><span class=variable>color</span></code> argument defaults to black.</p>
+<p>
+</p>
+<li><p><a name="node_idx_88"></a><a name="node_kw_definitionflip-ellipse"></a>
+<code class=scheme>((flip-ellipse <code class=scheme><span class=variable>viewport</span></code>) <code class=scheme><span class=variable>posn</span></code> <code class=scheme><span class=variable>width</span></code> <code class=scheme><span class=variable>height</span></code> 
+<code class=scheme><span class=variable>color</span></code>)</code> <br>
+Takes a viewport descriptor.  It returns a function that
+flips an ellipse border in the <code class=scheme><span class=variable>viewport</span></code>. The <code class=scheme><span class=variable>posn</span></code>, <code class=scheme><span class=variable>width</span></code>, 
+and <code class=scheme><span class=variable>height</span></code>  arguments are as in <code class=scheme>flip-rectangle</code>; the ellipse
+is inscribed within the specified rectangle.
+The optional <code class=scheme><span class=variable>color</span></code> argument defaults to black.</p>
+<p>
+</p>
+<li><p><a name="node_idx_90"></a><a name="node_kw_definitiondraw-solid-ellipse"></a>
+<code class=scheme>((draw-solid-ellipse <code class=scheme><span class=variable>viewport</span></code>) <code class=scheme><span class=variable>posn</span></code> <code class=scheme><span class=variable>width</span></code> <code class=scheme><span class=variable>height</span></code> 
+<code class=scheme><span class=variable>color</span></code>)</code> <br>
+Takes a viewport descriptor.  It returns a function that
+paints a solid ellipse in the <code class=scheme><span class=variable>viewport</span></code>. The <code class=scheme><span class=variable>posn</span></code>, <code class=scheme><span class=variable>width</span></code>, 
+and <code class=scheme><span class=variable>height</span></code>  arguments are as in <code class=scheme>draw-rectangle</code>; the ellipse
+is inscribed within the specified rectangle.
+The optional <code class=scheme><span class=variable>color</span></code> argument defaults to black.</p>
+<p>
+</p>
+<li><p><a name="node_idx_92"></a><a name="node_kw_definitionclear-solid-ellipse"></a>
+<code class=scheme>((clear-solid-ellipse <code class=scheme><span class=variable>viewport</span></code>) <code class=scheme><span class=variable>posn</span></code> <code class=scheme><span class=variable>width</span></code> <code class=scheme><span class=variable>height</span></code>)</code> <br>
+Takes a viewport descriptor.  It returns a function that
+erases a solid ellipse in the <code class=scheme><span class=variable>viewport</span></code>. The <code class=scheme><span class=variable>posn</span></code>, <code class=scheme><span class=variable>width</span></code>, 
+and <code class=scheme><span class=variable>height</span></code>  arguments are as in <code class=scheme>clear-rectangle</code>; the ellispse
+is be inscribed within the specified rectangle.
+The optional <code class=scheme><span class=variable>color</span></code> argument defaults to black.</p>
+<p>
+</p>
+<li><p><a name="node_idx_94"></a><a name="node_kw_definitionflip-solid-ellipse"></a>
+<code class=scheme>((flip-solid-ellipse <code class=scheme><span class=variable>viewport</span></code>) <code class=scheme><span class=variable>posn</span></code> <code class=scheme><span class=variable>width</span></code> <code class=scheme><span class=variable>height</span></code> 
+<code class=scheme><span class=variable>color</span></code>)</code> <br>
+Takes a viewport descriptor.  It returns a function that
+flips a solid ellipse in the <code class=scheme><span class=variable>viewport</span></code>. The <code class=scheme><span class=variable>posn</span></code>, <code class=scheme><span class=variable>width</span></code>, 
+and <code class=scheme><span class=variable>height</span></code>  arguments are as in <code class=scheme>flip-rectangle</code>; the ellipse
+is be inscribed within the specified rectangle.
+The optional <code class=scheme><span class=variable>color</span></code> argument defaults to black.
+</p>
+</ul><p></p>
+<p>
+</p>
+<a name="node_sec_2.4.6"></a>
+<h3><a href="misclib.html#node_toc_node_sec_2.4.6">2.4.6&nbsp;&nbsp;Polygons</a></h3>
+<p></p>
+<ul>
+<li><p><a name="node_idx_96"></a><a name="node_kw_definitiondraw-polygon"></a>
+<code class=scheme>((draw-polygon <code class=scheme><span class=variable>viewport</span></code>) <code class=scheme><span class=variable>posn-list</span></code> <code class=scheme><span class=variable>posn</span></code> <code class=scheme><span class=variable>color</span></code>)</code> <br>
+Takes a viewport descriptor.  It returns a function that
+draws a polygon border in the <code class=scheme><span class=variable>viewport</span></code> using <code class=scheme><span class=variable>posn-list</span></code> for the
+polygon vertices and <code class=scheme><span class=variable>posn</span></code> as an offset for the polygon.
+The optional <code class=scheme><span class=variable>color</span></code> argument defaults to black.</p>
+<p>
+</p>
+<li><p><a name="node_idx_98"></a><a name="node_kw_definitionclear-polygon"></a>
+<code class=scheme>((clear-polygon <code class=scheme><span class=variable>viewport</span></code>) <code class=scheme><span class=variable>posn-list</span></code> <code class=scheme><span class=variable>posn</span></code>)</code> <br>
+Takes a viewport descriptor.  It returns a function that
+erases a polygon border in the <code class=scheme><span class=variable>viewport</span></code> using <code class=scheme><span class=variable>posn-list</span></code> for the
+polygon vertices and <code class=scheme><span class=variable>posn</span></code> as an offset for the polygon.</p>
+<p>
+</p>
+<li><p><a name="node_idx_100"></a><a name="node_kw_definitionflip-polygon"></a>
+<code class=scheme>((flip-polygon <code class=scheme><span class=variable>viewport</span></code>) <code class=scheme><span class=variable>posn-list</span></code> <code class=scheme><span class=variable>posn</span></code>)</code> <br>
+Takes a viewport descriptor.  It returns a function that
+flips a polygon border in the <code class=scheme><span class=variable>viewport</span></code> using <code class=scheme><span class=variable>posn-list</span></code> for the
+polygon vertices and <code class=scheme><span class=variable>posn</span></code> as an offset for the polygon.</p>
+<p>
+</p>
+<li><p><a name="node_idx_102"></a><a name="node_kw_definitiondraw-solid-polygon"></a>
+<code class=scheme>((draw-solid-polygon <code class=scheme><span class=variable>viewport</span></code>) <code class=scheme><span class=variable>posn-list</span></code> <code class=scheme><span class=variable>posn</span></code> <code class=scheme><span class=variable>color</span></code>)</code> <br>
+Takes a viewport descriptor.  It returns a function that
+paints a solid polygon in the <code class=scheme><span class=variable>viewport</span></code> using <code class=scheme><span class=variable>posn-list</span></code> for the
+polygon vertices and <code class=scheme><span class=variable>posn</span></code> as an offset for the polygon.
+The optional <code class=scheme><span class=variable>color</span></code> argument defaults to black.</p>
+<p>
+</p>
+<li><p><a name="node_idx_104"></a><a name="node_kw_definitionclear-solid-polygon"></a>
+<code class=scheme>((clear-solid-polygon <code class=scheme><span class=variable>viewport</span></code>) <code class=scheme><span class=variable>posn-list</span></code> <code class=scheme><span class=variable>posn</span></code>)</code> <br>
+Takes a viewport descriptor.  It returns a function that
+erases a solid polygon in the <code class=scheme><span class=variable>viewport</span></code> using <code class=scheme><span class=variable>posn-list</span></code> for the
+polygon vertices and <code class=scheme><span class=variable>posn</span></code> as an offset for the polygon.</p>
+<p>
+</p>
+<li><p><a name="node_idx_106"></a><a name="node_kw_definitionflip-solid-polygon"></a>
+<code class=scheme>((flip-solid-polygon <code class=scheme><span class=variable>viewport</span></code>) <code class=scheme><span class=variable>posn-list</span></code> <code class=scheme><span class=variable>posn</span></code>)</code> <br>
+Takes a viewport descriptor.  It returns a function that
+flips a solid polygon in the <code class=scheme><span class=variable>viewport</span></code> using <code class=scheme><span class=variable>posn-list</span></code> for the
+polygon vertices and <code class=scheme><span class=variable>posn</span></code> as an offset for the polygon.</p>
+<p>
+</p>
+<a name="node_sec_2.4.7"></a>
+<h3><a href="misclib.html#node_toc_node_sec_2.4.7">2.4.7&nbsp;&nbsp;Strings</a></h3>
+<p></p>
+<li><p><a name="node_idx_108"></a><a name="node_kw_definitiondraw-string"></a>
+<code class=scheme>((draw-string <code class=scheme><span class=variable>viewport</span></code>) <code class=scheme><span class=variable>p</span></code> <code class=scheme><span class=variable>string</span></code> <code class=scheme><span class=variable>color</span></code>)</code> <br>
+Takes a viewport descriptor.  It returns a function that
+draws a string at a specified location in the <code class=scheme><span class=variable>viewport</span></code>.  The lower
+left of the string begins at <code class=scheme><span class=variable>p</span></code>.
+The optional <code class=scheme><span class=variable>color</span></code> argument defaults to black.</p>
+<p>
+</p>
+<li><p><a name="node_idx_110"></a><a name="node_kw_definitionclear-string"></a>
+<code class=scheme>((clear-string <code class=scheme><span class=variable>viewport</span></code>) <code class=scheme><span class=variable>p</span></code> <code class=scheme><span class=variable>string</span></code>)</code> <br>
+Takes a viewport descriptor.  It returns a
+function that   clears a string at a specified location in 
+<code class=scheme><span class=variable>viewport</span></code>.  The lower left of the string begins at <code class=scheme><span class=variable>p</span></code>.</p>
+<p>
+</p>
+<li><p><a name="node_idx_112"></a><a name="node_kw_definitionflip-string"></a>
+<code class=scheme>((flip-string <code class=scheme><span class=variable>viewport</span></code>) <code class=scheme><span class=variable>p</span></code> <code class=scheme><span class=variable>string</span></code>)</code> <br>
+Takes a viewport descriptor.  It returns a function that
+flips a string at a specified location in <code class=scheme><span class=variable>viewport</span></code>.  The lower
+left of the string begins at <code class=scheme><span class=variable>p</span></code>.
+</p>
+</ul><p></p>
+<p>
+</p>
+<a name="node_sec_2.4.8"></a>
+<h3><a href="misclib.html#node_toc_node_sec_2.4.8">2.4.8&nbsp;&nbsp;Pixmaps</a></h3>
+<p></p>
+<ul><p>
+</p>
+<li><p><a name="node_idx_114"></a><a name="node_kw_definitiondraw-pixmap-posn"></a>
+<code class=scheme>(((draw-pixmap-posn <code class=scheme><span class=variable>filename</span></code> <code class=scheme><span class=variable>type</span></code>) <code class=scheme><span class=variable>viewport</span></code>) <code class=scheme><span class=variable>posn</span></code> <code class=scheme><span class=variable>color</span></code>)</code> <br>
+</p>
+<p>
+Draws a pixmap into <code class=scheme><span class=variable>viewport</span></code> with its
+upper left corner at position <code class=scheme><span class=variable>posn</span></code>.  The
+<code class=scheme><span class=variable>type</span></code> is an optional symbol, one of <code class=scheme><span class=selfeval>'gif</span></code>, <code class=scheme><span class=selfeval>'gif/mask</span></code>, <code class=scheme><span class=selfeval>'xbm</span></code>, <code class=scheme><span class=selfeval>'xpm</span></code>,
+<code class=scheme><span class=selfeval>'bmp</span></code>, <code class=scheme><span class=selfeval>'pict</span></code>, <code class=scheme><span class=selfeval>'unknown</span></code>, or <code class=scheme><span class=selfeval>'unknown/mask</span></code>, and defaults to
+<code class=scheme><span class=selfeval>'unknown/mask</span></code>. If <code class=scheme><span class=variable>type</span></code> is <code class=scheme><span class=selfeval>'unknown</span></code> or <code class=scheme><span class=selfeval>'unknown/mask</span></code>, then the content of the
+file is examined to determine the type.
+All formats are supported on all platforms,
+except <code class=scheme><span class=selfeval>'pict</span></code> which is only supported under Mac OS.
+The <code class=scheme><span class=selfeval>'gif/mask</span></code> and <code class=scheme><span class=selfeval>'unknown/mask</span></code> types draw the bitmap with a
+transparent background if <code class=scheme><span class=variable>filename</span></code> refers to a GIF file with a transparent background.</p>
+<p>
+The argument <code class=scheme><span class=variable>color</span></code> is only used when the pixmap is black and
+white. In that case, the color is used instead of black in the drawn
+image. </p>
+<p>
+</p>
+<li><p><a name="node_idx_116"></a><a name="node_kw_definitiondraw-pixmap"></a>
+<code class=scheme>((draw-pixmap <code class=scheme><span class=variable>viewport</span></code>) <code class=scheme><span class=variable>filename</span></code> <code class=scheme><span class=variable>p</span></code> <code class=scheme><span class=variable>color</span></code>)</code> <br>
+Draws a pixmap into <code class=scheme><span class=variable>viewport</span></code> <code class=scheme><span class=variable>w</span></code> with its
+upper left corner at position <code class=scheme><span class=variable>p</span></code>.
+If <code class=scheme><span class=variable>color</span></code> is not <code class=scheme>#f</code> it is passed to 
+<code class=scheme>set-viewport-pen</code> with the viewport. It defaults to <code class=scheme>#f</code>.</p>
+<p>
+</p>
+<li><p><a name="node_idx_118"></a><a name="node_kw_definitionsave-pixmap"></a>
+<code class=scheme>((save-pixmap <code class=scheme><span class=variable>viewport</span></code>) <code class=scheme><span class=variable>filename</span></code> <code class=scheme><span class=variable>type</span></code>)</code> <br>
+Saves the current content of <code class=scheme><span class=variable>viewport</span></code> to <code class=scheme><span class=variable>filename</span></code>.
+The
+<code class=scheme><span class=variable>type</span></code> is an optional symbol, one of <code class=scheme><span class=selfeval>'xbm</span></code>, <code class=scheme><span class=selfeval>'xpm</span></code>,
+<code class=scheme><span class=selfeval>'bmp</span></code> (Windows only), or <code class=scheme><span class=selfeval>'pict</span></code> (Mac OS only); the default
+is <code class=scheme><span class=selfeval>'xpm</span></code>.</p>
+<p>
+</p>
+</ul><p></p>
+<p>
+</p>
+<a name="node_sec_2.5"></a>
+<h2><a href="misclib.html#node_toc_node_sec_2.5">2.5&nbsp;&nbsp;Miscellaneous Operations</a></h2>
+<p><a name="node_idx_120"></a></p>
+<p>
+</p>
+<ul>
+<li><p><a name="node_idx_122"></a><a name="node_kw_definitionget-string-size"></a>
+<code class=scheme>((get-string-size <code class=scheme><span class=variable>viewport</span></code>) <code class=scheme><span class=variable>string</span></code>)</code> <br>
+Takes a viewport descriptor.  It returns a
+function that returns the size of a string as a list of two numbers:
+the width and height.</p>
+<p>
+</p>
+<li><p><a name="node_idx_124"></a><a name="node_kw_definitionviewport->snip"></a>
+<code class=scheme>(viewport-&gt;snip <code class=scheme><span class=variable>viewport</span></code>)</code> <br>
+Takes a viewport descriptor.  It returns an
+object that can be inserted into an editor buffer to display the
+current image in the viewport. (Subsequent drawing to the viewport
+does not affect the snip's image.)</p>
+<p>
+When snips are the results of computations in the interactions window, DrScheme will print show the contents of the viewport, right in the interactions window.</p>
+<p>
+</p>
+<li><p><a name="node_idx_126"></a><a name="node_kw_definitionviewport-dc"></a>
+<code class=scheme>(viewport-dc <code class=scheme><span class=variable>viewport</span></code>)</code> <br>
+Takes a viewport descriptor.  It returns an
+object that can be used with the primitive MrEd toolbox
+functions to draw into the viewport's on-screen representation
+(if any). Mirror all such drawing to the result of 
+<code class=scheme>(viewport-offscreen-dc <code class=scheme><span class=variable>viewport</span></code>)</code>, too.</p>
+<p>
+</p>
+<li><p><a name="node_idx_128"></a><a name="node_kw_definitionviewport-offscreen-dc"></a>
+<code class=scheme>(viewport-offscreen-dc <code class=scheme><span class=variable>viewport</span></code>)</code> <br>
+Takes a viewport descriptor.  It returns an
+object that can be used with the primitive MrEd toolbox
+functions to draw into the viewport's off-screen representation.
+Mirror all such drawing to the result of 
+<code class=scheme>(viewport-dc <code class=scheme><span class=variable>viewport</span></code>)</code>, too.
+</p>
+</ul><p></p>
+<p>
+</p>
+<a name="node_sec_2.6"></a>
+<h2><a href="misclib.html#node_toc_node_sec_2.6">2.6&nbsp;&nbsp;An Example</a></h2>
+<p><a name="node_idx_130"></a></p>
+<p>
+</p>
+<div align=left><pre class=scheme>(<code class=scheme>open-graphics</code>)
+<span class=comment>;; nothing appears to happen, but the library is initialized...</span>
+
+(<span class=keyword>define</span> <span class=variable>w</span> (<code class=scheme>open-viewport</code> <span class=selfeval>&quot;practice&quot;</span> <span class=selfeval>300</span> <span class=selfeval>300</span>))
+<span class=comment>;; viewport appears</span>
+
+((<code class=scheme>draw-line</code> <span class=variable>w</span>) (<code class=scheme>make-posn</code> <span class=selfeval>30</span> <span class=selfeval>30</span>) (<code class=scheme>make-posn</code> <span class=selfeval>100</span> <span class=selfeval>100</span>))     
+<span class=comment>;; line appears</span>
+
+(<code class=scheme>close-viewport</code> <span class=variable>w</span>)
+<span class=comment>;; viewport disappears</span>
+
+(<code class=scheme>close-graphics</code>)
+<span class=comment>;; again, nothing appears to happen, but</span>
+<span class=comment>;; unclosed viewports (if any) would disappear</span>
+</pre></div><p></p>
+<p>
+</p>
+<a name="node_sec_2.7"></a>
+<h2><a href="misclib.html#node_toc_node_sec_2.7">2.7&nbsp;&nbsp;A More Complicated Example</a></h2>
+<p><a name="node_idx_132"></a></p>
+<p>
+The use of multiple viewports, viewport descriptors, drawing
+operations for multiple viewports is as easy as the use of a single
+viewport: </p>
+<p>
+</p>
+<div align=left><pre class=scheme>(<code class=scheme>open-graphics</code>)
+(<span class=keyword>let*</span> (<span class=comment>;; <code class=scheme><span class=variable>w1</span></code> and <code class=scheme><span class=variable>w2</span></code> are viewport descriptors for different windows</span>
+       [<span class=variable>w1</span>  (<code class=scheme>open-viewport</code> <span class=selfeval>&quot;viewport 1&quot;</span> <span class=selfeval>300</span> <span class=selfeval>300</span>)]
+       [<span class=variable>w2</span>  (<code class=scheme>open-viewport</code> <span class=selfeval>&quot;viewport 2&quot;</span> <span class=selfeval>200</span> <span class=selfeval>500</span>)]
+       <span class=comment>;; d1 and d2 are functions that draw lines in different viewports</span>
+       [<span class=variable>d1</span>  (<code class=scheme>draw-line</code> <span class=variable>w1</span>)]
+       [<span class=variable>d2</span>  (<code class=scheme>draw-line</code> <span class=variable>w2</span>)])
+  <span class=comment>;; draws a line in viewport labeled &quot;viewport 1&quot;</span>
+  (<span class=variable>d1</span> (<code class=scheme>make-posn</code> <span class=selfeval>100</span> <span class=selfeval>5</span>) (<code class=scheme>make-posn</code> <span class=selfeval>5</span> <span class=selfeval>100</span>))
+  <span class=comment>;; draws a line in viewport labeled &quot;viewport 2&quot;</span>
+  (<span class=variable>d2</span> (<code class=scheme>make-posn</code> <span class=selfeval>100</span> <span class=selfeval>100</span>) (<code class=scheme>make-posn</code> <span class=selfeval>101</span> <span class=selfeval>400</span>)))
+ 
+<span class=comment>;; we no longer have access to viewports 1 and 2, </span>
+<span class=comment>;; since their descriptors did not escape the <code class=scheme><span class=keyword>let</span></code></span>
+(<code class=scheme>close-graphics</code>) 
+<span class=comment>;; removes the viewports</span>
+</pre></div><p></p>
+<p>
+</p>
+<a name="node_sec_2.8"></a>
+<h2><a href="misclib.html#node_toc_node_sec_2.8">2.8&nbsp;&nbsp;Protecting Graphics Operations</a></h2>
+<p><a name="node_idx_134"></a></p>
+<p>
+To guarantee the proper closing of viewports in cases of errors,
+especially when a program manages several viewports simultaneously, a
+programmer should use <code class=scheme>dynamic-wind:</code></p>
+<p>
+</p>
+<div align=left><pre class=scheme>(<span class=keyword>let</span> ([<span class=variable>w</span> (<code class=scheme>open-viewport</code> <span class=selfeval>&quot;hello&quot;</span> <span class=selfeval>100</span> <span class=selfeval>100</span>)])
+  (<code class=scheme>dynamic-wind</code>
+    <span class=comment>;; what we want to happen first: nothing</span>
+    <code class=scheme>void</code>
+    <span class=comment>;; the main program (errors constrained to this piece)</span>
+    (<span class=keyword>lambda</span> () (<code class=scheme>draw-pixel</code> <span class=selfeval>13</span>))  <span class=comment>; an error</span>
+    <span class=comment>;; what we would like to happen, whether the main program finishes </span>
+    <span class=comment>;; normally or not</span>
+    (<span class=keyword>lambda</span> () (<code class=scheme>close-viewport</code> <span class=variable>w</span>))))
+</pre></div><p></p>
+<p>
+</p>
+<a name="node_sec_2.9"></a>
+<h2><a href="misclib.html#node_toc_node_sec_2.9">2.9&nbsp;&nbsp;Mouse Operations</a></h2>
+<p><a name="node_idx_136"></a></p>
+<p>
+The graphics library contains functions that determine where the
+mouse is, if there are any clicks, etc.
+The functions <code class=scheme>get-mouse-click</code> and <code class=scheme>ready-mouse-click</code> first
+return a ``mouse-click descriptor,'' and then other functions take
+the descriptor and return the mouse's position, which button was
+pushed, etc.
+Mouse clicks are buffered and returned in the same order in which
+they occurred.
+Thus, the descriptors returned by <code class=scheme>get-mouse-click</code> and 
+<code class=scheme>ready-mouse-click</code> may be from clicks that occurred long
+before these functions were called.</p>
+<p>
+</p>
+<ul>
+<li><p><a name="node_idx_138"></a><a name="node_kw_definitionget-mouse-click"></a>
+<code class=scheme>(get-mouse-click <code class=scheme><span class=variable>viewport</span></code>)</code> <br>
+Takes a viewport descriptor and returns
+a mouse click descriptor. 
+It returns the next mouse click in the <code class=scheme><span class=variable>viewport</span></code>, waiting for a click 
+if necessary.</p>
+<p>
+</p>
+<li><p><a name="node_idx_140"></a><a name="node_kw_definitionready-mouse-click"></a>
+<code class=scheme>(ready-mouse-click <code class=scheme><span class=variable>viewport</span></code>)</code> <br>
+Takes a viewport descriptor and returns
+either a mouse click descriptor, or else <code class=scheme>#f</code> if none is available.
+Unlike the previous function, <code class=scheme><span class=variable>ready-mouse-click</span></code> returns immediately.</p>
+<p>
+</p>
+<li><p><a name="node_idx_142"></a><a name="node_kw_definitionready-mouse-release"></a>
+<code class=scheme>(ready-mouse-release <code class=scheme><span class=variable>viewport</span></code>)</code> <br>
+Takes a viewport descriptor and returns
+either a click descriptor from a mouse-release (button-up) event,
+or else <code class=scheme>#f</code> if none is available.</p>
+<p>
+</p>
+<li><p><a name="node_idx_144"></a><a name="node_kw_definitionquery-mouse-posn"></a>
+<code class=scheme>(query-mouse-posn <code class=scheme><span class=variable>viewport</span></code>)</code> <br>
+Takes a viewport descriptor and returns
+either the position of the mouse cursor within the <code class=scheme><span class=variable>viewport</span></code>, 
+or else <code class=scheme>#f</code> if the cursor is currently outside the <code class=scheme><span class=variable>viewport</span></code>.</p>
+<p>
+</p>
+<li><p><a name="node_idx_146"></a><a name="node_kw_definitionmouse-click-posn"></a>
+<code class=scheme>(mouse-click-posn <code class=scheme><span class=variable>mouse-click</span></code>)</code> <br>
+Takes a mouse click descriptor and
+returns the position of the pixel where the click occurred.</p>
+<p>
+</p>
+<li><p><a name="node_idx_148"></a><a name="node_kw_definitionleft-mouse-click_Q_"></a>
+<code class=scheme>(left-mouse-click? <code class=scheme><span class=variable>mouse-click</span></code>)</code> <br>
+Takes a mouse click descriptor and returns
+<code class=scheme>#t</code> if the click occurred with the left mouse button,
+or else <code class=scheme>#f</code>.</p>
+<p>
+</p>
+<li><p><a name="node_idx_150"></a><a name="node_kw_definitionmiddle-mouse-click_Q_"></a>
+<code class=scheme>(middle-mouse-click? <code class=scheme><span class=variable>mouse-click</span></code>)</code> <br>
+Similar to <code class=scheme>left-mouse-click?</code>.</p>
+<p>
+</p>
+<li><p><a name="node_idx_152"></a><a name="node_kw_definitionright-mouse-click_Q_"></a>
+<code class=scheme>(right-mouse-click? <code class=scheme><span class=variable>mouse-click</span></code>)</code> <br>
+Similar to <code class=scheme>left-mouse-click?</code>.</p>
+<p>
+</p>
+<li><p><a name="node_idx_154"></a><a name="node_kw_definitionviewport-flush-input"></a>
+<code class=scheme>(viewport-flush-input <code class=scheme><span class=variable>viewport</span></code>)</code> <br>
+As noted above, mouse clicks are buffered.
+<code class=scheme>viewport-flush-input</code> takes a viewport descriptor 
+and empties the input buffer of mouse and keyboard events.
+This action is useful in some real-time applications.
+</p>
+</ul><p></p>
+<p>
+</p>
+<a name="node_sec_2.10"></a>
+<h2><a href="misclib.html#node_toc_node_sec_2.10">2.10&nbsp;&nbsp;Keyboard Operations</a></h2>
+<p><a name="node_idx_156"></a></p>
+<p>
+The graphics library contains functions that report key presses from
+the keyboard.  The functions <code class=scheme>get-key-press</code> and
+<code class=scheme>ready-key-press</code> return a ``key-press descriptor,'' and then
+<code class=scheme>key-value</code> takes the descriptor and returns a character or
+symbol (usually a character) representing the key that was pressed.
+Key presses are buffered and returned in the same order in which they
+occurred.  Thus, the descriptors returned by <code class=scheme>get-key-press</code> and
+<code class=scheme>ready-key-press</code> may be from presses that occurred long before
+these functions were called.</p>
+<p>
+</p>
+<ul>
+<li><p><a name="node_idx_158"></a><a name="node_kw_definitionget-key-press"></a>
+<code class=scheme>(get-key-press <code class=scheme><span class=variable>viewport</span></code>)</code> <br>
+Takes a viewport descriptor and returns
+a key press descriptor. 
+It returns the next key press in the <code class=scheme><span class=variable>viewport</span></code>, waiting for a click 
+if necessary.</p>
+<p>
+</p>
+<li><p><a name="node_idx_160"></a><a name="node_kw_definitionready-key-press"></a>
+<code class=scheme>(ready-key-press <code class=scheme><span class=variable>viewport</span></code>)</code> <br>
+Takes a viewport descriptor and returns
+either a key press descriptor, or else <code class=scheme>#f</code> if none is available.
+Unlike the previous function, <code class=scheme><span class=variable>ready-key-press</span></code> returns immediately.</p>
+<p>
+</p>
+<li><p><a name="node_idx_162"></a><a name="node_kw_definitionkey-value"></a>
+<code class=scheme>(key-value <code class=scheme><span class=variable>key-press</span></code>)</code> <br>
+Takes a key press descriptor and returns a character or special
+symbol for the key that was pressed. For example, the Enter key
+generates <code class=scheme>#<tt>\</tt>return</code><a name="node_idx_164"></a>, and the up-arrow key generates <code class=scheme><span class=selfeval>'up</span></code>.
+For a complete list of possible return values, see <a href="../mred/mred.html"><i>PLT MrEd: Graphical Toolbox Manual</i></a>. </p>
+<p>
+</p>
+<li><p><a name="node_idx_166"></a><a name="node_kw_definitionviewport-flush-input"></a>
+<code class=scheme>(viewport-flush-input <code class=scheme><span class=variable>viewport</span></code>)</code> <br>
+As noted above, key presses are buffered.
+<code class=scheme>viewport-flush-input</code> takes a viewport descriptor 
+and empties the input buffer of mouse and keyboard events.
+This action is useful in some real-time applications.
+</p>
+</ul><p></p>
+<p>
+</p>
+<a name="node_sec_2.11"></a>
+<h2><a href="misclib.html#node_toc_node_sec_2.11">2.11&nbsp;&nbsp;Unitized Graphics</a></h2>
+<p><a name="node_idx_168"></a></p>
+<p>
+To use a unitized version of the graphics library (see <a href="../mzlib/mzlib.html"><i>PLT MzLib: Libraries Manual</i></a>
+for more information on units), get the signatures
+<a name="node_idx_170"></a><code class=scheme>graphics<tt>^</tt></code>, <a name="node_idx_172"></a><code class=scheme>graphics:posn-less<tt>^</tt></code>, and
+<a name="node_idx_174"></a><code class=scheme>graphics:posn<tt>^</tt></code> with:
+</p>
+<div align=left><pre class=scheme>(<span class=keyword>require</span> (<code class=scheme><span class=keyword>lib</span></code> <span class=selfeval>&quot;graphics-sig.ss&quot;</span> <span class=selfeval>&quot;graphics&quot;</span>))
+</pre></div><p>
+The <code class=scheme>graphics<tt>^</tt></code> signature includes all of the names defined in
+this chapter. The <code class=scheme>graphics:posn-less<tt>^</tt></code> signature contains
+everything except the <code class=scheme>posn</code> structure information, and
+<code class=scheme>graphics:posn<tt>^</tt></code> contains only the <code class=scheme>posn</code> structure.</p>
+<p>
+To obtain <a name="node_idx_176"></a><code class=scheme>graphics@</code>, which imports <code class=scheme>mred<tt>^</tt></code> (all of
+the MrEd classes, functions, and constants) and exports
+<code class=scheme>graphics<tt>^</tt></code>:
+</p>
+<div align=left><pre class=scheme>(<span class=keyword>require</span> (<code class=scheme><span class=keyword>lib</span></code> <span class=selfeval>&quot;graphics-unit.ss&quot;</span> <span class=selfeval>&quot;graphics&quot;</span>))
+</pre></div><p>
+The <tt><strong>graphics-posn-less-unit.ss</strong></tt> library provides
+<code class=scheme>graphics-posn-less@</code>, which imports <code class=scheme>graphics:posn<tt>^</tt></code> in
+addition to MrEd.</p>
+<p>
+</p>
+<div align=right class=navigation><i>[Go to <span><a href="misclib.html">first</a>, <a href="misclib-Z-H-1.html">previous</a></span><span>, <a href="misclib-Z-H-3.html">next</a></span> page<span>; &nbsp;&nbsp;</span><span><a href="misclib.html#node_toc_start">contents</a></span><span><span>; &nbsp;&nbsp;</span><a href="misclib-Z-H-4.html#node_index_start">index</a></span>]</i></div><p></p>
+</body>
+</html>

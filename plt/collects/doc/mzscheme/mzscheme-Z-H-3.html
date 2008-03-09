@@ -1,0 +1,939 @@
+<!doctype html public "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!--
+
+Generated from mzscheme.tex by tex2page, v 2004-09-11
+(running on MzScheme 209, unix), 
+(c) Dorai Sitaram, 
+http://www.ccs.neu.edu/~dorai/tex2page/tex2page-doc.html
+
+-->
+<head>
+<title>
+PLT MzScheme: Language Manual
+</title>
+<link rel="stylesheet" type="text/css" href="mzscheme-Z-S.css" title=default>
+<meta name=robots content="noindex,follow">
+</head>
+<body>
+<div align=right class=navigation><i>[Go to <span><a href="mzscheme.html">first</a>, <a href="mzscheme-Z-H-2.html">previous</a></span><span>, <a href="mzscheme-Z-H-4.html">next</a></span> page<span>; &nbsp;&nbsp;</span><span><a href="mzscheme.html#node_toc_start">contents</a></span><span><span>; &nbsp;&nbsp;</span><a href="mzscheme-Z-H-19.html#node_index_start">index</a></span>]</i></div><p></p>
+<a name="node_chap_3"></a>
+<h1 class=chapter>
+<div class=chapterheading><a href="mzscheme.html#node_toc_node_chap_3">Chapter 3</a></div><br>
+<a href="mzscheme.html#node_toc_node_chap_3">Basic Data Extensions</a></h1>
+<p><a name="node_idx_98"></a></p>
+<p>
+</p>
+<a name="node_sec_3.1"></a>
+<h2><a href="mzscheme.html#node_toc_node_sec_3.1">3.1&nbsp;&nbsp;Void and Undefined</a></h2>
+<p><a name="node_idx_100"></a></p>
+<p>
+<a name="node_idx_102"></a> <a name="node_idx_104"></a>
+MzScheme returns the unique <strong>void</strong> value  --  printed as
+<code class=scheme><span class=selfeval>#&lt;void&gt;</span></code>  --  for expressions that have unspecified results in
+<em>R5RS</em>. <a name="node_idx_106"></a> The procedure <code class=scheme><code class=scheme>void</code></code> takes any
+number of arguments and returns void:
+</p>
+<ul><p>
+</p>
+<li><p><a name="node_idx_108"></a><a name="node_kw_definitionvoid"></a><code class=scheme>(void</code><tt>&nbsp;</tt><code class=scheme><span class=variable>v</span></code><tt>&nbsp;</tt><tt>&middot;&middot;&middot;</tt><code class=scheme>)</code> returns void.</p>
+<p>
+</p>
+<li><p><a name="node_idx_110"></a><a name="node_kw_definitionvoid_Q_"></a><code class=scheme>(void?</code><tt>&nbsp;</tt><code class=scheme><span class=variable>v</span></code><code class=scheme>)</code> returns <code class=scheme><span class=selfeval>#t</span></code> if <code class=scheme><span class=variable>v</span></code> is void,
+<code class=scheme><span class=selfeval>#f</span></code> otherwise.</p>
+<p>
+</p>
+</ul><p></p>
+<p>
+Variables bound by <a name="node_idx_112"></a><code class=scheme><span class=keyword>letrec-values</span></code> that are accessible but
+not yet initialized are bound to the unique <strong>undefined</strong>
+value, printed as <a name="node_idx_114"></a><code class=scheme><span class=selfeval>#&lt;undefined&gt;</span></code>.</p>
+<p>
+</p>
+<a name="node_sec_3.2"></a>
+<h2><a href="mzscheme.html#node_toc_node_sec_3.2">3.2&nbsp;&nbsp;Booleans</a></h2>
+<p><a name="node_idx_116"></a></p>
+<p>
+<a name="node_idx_118"></a><a name="node_idx_120"></a>
+Unless otherwise specified, two instances of a particular MzScheme
+data type are <code class=scheme><code class=scheme>equal?</code></code> only when they are <code class=scheme><code class=scheme>eq?</code></code>.  Two
+values are <code class=scheme><code class=scheme>eqv?</code></code> only when they are either <code class=scheme><code class=scheme>eq?</code></code>,
+<code class=scheme><span class=variable>=</span></code> and have the same exactness, or both <code class=scheme><span class=selfeval>+nan.0</span></code>.</p>
+<p>
+The <code class=scheme><code class=scheme>andmap</code></code> and <code class=scheme><code class=scheme>ormap</code></code> procedures apply a test
+procedure to the elements of a list, returning immediately when the
+result for testing the entire list is determined. The arguments to
+<code class=scheme><code class=scheme>andmap</code></code> and <code class=scheme><code class=scheme>ormap</code></code> are the same as for <code class=scheme><code class=scheme>map</code></code>, but a
+single boolean value is returned as the result, rather than a list:
+</p>
+<ul><p>
+</p>
+<li><p><a name="node_idx_122"></a><a name="node_kw_definitionandmap"></a><code class=scheme>(andmap</code><tt>&nbsp;</tt><code class=scheme><span class=variable>proc list</span></code><tt>&nbsp;</tt><tt>&middot;&middot;&middot;</tt><sup>1</sup><code class=scheme>)</code> applies <code class=scheme><span class=variable>proc</span></code> to elements of the
+<code class=scheme><span class=variable>list</span></code>s from the first elements to the last, returning <code class=scheme><span class=selfeval>#f</span></code>
+as soon as any application returns <code class=scheme><span class=selfeval>#f</span></code>.  If no application of
+<code class=scheme><span class=variable>proc</span></code> returns <code class=scheme><span class=selfeval>#f</span></code>, then the result of the last application
+of <code class=scheme><span class=variable>proc</span></code> is returned.  If the <code class=scheme><span class=variable>list</span></code>s are empty, then
+<code class=scheme><span class=selfeval>#t</span></code> is returned.</p>
+<p>
+</p>
+<li><p><a name="node_idx_124"></a><a name="node_kw_definitionormap"></a><code class=scheme>(ormap</code><tt>&nbsp;</tt><code class=scheme><span class=variable>proc list</span></code><tt>&nbsp;</tt><tt>&middot;&middot;&middot;</tt><sup>1</sup><code class=scheme>)</code> applies <code class=scheme><span class=variable>proc</span></code> to elements of the
+<code class=scheme><span class=variable>list</span></code>s from the first elements to the last.  If any application
+returns a value other than <code class=scheme><span class=selfeval>#f</span></code>, that value is immediately
+returned as the result of the <code class=scheme><code class=scheme>ormap</code></code> application. If all
+applications of <code class=scheme><span class=variable>proc</span></code> return <code class=scheme><span class=selfeval>#f</span></code>, then the result is
+<code class=scheme><span class=selfeval>#f</span></code>.  If the <code class=scheme><span class=variable>list</span></code>s are empty, then <code class=scheme><span class=selfeval>#f</span></code> is returned.</p>
+<p>
+</p>
+</ul><p></p>
+<p>
+Examples:
+</p>
+<div align=left><pre class=scheme>(<code class=scheme>andmap</code> <code class=scheme>positive?</code> <span class=keyword>'</span>(<span class=selfeval>1</span> <span class=selfeval>2</span> <span class=selfeval>3</span>)) <span class=comment>; =&gt; <code class=schemeresponse><span class=selfeval>#t</span></code></span>
+(<code class=scheme>ormap</code> <code class=scheme>eq?</code> <span class=keyword>'</span>(<span class=variable>a</span> <span class=variable>b</span> <span class=variable>c</span>) <span class=keyword>'</span>(<span class=variable>a</span> <span class=variable>b</span> <span class=variable>c</span>)) <span class=comment>; =&gt; <code class=schemeresponse><span class=selfeval>#t</span></code></span>
+(<code class=scheme>andmap</code> <code class=scheme>positive?</code> <span class=keyword>'</span>(<span class=selfeval>1</span> <span class=selfeval>2</span> <span class=variable>a</span>)) <span class=comment>; =&gt; raises <code class=schemeresponse><code class=scheme>exn:application:type</code></code></span>
+(<code class=scheme>ormap</code> <code class=scheme>positive?</code> <span class=keyword>'</span>(<span class=selfeval>1</span> <span class=selfeval>2</span> <span class=variable>a</span>)) <span class=comment>; =&gt; <code class=schemeresponse><span class=selfeval>#t</span></code></span>
+(<code class=scheme>andmap</code> <code class=scheme>positive?</code> <span class=keyword>'</span>(<span class=selfeval>1</span> <span class=selfeval>-2</span> <span class=variable>a</span>)) <span class=comment>; =&gt; <code class=schemeresponse><span class=selfeval>#f</span></code></span>
+(<code class=scheme>andmap</code> <span class=variable>+</span> <span class=keyword>'</span>(<span class=selfeval>1</span> <span class=selfeval>2</span> <span class=selfeval>3</span>) <span class=keyword>'</span>(<span class=selfeval>4</span> <span class=selfeval>5</span> <span class=selfeval>6</span>)) <span class=comment>; =&gt; <code class=schemeresponse><span class=selfeval>9</span></code></span>
+(<code class=scheme>ormap</code> <span class=variable>+</span> <span class=keyword>'</span>(<span class=selfeval>1</span> <span class=selfeval>2</span> <span class=selfeval>3</span>) <span class=keyword>'</span>(<span class=selfeval>4</span> <span class=selfeval>5</span> <span class=selfeval>6</span>)) <span class=comment>; =&gt; <code class=schemeresponse><span class=selfeval>5</span></code></span>
+</pre></div><p></p>
+<p>
+</p>
+<a name="node_sec_3.3"></a>
+<h2><a href="mzscheme.html#node_toc_node_sec_3.3">3.3&nbsp;&nbsp;Numbers</a></h2>
+<p><a name="node_idx_126"></a></p>
+<p>
+<a name="node_idx_128"></a>
+A number in MzScheme is one of the following:
+</p>
+<ul><p>
+</p>
+<li><p>a <strong>fixnum</strong><a name="node_idx_130"></a> exact integer (30 bits<a name="call_footnote_Temp_5"></a><a href="#footnote_Temp_5"><sup><small>2</small></sup></a> plus a
+sign bit)</p>
+<p>
+</p>
+<li><p>a <strong>bignum</strong><a name="node_idx_132"></a> exact integer (cannot be represented in a fixnum)</p>
+<p>
+</p>
+<li><p>a <strong>fraction</strong><a name="node_idx_134"></a> exact rational (represented by two exact integers)</p>
+<p>
+</p>
+<li><p>a <strong>flonum</strong><a name="node_idx_136"></a> inexact rational (double-precision floating-point number)</p>
+<p>
+</p>
+<li><p>a <strong>complex</strong><a name="node_idx_138"></a> number; either the real and imaginary
+parts are both exact or inexact, or the number has an exact zero real
+part and an inexact imaginary part; a complex number with an inexact
+zero imaginary part is a real number</p>
+<p>
+</p>
+</ul><p></p>
+<p>
+MzScheme extends the number syntax of <em>R5RS</em> in two ways:
+</p>
+<ul><p>
+</p>
+<li><p><a name="node_idx_140"></a> <a name="node_idx_142"></a> All input
+radixes (<code class=scheme><span class=selfeval>#b</span></code>, <code class=scheme><span class=selfeval>#o</span></code>, <code class=scheme><span class=selfeval>#d</span></code>, and <code class=scheme><span class=selfeval>#x</span></code>)
+allow ``decimal'' numbers that contain a period or exponent
+marker. For example, <code class=scheme><span class=selfeval>#b1.1</span></code> is equivalent to <code class=scheme><span class=selfeval>1.5</span></code>. In
+hexadecimal numbers, <code class=schemeresponse><code class=scheme>e</code></code> and <code class=schemeresponse><span class=variable>d</span></code> always
+stand for a hexadecimal digit, not an exponent marker.</p>
+<p>
+</p>
+<li><p><a name="node_idx_144"></a> <a name="node_idx_146"></a> The following are inexact
+numerical constants: <a name="node_idx_148"></a><code class=scheme>+inf.0</code> (infinity), <a name="node_idx_150"></a><code class=scheme>-inf.0</code>
+(negative infinity), <a name="node_idx_152"></a><code class=scheme>+nan.0</code> (not a number), and
+<a name="node_idx_154"></a><code class=scheme>-nan.0</code> (same as <code class=scheme><span class=selfeval>+nan.0</span></code>). These names can also be
+used within complex constants, as in <code class=scheme><span class=selfeval>-inf.0+inf.0i</span></code>.</p>
+<p>
+</p>
+</ul><p></p>
+<p>
+<a name="node_idx_156"></a>
+The special inexact numbers <code class=scheme><span class=selfeval>+inf.0</span></code>, <code class=scheme><span class=selfeval>-inf.0</span></code>, and
+<code class=scheme><span class=selfeval>+nan.0</span></code> have no exact form. Dividing by an inexact zero returns
+<a name="node_idx_158"></a><code class=scheme>+inf.0</code> or <code class=scheme><span class=selfeval>-inf.0</span></code>, depending on the sign of the
+dividend.  The infinities are integers, and they answer <code class=scheme><span class=selfeval>#t</span></code> for
+both <a name="node_idx_160"></a><code class=scheme>even?</code>  and <a name="node_idx_162"></a><code class=scheme>odd?</code>. The <code class=scheme><span class=selfeval>+nan.0</span></code> value is not an
+integer and is not <code class=scheme><span class=variable>=</span></code> to itself, but <code class=scheme><span class=selfeval>+nan.0</span></code> is
+<a name="node_idx_164"></a><code class=scheme>eqv?</code> to itself.<a name="call_footnote_Temp_6"></a><a href="#footnote_Temp_6"><sup><small>3</small></sup></a> Similarly, <code class=scheme>(<span class=variable>=</span> <span class=selfeval>0.0</span> <span class=selfeval>-0.0</span>)</code>
+is <code class=scheme><span class=selfeval>#t</span></code>, but <code class=scheme>(<code class=scheme>eqv?</code> <span class=selfeval>0.0</span> <span class=selfeval>-0.0</span>)</code> is <code class=scheme><span class=selfeval>#f</span></code>.</p>
+<p>
+All multi-argument arithmetic procedures operate pairwise on arguments
+from left to right.</p>
+<p>
+The <a name="node_idx_166"></a><code class=scheme>string-&gt;number</code> procedure works on all number
+representations and exact integer radix values in the range <code class=scheme><span class=selfeval>2</span></code>
+to <code class=scheme><span class=selfeval>16</span></code> (inclusive).  The <a name="node_idx_168"></a><code class=scheme>number-&gt;string</code> procedure
+accepts all number types and the radix values <code class=scheme><span class=selfeval>2</span></code>, <code class=scheme><span class=selfeval>8</span></code>,
+<code class=scheme><span class=selfeval>10</span></code>, and <code class=scheme><span class=selfeval>16</span></code>; however, if an inexact number is provided
+with a radix other than <code class=scheme><span class=selfeval>10</span></code>, the
+<a name="node_idx_170"></a><code class=scheme>exn:application:mismatch</code> exception is raised.</p>
+<p>
+The <code class=scheme><code class=scheme>add1</code></code> and <code class=scheme><code class=scheme>sub1</code></code> procedures work on any number:
+</p>
+<ul><p>
+</p>
+<li><p><a name="node_idx_172"></a><a name="node_kw_definitionadd1"></a><code class=scheme>(add1</code><tt>&nbsp;</tt><code class=scheme><span class=variable>z</span></code><code class=scheme>)</code> returns <code class=scheme><span class=variable>z</span></code> + 1.</p>
+<p>
+</p>
+<li><p><a name="node_idx_174"></a><a name="node_kw_definitionsub1"></a><code class=scheme>(sub1</code><tt>&nbsp;</tt><code class=scheme><span class=variable>z</span></code><code class=scheme>)</code> returns <code class=scheme><span class=variable>z</span></code> <tt>-</tt> 1.</p>
+<p>
+</p>
+</ul><p></p>
+<p>
+The following procedures work on integers:
+</p>
+<ul><p>
+</p>
+<li><p><a name="node_idx_176"></a><a name="node_kw_definitionquotient/remainder"></a><code class=scheme>(quotient/remainder</code><tt>&nbsp;</tt><code class=scheme><span class=variable>n1 n2</span></code><code class=scheme>)</code> returns two values: <code class=scheme>(<code class=scheme>quotient</code> <span class=variable>n1</span> <span class=variable>n2</span>)</code>
+and <code class=scheme>(<code class=scheme>remainder</code> <span class=variable>n1</span> <span class=variable>n2</span>)</code>.</p>
+<p>
+</p>
+<li><p><a name="node_idx_178"></a><a name="node_kw_definitioninteger-sqrt"></a><code class=scheme>(integer-sqrt</code><tt>&nbsp;</tt><code class=scheme><span class=variable>n</span></code><code class=scheme>)</code> returns the integer square-root of
+<code class=scheme><span class=variable>n</span></code>. For positive <code class=scheme><span class=variable>n</span></code>, the result is the
+largest positive integer bounded by the <code class=scheme>(<code class=scheme>sqrt</code> <span class=variable>n</span>)</code>.
+For negative <code class=scheme><span class=variable>n</span></code>, the result is
+<code class=scheme>(<span class=variable>*</span> (<code class=scheme>integer-sqrt</code> (<span class=variable>-</span> <span class=variable>n</span>)) <span class=selfeval>0+i</span>)</code>.</p>
+<p>
+</p>
+<li><p><a name="node_idx_180"></a><a name="node_kw_definitioninteger-sqrt/remainder"></a><code class=scheme>(integer-sqrt/remainder</code><tt>&nbsp;</tt><code class=scheme><span class=variable>n</span></code><code class=scheme>)</code> returns two values: <code class=scheme>(<code class=scheme>integer-sqrt</code> <span class=variable>n</span>)</code>
+and <code class=scheme>(<span class=variable>-</span> <span class=variable>n</span> (<code class=scheme>expt</code> (<code class=scheme>integer-sqrt</code> <span class=variable>n</span>) <span class=selfeval>2</span>))</code>.</p>
+<p>
+</p>
+</ul><p></p>
+<p>
+<a name="node_idx_182"></a>
+<a name="node_idx_184"></a>
+The following procedures work on exact integers in their (semi-infinite) two's
+complement representation:
+</p>
+<ul><p>
+</p>
+<li><p><a name="node_idx_186"></a><a name="node_kw_definitionbitwise-ior"></a><code class=scheme>(bitwise-ior</code><tt>&nbsp;</tt><code class=scheme><span class=variable>n</span></code><tt>&nbsp;</tt><tt>&middot;&middot;&middot;</tt><sup>1</sup><code class=scheme>)</code> returns the bitwise ``inclusive or'' of
+the <code class=scheme><span class=variable>n</span></code>s.</p>
+<p>
+</p>
+<li><p><a name="node_idx_188"></a><a name="node_kw_definitionbitwise-and"></a><code class=scheme>(bitwise-and</code><tt>&nbsp;</tt><code class=scheme><span class=variable>n</span></code><tt>&nbsp;</tt><tt>&middot;&middot;&middot;</tt><sup>1</sup><code class=scheme>)</code> returns the bitwise ``and'' of the
+<code class=scheme><span class=variable>n</span></code>s.</p>
+<p>
+</p>
+<li><p><a name="node_idx_190"></a><a name="node_kw_definitionbitwise-xor"></a><code class=scheme>(bitwise-xor</code><tt>&nbsp;</tt><code class=scheme><span class=variable>n</span></code><tt>&nbsp;</tt><tt>&middot;&middot;&middot;</tt><sup>1</sup><code class=scheme>)</code> returns the bitwise ``exclusive or'' of
+the <code class=scheme><span class=variable>n</span></code>s.</p>
+<p>
+</p>
+<li><p><a name="node_idx_192"></a><a name="node_kw_definitionbitwise-not"></a><code class=scheme>(bitwise-not</code><tt>&nbsp;</tt><code class=scheme><span class=variable>n</span></code><code class=scheme>)</code> returns the bitwise ``not'' of <code class=scheme><span class=variable>n</span></code>.</p>
+<p>
+</p>
+<li><p><a name="node_idx_194"></a><a name="node_kw_definitionarithmetic-shift"></a><code class=scheme>(arithmetic-shift</code><tt>&nbsp;</tt><code class=scheme><span class=variable>n m</span></code><code class=scheme>)</code> returns the bitwise ``shift'' of
+<code class=scheme><span class=variable>n</span></code>.  The integer <code class=scheme><span class=variable>n</span></code> is shifted left by <code class=scheme><span class=variable>m</span></code> bits; i.e.,
+<code class=scheme><span class=variable>m</span></code> new zeros are introduced as rightmost digits. If <code class=scheme><span class=variable>m</span></code> is
+negative, <code class=scheme><span class=variable>n</span></code> is shifted right by  <tt>-</tt> <code class=scheme><span class=variable>m</span></code> bits; i.e., the
+rightmost <code class=scheme><span class=variable>m</span></code> digits are dropped.</p>
+<p>
+</p>
+</ul><p></p>
+<p>
+The <code class=scheme><code class=scheme>random</code></code> procedure generates pseudo-random integers:
+</p>
+<ul><p>
+</p>
+<li><p><a name="node_idx_196"></a><a name="node_kw_definitionrandom"></a><code class=scheme>(random</code><tt>&nbsp;</tt><code class=scheme><span class=variable>k</span></code><code class=scheme>)</code> returns a random exact integer in the range
+<code class=scheme><span class=selfeval>0</span></code> to <code class=scheme><span class=variable>k</span></code> <tt>-</tt> 1 where <code class=scheme><span class=variable>k</span></code> is an exact integer between 1
+and 2<sup>31</sup> <tt>-</tt> 1, inclusive. The number is provided by the current
+pseudo-random number generator, which maintains an internal state for
+generating numbers.<a name="call_footnote_Temp_7"></a><a href="#footnote_Temp_7"><sup><small>4</small></sup></a></p>
+<p>
+</p>
+<li><p><a name="node_idx_198"></a><a name="node_kw_definitionrandom-seed"></a><code class=scheme>(random-seed</code><tt>&nbsp;</tt><code class=scheme><span class=variable>k</span></code><code class=scheme>)</code> seeds the current pseudo-random number
+generator with <code class=scheme><span class=variable>k</span></code>, an exact integer between 0 and 2<sup>31</sup> <tt>-</tt> 1,
+inclusive. Seeding a generator sets its internal state
+deterministically; seeding a generator with a particular number
+forces it to produce a sequence of pseudo-random numbers that is the
+same across runs and across platforms.</p>
+<p>
+</p>
+<li><p><a name="node_idx_200"></a><a name="node_kw_definitioncurrent-pseudo-random-generator"></a><code class=scheme>(current-pseudo-random-generator</code><code class=scheme>)</code> returns the current
+pseudo-random number generator, and
+<a name="node_idx_202"></a><a name="node_kw_definitioncurrent-pseudo-random-generator"></a><code class=scheme>(current-pseudo-random-generator</code><tt>&nbsp;</tt><code class=scheme><span class=variable>generator</span></code><code class=scheme>)</code> sets the current
+generator to <code class=scheme><span class=variable>generator</span></code>. See also
+section&nbsp;<a href="mzscheme-Z-H-7.html#node_sec_7.7.1.10">7.7.1.10</a>.</p>
+<p>
+</p>
+<li><p><a name="node_idx_204"></a><a name="node_kw_definitionmake-pseudo-random-generator"></a><code class=scheme>(make-pseudo-random-generator</code><code class=scheme>)</code> returns a new pseudo-random
+number generator. The new generator is seeded with a number derived
+from <code class=scheme>(<a name="node_idx_206"></a><code class=scheme>current-milliseconds</code>)</code>.</p>
+<p>
+</p>
+<li><p><a name="node_idx_208"></a><a name="node_kw_definitionpseudo-random-generator_Q_"></a><code class=scheme>(pseudo-random-generator?</code><tt>&nbsp;</tt><code class=scheme><span class=variable>v</span></code><code class=scheme>)</code> returns <code class=scheme><span class=selfeval>#t</span></code> if <code class=scheme><span class=variable>v</span></code>
+is a pseudo-random number generator, <code class=scheme><span class=selfeval>#f</span></code> otherwise.</p>
+<p>
+</p>
+</ul><p></p>
+<p>
+<a name="node_idx_210"></a>
+<a name="node_idx_212"></a>
+<a name="node_idx_214"></a>
+<a name="node_idx_216"></a>
+<a name="node_idx_218"></a>
+The following procedures convert between Scheme numbers and common
+machine byte representations:
+</p>
+<ul><p>
+</p>
+<li><p><a name="node_idx_220"></a><a name="node_kw_definitioninteger-byte-string->integer"></a><code class=scheme>(integer-byte-string-&gt;integer</code><tt>&nbsp;</tt><code class=scheme><span class=variable>string signed?</span></code><tt>&nbsp;</tt>[<code class=scheme><span class=variable>big-endian?</span></code>]<code class=scheme>)</code>
+converts the machine-format number encoded in <code class=scheme><span class=variable>string</span></code> to
+an exact integer. The <code class=scheme><span class=variable>string</span></code> must contain either 2, 4, or 8
+characters. If <code class=scheme><span class=variable>signed?</span></code> is true, then the string is decoded as
+a two's-complement number, otherwise it is decoded as an unsigned
+integer. If <code class=scheme><span class=variable>big-endian?</span></code> is true, then the first character's
+ASCII value provides the most significant eight bits of the number,
+otherwise the first character provides the least-significant eight
+bits, and so on. The default value of <code class=scheme><span class=variable>big-endian?</span></code> is the
+result of <code class=scheme><code class=scheme>system-big-endian?</code></code>.</p>
+<p>
+</p>
+<li><p><a name="node_idx_222"></a><a name="node_kw_definitioninteger->integer-byte-string"></a><code class=scheme>(integer-&gt;integer-byte-string</code><tt>&nbsp;</tt><code class=scheme><span class=variable>n size-n signed?</span></code><tt>&nbsp;</tt>[<code class=scheme><span class=variable>big-endian? to-string</span></code>]<code class=scheme>)</code>
+converts the exact integer <code class=scheme><span class=variable>n</span></code> to a machine-format number encoded
+in a string of length <code class=scheme><span class=variable>size-n</span></code>, which must be 2, 4, or 8. If
+<code class=scheme><span class=variable>signed?</span></code> is true, then the number is encoded with two's
+complement, otherwise it is encoded as an unsigned bit stream. If
+<code class=scheme><span class=variable>big-endian?</span></code> is true, then the most significant eight bits of
+the number are encoded in the first character of the resulting
+string, otherwise the least-significant bits are encoded in the first
+character, and so on. The default value of <code class=scheme><span class=variable>big-endian?</span></code> is the
+result of <code class=scheme><code class=scheme>system-big-endian?</code></code>.</p>
+<p>
+If <code class=scheme><span class=variable>to-string</span></code> is provided, it must be a mutable string of length
+<code class=scheme><span class=variable>size-n</span></code>; in that case, the encoding of <code class=scheme><span class=variable>n</span></code> is written into
+<code class=scheme><span class=variable>to-string</span></code>, and <code class=scheme><span class=variable>to-string</span></code> is returned as the result. If
+<code class=scheme><span class=variable>to-string</span></code> is not provided, the result is a newly allocated
+string.</p>
+<p>
+If <code class=scheme><span class=variable>n</span></code> cannot be encoded in a string of the requested size and
+format, the <a name="node_idx_224"></a><code class=scheme>exn:misc:application</code> exception is raised. If <code class=scheme><span class=variable>to-string</span></code> is
+provided and it is not of length <code class=scheme><span class=variable>size-n</span></code>, the
+<a name="node_idx_226"></a><code class=scheme>exn:misc:application</code> exception is raised.</p>
+<p>
+</p>
+<li><p><a name="node_idx_228"></a><a name="node_kw_definitionfloating-point-byte-string->real"></a><code class=scheme>(floating-point-byte-string-&gt;real</code><tt>&nbsp;</tt><code class=scheme><span class=variable>string</span></code><tt>&nbsp;</tt>[<code class=scheme><span class=variable>big-endian?</span></code>]<code class=scheme>)</code>
+converts the IEEE floating-point number encoded in <code class=scheme><span class=variable>string</span></code>
+to an inexact real number. The <code class=scheme><span class=variable>string</span></code> must contain
+either 4 or 8 characters. If <code class=scheme><span class=variable>big-endian?</span></code> is true, then the
+first character's ASCII value provides the most significant eight
+bits of the IEEE representation, otherwise the first character
+provides the least-significant eight bits, and so on. The default
+value of <code class=scheme><span class=variable>big-endian?</span></code> is the result of
+<code class=scheme><code class=scheme>system-big-endian?</code></code>.</p>
+<p>
+</p>
+<li><p><a name="node_idx_230"></a><a name="node_kw_definitionreal->floating-point-byte-string"></a><code class=scheme>(real-&gt;floating-point-byte-string</code><tt>&nbsp;</tt><code class=scheme><span class=variable>x size-n</span></code><tt>&nbsp;</tt>[<code class=scheme><span class=variable>big-endian? to-string</span></code>]<code class=scheme>)</code>
+converts the real number <code class=scheme><span class=variable>x</span></code> to its IEEE representation in a
+string of length <code class=scheme><span class=variable>size-n</span></code>, which must be 4 or 8. If
+<code class=scheme><span class=variable>big-endian?</span></code> is true, then the most significant eight bits of
+the number are encoded in the first character of the resulting
+string, otherwise the least-significant bits are encoded in the first
+character, and so on. The default value of <code class=scheme><span class=variable>big-endian?</span></code> is the
+result of <code class=scheme><code class=scheme>system-big-endian?</code></code>.</p>
+<p>
+If <code class=scheme><span class=variable>to-string</span></code> is provided, it must be a mutable string of length
+<code class=scheme><span class=variable>size-n</span></code>; in that case, the encoding of <code class=scheme><span class=variable>n</span></code> is written into
+<code class=scheme><span class=variable>to-string</span></code>, and <code class=scheme><span class=variable>to-string</span></code> is returned as the result. If
+<code class=scheme><span class=variable>to-string</span></code> is not provided, the result is a newly allocated
+string.</p>
+<p>
+If <code class=scheme><span class=variable>to-string</span></code> is provided and it is not of length <code class=scheme><span class=variable>size-n</span></code>,
+the <a name="node_idx_232"></a><code class=scheme>exn:misc:application</code> exception is raised.</p>
+<p>
+</p>
+<li><p><a name="node_idx_234"></a><a name="node_kw_definitionsystem-big-endian_Q_"></a><code class=scheme>(system-big-endian?</code><code class=scheme>)</code> returns <code class=scheme><span class=selfeval>#t</span></code> if the native
+encoding of numbers is big-endian for the machine running MzScheme,
+<code class=scheme><span class=selfeval>#f</span></code> if the native encoding is little-endian.</p>
+<p>
+</p>
+</ul><p></p>
+<p>
+</p>
+<a name="node_sec_3.4"></a>
+<h2><a href="mzscheme.html#node_toc_node_sec_3.4">3.4&nbsp;&nbsp;Characters</a></h2>
+<p><a name="node_idx_236"></a></p>
+<p>
+<a name="node_idx_238"></a>
+MzScheme character values range over the characters for ``extended
+ASCII'' values 0 to 255 (where the ASCII extensions are
+platform-specific).  The procedure <a name="node_idx_240"></a><code class=scheme>char-&gt;integer</code> returns
+the extended ASCII value of a character and <a name="node_idx_242"></a><code class=scheme>integer-&gt;char</code>
+takes an extended ASCII value and returns the corresponding
+character. If <a name="node_idx_244"></a><code class=scheme>integer-&gt;char</code> is given an integer that is
+not in 0 to 255 inclusive, the <a name="node_idx_246"></a><code class=scheme>exn:application:type</code> exception is raised.</p>
+<p>
+The procedures <code class=scheme><code class=scheme>char-&gt;latin-1-integer</code></code> and
+<code class=scheme><code class=scheme>latin-1-integer-&gt;char</code></code> support conversions between characters in
+the platform-specific character set and platform-independent Latin-1
+(ISO 8859-1) values:
+</p>
+<ul><p>
+</p>
+<li><p><a name="node_idx_248"></a><a name="node_kw_definitionchar->latin-1-integer"></a><code class=scheme>(char-&gt;latin-1-integer</code><tt>&nbsp;</tt><code class=scheme><span class=variable>char</span></code><code class=scheme>)</code> returns the integer in 0 to
+255 inclusive corresponding to the Latin-1 value for <code class=scheme><span class=variable>char</span></code>, or
+<code class=scheme><span class=selfeval>#f</span></code> if <code class=scheme><span class=variable>char</span></code> (in the platform-specific character set) has
+no corresponding character in Latin-1.</p>
+<p>
+</p>
+<li><p><a name="node_idx_250"></a><a name="node_kw_definitionlatin-1-integer->char"></a><code class=scheme>(latin-1-integer-&gt;char</code><tt>&nbsp;</tt><code class=scheme><span class=variable>k</span></code><code class=scheme>)</code> returns the character
+corresponding to the Latin-1 mapping of <code class=scheme><span class=variable>k</span></code>, or <code class=scheme><span class=selfeval>#f</span></code> if the
+platform-specific character set does not support the corresponding
+Latin-1 character. If <code class=scheme><span class=variable>k</span></code> is not in 0 to 255 inclusive, the
+<a name="node_idx_252"></a><code class=scheme>exn:application:type</code> exception is raised.</p>
+<p>
+</p>
+</ul><p>
+For Unix and Mac OS, <code class=scheme><code class=scheme>char-&gt;latin-1-integer</code></code> and
+<code class=scheme><code class=scheme>latin-1-integer-&gt;char</code></code> are the same as <code class=scheme><code class=scheme>char-&gt;integer</code></code>
+and <code class=scheme><code class=scheme>integer-&gt;char</code></code>. For Windows, the platform-specific set
+and Latin-1 match except for the range <code class=scheme><span class=selfeval>#x80</span></code> to <code class=scheme><span class=selfeval>#x9F</span></code>
+(which are unprintable control characters in Latin-1).</p>
+<p>
+<a name="node_idx_254"></a><a name="node_idx_256"></a><a name="node_idx_258"></a><a name="node_idx_260"></a><a name="node_idx_262"></a><a name="node_idx_264"></a><a name="node_idx_266"></a><a name="node_idx_268"></a><a name="node_idx_270"></a><a name="node_idx_272"></a>The character comparison procedures  --  <code class=scheme>char=?</code>,
+<code class=scheme>char&lt;?</code>, <code class=scheme>char-ci=?</code>, etc.  --  take two or more
+character arguments and check the arguments pairwise (like the
+numerical comparison procedures). Two characters are <a name="node_idx_274"></a><code class=scheme>eq?</code>
+whenever they are <code class=scheme>char=?</code>. The expression <code class=scheme>(<code class=scheme>char&lt;?</code> <span class=variable>char1</span>
+ <span class=variable>char2</span>)</code> produces the same result as <code class=scheme>(<span class=variable>&lt;</span> (<code class=scheme>char-&gt;integer</code> <span class=variable>char1</span>)
+ (<code class=scheme>char-&gt;integer</code> <span class=variable>char2</span>))</code>, etc. The procedures
+<a name="node_idx_276"></a><code class=scheme>char-whitespace?</code>, <a name="node_idx_278"></a><code class=scheme>char-alphabetic?</code>,
+<a name="node_idx_280"></a><code class=scheme>char-numeric?</code>, <a name="node_idx_282"></a><code class=scheme>char-upper-case?</code>, and
+<code class=scheme><code class=scheme>char-upper-case?</code></code>, <a name="node_idx_284"></a><code class=scheme>char-upcase</code>, and
+<a name="node_idx_286"></a><code class=scheme>char-downcase</code> are fully portable; their results do not
+depend on the platform or locales.</p>
+<p>
+In addition to the standard character procedures, MzScheme provides
+the following locale-sensitive procedures (see
+section&nbsp;<a href="mzscheme-Z-H-7.html#node_sec_7.7.1.11">7.7.1.11</a>):
+</p>
+<ul><p>
+</p>
+<li><p><a name="node_idx_288"></a><a name="node_kw_definitionchar-locale<_Q_"></a><code class=scheme>(char-locale&lt;?</code><tt>&nbsp;</tt><code class=scheme><span class=variable>char1 char2</span></code><tt>&nbsp;</tt><tt>&middot;&middot;&middot;</tt><sup>1</sup><code class=scheme>)</code>
+</p>
+<li><p><a name="node_idx_290"></a><a name="node_kw_definitionchar-locale>_Q_"></a><code class=scheme>(char-locale&gt;?</code><tt>&nbsp;</tt><code class=scheme><span class=variable>char1 char2</span></code><tt>&nbsp;</tt><tt>&middot;&middot;&middot;</tt><sup>1</sup><code class=scheme>)</code>
+</p>
+<li><p><a name="node_idx_292"></a><a name="node_kw_definitionchar-locale-ci=_Q_"></a><code class=scheme>(char-locale-ci=?</code><tt>&nbsp;</tt><code class=scheme><span class=variable>char1 char2</span></code><tt>&nbsp;</tt><tt>&middot;&middot;&middot;</tt><sup>1</sup><code class=scheme>)</code>
+</p>
+<li><p><a name="node_idx_294"></a><a name="node_kw_definitionchar-locale-ci<_Q_"></a><code class=scheme>(char-locale-ci&lt;?</code><tt>&nbsp;</tt><code class=scheme><span class=variable>char1 char2</span></code><tt>&nbsp;</tt><tt>&middot;&middot;&middot;</tt><sup>1</sup><code class=scheme>)</code>
+</p>
+<li><p><a name="node_idx_296"></a><a name="node_kw_definitionchar-locale-ci>_Q_"></a><code class=scheme>(char-locale-ci&gt;?</code><tt>&nbsp;</tt><code class=scheme><span class=variable>char1 char2</span></code><tt>&nbsp;</tt><tt>&middot;&middot;&middot;</tt><sup>1</sup><code class=scheme>)</code>
+</p>
+<li><p><a name="node_idx_298"></a><a name="node_kw_definitionchar-locale-whitespace_Q_"></a><code class=scheme>(char-locale-whitespace?</code><tt>&nbsp;</tt><code class=scheme><span class=variable>char</span></code><code class=scheme>)</code>
+</p>
+<li><p><a name="node_idx_300"></a><a name="node_kw_definitionchar-locale-alphabetic_Q_"></a><code class=scheme>(char-locale-alphabetic?</code><tt>&nbsp;</tt><code class=scheme><span class=variable>char</span></code><code class=scheme>)</code>
+</p>
+<li><p><a name="node_idx_302"></a><a name="node_kw_definitionchar-locale-numeric_Q_"></a><code class=scheme>(char-locale-numeric?</code><tt>&nbsp;</tt><code class=scheme><span class=variable>char</span></code><code class=scheme>)</code>
+</p>
+<li><p><a name="node_idx_304"></a><a name="node_kw_definitionchar-locale-upper-case_Q_"></a><code class=scheme>(char-locale-upper-case?</code><tt>&nbsp;</tt><code class=scheme><span class=variable>char</span></code><code class=scheme>)</code>
+</p>
+<li><p><a name="node_idx_306"></a><a name="node_kw_definitionchar-locale-lower-case_Q_"></a><code class=scheme>(char-locale-lower-case?</code><tt>&nbsp;</tt><code class=scheme><span class=variable>char</span></code><code class=scheme>)</code>
+</p>
+<li><p><a name="node_idx_308"></a><a name="node_kw_definitionchar-locale-upcase"></a><code class=scheme>(char-locale-upcase</code><tt>&nbsp;</tt><code class=scheme><span class=variable>char</span></code><code class=scheme>)</code>
+</p>
+<li><p><a name="node_idx_310"></a><a name="node_kw_definitionchar-locale-downcase"></a><code class=scheme>(char-locale-downcase</code><tt>&nbsp;</tt><code class=scheme><span class=variable>char</span></code><code class=scheme>)</code></p>
+<p>
+</p>
+</ul><p>
+For example, since ASCII character 112 is a lowercase ``p'' and
+Latin-1 character 246 is a lowercase ``ddot<em>o</em>'' (with an umlaut),
+<code class=scheme>(<code class=scheme>char-locale&lt;?</code>  (<code class=scheme>integer-&gt;char</code> <span class=selfeval>112</span>) (<code class=scheme>integer-&gt;char</code> <span class=selfeval>246</span>))</code>
+tends to produce <code class=scheme><span class=selfeval>#f</span></code>, though it always produces <code class=scheme><span class=selfeval>#t</span></code>
+if the current locale is disabled.</p>
+<p>
+</p>
+<a name="node_sec_3.5"></a>
+<h2><a href="mzscheme.html#node_toc_node_sec_3.5">3.5&nbsp;&nbsp;Strings</a></h2>
+<p><a name="node_idx_312"></a></p>
+<p>
+<a name="node_idx_314"></a>
+A string can be mutable or immutable. When an immutable string is
+provided to a procedure like <code class=scheme><code class=scheme>string-set!</code></code>, the
+<a name="node_idx_316"></a><code class=scheme>exn:application:type</code> exception is raised.</p>
+<p>
+String constants generated by <code class=scheme><code class=scheme>read</code></code> are
+immutable. <a name="node_idx_318"></a><a name="node_kw_definitionstring->immutable-string"></a><code class=scheme>(string-&gt;immutable-string</code><tt>&nbsp;</tt><code class=scheme><span class=variable>string</span></code><code class=scheme>)</code> returns an immutable
+string with the same content as <code class=scheme><span class=variable>string</span></code>, and it returns
+<code class=scheme><span class=variable>string</span></code> itself if <code class=scheme><span class=variable>string</span></code> is immutable. (See also
+<code class=scheme><code class=scheme>immutable?</code></code>  in section&nbsp;<a href="#node_sec_3.8">3.8</a>.)</p>
+<p>
+<a name="node_idx_320"></a><a name="node_kw_definitionsubstring"></a><code class=scheme>(substring</code><tt>&nbsp;</tt><code class=scheme><span class=variable>string start-k</span></code><tt>&nbsp;</tt>[<code class=scheme><span class=variable>end-k</span></code>]<code class=scheme>)</code> returns a mutable string, even
+if the <code class=scheme><span class=variable>string</span></code> argument is immutable. The <code class=scheme><span class=variable>end-k</span></code> argument
+defaults to <code class=scheme>(string-length <code class=scheme><span class=variable>string</span></code>)</code></p>
+<p>
+<a name="node_idx_322"></a><a name="node_kw_definitionstring-copy!"></a><code class=scheme>(string-copy!</code><tt>&nbsp;</tt><code class=scheme><span class=variable>dest-string dest-start-k src-string</span></code><tt>&nbsp;</tt>[<code class=scheme><span class=variable>src-start-k src-end-k</span></code>]<code class=scheme>)</code>
+changes the characters of <code class=scheme><span class=variable>dest-string</span></code> from positions
+<code class=scheme><span class=variable>dest-start-k</span></code> (inclusive) to <code class=scheme><span class=variable>dest-end-k</span></code> (exclsuive) to
+match the characters in <code class=scheme><span class=variable>src-string</span></code> from <code class=scheme><span class=variable>src-start-k</span></code>
+(inclsuive). If <code class=scheme><span class=variable>src-start-k</span></code> is not provided, it defaults to
+<code class=scheme><span class=selfeval>0</span></code>. If <code class=scheme><span class=variable>src-end-k</span></code> is not provided, it defaults to
+<code class=scheme>(<code class=scheme>string-length</code> <span class=variable>src-string</span>)</code>. The strings <code class=scheme><span class=variable>dest-string</span></code>
+and <code class=scheme><span class=variable>src-string</span></code> can be the same string, and in that case the
+destination region can overlap with the source region; the
+destination characters after the copy match the source characters
+from before the copy. If any of <code class=scheme><span class=variable>dest-start-k</span></code>,
+<code class=scheme><span class=variable>src-start-k</span></code>, or <code class=scheme><span class=variable>src-end-k</span></code> are out of range (taking into
+acount the sizes of the strings and the source and destination
+regions), the <a name="node_idx_324"></a><code class=scheme>exn:fail:contract</code> exception is raised.</p>
+<p>
+When a string is created with <a name="node_idx_326"></a><code class=scheme>make-string</code> without a fill
+value, it is initialized with the null character (<code class=scheme><span class=selfeval>#\nul</span></code>) in
+all positions.</p>
+<p>
+<a name="node_idx_328"></a><a name="node_idx_330"></a><a name="node_idx_332"></a><a name="node_idx_334"></a><a name="node_idx_336"></a><a name="node_idx_338"></a><a name="node_idx_340"></a><a name="node_idx_342"></a><a name="node_idx_344"></a><a name="node_idx_346"></a>The string comparison procedures  --  <code class=scheme>string=?</code>,
+<code class=scheme>string&lt;?</code>, <code class=scheme>string-ci=?</code>, etc.  --  take two or more
+string arguments and check the arguments pairwise (like the numerical
+comparison procedures). String comparisons using the standard
+functions are fully portable; the results do not depend on the
+platform or locales.</p>
+<p>
+In addition to the string character procedures, MzScheme provides
+the following locale-sensitive procedures (see
+section&nbsp;<a href="mzscheme-Z-H-7.html#node_sec_7.7.1.11">7.7.1.11</a>):
+</p>
+<ul><p>
+</p>
+<li><p><a name="node_idx_348"></a><a name="node_kw_definitionstring-locale<_Q_"></a><code class=scheme>(string-locale&lt;?</code><tt>&nbsp;</tt><code class=scheme><span class=variable>string1 string2</span></code><tt>&nbsp;</tt><tt>&middot;&middot;&middot;</tt><sup>1</sup><code class=scheme>)</code>
+</p>
+<li><p><a name="node_idx_350"></a><a name="node_kw_definitionstring-locale>_Q_"></a><code class=scheme>(string-locale&gt;?</code><tt>&nbsp;</tt><code class=scheme><span class=variable>string1 string2</span></code><tt>&nbsp;</tt><tt>&middot;&middot;&middot;</tt><sup>1</sup><code class=scheme>)</code>
+</p>
+<li><p><a name="node_idx_352"></a><a name="node_kw_definitionstring-locale-ci=_Q_"></a><code class=scheme>(string-locale-ci=?</code><tt>&nbsp;</tt><code class=scheme><span class=variable>string1 string2</span></code><tt>&nbsp;</tt><tt>&middot;&middot;&middot;</tt><sup>1</sup><code class=scheme>)</code>
+</p>
+<li><p><a name="node_idx_354"></a><a name="node_kw_definitionstring-locale-ci<_Q_"></a><code class=scheme>(string-locale-ci&lt;?</code><tt>&nbsp;</tt><code class=scheme><span class=variable>string1 string2</span></code><tt>&nbsp;</tt><tt>&middot;&middot;&middot;</tt><sup>1</sup><code class=scheme>)</code>
+</p>
+<li><p><a name="node_idx_356"></a><a name="node_kw_definitionstring-locale-ci>_Q_"></a><code class=scheme>(string-locale-ci&gt;?</code><tt>&nbsp;</tt><code class=scheme><span class=variable>string1 string2</span></code><tt>&nbsp;</tt><tt>&middot;&middot;&middot;</tt><sup>1</sup><code class=scheme>)</code></p>
+<p>
+</p>
+</ul><p></p>
+<p>
+</p>
+<a name="node_sec_3.6"></a>
+<h2><a href="mzscheme.html#node_toc_node_sec_3.6">3.6&nbsp;&nbsp;Symbols</a></h2>
+<p><a name="node_idx_358"></a></p>
+<p>
+For information about symbol parsing and printing, see
+section&nbsp;<a href="mzscheme-Z-H-14.html#node_sec_14.3">14.3</a> and section&nbsp;<a href="mzscheme-Z-H-14.html#node_sec_14.4">14.4</a>, respectively.</p>
+<p>
+<a name="node_idx_360"></a><a name="node_idx_362"></a>
+MzScheme provides two ways of generating an <strong>uninterned
+symbol</strong><a name="node_idx_364"></a>, i.e., a symbol that is not <code class=scheme><code class=scheme>eq?</code></code>, <code class=scheme><code class=scheme>eqv?</code></code>, or
+<code class=scheme><code class=scheme>equal?</code></code> to any other symbol, although it may print the same
+as another symbol:
+</p>
+<ul><p>
+</p>
+<li><p><a name="node_idx_366"></a><a name="node_kw_definitionstring->uninterned-symbol"></a><code class=scheme>(string-&gt;uninterned-symbol</code><tt>&nbsp;</tt><code class=scheme><span class=variable>string</span></code><code class=scheme>)</code> is like
+<code class=scheme>(<a name="node_idx_368"></a><code class=scheme>string-&gt;symbol</code> <code class=scheme><span class=variable>string</span></code>)</code>, but the resulting
+symbol is a new uninterned symbol. Calling
+<code class=scheme><code class=scheme>string-&gt;uninterned-symbol</code></code> twice with the same <code class=scheme><span class=variable>string</span></code>
+returns two distinct symbols.</p>
+<p>
+</p>
+<li><p><a name="node_idx_370"></a><a name="node_kw_definitiongensym"></a><code class=scheme>(gensym</code><tt>&nbsp;</tt>[<code class=scheme><span class=variable>symbol/string</span></code>]<code class=scheme>)</code> creates an uninterned symbol with
+an automatically-generated name. The optional <code class=scheme><span class=variable>symbol/string</span></code>
+argument is a prefix symbol or string.</p>
+<p>
+</p>
+</ul><p></p>
+<p>
+Regular (interned) symbols are only weakly held by the internal symbol
+table. This weakness can never affect the result of a <code class=scheme><code class=scheme>eq?</code></code>,
+<code class=scheme><code class=scheme>eqv?</code></code>, or <code class=scheme><code class=scheme>equal?</code></code> test, but a symbol placed into a weak box
+(see section&nbsp;<a href="mzscheme-Z-H-13.html#node_sec_13.1">13.1</a>) or used as the key in a weak hash table (see
+section&nbsp;<a href="#node_sec_3.12">3.12</a>) may disappear.</p>
+<p>
+</p>
+<a name="node_sec_3.7"></a>
+<h2><a href="mzscheme.html#node_toc_node_sec_3.7">3.7&nbsp;&nbsp;Vectors</a></h2>
+<p><a name="node_idx_372"></a></p>
+<p>
+When a vector is created with <code class=scheme><code class=scheme>make-vector</code></code> without a fill
+value, it is initialized with <code class=scheme><span class=selfeval>0</span></code> in all positions. A vector
+can be immutable, such as a vector returned by <code class=scheme>syntax-e</code>, but
+vectors generated by <code class=scheme>read</code> are mutable.  (See also
+<code class=scheme><code class=scheme>immutable?</code></code>  in section&nbsp;<a href="#node_sec_3.8">3.8</a>.)</p>
+<p>
+<a name="node_idx_374"></a><a name="node_kw_definitionvector->immutable-vector"></a><code class=scheme>(vector-&gt;immutable-vector</code><tt>&nbsp;</tt><code class=scheme><span class=variable>vec</span></code><code class=scheme>)</code> returns an immutable vector with
+the same content as <code class=scheme><span class=variable>vec</span></code>, and it returns <code class=scheme><span class=variable>vec</span></code> itself if
+<code class=scheme><span class=variable>vec</span></code> is immutable. (See also <code class=scheme><code class=scheme>immutable?</code></code>  in
+section&nbsp;<a href="#node_sec_3.8">3.8</a>.)</p>
+<p>
+<a name="node_idx_376"></a><a name="node_kw_definitionvector-immutable"></a><code class=scheme>(vector-immutable</code><tt>&nbsp;</tt><code class=scheme><span class=variable>v</span></code><tt>&nbsp;</tt><tt>&middot;&middot;&middot;</tt><sup>1</sup><code class=scheme>)</code> is like <code class=scheme>(<span class=variable>vector</span> <span class=variable>v</span> <tt>&middot;&middot;&middot;</tt><sup>1</sup>)</code> except that 
+the resulting vector is immutable. (See also <code class=scheme><code class=scheme>immutable?</code></code>  in
+section&nbsp;<a href="#node_sec_3.8">3.8</a>.)</p>
+<p>
+</p>
+<a name="node_sec_3.8"></a>
+<h2><a href="mzscheme.html#node_toc_node_sec_3.8">3.8&nbsp;&nbsp;Lists</a></h2>
+<p><a name="node_idx_378"></a></p>
+<p>
+A cons cell can be mutable or immutable. When an immutable cons cell
+is provided to a procedure like <code class=scheme><code class=scheme>set-cdr!</code></code>, the
+<a name="node_idx_380"></a><code class=scheme>exn:application:type</code> exception is raised. Cons cells generated by <code class=scheme><code class=scheme>read</code></code> are always mutable.</p>
+<p>
+The global variable <a name="node_kw_definitionnull"></a><a name="node_idx_382"></a><code class=scheme>null</code> is bound to the empty list.</p>
+<p>
+<a name="node_idx_384"></a><a name="node_kw_definitionreverse!"></a><code class=scheme>(reverse!</code><tt>&nbsp;</tt><code class=scheme><span class=variable>list</span></code><code class=scheme>)</code> is the same as <code class=scheme>(reverse <code class=scheme><span class=variable>list</span></code>)</code>, but
+<code class=scheme><span class=variable>list</span></code> is destructively reversed using <code class=scheme><code class=scheme>set-cdr!</code></code> (i.e.,
+each cons cell in <code class=scheme><span class=variable>list</span></code> is mutated).</p>
+<p>
+<a name="node_idx_386"></a><a name="node_kw_definitionappend!"></a><code class=scheme>(append!</code><tt>&nbsp;</tt><code class=scheme><span class=variable>list</span></code><tt>&nbsp;</tt><tt>&middot;&middot;&middot;</tt><sup>1</sup><code class=scheme>)</code> <a name="node_idx_388"></a> is like
+<code class=scheme>(append <code class=scheme><span class=variable>list</span></code>)</code>, but it destructively appends the
+<code class=scheme><span class=variable>list</span></code>s (i.e., except for the last <code class=scheme><span class=variable>list</span></code>, the last cons cell
+of each <code class=scheme><span class=variable>list</span></code> is mutated to append the lists; empty lists are
+essentially dropped).</p>
+<p>
+<a name="node_idx_390"></a><a name="node_kw_definitionlist*"></a><code class=scheme>(list*</code><tt>&nbsp;</tt><code class=scheme><span class=variable>v</span></code><tt>&nbsp;</tt><tt>&middot;&middot;&middot;</tt><sup>1</sup><code class=scheme>)</code> is similar to <code class=scheme>(<a name="node_idx_392"></a><code class=scheme>list</code> <code class=scheme><span class=variable>v</span></code> <tt>&middot;&middot;&middot;</tt><sup>1</sup>)</code>
+but the last argument is used directly as the <code class=scheme><code class=scheme>cdr</code></code> of the last
+pair constructed for the list:
+</p>
+<div align=left><pre class=scheme>(<code class=scheme>list*</code> <span class=selfeval>1</span> <span class=selfeval>2</span> <span class=selfeval>3</span> <span class=selfeval>4</span>) <span class=comment>; =&gt; <code class=schemeresponse><span class=keyword>'</span>(<span class=selfeval>1</span> <span class=selfeval>2</span> <span class=selfeval>3</span> . <span class=selfeval>4</span>)</code></span>
+</pre></div><p></p>
+<p>
+<a name="node_idx_394"></a><a name="node_kw_definitioncons-immutable"></a><code class=scheme>(cons-immutable</code><tt>&nbsp;</tt><code class=scheme><span class=variable>v1 v2</span></code><code class=scheme>)</code> returns an immutable pair whose
+<code class=scheme><code class=scheme>car</code></code> is <code class=scheme><span class=variable>v1</span></code> and <code class=scheme><code class=scheme>cdr</code></code> is <code class=scheme><span class=variable>v2</span></code>.</p>
+<p>
+<a name="node_idx_396"></a><a name="node_kw_definitionlist-immutable"></a><code class=scheme>(list-immutable</code><tt>&nbsp;</tt><code class=scheme><span class=variable>v</span></code><tt>&nbsp;</tt><tt>&middot;&middot;&middot;</tt><sup>1</sup><code class=scheme>)</code> is like <code class=scheme>(<code class=scheme>list</code> <span class=variable>v</span> <tt>&middot;&middot;&middot;</tt><sup>1</sup>)</code>, but using
+immutable pairs.</p>
+<p>
+<a name="node_idx_398"></a><a name="node_kw_definitionlist*-immutable"></a><code class=scheme>(list*-immutable</code><tt>&nbsp;</tt><code class=scheme><span class=variable>v</span></code><tt>&nbsp;</tt><tt>&middot;&middot;&middot;</tt><sup>1</sup><code class=scheme>)</code> is like <code class=scheme>(<code class=scheme>list*</code> <span class=variable>v</span> <tt>&middot;&middot;&middot;</tt><sup>1</sup>)</code>, but using
+immutable pairs.</p>
+<p>
+<a name="node_idx_400"></a><a name="node_kw_definitionimmutable_Q_"></a><code class=scheme>(immutable?</code><tt>&nbsp;</tt><code class=scheme><span class=variable>v</span></code><code class=scheme>)</code> returns <code class=scheme><span class=selfeval>#t</span></code> if <code class=scheme><span class=variable>v</span></code> is an immutable
+cons cell, string, vector, box, or hash table, <code class=scheme><span class=selfeval>#f</span></code> otherwise.</p>
+<p>
+The <a name="node_idx_402"></a><code class=scheme>list-ref</code> and <a name="node_idx_404"></a><code class=scheme>list-tail</code> procedures accept an
+improper list as a first argument. If either procedure is applied to
+an improper list and an index that would require taking the <code class=scheme><code class=scheme>car</code></code>
+or <code class=scheme><code class=scheme>cdr</code></code> of a non-cons-cell, the
+<a name="node_idx_406"></a><code class=scheme>exn:application:mismatch</code> exception is raised.</p>
+<p>
+The <a name="node_idx_408"></a><code class=scheme>member</code>, <a name="node_idx_410"></a><code class=scheme>memv</code>, and <a name="node_idx_412"></a><code class=scheme>memq</code> procedures
+accept an improper list as a second argument. If the membership
+search reaches the improper tail, the
+<a name="node_idx_414"></a><code class=scheme>exn:application:mismatch</code> exception is raised.</p>
+<p>
+The <a name="node_idx_416"></a><code class=scheme>assoc</code>, <a name="node_idx_418"></a><code class=scheme>assv</code>, and <a name="node_idx_420"></a><code class=scheme>assq</code> procedures
+accept an improperly formed association list as a second argument.
+If the association search reaches an improper list tail or a list
+element that is not a pair, the <a name="node_idx_422"></a><code class=scheme>exn:application:mismatch</code> exception is raised.</p>
+<p>
+</p>
+<a name="node_sec_3.9"></a>
+<h2><a href="mzscheme.html#node_toc_node_sec_3.9">3.9&nbsp;&nbsp;Boxes</a></h2>
+<p><a name="node_idx_424"></a></p>
+<p>
+<a name="node_idx_426"></a>
+MzScheme provides <strong>boxes</strong>, which are records that have a
+single field:
+</p>
+<ul><p>
+</p>
+<li><p> <a name="node_idx_428"></a><a name="node_kw_definitionbox"></a><code class=scheme>(box</code><tt>&nbsp;</tt><code class=scheme><span class=variable>v</span></code><code class=scheme>)</code> returns a new mutable box that contains <code class=scheme><span class=variable>v</span></code>.</p>
+<p>
+</p>
+<li><p> <a name="node_idx_430"></a><a name="node_kw_definitionbox-immutable"></a><code class=scheme>(box-immutable</code><tt>&nbsp;</tt><code class=scheme><span class=variable>v</span></code><code class=scheme>)</code> returns a new immutable box that
+contains <code class=scheme><span class=variable>v</span></code>.</p>
+<p>
+</p>
+<li><p> <a name="node_idx_432"></a><a name="node_kw_definitionunbox"></a><code class=scheme>(unbox</code><tt>&nbsp;</tt><code class=scheme><span class=variable>box</span></code><code class=scheme>)</code> returns the content of <code class=scheme><span class=variable>box</span></code>. For any
+<code class=scheme><span class=variable>v</span></code>, <code class=scheme>(unbox (box <code class=scheme><span class=variable>v</span></code>))</code> returns <code class=scheme><span class=variable>v</span></code>.</p>
+<p>
+</p>
+<li><p> <a name="node_idx_434"></a><a name="node_kw_definitionset-box!"></a><code class=scheme>(set-box!</code><tt>&nbsp;</tt><code class=scheme><span class=variable>mutable-box v</span></code><code class=scheme>)</code> sets the content of
+<code class=scheme><span class=variable>mutable-box</span></code> to <code class=scheme><span class=variable>v</span></code>.</p>
+<p>
+</p>
+<li><p> <a name="node_idx_436"></a><a name="node_kw_definitionbox_Q_"></a><code class=scheme>(box?</code><tt>&nbsp;</tt><code class=scheme><span class=variable>v</span></code><code class=scheme>)</code> returns <code class=scheme><span class=selfeval>#t</span></code> if <code class=scheme><span class=variable>v</span></code> is a box, <code class=scheme><span class=selfeval>#f</span></code>
+otherwise.</p>
+<p>
+</p>
+</ul><p></p>
+<p>
+Two boxes are <a name="node_idx_438"></a><code class=scheme>equal?</code> if the contents of the boxes are
+<code class=scheme><code class=scheme>equal?</code></code>.</p>
+<p>
+A box returned by <code class=scheme><code class=scheme>syntax-e</code></code> (see section&nbsp;<a href="mzscheme-Z-H-12.html#node_sec_12.2.2">12.2.2</a>) is
+immutable; if <code class=scheme><code class=scheme>set-box!</code></code> is applied to such a box, the
+<a name="node_idx_440"></a><code class=scheme>exn:application:type</code> exception is raised. A box produced by <code class=scheme>read</code> (via
+<code class=scheme>#&amp;</code>) is mutable.  (See also <code class=scheme><code class=scheme>immutable?</code></code>  in
+section&nbsp;<a href="#node_sec_3.8">3.8</a>.)</p>
+<p>
+</p>
+<a name="node_sec_3.10"></a>
+<h2><a href="mzscheme.html#node_toc_node_sec_3.10">3.10&nbsp;&nbsp;Procedures</a></h2>
+<p><a name="node_idx_442"></a></p>
+<p>
+See section&nbsp;<a href="mzscheme-Z-H-4.html#node_sec_4.6">4.6</a> for information on defining new procedure
+types.</p>
+<p>
+</p>
+<a name="node_sec_3.10.1"></a>
+<h3><a href="mzscheme.html#node_toc_node_sec_3.10.1">3.10.1&nbsp;&nbsp;Arity</a></h3>
+<p></p>
+<p>
+MzScheme's <code class=scheme><code class=scheme>procedure-arity</code></code> procedure returns the input arity
+of a procedure:
+</p>
+<ul><p>
+</p>
+<li><p><a name="node_idx_444"></a><a name="node_kw_definitionprocedure-arity"></a><code class=scheme>(procedure-arity</code><tt>&nbsp;</tt><code class=scheme><span class=variable>proc</span></code><code class=scheme>)</code> returns information about the number
+of arguments accepted by the procedure <code class=scheme><span class=variable>proc</span></code>. The result <code class=scheme><span class=variable>a</span></code>
+is either:
+</p>
+<ul><p>
+</p>
+<li><p>an exact non-negative integer ==&gt; the procedure
+always takes exactly <code class=scheme><span class=variable>a</span></code> arguments;</p>
+<p>
+</p>
+<li><p>an <code class=scheme><span class=keyword>arity-at-least</span></code><a name="call_footnote_Temp_8"></a><a href="#footnote_Temp_8"><sup><small>5</small></sup></a>  instance
+<a name="node_kw_definitionarity-at-least-value"></a> <a name="node_kw_definitionarity-at-least_Q_"></a>
+<a name="node_idx_446"></a> <a name="node_idx_448"></a>
+==&gt; the procedure takes <code class=scheme>(<code class=scheme>arity-at-least-value</code> <span class=variable>a</span>)</code>
+or more arguments; or</p>
+<p>
+</p>
+<li><p>a list containing integers and <code class=scheme><span class=keyword>arity-at-least</span></code>
+instances ==&gt; the procedure takes any number of arguments
+that can match one of the arities in the list.</p>
+<p>
+</p>
+</ul><p></p>
+<p>
+</p>
+<li><p><a name="node_idx_450"></a><a name="node_kw_definitionprocedure-arity-includes_Q_"></a><code class=scheme>(procedure-arity-includes?</code><tt>&nbsp;</tt><code class=scheme><span class=variable>proc k</span></code><code class=scheme>)</code> returns <code class=scheme><span class=selfeval>#t</span></code> if the
+procedure can accept <code class=scheme><span class=variable>n</span></code> arguments (where <code class=scheme><span class=variable>k</span></code> is an exact,
+non-negative integer), <code class=scheme><span class=selfeval>#f</span></code> otherwise.</p>
+<p>
+</p>
+</ul><p></p>
+<p>
+Examples:
+</p>
+<div align=left><pre class=scheme>(<code class=scheme>procedure-arity</code> <code class=scheme>cons</code>) <span class=comment>; =&gt; <code class=schemeresponse><span class=selfeval>2</span></code></span>
+(<code class=scheme>procedure-arity</code> <code class=scheme>list</code>) <span class=comment>; =&gt; <code class=schemeresponse><span class=variable>#&lt;struct:arity-at-least&gt;</span></code></span>
+(<code class=scheme>arity-at-least?</code> (<code class=scheme>procedure-arity</code> <code class=scheme>list</code>)) <span class=comment>; =&gt; <code class=schemeresponse><span class=selfeval>#t</span></code></span>
+(<code class=scheme>arity-at-least-value</code> (<code class=scheme>procedure-arity</code> <code class=scheme>list</code>)) <span class=comment>; =&gt; <code class=schemeresponse><span class=selfeval>0</span></code></span>
+(<code class=scheme>arity-at-least-value</code> (<code class=scheme>procedure-arity</code> (<span class=keyword>lambda</span> (<span class=variable>x</span> . <span class=variable>y</span>) <span class=variable>x</span>))) <span class=comment>; =&gt; <code class=schemeresponse><span class=selfeval>1</span></code></span>
+(<code class=scheme>procedure-arity</code> (<span class=keyword>case-lambda</span> [(<span class=variable>x</span>) <span class=selfeval>0</span>] [(<span class=variable>x</span> <span class=variable>y</span>) <span class=selfeval>1</span>])) <span class=comment>; =&gt; <code class=schemeresponse><span class=keyword>'</span>(<span class=selfeval>1</span> <span class=selfeval>2</span>)</code></span>
+(<code class=scheme>procedure-arity-includes?</code> <code class=scheme>cons</code> <span class=selfeval>2</span>) <span class=comment>; =&gt; <code class=schemeresponse><span class=selfeval>#t</span></code></span>
+(<code class=scheme>procedure-arity-includes?</code> <code class=scheme>display</code> <span class=selfeval>3</span>) <span class=comment>; =&gt; <code class=schemeresponse><span class=selfeval>#f</span></code></span>
+</pre></div><p></p>
+<p>
+When compiling a <code class=scheme><span class=keyword>lambda</span></code> or <code class=scheme><span class=keyword>case-lambda</span></code> expression,
+MzScheme looks for a <code class=scheme><span class=selfeval>'method-arity-error</span></code><a name="node_idx_452"></a> property
+attached to the expression (see section&nbsp;<a href="mzscheme-Z-H-12.html#node_sec_12.6.2">12.6.2</a>). If it is present
+with a true value, and if no case of the procedure accepts zero
+arguments, then the procedure is marked so that an
+<a name="node_idx_454"></a><code class=scheme>exn:application:arity</code> exception involving the procedure
+will hide the first argument, if one was provided. (Hiding the first
+argument is useful when the procedure implements a method, where the
+first argument is implicit in the original source). The property
+affects only the format of <a name="node_idx_456"></a><code class=scheme>exn:application:arity</code> exceptions,
+not the result of <code class=scheme><code class=scheme>procedure-arity</code></code>.</p>
+<p>
+</p>
+<a name="node_sec_3.10.2"></a>
+<h3><a href="mzscheme.html#node_toc_node_sec_3.10.2">3.10.2&nbsp;&nbsp;Primitives</a></h3>
+<p></p>
+<p>
+A <strong>primitive procedure</strong><a name="node_idx_458"></a> is a built-in procedure that is
+implemented in low-level language. Not all built-in procedures are
+primitives, but almost all <em>R5RS</em> procedures are primitives, as
+are most of the procedures described in this manual.</p>
+<p>
+</p>
+<ul><p>
+</p>
+<li><p><a name="node_idx_460"></a><a name="node_kw_definitionprimitive_Q_"></a><code class=scheme>(primitive?</code><tt>&nbsp;</tt><code class=scheme><span class=variable>v</span></code><code class=scheme>)</code> returns <code class=scheme><span class=selfeval>#t</span></code> if <code class=scheme><span class=variable>v</span></code> is a primitive
+procedure or <code class=scheme><span class=selfeval>#f</span></code> otherwise.</p>
+<p>
+</p>
+<li><p><a name="node_idx_462"></a><a name="node_kw_definitionprimitive-result-arity"></a><code class=scheme>(primitive-result-arity</code><tt>&nbsp;</tt><code class=scheme><span class=variable>prim-proc</span></code><code class=scheme>)</code> returns the arity of the
+result of the primitive procedure <code class=scheme><span class=variable>prim-proc</span></code> (as opposed to the
+procedure's input arity as returned by <a name="node_idx_464"></a><code class=scheme>arity</code>; see
+section&nbsp;<a href="#node_sec_3.10.1">3.10.1</a>). For most primitives, this procedure returns <code class=scheme><span class=selfeval>1</span></code>,
+since most primitives return a single value when applied. For
+information about arity values, see section&nbsp;<a href="#node_sec_3.10.1">3.10.1</a>.</p>
+<p>
+</p>
+<li><p><a name="node_idx_466"></a><a name="node_kw_definitionprimitive-closure_Q_"></a><code class=scheme>(primitive-closure?</code><tt>&nbsp;</tt><code class=scheme><span class=variable>v</span></code><code class=scheme>)</code> returns <code class=scheme><span class=selfeval>#t</span></code> if <code class=scheme><span class=variable>v</span></code> is
+internally implemented as a primitive closure rather than an simple
+primitive procedure, <code class=scheme><span class=selfeval>#f</span></code> otherwise.  This information is
+intended for use by the <tt><strong>mzc</strong></tt> compiler.</p>
+<p>
+</p>
+</ul><p></p>
+<p>
+</p>
+<a name="node_sec_3.10.3"></a>
+<h3><a href="mzscheme.html#node_toc_node_sec_3.10.3">3.10.3&nbsp;&nbsp;Procedure Names</a></h3>
+<p>See&nbsp;section&nbsp;<a href="mzscheme-Z-H-6.html#node_sec_6.2.4">6.2.4</a> for information about the names of primitives,
+and the names inferred for <code class=scheme><span class=keyword>lambda</span></code> and <code class=scheme><span class=keyword>case-lambda</span></code>
+procedures.</p>
+<p>
+</p>
+<a name="node_sec_3.11"></a>
+<h2><a href="mzscheme.html#node_toc_node_sec_3.11">3.11&nbsp;&nbsp;Promises</a></h2>
+<p><a name="node_idx_468"></a></p>
+<p>
+<a name="node_idx_470"></a>
+The <a name="node_idx_472"></a><code class=scheme>force</code> procedure can only be applied to values returned
+by <code class=scheme><span class=keyword>delay</span></code>, and promises are never implicitly <code class=scheme><code class=scheme>force</code></code>d.</p>
+<p>
+<a name="node_idx_474"></a><a name="node_kw_definitionpromise_Q_"></a><code class=scheme>(promise?</code><tt>&nbsp;</tt><code class=scheme><span class=variable>v</span></code><code class=scheme>)</code> returns <code class=scheme><span class=selfeval>#t</span></code> if <code class=scheme><span class=variable>v</span></code> is a promise
+created by <code class=scheme><span class=keyword>delay</span></code>, <code class=scheme><span class=selfeval>#f</span></code> otherwise.</p>
+<p>
+</p>
+<a name="node_sec_3.12"></a>
+<h2><a href="mzscheme.html#node_toc_node_sec_3.12">3.12&nbsp;&nbsp;Hash Tables</a></h2>
+<p><a name="node_idx_476"></a></p>
+<p>
+<a name="node_idx_478"></a>
+<a name="node_idx_480"></a><a name="node_kw_definitionmake-hash-table"></a><code class=scheme>(make-hash-table</code><tt>&nbsp;</tt>[<code class=scheme><span class=variable>flag-symbol flag-symbol</span></code>]<code class=scheme>)</code> creates and returns a
+new hash table. If provided, each <code class=scheme><span class=variable>flag-symbol</span></code> must one of
+the following:
+</p>
+<ul><p>
+</p>
+<li><p><code class=scheme><span class=selfeval>'weak</span></code><a name="node_idx_482"></a>  --  creates a hash table with weakly-held
+keys (see section&nbsp;<a href="mzscheme-Z-H-13.html#node_sec_13.1">13.1</a>).</p>
+<p>
+</p>
+<li><p><code class=scheme><span class=selfeval>'equal</span></code><a name="node_idx_484"></a>  --  creates a hash table that compares
+keys using <code class=scheme><code class=scheme>equal?</code></code> instead of <code class=scheme><code class=scheme>eq?</code></code> (needed, for
+example, when using strings as keys).</p>
+<p>
+</p>
+</ul><p>
+By default, key comparisons use <code class=scheme><code class=scheme>eq?</code></code>. If the second
+<code class=scheme><span class=variable>flag-symbol</span></code> is redundant, the
+<a name="node_idx_486"></a><code class=scheme>exn:application:mismatch</code> exception is raised.</p>
+<p>
+Two hash tables are <code class=scheme><code class=scheme>equal?</code></code> if they are created with the same
+flags, and if they map the same keys to <code class=scheme><code class=scheme>equal?</code></code> values (where
+``same key'' means either <code class=scheme><code class=scheme>eq?</code></code> or <code class=scheme><code class=scheme>equal?</code></code>, depending
+on the way the hash table compares keys).</p>
+<p>
+<a name="node_idx_488"></a><a name="node_kw_definitionmake-immutable-hash-table"></a><code class=scheme>(make-immutable-hash-table</code><tt>&nbsp;</tt><code class=scheme><span class=variable>assoc-list</span></code><tt>&nbsp;</tt>[<code class=scheme><span class=variable>flag-symbol</span></code>]<code class=scheme>)</code> creates an
+immutable hash table. (See also <code class=scheme><code class=scheme>immutable?</code></code>  in
+section&nbsp;<a href="#node_sec_3.8">3.8</a>.) The <code class=scheme><span class=variable>assoc-list</span></code> must be a list of pairs, where
+the <code class=scheme><code class=scheme>car</code></code> of each pair is a key, and the <code class=scheme><code class=scheme>cdr</code></code> is the
+corresponding value. The mappings are added to the table in the order
+that they appear in <code class=scheme><span class=variable>assoc-list</span></code>, so later mappings can hide
+earlier mappings. If the optional <code class=scheme><span class=variable>flag-symbol</span></code> argument is
+provided, it must be <code class=scheme><span class=selfeval>'equal</span></code><a name="node_idx_490"></a>, and the created hash table
+compares keys with <code class=scheme><code class=scheme>equal?</code></code>; otherwise, the created table
+compares keys with <code class=scheme><code class=scheme>eq?</code></code>.</p>
+<p>
+<a name="node_idx_492"></a><a name="node_kw_definitionhash-table_Q_"></a><code class=scheme>(hash-table?</code><tt>&nbsp;</tt><code class=scheme><span class=variable>v</span></code><tt>&nbsp;</tt>[<code class=scheme><span class=variable>flag-symbol flag-symbol</span></code>]<code class=scheme>)</code> returns <code class=scheme><span class=selfeval>#t</span></code> if
+<code class=scheme><span class=variable>v</span></code> was created by <code class=scheme><code class=scheme>make-hash-table</code></code> or
+<code class=scheme><span class=variable>make-immutable-hash-table</span></code> with the given <code class=scheme><span class=variable>flag-symbol</span></code>s
+(or more), <code class=scheme><span class=selfeval>#f</span></code> otherwise. Each provided <code class=scheme><span class=variable>flag-symbol</span></code>
+must be a distinct flag supported by <code class=scheme>make-hash-table</code>; if the
+second <code class=scheme><span class=variable>flag-symbol</span></code> is redundant, the
+<a name="node_idx_494"></a><code class=scheme>exn:application:mismatch</code> exception is raised.</p>
+<p>
+<a name="node_idx_496"></a><a name="node_kw_definitionhash-table-put!"></a><code class=scheme>(hash-table-put!</code><tt>&nbsp;</tt><code class=scheme><span class=variable>hash-table key-v v</span></code><code class=scheme>)</code> maps <code class=scheme><span class=variable>key-v</span></code> to <code class=scheme><span class=variable>v</span></code>
+in <code class=scheme><span class=variable>hash-table</span></code>, overwriting any existing mapping for
+<code class=scheme><span class=variable>key-v</span></code>. If <code class=scheme><span class=variable>hash-table</span></code> is immutable, the
+<a name="node_idx_498"></a><code class=scheme>exn:application:type</code> exception is raised.</p>
+<p>
+<a name="node_idx_500"></a><a name="node_kw_definitionhash-table-get"></a><code class=scheme>(hash-table-get</code><tt>&nbsp;</tt><code class=scheme><span class=variable>hash-table key-v</span></code><tt>&nbsp;</tt>[<code class=scheme><span class=variable>failure-thunk</span></code>]<code class=scheme>)</code> returns the
+value for <code class=scheme><span class=variable>key-v</span></code> in <code class=scheme><span class=variable>hash-table</span></code>. If no value is found for
+<code class=scheme><span class=variable>key-v</span></code>, then the result of invoking <code class=scheme><span class=variable>failure-thunk</span></code> (a
+procedure of no arguments) is returned. If <code class=scheme><span class=variable>failure-thunk</span></code> is not
+provided, the <a name="node_idx_502"></a><code class=scheme>exn:application:mismatch</code> exception is raised when no value is
+found for <code class=scheme><span class=variable>key-v</span></code>.</p>
+<p>
+<a name="node_idx_504"></a><a name="node_kw_definitionhash-table-remove!"></a><code class=scheme>(hash-table-remove!</code><tt>&nbsp;</tt><code class=scheme><span class=variable>hash-table key-v</span></code><code class=scheme>)</code> removes the value mapping
+for <code class=scheme><span class=variable>key-v</span></code> if it exists in <code class=scheme><span class=variable>hash-table</span></code>.  If
+<code class=scheme><span class=variable>hash-table</span></code> is immutable, the <a name="node_idx_506"></a><code class=scheme>en:application:type</code> exception is raised.</p>
+<p>
+<a name="node_idx_508"></a><a name="node_kw_definitionhash-table-map"></a><code class=scheme>(hash-table-map</code><tt>&nbsp;</tt><code class=scheme><span class=variable>hash-table proc</span></code><code class=scheme>)</code> applies the procedure <code class=scheme><span class=variable>proc</span></code>
+to each element in <code class=scheme><span class=variable>hash-table</span></code>, accumulating the results into a
+list. The procedure <code class=scheme><span class=variable>proc</span></code> must take two arguments: a key and its
+value. See the caveat below about concurrent modification.</p>
+<p>
+<a name="node_idx_510"></a><a name="node_kw_definitionhash-table-for-each"></a><code class=scheme>(hash-table-for-each</code><tt>&nbsp;</tt><code class=scheme><span class=variable>hash-table proc</span></code><code class=scheme>)</code> applies the procedure
+<code class=scheme><span class=variable>proc</span></code> to each element in <code class=scheme><span class=variable>hash-table</span></code> (for the side-effects
+of <code class=scheme><span class=variable>proc</span></code>) and returns void. The procedure <code class=scheme><span class=variable>proc</span></code> must
+take two arguments: a key and its value. See the caveat below about
+concurrent modification.</p>
+<p>
+<a name="node_idx_512"></a><a name="node_kw_definitionhash-table-count"></a><code class=scheme>(hash-table-count</code><tt>&nbsp;</tt><code class=scheme><span class=variable>hash-table</span></code><code class=scheme>)</code> returns the number of keys mapped
+by <code class=scheme><span class=variable>hash-table</span></code>. If <code class=scheme><span class=variable>hash-table</span></code> is not created with
+<code class=scheme><span class=selfeval>'weak</span></code>, then the result is computed in constant time and
+atomically. If <code class=scheme><span class=variable>hash-table</span></code> is created with <code class=scheme><span class=selfeval>'weak</span></code>, see
+the caveat below about concurrent modification.</p>
+<p>
+<a name="node_idx_514"></a><a name="node_kw_definitioneq-hash-code"></a><code class=scheme>(eq-hash-code</code><tt>&nbsp;</tt><code class=scheme><span class=variable>v</span></code><code class=scheme>)</code> returns an exact integer; for any two
+<code class=scheme><code class=scheme>eq?</code></code>  values, the returned integer is the same. Furthermore,
+for the result integer <code class=scheme><span class=variable>k</span></code> and any other exact integer <code class=scheme><span class=variable>j</span></code>,
+<code class=scheme>(<span class=variable>=</span> <span class=variable>k</span> <span class=variable>j</span>)</code> implies <code class=scheme>(<code class=scheme>eq?</code>  <span class=variable>k</span> <span class=variable>j</span>)</code>.</p>
+<p>
+<a name="node_idx_516"></a><a name="node_kw_definitionequal-hash-code"></a><code class=scheme>(equal-hash-code</code><tt>&nbsp;</tt><code class=scheme><span class=variable>v</span></code><code class=scheme>)</code> returns an exact integer; for any two
+<code class=scheme><code class=scheme>equal?</code></code> values, the returned integer is the same.
+Furthermore, for the result integer <code class=scheme><span class=variable>k</span></code> and any other exact
+integer <code class=scheme><span class=variable>j</span></code>, <code class=scheme>(<span class=variable>=</span> <span class=variable>k</span> <span class=variable>j</span>)</code> implies <code class=scheme>(<code class=scheme>eq?</code>  <span class=variable>k</span> <span class=variable>j</span>)</code>. If
+<code class=scheme><span class=variable>v</span></code> contains a cycle through pairs, vectors, boxes, and
+inspectable structure fields, then <code class=scheme>equal-hash-code</code> applied
+to <code class=scheme><span class=variable>v</span></code> will loop indefinitely.</p>
+<p>
+<strong>Caveat concerning concurrent modification:</strong> A hash table can be
+manipulated with <code class=scheme><code class=scheme>hash-table-get</code></code>, <code class=scheme><code class=scheme>hash-table-put!</code></code>,
+and <code class=scheme><code class=scheme>hash-table-remove!</code></code>  concurrently by multiple threads,
+and the operations are protected by a table-specific semaphore as
+needed. A few caveats apply, however:
+</p>
+<ul><p>
+</p>
+<li><p>If a thread is terminated while applying
+<code class=scheme><code class=scheme>hash-table-get</code></code>, <code class=scheme><code class=scheme>hash-table-put!</code></code>, or
+<code class=scheme><code class=scheme>hash-table-remove!</code></code> to a hash table that uses <code class=scheme><code class=scheme>equal?</code></code>
+comparisons, all current and future operations on the hash table
+block indefinitely.</p>
+<p>
+</p>
+<li><p>The <code class=scheme><code class=scheme>hash-table-map</code></code>, <code class=scheme><code class=scheme>hash-table-for-each</code></code>, and
+<code class=scheme><span class=variable>hash-table-count</span></code> procedures do not use the table's
+semaphore. Consequently, if a hash table is extended with new keys
+by another thread while a map or for-each is in process, arbitrary
+key-value pairs can be dropped or duplicated in the map, for-each,
+or count. Similarly, if the map or for-each procedure itself extends
+the table, arbitrary key-value pairs can be dropped or
+duplicated. However, key mappings can be deleted or remapped by any
+thread with no adverse affects (i.e., the change does not affect a
+traversal if the key has been seen already, otherwise the traversal
+skips a deleted key or uses the remapped key's new value).</p>
+<p>
+</p>
+</ul><p></p>
+<p>
+<strong>Caveat concerning mutable keys:</strong> If a key into an
+<code class=scheme><code class=scheme>equal?</code></code>-based hash table is mutated (e.g., a key string is
+modified with <code class=scheme><code class=scheme>string-set!</code></code>), then the hash table's behavior
+for put and get operations becomes unpredictable.</p>
+<p>
+</p>
+<div class=footnoterule><hr></div><p></p>
+<div class=footnote><p><a name="footnote_Temp_5"></a><a href="#call_footnote_Temp_5"><sup><small>2</small></sup></a> 30 bits for
+a 32-bit architecture, 62 bits for a 64-bit architecture.</p>
+<p><a name="footnote_Temp_6"></a><a href="#call_footnote_Temp_6"><sup><small>3</small></sup></a> This definition of <code class=scheme><code class=scheme>eqv?</code></code>
+technically contradicts <em>R5RS</em>, but <em>R5RS</em> does not address
+strange ``numbers'' like <code class=scheme><span class=selfeval>+nan.0</span></code>.</p>
+<p><a name="footnote_Temp_7"></a><a href="#call_footnote_Temp_7"><sup><small>4</small></sup></a> The random number generator uses a
+relatively standard Unix <tt>random()</tt> implementation in its
+degree-seven polynomial mode.</p>
+<p><a name="footnote_Temp_8"></a><a href="#call_footnote_Temp_8"><sup><small>5</small></sup></a> All fields of the
+<code class=scheme>arity-at-least</code> structure type are accessible by all
+inspectors (see section&nbsp;<a href="mzscheme-Z-H-4.html#node_sec_4.5">4.5</a>).</p>
+</div>
+<div align=right class=navigation><i>[Go to <span><a href="mzscheme.html">first</a>, <a href="mzscheme-Z-H-2.html">previous</a></span><span>, <a href="mzscheme-Z-H-4.html">next</a></span> page<span>; &nbsp;&nbsp;</span><span><a href="mzscheme.html#node_toc_start">contents</a></span><span><span>; &nbsp;&nbsp;</span><a href="mzscheme-Z-H-19.html#node_index_start">index</a></span>]</i></div><p></p>
+</body>
+</html>

@@ -1,0 +1,6 @@
+<html><head><title>let*</title><h1>let*</h1></head><body><code class="scheme">(<code class="scheme"><span class="keyword">let*</span></code> ((<b>NAME</b> <b>EXPRESSION</b>) ...) <b>EXPRESSION</b>) </code><br /> The <code class="scheme"><span class="keyword">let*</span></code> expression is similar to the <code class="scheme"><span class="keyword">letrec</span></code> expression, except that the scope of the bindings is different. Like <code class="scheme"><span class="keyword">letrec</span></code>, the body expression may refer to the bindings created by the <code class="scheme"><span class="keyword">let*</span></code>. However, each binding expression (those on the right-hand sides) can refer to the preceding bindings. In addition, a name can be bound multiple times, in which case each use sees the closest preceding binding. To illustrate this, consider the following expressions and its result: <pre>(let ((a 16)
+      (a (+ a 1))
+      (a (+ a 2)))
+  a)
+19
+</pre> <br /><p><a href="index.htm">Advanced Student Language</a></p></body></html>

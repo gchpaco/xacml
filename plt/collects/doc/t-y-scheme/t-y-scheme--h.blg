@@ -1,0 +1,45 @@
+This is BibTeX, Version 0.99c (Web2C 7.4.5)
+The top-level auxiliary file: ../html/t-y-scheme--h.aux
+The style file: plain.bst
+Database file #1: t-y-scheme.bib
+You've used 33 entries,
+            2118 wiz_defined-function locations,
+            633 strings with 7920 characters,
+and the built_in function-call counts, 8558 in all, are:
+= -- 776
+> -- 353
+< -- 6
++ -- 143
+- -- 108
+* -- 387
+:= -- 1397
+add.period$ -- 88
+call.type$ -- 33
+change.case$ -- 143
+chr.to.int$ -- 0
+cite$ -- 33
+duplicate$ -- 382
+empty$ -- 817
+format.name$ -- 108
+if$ -- 1862
+int.to.chr$ -- 0
+int.to.str$ -- 33
+missing$ -- 31
+newline$ -- 156
+num.names$ -- 69
+pop$ -- 268
+preamble$ -- 1
+purify$ -- 119
+quote$ -- 0
+skip$ -- 318
+stack$ -- 0
+substring$ -- 311
+swap$ -- 80
+text.length$ -- 6
+text.prefix$ -- 0
+top$ -- 0
+type$ -- 106
+warning$ -- 0
+while$ -- 82
+width$ -- 35
+write$ -- 307

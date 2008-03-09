@@ -1,0 +1,175 @@
+\begin{theindex}
+
+  \item \rawscm{\#/return}, \expandhtmlindex{164}
+
+  \indexspace
+
+  \item A More Complicated Example, \expandhtmlindex{132}
+  \item An Example, \expandhtmlindex{130}
+
+  \indexspace
+
+  \item Basic Commands, \expandhtmlindex{12}
+  \item Butterfly Attractor, \expandhtmlindex{216}
+
+  \indexspace
+
+  \item \rawscm{change-color}, \expandhtmlindex{46}
+  \item \rawscm{clear}, \expandhtmlindex{202}
+  \item \rawscm{clear-ellipse}, \expandhtmlindex{86}
+  \item \rawscm{clear-line}, \expandhtmlindex{68}
+  \item \rawscm{clear-pixel}, \expandhtmlindex{62}
+  \item \rawscm{clear-polygon}, \expandhtmlindex{98}
+  \item \rawscm{clear-rectangle}, \expandhtmlindex{74}
+  \item \rawscm{clear-solid-ellipse}, \expandhtmlindex{92}
+  \item \rawscm{clear-solid-polygon}, \expandhtmlindex{104}
+  \item \rawscm{clear-solid-rectangle}, \expandhtmlindex{80}
+  \item \rawscm{clear-string}, \expandhtmlindex{110}
+  \item \rawscm{clear-viewport}, \expandhtmlindex{54}
+  \item \rawscm{close-graphics}, \expandhtmlindex{16}
+  \item \rawscm{close-viewport}, \expandhtmlindex{22}
+  \item Color Operations, \expandhtmlindex{38}
+  \item \rawscm{copy-viewport}, \expandhtmlindex{58}
+
+  \indexspace
+
+  \item \rawscm{default-display-is-color?}, \expandhtmlindex{48}
+  \item \rawscm{draw}, \expandhtmlindex{188}, \expandhtmlindex{234}
+  \item Draw, Clear and Flip Operations, \expandhtmlindex{50}
+  \item \rawscm{draw-ellipse}, \expandhtmlindex{84}
+  \item \rawscm{draw-line}, \expandhtmlindex{66}
+  \item \rawscm{draw-offset}, \expandhtmlindex{194}, 
+		\expandhtmlindex{240}
+  \item \rawscm{draw-pixel}, \expandhtmlindex{60}
+  \item \rawscm{draw-pixmap}, \expandhtmlindex{116}
+  \item \rawscm{draw-pixmap-posn}, \expandhtmlindex{114}
+  \item \rawscm{draw-polygon}, \expandhtmlindex{96}
+  \item \rawscm{draw-rectangle}, \expandhtmlindex{72}
+  \item \rawscm{draw-solid-ellipse}, \expandhtmlindex{90}
+  \item \rawscm{draw-solid-polygon}, \expandhtmlindex{102}
+  \item \rawscm{draw-solid-rectangle}, \expandhtmlindex{78}
+  \item \rawscm{draw-string}, \expandhtmlindex{108}
+  \item \rawscm{draw-viewport}, \expandhtmlindex{52}
+
+  \indexspace
+
+  \item \rawscm{erase}, \expandhtmlindex{190}, \expandhtmlindex{236}
+  \item \rawscm{erase-offset}, \expandhtmlindex{196}, 
+		\expandhtmlindex{242}
+
+  \indexspace
+
+  \item Fern Fractal, \expandhtmlindex{220}
+  \item \rawscm{flip-ellipse}, \expandhtmlindex{88}
+  \item \rawscm{flip-line}, \expandhtmlindex{70}
+  \item \rawscm{flip-pixel}, \expandhtmlindex{64}
+  \item \rawscm{flip-polygon}, \expandhtmlindex{100}
+  \item \rawscm{flip-rectangle}, \expandhtmlindex{76}
+  \item \rawscm{flip-solid-ellipse}, \expandhtmlindex{94}
+  \item \rawscm{flip-solid-polygon}, \expandhtmlindex{106}
+  \item \rawscm{flip-solid-rectangle}, \expandhtmlindex{82}
+  \item \rawscm{flip-string}, \expandhtmlindex{112}
+  \item \rawscm{flip-viewport}, \expandhtmlindex{56}
+
+  \indexspace
+
+  \item \rawscm{get-color-pixel}, \expandhtmlindex{34}
+  \item \rawscm{get-key-press}, \expandhtmlindex{158}
+  \item \rawscm{get-mouse-click}, \expandhtmlindex{138}
+  \item \rawscm{get-pixel}, \expandhtmlindex{32}
+  \item \rawscm{get-string-size}, \expandhtmlindex{122}
+  \item graphics
+    \subitem simple, \expandhtmlindex{8}
+  \item \File{graphics.ss}, \expandhtmlindex{10}
+  \item \scmsig{graphics:posn-less}, \expandhtmlindex{172}
+  \item \scmsig{graphics:posn}, \expandhtmlindex{174}
+  \item \rawscm{graphics@}, \expandhtmlindex{176}
+  \item \scmsig{graphics}, \expandhtmlindex{170}
+
+  \indexspace
+
+  \item \rawscm{key-value}, \expandhtmlindex{162}
+  \item Keyboard Operations, \expandhtmlindex{156}
+  \item Koch Snowflake, \expandhtmlindex{212}
+
+  \indexspace
+
+  \item \rawscm{left-mouse-click?}, \expandhtmlindex{148}
+  \item Lorenz Attractor, \expandhtmlindex{214}
+
+  \indexspace
+
+  \item \rawscm{make-posn}, \expandhtmlindex{26}
+  \item \rawscm{make-rgb}, \expandhtmlindex{40}
+  \item \rawscm{merge}, \expandhtmlindex{248}
+  \item \rawscm{middle-mouse-click?}, \expandhtmlindex{150}
+  \item Miscellaneous Libraries, \expandhtmlindex{2}
+  \item Miscellaneous Operations, \expandhtmlindex{120}
+  \item Mouse Operations, \expandhtmlindex{136}
+  \item \rawscm{mouse-click-posn}, \expandhtmlindex{146}
+  \item \rawscm{move}, \expandhtmlindex{186}, \expandhtmlindex{232}
+  \item \rawscm{move-offset}, \expandhtmlindex{192}, 
+		\expandhtmlindex{238}
+
+  \indexspace
+
+  \item \rawscm{open-graphics}, \expandhtmlindex{14}
+  \item \rawscm{open-pixmap}, \expandhtmlindex{20}
+  \item \rawscm{open-viewport}, \expandhtmlindex{18}
+
+  \indexspace
+
+  \item Peano space-filling curve, \expandhtmlindex{218}
+  \item Position Operations, \expandhtmlindex{24}
+  \item \rawscm{posn-x}, \expandhtmlindex{28}
+  \item \rawscm{posn?}, \expandhtmlindex{30}
+  \item Protecting Graphics Operations, \expandhtmlindex{134}
+
+  \indexspace
+
+  \item \rawscm{query-mouse-posn}, \expandhtmlindex{144}
+
+  \indexspace
+
+  \item \rawscm{ready-key-press}, \expandhtmlindex{160}
+  \item \rawscm{ready-mouse-click}, \expandhtmlindex{140}
+  \item \rawscm{ready-mouse-release}, \expandhtmlindex{142}
+  \item \rawscm{rgb-red}, \expandhtmlindex{42}
+  \item \rawscm{rgb?}, \expandhtmlindex{44}
+  \item \rawscm{right-mouse-click?}, \expandhtmlindex{152}
+
+  \indexspace
+
+  \item \rawscm{save-pixmap}, \expandhtmlindex{118}
+  \item Serpinski Triangle, \expandhtmlindex{210}
+  \item \rawscm{split}, \expandhtmlindex{204}
+  \item \rawscm{split*}, \expandhtmlindex{206}
+
+  \indexspace
+
+  \item \rawscm{test-pixel}, \expandhtmlindex{36}
+  \item \rawscm{tprompt}, \expandhtmlindex{208}
+  \item \rawscm{turn}, \expandhtmlindex{198}, \expandhtmlindex{200}, 
+		\expandhtmlindex{244}, \expandhtmlindex{246}
+  \item Turtles, \expandhtmlindex{178}, \expandhtmlindex{180}
+    \subitem Value, \expandhtmlindex{226}
+  \item \rawscm{turtles}, \expandhtmlindex{184}, \expandhtmlindex{230}
+  \item \File{turtles.ss}, \expandhtmlindex{182}
+
+  \indexspace
+
+  \item Unitized Graphics, \expandhtmlindex{168}
+
+  \indexspace
+
+  \item Value Turtles, \expandhtmlindex{222}, \expandhtmlindex{224}
+  \item \File{value-turtles.ss}, \expandhtmlindex{228}
+  \item viewport, \expandhtmlindex{6}
+  \item Viewport Graphics, \expandhtmlindex{4}
+  \item \rawscm{viewport->snip}, \expandhtmlindex{124}
+  \item \rawscm{viewport-dc}, \expandhtmlindex{126}
+  \item \rawscm{viewport-flush-input}, \expandhtmlindex{154}, 
+		\expandhtmlindex{166}
+  \item \rawscm{viewport-offscreen-dc}, \expandhtmlindex{128}
+
+\end{theindex}

@@ -1,0 +1,113 @@
+<!doctype html public "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!--
+
+Generated from mzlib.tex by tex2page, v 2004-09-11
+(running on MzScheme 209, unix), 
+(c) Dorai Sitaram, 
+http://www.ccs.neu.edu/~dorai/tex2page/tex2page-doc.html
+
+-->
+<head>
+<title>
+PLT MzLib: Libraries Manual
+</title>
+<link rel="stylesheet" type="text/css" href="mzlib-Z-S.css" title=default>
+<meta name=robots content="noindex,follow">
+</head>
+<body>
+<div align=right class=navigation><i>[Go to <span><a href="mzlib.html">first</a>, <a href="mzlib-Z-H-34.html">previous</a></span><span>, <a href="mzlib-Z-H-36.html">next</a></span> page<span>; &nbsp;&nbsp;</span><span><a href="mzlib.html#node_toc_start">contents</a></span><span><span>; &nbsp;&nbsp;</span><a href="mzlib-Z-H-42.html#node_index_start">index</a></span>]</i></div><p></p>
+<a name="node_chap_35"></a>
+<h1 class=chapter>
+<div class=chapterheading><a href="mzlib.html#node_toc_node_chap_35">Chapter 35</a></div><br>
+<a href="mzlib.html#node_toc_node_chap_35"><tt><strong>surrogate.ss</strong></tt>: Proxy-like Design Pattern</a></h1>
+<p><a name="node_idx_1124"></a><a name="node_idx_1126"></a> </p>
+<p>
+This library provides an abstraction for building an
+instance of the proxy design pattern. The pattern consists
+of two objects, a <em>host</em> and a <em>surrogate</em>
+object. The host object delegates method calls to its
+surrogate object. Each host has a dynamically assigned
+surrogate, so an object can completely change its behavior
+merely by changing the surrogate.</p>
+<p>
+The library provides a form, <code class=scheme><span class=variable>surrogate</span></code>:</p>
+<p>
+
+
+</p>
+<p></p>
+<p>
+
+<a name="node_idx_1128"></a><a name="node_kw_definitionsurrogate"></a><code class=scheme>(surrogate</code><tt>&nbsp;</tt><code class=scheme><span class=variable>(method-name arg-spec ...) ...</span></code><code class=scheme>)</code> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<small>S</small><small>Y</small><small>N</small><small>T</small><small>A</small><small>X</small>
+</p>
+<p>
+where 
+</p>
+<div align=left><pre class=scheme><span class=variable>arg-spec</span> <span class=selfeval>::==</span>
+ | (<span class=variable>id</span> ...)
+ | <span class=variable>id</span>
+</pre></div><p></p>
+<p>
+The surrogate form produces four values: a host mixin (a
+procedure that accepts and returns a class), a host
+interface, a surrogate class, and a surrogate interface, in
+that order.</p>
+<p>
+The host mixin adds one additional
+field, <code class=scheme><span class=variable>surrogate</span></code>, to its argument and a getter
+method, <code class=scheme><span class=variable>get-surrogate</span></code>, and a setter
+method, <code class=scheme><span class=variable>set-surrogate</span></code>, for changing the
+field. The <code class=scheme><span class=variable>set-surrogate</span></code> form accepts instances the
+class returned by the form or <code class=scheme><span class=selfeval>#f</span></code>, and updates the
+field with its argument. Then, it calls the
+<code class=scheme><span class=variable>on-disable-surrogate</span></code> on the previous value of the
+field and <code class=scheme><span class=variable>on-enable-surrogate</span></code> for the new value of
+the field. The <code class=scheme><span class=variable>get-surrogate</span></code> method returns the
+current value of the field.</p>
+<p>
+The host mixin has a single overriding method for each
+<code class=scheme><span class=variable>method-name</span></code> in the <code class=scheme><span class=variable>surrogate</span></code> form. Each of
+these methods is defined with a case-lambda with one arm for
+each
+<code class=scheme><span class=variable>arg-spec</span></code>. Each arm has the variables as arguments
+in the <code class=scheme><span class=variable>arg-spec</span></code>. The body of each method test the
+<code class=scheme><span class=variable>surrogate</span></code> field. If it is <code class=scheme><span class=selfeval>#f</span></code>, the method
+just returns the result of invoking the super method. If the
+<code class=scheme><span class=variable>surrogate</span></code> field is not <code class=scheme><span class=selfeval>#f</span></code>, the
+corresponding method of the object in the field is
+invoked. This method receives the same arguments as the
+original method, plus two extras. The extra arguments come
+at the beginning of the argument list. The first is the
+original object. The second is a procedure that calls the
+super method, <i>e.g.</i>, the method of the class that is
+passed to the mixin, with the arguments that the procedure
+receives.</p>
+<p>
+The host interface has the names <code class=scheme><span class=variable>set-surrogate</span></code>,
+<code class=scheme><span class=variable>get-surrogate</span></code>, and each of the
+<code class=scheme><span class=variable>method-name</span></code>s in the original form.</p>
+<p>
+The surrogate class has a single public method for each
+<code class=scheme><span class=variable>method-name</span></code> in the <code class=scheme><span class=variable>surrogate</span></code> form. These
+methods are invoked by classes constructed by the
+mixin. Each has a corresponding method signature, as
+described in the above paragraph. Each method just passes
+its argument along to the super procedure it receives.</p>
+<p>
+Note: if you derive a class from the surrogate class, do not
+both call the <code class=scheme><span class=variable>super</span></code> argument and the super method
+of the surrogate class itself. Only call one or the other,
+since the default methods call the <code class=scheme><span class=variable>super</span></code> argument.</p>
+<p>
+Finally, the interface contains all of the names specified
+in surrogate's argument, plus <code class=scheme><span class=variable>on-enable-surrogate</span></code> and
+<code class=scheme><span class=variable>on-disable-surrogate</span></code>. The class returned by
+<code class=scheme><span class=variable>surrogate</span></code> implements this interface.</p>
+<p>
+</p>
+<p>
+</p>
+<div align=right class=navigation><i>[Go to <span><a href="mzlib.html">first</a>, <a href="mzlib-Z-H-34.html">previous</a></span><span>, <a href="mzlib-Z-H-36.html">next</a></span> page<span>; &nbsp;&nbsp;</span><span><a href="mzlib.html#node_toc_start">contents</a></span><span><span>; &nbsp;&nbsp;</span><a href="mzlib-Z-H-42.html#node_index_start">index</a></span>]</i></div><p></p>
+</body>
+</html>

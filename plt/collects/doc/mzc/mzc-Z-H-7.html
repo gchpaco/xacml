@@ -1,0 +1,76 @@
+<!doctype html public "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!--
+
+Generated from mzc.tex by tex2page, v 2004-09-11
+(running on MzScheme 209, unix), 
+(c) Dorai Sitaram, 
+http://www.ccs.neu.edu/~dorai/tex2page/tex2page-doc.html
+
+-->
+<head>
+<title>
+PLT mzc: MzScheme Compiler Manual
+</title>
+<link rel="stylesheet" type="text/css" href="mzc-Z-S.css" title=default>
+<meta name=robots content="noindex,follow">
+</head>
+<body>
+<div align=right class=navigation><i>[Go to <span><a href="mzc.html">first</a>, <a href="mzc-Z-H-6.html">previous</a></span><span>, <a href="mzc-Z-H-8.html">next</a></span> page<span>; &nbsp;&nbsp;</span><span><a href="mzc.html#node_toc_start">contents</a></span><span><span>; &nbsp;&nbsp;</span><a href="mzc-Z-H-8.html#node_index_start">index</a></span>]</i></div><p></p>
+<a name="node_chap_7"></a>
+<h1 class=chapter>
+<div class=chapterheading><a href="mzc.html#node_toc_node_chap_7">Chapter 7</a></div><br>
+<a href="mzc.html#node_toc_node_chap_7"><tt><strong>info.ss</strong></tt> File Format</a></h1>
+<p><a name="node_idx_210"></a></p>
+<p>
+<a name="node_idx_212"></a> <a name="node_idx_214"></a> An <tt><strong>info.ss</strong></tt> file provides general information about a
+collection. The file must have the following format:
+</p>
+<div align=left><pre class=scheme>(<span class=keyword>module</span> <code class=scheme><span class=keyword>info</span></code> (<code class=scheme><span class=keyword>lib</span></code> <span class=selfeval>&quot;infotab.ss&quot;</span> <span class=selfeval>&quot;setup&quot;</span>)
+   (<span class=keyword>define</span> <span class=variable>identifier</span> <span class=variable>info-expr</span>)
+   <tt>&middot;&middot;&middot;</tt>)
+
+<span class=variable>info-expr</span> is one of
+  (<span class=keyword>quote</span> <span class=variable>datum</span>)
+  (<span class=keyword>quasiquote</span> <span class=variable>datum</span>) <span class=comment>; with <code class=scheme><span class=keyword>unquote</span></code> and <code class=scheme><span class=keyword>unquote-splicing</span></code></span>
+  (<span class=variable>info-primitive</span> <span class=variable>info-expr</span> <tt>&middot;&middot;&middot;</tt>)
+  <span class=variable>identifier</span> <span class=comment>; an identifier defined in the <code class=scheme><span class=variable>info</span></code> module</span>
+  <span class=variable>literal</span> <span class=comment>; a string, number, boolean, etc.</span>
+  (<span class=variable>string-constant</span> <span class=variable>identifier</span>) <span class=comment>; a string constant defined in </span>
+                               <span class=comment>; the string-constants collection</span>
+
+<span class=variable>info-primitive</span> is one of
+  <code class=scheme>cons</code> <code class=scheme>car</code> <code class=scheme>cdr</code> <code class=scheme>list</code>
+  <code class=scheme>list*</code> <code class=scheme>reverse</code> <code class=scheme>append</code>
+  <code class=scheme>build-path</code> <code class=scheme>collection-path</code>
+  <code class=scheme>system-library-subpath</code>
+</pre></div><p>
+For example, the following declaration is in the <tt><strong>info.ss</strong></tt>
+library of the <tt><strong>help</strong></tt> collection. It contains definitions for
+three info tags:
+</p>
+<div align=left><pre class=scheme>(<span class=keyword>module</span> <code class=scheme><span class=keyword>info</span></code> (<code class=scheme><span class=keyword>lib</span></code> <span class=selfeval>&quot;infotab.ss&quot;</span> <span class=selfeval>&quot;setup&quot;</span>)
+  (<span class=keyword>define</span> <span class=variable>name</span> <span class=selfeval>&quot;Help&quot;</span>)
+  (<span class=keyword>define</span> <span class=variable>mred-launcher-libraries</span> (<code class=scheme>list</code> <span class=selfeval>&quot;help.ss&quot;</span>))
+  (<span class=keyword>define</span> <span class=variable>mred-launcher-names</span> (<code class=scheme>list</code> <span class=selfeval>&quot;Help Desk&quot;</span>)))
+</pre></div><p>
+The <tt><strong>setup</strong></tt> collection's <tt><strong>getinfo.ss</strong></tt> library defines a
+<code class=scheme>get-info</code> function for extracting field values from a
+collection's <tt><strong>info.ss</strong></tt> file. See the <tt><strong>setup</strong></tt> collection's
+documentation for details.</p>
+<p>
+</p>
+<p>
+
+
+
+
+</p>
+<p>
+
+</p>
+<p>
+</p>
+<div align=right class=navigation><i>[Go to <span><a href="mzc.html">first</a>, <a href="mzc-Z-H-6.html">previous</a></span><span>, <a href="mzc-Z-H-8.html">next</a></span> page<span>; &nbsp;&nbsp;</span><span><a href="mzc.html#node_toc_start">contents</a></span><span><span>; &nbsp;&nbsp;</span><a href="mzc-Z-H-8.html#node_index_start">index</a></span>]</i></div><p></p>
+</body>
+</html>

@@ -1,0 +1,421 @@
+<!doctype html public "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!--
+
+Generated from mzlib.tex by tex2page, v 2004-09-11
+(running on MzScheme 209, unix), 
+(c) Dorai Sitaram, 
+http://www.ccs.neu.edu/~dorai/tex2page/tex2page-doc.html
+
+-->
+<head>
+<title>
+PLT MzLib: Libraries Manual
+</title>
+<link rel="stylesheet" type="text/css" href="mzlib-Z-S.css" title=default>
+<meta name=robots content="noindex,follow">
+</head>
+<body>
+<div align=right class=navigation><i>[Go to <span><a href="mzlib.html">first</a>, <a href="mzlib-Z-H-16.html">previous</a></span><span>, <a href="mzlib-Z-H-18.html">next</a></span> page<span>; &nbsp;&nbsp;</span><span><a href="mzlib.html#node_toc_start">contents</a></span><span><span>; &nbsp;&nbsp;</span><a href="mzlib-Z-H-42.html#node_index_start">index</a></span>]</i></div><p></p>
+<a name="node_chap_17"></a>
+<h1 class=chapter>
+<div class=chapterheading><a href="mzlib.html#node_toc_node_chap_17">Chapter 17</a></div><br>
+<a href="mzlib.html#node_toc_node_chap_17"><tt><strong>etc.ss</strong></tt>: Useful Procedures and Syntax</a></h1>
+<p><a name="node_idx_596"></a><a name="node_idx_598"></a></p>
+<p>
+
+
+</p>
+<p></p>
+<p>
+
+<a name="node_idx_600"></a><a name="node_kw_definitionboolean=_Q_"></a><code class=scheme>(boolean=?</code><tt>&nbsp;</tt><code class=scheme><span class=variable>bool1 bool2</span></code><code class=scheme>)</code> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<small>P</small><small>R</small><small>O</small><small>C</small><small>E</small><small>D</small><small>U</small><small>R</small><small>E</small>
+</p>
+<p>
+Returns <code class=scheme><span class=selfeval>#t</span></code> if <code class=scheme><span class=variable>bool1</span></code> and <code class=scheme><span class=variable>bool2</span></code> are both <code class=scheme><span class=selfeval>#t</span></code> or
+both <code class=scheme><span class=selfeval>#f</span></code>, and returns <code class=scheme><span class=selfeval>#f</span></code> otherwise. If either
+<code class=scheme><span class=variable>bool1</span></code> or <code class=scheme><span class=variable>bool2</span></code> is not a Boolean, the
+<a name="node_idx_602"></a><code class=scheme>exn:fail:contract</code> exception is raised.</p>
+<p>
+
+
+</p>
+<p></p>
+<p>
+
+<a name="node_idx_604"></a><a name="node_kw_definitionbuild-list"></a><code class=scheme>(build-list</code><tt>&nbsp;</tt><code class=scheme><span class=variable>n f</span></code><code class=scheme>)</code> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<small>P</small><small>R</small><small>O</small><small>C</small><small>E</small><small>D</small><small>U</small><small>R</small><small>E</small>
+</p>
+<p>
+Creates a list of <code class=scheme><span class=variable>n</span></code> elements by applying <code class=scheme><span class=variable>f</span></code> to the integers
+from <code class=scheme>0</code> to <code class=scheme><span class=variable>n</span></code> <tt>-</tt> <code class=scheme>1</code> in order, where <code class=scheme><span class=variable>n</span></code> is a
+non-negative integer. If <code class=scheme><span class=variable>r</span></code> is the resulting list, <code class=scheme>(<code class=scheme>list-ref</code> <span class=variable>r</span> <span class=variable>i</span>)</code> is
+<code class=scheme>(<code class=scheme><span class=variable>f</span></code> <code class=scheme><span class=variable>i</span></code>)</code>.</p>
+<p>
+
+
+</p>
+<p></p>
+<p>
+
+<a name="node_idx_606"></a><a name="node_kw_definitionbuild-string"></a><code class=scheme>(build-string</code><tt>&nbsp;</tt><code class=scheme><span class=variable>n f</span></code><code class=scheme>)</code> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<small>P</small><small>R</small><small>O</small><small>C</small><small>E</small><small>D</small><small>U</small><small>R</small><small>E</small>
+</p>
+<p>
+Creates a string of length <code class=scheme><span class=variable>n</span></code> by applying <code class=scheme><span class=variable>f</span></code> to the integers
+from <code class=scheme>0</code> to <code class=scheme><span class=variable>n</span></code> <tt>-</tt> <code class=scheme>1</code> in order, where <code class=scheme><span class=variable>n</span></code> is a
+non-negative integer and <code class=scheme><span class=variable>f</span></code> returns a character for the <code class=scheme><span class=variable>n</span></code>
+invocations. If <code class=scheme><span class=variable>r</span></code> is the resulting string, <code class=scheme>(<code class=scheme>string-ref</code> <span class=variable>r</span> <span class=variable>i</span>)</code>
+is <code class=scheme>(<code class=scheme><span class=variable>f</span></code> <code class=scheme><span class=variable>i</span></code>)</code>.</p>
+<p>
+
+
+</p>
+<p></p>
+<p>
+
+<a name="node_idx_608"></a><a name="node_kw_definitionbuild-vector"></a><code class=scheme>(build-vector</code><tt>&nbsp;</tt><code class=scheme><span class=variable>n f</span></code><code class=scheme>)</code> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<small>P</small><small>R</small><small>O</small><small>C</small><small>E</small><small>D</small><small>U</small><small>R</small><small>E</small>
+</p>
+<p>
+Creates a vector of <code class=scheme><span class=variable>n</span></code> elements by applying <code class=scheme><span class=variable>f</span></code> to the
+integers from <code class=scheme>0</code> to <code class=scheme><span class=variable>n</span></code> <tt>-</tt> <code class=scheme>1</code> in order,
+where <code class=scheme><span class=variable>n</span></code> is a non-negative integer. If <code class=scheme><span class=variable>r</span></code> is the resulting
+vector, <code class=scheme>(<code class=scheme>vector-ref</code> <span class=variable>r</span> <span class=variable>i</span>)</code> is <code class=scheme>(<code class=scheme><span class=variable>f</span></code> <code class=scheme><span class=variable>i</span></code>)</code>.</p>
+<p>
+
+
+</p>
+<p></p>
+<p>
+
+<a name="node_idx_610"></a><a name="node_kw_definitioncompose"></a><code class=scheme>(compose</code><tt>&nbsp;</tt><code class=scheme><span class=variable>f</span></code><tt>&nbsp;</tt><tt>&middot;&middot;&middot;</tt><sup>1</sup><code class=scheme>)</code> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<small>P</small><small>R</small><small>O</small><small>C</small><small>E</small><small>D</small><small>U</small><small>R</small><small>E</small>
+</p>
+<p>
+Returns a procedure that composes the given functions, applying the
+last <code class=scheme><span class=variable>f</span></code> first and the first <code class=scheme><span class=variable>f</span></code> last. The composed functions
+can consume and produce any number of values, as long as each
+function produces as many values as the preceding function consumes.</p>
+<p>
+For example, <code class=scheme>(compose <code class=scheme><span class=variable>f</span></code> <code class=scheme><span class=variable>g</span></code>)</code> returns the equivalent
+of <code class=scheme>(<span class=keyword>lambda</span> <span class=variable>l</span> (<code class=scheme>call-with-values</code> (<span class=keyword>lambda</span> () (<code class=scheme>apply</code> <span class=variable>g</span> <span class=variable>l</span>)) <span class=variable>f</span>))</code>.</p>
+<p>
+
+<a name="node_kw_definitiondefine-syntax-set"></a><a name="node_idx_612"></a>
+</p>
+<p></p>
+<p>
+
+<code class=scheme>(<code class=scheme><span class=keyword>define-syntax-set</span></code> <code class=scheme><span class=variable><code class=scheme>(</code>identifier <tt>&middot;&middot;&middot;</tt><code class=scheme>)</code> defn <tt>&middot;&middot;&middot;</tt></span></code>)</code> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<small>S</small><small>Y</small><small>N</small><small>T</small><small>A</small><small>X</small>
+</p>
+<p>
+This form is similar to <code class=scheme><span class=keyword>define-syntaxes</span></code>, but instead of a
+single body expression, a sequence of definitions follows the
+sequence of defined identifiers. For each <code class=scheme><span class=variable>identifier</span></code>, the
+<code class=scheme><span class=variable>defn</span></code>s should include a definition for
+<code class=scheme><code class=scheme><span class=variable>identifier</span></code>/proc</code>.  The value for
+<code class=scheme><code class=scheme><span class=variable>identifier</span></code>/proc</code> is used as the (expansion-time) value
+for <code class=scheme><span class=variable>identifier</span></code>.</p>
+<p>
+The <code class=scheme><span class=keyword>define-syntax-set</span></code> form is especially useful for defining
+a set of syntax transformers that share helper functions.</p>
+<p>
+Example:
+</p>
+<div align=left><pre class=scheme>(<span class=keyword>define-syntax-set</span> (<span class=variable>let-current-continuation</span> <span class=variable>let-current-escape-continuation</span>)
+  (<span class=keyword>define</span> (<span class=variable>mk</span> <span class=variable>call-id</span>)
+     (<span class=keyword>lambda</span> (<span class=variable>stx</span>)
+       (<span class=keyword>syntax-case</span> <span class=variable>stx</span> ()
+         [(<span class=variable>_</span> <span class=variable>id</span> <span class=variable>body1</span> <span class=variable>body</span> ...) 
+          (<span class=keyword>with-syntax</span> ([<span class=variable>call</span> <span class=variable>call-id</span>])
+            (<span class=keyword>syntax</span> (<span class=variable>call</span> (<span class=keyword>lambda</span> (<span class=variable>id</span>) <span class=variable>body1</span> <span class=variable>body</span> ...))))])))
+  (<span class=keyword>define</span> <span class=variable>let-current-continuation/proc</span> (<span class=variable>mk</span> (<span class=keyword>quote-syntax</span> <code class=scheme>call/cc</code>)))
+  (<span class=keyword>define</span> <span class=variable>let-current-escape-continuation/proc</span> (<span class=variable>mk</span> (<span class=keyword>quote-syntax</span> <code class=scheme>call/ec</code>))))
+</pre></div><p></p>
+<p>
+
+<a name="node_kw_definitionevcase"></a><a name="node_idx_614"></a>
+</p>
+<p></p>
+<p>
+
+<code class=scheme>(<code class=scheme><span class=keyword>evcase</span></code> <code class=scheme><span class=variable>key-expr <code class=scheme>(</code>value-expr body-expr <tt>&middot;&middot;&middot;</tt><code class=scheme>)</code> <tt>&middot;&middot;&middot;</tt><sup>1</sup></span></code>)</code> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<small>S</small><small>Y</small><small>N</small><small>T</small><small>A</small><small>X</small>
+</p>
+<p>
+The <code class=scheme>evcase</code> form is similar to <code class=scheme>case</code>, except that expressions
+are provided in each clause instead of a sequence of data. After
+<code class=scheme><span class=variable>key-expr</span></code> is evaluated, each <code class=scheme><span class=variable>value-expr</span></code> is evaluated until
+a value is found that is <code class=scheme>eqv?</code> to the key value; when a matching
+value is found, the corresponding <code class=scheme><span class=variable>body-expr</span></code>s are evaluated and
+the value(s) for the last is the result of the entire <code class=scheme>evcase</code>
+expression.</p>
+<p>
+A <code class=scheme><span class=variable>value-expr</span></code> can be the special identifier <code class=scheme>else</code>. This
+identifier is recognized as in <code class=scheme>case</code> (see section&nbsp;<a href="../mzscheme/mzscheme-Z-H-2.html#node_sec_2.3">2.3</a> in <a href="../mzscheme/mzscheme.html"><i>PLT MzScheme: Language Manual</i></a>).</p>
+<p>
+
+<a name="node_kw_definitionfalse"></a>
+</p>
+<p></p>
+<p>
+
+<a name="node_idx_616"></a><code class=scheme>false</code> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<small>B</small><small>O</small><small>O</small><small>L</small><small>E</small><small>A</small><small>N</small>
+</p>
+<p>
+Boolean false.</p>
+<p>
+
+
+</p>
+<p></p>
+<p>
+
+<a name="node_idx_618"></a><a name="node_kw_definitionidentity"></a><code class=scheme>(identity</code><tt>&nbsp;</tt><code class=scheme><span class=variable>v</span></code><code class=scheme>)</code> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<small>P</small><small>R</small><small>O</small><small>C</small><small>E</small><small>D</small><small>U</small><small>R</small><small>E</small>
+</p>
+<p>
+Returns <code class=scheme><span class=variable>v</span></code>.</p>
+<p>
+
+<a name="node_kw_definitionlet+"></a><a name="node_idx_620"></a>
+</p>
+<p></p>
+<p>
+
+<code class=scheme>(<code class=scheme><span class=keyword>let+</span></code> <code class=scheme><span class=variable>clause body-expr <tt>&middot;&middot;&middot;</tt><sup>1</sup></span></code>)</code> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<small>S</small><small>Y</small><small>N</small><small>T</small><small>A</small><small>X</small>
+</p>
+<p>
+A new binding construct that specifies scoping on a per-binding basis
+instead of a per-expression basis.  It helps eliminate
+rightward-drift in programs.  It looks similar to <code class=scheme>let</code>, except
+each clause has an additional keyword tag before the binding
+variables.</p>
+<p>
+Each <code class=scheme><span class=variable>clause</span></code> has one of the following forms:
+</p>
+<ul><p>
+</p>
+<li><p><code class=scheme>(<code class=scheme><span class=keyword>val</span></code> <span class=variable>target</span> <span class=variable>expr</span>)</code> binds <code class=scheme><span class=variable>target</span></code>
+non-recursively to <code class=scheme><span class=variable>expr</span></code>.</p>
+<p>
+</p>
+<li><p><code class=scheme>(<span class=variable>rec</span> <span class=variable>target</span> <span class=variable>expr</span>)</code> binds <code class=scheme><span class=variable>target</span></code> recursively to
+<code class=scheme><span class=variable>expr</span></code>.</p>
+<p>
+</p>
+<li><p><code class=scheme>(<code class=scheme><span class=keyword>vals</span></code> (<span class=variable>target</span> <span class=variable>expr</span>) <tt>&middot;&middot;&middot;</tt>)</code> the
+<code class=scheme><span class=variable>target</span></code>s are bound to the <code class=scheme><span class=variable>expr</span></code>s. The environment of the
+<code class=scheme><span class=variable>expr</span></code>s is the environment active before this clause.</p>
+<p>
+</p>
+<li><p><code class=scheme>(<code class=scheme><span class=keyword>recs</span></code> (<span class=variable>variable</span> <span class=variable>expr</span>) <tt>&middot;&middot;&middot;</tt>)</code> the <code class=scheme><span class=variable>targets</span></code>s are
+bound to the <code class=scheme><span class=variable>expr</span></code>s. The environment of the <code class=scheme><span class=variable>expr</span></code>s includes
+all of the <code class=scheme><span class=variable>targets</span></code>s.</p>
+<p>
+</p>
+<li><p><code class=scheme>(<span class=variable>_</span> <span class=variable>expr</span> <tt>&middot;&middot;&middot;</tt>)</code> evaluates the <code class=scheme><span class=variable>expr</span></code>s without
+binding any variables.</p>
+<p>
+</p>
+</ul><p></p>
+<p>
+The clauses bind left-to-right. Each <code class=scheme><span class=variable>target</span></code> above can either be
+an identifier or <code class=scheme>(<code class=scheme><span class=keyword>values</span></code> <span class=variable>variable</span> <tt>&middot;&middot;&middot;</tt>)</code>. In the latter
+case, multiple values returned by the corresponding expression are
+bound to the multiple variables.</p>
+<p>
+Examples:
+</p>
+<div align=left><pre class=scheme>(<span class=keyword>let+</span> ([<code class=scheme><span class=keyword>val</span></code> (<code class=scheme><span class=keyword>values</span></code> <span class=variable>x</span> <span class=variable>y</span>) (<code class=scheme>values</code> <span class=selfeval>1</span> <span class=selfeval>2</span>)])
+   (<code class=scheme>list</code> <span class=variable>x</span> <span class=variable>y</span>)) <span class=comment>; =&gt; <code class=schemeresponse><span class=keyword>'</span>(<span class=selfeval>1</span> <span class=selfeval>2</span>)</code></span>
+
+(<span class=keyword>let</span> ([<span class=variable>x</span> <span class=selfeval>1</span>])
+   (<span class=keyword>let+</span> ([<code class=scheme><span class=keyword>val</span></code> <span class=variable>x</span> <span class=selfeval>3</span>]
+          [<code class=scheme><span class=keyword>val</span></code> <span class=variable>y</span> <span class=variable>x</span>])
+      <span class=variable>y</span>)) <span class=comment>; =&gt; <code class=schemeresponse><span class=selfeval>3</span></code></span>
+</pre></div><p></p>
+<p>
+
+<a name="node_kw_definitionlocal"></a><a name="node_idx_622"></a>
+</p>
+<p></p>
+<p>
+
+<code class=scheme>(<code class=scheme><span class=keyword>local</span></code> <code class=scheme><span class=variable><code class=scheme>(</code>definition <tt>&middot;&middot;&middot;</tt><code class=scheme>)</code> body-expr <tt>&middot;&middot;&middot;</tt><sup>1</sup></span></code>)</code> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<small>S</small><small>Y</small><small>N</small><small>T</small><small>A</small><small>X</small>
+</p>
+<p>
+This is a binding form similar to <code class=scheme><span class=keyword>letrec</span></code>, except that each
+<code class=scheme><span class=variable>definition</span></code> is a <code class=scheme><span class=keyword>define-values</span></code> expression (after
+partial macro expansion). The <code class=scheme><span class=variable>body-expr</span></code>s are evaluated in the
+lexical scope of these definitions.</p>
+<p>
+
+
+</p>
+<p></p>
+<p>
+
+<a name="node_idx_624"></a><a name="node_kw_definitionloop-until"></a><code class=scheme>(loop-until</code><tt>&nbsp;</tt><code class=scheme><span class=variable>start done? next f</span></code><code class=scheme>)</code> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<small>P</small><small>R</small><small>O</small><small>C</small><small>E</small><small>D</small><small>U</small><small>R</small><small>E</small>
+</p>
+<p>
+Repeatedly invokes the <code class=scheme><span class=variable>f</span></code> procedure until the
+<code class=scheme><span class=variable>done?</span></code> procedure returns <code class=scheme><span class=selfeval>#t</span></code>. The procedure is
+best described by its implementation:</p>
+<p>
+</p>
+<div align=left><pre class=scheme>(<span class=keyword>define</span> <code class=scheme>loop-until</code>
+  (<span class=keyword>lambda</span> (<span class=variable>start</span> <span class=variable>done?</span> <span class=variable>next</span> <span class=variable>f</span>)
+    (<span class=keyword>let</span> <span class=variable>loop</span> ([<span class=variable>i</span> <span class=variable>start</span>])
+      (<span class=keyword>unless</span> (<span class=variable>done?</span> <span class=variable>i</span>)
+        (<span class=variable>f</span> <span class=variable>i</span>)
+        (<span class=variable>loop</span> (<span class=variable>next</span> <span class=variable>i</span>))))))
+</pre></div><p></p>
+<p>
+
+
+</p>
+<p></p>
+<p>
+
+<a name="node_idx_626"></a><a name="node_kw_definitionnamespace-defined_Q_"></a><code class=scheme>(namespace-defined?</code><tt>&nbsp;</tt><code class=scheme><span class=variable>symbol</span></code><code class=scheme>)</code> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<small>P</small><small>R</small><small>O</small><small>C</small><small>E</small><small>D</small><small>U</small><small>R</small><small>E</small>
+</p>
+<p>
+Returns <code class=scheme><span class=selfeval>#t</span></code> if <code class=scheme><span class=variable>namespace-variable-value</span></code> would
+return a value for <code class=scheme><span class=variable>symbol</span></code>, <code class=scheme><span class=selfeval>#f</span></code> otherwise. See
+section&nbsp;<a href="../mzscheme/mzscheme-Z-H-8.html#node_sec_8.2">8.2</a> in <a href="../mzscheme/mzscheme.html"><i>PLT MzScheme: Language Manual</i></a> for further information.</p>
+<p>
+
+<a name="node_kw_definitionnand"></a><a name="node_idx_628"></a>
+</p>
+<p></p>
+<p>
+
+<code class=scheme>(<code class=scheme><span class=keyword>nand</span></code> <code class=scheme><span class=variable>expr <tt>&middot;&middot;&middot;</tt></span></code>)</code> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<small>S</small><small>Y</small><small>N</small><small>T</small><small>A</small><small>X</small>
+</p>
+<p>
+Returns <code class=scheme>(<code class=scheme>not</code> (<span class=keyword>and</span> <span class=variable>expr</span> <tt>&middot;&middot;&middot;</tt>))</code>.</p>
+<p>
+
+<a name="node_kw_definitionnor"></a><a name="node_idx_630"></a>
+</p>
+<p></p>
+<p>
+
+<code class=scheme>(<code class=scheme><span class=keyword>nor</span></code> <code class=scheme><span class=variable>expr <tt>&middot;&middot;&middot;</tt></span></code>)</code> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<small>S</small><small>Y</small><small>N</small><small>T</small><small>A</small><small>X</small>
+</p>
+<p>
+Returns <code class=scheme>(<code class=scheme>not</code> (<span class=keyword>or</span> <span class=variable>expr</span> <tt>&middot;&middot;&middot;</tt>))</code>.</p>
+<p>
+
+<a name="node_kw_definitionopt-lambda"></a><a name="node_idx_632"></a>
+</p>
+<p></p>
+<p>
+
+<code class=scheme>(<code class=scheme><span class=keyword>opt-lambda</span></code> <code class=scheme><span class=variable>formals body-expr <tt>&middot;&middot;&middot;</tt><sup>1</sup></span></code>)</code> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<small>S</small><small>Y</small><small>N</small><small>T</small><small>A</small><small>X</small>
+</p>
+<p>
+The <code class=scheme>opt-lambda</code> form is like <code class=scheme>lambda</code>, except that default
+values are assigned to arguments (C++-style). Default values are
+defined in the <code class=scheme><span class=variable>formals</span></code> list by replacing each <code class=scheme><span class=variable>variable</span></code> by
+<code class=scheme>[<code class=scheme><span class=variable>variable</span></code> <code class=scheme><span class=variable>default-value-expression</span></code>]</code>. If an variable
+has a default value expression, then all (non-aggregate) variables
+after it must have default value expressions. A final aggregate
+variable can be used as in <code class=scheme>lambda</code>, but it cannot be given a
+default value. Each default value expression is evaluated only if it
+is needed. The environment of each default value expression includes
+the preceding arguments.</p>
+<p>
+For example:
+</p>
+<div align=left><pre class=scheme>(<span class=keyword>define</span> <span class=variable>f</span>
+  (<span class=keyword>opt-lambda</span> (<span class=variable>a</span> [<span class=variable>b</span> (<code class=scheme>add1</code> <span class=variable>a</span>)] . <span class=variable>c</span>)
+     ...))
+</pre></div><p>
+In the example, <code class=scheme>f</code> is a procedure which takes at least one
+argument. If a second argument is specified, it is the value of
+<code class=scheme><span class=variable>b</span></code>, otherwise <code class=scheme><span class=variable>b</span></code> is <code class=scheme>(<code class=scheme>add1</code> <span class=variable>a</span>)</code>. If more than two
+arguments are specified, then the extra arguments are placed in a new
+list that is the value of <code class=scheme><span class=variable>c</span></code>.</p>
+<p>
+
+<a name="node_kw_definitionrecur"></a><a name="node_idx_634"></a>
+</p>
+<p></p>
+<p>
+
+<code class=scheme>(<code class=scheme><span class=keyword>recur</span></code> <code class=scheme><span class=variable>name bindings body-expr <tt>&middot;&middot;&middot;</tt><sup>1</sup></span></code>)</code> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<small>S</small><small>Y</small><small>N</small><small>T</small><small>A</small><small>X</small>
+</p>
+<p>
+This is equivalent to a named <code class=scheme><span class=keyword>let</span></code>: <code class=scheme>(<span class=keyword>let</span> <span class=variable>name</span> <span class=variable>bindings</span> <span class=variable>body-expr</span> <tt>&middot;&middot;&middot;</tt><sup>1</sup>)</code>.</p>
+<p>
+
+<a name="node_kw_definitionrec"></a><a name="node_idx_636"></a>
+</p>
+<p></p>
+<p>
+
+<code class=scheme>(<code class=scheme><span class=keyword>rec</span></code> <code class=scheme><span class=variable>name value-expr</span></code>)</code> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<small>S</small><small>Y</small><small>N</small><small>T</small><small>A</small><small>X</small>
+</p>
+<p>
+This is equivalent to a <code class=scheme><span class=keyword>letrec</span></code> expression that returns its
+binding: <code class=scheme>(<span class=keyword>letrec</span> ((<span class=variable>name</span> <span class=variable>value-expr</span>)) <span class=variable>name</span>)</code>.</p>
+<p>
+
+
+</p>
+<p></p>
+<p>
+
+<a name="node_idx_638"></a><a name="node_kw_definitionsymbol=_Q_"></a><code class=scheme>(symbol=?</code><tt>&nbsp;</tt><code class=scheme><span class=variable>symbol1 symbol2</span></code><code class=scheme>)</code> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<small>P</small><small>R</small><small>O</small><small>C</small><small>E</small><small>D</small><small>U</small><small>R</small><small>E</small>
+</p>
+<p>
+Returns <code class=scheme><span class=selfeval>#t</span></code> if <code class=scheme><span class=variable>symbol1</span></code> and <code class=scheme><span class=variable>symbol2</span></code> are equivalent
+(as determined by <code class=scheme>eq?</code>), <code class=scheme><span class=selfeval>#f</span></code> otherwise. If either
+<code class=scheme><span class=variable>symbol1</span></code> or <code class=scheme><span class=variable>symbol2</span></code> is not a symbol, the
+<a name="node_idx_640"></a><code class=scheme>exn:fail:contract</code> exception is raised.</p>
+<p>
+
+<a name="node_kw_definitionthis-expression-source-directory"></a><a name="node_idx_642"></a>
+</p>
+<p></p>
+<p>
+
+<code class=scheme>(<code class=scheme><span class=keyword>this-expression-source-directory</span></code>)</code> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<small>S</small><small>Y</small><small>N</small><small>T</small><small>A</small><small>X</small>
+</p>
+<p>
+Expands to a an expression that evaluates to the name of the directory of the
+file containing the source expression.  The source expression's file is
+determined through source location information associated with the syntax if
+it is present.  Otherwise, <code class=scheme>current-load-relative-directory</code> is used if
+it is not <code class=scheme><span class=selfeval>#f</span></code>, and <code class=scheme>current-directory</code> is used if all else
+fails.  The expression is a simple string, unless the directory is in the PLT
+home, which will make an expression that uses `<code class=scheme><span class=variable>plthome</span></code>' to get the
+PLT home path determined at runtime, therefore not hard-wiring the path to the
+resulting syntax.</p>
+<p>
+
+<a name="node_kw_definitiontrue"></a>
+</p>
+<p></p>
+<p>
+
+<a name="node_idx_644"></a><code class=scheme>true</code> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<small>B</small><small>O</small><small>O</small><small>L</small><small>E</small><small>A</small><small>N</small>
+</p>
+<p>
+Boolean true.</p>
+<p>
+
+<a name="node_kw_definitionhash-table"></a><a name="node_idx_646"></a>
+</p>
+<p></p>
+<p>
+
+<code class=scheme>(<code class=scheme><span class=keyword>hash-table</span></code> <code class=scheme><span class=variable>(key value) <tt>...</tt></span></code>)</code> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<small>S</small><small>Y</small><small>N</small><small>T</small><small>A</small><small>X</small>
+</p>
+<p>
+This creates a new hash-table that maps each of the keys to
+the values.</p>
+<p>
+</p>
+<p>
+</p>
+<div align=right class=navigation><i>[Go to <span><a href="mzlib.html">first</a>, <a href="mzlib-Z-H-16.html">previous</a></span><span>, <a href="mzlib-Z-H-18.html">next</a></span> page<span>; &nbsp;&nbsp;</span><span><a href="mzlib.html#node_toc_start">contents</a></span><span><span>; &nbsp;&nbsp;</span><a href="mzlib-Z-H-42.html#node_index_start">index</a></span>]</i></div><p></p>
+</body>
+</html>

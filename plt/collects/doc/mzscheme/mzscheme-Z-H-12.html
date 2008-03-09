@@ -1,0 +1,2093 @@
+<!doctype html public "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!--
+
+Generated from mzscheme.tex by tex2page, v 2004-09-11
+(running on MzScheme 209, unix), 
+(c) Dorai Sitaram, 
+http://www.ccs.neu.edu/~dorai/tex2page/tex2page-doc.html
+
+-->
+<head>
+<title>
+PLT MzScheme: Language Manual
+</title>
+<link rel="stylesheet" type="text/css" href="mzscheme-Z-S.css" title=default>
+<meta name=robots content="noindex,follow">
+</head>
+<body>
+<div align=right class=navigation><i>[Go to <span><a href="mzscheme.html">first</a>, <a href="mzscheme-Z-H-11.html">previous</a></span><span>, <a href="mzscheme-Z-H-13.html">next</a></span> page<span>; &nbsp;&nbsp;</span><span><a href="mzscheme.html#node_toc_start">contents</a></span><span><span>; &nbsp;&nbsp;</span><a href="mzscheme-Z-H-19.html#node_index_start">index</a></span>]</i></div><p></p>
+<a name="node_chap_12"></a>
+<h1 class=chapter>
+<div class=chapterheading><a href="mzscheme.html#node_toc_node_chap_12">Chapter 12</a></div><br>
+<a href="mzscheme.html#node_toc_node_chap_12">Syntax and Macros</a></h1>
+<p><a name="node_idx_2018"></a></p>
+<p>
+<a name="node_idx_2020"></a><a name="node_idx_2022"></a>
+MzScheme supports the <em>R5RS</em> <code class=scheme><span class=keyword>define-syntax</span></code>,
+<code class=scheme><span class=keyword>let-syntax</span></code>, and <code class=scheme><span class=keyword>letrec-syntax</span></code> forms with
+<code class=scheme><span class=keyword>syntax-rules</span></code>, with minor pattern and template extensions
+described in section&nbsp;<a href="#node_sec_12.1">12.1</a>.</p>
+<p>
+<a name="node_idx_2024"></a><a name="node_idx_2026"></a>
+In addition to <code class=scheme><span class=keyword>syntax-rules</span></code>, MzScheme supports macros that
+perform arbitrary transformations on syntax.  In particular, a
+<strong>transformer expression</strong>  --  the right-hand side of a
+<code class=scheme><span class=keyword>define-syntax</span></code>, <code class=scheme><span class=keyword>let-syntax</span></code>, or
+<code class=scheme><span class=keyword>letrec-syntax</span></code> binding  --  can be an arbitrary expression,
+and it is evaluated in a <strong>transformer environment</strong>. When the
+expression produces a procedure, it is associated as a syntax
+transformer to the identifier bound by <code class=scheme><span class=keyword>define-syntax</span></code>,
+<code class=scheme><span class=keyword>let-syntax</span></code>, or <code class=scheme><span class=keyword>letrec-syntax</span></code>. This more general,
+mostly hygienic macro system is based on <code class=scheme><span class=keyword>syntax-case</span></code> by
+<a name="node_idx_2028"></a>Dybvig, <a name="node_idx_2030"></a>Hieb, and
+<a name="node_idx_2032"></a>Bruggeman (see ``Syntactic abstraction in
+Scheme'' in <i>Lisp and Symbolic Computation</i>, December 1993).</p>
+<p>
+A transformer procedure consumes a syntax object and produces a new
+syntax object. A syntax object encodes S-expression structure, but
+also includes source-location information and lexical-binding
+information for each element within the S-expression. A syntax object
+is a first-class value, and it can exist at run-time. However, syntax
+objects are more typically used at syntax-expansion time  --  which is
+the run-time of a transformer procedure.<a name="call_footnote_Temp_35"></a><a href="#footnote_Temp_35"><sup><small>31</small></sup></a></p>
+<p>
+<a name="node_idx_2034"></a>
+Unlike traditional <code class=scheme><span class=keyword>defmacro</span></code> systems, MzScheme keeps the
+top-level transformer environment separate from the normal top-level
+environment. The environments are separated because the expressions
+in the different environments are evaluated at different times
+(transformer expressions are evaluated at syntax-expansion time,
+while normal expressions are evaluated at run time). Separating each
+environment ensures that compilation and analysis tools can process
+programs properly. See section&nbsp;<a href="#node_sec_12.3.3">12.3.3</a> for more information.</p>
+<p>
+Also unlike traditional macro systems, a transformer procedure is
+invoked whenever its identifier is used in an expression position,
+not in application positions only. Even more generally, a transformer
+expression might not produce a procedure value, in which case the
+non-procedure is associated to its identifier as a generic
+expansion-time value. For example, a unit signature (see
+Chapter&nbsp;<a href="../mzlib/mzlib-Z-H-41.html#node_chap_41">41</a>
+in <a href="../mzlib/mzlib.html"><i>PLT MzLib: Libraries Manual</i></a>) is associated to an identifier
+through an expansion-time value. See section&nbsp;<a href="#node_sec_12.6">12.6</a> for more
+information on transformer applications and expansion-time values.</p>
+<p>
+</p>
+<p>
+</p>
+<a name="node_sec_12.1"></a>
+<h2><a href="mzscheme.html#node_toc_node_sec_12.1">12.1&nbsp;&nbsp;<code class=scheme><span class=keyword>syntax-rules</span></code> Extensions</a></h2>
+<p><a name="node_idx_2036"></a></p>
+<p>
+MzScheme extends the pattern language for <a name="node_idx_2038"></a><code class=scheme><span class=keyword>syntax-rules</span></code> so
+that a pattern of the form
+</p>
+<div align=left><pre class=scheme>(... <span class=variable>pattern</span>)
+</pre></div><p>
+is equivalent to <code class=scheme><span class=variable>pattern</span></code> where <a name="node_idx_2040"></a> <code class=scheme>...</code> is
+treated like any other identifier. Similarly, a template of the form
+</p>
+<div align=left><pre class=scheme>(... <span class=variable>template</span>)
+</pre></div><p>
+is equivalent to <code class=scheme><span class=variable>template</span></code> where <code class=scheme>...</code> is treated like any
+other identifier.</p>
+<p>
+In a pattern, additional patterns can follow <code class=scheme>...</code>, but only one
+<code class=scheme>...</code> can appear in a sequence:
+</p>
+<div align=left><pre class=scheme>(<span class=variable>pattern</span> <tt>&middot;&middot;&middot;</tt><sup>1</sup> ... <span class=variable>pattern</span> <tt>&middot;&middot;&middot;</tt>)
+</pre></div><p>
+Furthermore, a sequence containing <code class=scheme>...</code> can end with a dotted
+pair:
+</p>
+<div align=left><pre class=scheme>(<span class=variable>pattern</span> <tt>&middot;&middot;&middot;</tt><sup>1</sup> ... <span class=variable>pattern</span> <tt>&middot;&middot;&middot;</tt> . <span class=variable>pattern</span>)
+</pre></div><p>
+but in this case, the final <code class=scheme><span class=variable>pattern</span></code> is never matched to a
+syntactic list.</p>
+<p>
+A template element consists of any number of <code class=scheme>...</code>s after a
+template. For each <code class=scheme>...</code> after the first one, the preceding
+element (with earlier <code class=scheme>...</code>s) is conceptually wrapped with
+parentheses for generating output, and then wrapping parentheses in
+the output are removed.</p>
+<p>
+To mesh gracefully with modules, literal identifiers are compared with
+<code class=scheme><code class=scheme>module-identifier=?</code></code>, which is equivalent to the comparison
+behavior of <em>R5RS</em> in the absence of modules; see section&nbsp;<a href="#node_sec_12.3.1">12.3.1</a>
+for more information on identifier syntax comparisons.</p>
+<p>
+Examples:
+</p>
+<div align=left><pre class=scheme>(<code class=scheme><span class=keyword>define-syntax</span></code> <span class=variable>ex1</span>
+  (<span class=keyword>syntax-rules</span> ()
+   [(<span class=variable>ex1</span> <span class=variable>a</span>) <span class=keyword>'</span>(<span class=variable>a</span> (... ...))]))
+(<span class=variable>ex1</span> <span class=selfeval>1</span>) <span class=comment>; =&gt; <code class=scheme><span class=keyword>'</span>(<span class=selfeval>1</span> ...)</code></span>
+
+(<code class=scheme><span class=keyword>define-syntax</span></code> <span class=variable>ex2</span>
+  (<span class=keyword>syntax-rules</span> ()
+   [(<span class=variable>ex2</span> <span class=variable>a</span> ... <span class=variable>b</span>) <span class=keyword>'</span>(<span class=variable>b</span> <span class=variable>a</span> ...)]))
+(<span class=variable>ex2</span> <span class=selfeval>1</span> <span class=selfeval>2</span> <span class=selfeval>3</span>) <span class=comment>; =&gt; <code class=scheme><span class=keyword>'</span>(<span class=selfeval>3</span> <span class=selfeval>1</span> <span class=selfeval>2</span>)</code></span>
+
+(<code class=scheme><span class=keyword>define-syntax</span></code> <span class=variable>ex3</span>
+  (<span class=keyword>syntax-rules</span> ()
+   [(<span class=variable>ex3</span> <span class=variable>a</span> ... <span class=variable>b</span> . <span class=variable>c</span>) <span class=keyword>'</span>(<span class=variable>b</span> <span class=variable>a</span> ... <span class=variable>c</span>)]))
+(<span class=variable>ex3</span> <span class=selfeval>1</span> <span class=selfeval>2</span> <span class=selfeval>3</span> <span class=selfeval>4</span>) <span class=comment>; syntax error</span>
+(<span class=variable>ex3</span> <span class=selfeval>1</span> <span class=selfeval>2</span> <span class=selfeval>3</span> . <span class=selfeval>4</span>) <span class=comment>; =&gt; <code class=scheme><span class=keyword>'</span>(<span class=selfeval>3</span> <span class=selfeval>1</span> <span class=selfeval>2</span> <span class=selfeval>4</span>)</code></span>
+
+(<code class=scheme><span class=keyword>define-syntax</span></code> <span class=variable>ex4</span>
+  (<span class=keyword>syntax-rules</span> ()
+   [(<span class=variable>ex4</span> (<span class=variable>a</span> ...) ... <span class=variable>b</span>) <span class=keyword>'</span>(<span class=variable>a</span> ... ... <span class=variable>b</span>)]))
+(<span class=variable>ex4</span> (<span class=selfeval>1</span>) (<span class=selfeval>2</span> <span class=selfeval>3</span>) <span class=selfeval>4</span>) <span class=comment>; =&gt; <code class=scheme><span class=keyword>'</span>(<span class=selfeval>1</span> <span class=selfeval>2</span> <span class=selfeval>3</span> <span class=selfeval>4</span>)</code></span>
+</pre></div><p></p>
+<p>
+The <a name="node_kw_definitionsyntax-id-rules"></a><a name="node_idx_2042"></a><code class=scheme><span class=keyword>syntax-id-rules</span></code> <a name="node_idx_2044"></a> form has
+the same syntax as <code class=scheme><span class=keyword>syntax-rules</span></code>, except that each pattern is
+used in its entirety (instead of starting with a keyword placeholder
+that is ignored). Furthermore, when an identifier <code class=scheme><span class=variable>id</span></code> is bound
+as syntax to a <a name="node_kw_definitionsyntax-id-rules"></a><a name="node_idx_2046"></a><code class=scheme><span class=keyword>syntax-id-rules</span></code> transformer, the
+transformer is applied whenever <code class=scheme><span class=variable>id</span></code> appears in an expression
+position  --  not just when it is in the application position  --  or
+when <code class=scheme><span class=variable>id</span></code> appears as the target of an assignment.  When the
+identifier appears in an application position, <code class=scheme>(<span class=variable>id</span> <span class=variable>expr</span>
+ <tt>&middot;&middot;&middot;</tt>)</code>, the entire ``application'' is provided to the transformer,
+and when the identifier appears as a <code class=scheme><span class=keyword>set!</span></code> target,
+<code class=scheme>(<span class=keyword>set!</span> <span class=variable>id</span> <span class=variable>expr</span>)</code>, the entire <code class=scheme><span class=keyword>set!</span></code> expression is
+provided to the transformer; otherwise, the <code class=scheme><span class=variable>id</span></code> is provided
+alone to the transformer. Typically, <code class=scheme><span class=keyword>set!</span></code> is included as a
+keyword in a <code class=scheme><span class=keyword>syntax-id-rules</span></code> use, and three patterns match
+the three possible uses of the identifier.</p>
+<p>
+</p>
+<div align=left><pre class=scheme>(<code class=scheme><span class=keyword>define-syntax</span></code> <span class=variable>pwd</span>
+  <span class=comment>; For this macro to work, the <code class=scheme><span class=keyword>set!</span></code> case must </span>
+  <span class=comment>;  be first, and the <code class=scheme><span class=variable>pwd</span></code> case must be last</span>
+  (<span class=keyword>syntax-id-rules</span> (<span class=keyword>set!</span>)
+    [(<span class=keyword>set!</span> <span class=variable>pwd</span> <span class=variable>expr</span>) (<code class=scheme>current-directory</code> <span class=variable>expr</span>)]
+    [(<span class=variable>pwd</span> <span class=variable>expr</span> ...) ((<code class=scheme>current-directory</code>) <span class=variable>expr</span> ...)]
+    [<span class=variable>pwd</span> (<code class=scheme>current-directory</code>)]))
+
+(<span class=keyword>set!</span> <span class=variable>pwd</span> <span class=selfeval>&quot;/tmp&quot;</span>) <span class=comment>; sets <code class=scheme><code class=scheme>current-directory</code></code> parameter</span>
+<span class=variable>pwd</span> <span class=comment>; =&gt; <code class=scheme><span class=selfeval>&quot;/tmp&quot;</span></code></span>
+(<code class=scheme>current-directory</code>) <span class=comment>; =&gt; <code class=scheme><span class=selfeval>&quot;/tmp&quot;</span></code></span>
+(<code class=scheme>current-directory</code> <span class=selfeval>&quot;/usr/tmp&quot;</span>)
+<span class=variable>pwd</span> <span class=comment>; =&gt; <code class=scheme><span class=selfeval>&quot;/usr/tmp&quot;</span></code></span>
+</pre></div><p></p>
+<p>
+</p>
+<p>
+</p>
+<a name="node_sec_12.2"></a>
+<h2><a href="mzscheme.html#node_toc_node_sec_12.2">12.2&nbsp;&nbsp;Syntax Objects</a></h2>
+<p><a name="node_idx_2048"></a></p>
+<p>
+<a name="node_idx_2050"></a>
+<a name="node_idx_2052"></a><a name="node_kw_definitionread-syntax"></a><code class=scheme>(read-syntax</code><tt>&nbsp;</tt><code class=scheme><span class=variable>source-name-v</span></code><tt>&nbsp;</tt>[<code class=scheme><span class=variable>input-port offset-list</span></code>]<code class=scheme>)</code> is like
+<code class=scheme><code class=scheme>read</code></code>, except that it produces a syntax object with
+source-location information. The <code class=scheme><span class=variable>source-name-v</span></code> is used as the
+source field of the syntax object; it can be an arbitrary value, but
+should generally be a string path for the source file. The
+<code class=scheme><span class=variable>offset-list</span></code> argument is a list of three non-negative, exact
+integers; the first integer is the line offset for the source line of
+the returned syntax object, the second is the column offset (for data
+read on the first line), and the third is the position offset. The
+default value for <code class=scheme><span class=variable>offset-list</span></code> is <code class=scheme>(<code class=scheme>list</code> <span class=selfeval>0</span> <span class=selfeval>0</span> <span class=selfeval>0</span>)</code>. See
+section&nbsp;<a href="mzscheme-Z-H-14.html#node_sec_14.3">14.3</a> for more information about <code class=scheme><code class=scheme>read</code></code> and
+<code class=scheme><code class=scheme>read-syntax</code></code>, see section&nbsp;<a href="mzscheme-Z-H-11.html#node_sec_11.2.3">11.2.3</a> for information about port
+locations, and see section&nbsp;<a href="#node_sec_12.6.2">12.6.2</a> for information on the property
+attached to a syntax object by <code class=scheme>read-syntax</code>.</p>
+<p>
+The result of <code class=scheme><code class=scheme>read-syntax</code></code> is a syntax object with
+source-location information, but no lexical information. Syntax
+objects acquire lexical information during expansion, so that by the
+time a transformer is called, the provided syntax object has lexical
+information.</p>
+<p>
+The <code class=scheme><code class=scheme>eval</code></code>, <code class=scheme><code class=scheme>compile</code></code>, <code class=scheme><code class=scheme>expand</code></code>,
+<code class=scheme><code class=scheme>expand-once</code></code>, and <code class=scheme><code class=scheme>expand-to-top-form</code></code> procedures work
+on syntax objects, especially syntax objects with no lexical
+context. (If one of these procedures is given a non-syntax
+S-expression, the S-expression is converted to a syntax object
+containing no source information and no lexical context.) Each of
+these procedures adds context to the syntax object using
+<code class=scheme>namespace-syntax-introduce</code> before expanding the syntax. In
+contrast, the <code class=scheme>eval-syntax</code>, <code class=scheme>compile-syntax</code>,
+<code class=scheme>expand-syntax</code>, <code class=scheme>expand-syntax-once</code>, and
+<code class=scheme>expand-syntax-to-top-form</code> procedures do not add context to a
+given syntax object before expanding.</p>
+<p>
+The syntax object produced by <code class=scheme><code class=scheme>expand</code></code>, <code class=scheme>expand-syntax</code>,
+etc. includes lexical information that will influence future expansion
+and compilation of the syntax object. Thus, a syntax object produced
+by <code class=scheme><code class=scheme>read-syntax</code></code> should be passed to <code class=scheme><code class=scheme>eval</code></code> or
+<code class=scheme><code class=scheme>expand</code></code> (or another procedure without <code class=scheme>-syntax</code> in its
+name), but a syntax object returned by <code class=scheme><code class=scheme>expand</code></code> should be
+passed to <code class=scheme>eval-syntax</code> (or another procedure with
+<code class=scheme>-syntax</code> in its name), since the result from <code class=scheme><code class=scheme>expand</code></code>
+has acquired a lexical context.</p>
+<p>
+For example, if the following text is parsed by <code class=scheme><code class=scheme>read-syntax</code></code>,
+</p>
+<div align=left><pre class=scheme>(<span class=keyword>lambda</span> (<span class=variable>x</span>) (<span class=variable>+</span> <span class=variable>x</span> <span class=variable>y</span>))
+</pre></div><p>
+the result is a syntax object that contains the S-expression structure
+<code class=scheme><span class=keyword>'</span>(<span class=keyword>lambda</span> (<span class=variable>x</span>) (<span class=variable>+</span> <span class=variable>x</span> <span class=variable>y</span>))</code>, but also source information
+indicating that the first <code class=scheme><span class=variable>x</span></code> is in column 9, etc. If
+<code class=scheme><code class=scheme>expand</code></code> is applied to the syntax object with a normal
+top-level environment, then the result will be a similar syntax
+object (with the source-location information intact), but the second
+<code class=scheme><span class=variable>x</span></code> in the syntax object will have lexical information that
+ties it to the first <code class=scheme><span class=variable>x</span></code>, and <code class=scheme><span class=variable>y</span></code> in the syntax object
+will be annotated as a free variable. Even the syntax object's
+<code class=scheme><span class=keyword>'</span><span class=keyword>lambda</span></code> will have lexical information tying it to the
+built-in <code class=scheme><span class=keyword>lambda</span></code> form.</p>
+<p>
+Compilation (often as a prelude to interactive evaluation) strips away
+source and context information as it processes a syntax object. The
+compilation of a <a name="node_kw_definitionquote-syntax"></a><a name="node_idx_2054"></a><code class=scheme><span class=keyword>quote-syntax</span></code> form is an exception:
+</p>
+<div align=left><pre class=scheme>(<span class=keyword>quote-syntax</span> <span class=variable>datum</span>)
+</pre></div><p>
+The <code class=scheme><span class=keyword>quote-syntax</span></code> form produces a syntax object that preserves
+the source-location information for <code class=scheme><span class=variable>datum</span></code>. It also encapsulates
+lexical-binding information accumulated by compilation in the
+<code class=scheme><span class=keyword>quote-syntax</span></code> expression's environment. A
+<code class=scheme><span class=keyword>quote-syntax</span></code> expression rarely appears in normal expressions;
+<code class=scheme><span class=keyword>quote-syntax</span></code> is more typically used within a transformer
+expression. Unlike <code class=scheme><span class=keyword>quote</span></code>, <code class=scheme><span class=keyword>quote-syntax</span></code> fails to
+compile (i.e., it loops forever) when <code class=scheme><span class=variable>datum</span></code> is cyclic.</p>
+<p>
+The <code class=scheme><code class=scheme>syntax-object-&gt;datum</code></code> procedure strips away location and
+lexical information from a syntax object to produce a plain
+S-expression. The <code class=scheme><code class=scheme>datum-&gt;syntax-object</code></code> procedure wraps syntax
+information onto an S-expression, copying the source-location
+information of a given syntax object and the lexical information of
+another syntax object. The <code class=scheme><code class=scheme>syntax-e</code></code> procedure unwraps only the
+immediate S-expression structure from a syntax object, leaving nested
+structure in place. These procedures are described in
+section&nbsp;<a href="#node_sec_12.2.2">12.2.2</a>.</p>
+<p>
+Although procedures such as <code class=scheme><code class=scheme>syntax-object-&gt;datum</code></code> permit
+arbitrary manipulation of syntax objects, a syntax transformer is
+more likely to use the pattern-matching <code class=scheme><span class=keyword>syntax-case</span></code> and
+<code class=scheme><span class=keyword>syntax</span></code> forms, which are described in the following
+subsection.</p>
+<p>
+</p>
+<a name="node_sec_12.2.1"></a>
+<h3><a href="mzscheme.html#node_toc_node_sec_12.2.1">12.2.1&nbsp;&nbsp;Syntax Patterns</a></h3>
+<p><a name="node_idx_2056"></a>
+The <a name="node_kw_definitionsyntax-case"></a><a name="node_idx_2058"></a><code class=scheme><span class=keyword>syntax-case</span></code> form pattern-matches and deconstructs a
+syntax object:
+</p>
+<div align=left><pre class=scheme>(<span class=keyword>syntax-case</span> <span class=variable>stx-expr</span> (<code class=scheme><span class=variable>literal-identifier</span></code> ...) 
+  <span class=variable>syntax-clause</span> 
+  <tt>&middot;&middot;&middot;</tt>) 
+
+<span class=variable>syntax-clause</span> is one of
+  (<span class=variable>pattern</span> <span class=variable>expr</span>) 
+  (<span class=variable>pattern</span> <span class=variable>fender-expr</span> <span class=variable>expr</span>)
+</pre></div><p>
+If <code class=scheme><span class=variable>stx-expr</span></code> expression does not produce a syntax object value,
+it is converted to one using <code class=scheme><code class=scheme>datum-&gt;syntax-object</code></code> with the
+lexical context of the expression (see section&nbsp;<a href="#node_sec_12.2.2">12.2.2</a>). The syntax
+is then compared to the <code class=scheme><span class=variable>pattern</span></code> in each <code class=scheme><span class=variable>syntax-clause</span></code>
+until a match is found, and the result of the corresponding
+<code class=scheme><span class=variable>expr</span></code> is the result of the <code class=scheme><span class=keyword>syntax-case</span></code> expression.  If
+a <code class=scheme><span class=variable>syntax-clause</span></code> contains a <code class=scheme><span class=variable>fender-expr</span></code>, the clause
+matches only when both the <code class=scheme><span class=variable>pattern</span></code> matches the syntax object
+and the <code class=scheme><span class=variable>fender-expr</span></code> returns a true value. If no pattern
+matches, a ``bad syntax'' <a name="node_idx_2060"></a><code class=scheme>exn:syntax</code> exception is raised.</p>
+<p>
+A <code class=scheme><span class=variable>pattern</span></code> is nearly the same as a <code class=scheme><span class=keyword>syntax-rules</span></code> pattern
+(see <em>R5RS</em>), with the ellipsis-escaping extension (see
+section&nbsp;<a href="#node_sec_12.1">12.1</a>). The difference is that the first identifier in
+<code class=scheme><span class=variable>pattern</span></code> is not ignored, unlike the leading keyword in a
+<code class=scheme><span class=keyword>syntax-rules</span></code> pattern.</p>
+<p>
+As in <code class=scheme><span class=keyword>syntax-rules</span></code>, a non-literal identifier in a
+<code class=scheme><span class=variable>pattern</span></code> is bound to a corresponding part of the syntax object
+within the clause's <code class=scheme><span class=variable>expr</span></code> and optional <code class=scheme><span class=variable>fender-expr</span></code>. The
+identifier cannot be used directly, however; a use of the identifier
+in an expression position is a syntax error. Instead, the identifier
+can be used only in <code class=scheme><span class=keyword>syntax</span></code> expressions within the binding's
+scope.</p>
+<p>
+A <a name="node_kw_definitionsyntax"></a><a name="node_idx_2062"></a><code class=scheme><span class=keyword>syntax</span></code> expression has the form
+</p>
+<div align=left><pre class=scheme>(<span class=keyword>syntax</span> <span class=variable>template</span>)
+</pre></div><p>
+where <code class=scheme><span class=variable>template</span></code> is as in <code class=scheme><span class=keyword>syntax-rules</span></code> (extended, as
+usual, for escaped ellipses). The result of a <code class=scheme><span class=keyword>syntax</span></code>
+expression is a syntax object. Identifiers in the <code class=scheme><span class=variable>template</span></code> that
+are bound by a <code class=scheme><span class=keyword>syntax-case</span></code> pattern are replaced with their
+bindings in the generated syntax object. A <code class=scheme><span class=keyword>syntax</span></code> expression
+that contains no pattern identifiers is equivalent to a
+<code class=scheme><span class=keyword>quote-syntax</span></code> expression.</p>
+<p>
+The <code class=scheme><span class=keyword>syntax-rules</span></code> form can be expressed as a <code class=scheme><span class=keyword>syntax-case</span></code>
+form wrapped in <code class=scheme><span class=keyword>lambda</span></code>:
+</p>
+<div align=left><pre class=scheme> (<span class=keyword>syntax-rules</span> (<code class=scheme><span class=variable>literal-identifier</span></code> <tt>&middot;&middot;&middot;</tt>)
+   ((<span class=variable>ignored-identifier</span> . <span class=variable>pattern</span>) <span class=variable>template</span>)
+   <tt>&middot;&middot;&middot;</tt>)
+<tt>=expands=&gt;</tt>
+ (<span class=keyword>lambda</span> (<span class=variable>stx</span>)
+   (<span class=keyword>syntax-case</span> <span class=variable>stx</span> (<code class=scheme><span class=variable>literal-identifier</span></code> <tt>&middot;&middot;&middot;</tt>)
+     ((<span class=variable>generated-identifier</span> . <span class=variable>pattern</span>) (<span class=keyword>syntax</span> <span class=variable>template</span>))
+     <tt>&middot;&middot;&middot;</tt>))
+</pre></div><p>
+Note that implicit <code class=scheme><span class=keyword>lambda</span></code> of <code class=scheme><span class=keyword>syntax-rules</span></code> for the
+transformer procedure is made explicit with <code class=scheme><span class=keyword>syntax-case</span></code>. The
+<a name="node_idx_2064"></a><code class=scheme><span class=keyword>define-syntax</span></code> form supports <code class=scheme><span class=keyword>define</span></code>-style
+abbreviations for transformer procedures (see section&nbsp;<a href="mzscheme-Z-H-2.html#node_sec_2.8.1">2.8.1</a>).</p>
+<p>
+The following example shows one reason to use <code class=scheme><span class=keyword>syntax-case</span></code>
+instead of <code class=scheme><span class=keyword>syntax-rules</span></code>: custom error reporting.
+</p>
+<div align=left><pre class=scheme>(<code class=scheme><span class=keyword>define-syntax</span></code> (<span class=variable>let1</span> <span class=variable>stx</span>)
+  (<span class=keyword>syntax-case</span> <span class=variable>stx</span> ()
+    [(<span class=variable>_</span> <span class=variable>id</span> <span class=variable>val</span> <span class=variable>body</span>)
+     (<span class=keyword>begin</span>
+       <span class=comment>;; If <code class=scheme><span class=variable>id</span></code> is not an identifier, report an error in terms of <code class=scheme><span class=variable>let1</span></code> instead of <code class=scheme><span class=keyword>let</span></code>:</span>
+       (<span class=keyword>unless</span> (<code class=scheme>identifier?</code> (<span class=keyword>syntax</span> <span class=variable>id</span>))
+         (<code class=scheme>raise-syntax-error</code> <span class=selfeval>#f</span> <span class=selfeval>&quot;expected an identifier&quot;</span> <span class=variable>stx</span> (<span class=keyword>syntax</span> <span class=variable>id</span>)))
+       (<span class=keyword>syntax</span> (<span class=keyword>let</span> ([<span class=variable>id</span> <span class=variable>val</span>]) <span class=variable>body</span>)))]))
+(<span class=variable>let1</span> <span class=variable>x</span> <span class=selfeval>10</span> (<code class=scheme>add1</code> <span class=variable>x</span>)) <span class=comment>; =&gt; <code class=schemeresponse><span class=selfeval>11</span></code></span>
+(<span class=variable>let1</span> <span class=selfeval>2</span> <span class=selfeval>10</span> (<code class=scheme>add1</code> <span class=variable>x</span>)) <span class=comment>; =&gt; let1: expected an identifier at: <code class=scheme><span class=selfeval>2</span></code> in: <code class=scheme>(<span class=variable>let1</span> <span class=selfeval>2</span> <span class=selfeval>10</span> (<code class=scheme>add1</code> <span class=variable>x</span>))</code></span>
+</pre></div><p>
+Another reason to use <code class=scheme><span class=keyword>syntax-case</span></code> is to implement
+``non-hygienic'' macros that introduce capturing identifiers:
+</p>
+<div align=left><pre class=scheme>(<code class=scheme><span class=keyword>define-syntax</span></code> (<span class=variable>if-it</span> <span class=variable>stx</span>)
+  (<span class=keyword>syntax-case</span> <span class=variable>stx</span> ()
+    [(<span class=variable>src-if-it</span> <span class=variable>test</span> <span class=variable>then</span> <code class=scheme><span class=variable>else</span></code>)
+     (<span class=keyword>syntax-case</span> (<code class=scheme>datum-&gt;syntax-object</code> (<span class=keyword>syntax</span> <span class=variable>src-if-it</span>) <span class=keyword>'</span><span class=variable>it</span>) ()
+       [<span class=variable>it</span> (<span class=keyword>syntax</span> (<span class=keyword>let</span> ([<span class=variable>it</span> <span class=variable>test</span>]) (<span class=keyword>if</span> <span class=variable>it</span> <span class=variable>then</span> <code class=scheme><span class=variable>else</span></code>)))])])))
+(<span class=variable>if-it</span> (<code class=scheme>memq</code> <span class=keyword>'</span><span class=variable>b</span> <span class=keyword>'</span>(<span class=variable>a</span> <span class=variable>b</span> <span class=variable>c</span>)) <span class=variable>it</span> <span class=keyword>'</span><span class=variable>nope</span>) <span class=comment>; =&gt; <code class=schemeresponse><span class=keyword>'</span>(<span class=variable>b</span> <span class=variable>c</span>)</code></span>
+</pre></div><p>
+The nested <code class=scheme><span class=keyword>syntax-case</span></code> is used to bind the pattern variable
+<code class=scheme><span class=variable>it</span></code>. The syntax for <code class=scheme><span class=variable>it</span></code> is generated with
+<code class=scheme><code class=scheme>datum-&gt;syntax-object</code></code> using the context of
+<code class=scheme><span class=variable>src-if-it</span></code>, which means that that the introduced variable has
+the same lexical context as <code class=scheme><span class=variable>if-it</span></code> at the macro's use; in
+other words, <code class=scheme><span class=variable>it</span></code> acts as if it existed in the input syntax,
+so it can bind uses of <code class=scheme><span class=variable>it</span></code> in <code class=scheme><span class=variable>test</span></code>.</p>
+<p>
+The <a name="node_kw_definitionsyntax-case*"></a><a name="node_idx_2066"></a><code class=scheme><span class=keyword>syntax-case*</span></code> form is a generalization of
+<code class=scheme><span class=keyword>syntax-case</span></code> where the procedure for comparing
+<code class=scheme><span class=variable>literal-identifier</span></code>s is determined by a
+<code class=scheme><span class=variable>comparison-proc-expr</span></code>:
+</p>
+<div align=left><pre class=scheme>(<span class=keyword>syntax-case*</span> <span class=variable>stx-expr</span> (<code class=scheme><span class=variable>literal-identifier</span></code> ...) <span class=variable>comparison-proc-expr</span> 
+  <span class=variable>syntax-clause</span> 
+  <tt>&middot;&middot;&middot;</tt>)
+</pre></div><p>
+The result of <code class=scheme><span class=variable>comparison-proc-expr</span></code> must be a procedure that
+accepts two arguments. The first argument is an identifier from
+<code class=scheme><span class=variable>stx-expr</span></code>, and the second argument is an identifier from a
+<code class=scheme><span class=variable>syntax-clause</span></code> pattern that is <code class=scheme><code class=scheme>module-identifier=?</code></code> to
+one of the <code class=scheme><span class=variable>literal-identifier</span></code>s. A true result from the
+comparison procedure indicates that the first identifier matches the
+second.</p>
+<p>
+</p>
+<a name="node_sec_12.2.1.1"></a>
+<h4><a href="mzscheme.html#node_toc_node_sec_12.2.1.1">12.2.1.1&nbsp;&nbsp;Binding Pattern Variables</a></h4>
+<p>The <a name="node_kw_definitionwith-syntax"></a><a name="node_idx_2068"></a><code class=scheme><span class=keyword>with-syntax</span></code> form is a <code class=scheme><span class=keyword>let</span></code>-like form for
+binding pattern variables:
+</p>
+<div align=left><pre class=scheme>(<span class=keyword>with-syntax</span> ((<span class=variable>pattern</span> <span class=variable>stx-expr</span>) 
+              <tt>&middot;&middot;&middot;</tt>) 
+  <span class=variable>expr</span>)
+</pre></div><p>
+A vector of the <code class=scheme><span class=variable>pattern</span></code>s is matched against a vector of the
+<code class=scheme><span class=variable>stx-expr</span></code> values, and all pattern identifiers are bound in
+<code class=scheme><span class=variable>expr</span></code>. If the result of a <code class=scheme><span class=variable>stx-expr</span></code> does not match its
+<code class=scheme><span class=variable>pattern</span></code>, the <a name="node_idx_2070"></a><code class=scheme>exn:syntax</code> exception is raised.</p>
+<p>
+The <code class=scheme><span class=variable>if-it</span></code> example can be written more simply using
+<code class=scheme><span class=keyword>with-syntax</span></code>:
+</p>
+<div align=left><pre class=scheme>(<code class=scheme><span class=keyword>define-syntax</span></code> (<span class=variable>if-it</span> <span class=variable>stx</span>)
+  (<span class=keyword>syntax-case</span> <span class=variable>stx</span> ()
+    [(<span class=variable>src-if-it</span> <span class=variable>test</span> <span class=variable>then</span> <code class=scheme><span class=variable>else</span></code>)
+     (<span class=keyword>with-syntax</span> ([<span class=variable>it</span> (<code class=scheme>datum-&gt;syntax-object</code> (<span class=keyword>syntax</span> <span class=variable>src-if-it</span>) <span class=keyword>'</span><span class=variable>it</span>)])
+       (<span class=keyword>syntax</span> (<span class=keyword>let</span> ([<span class=variable>it</span> <span class=variable>test</span>]) (<span class=keyword>if</span> <span class=variable>it</span> <span class=variable>then</span> <code class=scheme><span class=variable>else</span></code>))))]))
+</pre></div><p>
+Macros that expand to non-hygienic macros rarely work as intended. For
+example:
+</p>
+<div align=left><pre class=scheme>(<code class=scheme><span class=keyword>define-syntax</span></code> (<span class=variable>cond-it</span> <span class=variable>stx</span>)
+  (<span class=keyword>syntax-case</span> <span class=variable>stx</span> ()
+    [(<span class=variable>_</span> (<span class=variable>test</span> <span class=variable>body</span>) . <code class=scheme><span class=variable>rest</span></code>)
+     (<span class=keyword>syntax</span> (<span class=variable>if-it</span> <span class=variable>test</span> <span class=variable>body</span> (<span class=variable>cond-it</span> . <code class=scheme><span class=variable>rest</span></code>)))]
+    [(<span class=variable>_</span>) (<span class=keyword>syntax</span> (<code class=scheme>void</code>))]))
+(<span class=variable>cond-it</span> [(<code class=scheme>memq</code> <span class=keyword>'</span><span class=variable>b</span> <span class=keyword>'</span>(<span class=variable>a</span> <span class=variable>b</span> <span class=variable>c</span>)) <span class=variable>it</span>] [<span class=selfeval>#t</span> <span class=keyword>'</span><span class=variable>nope</span>]) <span class=comment>; =&gt; undefined variable <code class=scheme><span class=variable>it</span></code></span>
+</pre></div><p>
+The problem is that <code class=scheme><span class=variable>cond-it</span></code> introduces <code class=scheme><span class=variable>if-it</span></code>
+(hygienically), so <code class=scheme><span class=variable>cond-it</span></code> effectively introduces
+<code class=scheme><span class=variable>it</span></code> (hygienically), which doesn't bind <code class=scheme><span class=variable>it</span></code> in the
+source use of <code class=scheme><span class=variable>cond-it</span></code>. In general, the solution is to avoid
+macros that expand to uses of non-hygienic macros.<a name="call_footnote_Temp_36"></a><a href="#footnote_Temp_36"><sup><small>32</small></sup></a></p>
+<p>
+</p>
+<a name="node_sec_12.2.1.2"></a>
+<h4><a href="mzscheme.html#node_toc_node_sec_12.2.1.2">12.2.1.2&nbsp;&nbsp;Quasiquoting Templates</a></h4>
+<p></p>
+<p>
+The <a name="node_kw_definitionquasisyntax"></a><a name="node_idx_2072"></a><code class=scheme><span class=keyword>quasisyntax</span></code> form is like <code class=scheme><span class=keyword>syntax</span></code>, except with
+a quasiquoting within the template:
+</p>
+<div align=left><pre class=scheme>(<span class=keyword>quasisyntax</span> <span class=variable>quasitemplate</span>)
+</pre></div><p>
+A <code class=scheme><span class=variable>quasitemplate</span></code> is the same as a <code class=scheme><span class=variable>template</span></code>, except
+that <a name="node_kw_definitionunsyntax"></a><a name="node_idx_2074"></a><code class=scheme><span class=keyword>unsyntax</span></code> and <a name="node_kw_definitionunsyntax-splicing"></a><a name="node_idx_2076"></a><code class=scheme><span class=keyword>unsyntax-splicing</span></code> escape
+to an expression:
+</p>
+<div align=left><pre class=scheme>(<span class=keyword>unsyntax</span> <span class=variable>expr</span>)
+(<span class=keyword>unsyntax-splicing</span> <span class=variable>expr</span>)
+</pre></div><p>
+The expression must produce a syntax object (or syntax list) to be
+substituted in place of the <code class=scheme><span class=keyword>unsyntax</span></code> or
+<code class=scheme><span class=keyword>unsyntax-splicing</span></code> form within the quasiquoting template,
+just like <code class=scheme><span class=keyword>unquote</span></code> and <code class=scheme><span class=keyword>unquote-splicing</span></code> within
+<code class=scheme><span class=keyword>quasiquote</span></code>. (If the escaped expression does not generate a
+syntax object, it is converted to one in the same was as for the
+right-hand sides of <code class=scheme><span class=keyword>with-syntax</span></code>.)  Nested
+<code class=scheme><span class=keyword>quasisyntax</span></code>es introduce quasiquoting layers in the same way
+as nested <code class=scheme><span class=keyword>quasiquote</span></code>s.</p>
+<p>
+Also analogous to <code class=scheme><span class=keyword>quote</span></code> and <code class=scheme><span class=keyword>quasiquote</span></code>, the reader
+converts <code class=scheme><span class=selfeval>#</span><span class=keyword>'</span></code> to <code class=scheme><span class=keyword>syntax</span></code>, <code class=scheme><span class=selfeval>#</span><span class=keyword>`</span></code> to
+<code class=scheme><span class=keyword>quasisyntax</span></code>, <code class=scheme><span class=selfeval>#</span><span class=keyword>,</span></code> to <code class=scheme><span class=keyword>unsyntax</span></code>, and
+<code class=scheme><span class=selfeval>#</span><span class=keyword>,@</span></code> to <code class=scheme><span class=keyword>unsyntax-splicing</span></code>. See also
+section&nbsp;<a href="mzscheme-Z-H-14.html#node_sec_14.3">14.3</a>.</p>
+<p>
+Example:
+</p>
+<div align=left><pre class=scheme>(<span class=keyword>with-syntax</span> ([(<span class=variable>v</span> ...) (<code class=scheme>list</code> <span class=selfeval>1</span> <span class=selfeval>2</span> <span class=selfeval>3</span>)])
+  <span class=selfeval>#</span><span class=keyword>`</span>(<span class=selfeval>0</span> <code class=scheme><span class=variable>v</span></code> ... <span class=selfeval>#</span><span class=keyword>,</span>(<span class=variable>+</span> <span class=selfeval>2</span> <span class=selfeval>2</span>) <span class=selfeval>#</span><span class=keyword>,@</span>(<code class=scheme>list</code> <span class=selfeval>5</span> <span class=selfeval>6</span>) <span class=selfeval>7</span>)) <span class=comment>; =&gt; syntax for <code class=scheme>(<span class=selfeval>0</span> <span class=selfeval>1</span> <span class=selfeval>2</span> <span class=selfeval>3</span> <span class=selfeval>4</span> <span class=selfeval>5</span> <span class=selfeval>6</span> <span class=selfeval>7</span>)</code></span>
+</pre></div><p>
+</p>
+<p>
+</p>
+<a name="node_sec_12.2.1.3"></a>
+<h4><a href="mzscheme.html#node_toc_node_sec_12.2.1.3">12.2.1.3&nbsp;&nbsp;Assigning Source Location</a></h4>
+<p>The <a name="node_kw_definitionsyntax/loc"></a><a name="node_idx_2078"></a><code class=scheme><span class=keyword>syntax/loc</span></code> form is like <code class=scheme><span class=keyword>syntax</span></code>, except that
+the immediate resulting syntax object takes its source-location
+information from a supplied syntax object:
+</p>
+<div align=left><pre class=scheme>(<span class=keyword>syntax/loc</span> <span class=variable>location-stx-expr</span> <span class=variable>template</span>)
+</pre></div><p>
+Use <code class=scheme><span class=keyword>syntax/loc</span></code> instead of <code class=scheme><span class=keyword>syntax</span></code> whenever possible
+to help tools that report source locations. For example, the earlier
+<code class=scheme><span class=variable>if-it</span></code> example should have been written with
+<code class=scheme><span class=keyword>syntax/loc</span></code>:
+</p>
+<div align=left><pre class=scheme>(<code class=scheme><span class=keyword>define-syntax</span></code> (<span class=variable>if-it</span> <span class=variable>stx</span>)
+  (<span class=keyword>syntax-case</span> <span class=variable>stx</span> ()
+    [(<span class=variable>src-if-it</span> <span class=variable>test</span> <span class=variable>then</span> <code class=scheme><span class=variable>else</span></code>)
+     (<span class=keyword>with-syntax</span> ([<span class=variable>it</span> (<code class=scheme>datum-&gt;syntax-object</code> (<span class=keyword>syntax</span> <span class=variable>src-if-it</span>) <span class=keyword>'</span><span class=variable>it</span>)])
+       (<span class=keyword>syntax/loc</span> <span class=variable>stx</span> (<span class=keyword>let</span> ([<span class=variable>it</span> <span class=variable>test</span>]) (<span class=keyword>if</span> <span class=variable>it</span> <span class=variable>then</span> <code class=scheme><span class=variable>else</span></code>))))]))
+</pre></div><p>
+The <a name="node_kw_definitionquasisyntax/loc"></a><a name="node_idx_2080"></a><code class=scheme><span class=keyword>quasisyntax/loc</span></code> form is the quasiquoting analogue of
+<code class=scheme><span class=keyword>syntax/loc</span></code>:
+</p>
+<div align=left><pre class=scheme>(<span class=keyword>quasisyntax/loc</span> <span class=variable>location-stx-expr</span> <span class=variable>template</span>)
+</pre></div><p>
+</p>
+<p>
+</p>
+<a name="node_sec_12.2.2"></a>
+<h3><a href="mzscheme.html#node_toc_node_sec_12.2.2">12.2.2&nbsp;&nbsp;Syntax Object Content</a></h3>
+<p></p>
+<p>
+<a name="node_idx_2082"></a>
+<a name="node_idx_2084"></a><a name="node_kw_definitionsyntax_Q_"></a><code class=scheme>(syntax?</code><tt>&nbsp;</tt><code class=scheme><span class=variable>v</span></code><code class=scheme>)</code> returns <code class=scheme><span class=selfeval>#t</span></code> if <code class=scheme><span class=variable>v</span></code> is a syntax object,
+<code class=scheme><span class=selfeval>#f</span></code> otherwise.</p>
+<p>
+<a name="node_idx_2086"></a>
+<a name="node_idx_2088"></a><a name="node_kw_definitionsyntax-source"></a><code class=scheme>(syntax-source</code><tt>&nbsp;</tt><code class=scheme><span class=variable>stx</span></code><code class=scheme>)</code> returns the source for the syntax object
+<code class=scheme><span class=variable>stx</span></code>, or <code class=scheme><span class=selfeval>#f</span></code> if none is known. The source is represented
+by an arbitrary value (e.g., one passed to <code class=scheme><code class=scheme>read-syntax</code></code>), but
+it is typically a file path string. See also section&nbsp;<a href="mzscheme-Z-H-14.html#node_sec_14.6">14.6</a>.</p>
+<p>
+<a name="node_idx_2090"></a><a name="node_kw_definitionsyntax-line"></a><code class=scheme>(syntax-line</code><tt>&nbsp;</tt><code class=scheme><span class=variable>stx</span></code><code class=scheme>)</code> returns the line number (positive exact
+integer) for the start of the syntax object in its source, or
+<code class=scheme><span class=selfeval>#f</span></code> if the line number or source is unknown. The result is
+<code class=scheme><span class=selfeval>#f</span></code> if and only if <code class=scheme>(<code class=scheme>syntax-column</code> <span class=variable>stx</span>)</code> produces
+<code class=scheme><span class=selfeval>#f</span></code>. See also section&nbsp;<a href="mzscheme-Z-H-11.html#node_sec_11.2.3">11.2.3</a> and section&nbsp;<a href="mzscheme-Z-H-14.html#node_sec_14.6">14.6</a>.</p>
+<p>
+<a name="node_idx_2092"></a><a name="node_kw_definitionsyntax-column"></a><code class=scheme>(syntax-column</code><tt>&nbsp;</tt><code class=scheme><span class=variable>stx</span></code><code class=scheme>)</code> returns the column number (non-negative exact
+integer) for the start of the syntax object in its source, or
+<code class=scheme><span class=selfeval>#f</span></code> if the source column is unknown. The result is
+<code class=scheme><span class=selfeval>#f</span></code> if and only if <code class=scheme>(<code class=scheme>syntax-line</code> <span class=variable>stx</span>)</code> produces
+<code class=scheme><span class=selfeval>#f</span></code>. See also section&nbsp;<a href="mzscheme-Z-H-11.html#node_sec_11.2.3">11.2.3</a> and section&nbsp;<a href="mzscheme-Z-H-14.html#node_sec_14.6">14.6</a>.</p>
+<p>
+<a name="node_idx_2094"></a><a name="node_kw_definitionsyntax-position"></a><code class=scheme>(syntax-position</code><tt>&nbsp;</tt><code class=scheme><span class=variable>stx</span></code><code class=scheme>)</code> returns the character position (positive
+exact integer) for the start of the syntax object in its source, or
+<code class=scheme><span class=selfeval>#f</span></code> if the source position is unknown. See also
+section&nbsp;<a href="mzscheme-Z-H-11.html#node_sec_11.2.3">11.2.3</a> and section&nbsp;<a href="mzscheme-Z-H-14.html#node_sec_14.6">14.6</a>.</p>
+<p>
+<a name="node_idx_2096"></a><a name="node_kw_definitionsyntax-span"></a><code class=scheme>(syntax-span</code><tt>&nbsp;</tt><code class=scheme><span class=variable>stx</span></code><code class=scheme>)</code> returns the span (non-negative exact integer)
+in characters of the syntax object in its source, or <code class=scheme><span class=selfeval>#f</span></code> if
+the span is unknown. See also section&nbsp;<a href="mzscheme-Z-H-14.html#node_sec_14.6">14.6</a>.</p>
+<p>
+<a name="node_idx_2098"></a><a name="node_kw_definitionsyntax-original_Q_"></a><code class=scheme>(syntax-original?</code><tt>&nbsp;</tt><code class=scheme><span class=variable>stx</span></code><code class=scheme>)</code> returns <code class=scheme><span class=selfeval>#t</span></code> if <code class=scheme><span class=variable>stx</span></code> has the
+property that <code class=scheme><code class=scheme>read-syntax</code></code> attaches to the syntax objects
+that it generates (see section&nbsp;<a href="#node_sec_12.6.2">12.6.2</a>), and if <code class=scheme><span class=variable>stx</span></code>'s lexical
+information does not indicate that the object was introduced by a
+syntax transformer (see section&nbsp;<a href="#node_sec_12.3">12.3</a>). The result is <code class=scheme><span class=selfeval>#f</span></code>
+otherwise. This predicate can be used to distinguish syntax objects
+in an expanded expression that were directly present in the original
+expression, as opposed to syntax objects inserted by macros.</p>
+<p>
+<a name="node_idx_2100"></a>
+<a name="node_idx_2102"></a><a name="node_kw_definitionsyntax-source-module"></a><code class=scheme>(syntax-source-module</code><tt>&nbsp;</tt><code class=scheme><span class=variable>stx</span></code><code class=scheme>)</code> returns a module path index or symbol
+(see section&nbsp;<a href="#node_sec_12.6.4">12.6.4</a>) for the module whose source contains
+<code class=scheme><span class=variable>stx</span></code>, or <code class=scheme><span class=selfeval>#f</span></code> if <code class=scheme><span class=variable>stx</span></code> has no source module.</p>
+<p>
+<a name="node_idx_2104"></a><a name="node_kw_definitionsyntax-e"></a><code class=scheme>(syntax-e</code><tt>&nbsp;</tt><code class=scheme><span class=variable>stx</span></code><code class=scheme>)</code> unwraps the immediate S-expression structure from
+a syntax object, leaving nested syntax structure (if any) in place.
+The result of <code class=scheme>(syntax-e <code class=scheme><span class=variable>stx</span></code>)</code> is one of the following:</p>
+<p>
+</p>
+<ul><p>
+</p>
+<li><p>a symbol</p>
+<p>
+</p>
+<li><p>a syntax pair (described below)</p>
+<p>
+</p>
+<li><p>the empty list</p>
+<p>
+</p>
+<li><p>a vector containing syntax objects</p>
+<p>
+</p>
+<li><p>some other kind of datum, usually a number, boolean, or string</p>
+<p>
+</p>
+</ul><p></p>
+<p>
+A <strong>syntax pair</strong><a name="node_idx_2106"></a> is a pair containing a syntax object as
+its first element, and either the empty list, a syntax pair, or a
+syntax object as its second element.</p>
+<p>
+A syntax object that is the result of <code class=scheme><code class=scheme>read-syntax</code></code> reflects
+the use of dots (<code class=scheme>.</code>) in the input by creating a syntax object
+for every pair of parentheses in the source, and by creating a
+pair-valued syntax object <em>only</em> for parentheses in the
+source. For example:</p>
+<p>
+</p>
+<div align=center><table><tr><td>
+
+<table border=0><tr><td valign=top >input            </td><td valign=top ><code class=scheme><code class=scheme>read-syntax</code></code> result </td></tr>
+<tr><td valign=top ><code class=scheme>(a b)</code>      </td><td valign=top ><code class=scheme><span class=variable>stx</span></code>, where </td></tr>
+<tr><td valign=top ></td><td valign=top >&nbsp;<code class=scheme>(syntax-e <code class=scheme><span class=variable>stx</span></code>)</code> 
+is equivalent to <code class=scheme>(list <code class=scheme><span class=variable>a-stx</span></code> <code class=scheme><span class=variable>b-stx</span></code>)</code> </td></tr>
+<tr><td valign=top ></td><td valign=top >&nbsp;and <code class=scheme>(syntax-e <code class=scheme><span class=variable>a-stx</span></code>)</code> is equivalent to <code class=scheme><span class=keyword>'</span><span class=variable>a</span></code> </td></tr>
+<tr><td valign=top ></td><td valign=top >&nbsp;and <code class=scheme>(syntax-e <code class=scheme><span class=variable>b-stx</span></code>)</code> is equivalent to <code class=scheme><span class=keyword>'</span><span class=variable>b</span></code> </td></tr>
+<tr><td valign=top ><code class=scheme>(a . (b))</code>  </td><td valign=top ><code class=scheme><span class=variable>stx</span></code>, where </td></tr>
+<tr><td valign=top ></td><td valign=top >&nbsp;<code class=scheme>(syntax-e <code class=scheme><span class=variable>stx</span></code>)</code> 
+is equivalent to <code class=scheme>(cons <code class=scheme><span class=variable>a-stx</span></code> <code class=scheme><span class=variable>sb-stx</span></code>)</code> </td></tr>
+<tr><td valign=top ></td><td valign=top >&nbsp;and <code class=scheme>(syntax-e <code class=scheme><span class=variable>a-stx</span></code>)</code> is equivalent to <code class=scheme><span class=keyword>'</span><span class=variable>a</span></code> </td></tr>
+<tr><td valign=top ></td><td valign=top >&nbsp;and <code class=scheme>(syntax-e <code class=scheme><span class=variable>sb-stx</span></code>)</code> is equivalent to <code class=scheme>(list b-stx)</code> </td></tr>
+<tr><td valign=top ></td><td valign=top >&nbsp;and <code class=scheme>(syntax-e <code class=scheme><span class=variable>b-stx</span></code>)</code> is equivalent to <code class=scheme><span class=keyword>'</span><span class=variable>b</span></code> </td></tr>
+<tr><td valign=top ></td></tr></table>
+</td></tr></table></div>
+<p>
+<a name="node_idx_2108"></a><a name="node_kw_definitionsyntax->list"></a><code class=scheme>(syntax-&gt;list</code><tt>&nbsp;</tt><code class=scheme><span class=variable>stx</span></code><code class=scheme>)</code> returns an immutable list of syntax objects or
+<code class=scheme><span class=selfeval>#f</span></code>. The result is a list of syntax objects when
+<code class=scheme>(<code class=scheme>syntax-object-&gt;datum</code> <code class=scheme><span class=variable>stx</span></code>)</code> would produce a list. In other
+words, syntax pairs in <code class=scheme>(syntax-e <code class=scheme><span class=variable>stx</span></code>)</code> are
+flattened.</p>
+<p>
+<a name="node_idx_2110"></a><a name="node_kw_definitionsyntax-object->datum"></a><code class=scheme>(syntax-object-&gt;datum</code><tt>&nbsp;</tt><code class=scheme><span class=variable>stx</span></code><code class=scheme>)</code> returns an S-expression by
+stripping the syntactic information from <code class=scheme><span class=variable>stx</span></code>. Graph
+structure is preserved by the conversion.</p>
+<p>
+<a name="node_idx_2112"></a><a name="node_kw_definitiondatum->syntax-object"></a><code class=scheme>(datum-&gt;syntax-object</code><tt>&nbsp;</tt><code class=scheme><span class=variable>ctxt-stx v</span></code><tt>&nbsp;</tt>[<code class=scheme><span class=variable>src-stx-or-list prop-stx</span></code>]<code class=scheme>)</code>
+converts the S-expression <code class=scheme><span class=variable>v</span></code> to a syntax object, using
+syntax objects already in <code class=scheme><span class=variable>v</span></code> in the result. Converted
+objects in <code class=scheme><span class=variable>v</span></code> are given the lexical context information of
+<code class=scheme><span class=variable>ctxt-stx</span></code> and the source-location information of
+<code class=scheme><span class=variable>src-stx-or-list</span></code>; if the resulting syntax object has no
+properties, then it is given the properties of
+<code class=scheme><span class=variable>prop-stx</span></code>. Any of <code class=scheme><span class=variable>ctxt-stx</span></code>, <code class=scheme><span class=variable>src-stx-or-list</span></code>,
+or <code class=scheme><span class=variable>prop-stx</span></code> can be <code class=scheme><span class=selfeval>#f</span></code>, in which case the
+resulting syntax has no lexical context, source information,
+and/or new properties. If <code class=scheme><span class=variable>src-stx-or-list</span></code> is not <code class=scheme><span class=selfeval>#f</span></code>
+or a syntax object, it must be a list of five elements:
+</p>
+<div align=left><pre class=scheme>  (<code class=scheme>list</code> <span class=variable>source-name-v</span> <span class=variable>line-k</span> <span class=variable>column-k</span> <span class=variable>position-k</span> <span class=variable>span-k</span>)
+</pre></div><p>
+where <code class=scheme><span class=variable>source-name-v</span></code> is an arbitrary value for the source
+name; <code class=scheme><span class=variable>line-k</span></code> is a positive, exact integer for the source
+line, or <code class=scheme><span class=selfeval>#f</span></code>; and <code class=scheme><span class=variable>column-k</span></code> is a non-negative, exact
+integer for the source column, or <code class=scheme><span class=selfeval>#f</span></code>; <code class=scheme><span class=variable>position-k</span></code>
+is a positive, exact integer for the source position, or
+<code class=scheme><span class=selfeval>#f</span></code>; and <code class=scheme><span class=variable>span-k</span></code> is a non-negative, exact integer
+for the source span, or <code class=scheme><span class=selfeval>#f</span></code>. The <code class=scheme><span class=variable>line-k</span></code> and
+<code class=scheme><span class=variable>column-k</span></code> values must both be numbers or both be
+<code class=scheme><span class=selfeval>#f</span></code>, otherwise the
+<a name="node_idx_2114"></a><code class=scheme>exn:application;mismatch</code> exception is raised.
+Graph structure is preserved by the conversion, but graph
+structure that is distributed among distinct syntax objects in
+<code class=scheme><span class=variable>v</span></code> may be hidden from future applications of
+<code class=scheme><code class=scheme>syntax-object-&gt;datum</code></code> and <code class=scheme><code class=scheme>syntax-graph?</code></code> to the
+new syntax object.</p>
+<p>
+<a name="node_idx_2116"></a><a name="node_kw_definitionsyntax-graph_Q_"></a><code class=scheme>(syntax-graph?</code><tt>&nbsp;</tt><code class=scheme><span class=variable>stx</span></code><code class=scheme>)</code> returns <code class=scheme><span class=selfeval>#t</span></code> if <code class=scheme><span class=variable>stx</span></code> might be
+preservably shared within a syntax object created by
+<code class=scheme><code class=scheme>read-syntax</code></code> or <code class=scheme><code class=scheme>datum-&gt;syntax-object</code></code>. In
+general, sharing detection is
+approximate -- <code class=scheme><code class=scheme>datum-&gt;syntax-object</code></code> can construct
+syntax objects with sharing that is hidden from
+<code class=scheme><code class=scheme>syntax-graph?</code></code> -- but <code class=scheme><code class=scheme>syntax-graph?</code></code> reliably
+returns <code class=scheme><span class=selfeval>#t</span></code> for at least one syntax object in a cyclic
+structure. Meanwhile, deconstructing a syntax object with
+procedures such as <code class=scheme><code class=scheme>syntax-e</code></code> and comparing the results
+with <code class=scheme><code class=scheme>eq?</code></code> can also fail to detect sharing (even cycles),
+due to the way lexical information is lazily propagated; only
+<code class=scheme><code class=scheme>syntax-object-&gt;datum</code></code> reliably exposes sharing in a way
+that can be detected with <code class=scheme><code class=scheme>eq?</code></code>.</p>
+<p>
+<a name="node_idx_2118"></a>
+<a name="node_idx_2120"></a><a name="node_kw_definitionidentifier_Q_"></a><code class=scheme>(identifier?</code><tt>&nbsp;</tt><code class=scheme><span class=variable>v</span></code><code class=scheme>)</code> returns <code class=scheme><span class=selfeval>#t</span></code> if <code class=scheme><span class=variable>v</span></code> is a syntax
+object and <code class=scheme>(syntax-e <code class=scheme><span class=variable>stx</span></code>)</code> produces a symbol.</p>
+<p>
+<a name="node_idx_2122"></a><a name="node_kw_definitiongenerate-temporaries"></a><code class=scheme>(generate-temporaries</code><tt>&nbsp;</tt><code class=scheme><span class=variable>stx-pair</span></code><code class=scheme>)</code> returns a list of identifiers
+that are distinct from all other identifiers. The list contains
+as many identifiers as <code class=scheme><span class=variable>stx-pair</span></code> contains elements. The
+<code class=scheme><span class=variable>stx-pair</span></code> argument must be a syntax pair that can be
+flattened into a list. The elements of <code class=scheme><span class=variable>stx-pair</span></code> can be
+anything, but string, symbol, and identifier elements will be
+embedded in the corresponding generated name (useful for
+debugging purposes). The generated identifiers are built with
+interned symbols (not <code class=scheme>gensym</code>s), so the limitations
+described in section&nbsp;<a href="mzscheme-Z-H-14.html#node_sec_14.6">14.6</a> do not apply. In addition,
+the generated identifiers have the lexical context (see
+section&nbsp;<a href="#node_sec_12.3">12.3</a>) of the module being expanded/compiled, if
+any, at the time that <code class=scheme>generate-temporaries</code> is called.</p>
+<p>
+</p>
+<p>
+</p>
+<a name="node_sec_12.3"></a>
+<h2><a href="mzscheme.html#node_toc_node_sec_12.3">12.3&nbsp;&nbsp;Syntax and Lexical Scope</a></h2>
+<p><a name="node_idx_2124"></a></p>
+<p>
+Hygienic macro expansion depends on information associated with each
+syntax object that records the lexical context of the site where the
+syntax object is introduced. This information includes the variables
+that are bound by <code class=scheme><span class=keyword>lambda</span></code>, <code class=scheme><span class=keyword>let</span></code>, <code class=scheme><span class=keyword>letrec</span></code>,
+etc., at the syntax object's introduction site, the <code class=scheme><span class=keyword>require</span></code>d
+variables at the introduction site, and the macro expansion that
+introduces the object.</p>
+<p>
+Based on this information, a particular identifier syntax object falls
+into one of three classifications:
+</p>
+<ul><p>
+</p>
+<li><p><strong>lexical</strong>  --  the identifier is bound by
+<code class=scheme><span class=keyword>lambda</span></code>, <code class=scheme><span class=keyword>let</span></code>, <code class=scheme><span class=keyword>letrec</span></code>, or some other form
+besides <code class=scheme><span class=keyword>module</span></code> or a top-level definition.</p>
+<p>
+</p>
+<li><p><strong>module-imported</strong>  --  the identifier is bound through a
+<code class=scheme><span class=keyword>require</span></code> declaration or a top-level definition within
+<code class=scheme><span class=keyword>module</span></code>.</p>
+<p>
+</p>
+<li><p><strong>free</strong>  --  the identifier is not bound (and therefore
+refers to a top-level variable, if the identifier is not within a
+module).</p>
+<p>
+</p>
+</ul><p>
+The <code class=scheme>identifier-binding</code> procedure (described in
+section&nbsp;<a href="#node_sec_12.3.2">12.3.2</a>) reports an identifiers classification. Further
+information about a lexical identifier is available only in relative
+terms, such as whether two identifiers refer to the same binding (see
+<code class=scheme><code class=scheme>bound-identifier=?</code></code>  in section&nbsp;<a href="#node_sec_12.3.1">12.3.1</a>). For module-imported
+identifiers, information about the module source is available.</p>
+<p>
+In a freshly read syntax object, identifiers have no lexical
+information, so they are all classified as free. During expansion,
+some identifiers acquire lexical or module-import classifications. An
+identifier that becomes classified as lexical will remain so
+classified, though its binding might shift as expansion proceeds
+(i.e., as nested binding expressions are parsed, and as macro
+introductions are tracked). An identifier classified as
+module-imported might similarly shift to the lexical classification,
+but if it remains module-imported, its source-module designation will
+never change.</p>
+<p>
+Lexical information is used to expand and parse syntax in a way that
+it obeys lexical and module scopes.  In addition, an identifier's
+lexical information encompasses a second dimension, which
+distinguishes the environment of normal expressions from the
+environment of transformer expressions. The module bindings of each
+environment can be different, so an identifier may be classified
+differently depending on whether it is ultimately used in a normal
+expression or in a transformer expression. See section&nbsp;<a href="#node_sec_12.3.3">12.3.3</a> and
+section&nbsp;<a href="#node_sec_12.3.4">12.3.4</a> for more information on the two environments.</p>
+<p>
+</p>
+<a name="node_sec_12.3.1"></a>
+<h3><a href="mzscheme.html#node_toc_node_sec_12.3.1">12.3.1&nbsp;&nbsp;Syntax Object Comparisons</a></h3>
+<p></p>
+<p>
+<a name="node_idx_2126"></a>
+<a name="node_idx_2128"></a><a name="node_kw_definitionbound-identifier=_Q_"></a><code class=scheme>(bound-identifier=?</code><tt>&nbsp;</tt><code class=scheme><span class=variable>a-id-stx b-id-stx</span></code><code class=scheme>)</code> returns <code class=scheme><span class=selfeval>#t</span></code> if
+the identifier <code class=scheme><span class=variable>a-id-stx</span></code> would bind <code class=scheme><span class=variable>b-id-stx</span></code> (or
+vice-versa) if the identifiers were substituted in a suitable
+expression context, <code class=scheme><span class=selfeval>#f</span></code> otherwise.</p>
+<p>
+<a name="node_idx_2130"></a><a name="node_kw_definitionfree-identifier=_Q_"></a><code class=scheme>(free-identifier=?</code><tt>&nbsp;</tt><code class=scheme><span class=variable>a-id-stx b-id-stx</span></code><code class=scheme>)</code> returns <code class=scheme><span class=selfeval>#t</span></code> if
+<code class=scheme><span class=variable>a-id-stx</span></code> and <code class=scheme><span class=variable>b-id-stx</span></code> access the same lexical,
+module, or top-level binding and return the same result for
+<code class=scheme><code class=scheme>syntax-e</code></code>, <code class=scheme><span class=selfeval>#f</span></code> otherwise.</p>
+<p>
+<a name="node_idx_2132"></a><a name="node_kw_definitionmodule-identifier=_Q_"></a><code class=scheme>(module-identifier=?</code><tt>&nbsp;</tt><code class=scheme><span class=variable>a-id-stx b-id-stx</span></code><code class=scheme>)</code> returns <code class=scheme><span class=selfeval>#t</span></code> if
+<code class=scheme><span class=variable>a-id-stx</span></code> and <code class=scheme><span class=variable>b-id-stx</span></code> access the same lexical,
+module, or top-level binding in the normal environment. ``Same
+module binding'' means that the identifiers refer to the same
+original definition site, not necessarily the <code class=scheme><span class=keyword>require</span></code>
+or <code class=scheme><span class=keyword>provide</span></code> site. Due to renaming in <code class=scheme><span class=keyword>require</span></code>
+and <code class=scheme><span class=keyword>provide</span></code>, the identifiers may return distinct
+results with <code class=scheme><code class=scheme>syntax-e</code></code>.</p>
+<p>
+<a name="node_idx_2134"></a><a name="node_kw_definitionmodule-transformer-identifier=_Q_"></a><code class=scheme>(module-transformer-identifier=?</code><tt>&nbsp;</tt><code class=scheme><span class=variable>a-id-stx b-id-stx</span></code><code class=scheme>)</code> returns
+<code class=scheme><span class=selfeval>#t</span></code> if <code class=scheme><span class=variable>a-id-stx</span></code> and <code class=scheme><span class=variable>b-id-stx</span></code> access the
+same lexical, module, or top-level binding in the identifiers'
+transformer environments (see section&nbsp;<a href="#node_sec_12.3.3">12.3.3</a>).</p>
+<p>
+<a name="node_idx_2136"></a><a name="node_kw_definitioncheck-duplicate-identifier"></a><code class=scheme>(check-duplicate-identifier</code><tt>&nbsp;</tt><code class=scheme><span class=variable>id-stx-list</span></code><code class=scheme>)</code> compares each
+identifier in <code class=scheme><span class=variable>id-stx-list</span></code> with every other identifier in
+the list with <code class=scheme><code class=scheme>bound-identifier=?</code></code>. If any comparison
+returns <code class=scheme><span class=selfeval>#t</span></code>, one of the duplicate identifiers is
+returned (the first one in <code class=scheme><span class=variable>id-stx-list</span></code> that is a
+duplicate), otherwise the result is <code class=scheme><span class=selfeval>#f</span></code>.</p>
+<p>
+</p>
+<a name="node_sec_12.3.2"></a>
+<h3><a href="mzscheme.html#node_toc_node_sec_12.3.2">12.3.2&nbsp;&nbsp;Syntax Object Bindings</a></h3>
+<p></p>
+<p>
+<a name="node_idx_2138"></a><a name="node_kw_definitionidentifier-binding"></a><code class=scheme>(identifier-binding</code><tt>&nbsp;</tt><code class=scheme><span class=variable>id-stx</span></code><code class=scheme>)</code> returns one of three kinds of
+values, depending on the binding of <code class=scheme><span class=variable>id-stx</span></code> in its normal
+environment:</p>
+<p>
+</p>
+<ul> <p>
+</p>
+<li><p>The result is <code class=scheme><span class=selfeval>'lexical</span></code><a name="node_idx_2140"></a> if <code class=scheme><span class=variable>id-stx</span></code> is
+bound in its context to anything other than a top-level variable
+or a module variable.</p>
+<p>
+</p>
+<li><p>The result is a list of four items when <code class=scheme><span class=variable>id-stx</span></code> is
+bound in its context to a module-defined variable: <code class=scheme>(<code class=scheme>list</code>
+      <span class=variable>source-mod</span> <span class=variable>source-id</span> <span class=variable>nominal-source-mod</span> <span class=variable>nominal-source-id</span>)</code>.</p>
+<p>
+</p>
+<ul><p>
+</p>
+<li><p><code class=scheme><span class=variable>source-mod</span></code> is a module path index or symbol (see
+section&nbsp;<a href="#node_sec_12.6.4">12.6.4</a>) that indicates the defining module.</p>
+<p>
+</p>
+<li><p><code class=scheme><span class=variable>source-id</span></code> is a symbol for the variable's name at
+its definition site in the source module. This can be
+different from the local name returned
+by <code class=scheme><code class=scheme>syntax-object-&gt;datum</code></code> for several reasons: the
+identifier is renamed on import, it is renamed on export, or
+it is implicitly renamed because the identifier (or its
+import) was generated by a macro invocation.</p>
+<p>
+</p>
+<li><p><code class=scheme><span class=variable>nominal-source-mod</span></code> is a module path index or
+symbol (see section&nbsp;<a href="#node_sec_12.6.4">12.6.4</a>) that indicates the module
+<code class=scheme><span class=keyword>require</span></code>d into the context of <code class=scheme><span class=variable>id-stx</span></code> to provide
+its binding. It can be different from <code class=scheme><span class=variable>source-mod</span></code> due to
+a re-export in <code class=scheme><span class=variable>nominal-source-mod</span></code> of some imported
+identifier.</p>
+<p>
+</p>
+<li><p><code class=scheme><span class=variable>nominal-source-id</span></code> is a symbol for the variable's
+name as exported by <code class=scheme><span class=variable>nominal-source-mod</span></code>. It can be
+different from <code class=scheme><span class=variable>source-id</span></code> due to a renaming
+<code class=scheme><span class=keyword>provide</span></code>, even if <code class=scheme><span class=variable>source-mod</span></code> and
+<code class=scheme><span class=variable>nominal-source-mod</span></code> are the same.</p>
+<p>
+</p>
+</ul><p></p>
+<p>
+</p>
+<li><p>The result is <code class=scheme><span class=selfeval>#f</span></code> if <code class=scheme><span class=variable>id-stx</span></code> is not bound
+(or bound only to a top-level variable) in its lexical context.</p>
+<p>
+</p>
+</ul><p></p>
+<p>
+<a name="node_idx_2142"></a><a name="node_kw_definitionidentifier-transformer-binding"></a><code class=scheme>(identifier-transformer-binding</code><tt>&nbsp;</tt><code class=scheme><span class=variable>id-stx</span></code><code class=scheme>)</code> is like
+<code class=scheme><code class=scheme>identifier-binding</code></code>, except that the reported
+information is for the identifier's bindings in the transformer
+environment (see section&nbsp;<a href="#node_sec_12.3.3">12.3.3</a>), instead of the normal
+environment. If the result is <code class=scheme><span class=selfeval>'lexical</span></code> for either of
+<code class=scheme><code class=scheme>identifier-binding</code></code> or
+<code class=scheme><code class=scheme>identifier-transformer-binding</code></code>, then the result is
+always <code class=scheme><span class=selfeval>'lexical</span></code> for both.</p>
+<p>
+<a name="node_idx_2144"></a><a name="node_kw_definitionidentifier-binding-export-position"></a><code class=scheme>(identifier-binding-export-position</code><tt>&nbsp;</tt><code class=scheme><span class=variable>id-stx</span></code><code class=scheme>)</code> returns either
+<code class=scheme><span class=selfeval>#f</span></code> or an exact non-negative integer. It returns an
+integer only when <code class=scheme>identifier-binding</code> returns a list, when
+<code class=scheme><span class=variable>id-stx</span></code> represents an imported binding, and when the source
+module assigns internal positions for its definitions.  This
+function is intended for use by <tt><strong>mzc</strong></tt>.</p>
+<p>
+<a name="node_idx_2146"></a><a name="node_kw_definitionidentifier-transformer-binding-export-position"></a><code class=scheme>(identifier-transformer-binding-export-position</code><tt>&nbsp;</tt><code class=scheme><span class=variable>id-stx</span></code><code class=scheme>)</code> is
+like <code class=scheme>identifier-binding-export-position</code>, except that
+the reported information is for the transformer
+environment. This function is intended for use by <tt><strong>mzc</strong></tt>.</p>
+<p>
+</p>
+<a name="node_sec_12.3.3"></a>
+<h3><a href="mzscheme.html#node_toc_node_sec_12.3.3">12.3.3&nbsp;&nbsp;Transformer Environments</a></h3>
+<p></p>
+<p>
+<a name="node_idx_2148"></a>
+The top-level environment for transformer expressions is separate from
+the normal top-level environment. Consequently, top-level definitions
+are not available for use in top-level transformer definitions. For
+example, the following program does not work:
+</p>
+<div align=left><pre class=scheme>(<span class=keyword>define</span> <span class=variable>count</span> <span class=selfeval>0</span>)
+(<code class=scheme><span class=keyword>define-syntax</span></code> (<span class=variable>let1</span> <span class=variable>stx</span>)
+  (<span class=keyword>syntax-case</span> <span class=variable>stx</span> ()
+    [(<span class=variable>_</span> <span class=variable>x</span> <span class=variable>v</span> <span class=variable>b</span>)
+     (<span class=keyword>begin</span>
+       (<span class=keyword>set!</span> <span class=variable>count</span> (<code class=scheme>add1</code> <span class=variable>count</span>)) <span class=comment>; DOESN'T WORK</span>
+       (<span class=keyword>syntax</span> (<span class=keyword>let</span> ([<span class=variable>x</span> <span class=variable>v</span>]) <span class=variable>b</span>)))]))
+(<span class=variable>let1</span> <span class=variable>x</span> <span class=selfeval>2</span> (<code class=scheme>add1</code> <span class=variable>x</span>))
+</pre></div><p>
+The variable <code class=scheme><span class=variable>count</span></code> is bound in the normal top-level
+environment, but it is not bound in the transformer environment, so
+the attempt to expand <code class=scheme>(<span class=variable>let1</span> <span class=variable>x</span> <span class=selfeval>2</span> (<code class=scheme>add1</code> <span class=variable>x</span>))</code> will result in an
+undefined-variable error.</p>
+<p>
+<a name="node_idx_2150"></a>
+The initial namespace created by the stand-alone MzScheme application
+imports all of MzScheme's built-in syntax, procedures, and constants
+into the transformer environment.<a name="call_footnote_Temp_37"></a><a href="#footnote_Temp_37"><sup><small>33</small></sup></a> To extend
+this environment, a programmer must place definitions into a module,
+and then use <a name="node_idx_2152"></a><code class=scheme><span class=keyword>require-for-syntax</span></code> to import the definitions
+into the top-level transformer environment.</p>
+<p>
+Like a top-level definition, a top-level <code class=scheme><span class=keyword>require</span></code> expression
+imports into the normal environment, and the imported bindings are
+not made visible in the transformer environment. A top-level
+<code class=scheme><span class=keyword>require-for-syntax</span></code> imports into the transformer environment
+without affecting the normal environment. The <code class=scheme><span class=keyword>require</span></code> and
+<code class=scheme><span class=keyword>require-for-syntax</span></code> forms create separate instantiations of
+any module that is imported into both environments, in keeping with
+the separation of the environments.</p>
+<p>
+When a lexical variable is introduced by a form other than
+<code class=scheme><span class=keyword>module</span></code> or a top-level definition, it extends the environment
+for both normal and transformer expressions within its scope, but the
+binding is only accessible by expressions resolved in the proper
+environment (i.e., the one in which it was introduced). In
+particular, a transformer expression in a <code class=scheme><span class=keyword>let-syntax</span></code> or
+<code class=scheme><span class=keyword>letrec-syntax</span></code> expression cannot access identifiers bound by
+enclosing forms, and an identifier bound in a transformer expression
+should not appear as an expression in the result of the
+transformer. Such out-of-context uses of a variable are flagged as
+syntax errors when attempting to resolve the identifier.</p>
+<p>
+A <code class=scheme><span class=keyword>let-syntax</span></code> or <code class=scheme><span class=keyword>letrec-syntax</span></code> expression can never
+usefully appear as a transformer expression, because MzScheme
+provides no mechanism for importing into the meta-transformer
+environment that would be used by meta-transformer expressions to
+operate on transformer expressions. In other words, an expression of
+the form
+</p>
+<div align=left><pre class=scheme>(<span class=keyword>let-syntax</span> ([<span class=variable>identifier</span> (<span class=keyword>let-syntax</span> ([<span class=variable>identifier</span> <span class=variable>expr</span>]) 
+                                 <span class=variable>body-expr</span>)]) 
+  <tt>...</tt>)
+</pre></div><p>
+is always illegal, assuming that <code class=scheme><span class=keyword>let-syntax</span></code> is bound in both the
+normal and transformer environments to the <code class=scheme><span class=keyword>let-syntax</span></code> of
+<code class=scheme><code class=scheme>mzscheme</code></code>. No syntax (not even function application) is bound in
+<code class=scheme><span class=variable>expr</span></code>'s environment. This restriction in the <code class=scheme><code class=scheme>mzscheme</code></code>
+language is of little consequence, however, since for-syntax exports
+allow the definition of syntax applicable to the above
+<code class=scheme><span class=variable>body-expr</span></code>.</p>
+<p>
+</p>
+<a name="node_sec_12.3.4"></a>
+<h3><a href="mzscheme.html#node_toc_node_sec_12.3.4">12.3.4&nbsp;&nbsp;Module Environments</a></h3>
+<p></p>
+<p>
+<a name="node_idx_2154"></a><a name="node_idx_2156"></a><a name="node_idx_2158"></a>
+<a name="node_idx_2160"></a>
+In the same way that the normal and transformer environments are kept
+separate at the top level, a module's normal and transformer
+environments are also separated.  Normal imports and definitions in a
+module  --  both variable and syntax  --  contribute to the module's
+normal environment, only.</p>
+<p>
+For example, the module expression
+</p>
+<div align=left><pre class=scheme>(<span class=keyword>module</span> <span class=variable>m</span> <code class=scheme>mzscheme</code> 
+  (<span class=keyword>define</span> (<span class=variable>id</span> <span class=variable>x</span>) <span class=variable>x</span>)
+  (<code class=scheme><span class=keyword>define-syntax</span></code> (<span class=variable>macro</span> <span class=variable>stx</span>)
+    (<span class=variable>id</span> (<span class=keyword>syntax</span> (<code class=scheme>printf</code> <span class=selfeval>&quot;hi~n&quot;</span>)))))
+</pre></div><p>
+is ill-formed because <code class=scheme><span class=variable>id</span></code> is not bound in the transformer
+environment  for the <code class=scheme><span class=variable>macro</span></code> implementation. To make
+<code class=scheme><span class=variable>id</span></code> usable from the transformer, the body of the module <code class=scheme><span class=variable>m</span></code>
+would have to be executed  --  which is impossible in general, because
+a syntax definition such as <code class=scheme><span class=variable>macro</span></code> affects the expansion of the
+rest of the module body.</p>
+<p>
+Consequently, if a procedure such as <code class=scheme><span class=variable>id</span></code> is to be used in a
+transformer, it must either remain local to the transformer
+expression, or reside in a different module. For example, the above
+module is trivially repaired as
+</p>
+<div align=left><pre class=scheme>(<span class=keyword>module</span> <span class=variable>m</span> <code class=scheme>mzscheme</code> 
+  (<code class=scheme><span class=keyword>define-syntax</span></code> <span class=variable>macro</span>
+    (<span class=keyword>let</span> ([<span class=variable>id</span> (<span class=keyword>lambda</span> (<span class=variable>x</span>) <span class=variable>x</span>)])
+      (<span class=keyword>lambda</span> (<span class=variable>stx</span>)
+        (<span class=variable>id</span> (<span class=keyword>syntax</span> (<code class=scheme>printf</code> <span class=selfeval>&quot;hi~n&quot;</span>)))))))
+</pre></div><p>
+The <code class=scheme><span class=keyword>define-syntaxes</span></code> form (see section&nbsp;<a href="#node_sec_12.4">12.4</a>) is useful
+for defining multiple macros that share helper functions. See also
+<code class=scheme><span class=keyword>define-syntax-set</span></code> in Chapter&nbsp;<a href="../mzlib/mzlib-Z-H-17.html#node_chap_17">17</a>
+in <a href="../mzlib/mzlib.html"><i>PLT MzLib: Libraries Manual</i></a>.</p>
+<p>
+In the <code class=scheme><code class=scheme>mzscheme</code></code> language, the base environment for a
+transformer expression includes all of MzScheme. The
+<code class=scheme><code class=scheme>mzscheme</code></code> language also provides a
+<a name="node_kw_definitionrequire-for-syntax"></a><a name="node_idx_2162"></a><code class=scheme><span class=keyword>require-for-syntax</span></code> form (in the normal environment) for
+importing bindings from another module into the importing module's
+transformer environment:
+</p>
+<div align=left><pre class=scheme>(<span class=keyword>require-for-syntax</span> <span class=variable>require-spec</span> ...)
+</pre></div><p>
+A for-syntax import causes the referenced module to be executed at
+expansion time, instead of (or possibly in addition to) run time for
+the module being expanded. The syntax and variable identifiers
+exported by the for-syntax module are visible within the module's
+transformer environment, but not its normal environment. Like a
+normal expression, a transformer expression in a module cannot
+contain free variables.</p>
+<p>
+Transformer expressions and imports for a module <em>M</em> are executed once
+each time a module is expanded using <em>M</em>'s syntax bindings or using
+<em>M</em> as a for-syntax import.  After the module is expanded, its
+transformer environment is destroyed, including bindings from modules
+used at expansion time.</p>
+<p>
+Example:
+</p>
+<div align=left><pre class=scheme> (<span class=keyword>module</span> <span class=variable>rt</span> <code class=scheme>mzscheme</code>
+   (<code class=scheme>printf</code> <span class=selfeval>&quot;RT here~n&quot;</span>)
+   (<span class=keyword>define</span> <span class=variable>mx</span> (<span class=keyword>lambda</span> () <span class=selfeval>7</span>))
+   (<span class=keyword>provide</span> <span class=variable>mx</span>))
+
+ (<span class=keyword>module</span> <span class=variable>et</span> <code class=scheme>mzscheme</code>
+   (<code class=scheme>printf</code> <span class=selfeval>&quot;ET here~n&quot;</span>)
+   (<span class=keyword>define</span> <span class=variable>mx</span> (<span class=keyword>lambda</span> () <span class=selfeval>700</span>))
+   (<span class=keyword>provide</span> <span class=variable>mx</span>))
+
+ (<span class=keyword>module</span> <span class=variable>m</span> <code class=scheme>mzscheme</code>
+   (<span class=keyword>require-for-syntax</span> <code class=scheme>mzscheme</code>)
+   (<span class=keyword>require</span> <span class=variable>rt</span>)               <span class=comment>; rt provides run-time mx</span>
+   (<span class=keyword>require-for-syntax</span> <span class=variable>et</span>)    <span class=comment>; et provides exp-time mx</span>
+
+   <span class=comment>; The mx below is run-time:</span>
+   (<code class=scheme>printf</code> <span class=selfeval>&quot;~a~n&quot;</span> (<span class=variable>mx</span>))       <span class=comment>; prints <code class=schemeresponse><span class=selfeval>7</span></code> when run</span>
+
+   <span class=comment>; The mx below is exp-time:</span>
+   (<span class=keyword>define-syntax</span> <span class=variable>onem</span> (<span class=keyword>lambda</span> (<span class=variable>stx</span>) (<code class=scheme>datum-&gt;syntax-object</code> <span class=variable>stx</span> (<span class=variable>mx</span>) <span class=variable>stx</span>)))
+   (<code class=scheme>printf</code> <span class=selfeval>&quot;~a~n&quot;</span> (<span class=variable>onem</span>))    <span class=comment>; prints <code class=schemeresponse><span class=selfeval>700</span></code> when run</span>
+
+   <span class=comment>; The mx below is run-time:</span>
+   (<span class=keyword>define-syntax</span> <span class=variable>twom</span> (<span class=keyword>lambda</span> (<span class=variable>stx</span>) (<span class=keyword>syntax</span> (<span class=variable>mx</span>))))
+   (<code class=scheme>printf</code> <span class=selfeval>&quot;~a~n&quot;</span> (<span class=variable>twom</span>)))    <span class=comment>; prints <code class=schemeresponse><span class=selfeval>7</span></code> when run</span>
+
+ <span class=comment>; <code class=schemeresponse><span class=selfeval>&quot;ET here&quot;</span></code> is printed during the expansion of m</span>
+
+ (<span class=keyword>require</span> <span class=variable>m</span>) <span class=comment>; prints <code class=schemeresponse><span class=selfeval>&quot;RT here&quot;</span></code>, then <code class=schemeresponse><span class=selfeval>7</span></code>, then <code class=schemeresponse><span class=selfeval>700</span></code>, then <code class=schemeresponse><span class=selfeval>7</span></code></span>
+</pre></div><p>
+This expansion-time execution model explains the need to execute
+declared modules only when they are invoked. If a declared module is
+imported into other modules only for syntax, then the module is
+needed only at expansion time and can be ignored at run time. The
+separation of declaration and execution also allows a for-syntax
+module to be executed once for each module that it expands through
+<code class=scheme><span class=keyword>require-for-syntax</span></code>.</p>
+<p>
+<a name="node_idx_2164"></a>
+The hierarchy of run times avoids confusion among expansion and
+executing layers that can prevent separate compilation. By ensuring that
+the layers are separate, a compiler or programming environment can
+expand, partially expand, or re-expand a module without affecting the
+module's run-time behavior, whether the module is currently executing
+or not.</p>
+<p>
+Since transformer expressions may themselves use macros defined by
+modules with for-syntax imports (to implement the macros), expansion
+of a module creates a hierarchy of run times (or &quot;tower of
+expanders&quot;). The expansion time of each layer corresponds to the run
+time of the next deeper layer.</p>
+<p>
+In the absence of <code class=scheme><span class=keyword>let-syntax</span></code> and <code class=scheme><span class=keyword>letrec-syntax</span></code>, the
+hierarchy of run times would be limited to three levels, since the
+transformer expressions for run-time imports would have been expanded
+before the importing module must be expanded. The <code class=scheme><span class=keyword>let-syntax</span></code> and
+<code class=scheme><span class=keyword>letrec-syntax</span></code> forms, however, allow syntax visible in a
+for-syntax import's transformers to appear in the expansion of
+transformer expressions in the module. Consequently, the hierarchy is
+bounded in principle only by the number of declared modules. In
+practice, the hierarchy will rarely exceed a few levels.</p>
+<p>
+</p>
+<a name="node_sec_12.3.5"></a>
+<h3><a href="mzscheme.html#node_toc_node_sec_12.3.5">12.3.5&nbsp;&nbsp;Macro-Generated Top-Level and Module Definitions</a></h3>
+<p></p>
+<p>
+When a top-level definition binds an identifier that originates from a
+macro expansion, the definition captures only uses of the identifier
+that are generated by the same expansion. This behavior is consistent
+with internal definitions (see section&nbsp;<a href="mzscheme-Z-H-2.html#node_sec_2.8.5">2.8.5</a>), where the
+defined identifier turns into a fresh lexical binding.</p>
+<p>
+Example:
+</p>
+<div align=left><pre class=scheme>(<span class=keyword>define-syntax</span> <span class=variable>def-and-use-of-x</span>
+  (<span class=keyword>syntax-rules</span> ()
+    [(<span class=variable>def-and-use-of-x</span> <span class=variable>val</span>)
+     <span class=comment>; <code class=scheme><span class=variable>x</span></code> below originates from this macro:</span>
+     (<span class=keyword>begin</span> (<span class=keyword>define</span> <span class=variable>x</span> <span class=variable>val</span>) <span class=variable>x</span>)]))
+(<span class=keyword>define</span> <span class=variable>x</span> <span class=selfeval>1</span>)
+<span class=variable>x</span> <span class=comment>; =&gt; <code class=schemeresponse><span class=selfeval>1</span></code></span>
+(<span class=variable>def-and-use-of-x</span> <span class=selfeval>2</span>) <span class=comment>; =&gt; <code class=schemeresponse><span class=selfeval>2</span></code></span>
+<span class=variable>x</span> <span class=comment>; =&gt; <code class=schemeresponse><span class=selfeval>1</span></code></span>
+
+(<span class=keyword>define-syntax</span> <span class=variable>def-and-use</span>
+  (<span class=keyword>syntax-rules</span> ()
+    [(<span class=variable>def-and-use</span> <span class=variable>x</span> <span class=variable>val</span>)
+     <span class=comment>; <code class=scheme><span class=variable>x</span></code> below was provided by the macro use:</span>
+     (<span class=keyword>begin</span> (<span class=keyword>define</span> <span class=variable>x</span> <span class=variable>val</span>) <span class=variable>x</span>)]))
+(<span class=variable>def-and-use</span> <span class=variable>x</span> <span class=selfeval>3</span>) <span class=comment>; =&gt; <code class=schemeresponse><span class=selfeval>3</span></code></span>
+<span class=variable>x</span> <span class=comment>; =&gt; <code class=schemeresponse><span class=selfeval>3</span></code></span>
+</pre></div><p></p>
+<p>
+For a top-level definition (outside of <code class=scheme><span class=keyword>module</span></code>), the order of
+evaluation affects the binding of a generated definition for a
+generated variable use. If the use precedes the definition, then the
+use refers to a non-generated binding, just as if the generated
+definition were not present. (No such dependency on order occurs
+within a <code class=scheme><span class=keyword>module</span></code>, since a module binding covers the entire
+module body.) To support the declaration of an identifier before its
+use, the <code class=scheme><span class=keyword>define-syntaxes</span></code> form avoids binding an identifier
+if the body of the <code class=scheme><span class=keyword>define-syntaxes</span></code> declaration produces zero
+results (see also section&nbsp;<a href="#node_sec_12.4">12.4</a>).</p>
+<p>
+Example:
+</p>
+<div align=left><pre class=scheme>(<span class=keyword>define</span> <span class=variable>bucket-1</span> <span class=selfeval>0</span>)
+(<span class=keyword>define</span> <span class=variable>bucket-2</span> <span class=selfeval>0</span>)
+(<span class=keyword>define-syntax</span> <span class=variable>def-and-set!-use-of-x</span>
+  (<span class=keyword>syntax-rules</span> ()
+    [(<span class=variable>def-and-set!-use-of-x</span> <span class=variable>val</span>)
+     (<span class=keyword>begin</span> (<span class=keyword>set!</span> <span class=variable>bucket-1</span> <span class=variable>x</span>) (<span class=keyword>define</span> <span class=variable>x</span> <span class=variable>val</span>) (<span class=keyword>set!</span> <span class=variable>bucket-2</span> <span class=variable>x</span>))]))
+(<span class=keyword>define</span> <span class=variable>x</span> <span class=selfeval>1</span>)
+(<span class=variable>def-and-set!-use-of-x</span> <span class=selfeval>2</span>)
+<span class=variable>x</span> <span class=comment>; =&gt; <code class=schemeresponse><span class=selfeval>1</span></code></span>
+<span class=variable>bucket-1</span> <span class=comment>; =&gt; <code class=schemeresponse><span class=selfeval>1</span></code></span>
+<span class=variable>bucket-2</span> <span class=comment>; =&gt; <code class=schemeresponse><span class=selfeval>2</span></code></span>
+
+(<span class=keyword>define-syntax</span> <span class=variable>defs-and-uses/fail</span>
+  (<span class=keyword>syntax-rules</span> ()
+    [(<span class=variable>def-and-use</span>)
+     (<span class=keyword>begin</span>
+      <span class=comment>; Initial reference to <code class=scheme><span class=variable>even</span></code> precedes definition:</span>
+      (<span class=keyword>define</span> (<span class=variable>odd</span> <span class=variable>x</span>) (<span class=keyword>if</span> (<code class=scheme>zero?</code> <span class=variable>x</span>) <span class=selfeval>#f</span> (<span class=variable>even</span> (<code class=scheme>sub1</code> <span class=variable>x</span>))))
+      (<span class=keyword>define</span> (<span class=variable>even</span> <span class=variable>x</span>) (<span class=keyword>if</span> (<code class=scheme>zero?</code> <span class=variable>x</span>) <span class=selfeval>#t</span> (<span class=variable>odd</span> (<code class=scheme>sub1</code> <span class=variable>x</span>))))
+      (<span class=variable>odd</span> <span class=selfeval>17</span>))]))
+(<span class=variable>defs-and-uses/fail</span>) <span class=comment>; =&gt; error: undefined identifier <code class=scheme><span class=variable>even</span></code></span>
+     
+(<span class=keyword>define-syntax</span> <span class=variable>defs-and-uses</span>
+  (<span class=keyword>syntax-rules</span> ()
+    [(<span class=variable>def-and-use</span>)
+     (<span class=keyword>begin</span>
+      <span class=comment>; Declare before definition via no-values <code class=scheme><span class=keyword>define-syntaxes</span></code>:</span>
+      (<span class=keyword>define-syntaxes</span> (<span class=variable>odd</span> <span class=variable>even</span>) (<code class=scheme>values</code>))
+      (<span class=keyword>define</span> (<span class=variable>odd</span> <span class=variable>x</span>) (<span class=keyword>if</span> (<code class=scheme>zero?</code> <span class=variable>x</span>) <span class=selfeval>#f</span> (<span class=variable>even</span> (<code class=scheme>sub1</code> <span class=variable>x</span>))))
+      (<span class=keyword>define</span> (<span class=variable>even</span> <span class=variable>x</span>) (<span class=keyword>if</span> (<code class=scheme>zero?</code> <span class=variable>x</span>) <span class=selfeval>#t</span> (<span class=variable>odd</span> (<code class=scheme>sub1</code> <span class=variable>x</span>))))
+      (<span class=variable>odd</span> <span class=selfeval>17</span>))]))
+(<span class=variable>defs-and-uses</span>) <span class=comment>; =&gt; <code class=schemeresponse><span class=selfeval>#t</span></code></span>
+</pre></div><p></p>
+<p>
+Within a module, macro-generated <code class=scheme><span class=keyword>require</span></code> and <code class=scheme><span class=keyword>provide</span></code>
+clauses also introduce and reference generation-specific bindings:
+</p>
+<ul><p>
+</p>
+<li><p>In <code class=scheme><span class=keyword>require</span></code> (see section&nbsp;<a href="mzscheme-Z-H-5.html#node_sec_5.2">5.2</a>), for a
+<code class=scheme><span class=variable>require-spec</span></code> of the form <code class=scheme>(<code class=scheme><span class=keyword>rename</span></code>
+<code class=scheme><span class=variable>local-identifier</span></code> <code class=scheme><span class=variable>exported-identifier</span></code>)</code>, the
+<code class=scheme><span class=variable>local-identifier</span></code> is bound only for uses of the identifier
+generated by the same macro expansion as <code class=scheme><span class=variable>local-identifier</span></code>. In
+<code class=scheme><span class=keyword>require</span></code> for other <code class=scheme><span class=variable>require-spec</span></code>s, the generator of the
+<code class=scheme><span class=variable>require-spec</span></code> determines the scope of the bindings.</p>
+<p>
+</p>
+<li><p>In <code class=scheme><span class=keyword>provide</span></code> (see section&nbsp;<a href="mzscheme-Z-H-5.html#node_sec_5.2">5.2</a>), for a
+<code class=scheme><span class=variable>provide-spec</span></code> of the form <code class=scheme><span class=variable>identifier</span></code>, the exported
+identifier is the one that binds <code class=scheme><span class=variable>identifier</span></code> within the module
+in a generator-specific way, but the external name is the plain
+<code class=scheme><span class=variable>identifier</span></code>. The exceptions for <code class=scheme><span class=keyword>all-from-except</span></code> and
+<code class=scheme><span class=keyword>all-defined-except</span></code> are similarly determined in a
+generator-specific way, as is the <code class=scheme><span class=variable>local-identifier</span></code> binding of
+a <code class=scheme><span class=keyword>rename</span></code> form, but plain identifiers are used for the external
+names. For <code class=scheme><span class=keyword>struct</span></code>, the context of the <code class=scheme><span class=variable>struct-identifier</span></code>
+determines local bindings for all of the expanded <code class=scheme><span class=keyword>struct</span></code>
+names. For <code class=scheme><span class=keyword>all-defined</span></code> and <code class=scheme><span class=keyword>all-defined-except</span></code>, only
+identifiers with definitions having the same generator as the
+<code class=scheme><span class=keyword>all-defined</span></code> or <code class=scheme><span class=keyword>all-defined-except</span></code> keyword are exported;
+the external name is the plain identifier from the definition. The
+generator of a <code class=scheme><span class=keyword>all-from</span></code> or <code class=scheme><span class=keyword>all-from-except</span></code>
+<code class=scheme><span class=variable>provide-spec</span></code> does not affect the set identifiers exported by
+the <code class=scheme><span class=variable>provide-spec</span></code>.</p>
+<p>
+</p>
+</ul><p></p>
+<p>
+</p>
+<p>
+</p>
+<a name="node_sec_12.4"></a>
+<h2><a href="mzscheme.html#node_toc_node_sec_12.4">12.4&nbsp;&nbsp;Binding Multiple and Fluid Syntax Identifiers</a></h2>
+<p><a name="node_idx_2166"></a></p>
+<p>
+In addition to <code class=scheme><span class=keyword>define-syntax</span></code>, <code class=scheme><span class=keyword>let-syntax</span></code>, and
+<code class=scheme><span class=keyword>letrec-syntax</span></code>, MzScheme provides
+<a name="node_kw_definitiondefine-syntaxes"></a><a name="node_idx_2168"></a><code class=scheme><span class=keyword>define-syntaxes</span></code>, <a name="node_kw_definitionlet-syntaxes"></a><a name="node_idx_2170"></a><code class=scheme><span class=keyword>let-syntaxes</span></code>, and
+<a name="node_kw_definitionletrec-syntaxes"></a><a name="node_idx_2172"></a><code class=scheme><span class=keyword>letrec-syntaxes</span></code>. These forms are analogous to
+<code class=scheme><span class=keyword>define-values</span></code>, <code class=scheme><span class=keyword>let-values</span></code>, and
+<code class=scheme><span class=keyword>letrec-values</span></code>, allowing multiple syntax bindings at once
+(see section&nbsp;<a href="mzscheme-Z-H-2.html#node_sec_2.8">2.8</a>).
+</p>
+<div align=left><pre class=scheme>(<span class=keyword>define-syntaxes</span> (<span class=variable>variable</span> <tt>&middot;&middot;&middot;</tt>) <span class=variable>expr</span>)
+
+(<span class=keyword>let-syntaxes</span> (((<span class=variable>variable</span> <tt>&middot;&middot;&middot;</tt>) <span class=variable>expr</span>)
+               <tt>&middot;&middot;&middot;</tt>)
+   <span class=variable>expr</span> <tt>&middot;&middot;&middot;</tt><sup>1</sup>)
+
+(<span class=keyword>letrec-syntaxes</span> (((<span class=variable>variable</span> <tt>&middot;&middot;&middot;</tt>) <span class=variable>expr</span>)
+                  <tt>&middot;&middot;&middot;</tt>)
+   <span class=variable>expr</span> <tt>&middot;&middot;&middot;</tt><sup>1</sup>)
+</pre></div><p>
+At the top level, <code class=scheme><span class=keyword>define-syntaxes</span></code> accepts zero results for
+any number of <code class=scheme><span class=variable>variable</span></code>s, and in that case, it neither binds the
+identifiers nor signals an error. This behavior is useful for
+<code class=scheme><span class=variable>variable</span></code>s that are introduced by a macro that produces
+top-level <code class=scheme><span class=keyword>define</span></code>s. See section&nbsp;<a href="#node_sec_12.3.5">12.3.5</a> for more information.</p>
+<p>
+MzScheme also provides a <a name="node_kw_definitionletrec-syntaxes+values"></a><a name="node_idx_2174"></a><code class=scheme><span class=keyword>letrec-syntaxes+values</span></code> form for
+binding both values and syntax in a single, mutually recursive scope:
+</p>
+<div align=left><pre class=scheme>(<span class=keyword>letrec-syntaxes+values</span> (((<span class=variable>variable</span> <tt>&middot;&middot;&middot;</tt>) <span class=variable>expr</span>) <tt>&middot;&middot;&middot;</tt>)
+                        (((<span class=variable>variable</span> <tt>&middot;&middot;&middot;</tt>) <span class=variable>expr</span>) <tt>&middot;&middot;&middot;</tt>)
+   <span class=variable>expr</span> <tt>&middot;&middot;&middot;</tt><sup>1</sup>)
+</pre></div><p>
+The first set of bindings are syntax bindings (as in
+<code class=scheme><span class=keyword>letrec-syntaxes</span></code>), and the second set of bindings are normal
+variable bindings (as in <code class=scheme><span class=keyword>letrec-values</span></code>).</p>
+<p>
+Examples:
+</p>
+<div align=left><pre class=scheme><span class=comment>;; Defines <code class=scheme><code class=scheme><span class=variable>let/cc</span></code></code> and <code class=scheme><span class=variable>let-current-continuation</span></code> as the same macro:</span>
+(<span class=keyword>define-syntaxes</span> (<code class=scheme><span class=variable>let/cc</span></code> <span class=variable>let-current-continuation</span>)
+  (<span class=keyword>let</span> ([<span class=variable>macro</span> (<span class=keyword>syntax-rules</span> ()
+                 [(<span class=variable>_</span> <span class=variable>id</span> <span class=variable>body1</span> <span class=variable>body</span> ...) 
+                  (<code class=scheme>call/cc</code> (<span class=keyword>lambda</span> (<span class=variable>id</span>) <span class=variable>body1</span> <span class=variable>body</span> ...))])])
+    (<code class=scheme>values</code> <span class=variable>macro</span> <span class=variable>macro</span>)))
+
+(<span class=keyword>letrec-syntaxes+values</span> ([(<span class=variable>get-id</span>) (<span class=keyword>syntax-rules</span> ()
+                                    [(<span class=variable>_</span>) <span class=variable>id</span>])])
+                        ([(<span class=variable>id</span>) (<span class=keyword>lambda</span> (<span class=variable>x</span>) <span class=variable>x</span>)]
+                         [(<span class=variable>x</span>) (<span class=variable>get-id</span>)])
+   <span class=variable>x</span>) <span class=comment>; =&gt; the <code class=scheme><span class=variable>id</span></code> identify procedure</span>
+</pre></div><p></p>
+<p>
+Finally, MzScheme provides <a name="node_kw_definitionfluid-let-syntax"></a><a name="node_idx_2176"></a><code class=scheme><span class=keyword>fluid-let-syntax</span></code>, which is
+roughly analogous to <code class=scheme><span class=keyword>fluid-let</span></code>.
+</p>
+<div align=left><pre class=scheme>(<span class=keyword>fluid-let-syntax</span> ((<span class=variable>variable</span> <span class=variable>expr</span>)
+                   <tt>&middot;&middot;&middot;</tt>)
+   <span class=variable>body-expr</span> <tt>&middot;&middot;&middot;</tt><sup>1</sup>)
+</pre></div><p>
+Instead of introducing a new binding, <code class=scheme><span class=keyword>fluid-let-syntax</span></code> alters
+the mapping for each <code class=scheme><span class=variable>variable</span></code> while expanding the
+<code class=scheme><span class=variable>body-expr</span></code>s. Each <code class=scheme><span class=variable>variable</span></code> need not have been mapped to
+expansion-time values before, and the re-mapping is not restricted to
+instances of <code class=scheme><span class=variable>variable</span></code> in the <code class=scheme><span class=variable>body-expr</span></code>s; it applies when
+resolving any identifier that is <code class=scheme><code class=scheme>bound-identifier=?</code></code> to
+<code class=scheme><span class=variable>variable</span></code> while the <code class=scheme><span class=variable>body-expr</span></code>s are expanded. However,
+<code class=scheme><span class=keyword>fluid-let-syntax</span></code> does not mutate any state that is visible to
+other expansions (that are possibly running in other threads).</p>
+<p>
+</p>
+<p>
+</p>
+<a name="node_sec_12.5"></a>
+<h2><a href="mzscheme.html#node_toc_node_sec_12.5">12.5&nbsp;&nbsp;Special Syntax Identifiers</a></h2>
+<p><a name="node_idx_2178"></a></p>
+<p>
+To enable the definition of syntax transformers for application forms
+and other data (numbers, vectors, etc.), the syntax expander treats
+<a name="node_idx_2180"></a><code class=scheme><span class=keyword>#%app</span></code>, <a name="node_idx_2182"></a><code class=scheme><span class=keyword>#%top</span></code>, and <a name="node_idx_2184"></a><code class=scheme><span class=keyword>#%datum</span></code>
+as special identifiers.</p>
+<p>
+Any expandable expression of the form
+</p>
+<div align=left><pre class=scheme>(<span class=variable>datum</span> . <span class=variable>datum</span>)
+</pre></div><p>
+where the first <code class=scheme><span class=variable>datum</span></code> is not an identifier bound to an
+expansion-time value, is treated as
+</p>
+<div align=left><pre class=scheme>(<span class=keyword>#%app</span> <span class=variable>datum</span> . <span class=variable>datum</span>)
+</pre></div><p>
+so that the syntax transformer bound to <code class=scheme><span class=keyword>#%app</span></code> is applied.
+In addition, <code class=scheme>()</code> is treated as <code class=scheme>(<span class=keyword>#%app</span>)</code>.
+Similarly, an expression
+</p>
+<div align=left><pre class=scheme><span class=variable>identifier</span>
+</pre></div><p>
+where <code class=scheme><span class=variable>identifier</span></code> has no binding other than a top-level or local
+module binding, is treated as
+</p>
+<div align=left><pre class=scheme>(<span class=keyword>#%top</span> . <span class=variable>identifier</span>)
+</pre></div><p>
+Finally, an expression
+</p>
+<div align=left><pre class=scheme><span class=variable>datum</span>
+</pre></div><p>
+where <code class=scheme><span class=variable>datum</span></code> is not an identifier or pair, 
+is treated as 
+</p>
+<div align=left><pre class=scheme>(<span class=keyword>#%datum</span> . <span class=variable>datum</span>)
+</pre></div><p></p>
+<p>
+The <code class=scheme><code class=scheme>mzscheme</code></code> module binds <code class=scheme><span class=keyword>#%app</span></code>, <code class=scheme><span class=keyword>#%top</span></code>, and
+<code class=scheme><span class=keyword>#%datum</span></code> as regular application, top-level variable
+reference, and implicit quote, respectively. A module can export
+different transformers with these names to support languages
+different from conventional Scheme.</p>
+<p>
+In addition, <a name="node_idx_2186"></a><code class=scheme><span class=keyword>#%module-begin</span></code> is used as a transformer for a
+module body. The <code class=scheme><code class=scheme>mzscheme</code></code> module binds <code class=scheme><span class=keyword>#%module-begin</span></code>
+to a form that inserts a for-syntax import of <code class=scheme><code class=scheme>mzscheme</code></code> for
+syntax definitions. It also exports <code class=scheme><span class=keyword>#%plain-module-begin</span></code>,
+which can be substituted for <code class=scheme><span class=keyword>#%module-begin</span></code> to avoid the
+for-syntax import of <code class=scheme><code class=scheme>mzscheme</code></code>. Any other transformer used for
+<code class=scheme><span class=keyword>#%module-begin</span></code> must expand to <code class=scheme><code class=scheme>mzscheme</code></code>'s
+<code class=scheme><span class=keyword>#%module-begin</span></code> or <code class=scheme><span class=keyword>#%plain-module-begin</span></code>.</p>
+<p>
+When an expression is fully expanded, all applications, top-level
+variable references, and literal datum expressions will appear as
+explicit <code class=scheme><span class=keyword>#%app</span></code>, <code class=scheme><span class=keyword>#%top</span></code>, and <code class=scheme><span class=keyword>#%datum</span></code> forms,
+respectively. Those forms can also be used directly by source
+code. The <code class=scheme><span class=keyword>#%module-begin</span></code> form can never usefully appear in an
+expression, and the body of a fully expanded <code class=scheme><span class=keyword>module</span></code> declaration
+is not wrapped with <code class=scheme><span class=keyword>#%module-begin</span></code>.</p>
+<p>
+The following example shows how the special syntax identifiers can be
+defined to create a non-Scheme module language:
+</p>
+<div align=left><pre class=scheme>(<span class=keyword>module</span> <span class=variable>lambda-calculus</span> <code class=scheme>mzscheme</code> 
+  
+  <span class=comment>; Restrict lambda to one argument: </span>
+  (<span class=keyword>define-syntax</span> <span class=variable>lc-lambda</span> 
+    (<span class=keyword>syntax-rules</span> () 
+      [(<span class=variable>_</span> (<span class=variable>x</span>) <span class=variable>E</span>) (<span class=keyword>lambda</span> (<span class=variable>x</span>) <span class=variable>E</span>)])) 
+  
+  <span class=comment>; Restrict application to two expressions:</span>
+  (<span class=keyword>define-syntax</span> <span class=variable>lc-app</span> 
+    (<span class=keyword>syntax-rules</span> () 
+      [(<span class=variable>_</span> <span class=variable>E1</span> <span class=variable>E2</span>) (<span class=variable>E1</span> <span class=variable>E2</span>)])) 
+  
+  <span class=comment>; Restrict a lambda calculus module to one body expression: </span>
+  (<span class=keyword>define-syntax</span> <span class=variable>lc-module-begin</span>  
+    (<span class=keyword>syntax-rules</span> () 
+      [(<span class=variable>_</span> <span class=variable>E</span>) (<span class=keyword>#%module-begin</span> <span class=variable>E</span>)])) 
+  
+  <span class=comment>; Disallow numbers, vectors, etc. </span>
+  (<span class=keyword>define-syntax</span> <span class=variable>lc-datum</span> 
+    (<span class=keyword>syntax-rules</span> ())) 
+  
+  <span class=comment>; Provide (with renaming): </span>
+  (<span class=keyword>provide</span> <span class=keyword>#%top</span> <span class=comment>; keep mzscheme's free-variable error </span>
+           (<span class=keyword>rename</span> <span class=variable>lc-lambda</span> <span class=keyword>lambda</span>) 
+           (<span class=keyword>rename</span> <span class=variable>lc-app</span> <span class=keyword>#%app</span>) 
+           (<span class=keyword>rename</span> <span class=variable>lc-module-begin</span> <span class=keyword>#%module-begin</span>) 
+           (<span class=keyword>rename</span> <span class=variable>lc-datum</span> <span class=keyword>#%datum</span>))) 
+  
+(<span class=keyword>module</span> <span class=variable>m</span> <span class=variable>lambda-calculus</span> 
+  <span class=comment>; The only syntax defined by <code class=scheme><span class=variable>lambda-calculus</span></code> is </span>
+  <span class=comment>; unary <code class=scheme><span class=keyword>lambda</span></code>, unary application, and variables. </span>
+  <span class=comment>; Also, the module must contain exactly one expression. </span>
+  ((<span class=keyword>lambda</span> (<span class=variable>y</span>) (<span class=variable>y</span> <span class=variable>y</span>)) 
+   (<span class=keyword>lambda</span> (<span class=variable>y</span>) (<span class=variable>y</span> <span class=variable>y</span>)))) 
+  
+(<span class=keyword>require</span> <span class=variable>m</span>)     <span class=comment>; executes m, loops forever</span>
+</pre></div><p></p>
+<p>
+</p>
+<p>
+</p>
+<a name="node_sec_12.6"></a>
+<h2><a href="mzscheme.html#node_toc_node_sec_12.6">12.6&nbsp;&nbsp;Macro Expansion</a></h2>
+<p><a name="node_idx_2188"></a></p>
+<p>
+<a name="node_idx_2190"></a><a name="node_idx_2192"></a>
+A <code class=scheme><span class=keyword>define-syntax</span></code>, <code class=scheme><span class=keyword>let-syntax</span></code>, or
+<code class=scheme><span class=keyword>letrec-syntax</span></code> form associates an identifier to an
+expansion-time value. If the expansion-time value is a procedure of
+one argument, then the procedure is applied by the syntax expander
+when the identifier is used in the scope of the syntax binding.</p>
+<p>
+The transformer for an <code class=scheme><span class=variable>identifier</span></code> is applied whenever the
+<code class=scheme><span class=variable>identifier</span></code> appears in an expression position  --  not just when
+it appears after a parenthesis as <code class=scheme><span class=variable>(<code class=scheme><span class=variable>identifier</span></code> <tt>...</tt>)</span></code>.
+When it does appear as <code class=scheme><span class=variable>(<code class=scheme><span class=variable>identifier</span></code> <tt>...</tt>)</span></code>, the entire
+<code class=scheme><span class=variable>(<code class=scheme><span class=variable>identifier</span></code> <tt>...</tt>)</span></code> expression is provided as the
+argument to the transformer. Otherwise only <code class=scheme><span class=variable>identifier</span></code> is
+provided to the transformer.</p>
+<p>
+A typical transformer is implemented as
+</p>
+<div align=left><pre class=scheme>(<span class=keyword>lambda</span> (<span class=variable>stx</span>) 
+  (<span class=keyword>syntax-case</span> <span class=variable>stx</span> ()
+    [(<span class=variable>_</span> <span class=variable>rest-of-pattern</span>) <span class=variable>expr</span>]))
+</pre></div><p>
+so that <code class=scheme><span class=variable>identifier</span></code> by itself does not match the pattern; thus,
+the <a name="node_idx_2194"></a><code class=scheme>exn:syntax</code> exception is raised when <code class=scheme><span class=variable>identifier</span></code> does not appear as
+<code class=scheme><span class=variable>(<code class=scheme><span class=variable>identifier</span></code> <tt>...</tt>)</span></code>.</p>
+<p>
+<a name="node_idx_2196"></a><a name="node_kw_definitionmake-set!-transformer"></a><code class=scheme>(make-set!-transformer</code><tt>&nbsp;</tt><code class=scheme><span class=variable>proc</span></code><code class=scheme>)</code> <a name="node_idx_2198"></a> also
+creates a transformer procedure. The <code class=scheme><span class=variable>proc</span></code> argument must be a
+procedure of one argument; if the result of
+<code class=scheme>(<code class=scheme>make-set!-transformer</code> <span class=variable>proc</span>)</code> is bound as syntax to
+<code class=scheme><span class=variable>identifier</span></code>, then <code class=scheme><span class=variable>proc</span></code> is applied as a transformer when
+<code class=scheme><span class=variable>identifier</span></code> is used in an expression position, or when it is
+used as the target of a <code class=scheme><span class=keyword>set!</span></code> assignment:
+<code class=scheme>(set!&nbsp;<code class=scheme><span class=variable>identifier</span></code> <code class=scheme><span class=variable>expr</span></code>)</code>. When the identifier
+appears as a <code class=scheme><span class=keyword>set!</span></code> target, the entire <code class=scheme><span class=keyword>set!</span></code>
+expression is provided to the transformer.</p>
+<p>
+Example:
+</p>
+<div align=left><pre class=scheme>(<span class=keyword>let</span> ([<span class=variable>x</span> <span class=selfeval>1</span>]
+      [<span class=variable>y</span> <span class=selfeval>2</span>])
+  (<span class=keyword>let-syntax</span> ([<span class=variable>x</span> (<code class=scheme>make-set!-transformer</code>
+                    (<span class=keyword>lambda</span> (<span class=variable>stx</span>)
+                     (<span class=keyword>syntax-case</span> <span class=variable>stx</span> (<span class=keyword>set!</span>)
+                       <span class=comment>; Redirect mutation of x to y</span>
+                       [(<span class=keyword>set!</span> <span class=variable>id</span> <span class=variable>v</span>) (<span class=keyword>syntax</span> (<span class=keyword>set!</span> <span class=variable>y</span> <span class=variable>v</span>))])))]
+                       <span class=comment>; Normal use of <code class=scheme><span class=variable>x</span></code> really gets <code class=scheme><span class=variable>x</span></code></span>
+                       [<span class=variable>id</span> (<code class=scheme>identifier?</code> (<span class=keyword>syntax</span> <span class=variable>id</span>)) (<span class=keyword>syntax</span> <span class=variable>x</span>)])))])
+    (<span class=keyword>begin</span>
+      (<span class=keyword>set!</span> <span class=variable>x</span> <span class=selfeval>3</span>)
+      (<code class=scheme>list</code> <span class=variable>x</span> <span class=variable>y</span>)))) <span class=comment>; =&gt; <code class=schemeresponse><span class=keyword>'</span>(<span class=selfeval>1</span> <span class=selfeval>3</span>)</code></span>
+</pre></div><p></p>
+<p>
+<a name="node_idx_2200"></a><a name="node_kw_definitionset!-transformer_Q_"></a><code class=scheme>(set!-transformer?</code><tt>&nbsp;</tt><code class=scheme><span class=variable>v</span></code><code class=scheme>)</code> returns <code class=scheme><span class=selfeval>#t</span></code> if <code class=scheme><span class=variable>v</span></code> is a
+value created by <code class=scheme>make-set!-transformer</code>, <code class=scheme><span class=selfeval>#f</span></code>
+otherwise.</p>
+<p>
+<a name="node_idx_2202"></a><a name="node_kw_definitionmake-rename-transformer"></a><code class=scheme>(make-rename-transformer</code><tt>&nbsp;</tt><code class=scheme><span class=variable>id-stx</span></code><code class=scheme>)</code> <a name="node_idx_2204"></a> creates
+a transformer procedure that inserts the identifier <code class=scheme><span class=variable>id-stx</span></code> in
+place of whatever identifier binds the transformer, including in
+non-application positions, and in <code class=scheme><span class=keyword>set!</span></code> expressions. Such a
+transformer could be written manually, but the one created by
+<code class=scheme>make-rename-transformer</code> cooperates specially with
+<code class=scheme>syntax-local-value</code> (see below).</p>
+<p>
+<a name="node_idx_2206"></a><a name="node_kw_definitionrename-transformer_Q_"></a><code class=scheme>(rename-transformer?</code><tt>&nbsp;</tt><code class=scheme><span class=variable>v</span></code><code class=scheme>)</code> returns <code class=scheme><span class=selfeval>#t</span></code> if <code class=scheme><span class=variable>v</span></code> is a value
+created by <code class=scheme>make-rename-transformer</code>, <code class=scheme><span class=selfeval>#f</span></code> otherwise.</p>
+<p>
+If a transformer expression produces a non-procedure value, the value
+is associated with the identifier as a generic expansion-time
+value. Any use of the identifier in an expression position is
+rejected as a syntax error, but syntax transformers can access the
+value. For example, the <code class=scheme><span class=keyword>define-signature</span></code> form (see
+Chapter&nbsp;<a href="../mzlib/mzlib-Z-H-41.html#node_chap_41">41</a>
+in <a href="../mzlib/mzlib.html"><i>PLT MzLib: Libraries Manual</i></a>) associates a component interface
+description to the defined identifier.</p>
+<p>
+When a syntax transformer is applied, it can query the bindings of
+identifiers in the lexical environment of the expression being
+transformed. For example, the <code class=scheme><span class=keyword>unit/sig</span></code> form can access a
+named interface description with <code class=scheme><code class=scheme>syntax-local-value</code></code>:
+</p>
+<ul><p>
+</p>
+<li><p><a name="node_idx_2208"></a><a name="node_kw_definitionsyntax-local-value"></a><code class=scheme>(syntax-local-value</code><tt>&nbsp;</tt><code class=scheme><span class=variable>id-stx</span></code><tt>&nbsp;</tt>[<code class=scheme><span class=variable>failure-thunk</span></code>]<code class=scheme>)</code> returns the
+expansion-time value of <code class=scheme><span class=variable>id-stx</span></code> in the transformed expression's
+context. If <code class=scheme><span class=variable>id-stx</span></code> is not bound to an expansion-time value (via
+<code class=scheme><span class=keyword>define-syntax</span></code>, <code class=scheme><span class=keyword>let-syntax</span></code>, etc.) in the environment
+of the expression being transformed, the result is obtained by
+applying <code class=scheme><span class=variable>failure-thunk</span></code>. If <code class=scheme><span class=variable>failure-thunk</span></code> is not provided,
+the <a name="node_idx_2210"></a><code class=scheme>exn:application:mismatch</code> exception is raised. If <code class=scheme><span class=variable>id-stx</span></code> is bound to
+a rename transformer created with <code class=scheme>make-rename-transformer</code>,
+<code class=scheme>syntax-local-value</code> effectively calls itself with the target
+of the rename and returns that result, instead of the rename
+transformer.</p>
+<p>
+</p>
+<li><p><a name="node_idx_2212"></a><a name="node_kw_definitionsyntax-local-name"></a><code class=scheme>(syntax-local-name</code><code class=scheme>)</code> returns an inferred name for the
+expression position being transformed, or <code class=scheme><span class=selfeval>#f</span></code>; see also
+section&nbsp;<a href="mzscheme-Z-H-6.html#node_sec_6.2.4">6.2.4</a>.</p>
+<p>
+</p>
+<li><p><a name="node_idx_2214"></a><a name="node_kw_definitionsyntax-local-context"></a><code class=scheme>(syntax-local-context</code><code class=scheme>)</code> returns either <code class=scheme><span class=selfeval>'expression</span></code>,
+<code class=scheme><span class=selfeval>'top-level</span></code>, <code class=scheme><span class=selfeval>'module</span></code>, or a non-empty list of arbitrary
+values.  The first three possibilities indicate that the expression
+is being expanded for a (non-definition) expression position, a
+top-level position, or a module top-level position, respectively. The
+last indicates expansion for an internal-definition position. The
+identity of the lists's first element (i.e., its <code class=scheme><code class=scheme>eq?</code></code>ness)
+reflects the identity of the internal-definition context; in
+particular two transformer expansions receive the same first value if
+and only if they are invoked for the same internal-definition
+context. Later values in the list similarly identify
+internal-definition contexts that are still being expanded, and that
+required the expansion of nested internal-definition contexts.</p>
+<p>
+</p>
+<li><p><a name="node_idx_2216"></a><a name="node_kw_definitionsyntax-local-get-shadower"></a><code class=scheme>(syntax-local-get-shadower</code><tt>&nbsp;</tt><code class=scheme><span class=variable>identifier</span></code><code class=scheme>)</code> returns
+<code class=scheme><span class=variable>identifier</span></code> if no binding in the current expansion context
+shadows <code class=scheme><span class=variable>identifier</span></code>, if <code class=scheme><span class=variable>identifier</span></code> has no module context,
+and if the current expansion context is not a module. If a binding of
+<code class=scheme><span class=variable>inner-identifier</span></code> shadows <code class=scheme><span class=variable>identifier</span></code>, the result is the
+same as <code class=scheme>(syntax-local-get-shadower <code class=scheme><span class=variable>inner-identifier</span></code>)</code>,
+except that it has the location and properties of
+<code class=scheme><span class=variable>identifier</span></code>. Otherwise, the result is the same as
+<code class=scheme><span class=variable>identifier</span></code> with its module context (if any) removed and the
+current module context (if any) added. Thus, the result is an
+identifier corresponding to the innermost shadowing of
+<code class=scheme><span class=variable>identifier</span></code> in the current context if its shadowed, and a
+module-contextless version of <code class=scheme><span class=variable>identifier</span></code> otherwise.</p>
+<p>
+</p>
+<li><p><a name="node_idx_2218"></a><a name="node_kw_definitionsyntax-local-module-introduce"></a><code class=scheme>(syntax-local-module-introduce</code><tt>&nbsp;</tt><code class=scheme><span class=variable>stx</span></code><code class=scheme>)</code> returns a syntax object
+like <code class=scheme><span class=variable>stx</span></code>, except that if <code class=scheme><span class=variable>stx</span></code> has no module context, the
+returned object's lexical context includes bindings of the module
+being compiled/expanded at the time of the call, if any. This
+procedure is normally not used directly; it is used by
+<code class=scheme>generate-temporaries</code>.</p>
+<p>
+</p>
+</ul><p></p>
+<p>
+<a name="node_idx_2220"></a>
+A transformer can also expand or partially expand subexpressions from
+its input syntax object:
+</p>
+<ul><p>
+</p>
+<li><p><a name="node_idx_2222"></a><a name="node_kw_definitionlocal-expand"></a><code class=scheme>(local-expand</code><tt>&nbsp;</tt><code class=scheme><span class=variable>stx context-v stop-id-stx-list</span></code><code class=scheme>)</code> expands
+<code class=scheme><span class=variable>stx</span></code> in the lexical context of the expression currently being
+expanded. The <code class=scheme><span class=variable>context-v</span></code> argument is used as the result of
+<code class=scheme><span class=variable>syntax-local-context</span></code> for immediate expansions; for a
+particular internal-definition context, generate a unique value and
+<code class=scheme>cons</code> it onto the current result of
+<code class=scheme>syntax-local-context</code> if it is a list.</p>
+<p>
+When an identifier in <code class=scheme><span class=variable>stop-id-stx-list</span></code> is encountered by the
+expander in a subexpression, expansions stops for the subexpression.
+If <code class=scheme><span class=keyword>#%app</span></code>, <code class=scheme><span class=keyword>#%top</span></code>, or <code class=scheme><span class=keyword>#%datum</span></code> (see
+section&nbsp;<a href="#node_sec_12.5">12.5</a>) appears in <code class=scheme><span class=variable>stop-id-stx-list</span></code>, then
+application, top-level variable reference, and literal data
+expressions without the respective explicit form are not wrapped with
+the explicit form.</p>
+<p>
+</p>
+</ul><p>
+</p>
+<p>
+To track the introduction of identifiers by a macro
+(see section&nbsp;<a href="#node_sec_12.3">12.3</a>), the syntax expander adds a special ``mark''
+to a syntax object that is provided to a transformer, and also marks
+the result of the transformer. Consecutive marks cancel, and each
+transformer application has a distinct mark, so the only parts of the
+resulting syntax object with marks are the parts that were introduced
+by the transformer. A transformer can explicitly add a current mark
+to a syntax object using <code class=scheme>syntax-local-introduce</code> or the
+result of <code class=scheme>make-syntax-introducer</code>:
+</p>
+<ul><p>
+</p>
+<li><p><a name="node_idx_2224"></a><a name="node_kw_definitionsyntax-local-introduce"></a><code class=scheme>(syntax-local-introduce</code><tt>&nbsp;</tt><code class=scheme><span class=variable>stx</span></code><code class=scheme>)</code> produces a syntax object that
+is like <code class=scheme><span class=variable>stx</span></code>, except that a mark for the current expansion is
+added (possibly canceling an existing mark in parts of <code class=scheme><span class=variable>stx</span></code>).</p>
+<p>
+</p>
+<li><p><a name="node_idx_2226"></a><a name="node_kw_definitionmake-syntax-introducer"></a><code class=scheme>(make-syntax-introducer</code><code class=scheme>)</code> produces a procedure that behaves
+like <code class=scheme>syntax-local-introduce</code>, except using a fresh
+mark. Multiple applications of the
+same <code class=scheme>make-syntax-introducer</code> result procedure use the same
+mark, and different result procedures use distinct marks.</p>
+<p>
+</p>
+</ul><p>
+Explicit marking is useful on syntax objects that flow into or out of
+a transformer without being the transformer argument or result. For
+example, DrScheme's Check Syntax<a name="node_idx_2228"></a> tool recognizes
+<code class=scheme><span class=selfeval>'disappeared-binding</span></code><a name="node_idx_2230"></a> and <code class=scheme><span class=selfeval>'disappeared-use</span></code><a name="node_idx_2232"></a>
+properties, which specify bound-binding identifier pairs in the
+source program that do not appear in the expansion. Example:
+</p>
+<div align=left><pre class=scheme>(<code class=scheme><span class=keyword>define-syntax</span></code> (<span class=variable>match-list</span> <span class=variable>stx</span>)
+  (<span class=keyword>syntax-case</span> <span class=variable>stx</span> ()
+    [(<span class=variable>_</span> <span class=variable>expr</span> (<span class=variable>id</span> ...) <span class=variable>result-id</span>)
+     (<span class=keyword>let</span> ([<span class=variable>ids</span> (<code class=scheme>syntax-&gt;list</code> (<span class=keyword>syntax</span> (<span class=variable>id</span> ...)))]
+           [<span class=variable>result-id</span> (<span class=keyword>syntax</span> <span class=variable>result-id</span>)])
+       <span class=comment>;; Make sure the expression is well formed:</span>
+       (<code class=scheme>for-each</code> (<span class=keyword>lambda</span> (<span class=variable>id</span>)
+                   (<span class=keyword>unless</span> (<code class=scheme>identifier?</code> <span class=variable>id</span>)
+                     (<code class=scheme>raise-syntax-error</code> <span class=selfeval>#f</span> <span class=selfeval>&quot;not an identifier&quot;</span> <span class=variable>stx</span> <span class=variable>id</span>)))
+                 (<code class=scheme>append</code> <span class=variable>ids</span> (<code class=scheme>list</code> <span class=variable>result-id</span>)))
+       <span class=comment>;; Find the matching variable and produce a <code class=scheme><code class=scheme>list-ref</code></code> expression:</span>
+       (<span class=keyword>let</span> <span class=variable>loop</span> ([<span class=variable>ids</span> <span class=variable>ids</span>] [<span class=variable>pos</span> <span class=selfeval>0</span>])
+         (<span class=keyword>cond</span>
+           [(<code class=scheme>null?</code> <span class=variable>ids</span>) (<code class=scheme>raise-syntax-error</code> <span class=selfeval>#f</span> <span class=selfeval>&quot;no pattern binding&quot;</span> <span class=variable>stx</span> <span class=variable>result-id</span>)]
+           [(<code class=scheme>bound-identifier=?</code> (<code class=scheme>car</code> <span class=variable>ids</span>) <span class=variable>result-id</span>)
+            <span class=comment>;; Found it; produce the <code class=scheme><code class=scheme>list-ref</code></code> expression, and</span>
+            <span class=comment>;; tell the Check Syntax tool about the pattern-variable binding:</span>
+            (<span class=keyword>with-syntax</span> ([<span class=variable>pos</span> <span class=variable>pos</span>])
+              (<code class=scheme>syntax-property</code>
+               (<code class=scheme>syntax-property</code>
+                (<span class=keyword>syntax</span> (<code class=scheme>list-ref</code> <span class=variable>expr</span> <span class=variable>pos</span>)) <span class=comment>; the expansion result</span>
+                <span class=keyword>'</span><span class=variable>disappeared-binding</span>
+                (<code class=scheme>syntax-local-introduce</code> (<code class=scheme>car</code> <span class=variable>ids</span>)))
+               <span class=keyword>'</span><span class=variable>disappeared-use</span>
+               (<code class=scheme>syntax-local-introduce</code> <span class=variable>result-id</span>)))]
+           [<span class=keyword>else</span> (<span class=variable>loop</span> (<code class=scheme>cdr</code> <span class=variable>ids</span>) (<code class=scheme>add1</code> <span class=variable>pos</span>))])))]))
+
+<span class=comment>;; Test it:</span>
+(<span class=variable>match-list</span> <span class=keyword>'</span>(<span class=selfeval>1</span> <span class=selfeval>2</span> <span class=selfeval>3</span>) (<span class=variable>a</span> <span class=variable>b</span> <span class=variable>c</span>) <span class=variable>b</span>) <span class=comment>; =&gt; <code class=schemeresponse><span class=selfeval>2</span></code></span>
+</pre></div><p>
+In this example, Check Syntax will draw a binding arrow from the first
+<code class=scheme><span class=variable>b</span></code> to the second <code class=scheme><span class=variable>b</span></code>. Without the calls to
+<code class=scheme>syntax-local-introduce</code>, the identifiers stored in the
+property would appear to have originated from the transformer,
+instead of from the transformer's argument; consequently, Check
+Syntax would not draw the arrow, because it would not know that the
+<code class=scheme><span class=variable>b</span></code>s exist in the source program.</p>
+<p>
+</p>
+<a name="node_sec_12.6.1"></a>
+<h3><a href="mzscheme.html#node_toc_node_sec_12.6.1">12.6.1&nbsp;&nbsp;Expanding Expressions to Primitive Syntax</a></h3>
+<p></p>
+<p>
+<a name="node_idx_2234"></a>
+<a name="node_idx_2236"></a><a name="node_kw_definitionexpand"></a><code class=scheme>(expand</code><tt>&nbsp;</tt><code class=scheme><span class=variable>stx-or-sexpr</span></code><code class=scheme>)</code> expands all non-primitive syntax in
+<code class=scheme><span class=variable>stx-or-sexpr</span></code>, and returns a syntax object for the expanded
+expression. See below for the grammar of fully expanded
+expressions. Before <code class=scheme><span class=variable>stx-or-sexpr</span></code> is expanded, its lexical
+context is enriched with <code class=scheme>namespace-syntax-introduce</code> (see
+section&nbsp;<a href="mzscheme-Z-H-8.html#node_sec_8.3">8.3</a>). Use <code class=scheme><code class=scheme>syntax-object-&gt;datum</code></code> to
+convert the returned syntax object into an S-expression.</p>
+<p>
+<a name="node_idx_2238"></a><a name="node_kw_definitionexpand-syntax"></a><code class=scheme>(expand-syntax</code><tt>&nbsp;</tt><code class=scheme><span class=variable>stx</span></code><code class=scheme>)</code> is like <code class=scheme>(expand <code class=scheme><span class=variable>stx</span></code>)</code>, except
+that the argument must be a syntax object, and its lexical context is
+not enriched before expansion.</p>
+<p>
+<a name="node_idx_2240"></a><a name="node_kw_definitionexpand-once"></a><code class=scheme>(expand-once</code><tt>&nbsp;</tt><code class=scheme><span class=variable>stx-or-sexpr</span></code><code class=scheme>)</code> partially expands syntax in the
+<code class=scheme><span class=variable>stx-or-sexpr</span></code> and returns a syntax object for the
+partially-expanded expression. Due to limitations in the expansion
+mechanism, some context information may be lost. In particular,
+calling <code class=scheme><code class=scheme>expand-once</code></code> on the result may produce a result that
+is different from expansion via <code class=scheme><code class=scheme>expand</code></code>. Before
+<code class=scheme><span class=variable>stx-or-sexpr</span></code> is expanded, its lexical context is enriched with
+<code class=scheme>namespace-syntax-introduce</code> (see
+section&nbsp;<a href="mzscheme-Z-H-8.html#node_sec_8.3">8.3</a>).</p>
+<p>
+<a name="node_idx_2242"></a><a name="node_kw_definitionexpand-syntax-once"></a><code class=scheme>(expand-syntax-once</code><tt>&nbsp;</tt><code class=scheme><span class=variable>stx</span></code><code class=scheme>)</code> is like <code class=scheme>(expand-once
+<code class=scheme><span class=variable>stx</span></code>)</code>, except that the argument must be a syntax object, and
+its lexical context is not enriched before expansion.</p>
+<p>
+<a name="node_idx_2244"></a><a name="node_kw_definitionexpand-to-top-form"></a><code class=scheme>(expand-to-top-form</code><tt>&nbsp;</tt><code class=scheme><span class=variable>stx-or-sexpr</span></code><code class=scheme>)</code> partially expands syntax in
+<code class=scheme><span class=variable>stx-or-sexpr</span></code> to reveal the outermost syntactic form. This
+partial expansion is mainly useful for detecting top-level uses of
+<code class=scheme><span class=keyword>begin</span></code>. Unlike expanding the result of <code class=scheme><code class=scheme>expand-once</code></code>,
+expanding the result of <code class=scheme><code class=scheme>expand-to-top-form</code></code> with
+<code class=scheme><code class=scheme>expand</code></code> produces the same result as using <code class=scheme><code class=scheme>expand</code></code> on
+the original syntax.  Before <code class=scheme><span class=variable>stx-or-sexpr</span></code> is expanded, its
+lexical context is enriched with <code class=scheme>namespace-syntax-introduce</code>
+(see section&nbsp;<a href="mzscheme-Z-H-8.html#node_sec_8.3">8.3</a>).</p>
+<p>
+<a name="node_idx_2246"></a><a name="node_kw_definitionexpand-syntax-to-top-form"></a><code class=scheme>(expand-syntax-to-top-form</code><tt>&nbsp;</tt><code class=scheme><span class=variable>stx</span></code><code class=scheme>)</code> is like
+<code class=scheme>(expand-to-top-form <code class=scheme><span class=variable>stx</span></code>)</code>, except that the argument
+must be a syntax object, and its lexical context is not enriched
+before expansion.</p>
+<p>
+The possible shapes of a fully expanded expression are defined by
+<code class=scheme><span class=variable>top-level-expr</span></code>:
+</p>
+<div align=left><pre class=scheme><span class=variable>top-level-expr</span> is one of
+  <span class=variable>general-top-level-expr</span>
+  (<span class=keyword>module</span> <span class=variable>identifier</span> <span class=variable>name</span> (<span class=keyword>#%plain-module-begin</span> <span class=variable>module-level-expr</span> <tt>&middot;&middot;&middot;</tt>))
+  (<span class=keyword>begin</span> <span class=variable>top-level-expr</span> <tt>&middot;&middot;&middot;</tt>)
+
+<span class=variable>module-level-expr</span> is one of
+  <span class=variable>general-top-level-expr</span>
+  (<span class=keyword>provide</span> <span class=variable>provide-spec</span> <tt>...</tt>)
+  (<span class=keyword>begin</span> <span class=variable>module-level-expr</span> <tt>&middot;&middot;&middot;</tt>)
+
+<span class=variable>general-top-level-expr</span> is one of
+  <span class=variable>expr</span>
+  (<span class=keyword>define-values</span> (<span class=variable>variable</span> <tt>&middot;&middot;&middot;</tt>) <span class=variable>expr</span>)
+  (<span class=keyword>define-syntaxes</span> (<span class=variable>variable</span> <tt>&middot;&middot;&middot;</tt>) <span class=variable>expr</span>)
+  (<span class=keyword>require</span> <span class=variable>require-spec</span> <tt>&middot;&middot;&middot;</tt>)
+  (<span class=keyword>require-for-syntax</span> <span class=variable>require-spec</span> <tt>&middot;&middot;&middot;</tt>)
+
+<span class=variable>expr</span> is one of
+  <span class=variable>variable</span>
+  (<span class=keyword>lambda</span> <span class=variable>formals</span> <span class=variable>expr</span> <tt>&middot;&middot;&middot;</tt><sup>1</sup>)
+  (<span class=keyword>case-lambda</span> (<span class=variable>formals</span> <span class=variable>expr</span> <tt>&middot;&middot;&middot;</tt><sup>1</sup>) <tt>&middot;&middot;&middot;</tt>)
+  (<span class=keyword>if</span> <span class=variable>expr</span> <span class=variable>expr</span>)
+  (<span class=keyword>if</span> <span class=variable>expr</span> <span class=variable>expr</span> <span class=variable>expr</span>)
+  (<span class=keyword>begin</span> <span class=variable>expr</span> <tt>&middot;&middot;&middot;</tt><sup>1</sup>)
+  (<span class=keyword>begin0</span> <span class=variable>expr</span> <span class=variable>expr</span> <tt>&middot;&middot;&middot;</tt>)
+  (<span class=keyword>let-values</span> (((<span class=variable>variable</span> <tt>&middot;&middot;&middot;</tt>) <span class=variable>expr</span>) <tt>&middot;&middot;&middot;</tt>) <span class=variable>expr</span> <tt>&middot;&middot;&middot;</tt><sup>1</sup>)
+  (<span class=keyword>letrec-values</span> (((<span class=variable>variable</span> <tt>&middot;&middot;&middot;</tt>) <span class=variable>expr</span>) <tt>&middot;&middot;&middot;</tt>) <span class=variable>expr</span> <tt>&middot;&middot;&middot;</tt><sup>1</sup>)
+  (<span class=keyword>set!</span> <span class=variable>variable</span> <span class=variable>expr</span>)
+  (<code class=scheme><span class=keyword>quote</span></code> <span class=variable>datum</span>)
+  (<span class=keyword>quote-syntax</span> <span class=variable>datum</span>)
+  (<span class=keyword>with-continuation-mark</span> <span class=variable>expr</span> <span class=variable>expr</span> <span class=variable>expr</span>)
+  (<span class=keyword>#%app</span> <span class=variable>expr</span> <tt>&middot;&middot;&middot;</tt><sup>1</sup>)
+  (<span class=keyword>#%datum</span> . <span class=variable>datum</span>)
+  (<span class=keyword>#%top</span> . <span class=variable>variable</span>)
+</pre></div><p>
+where <code class=scheme><span class=variable>formals</span></code> is defined in section&nbsp;<a href="mzscheme-Z-H-2.html#node_sec_2.9">2.9</a>, and
+<code class=scheme><span class=variable>require-spec</span></code> and <code class=scheme><span class=variable>provide-spec</span></code> are defined in
+section&nbsp;<a href="mzscheme-Z-H-5.html#node_sec_5.2">5.2</a>.</p>
+<p>
+When a <code class=scheme><span class=variable>variable</span></code> expression appears in a fully-expanded
+expression, it either refers to a variable bound by <code class=scheme><span class=keyword>lambda</span></code>,
+<code class=scheme><span class=keyword>case-lambda</span></code>, <code class=scheme><span class=keyword>let-values</span></code>, or <code class=scheme><span class=keyword>letrec-values</span></code>,
+or it refers to an imported variable. (In other words, a
+<code class=scheme><span class=variable>variable</span></code> not wrapped by <code class=scheme><span class=keyword>#%top</span></code> never refers to a
+top-level variable, and it never refers to a non-imported variable
+that is defined at the top-level of a module.)</p>
+<p>
+The keywords in the above grammar are placeholders for identifiers
+that are <code class=scheme><code class=scheme>module-identifier=?</code></code>  (or
+<code class=scheme><code class=scheme>module-transformer-identifier=?</code></code> for <code class=scheme><span class=keyword>define-syntax</span></code>
+expressions) to the same-named exports of <code class=scheme><code class=scheme>mzscheme</code></code>. Due to
+import renamings, the printed identifier names can be different in
+the expanded expression.</p>
+<p>
+</p>
+<a name="node_sec_12.6.2"></a>
+<h3><a href="mzscheme.html#node_toc_node_sec_12.6.2">12.6.2&nbsp;&nbsp;Syntax Object Properties</a></h3>
+<p></p>
+<p>
+<a name="node_idx_2248"></a>
+Every syntax object has an associated property list, which can be
+queried or extended with <code class=scheme>syntax-property</code>:
+</p>
+<ul><p>
+</p>
+<li><p><a name="node_idx_2250"></a><a name="node_kw_definitionsyntax-property"></a><code class=scheme>(syntax-property</code><tt>&nbsp;</tt><code class=scheme><span class=variable>stx key-v v</span></code><code class=scheme>)</code> extends <code class=scheme><span class=variable>stx</span></code> by
+associating an arbitrary property value <code class=scheme><span class=variable>v</span></code> with the key
+<code class=scheme><span class=variable>key-v</span></code>; the result is a new syntax object with the association
+(while <code class=scheme><span class=variable>stx</span></code> itself is unchanged).</p>
+<p>
+</p>
+<li><p><a name="node_idx_2252"></a><a name="node_kw_definitionsyntax-property"></a><code class=scheme>(syntax-property</code><tt>&nbsp;</tt><code class=scheme><span class=variable>stx key-v</span></code><code class=scheme>)</code> returns an arbitrary property
+value associated to <code class=scheme><span class=variable>stx</span></code> with the key <code class=scheme><span class=variable>key-v</span></code>, or
+<code class=scheme><span class=selfeval>#f</span></code> if no value is associated to <code class=scheme><span class=variable>stx</span></code> for <code class=scheme><span class=variable>key-v</span></code>.</p>
+<p>
+</p>
+</ul><p></p>
+<p>
+Both the syntax input to a transformer and the syntax result of a
+transformer may have associated properties. The two sets of
+properties are merged by the syntax expander: each property in the
+original and not present in the result is copied to the result, and
+the values of properties present in both are combined with
+<code class=scheme><code class=scheme>cons-immutable</code></code> (result value first, original value second).</p>
+<p>
+Before performing the merge, however, the syntax expander
+automatically add a property to the original syntax object using
+the key <code class=scheme><span class=selfeval>'origin</span></code><a name="node_idx_2254"></a>. If the source syntax has no
+<code class=scheme><span class=selfeval>'origin</span></code> property, it is set to the empty list.  Then, still
+before the merge, the identifier that triggered the macro expansion
+(as syntax) is <code class=scheme><code class=scheme>cons-immutable</code></code>d onto the <code class=scheme><span class=selfeval>'origin</span></code>
+property so far.</p>
+<p>
+The <code class=scheme><span class=selfeval>'origin</span></code> property thus records (in reverse order) the
+sequence of macro expansions that produced an expanded
+expression. Usually, the <code class=scheme><span class=selfeval>'origin</span></code> value is an immutable list
+of identifiers. However, a transformer might return syntax that has
+already been expanded, in which case an <code class=scheme><span class=selfeval>'origin</span></code> list can
+contain other lists after a merge.</p>
+<p>
+For example, the expression
+</p>
+<div align=left><pre class=scheme>(<span class=keyword>or</span> <span class=variable>x</span> <span class=variable>y</span>)
+</pre></div><p>
+expands to
+</p>
+<div align=left><pre class=scheme>(<span class=keyword>let</span> ((<span class=variable>or-part</span> <span class=variable>x</span>)) (<span class=keyword>if</span> <span class=variable>or-part</span> <span class=variable>or-part</span> (<span class=keyword>or</span> <span class=variable>y</span>)))
+</pre></div><p>
+which, in turn, expands to
+</p>
+<div align=left><pre class=scheme>(<span class=keyword>let-values</span> ([(<span class=variable>or-part</span>) <span class=variable>x</span>]) (<span class=keyword>if</span> <span class=variable>or-part</span> <span class=variable>or-part</span> <span class=variable>y</span>))
+</pre></div><p>
+The syntax object for the final expression will have an
+<code class=scheme><span class=selfeval>'origin</span></code> property whose value is <code class=scheme>(<code class=scheme>list-immutable</code>
+ (<span class=keyword>quote-syntax</span> <span class=keyword>let</span>) (<span class=keyword>quote-syntax</span> <span class=keyword>or</span>))</code>.</p>
+<p>
+<a name="node_idx_2256"></a><a name="node_kw_definitionsyntax-track-origin"></a><code class=scheme>(syntax-track-origin</code><tt>&nbsp;</tt><code class=scheme><span class=variable>new-stx orig-stx id-stx</span></code><code class=scheme>)</code> add properties to
+<code class=scheme><span class=variable>new-stx</span></code> in the same way that macro expansion adds properties to
+a transformer result. In particular, it merges the properties of
+<code class=scheme><span class=variable>orig-stx</span></code> into <code class=scheme><span class=variable>new-stx</span></code>, first adding <code class=scheme><span class=variable>id-stx</span></code> as an
+<code class=scheme><span class=selfeval>'origin</span></code> property, and it returns the property-extended syntax
+object. Use the <code class=scheme>syntax-track-origin</code> procedure in a macro
+transformer that discards syntax (corresponding to <code class=scheme><span class=variable>orig-stx</span></code>
+with a keyword <code class=scheme><span class=variable>id-stx</span></code>) leaving some other syntax in its place
+(corresponding to <code class=scheme><span class=variable>new-stx</span></code>).</p>
+<p>
+Besides <code class=scheme><span class=selfeval>'origin</span></code> tracking for general macro expansion, MzScheme
+adds properties to expanded syntax (often using
+<code class=scheme>syntax-track-origin</code>) to record additional expansion details:
+</p>
+<ul><p>
+</p>
+<li><p>When a <code class=scheme><span class=keyword>begin</span></code> form is spliced into a sequence with
+internal definitions (see section&nbsp;<a href="mzscheme-Z-H-2.html#node_sec_2.8.5">2.8.5</a>),
+<code class=scheme>syntax-track-origin</code> is applied to every spliced element from
+the <code class=scheme><span class=keyword>begin</span></code> body. The second argument to
+<code class=scheme>syntax-track-origin</code> is the <code class=scheme><span class=keyword>begin</span></code> form, and the third
+argument is the <code class=scheme><span class=keyword>begin</span></code> keyword (extracted from the spliced
+form).</p>
+<p>
+</p>
+<li><p>When an internal <code class=scheme><span class=keyword>define-values</span></code> or <code class=scheme><span class=keyword>define-syntaxes</span></code>
+form is converted into a <code class=scheme><span class=keyword>letrec-values+syntaxes</span></code> form (see
+section&nbsp;<a href="mzscheme-Z-H-2.html#node_sec_2.8.5">2.8.5</a>), <code class=scheme>syntax-track-origin</code> is applied to
+each generated binding clause.  The second argument to
+<code class=scheme>syntax-track-origin</code> is the converted form, and the third
+argument is the <code class=scheme><span class=keyword>define-values</span></code> or <code class=scheme><span class=keyword>define-syntaxes</span></code>
+keyword form the converted form.</p>
+<p>
+</p>
+<li><p>When a <code class=scheme><span class=keyword>letrec-values+syntaxes</span></code> expression is fully
+expanded, syntax bindings disappear, and the result is either a
+<code class=scheme><span class=keyword>letrec-values</span></code> form (if the unexpanded form contained
+non-syntax bindings), or only the body of the
+<code class=scheme><span class=keyword>letrec-values+syntaxes</span></code> form (wrapped with <code class=scheme><span class=keyword>begin</span></code> if the
+body contained multiple expressions). To record the disappeared
+syntax bindings, a property is added to the expansion result: an
+immutable list of identifiers from the disappeared bindings, as a
+<code class=scheme><span class=selfeval>'disappeared-binding</span></code><a name="node_idx_2258"></a> property.</p>
+<p>
+</p>
+<li><p>When a subtyping <code class=scheme><span class=keyword>define-struct</span></code> form is expanded, the
+identifier used to reference the base type does not appear in the
+expansion. Therefore, the <code class=scheme><span class=keyword>define-struct</span></code> transformer adds the
+identifier to the expansion result as a <code class=scheme><span class=selfeval>'disappeared-use</span></code><a name="node_idx_2260"></a>
+property.</p>
+<p>
+</p>
+<li><p>When <a name="node_idx_2262"></a><code class=scheme>read-syntax</code> generates a syntax object, it
+attaches a property to the object (using a private key) to mark the
+object as originating from a read. The <code class=scheme><code class=scheme>syntax-original?</code></code>
+predicate looks for the property to recognize such syntax
+objects. (See section&nbsp;<a href="#node_sec_12.2.2">12.2.2</a> for more information.)</p>
+<p>
+</p>
+</ul><p></p>
+<p>
+The <code class=scheme>syntax-original?</code> procedure and the <code class=scheme><span class=selfeval>'origin</span></code>,
+<code class=scheme><span class=selfeval>'disappeared-binding</span></code>, and <code class=scheme><span class=selfeval>'disappeared-use</span></code> properties
+are used by program-processing tools (such as Check Syntax<a name="node_idx_2264"></a> in
+DrScheme) to relate source code to its expanded form. Implementors of
+macro transformers should consider whether properties added
+automatically by MzScheme are sufficient for tools to make sense of
+expansion result, and implementors should use
+<code class=scheme>syntax-track-origin</code> and <code class=scheme>syntax-property</code> as
+necessary to fill in gaps (see section&nbsp;<a href="#node_sec_12.6">12.6</a> for an example).</p>
+<p>
+See section&nbsp;<a href="#node_sec_12.6.4">12.6.4</a> for information about properties generated by the
+expansion of a module declaration. See section&nbsp;<a href="mzscheme-Z-H-3.html#node_sec_3.10.1">3.10.1</a> and
+section&nbsp;<a href="mzscheme-Z-H-6.html#node_sec_6.2.4">6.2.4</a> for information about properties recognized when
+compiling a procedure. See section&nbsp;<a href="mzscheme-Z-H-14.html#node_sec_14.6">14.6</a> for information on
+properties and byte codes.</p>
+<p>
+</p>
+<p>
+</p>
+<a name="node_sec_12.6.3"></a>
+<h3><a href="mzscheme.html#node_toc_node_sec_12.6.3">12.6.3&nbsp;&nbsp;Information on Structure Types</a></h3>
+<p></p>
+<p>
+The <code class=scheme><span class=keyword>define-struct</span></code> form (see section&nbsp;<a href="mzscheme-Z-H-4.html#node_sec_4.1">4.1</a>) binds
+the name of a structure type to an expansion-time value that records
+the identifiers bound to the structure type, the constructor
+procedure, the predicate procedure, and the field accessor and
+mutator procedures. This information can be used during the expansion
+of other expressions.</p>
+<p>
+For example, the <code class=scheme><span class=keyword>define-struct</span></code> variant for subtypes (see
+section&nbsp;<a href="mzscheme-Z-H-4.html#node_sec_4.2">4.2</a>) uses the base type name <code class=scheme><span class=variable>t</span></code> to find the
+variable <code class=scheme>struct<code class=scheme><span class=variable>:t</span></code></code> containing the base type's
+descriptor; it also folds the field accessor and mutator information
+for the base type into the information for the subtype. The
+<code class=scheme><span class=keyword>match</span></code> form (see Chapter&nbsp;<a href="../mzlib/mzlib-Z-H-22.html#node_chap_22">22</a>
+in <a href="../mzlib/mzlib.html"><i>PLT MzLib: Libraries Manual</i></a>) uses a type name to
+find the predicates and field accessors for the structure type.</p>
+<p>
+Besides using the information, other syntactic forms can even generate
+information with the same shape. For example, the <code class=scheme><span class=keyword>struct</span></code>
+form in an imported signature for <code class=scheme><span class=keyword>unit/sig</span></code> (see
+Chapter&nbsp;<a href="../mzlib/mzlib-Z-H-41.html#node_chap_41">41</a>
+in <a href="../mzlib/mzlib.html"><i>PLT MzLib: Libraries Manual</i></a>) causes the <code class=scheme><span class=keyword>unit/sig</span></code> transformer
+to generate information about imported structure types, so that
+<code class=scheme><span class=keyword>match</span></code> and subtyping <code class=scheme><span class=keyword>define-struct</span></code> expressions work
+within the unit.</p>
+<p>
+The expansion-time information for a structure type is represented as
+an immutable list of six items:
+</p>
+<ul><p>
+</p>
+<li><p>an identifier that is bound to the structure type's descriptor,
+or <code class=scheme><span class=selfeval>#f</span></code> it none is known;</p>
+<p>
+</p>
+<li><p>an identifier that is bound to the structure type's constructor,
+or <code class=scheme><span class=selfeval>#f</span></code> it none is known;</p>
+<p>
+</p>
+<li><p>an identifier that is bound to the structure type's predicate,
+or <code class=scheme><span class=selfeval>#f</span></code> it none is known;</p>
+<p>
+</p>
+<li><p>an immutable list of identifiers bound to the field accessors
+of the structure type, optionally with <code class=scheme><span class=selfeval>#f</span></code> as the list's last
+element. A <code class=scheme><span class=selfeval>#f</span></code> as the last element indicates that the
+structure type may have additional fields, otherwise the list is a
+reliable indicator of the number of fields in the structure
+type. Furthermore, the accessors are listed in reverse order for the
+corresponding constructor arguments. (The reverse order enables
+sharing in the lists for a subtype and its base type.)</p>
+<p>
+</p>
+<li><p>an immutable list of identifiers bound to the field mutators of
+the structure type, optionally with <code class=scheme><span class=selfeval>#f</span></code> as the list's last
+element. The meaning of <code class=scheme><span class=selfeval>#f</span></code> and the order are the same as for
+the accessor identifiers.</p>
+<p>
+</p>
+<li><p>an identifier that determines a super-type for the structure
+type, <code class=scheme><span class=selfeval>#f</span></code> if the super-type (if any) is unknown,
+or <code class=scheme><span class=selfeval>#t</span></code> if there is no super-type. If a super-type is
+specified, the identifier is also bound to structure-type
+expansion-time information.</p>
+<p>
+</p>
+</ul><p></p>
+<p>
+The implementor of a syntactic form can expect users of the form to
+know what kind of information is available about a structure
+type. For example, the <code class=scheme><span class=keyword>match</span></code> implementation works with
+structure information containing an incomplete set of accessor
+bindings, because the user is assumed to know what information is
+available in the context of the <code class=scheme><span class=keyword>match</span></code> expression. In
+particular, the <code class=scheme><span class=keyword>match</span></code> expression can appear in a
+<code class=scheme><span class=keyword>unit/sig</span></code> form with an imported structure type, in which case
+the user is expected to know the set of fields that are listed in the
+signature for the structure type.</p>
+<p>
+</p>
+<a name="node_sec_12.6.4"></a>
+<h3><a href="mzscheme.html#node_toc_node_sec_12.6.4">12.6.4&nbsp;&nbsp;Information on Expanded and Compiled Modules</a></h3>
+<p></p>
+<p>
+MzScheme provides an interface for obtaining information about a
+expanded or compiled module declaration's imports and exports. This
+information is intended for use by tools such as a compilation
+manager. The information usually identifies modules through a
+<strong>module path index</strong><a name="node_idx_2266"></a>, which is a
+semi-interned<a name="call_footnote_Temp_38"></a><a href="#footnote_Temp_38"><sup><small>34</small></sup></a> opaque
+value that encodes a relative module path (see section&nbsp;<a href="mzscheme-Z-H-5.html#node_sec_5.4">5.4</a>) and
+another index to which it is relative.</p>
+<p>
+Where an index is expected, a symbol can usually take its place,
+representing a literal module name. A symbol is used instead of
+an index when a module is imported using its name directly with
+<code class=scheme><span class=keyword>require</span></code> instead of a module path.</p>
+<p>
+An index that returns <code class=scheme><span class=selfeval>#f</span></code> for its path and base index
+represents ``self''  --  i.e., the module declaration that was the
+source of the index  --  and such an index is always used as the root
+for a chain of indices. For example, when extracting information
+about an identifier's binding within a module, if the identifier is
+bound by a definition within the same module, the identifier's source
+module will be reported using the ``self'' index. If the identifier
+is instead defined in a module that is imported via a module
+path (as opposed to a literal module name), then the identifier's
+source module will be reported using an index that contains the
+<code class=scheme><span class=keyword>require</span></code>d module path and the ``self'' index.</p>
+<p>
+</p>
+<ul><p>
+</p>
+<li><p><a name="node_idx_2268"></a><a name="node_kw_definitionmodule-path-index_Q_"></a><code class=scheme>(module-path-index?</code><tt>&nbsp;</tt><code class=scheme><span class=variable>v</span></code><code class=scheme>)</code> returns <code class=scheme><span class=selfeval>#t</span></code> if <code class=scheme><span class=variable>v</span></code> is a
+module path index, <code class=scheme><span class=selfeval>#f</span></code> otherwise.</p>
+<p>
+</p>
+<li><p><a name="node_idx_2270"></a><a name="node_kw_definitionmodule-path-index-split"></a><code class=scheme>(module-path-index-split</code><tt>&nbsp;</tt><code class=scheme><span class=variable>module-path-index</span></code><code class=scheme>)</code> returns two
+values: a non-symbol S-expression representing a module path, and a
+base index (to which the module path is relative), symbol, or
+<code class=scheme><span class=selfeval>#f</span></code>. A <code class=scheme><span class=selfeval>#f</span></code> second result means ``relative to a
+top-level environment''. A <code class=scheme><span class=selfeval>#f</span></code> for the first result implies a
+<code class=scheme><span class=selfeval>#f</span></code> for the second result, and means that
+<code class=scheme><span class=variable>module-path-index</span></code> represents ``self'' (see above).</p>
+<p>
+</p>
+<li><p><a name="node_idx_2272"></a><a name="node_kw_definitionmodule-path-index-join"></a><code class=scheme>(module-path-index-join</code><tt>&nbsp;</tt><code class=scheme><span class=variable>module-path module-path-index</span></code><code class=scheme>)</code>
+combines <code class=scheme><span class=variable>module-path</span></code> and <code class=scheme><span class=variable>module-path-index</span></code> to create a
+new module path index. The <code class=scheme><span class=variable>module-path</span></code> argument can be anything
+except a symbol, and the <code class=scheme><span class=variable>module-path-index</span></code> argument can be
+a index, symbol, or <code class=scheme><span class=selfeval>#f</span></code>.</p>
+<p>
+</p>
+</ul><p></p>
+<p>
+Information for an expanded module declaration is stored in a set of
+properties attached to the syntax object:
+</p>
+<ul><p>
+</p>
+<li><p><code class=scheme><span class=selfeval>'module-direct-requires</span></code><a name="node_idx_2274"></a>  --  an immutable list of
+module path indices (or symbols) representing the modules explicitly
+imported into the module.</p>
+<p>
+</p>
+<li><p><code class=scheme><span class=selfeval>'module-direct-for-syntax-requires</span></code><a name="node_idx_2276"></a>  --  an
+immutable list of module path indices (or symbols) representing the
+modules explicitly for-syntax imported into the module.</p>
+<p>
+</p>
+<li><p><code class=scheme><span class=selfeval>'module-variable-provides</span></code><a name="node_idx_2278"></a>  --  an immutable list of
+provided items, where each item is one of the following:</p>
+<p>
+</p>
+<ul><p>
+</p>
+<li><p><code class=scheme><span class=variable>symbol</span></code>  --  represents a locally defined variable that
+is provided with its defined name.</p>
+<p>
+</p>
+<li><p><code class=scheme>(cons-immutable <code class=scheme><span class=variable>provided-symbol</span></code>
+<code class=scheme><span class=variable>defined-symbol</span></code>)</code>  --  represents a locally defined variable
+that is provided with renaming; the first symbol is the exported
+name, and the second symbol is the defined name.</p>
+<p>
+</p>
+<li><p><code class=scheme>(list*-immutable <code class=scheme><span class=variable>module-path-index</span></code>
+<code class=scheme><span class=variable>provided-symbol</span></code> <code class=scheme><span class=variable>defined-symbol</span></code>)</code>  --  represents a
+re-exported and possibly re-named variable from the specified
+module; <code class=scheme><span class=variable>module-path-index</span></code> is either an index or symbol,
+indicating the source module for the binding. The
+<code class=scheme><span class=variable>provided-symbol</span></code> is the external name for the re-export, and
+<code class=scheme><span class=variable>defined-symbol</span></code> is the originally defined name in the module
+specified by <code class=scheme><span class=variable>module-path-index</span></code>.</p>
+<p>
+</p>
+</ul><p></p>
+<p>
+</p>
+<li><p><code class=scheme><span class=selfeval>'module-syntax-provides</span></code><a name="node_idx_2280"></a>  --  like
+<code class=scheme><span class=selfeval>'module-variable-provides</span></code>, but for syntax exports instead of
+variable exports.</p>
+<p>
+</p>
+<li><p><code class=scheme><span class=selfeval>'module-indirect-provides</span></code><a name="node_idx_2282"></a>  --  an immutable list of
+symbols for variables that are defined in the module but not
+exported; they may be exported indirectly through macro expansions.
+Definitions of macro-generated identifiers create uninterned symbols
+in this list.</p>
+<p>
+</p>
+<li><p><code class=scheme><span class=selfeval>'module-kernel-reprovide-hint</span></code><a name="node_idx_2284"></a>  --  either
+<code class=scheme><span class=selfeval>#f</span></code>, <code class=scheme><span class=selfeval>#t</span></code>, or a symbol. If it is <code class=scheme><span class=selfeval>#t</span></code>, then the
+module re-exports all of the functionality from MzScheme's internal
+kernel module. If it is a symbol, then all kernel exports but the
+indicated one is re-exported, and some other export is provided with
+the indicated name. This ad hoc information is used in an
+optimization by the <tt><strong>mzc</strong></tt> compiler.</p>
+<p>
+</p>
+<li><p><code class=scheme><span class=selfeval>'module-self-path-index</span></code><a name="node_idx_2286"></a>  --  a module path index
+whose parts are both <code class=scheme><span class=selfeval>#f</span></code>. This information is used by the
+<tt><strong>mzc</strong></tt> compiler to manage syntax objects (which contain
+module-relative information keyed on the module's own index).</p>
+<p>
+</p>
+</ul><p></p>
+<p>
+<a name="node_idx_2288"></a><a name="node_kw_definitioncompiled-module-expression_Q_"></a><code class=scheme>(compiled-module-expression?</code><tt>&nbsp;</tt><code class=scheme><span class=variable>v</span></code><code class=scheme>)</code> returns <code class=scheme><span class=selfeval>#t</span></code> if <code class=scheme><span class=variable>v</span></code> is
+a compiled expression for a <code class=scheme><span class=keyword>module</span></code> declaration, <code class=scheme><span class=selfeval>#f</span></code>
+otherwise. See also section&nbsp;<a href="mzscheme-Z-H-14.html#node_sec_14.6">14.6</a>.</p>
+<p>
+<a name="node_idx_2290"></a><a name="node_kw_definitionmodule-compiled-name"></a><code class=scheme>(module-compiled-name</code><tt>&nbsp;</tt><code class=scheme><span class=variable>compiled-module-code</span></code><code class=scheme>)</code> takes a module
+declaration in compiled form (see section&nbsp;<a href="mzscheme-Z-H-14.html#node_sec_14.6">14.6</a>) and returns a
+symbol for the module's declared name.</p>
+<p>
+<a name="node_idx_2292"></a><a name="node_kw_definitionmodule-compiled-imports"></a><code class=scheme>(module-compiled-imports</code><tt>&nbsp;</tt><code class=scheme><span class=variable>compiled-module-code</span></code><code class=scheme>)</code> takes a module
+declaration in compiled form (see section&nbsp;<a href="mzscheme-Z-H-14.html#node_sec_14.6">14.6</a>) and returns
+two values: an immutable list of module path indices (and symbols)
+for the module's explicit imports, and an immutable list of module
+path indices (and symbols) for the module's explicit for-syntax
+imports.</p>
+<p>
+</p>
+<p>
+</p>
+<div class=footnoterule><hr></div><p></p>
+<div class=footnote><p><a name="footnote_Temp_35"></a><a href="#call_footnote_Temp_35"><sup><small>31</small></sup></a> In general, modules
+and for-syntax imports create a hierarchy of run times and expansion
+times. See section&nbsp;<a href="#node_sec_12.3.4">12.3.4</a> for more information.</p>
+<p><a name="footnote_Temp_36"></a><a href="#call_footnote_Temp_36"><sup><small>32</small></sup></a> In this
+particular case, Shriram Krishnamurthi points out changing <code class=scheme><span class=variable>if-it</span></code> to use 
+<code class=scheme>(datum-&gt;syntax-object (<code class=scheme><span class=keyword>syntax</span></code> <code class=scheme><span class=variable>test</span></code>) <code class=scheme><span class=selfeval>'it</span></code>)</code>
+solves the problem in a sensible way.</p>
+<p><a name="footnote_Temp_37"></a><a href="#call_footnote_Temp_37"><sup><small>33</small></sup></a> In contrast, a namespace
+created by <code class=scheme>(scheme-report-environment 5)</code> imports only
+<code class=scheme><span class=keyword>syntax-rules</span></code> into the transformer environment.</p>
+<p><a name="footnote_Temp_38"></a><a href="#call_footnote_Temp_38"><sup><small>34</small></sup></a> Multiple references to the same relative
+module tend to use the same index value, but not always.</p>
+</div>
+<div align=right class=navigation><i>[Go to <span><a href="mzscheme.html">first</a>, <a href="mzscheme-Z-H-11.html">previous</a></span><span>, <a href="mzscheme-Z-H-13.html">next</a></span> page<span>; &nbsp;&nbsp;</span><span><a href="mzscheme.html#node_toc_start">contents</a></span><span><span>; &nbsp;&nbsp;</span><a href="mzscheme-Z-H-19.html#node_index_start">index</a></span>]</i></div><p></p>
+</body>
+</html>

@@ -1,0 +1,110 @@
+<!doctype html public "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!--
+
+Generated from mzlib.tex by tex2page, v 2004-09-11
+(running on MzScheme 209, unix), 
+(c) Dorai Sitaram, 
+http://www.ccs.neu.edu/~dorai/tex2page/tex2page-doc.html
+
+-->
+<head>
+<title>
+PLT MzLib: Libraries Manual
+</title>
+<link rel="stylesheet" type="text/css" href="mzlib-Z-S.css" title=default>
+<meta name=robots content="noindex,follow">
+</head>
+<body>
+<div align=right class=navigation><i>[Go to <span><a href="mzlib.html">first</a>, <a href="mzlib-Z-H-22.html">previous</a></span><span>, <a href="mzlib-Z-H-24.html">next</a></span> page<span>; &nbsp;&nbsp;</span><span><a href="mzlib.html#node_toc_start">contents</a></span><span><span>; &nbsp;&nbsp;</span><a href="mzlib-Z-H-42.html#node_index_start">index</a></span>]</i></div><p></p>
+<a name="node_chap_23"></a>
+<h1 class=chapter>
+<div class=chapterheading><a href="mzlib.html#node_toc_node_chap_23">Chapter 23</a></div><br>
+<a href="mzlib.html#node_toc_node_chap_23"><tt><strong>math.ss</strong></tt>: Math</a></h1>
+<p><a name="node_idx_820"></a><a name="node_idx_822"></a></p>
+<p>
+
+
+</p>
+<p></p>
+<p>
+
+<a name="node_idx_824"></a><a name="node_kw_definitionconjugate"></a><code class=scheme>(conjugate</code><tt>&nbsp;</tt><code class=scheme><span class=variable>z</span></code><code class=scheme>)</code> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<small>P</small><small>R</small><small>O</small><small>C</small><small>E</small><small>D</small><small>U</small><small>R</small><small>E</small>
+</p>
+<p>
+Returns the complex conjugate of <code class=scheme><span class=variable>z</span></code>.</p>
+<p>
+
+
+</p>
+<p></p>
+<p>
+
+<a name="node_idx_826"></a><a name="node_kw_definitioncosh"></a><code class=scheme>(cosh</code><tt>&nbsp;</tt><code class=scheme><span class=variable>z</span></code><code class=scheme>)</code> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<small>P</small><small>R</small><small>O</small><small>C</small><small>E</small><small>D</small><small>U</small><small>R</small><small>E</small>
+</p>
+<p>
+Returns the hyperbolic cosine of <code class=scheme><span class=variable>z</span></code>.</p>
+<p>
+
+<a name="node_kw_definitione"></a>
+</p>
+<p></p>
+<p>
+
+<a name="node_idx_828"></a><code class=scheme>e</code> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<small>N</small><small>U</small><small>M</small><small>B</small><small>E</small><small>R</small>
+</p>
+<p>
+Approximation of Euler's number, equivalent to <code class=scheme>(exp <code class=scheme><span class=selfeval>1.0</span></code>)</code>.</p>
+<p>
+
+<a name="node_kw_definitionpi"></a>
+</p>
+<p></p>
+<p>
+
+<a name="node_idx_830"></a><code class=scheme>pi</code> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<small>N</small><small>U</small><small>M</small><small>B</small><small>E</small><small>R</small>
+</p>
+<p>
+Approximation of pi, equivalent to <code class=scheme>(<code class=scheme>atan</code> <span class=selfeval>0.0</span> <span class=selfeval>-1.0</span>)</code>.</p>
+<p>
+
+
+</p>
+<p></p>
+<p>
+
+<a name="node_idx_832"></a><a name="node_kw_definitionsinh"></a><code class=scheme>(sinh</code><tt>&nbsp;</tt><code class=scheme><span class=variable>z</span></code><code class=scheme>)</code> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<small>P</small><small>R</small><small>O</small><small>C</small><small>E</small><small>D</small><small>U</small><small>R</small><small>E</small>
+</p>
+<p>
+Returns the hyperbolic sine of <code class=scheme><span class=variable>z</span></code>.</p>
+<p>
+
+
+</p>
+<p></p>
+<p>
+
+<a name="node_idx_834"></a><a name="node_kw_definitionsgn"></a><code class=scheme>(sgn</code><tt>&nbsp;</tt><code class=scheme><span class=variable>n</span></code><code class=scheme>)</code> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<small>P</small><small>R</small><small>O</small><small>C</small><small>E</small><small>D</small><small>U</small><small>R</small><small>E</small>
+</p>
+<p>
+Returns <code class=scheme><span class=selfeval>1</span></code> if <code class=scheme><span class=variable>n</span></code> is positive, <code class=scheme><span class=selfeval>-1</span></code> if <code class=scheme><span class=variable>n</span></code> is
+negative, and <code class=scheme><span class=selfeval>0</span></code> otherwise. If <code class=scheme><span class=variable>n</span></code> is exact, the result is
+exact, otherwise the result is inexact.</p>
+<p>
+
+
+</p>
+<p></p>
+<p>
+
+<a name="node_idx_836"></a><a name="node_kw_definitionsqr"></a><code class=scheme>(sqr</code><tt>&nbsp;</tt><code class=scheme><span class=variable>z</span></code><code class=scheme>)</code> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<small>P</small><small>R</small><small>O</small><small>C</small><small>E</small><small>D</small><small>U</small><small>R</small><small>E</small>
+</p>
+<p>
+Returns <code class=scheme>(<span class=variable>*</span> <span class=variable>z</span> <span class=variable>z</span>))</code>.</p>
+<p>
+</p>
+<p>
+</p>
+<div align=right class=navigation><i>[Go to <span><a href="mzlib.html">first</a>, <a href="mzlib-Z-H-22.html">previous</a></span><span>, <a href="mzlib-Z-H-24.html">next</a></span> page<span>; &nbsp;&nbsp;</span><span><a href="mzlib.html#node_toc_start">contents</a></span><span><span>; &nbsp;&nbsp;</span><a href="mzlib-Z-H-42.html#node_index_start">index</a></span>]</i></div><p></p>
+</body>
+</html>

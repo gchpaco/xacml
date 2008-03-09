@@ -1,0 +1,115 @@
+<!doctype html public "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!--
+
+Generated from mzscheme.tex by tex2page, v 2004-09-11
+(running on MzScheme 209, unix), 
+(c) Dorai Sitaram, 
+http://www.ccs.neu.edu/~dorai/tex2page/tex2page-doc.html
+
+-->
+<head>
+<title>
+PLT MzScheme: Language Manual
+</title>
+<link rel="stylesheet" type="text/css" href="mzscheme-Z-S.css" title=default>
+<meta name=robots content="noindex,follow">
+</head>
+<body>
+<div align=right class=navigation><i>[Go to <span><a href="mzscheme.html">first</a>, <a href="mzscheme-Z-H-15.html">previous</a></span><span>, <a href="mzscheme-Z-H-17.html">next</a></span> page<span>; &nbsp;&nbsp;</span><span><a href="mzscheme.html#node_toc_start">contents</a></span><span><span>; &nbsp;&nbsp;</span><a href="mzscheme-Z-H-19.html#node_index_start">index</a></span>]</i></div><p></p>
+<a name="node_chap_16"></a>
+<h1 class=chapter>
+<div class=chapterheading><a href="mzscheme.html#node_toc_node_chap_16">Chapter 16</a></div><br>
+<a href="mzscheme.html#node_toc_node_chap_16">Library Collections and MzLib</a></h1>
+<p><a name="node_idx_2774"></a></p>
+<p>
+<a name="node_idx_2776"></a>
+<a name="node_idx_2778"></a>
+A <strong>library</strong> is <code class=scheme><span class=keyword>module</span></code> declaration for use by multiple
+programs. MzScheme provides a mechanism for grouping libraries into
+<strong>collections</strong> that can be easily distributed and easily added
+to a local MzScheme installation. A collection is normally installed
+into a directory named <tt><strong>collects</strong></tt> that is in the same directory
+as the MzScheme executable.<a name="call_footnote_Temp_45"></a><a href="#footnote_Temp_45"><sup><small>41</small></sup></a>  Each installed
+collection is represented as a subdirectory within the
+<tt><strong>collects</strong></tt> directory.</p>
+<p>
+Client programs incorporate a library by using a module path of the
+form <code class=scheme>(<code class=scheme><span class=keyword>lib</span></code> <span class=variable>library-file-path</span> <span class=variable>collection</span> <tt>&middot;&middot;&middot;</tt>)</code>. Such a path
+accesses the module in the file <code class=scheme><span class=variable>library-file-path</span></code> in the
+collection named by the first <code class=scheme><span class=variable>collection</span></code>, where both
+<code class=scheme><span class=variable>library-file-path</span></code> and <code class=scheme><span class=variable>collection</span></code> are literal strings that
+will be used as elements in a pathname. If additional
+<code class=scheme><span class=variable>collection</span></code> strings are provided, they are used to form a path
+into a subcollection.  If the <code class=scheme><span class=variable>collection</span></code> arguments are omitted,
+the library is accessed in the <tt><strong>mzlib</strong></tt> collection.</p>
+<p>
+The <tt><strong>info.ss</strong></tt><a name="node_idx_2780"></a> library in a collection is special by
+convention.  This library is used to provide information about the
+collection to <tt><strong>mzc</strong></tt> (the MzScheme compiler) or MrEd. For more
+information see <a href="../mzc/mzc.html"><i>PLT mzc: MzScheme Compiler Manual</i></a> and <a href="../mred/mred.html"><i>PLT MrEd: Graphical Toolbox Manual</i></a>.</p>
+<p>
+There is usually one standard <tt><strong>collects</strong></tt> directory, but MzScheme
+supports any number of directories containing collections. The search
+path for collections is determined by the
+<a name="node_idx_2782"></a><code class=scheme>current-library-collection-paths</code> parameter (see
+section&nbsp;<a href="mzscheme-Z-H-7.html#node_sec_7.7.1.6">7.7.1.6</a>). The list of paths in
+<code class=scheme><code class=scheme>current-library-collection-paths</code></code> is searched from first to
+last to locate a collection. To find a sub-collection, the enclosing
+collection is first found; if the sub-collection is not present in
+the found enclosing collection, then the search continues by looking
+for another instance of the enclosing collection, and so on. In other
+words, the directory tree for each element in the search path is
+spliced together with the directory trees of other path
+elements. (The ``splicing'' of tress applies only to directories; a
+file within a collection is found only within the first instance of
+the collection.)</p>
+<p>
+The value of the <code class=scheme>current-library-collection-paths</code> parameter
+is initialized by the stand-alone version of MzScheme to the result
+of <a name="node_idx_2784"></a><a name="node_kw_definitionfind-library-collection-paths"></a><code class=scheme>(find-library-collection-paths</code><code class=scheme>)</code>, whose body is as
+follows:<a name="node_idx_2786"></a><a name="call_footnote_Temp_46"></a><a href="#footnote_Temp_46"><sup><small>42</small></sup></a>
+</p>
+<div align=left><pre class=scheme>(<code class=scheme>current-library-collection-paths</code>
+ (<code class=scheme>path-list-string-&gt;path-list</code>
+  (<span class=keyword>or</span> (<code class=scheme>getenv</code> <span class=selfeval>&quot;PLTCOLLECTS&quot;</span>) <span class=selfeval>&quot;&quot;</span>)
+  (<code class=scheme>cons</code>
+   (<code class=scheme>build-path</code> (<code class=scheme>find-system-path</code> <span class=keyword>'</span><span class=variable>addon-dir</span>) (<code class=scheme>version</code>) <span class=selfeval>&quot;collects&quot;</span>)
+   (<span class=keyword>or</span> (<code class=scheme>ormap</code> (<span class=keyword>lambda</span> (<span class=variable>p</span>) (<span class=keyword>and</span> <span class=variable>p</span> (<code class=scheme>directory-exists?</code> <span class=variable>p</span>) 
+                               (<code class=scheme>list</code> (<code class=scheme>simplify-path</code> <span class=variable>p</span>))))
+              (<code class=scheme>list</code> (<span class=keyword>let</span> ([<span class=variable>v</span> (<code class=scheme>getenv</code> <span class=selfeval>&quot;PLTHOME&quot;</span>)])
+                      (<span class=keyword>and</span> <span class=variable>v</span> (<code class=scheme>build-path</code> <span class=variable>v</span> <span class=selfeval>&quot;collects&quot;</span>)))
+                    (<code class=scheme>find-executable-path</code> <span class=variable>program</span> <span class=selfeval>&quot;collects&quot;</span>)
+                    (<code class=scheme>find-executable-path</code> <span class=variable>program</span> (<code class=scheme>build-path</code> <span class=keyword>'</span><span class=variable>up</span> <span class=selfeval>&quot;collects&quot;</span>))
+                    (<code class=scheme>find-executable-path</code> <span class=variable>program</span> (<code class=scheme>build-path</code> <span class=keyword>'</span><span class=variable>up</span> <span class=keyword>'</span><span class=variable>up</span> <span class=selfeval>&quot;collects&quot;</span>))
+                    (<code class=scheme>find-executable-path</code> <span class=variable>program</span> (<code class=scheme>build-path</code> <span class=keyword>'</span><span class=variable>up</span> <span class=keyword>'</span><span class=variable>up</span> <span class=keyword>'</span><span class=variable>up</span> <span class=selfeval>&quot;collects&quot;</span>))))
+       <code class=scheme>null</code>))))
+</pre></div><p>
+where <code class=scheme><span class=variable>program</span></code> is the name used to start MzScheme (always a
+complete path for Mac OS Classic). See also section&nbsp;<a href="mzscheme-Z-H-11.html#node_sec_11.3.1">11.3.1</a> for
+information about <code class=scheme><code class=scheme>path-list-string-&gt;path-list</code></code>,
+<code class=scheme><code class=scheme>find-executable-path</code></code>, and <code class=scheme><code class=scheme>find-system-path</code></code>.</p>
+<p>
+<a name="node_idx_2788"></a><a name="node_kw_definitioncollection-path"></a><code class=scheme>(collection-path</code><tt>&nbsp;</tt><code class=scheme><span class=variable>collection</span></code><tt>&nbsp;</tt><tt>&middot;&middot;&middot;</tt><sup>1</sup><code class=scheme>)</code> returns the path containing the
+libraries of <code class=scheme><span class=variable>collection</span></code>; if the collection is not found, the
+<a name="node_idx_2790"></a><code class=scheme>exn:i/o:filesystem</code> exception is raised.</p>
+<p>
+<a name="node_idx_2792"></a>
+MzScheme is distributed with a standard collection of utility
+libraries with MzLib as the representative library. The name of this
+collection is <tt><strong>mzlib</strong></tt>, so the libraries are distributed in a
+<tt><strong>mzlib</strong></tt> subdirectory of the <tt><strong>collects</strong></tt> library collection
+directory. MzLib is described in <a href="../mzlib/mzlib.html"><i>PLT MzLib: Libraries Manual</i></a>.</p>
+<p>
+</p>
+<div class=footnoterule><hr></div><p></p>
+<div class=footnote><p><a name="footnote_Temp_45"></a><a href="#call_footnote_Temp_45"><sup><small>41</small></sup></a> In the PLT distribution of
+MzScheme for Unix, the <tt><strong>collects</strong></tt> directory is in the
+top-level <tt><strong>plt</strong></tt> directory, rather than with the
+platform-specific binary in <tt><strong>plt/bin</strong></tt>.</p>
+<p><a name="footnote_Temp_46"></a><a href="#call_footnote_Temp_46"><sup><small>42</small></sup></a> MrEd initializes the
+<code class=scheme><code class=scheme>current-library-collection-paths</code></code> parameter in the same way.</p>
+</div>
+<div align=right class=navigation><i>[Go to <span><a href="mzscheme.html">first</a>, <a href="mzscheme-Z-H-15.html">previous</a></span><span>, <a href="mzscheme-Z-H-17.html">next</a></span> page<span>; &nbsp;&nbsp;</span><span><a href="mzscheme.html#node_toc_start">contents</a></span><span><span>; &nbsp;&nbsp;</span><a href="mzscheme-Z-H-19.html#node_index_start">index</a></span>]</i></div><p></p>
+</body>
+</html>
