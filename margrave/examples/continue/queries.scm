@@ -343,7 +343,7 @@
 
 ;; To load the raw policy code and convert it into a Margrave Policy (an ADD).
 (printf "parse and convert: ")    
-(define cont-policy-un (time (load-xacml-policy "/pro/web/web/research/plt/tmp/icse2005sub/continue/CodeB/"
+(define cont-policy-un (time (load-xacml-policy "/home/graham/wd/xacml/margrave/examples/continue/CodeB/"
                                             "RPSlist.xml")))
 
 (printf "restricting the policy: ")

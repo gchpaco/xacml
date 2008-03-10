@@ -5,7 +5,8 @@
 # make CUDIR equal the file path to where you have CUDD installed.
 # For example, if CUDD is at /pro/xacml/summer2004/cudd/cudd-2.4.0/,
 
-CUDIR = /pro/xacml/summer2004/cudd/cudd-2.4.0/
+CUDIR = ../../../cudd-2.4.1/
+PLT=../../../plt/
 
 # Now replace /pro/xacml/summer2004/cudd/cudd-2.4.0/ with where 
 # you have CUDD installed.
@@ -16,7 +17,7 @@ CUDIR = /pro/xacml/summer2004/cudd/cudd-2.4.0/
 BDDINCLUDE = ${CUDIR}/include/
 
 import.so : import.o cuddAddXacml.o
-	mzc --ld import.so import.o \
+	$(PLT)/bin/mzc --ld import.so import.o \
 	${CUDIR}/cudd/*.o ${CUDIR}/util/*.o ${CUDIR}/mtr/*.o ${CUDIR}/st/*.o \
 	${CUDIR}/epd/*.o cuddAddXacml.o
 
@@ -26,15 +27,15 @@ xacmlplain : cuddAddXacml.c
 	${CUDIR}/epd/*.o -lm
 
 cuddAddXacml.o : cuddAddXacml.c
-	mzc ++ccf -I${BDDINCLUDE} --cc cuddAddXacml.c
+	$(PLT)/bin/mzc ++ccf -I${BDDINCLUDE} --cc cuddAddXacml.c
 
 cuddAddXacml.so : cuddAddXacml.o
-	mzc --ld cuddAddXacml.so cuddAddXacml.o \
+	$(PLT)/bin/mzc --ld cuddAddXacml.so cuddAddXacml.o \
 	${CUDIR}/cudd/*.o ${CUDIR}/util/*.o ${CUDIR}/mtr/*.o ${CUDIR}/st/*.o \
 	${CUDIR}/epd/*.o
 
 import.o : import.c
-	mzc ++ccf -I${BDDINCLUDE} --cc import.c
+	$(PLT)/bin/mzc ++ccf -I${BDDINCLUDE} --cc import.c
 
 clean : 
 	rm -f *.so
