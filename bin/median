@@ -1,0 +1,18 @@
+#!/usr/bin/env python
+import fileinput
+from itertools import *
+numbers = []
+for line in fileinput.input ():
+    fields = line.split ()
+    if len(fields) > len(numbers):
+        for i in range (len (numbers), len (fields)):
+            numbers.append ([])
+    for i, field in izip (count (), fields):
+        numbers[i].append (int (field))
+for list in numbers:
+    list.sort ()
+    midpoint = len (list) / 2
+    if len (list) % 2 == 0:
+        print list[midpoint]+list[midpoint+1]/2,
+    else:
+        print list[midpoint],

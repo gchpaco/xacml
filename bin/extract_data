@@ -1,0 +1,20 @@
+#!/usr/bin/awk -f
+BEGIN {
+    ORS=" "
+}
+FNR == 1 { printf "\n" }
+/^IO in/ {
+    print $3
+}
+/^Tree transform/ {
+    print $4
+}
+/^Output in/ {
+      print $3
+}
+/^Subsumption (in)?valid/ {
+    print $3
+}
+  END {
+      printf "\n"
+  }
