@@ -38,6 +38,7 @@
 #include <fstream>
 #include <cstdlib>
 #include <cstdio>
+#include <cstring>
 
 #include <set>
 #include <vector>

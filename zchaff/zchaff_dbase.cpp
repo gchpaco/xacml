@@ -33,6 +33,7 @@
  of the possibility of those damages.
 *********************************************************************/
 
+#include <cstdlib>
 #include "zchaff_dbase.h"
 
 CDatabase::CDatabase()  
